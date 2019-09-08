@@ -63,17 +63,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Actions\ActionBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Actions\Actions\FindNewPOI.cs" />
     <Compile Include="Assets\Scripts\IAUS\Actions\Actions\PatrolArea.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Actions\Actions\WaitAtPoint.cs" />
     <Compile Include="Assets\Scripts\IAUS\Actions\Interface\IAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Considerations\Consideration\PlayerInsight.cs" />
     <Compile Include="Assets\Scripts\IAUS\Considerations\ConsiderationBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Considerations\DistanceTO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Considerations\Interface\IConsideration.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Considerations\WaitConsideration.cs" />
     <Compile Include="Assets\Scripts\IAUS\Context\CharacterContext.cs" />
     <Compile Include="Assets\Scripts\IAUS\Context\Interfaces\IContext.cs" />
     <Compile Include="Assets\Scripts\IAUS\Context\WorldContext.cs" />
-    <Compile Include="Assets\Scripts\IAUS\DistanceTO.cs" />
     <Compile Include="Assets\Scripts\IAUS\General\Interfaces\Prototype.cs" />
     <Compile Include="Assets\Scripts\IAUS\UtilitySystem.cs" />
-    <Compile Include="Assets\Scripts\IAUS\WaitConsideration.cs" />
+    <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

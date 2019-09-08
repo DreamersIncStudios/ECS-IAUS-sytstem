@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IAUS.Considerations
+
+namespace ThreatMatrixSystem
 {
-    public class WaitConsideration : ConsiderationBase
+    public class ThreatMatrix : MonoBehaviour
     {
-
-        public float Timer;
-        public float AlloctedTime;
-
-
-        public override void Consider()
-        {
-            throw new System.NotImplementedException();
-        }
-
         // Start is called before the first frame update
         void Start()
         {
@@ -28,4 +19,18 @@ namespace IAUS.Considerations
 
         }
     }
+
+
+    public enum Crew {
+        Knights,
+        Bandits,
+        Demons,
+        Slayers,
+    }
+    public struct Threat {
+        public Crew Indentifier;
+        public int Value;
+
+    }
+
 }

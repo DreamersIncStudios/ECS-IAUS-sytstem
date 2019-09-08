@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using IAUS.Actions;
 
@@ -15,15 +16,44 @@ namespace IAUS
         void Start()
         {
             World = WorldContext.World;
-            Debug.Log(World.Player.name);
+            Actions = new List<ActionBase>();
 
-            Actions.Add(new PatrolArea { Agent=Agent.NavAgent,Waypoints=Agent.Waypoints });
+            Actions.Add(new PatrolArea { NameId="Patrol the Area", Agent=Agent});
+            Actions.Add(new WaitAtPoint {NameId = " Wait at spot Look around", Agent=Agent, IntervalOffset = interval });
+            Actions.Add(new FindNewPOI { NameId = "Goto next point" , Agent = Agent});
+            SetupActions();
+        }
+        void ScoreAndSort() {
+            foreach (ActionBase Action in Actions) {
+                Action.Score();
+
+               // Debug.Log(Action.TotalScore + "  " + Action.NameId);
+            }
+            Actions.Sort((a,b)=>a.TotalScore.CompareTo(b.TotalScore));
+
+            Debug.Log(Actions[Actions.Count-1].NameId+ Actions[Actions.Count - 1].TotalScore);
+            Actions[Actions.Count - 1].Execute();
+
+
+        }
+        void SetupActions() {
+            foreach (ActionBase Action in Actions) {
+                Action.Setup();
+            }
+              //  Actions.Sort((a, b) => a.TotalScore.CompareTo(b.TotalScore));
+
         }
 
         // Update is called once per frame
+        int interval= 120;
         void Update()
         {
+            if (Time.frameCount % interval == 1)
+            {
+                ScoreAndSort();
+            }
 
         }
+
     }
 }

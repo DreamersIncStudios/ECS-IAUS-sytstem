@@ -4,7 +4,8 @@ namespace IAUS {
     public interface IAction : Prototype<IAction> {
         string NameId { get; }
         List<ConsiderationBase> Considerations { get; set; }
-        float TotalScore { get; }
+        float TotalScore { get; set; }
+        CharacterContext Agent { get; set; }
         void Setup();
         void Score();
         void Execute();
