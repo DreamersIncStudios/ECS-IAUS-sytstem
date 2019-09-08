@@ -17,3 +17,10 @@ Here is a link to the talks:
 http://intrinsicalgorithm.com/IAonAI/2013/02/both-my-gdc-lectures-on-utility-theory-free-on-gdc-vault/
 
 https://www.gdcvault.com/play/1018040/Architecture-Tricks-Managing-Behaviors-in starts at 33 min mark
+
+Rev 0.1.0A: Consideration  and Actions States Functional 
+To Be Added in next revision
+	Response Curves
+	Action OnStateEnter, OnStateExit, 
+	Example Codes Improvement
+	Possible Removal of Inverse bool in considerations
