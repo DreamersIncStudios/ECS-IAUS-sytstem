@@ -12,6 +12,8 @@ namespace IAUS
 
         public ThreatMatrixSystem.Crew Crew;
         public NavMeshAgent NavAgent { get { return this.GetComponent<NavMeshAgent>(); } }
+        public Stats.PlayerCharacter PC { get { return this.GetComponent<Stats.PlayerCharacter>(); } }
+        public bool ExitTimerLoop { get; set; }
         [Header("Travel")]
         public List<Transform> Waypoints;
         public Transform PointOfInterest;
@@ -35,18 +37,14 @@ namespace IAUS
         float IntialDL;
         public Vector3 SearchLocation;
         public bool LookHere;
+
         #endregion
-
-        // Start is called before the first frame update
-        void Start()
+        public Vector3 DirFromAngle(float AngleInDeg, bool AngleIsGlobal)
         {
-
+            if (!AngleIsGlobal)
+                AngleInDeg += transform.eulerAngles.y;
+            return new Vector3(Mathf.Sin(AngleInDeg * Mathf.Deg2Rad), 0, Mathf.Cos(AngleInDeg * Mathf.Deg2Rad));
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

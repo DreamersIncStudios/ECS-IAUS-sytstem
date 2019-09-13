@@ -18,25 +18,37 @@ namespace IAUS.Considerations
         public LayerMask ObstacleMask { get {return Agent.ObstacleMask; } }
         public Transform AgentPos { get { return Agent.gameObject.transform; } }
 
-public List<Transform> VisibleTargets { get; }
-        public float DetectionLevel { get { return Agent.DetectionLevel; } }
+        public List<Transform> VisibleTargets { get; set; }
 
 
         public override void Consider()
         {
             // Add player Detection algorithm
             // For testing set to .5
-            Score = .5f;
+            LookForEnemies();
+            PossibleScores = new List<float>();
+            if (VisibleTargets.Count > 0)
+            {
+                foreach (Transform Target in VisibleTargets)
+                {
+                    float dist = Vector3.Distance(AgentPos.position, Target.position);
+                    float input = Mathf.Clamp01(dist / viewRadius);
+                    PossibleScores.Add(input);
+                }
+                PossibleScores.Sort((a, b) => a.CompareTo(b));
+                Score = Mathf.Clamp01(PossibleScores[0]);
+            }
+            else { Score = 0; }
         }
 
         //
         List<float> PossibleScores;
         void LookForEnemies() {
-            VisibleTargets.Clear();
+            VisibleTargets = new List<Transform>();
 
             Collider[] TargetInViewRadius = Physics.OverlapSphere(Agent.gameObject.transform.position, viewRadius,TargetMask);
             foreach (Collider col in TargetInViewRadius) {
-                Vector3 dirToTarget = (col.transform.position = AgentPos.position).normalized;
+                Vector3 dirToTarget = (col.transform.position - AgentPos.position).normalized;
                 if (Vector3.Angle(AgentPos.forward, dirToTarget) < viewAngle / 2.0f) {
                     float dist = Vector3.Distance(AgentPos.position, col.transform.position);
                     if (!Physics.Raycast(AgentPos.position, dirToTarget, dist, ObstacleMask)) {
@@ -46,8 +58,5 @@ public List<Transform> VisibleTargets { get; }
             }
         }
 
-        public override void Output(float input)
-        {
-        }
     }
 }

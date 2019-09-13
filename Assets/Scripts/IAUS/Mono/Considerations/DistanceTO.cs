@@ -11,8 +11,8 @@ namespace IAUS.Considerations {
         //{
         //    throw new System.NotImplementedException();
         //}
-        public Transform Point { get { return Agent.PointOfInterest; } }
-        public GameObject NavAgent { get { return Agent.gameObject; } }
+        Transform Point { get { return Agent.PointOfInterest; } }
+        GameObject NavAgent { get { return Agent.gameObject; } }
 
         public override void Consider()
         {
@@ -20,21 +20,14 @@ namespace IAUS.Considerations {
             //Inverse Function the closer agent is to objects value approaches zero
             Score = new float();
             float dist = Vector3.Distance(Point.position, NavAgent.transform.position);
-            if (Inverse)
-            {
-                Score = 1.0f - Mathf.Clamp01((float)(dist - MinRange) / (float)(MaxRange - MinRange));
-            }
-            else
-            {
-                Score = Mathf.Clamp01((float)(dist - MinRange) / (float)(MaxRange - MinRange));
-            }
+           float input = Mathf.Clamp01((float)(dist - MinRange) / (float)(MaxRange - MinRange));
+            Score = Mathf.Clamp01(Output(input));
+       
 
 
         }
 
-        public override void Output(float input)
-        {
-        }
+    
 
     }
 }

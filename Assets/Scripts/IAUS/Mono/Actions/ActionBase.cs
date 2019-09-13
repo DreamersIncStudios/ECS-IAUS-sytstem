@@ -14,7 +14,9 @@ namespace IAUS
   
         public float TotalScore { get; set; }
 
-        public abstract void Execute();
+        public abstract void OnUpdate();
+        public abstract void OnExit();
+        public abstract void OnStart();
         public abstract void Setup();
         public virtual void Score()
         {
@@ -23,8 +25,11 @@ namespace IAUS
             foreach (ConsiderationBase consideration in Considerations)
             {
                 consideration.Consider();
+
                 TotalScore= TotalScore *consideration.Score;
-               // Debug.Log(consideration.Score+ " "+ consideration.NameId);
+                float mod = 1.0f - (1.0f / (float)Considerations.Count);
+                float MakeUp = (1.0F - TotalScore) * mod;
+                TotalScore = TotalScore + (MakeUp * TotalScore);
             }
         }
             

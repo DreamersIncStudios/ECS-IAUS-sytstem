@@ -8,7 +8,9 @@ namespace IAUS {
         CharacterContext Agent { get; set; }
         void Setup();
         void Score();
-        void Execute();
+        void OnUpdate();
+        void OnExit();
+        void OnStart();
 
     }
 
