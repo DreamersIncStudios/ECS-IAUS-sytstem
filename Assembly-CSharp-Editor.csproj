@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Mono\Context\Editor\EnemyDetectionEditor.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Mono\Context\Editor\UTEditorWindow.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

@@ -32,7 +32,7 @@ namespace IAUS
             Actions.Sort((a,b)=>a.TotalScore.CompareTo(b.TotalScore));
 
          //   Debug.Log(Actions[Actions.Count-1].NameId+ Actions[Actions.Count - 1].TotalScore);
-            Actions[Actions.Count - 1].OnUpdate();
+            Actions[Actions.Count - 1].Excute();
 
 
         }
