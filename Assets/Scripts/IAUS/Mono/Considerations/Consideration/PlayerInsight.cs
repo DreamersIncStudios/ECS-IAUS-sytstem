@@ -18,7 +18,7 @@ namespace IAUS.Considerations
         public LayerMask ObstacleMask { get {return Agent.ObstacleMask; } }
         public Transform AgentPos { get { return Agent.gameObject.transform; } }
 
-        public List<Transform> VisibleTargets { get; set; }
+        public List<Transform> VisibleTargets { get { return VisibleTargets = Agent.VisibleTargets; } set { VisibleTargets = value; } }
 
 
         public override void Consider()

@@ -39,6 +39,8 @@ namespace IAUS.Editors
                     {
                         GUILayout.BeginVertical("box");
                         GUILayout.Label(Action.NameId + ": " + Action.TotalScore);
+                        GUILayout.Label("Action Status:  " + Action.actionStatus + "CoolDown Time Remain: " + Action.CooldownTimer);
+
                         foreach (ConsiderationBase consideration in Action.Considerations)
                         {
                             GUILayout.Label("\t" + consideration.NameId + ": " + consideration.Score);

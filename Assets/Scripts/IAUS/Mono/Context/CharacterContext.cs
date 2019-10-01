@@ -9,17 +9,18 @@ namespace IAUS
     {
         #region Variables
         //rewrite code to passs in consideratiors
-
+        public bool UseJobs;
         public ThreatMatrixSystem.Crew Crew;
         public NavMeshAgent NavAgent { get { return this.GetComponent<NavMeshAgent>(); } }
         public Stats.PlayerCharacter PC { get { return this.GetComponent<Stats.PlayerCharacter>(); } }
         public bool ExitTimerLoop { get; set; }
         [Header("Travel")]
         public List<Transform> Waypoints;
-        public Transform PointOfInterest;
+        public Transform Target;
         public float TimeAtLoc;
         [SerializeField]public float Timer { get; set; }
-
+        public bool Waiting;
+        public bool Moving;
 
         [Header("Detection")]
         public float viewRadius;

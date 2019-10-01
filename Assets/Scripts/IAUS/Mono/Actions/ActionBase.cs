@@ -20,13 +20,13 @@ namespace IAUS
         public CharacterContext Agent { get; set; }
   
         public float TotalScore { get; set; }
-        public ActionStatus ActionStatus { get; protected set; } = ActionStatus.Idle;
+        public ActionStatus actionStatus { get;set; } = ActionStatus.Idle;
 
         bool CanExecute()
         {
             if (InCooldown)
             {
-                ActionStatus = ActionStatus.Failure;
+                actionStatus = ActionStatus.Failure;
                 return false;
             }
 
@@ -36,21 +36,32 @@ namespace IAUS
         {
             get
             {
-                if (ActionStatus == ActionStatus.Running ||
-                   ActionStatus == ActionStatus.Idle)
+                if (actionStatus == ActionStatus.Running ||
+                   actionStatus == ActionStatus.Idle)
                     return false;
 
-                return ElapsedTime < Cooldown;
+                return CooldownTimer <= 0.0f;
             }
         }
 
         public float Cooldown { get; set; }
 
-        public float ElapsedTime => throw new System.NotImplementedException();
+        public float CooldownTimer { get; set; }
 
-        public abstract void Excute();
-        public abstract void OnExit();
-        public abstract void OnStart();
+
+
+        public virtual void Execute() {
+
+            if (actionStatus != ActionStatus.Running) { OnStart(); }
+        }
+        public virtual void OnExit() {
+            actionStatus = ActionStatus.Idle;
+            CooldownTimer -=Time.deltaTime;
+        }
+        public virtual void OnStart() {
+            actionStatus = ActionStatus.Running;
+            CooldownTimer = Cooldown;
+        }
         public virtual void Setup() {
             Considerations = new List<ConsiderationBase>();
 
@@ -66,7 +77,7 @@ namespace IAUS
                 TotalScore= TotalScore *consideration.Score;
                 float mod = 1.0f - (1.0f / (float)Considerations.Count);
                 float MakeUp = (1.0F - TotalScore) * mod;
-                TotalScore = TotalScore + (MakeUp * TotalScore);
+                TotalScore =  Mathf.Clamp01(TotalScore + (MakeUp * TotalScore));
             }
         }
 

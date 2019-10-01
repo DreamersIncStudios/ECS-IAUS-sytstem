@@ -20,23 +20,34 @@ namespace IAUS.Actions
         {
             base.Setup();
 
-            Considerations.Add(new CharacterHealth { Agent = Agent });
-            Considerations.Add(new PlayerInSight { Agent = Agent });
+            Considerations.Add(new CharacterHealth
+            {
+                Agent = Agent,
+                NameId = "Health",
+                responseType = ResponseType.Logistic,
+                M = 5,
+                K = .85f,
+                B = 0.155f,
+                C = .4f
+            });
+            //Considerations.Add(new PlayerInSight { Agent = Agent });
         }
 
 
         public override void OnStart()
         {
-            throw new System.NotImplementedException();
+            base.OnStart();
         }
 
-        public override void Excute()
+        public override void Execute()
         {
+            base.Execute();
             throw new System.NotImplementedException();
         }
 
         public override void OnExit()
         {
+            base.OnExit();
             throw new System.NotImplementedException();
         }
 

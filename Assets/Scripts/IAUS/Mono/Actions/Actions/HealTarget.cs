@@ -42,16 +42,17 @@ namespace IAUS.Actions
         }
         public override void OnExit()
         {
-            throw new System.NotImplementedException();
+            base.OnExit();
         }
 
         public override void OnStart()
         {
-            throw new System.NotImplementedException();
+            base.OnExit();
         }
 
-        public override void Excute()
+        public override void Execute()
         {
+            base.Execute();
             throw new System.NotImplementedException();
         }
 

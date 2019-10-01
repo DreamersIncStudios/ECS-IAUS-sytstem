@@ -20,16 +20,15 @@ namespace IAUS.Actions
         public float AlloctedTime;
         bool SetTimer;
         public int IntervalOffset;
-        List<Transform> Waypoint { get { return Agent.Waypoints; } }
-        int WaypointIndex = 0;
-
+ 
         public override void OnStart()
         {
-            throw new System.NotImplementedException();
+            base.OnStart();
+            Agent.Waiting = true;
         }
-        public override void Excute()
+        public override void Execute()
         {
-
+            base.Execute();
             if (Timer > 0.0f)
             {
                 Timer -= Time.deltaTime * IntervalOffset;
@@ -47,11 +46,8 @@ namespace IAUS.Actions
 
         public override void OnExit()
         {
-            if (WaypointIndex < Waypoint.Count - 1)
-                WaypointIndex++;
-            else WaypointIndex = 0;
-
-            Agent.PointOfInterest = Agent.Waypoints[WaypointIndex];
+            base.OnExit();
+            Agent.Waiting = false;
         }
         public override void Score()
         {
@@ -69,7 +65,7 @@ namespace IAUS.Actions
                 B = 0.05f,
                 C = 0.6f
             });
-            Considerations.Add(new DistanceTO { NameId = "Distance To Point", Agent = Agent, MinRange=0,
+            Considerations.Add(new DistanceTO { NameId = "Distance To Point", Agent = Agent, MinRange=0,  Point = Agent.Target,
                 responseType = ResponseType.Logistic, M = 50,K=-.95f,B=1,C=.6f
  });
            // Considerations.Add(new PlayerInSight { NameId = "Can I see Player" });

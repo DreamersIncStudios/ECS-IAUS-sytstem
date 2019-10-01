@@ -6,17 +6,17 @@ namespace IAUS {
         List<ConsiderationBase> Considerations { get; set; }
         float TotalScore { get; set; }
         CharacterContext Agent { get; set; }
-        ActionStatus ActionStatus { get; }
+        ActionStatus actionStatus { get; }
         float Cooldown { get; set; }
-        float ElapsedTime { get; }
+        float CooldownTimer { get; }
         void Setup();
         void Score();
-        void Excute();
+        void Execute();
         void OnExit();
         void OnStart();
 
     }
     public enum ActionStatus {
 
-    Failure,Succes,Running, Idle, InCoolDown}
+    Failure,Succes,Running, Interrupted, Idle}
 }
