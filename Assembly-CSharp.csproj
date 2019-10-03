@@ -63,10 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\MoveTo.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\WaitFor.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Consideration\Interface\Iconsideration.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\DistanceConsider.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Job\FindDistanceJob.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Grunt\GruntUS.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Job\MoveConsiderJob.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Job\ScoreJob.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Grunt\GruntUtility.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\ActionBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\HealTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\MoveToPlayer.cs" />
@@ -87,6 +89,7 @@
     <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\UtilitySystem.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
+    <Compile Include="Assets\Scripts\UtilitySystems\TransfomSync.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

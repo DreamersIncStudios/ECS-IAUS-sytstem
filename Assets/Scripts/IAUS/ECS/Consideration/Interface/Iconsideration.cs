@@ -8,8 +8,7 @@ namespace IAUS.ECS.Consideration
     {
         float Score { get; set; }
         //      bool Inverse { get; set; } Replace using Response curve Slope
-        ResponseType responseType { get; set; }
-        void Consider();
+        ResponseTypeECS responseType { get; set; }
         float Output(float input);
         float M { get; set; }
         float K { get; set; }
@@ -23,7 +22,7 @@ namespace IAUS.ECS.Consideration
 
     }
 
-    public enum ResponseType
+    public enum ResponseTypeECS
     {
         LinearQuad,
         Log,
