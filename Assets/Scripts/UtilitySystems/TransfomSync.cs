@@ -97,6 +97,7 @@ namespace ECS.Utilities
                 transformStashes = transformStashes,
             };
 
+
             return copyTransformsJob.Schedule(m_TransformGroup, stashTransformsJobHandle);
         }
     }

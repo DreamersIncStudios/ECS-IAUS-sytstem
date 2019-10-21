@@ -62,13 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\IAUS\ECS\Components\MoveTo.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Components\WaitFor.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Consideration\Interface\Iconsideration.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\DistanceConsider.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Job\MoveConsiderJob.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Job\ScoreJob.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Grunt\GruntUtility.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\BaseAI.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Movement.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Grunt.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\ActionBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\HealTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\MoveToPlayer.cs" />
