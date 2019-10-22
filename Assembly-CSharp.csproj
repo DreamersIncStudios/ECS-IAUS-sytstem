@@ -62,10 +62,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\IAUS\ECS\BaseAI.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Archtypes\BaseAI.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Archtypes\Citizen.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Archtypes\Cop.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Archtypes\Grunt.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Archtypes\Robber.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\CharacterSpecs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Movement.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Grunt.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\MovementSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\BaseUtilityAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\CitizenSampleActions.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\CitizenSystems.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\ActionBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\HealTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\MoveToPlayer.cs" />
