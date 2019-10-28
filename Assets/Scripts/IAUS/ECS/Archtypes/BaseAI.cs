@@ -8,7 +8,7 @@ using Unity.Mathematics;
 public abstract class BaseAI : MonoBehaviour,IConvertGameObjectToEntity
 {
     public virtual void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem) {
-        var Move = new Movement() { CanMove = true, TargetLocation = new float3(10, 0, 10), MovementSpeed = 2, StoppingDistance = 1 };
+        var Move = new Movement() { CanMove = false, TargetLocation = new float3(), MovementSpeed = 2, StoppingDistance = 1 };
         dstManager.AddComponentData(entity, Move);
     }
 

@@ -8,6 +8,8 @@ namespace IAUS.ECS.Component {
         float Cooldown { get; set; }
         float Timer { get; set; }
         bool InCooldown();
+        float InfiniteAxisModScore();
+        int NumberOfConsiderations { get;  }
     }
     public enum States {
         Idle,
