@@ -73,8 +73,11 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\Stores.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\BaseUtilityAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\CitizenSampleActions.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\CitizenSystems.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\RobberActions.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\DetectionSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\JobSystem\CitizenSystems.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Systems\RobberSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Utilities.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\ActionBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Actions\Actions\HealTarget.cs" />

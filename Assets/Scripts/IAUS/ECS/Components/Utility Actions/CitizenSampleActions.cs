@@ -3,13 +3,13 @@ using IAUS.ECS.Utilities;
 using System;
 using Unity.Mathematics;
 namespace IAUS.ECS.Component {
-    [Serializable]
+   
     public struct GetMoney : BaseUtilityAction
     {
         public float Score { get; set; }
-        [SerializeField] public States state { get; set; }
+        public States state { get; set; }
         public float Cooldown { get; set; }
-       [SerializeField] public float Timer { get; set; }
+       public float Timer { get; set; }
 
         public bool InCooldown()
         {
@@ -17,9 +17,9 @@ namespace IAUS.ECS.Component {
         }
         public int NumberOfConsiderations { get { return 3; } }
 
-       [SerializeField] public ConsiderationBased MoneyOnHand;
-        [SerializeField] public ConsiderationBased Robbing;
-        [SerializeField] public ConsiderationBased ItemsOnHand;
+       public ConsiderationBased MoneyOnHand;
+       public ConsiderationBased Robbing;
+       public ConsiderationBased ItemsOnHand;
 
         public float InfiniteAxisModScore() {
             float mod = 1.0f - (1.0f / NumberOfConsiderations);
