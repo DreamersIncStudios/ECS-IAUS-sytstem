@@ -5,6 +5,9 @@ using Unity.Entities;
 using Unity.Transforms;
 using IAUS.ECS.Component;
 using Unity.Collections;
+using Unity.Jobs;
+using Unity.Mathematics; 
+
 public class DetectionSystem : ComponentSystem
 {
 
@@ -16,29 +19,30 @@ public class DetectionSystem : ComponentSystem
     public EntityQueryDesc Targets = new EntityQueryDesc()
     {
         All = new ComponentType[] { typeof(LocalToWorld) },
-        Any= new ComponentType[] { typeof(CitizenC),}, 
+        Any= new ComponentType[] { typeof(CitizenC),typeof(Police)}, 
         
     };
 
-    public EntityQueryDesc Enemies = new EntityQueryDesc()
-    {
-        All = new ComponentType[] { typeof(LocalToWorld),typeof(Police) },
-    
-
-    };
-
+    int interval = 60;
     // Consider adding an if Exist loop to separate citizen from Cops 
     protected override void OnUpdate()
     {
+   
+
         Entities.With(GetEntityQuery(Looker)).ForEach((ref Detection DetectSpecs, ref LocalToWorld transform, ref RobberC robber) =>
         {
-            NativeList<Entity> TargetsInRange = new NativeList<Entity>(Allocator.Persistent);
-            //NativeList<float> TargetDistances = new NativeList<float>(Allocator.Persistent);
-            LocalToWorld TempTransform = transform;
-            Detection Spec = DetectSpecs;
+            if (Time.frameCount % interval == 0)
+            {
+                NativeList<Entity> TargetsInRange = new NativeList<Entity>(Allocator.Persistent);
+                NativeList<Entity> EnemiesInRange = new NativeList<Entity>(Allocator.Persistent);
+                ComponentDataFromEntity<CitizenC> Shoppers = GetComponentDataFromEntity<CitizenC>();
+                ComponentDataFromEntity<Police> Cops = GetComponentDataFromEntity<Police>();
+
+                LocalToWorld TempTransform = transform;
+                Detection Spec = DetectSpecs;
 
 
-            Entities.With(GetEntityQuery(Targets)).ForEach((Entity entity, ref LocalToWorld toWorld) =>
+                Entities.With(GetEntityQuery(Targets)).ForEach((Entity entity, ref LocalToWorld toWorld) =>
             {
                 float dist = Vector3.Distance(TempTransform.Position, toWorld.Position);
                 if (Spec.viewRadius > dist)
@@ -49,72 +53,69 @@ public class DetectionSystem : ComponentSystem
                         if (!Physics.Raycast(TempTransform.Position, dirToTarget, dist, Spec.ObstacleMask))
                         {
                             TargetsInRange.Add(entity);
-                            if (Spec.distanceToClosetEnemy > dist)
-                                Spec.distanceToClosetEnemy = dist / (float)Spec.viewRadius;
-
+                            if (Shoppers.Exists(entity))
+                            {
+                                if (Spec.distanceToClosetTarget > dist)
+                                    Spec.distanceToClosetTarget = dist / (float)Spec.viewRadius;
+                            }
+                            if (Cops.Exists(entity))
+                            {
+                                if (Spec.distanceToClosetEnemy > dist)
+                                    Spec.distanceToClosetEnemy = dist / (float)Spec.viewRadius;
+                            }
                         }
                         else
                         {
-                            Spec.distanceToClosetEnemy = 10;
+                            if (Shoppers.Exists(entity))
+                            {
+                                Spec.distanceToClosetTarget = 1000;
+                            }
+                            if (Cops.Exists(entity))
+                            {
+                                Spec.distanceToClosetEnemy = 1000;
+                            }
+
                         }
                     }
                     else
                     {
-                        Spec.distanceToClosetEnemy = 10.0f;
+                        if (Shoppers.Exists(entity))
+                        {
+                            Spec.distanceToClosetTarget = 1000.0f;
+                        }
+                        if (Cops.Exists(entity))
+                        {
+                            Spec.distanceToClosetEnemy = 1000.0f;
+                        }
                     }
                 }
                 else
                 {
-                    Spec.distanceToClosetEnemy = 10.0f;
-                }
-            });
-            NativeList<Entity> EnemiesInRange = new NativeList<Entity>(Allocator.Persistent);
-          //  NativeList<float> EnemyDistances = new NativeList<float>(Allocator.Persistent);
-
-            Entities.With(GetEntityQuery(Enemies)).ForEach((Entity entity, ref LocalToWorld toWorld) =>
-            {
-                float dist = Vector3.Distance(TempTransform.Position, toWorld.Position);
-                if (Spec.viewRadius > dist)
-                {
-                    Vector3 dirToTarget = ((Vector3)toWorld.Position - (Vector3)TempTransform.Position).normalized;
-                    if (Vector3.Angle(TempTransform.Forward, dirToTarget) < Spec.viewAngleXZ && Vector3.Angle(TempTransform.Forward, dirToTarget) < Spec.viewAngleYZ)
-                    {// angle in YZ  plane 
-                        if (!Physics.Raycast(TempTransform.Position, dirToTarget, dist, Spec.ObstacleMask))
-                        {
-                          EnemiesInRange.Add(entity);
-                            if (Spec.distanceToClosetEnemy > dist)
-                                Spec.distanceToClosetEnemy = dist / (float)Spec.viewRadius;
-
-                        }
-                        else
-                        {
-                            Spec.distanceToClosetEnemy = 10;
-                        }
-                    }
-                    else
+                    if (Shoppers.Exists(entity))
                     {
-                        Spec.distanceToClosetEnemy = 10.0f;
+                        Spec.distanceToClosetTarget = 1000.0f;
                     }
-                }
-                else
-                {
-                    Spec.distanceToClosetEnemy = 10.0f;
+                    if (Cops.Exists(entity))
+                    {
+                        Spec.distanceToClosetEnemy = 1000.0f;
+                    }
                 }
             });
 
+                DetectSpecs = Spec;
+                TargetsInRange.Dispose();
+                EnemiesInRange.Dispose();
 
+                robber.DistanceToCop = Mathf.Clamp01((float)Spec.distanceToClosetEnemy / Spec.viewRadius);
+                robber.DistnaceToTarget = Mathf.Clamp01((float)Spec.distanceToClosetTarget / Spec.viewRadius);
 
-            DetectSpecs = Spec;
-            TargetsInRange.Dispose();
-            EnemiesInRange.Dispose();
-            //  TargetDistances.Dispose();
-
-            robber.DistanceToCop = Mathf.Clamp01((float)Spec.distanceToClosetEnemy/Spec.viewRadius);
-            robber.DistnaceToTarget = Mathf.Clamp01((float)Spec.distanceToClosetTarget / Spec.viewRadius);
-
+            }
         });
     }
-}
+    }
+
+
+
 
 namespace IAUS.ECS.Component
 {
