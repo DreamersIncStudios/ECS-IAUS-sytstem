@@ -153,7 +153,7 @@ namespace IAUS.ECS.System
 
 
 
-    [UpdateAfter(typeof(DetectionSystem))]
+    [UpdateAfter(typeof(DetectionTest))]
     public class RobberSystem : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)

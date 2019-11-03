@@ -40,7 +40,9 @@ namespace IAUS.Sample.Archtypes
             dstManager.AddComponentData(entity, detect); 
             dstManager.AddComponentData(entity, Rob);
             dstManager.AddBuffer<Waypoint>(entity);
+            dstManager.AddBuffer<TargetToRaycast>(entity);
             DynamicBuffer<Waypoint> buffer = dstManager.GetBuffer<Waypoint>(entity);
+            
             foreach (Transform point in WayPoints) {
                 buffer.Add(new Waypoint() { Point = point.position });
                     }
