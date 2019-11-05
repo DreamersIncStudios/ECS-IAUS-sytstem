@@ -106,6 +106,18 @@ public class DetectionTest2 : ComponentSystem
         All = new ComponentType[] { typeof(Detection), typeof(LocalToWorld) , typeof(RobberC)}
     };
     NativeArray<RaycastHit> results;
+
+    public bool Hit(RaycastHit Result, Detection DetectSpecs)
+    {
+        Collider col = Result.collider;
+
+        if (Result.collider != null)
+        {
+            return col.gameObject.layer ==8;
+        }
+        return false;
+    }
+
     protected override void OnUpdate()
     {
         Entities.With(GetEntityQuery(Looker)).ForEach((Entity entity, ref Detection DetectSpecs, ref LocalToWorld transform, ref RobberC robber) =>
@@ -121,16 +133,19 @@ public class DetectionTest2 : ComponentSystem
             JobHandle handle = RaycastCommand.ScheduleBatch(CastRay, results, 1);
             handle.Complete();
 
+            float closestDistance = DetectSpecs.viewRadius;
 
             foreach (RaycastHit result in results) {
-                if (result.collider != null)
-                {
-                 //   Debug.Log(result.collider.gameObject.name);
-                   // Debug.Log(result.collider.gameObject.layer== DetectSpecs.ObstacleMask);
+                if(Hit(result, DetectSpecs)){
+                    if (closestDistance > result.distance)
+                    {
+                        closestDistance = result.distance;
+                        DetectSpecs.distanceToClosetTarget = (float)result.distance / DetectSpecs.viewRadius;
+                    }
                 }
     
             }
-            buffer.Clear();
+            //buffer.Clear();
             CastRay.Dispose();
             results.Dispose();
         });
