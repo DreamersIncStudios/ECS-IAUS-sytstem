@@ -46,6 +46,7 @@ namespace IAUS.ECS.System
             float money = (float)c0.CashOnHand / c0.MaxCashOnHand;
             float item = ((float)c0.boughtItem / c0.CarryLimit);
             float Robbing = c0.Robbing? 1 : 0;
+
             c1.Score = c1.MoneyOnHand.Output(money) * c1.Robbing.Output(Robbing) * c1.ItemsOnHand.Output(item) * 
                 c1.InViewOfCop.Output(c0.DistanceToCop) * c1.CanSeeTarget.Output(c0.DistnaceToTarget);
             c2.Score = c2.MoneyOnHand.Output(money) * c2.Robbing.Output(Robbing) * c2.ItemsOnHand.Output(item) *
