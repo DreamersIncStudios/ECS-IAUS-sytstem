@@ -7,7 +7,7 @@ using IAUS.ECS.Component;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
-
+using Unity.Burst;
 struct TargetToRaycast : IBufferElementData
 {
     public int TargetClass;
@@ -28,7 +28,7 @@ struct TargetToRaycast : IBufferElementData
 
 }
 
-
+[BurstCompile]
 struct GetListOfTarget : IJobForEachWithEntity<Detection, LocalToWorld>
 {
    [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> TargetsInScene;

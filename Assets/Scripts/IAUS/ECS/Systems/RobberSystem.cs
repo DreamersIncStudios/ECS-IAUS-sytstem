@@ -5,10 +5,11 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Mathematics;
 using Unity.Transforms;
-
+using Unity.Burst;
 
 namespace IAUS.ECS.System
 {
+    [BurstCompile]
     public struct RobberScore : IJobForEach<RobberC, Lurk, Rob, RunFromCops, ReturnHome>
     {
         public float DT;
@@ -59,7 +60,7 @@ namespace IAUS.ECS.System
 
         }
     }
-
+    [BurstCompile]
     public struct RobberSys : IJobForEachWithEntity<RobberC, Movement, LocalToWorld>
     {
 
