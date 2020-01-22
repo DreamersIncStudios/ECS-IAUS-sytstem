@@ -26,7 +26,7 @@ namespace InfluenceMap
         Ring,
         Barrier
            
-            S
+           
 
     }
 
