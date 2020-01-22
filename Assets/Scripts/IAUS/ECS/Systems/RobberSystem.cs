@@ -160,7 +160,7 @@ namespace IAUS.ECS.System
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            float DT = Time.deltaTime;
+            float DT = Time.DeltaTime;
             var RobberScoreJob = new RobberScore() { DT = DT };
 
             var sys= new RobberSys() {
