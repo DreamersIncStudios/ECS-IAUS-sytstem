@@ -78,6 +78,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\ActorComponents.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\GridComponent.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Influencer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Setting Components\Cover.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Setting Components\CoverAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\TestBehaviour.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Systems Jobs\SetInfluences.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />
