@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Detection.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Movement.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\ATM.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\TestTags.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\Stores.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\BaseUtilityAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\CitizenSampleActions.cs" />

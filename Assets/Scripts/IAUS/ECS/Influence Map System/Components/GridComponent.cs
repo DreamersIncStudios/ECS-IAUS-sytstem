@@ -15,9 +15,11 @@ namespace InfluenceMap
     }
     public struct Gridpoint : IBufferElementData {
         
-        public float TotalValue;
-        public Threat threat;
-        public Threat protection;
+        public Influence Player;
+        public Influence Enemy;
+        public Influence Global;
+
         public Vector3 Position;
+        public float dist;
     }
 }

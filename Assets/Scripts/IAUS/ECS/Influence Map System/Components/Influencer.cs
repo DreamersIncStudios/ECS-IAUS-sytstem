@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace InfluenceMap
 {
     [GenerateAuthoringComponent]
+    [System.Serializable]
     public struct Influencer : IComponentData
     {
-        public float Influence;
-        public Threat threat;
-        public Threat Protection;
+        public Influence influence;
         public int Range;
-        public FallOff fallOff;
+        public float RingWidth;
+        public FallOff fallOff { get; set; }
 
-        public float M { get { return 2.0f; } }
+
+
+        public float M { get { return 3.0f; } }
         public float K { get { return 1.0f; } } // Value of K is to be between -1 and 1 for Logistic Responses
-        public float B { get { return 0.0f; } }
+        public float B { get { return -2.0f; } }
         public float C { get { return 0.0f; } }
 
         public float Output(float input)
@@ -24,10 +27,7 @@ namespace InfluenceMap
             float temp = new float();
             switch (fallOff)
             {
-                case FallOff.linear:
-                    temp = M * Mathf.Pow((input - C), K) + B;
-                    break;
-                case FallOff.Quadratic:
+                case FallOff.LinearQuadInverse:
                     temp = M * Mathf.Pow((input - C), K) + B;
                     break;
                 case FallOff.Logistic:
@@ -39,16 +39,15 @@ namespace InfluenceMap
 
     }
     [System.Serializable]
-    public struct Threat
-    {
-        public float Global;
-        public float Player, Enemy;// To Be Expanded later
+    public struct Influence {
+      
+        public float2 Proximity;   //In physical attack range  Value and range
+        public float2 Threat; //In range of attack or notice   Value and range
     }
+
     public enum FallOff
     {
-        linear,
-        Quadratic,
-        Inverse,
+        LinearQuadInverse,
         Ring,
         Barrier,
         Logistic
