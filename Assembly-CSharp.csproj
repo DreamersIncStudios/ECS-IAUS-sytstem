@@ -71,7 +71,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Detection.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Movement.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\ATM.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\TestTags.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\EnemyCharacter.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\Stores.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\BaseUtilityAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\CitizenSampleActions.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\GridComponent.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Influencer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Setting Components\Cover.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\Setting Components\CoverAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Components\TestBehaviour.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Influence Map System\Systems Jobs\SetInfluences.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />

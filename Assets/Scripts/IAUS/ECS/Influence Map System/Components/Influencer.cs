@@ -7,13 +7,11 @@ using Unity.Mathematics;
 namespace InfluenceMap
 {
     [GenerateAuthoringComponent]
-    [System.Serializable]
     public struct Influencer : IComponentData
     {
         public Influence influence;
-        public int Range;
         public float RingWidth;
-        public FallOff fallOff { get; set; }
+        public FallOff fallOff;
 
 
 

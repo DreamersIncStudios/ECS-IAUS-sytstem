@@ -601,9 +601,10 @@ GameObject:
   - component: {fileID: 652544131}
   - component: {fileID: 652544130}
   - component: {fileID: 652544129}
+  - component: {fileID: 652544134}
+  - component: {fileID: 652544132}
   - component: {fileID: 652544128}
   - component: {fileID: 652544133}
-  - component: {fileID: 652544132}
   m_Layer: 0
   m_Name: Cover
   m_TagString: Untagged
@@ -694,43 +695,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 652544127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d1e415928126741b5b1ce2c097d67c, type: 3}
+  m_Script: {fileID: 11500000, guid: d9d9e58194509a24eaec2cae8909a179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  influence:
-    influence:
-      Proximity:
-        x: 1
-        y: 10
-      Threat:
-        x: 1
-        y: 25
-    threat:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Protection:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Range: 0
-    RingWidth: 0
-  cover:
-    Destruction: 0
-    Destroyed: 0
-    level: 0
-    CurHealth: 0
-    MaxHealth: 0
-    threat:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Protection:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Range: 0
-    Damage: 0
+  Destruction: 1
+  Destroyed: 0
+  level: 1
+  CurHealth: 0
+  MaxHealth: 250
+  DamageRange: 0
+  Damage: 0
 --- !u!114 &652544133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -744,6 +718,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
+--- !u!114 &652544134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652544127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f50b022b4f995e41b0c332938419ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  influence:
+    Proximity:
+      x: 1
+      y: 5
+    Threat:
+      x: 1
+      y: 10
+  RingWidth: 0
+  fallOff: 0
 --- !u!1 &710813436
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +752,6 @@ GameObject:
   - component: {fileID: 710813440}
   - component: {fileID: 710813439}
   - component: {fileID: 710813438}
-  - component: {fileID: 710813437}
   m_Layer: 0
   m_Name: Cover (1)
   m_TagString: Untagged
@@ -765,52 +759,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &710813437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710813436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d1e415928126741b5b1ce2c097d67c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  influence:
-    influence:
-      Proximity:
-        x: 0
-        y: 0
-      Threat:
-        x: 0
-        y: 0
-    threat:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Protection:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Range: 0
-    RingWidth: 0
-  cover:
-    Destruction: 0
-    Destroyed: 0
-    level: 0
-    CurHealth: 0
-    MaxHealth: 0
-    threat:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Protection:
-      Global: 0
-      Player: 0
-      Enemy: 0
-    Range: 0
-    Damage: 0
 --- !u!114 &710813438
 MonoBehaviour:
   m_ObjectHideFlags: 0

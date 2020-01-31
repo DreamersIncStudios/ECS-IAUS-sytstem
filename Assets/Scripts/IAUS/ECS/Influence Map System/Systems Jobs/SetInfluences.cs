@@ -20,7 +20,7 @@ namespace InfluenceMap
         public EntityQueryDesc influencersPlayer = new EntityQueryDesc()
         {
             All = new ComponentType[] { typeof(Influencer), typeof(LocalToWorld) },
-            Any = new ComponentType[] { typeof(PlayerCharaacter) }
+            Any = new ComponentType[] { typeof(PlayerCharacter) }
 
         }; public EntityQueryDesc influencersEnemy = new EntityQueryDesc()
         {
@@ -28,14 +28,14 @@ namespace InfluenceMap
             Any = new ComponentType[] { typeof(EnemyCharacter) }
 
         };
+
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
 
-        
+
             EntityQuery GlobalQ = GetEntityQuery(influencersGlobal);
             EntityQuery PlayerQ = GetEntityQuery(influencersPlayer);
             EntityQuery EnemyQ = GetEntityQuery(influencersEnemy);
-
 
             var setinf = new Set()
             {
@@ -45,12 +45,13 @@ namespace InfluenceMap
                 InfPosPlayer = PlayerQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
                 influencersPlayer = PlayerQ.ToComponentDataArray<Influencer>(Allocator.TempJob),
 
-                InfPosEnemies =PlayerQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                influencersEnemies = PlayerQ.ToComponentDataArray<Influencer>(Allocator.TempJob)
+                InfPosEnemies = EnemyQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+                influencersEnemies = EnemyQ.ToComponentDataArray<Influencer>(Allocator.TempJob)
             };
 
             JobHandle handle = setinf.Schedule(this, inputDeps);
             return handle;
+            
         }
     }
 
@@ -58,14 +59,14 @@ namespace InfluenceMap
     [BurstCompile]
     public struct Set : IJobForEach_B<Gridpoint>
     {
-        [ReadOnly] public NativeArray<LocalToWorld> InfPosGlobal;
-        [ReadOnly] public NativeArray<Influencer> influencersGlobal;
+       [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosGlobal;
+        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersGlobal;
 
-        [ReadOnly] public NativeArray<Influencer> influencersPlayer;
-        [ReadOnly] public NativeArray<LocalToWorld> InfPosPlayer;
+        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersPlayer;
+        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosPlayer;
 
-        [ReadOnly] public NativeArray<Influencer> influencersEnemies;
-        [ReadOnly] public NativeArray<LocalToWorld> InfPosEnemies;
+        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersEnemies;
+        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosEnemies;
 
 
         public void Execute(DynamicBuffer<Gridpoint> gridpoints)
@@ -94,8 +95,7 @@ namespace InfluenceMap
                     if (influencersPlayer[index].influence.Proximity.y > dist)
                     {
                         temp.Player.Proximity.x += influencersPlayer[index].influence.Proximity.x;
-                        if(temp.Global.Proximity.x>0)
-                            temp.Global.Proximity.x -= influencersPlayer[index].influence.Proximity.x;
+                       // temp.Global.Proximity.x -= influencersPlayer[index].influence.Proximity.x;
                     }
                 }
                 for (int index = 0; index < InfPosEnemies.Length; index++)
@@ -106,8 +106,7 @@ namespace InfluenceMap
                     if (influencersEnemies[index].influence.Proximity.y > dist)
                     {
                         temp.Enemy.Proximity.x += influencersEnemies[index].influence.Proximity.x;
-                        if (temp.Global.Proximity.x > 0)
-                            temp.Global.Proximity.x -= influencersEnemies[index].influence.Proximity.x;
+                        //temp.Global.Proximity.x -= influencersEnemies[index].influence.Proximity.x;
                     }
                 }
                 gridpoints[cnt] = temp;

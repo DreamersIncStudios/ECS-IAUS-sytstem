@@ -1,18 +1,18 @@
 ﻿using Unity.Entities;
-
+using UnityEngine;
 namespace InfluenceMap {
-    [GenerateAuthoringComponent]
     [System.Serializable]
+    [GenerateAuthoringComponent]
     public struct Cover : IComponentData {
         public DestructionType Destruction;
         public bool Destroyed;
         public int level;
-        public int CurHealth;
-        public int MaxHealth;
+        [HideInInspector]public int CurHealth;
+        public int MaxHealth; // Think about calculating or making this a scriptableobject 
         
         public float HPratio { get { return (float)CurHealth / MaxHealth; } }
 
-        public int Range;
+        public int DamageRange;
         public int Damage;
 
 
