@@ -51,12 +51,18 @@ namespace InfluenceMap {
             {
                 for (int y = 0; y < NumCells; y++)
                 {
-                    CellPositions.Add(StartPos + new Vector3(CellSize.x * x, Go.transform.position.y, CellSize.y * y)
-                        );
+                    RaycastHit hit = new RaycastHit();
+                    if (Physics.Raycast(StartPos + new Vector3(CellSize.x * x, 60, CellSize.y * y), Vector3.down, out hit))
+                    {
+                        CellPositions.Add(StartPos + new Vector3(CellSize.x * x, hit.point.y, CellSize.y * y));
+                    }
+                    else
+                        CellPositions.Add(StartPos + new Vector3(CellSize.x * x, Go.transform.position.y, CellSize.y * y));
                 }
 
             }
         }
 
     }
+
 }

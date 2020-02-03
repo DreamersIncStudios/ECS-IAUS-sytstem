@@ -86,7 +86,10 @@ namespace InfluenceMap
                     if (influencersGlobal[index].influence.Proximity.y > temp.dist)  
                         temp.Global.Proximity.x += influencersGlobal[index].influence.Proximity.x;
 
+                    if (influencersGlobal[index].influence. Threat.y > temp.dist)
+                        temp.Global.Threat.x += influencersGlobal[index].influence.Threat.x;
                 }
+
                 for (int index = 0; index < InfPosPlayer.Length; index++)
                 {
 
@@ -97,7 +100,12 @@ namespace InfluenceMap
                         temp.Player.Proximity.x += influencersPlayer[index].influence.Proximity.x;
                        // temp.Global.Proximity.x -= influencersPlayer[index].influence.Proximity.x;
                     }
+                    if (influencersPlayer[index].influence.Threat.y > dist)
+                    {
+                        temp.Player.Threat.x += influencersPlayer[index].influence.Threat.x;
+                    }
                 }
+
                 for (int index = 0; index < InfPosEnemies.Length; index++)
                 {
 
@@ -107,6 +115,10 @@ namespace InfluenceMap
                     {
                         temp.Enemy.Proximity.x += influencersEnemies[index].influence.Proximity.x;
                         //temp.Global.Proximity.x -= influencersEnemies[index].influence.Proximity.x;
+                    }
+                    if (influencersEnemies[index].influence.Threat.y > dist)
+                    {
+                        temp.Enemy.Threat.x += influencersEnemies[index].influence.Threat.x;
                     }
                 }
                 gridpoints[cnt] = temp;
