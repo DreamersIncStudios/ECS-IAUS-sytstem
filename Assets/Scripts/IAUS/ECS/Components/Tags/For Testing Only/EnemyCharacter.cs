@@ -4,13 +4,18 @@ using Unity.Transforms;
 [GenerateAuthoringComponent]
 public struct EnemyCharacter : IComponentData
 {
-    public LocalToWorld Target;
+    public Entity Target;
+    public bool HaveTarget;
+    public InfluenceMap.Gridpoint gridpoint;
 }
 namespace InfluenceMap {
 
-    public struct LookForPlayer : IComponentData { }
+    public struct LookForPlayer : IComponentData {
+        public int test;
+    }
     public struct MoveToPlayer : IComponentData {
         public Gridpoint Location;
+        public bool CanMoveToPlayer;
     }
 
 

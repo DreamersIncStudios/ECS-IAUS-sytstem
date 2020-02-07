@@ -8,7 +8,11 @@ namespace InfluenceMap
     {
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            dstManager.AddComponentData(entity, new EnemyCharacter() { Target= new Unity.Transforms.LocalToWorld()});
+            dstManager.AddComponentData(entity, new EnemyCharacter() {
+                Target = new Entity(),
+                HaveTarget=false,
+                gridpoint = new Gridpoint()
+            });
             dstManager.AddComponentData(entity, new LookForPlayer());
 
         }

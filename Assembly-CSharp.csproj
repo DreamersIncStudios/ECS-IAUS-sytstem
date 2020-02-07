@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\CreateEnemy.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\PlayerCharacter.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\TakeTwo.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\For Testing Only\TestBehaviour.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Tags\Stores.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Utility Actions\BaseUtilityAction.cs" />
