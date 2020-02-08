@@ -233,7 +233,7 @@ namespace IAUS.ECS.System
             ATMPost = GetEntityQuery(ATMS).ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
             StorePost = GetEntityQuery(Stores).ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
 
-            var Citizen = new CitizenScorer() { DT=Time.deltaTime};
+            var Citizen = new CitizenScorer() { DT=Time.DeltaTime};
 
             var ai = new AICitizenJob()
             {
@@ -243,7 +243,7 @@ namespace IAUS.ECS.System
                 Evade = GetComponentDataFromEntity<Evade>(false),
                 Home = GetComponentDataFromEntity<TakeStuffHome>(false),
                 StorePositions = StorePost,
-                DT=Time.deltaTime
+                DT=Time.DeltaTime
               
             };
 

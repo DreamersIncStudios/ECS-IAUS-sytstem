@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Influence Map work area.unity
+    guid: 606927d9aac755549af47d2309ceb42e
+  - enabled: 0
     path: Assets/Scenes/ECS IAUS.unity
     guid: d87d7fda20beb104ea11d0617c094c38
   m_configObjects: {}
