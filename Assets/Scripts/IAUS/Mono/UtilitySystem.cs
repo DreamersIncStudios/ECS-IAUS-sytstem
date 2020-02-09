@@ -24,7 +24,7 @@ namespace IAUS
             Agent.Target = Waypoints[0];
             Actions = new List<ActionBase>();
             // Response Variables need to be passed through to action to be set in Utility
-            Actions.Add(new PatrolArea { NameId="Patrol the Area", Agent=Agent});
+            Actions.Add(new MoveToTargetLocation { NameId="Patrol the Area", Agent=Agent});
             Actions.Add(new WaitAtPoint {NameId = " Wait at spot Look around", Agent=Agent, IntervalOffset = interval });
             Actions.Add(new MoveToPlayer { NameId = "MoveToPlayer", Agent = Agent });
             SetupActions();
@@ -98,7 +98,7 @@ namespace IAUS
 
             Entities.ForEach((UtilitySystem US) =>
             {
-                if (Time.frameCount % interval == 1)
+                if (UnityEngine.Time.frameCount % interval == 1)
                 {
                     US.ScoreAndSort();
                 }

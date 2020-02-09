@@ -1,6 +1,8 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using Unity.Transforms;
+//Add namespace later
+
 [GenerateAuthoringComponent]
 public struct EnemyCharacter : IComponentData
 {

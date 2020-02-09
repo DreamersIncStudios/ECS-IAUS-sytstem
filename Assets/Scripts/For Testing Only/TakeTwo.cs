@@ -59,7 +59,7 @@ namespace InfluenceMap
                 gridpoints.Dispose();
         }
     }
-
+    //Unable to burst  due to line 77
     public struct PlayerTargetingInfluenceJob : IJobForEachWithEntity<EnemyCharacter, Influencer, LookForPlayer>
     {
         [NativeDisableParallelForRestriction] [ReadOnly] public NativeList<Gridpoint> GridPointsInRange;
@@ -67,7 +67,6 @@ namespace InfluenceMap
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<PlayerCharacter> PlayerChars;
         [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Entity> PlayerEntities;
         [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
-
         public struct tempstruct {
             public Entity Player;
             public float dist;
@@ -75,7 +74,7 @@ namespace InfluenceMap
 
         public void Execute(Entity entity,int ThreadIndex, ref EnemyCharacter c0, ref Influencer influencer, ref LookForPlayer look)
         {
-            List<tempstruct> temps = new List<tempstruct>();
+        List<tempstruct> temps = new List<tempstruct>();
             for (int index2 = 0; index2 < PlayerEntities.Length; index2++)
             {
                 temps.Add(new tempstruct()
@@ -139,7 +138,7 @@ namespace InfluenceMap
 
         }
 
-        float ResetThreshold;
+        float ResetThreshold = 5;
        // NativeArray<bool> check;
         protected override void OnUpdate()
         {
@@ -193,7 +192,7 @@ namespace InfluenceMap
             });
 
         }
-        [BurstCompile]
+       // [BurstCompile]
         public struct SpotCheckInfluence : IJobForEachWithEntity<Influencer, MoveToPlayer,EnemyCharacter>
         {
           [ReadOnly][NativeDisableParallelForRestriction]public ComponentDataFromEntity<LocalToWorld> PlayerPosition;

@@ -12,7 +12,7 @@ namespace IAUS
         public bool UseJobs;
         public ThreatMatrixSystem.Crew Crew;
         public NavMeshAgent NavAgent { get { return this.GetComponent<NavMeshAgent>(); } }
-        public Stats.PlayerCharacter PC { get { return this.GetComponent<Stats.PlayerCharacter>(); } }
+        public CharacterStats.PlayerCharacter PC { get { return this.GetComponent<CharacterStats.PlayerCharacter>(); } }
         public bool ExitTimerLoop { get; set; }
         [Header("Travel")]
         public List<Transform> Waypoints;

@@ -13,10 +13,11 @@ GameObject:
   - component: {fileID: 214731906077720512}
   - component: {fileID: 214731906077720513}
   - component: {fileID: 214731906077720514}
-  - component: {fileID: 1786214254}
   - component: {fileID: 214731906077720524}
   - component: {fileID: 214731906077720525}
+  - component: {fileID: 5246178431700659747}
   - component: {fileID: 7354561406910048039}
+  - component: {fileID: 3968187185008346539}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -111,18 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
---- !u!114 &1786214254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214731906077720526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da47835681ca07142bd0988130d0cb9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &214731906077720524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,6 +155,19 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5246178431700659747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60d8ffe038453945b89eae7b6b7deeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WayPoints: []
 --- !u!114 &7354561406910048039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,3 +180,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b1771da3596ee409d26761dcc099e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3968187185008346539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b053931b75b9284587035c43c0b9ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToWait: 0
+  Health:
+    Inverse: 0
+    responseType: 2
+    M: 5
+    K: 0.85
+    B: 0.155
+    C: 0.4
+  DistanceToTarget:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 0.85
+    B: 0.15
+    C: 0.6
+  WaitTimer:
+    Inverse: 0
+    responseType: 2
+    M: 5
+    K: -0.99
+    B: 1
+    C: 0.6
+  TotalScore: 0

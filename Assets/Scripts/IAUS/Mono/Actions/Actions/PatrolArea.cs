@@ -17,7 +17,7 @@ using Unity.Collections;
 namespace IAUS.Actions
 {
     [System.Serializable]
-    public class PatrolArea : ActionBase
+    public class MoveToTargetLocation : ActionBase
     {
 
         public Transform Target { get { return Agent.Target; } set { Agent.Target = value; } }
