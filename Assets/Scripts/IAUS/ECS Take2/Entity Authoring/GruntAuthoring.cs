@@ -20,16 +20,15 @@ namespace IAUS.ECS2
 
         public List<Transform> WayPoints;
 
-
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
+            dstManager.AddComponent<TestAI>(entity);
 
             dstManager.AddComponent<HealthConsideration>(entity);
             dstManager.AddComponent<DistanceToConsideration>(entity);
             dstManager.AddComponent<TimerConsideration>(entity);
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddBuffer<PatrolBuffer>(entity);
-
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
 
@@ -45,6 +44,12 @@ namespace IAUS.ECS2
 
 
         }
+    
+    }
+    public struct TestAI : IComponentData
+    {
+        public float Patrol;
+        public float wait;
 
     }
 }

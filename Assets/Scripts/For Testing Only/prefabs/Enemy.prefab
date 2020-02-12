@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5246178431700659747}
   - component: {fileID: 7354561406910048039}
   - component: {fileID: 3968187185008346539}
+  - component: {fileID: 2084263992803212845}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -167,7 +168,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f60d8ffe038453945b89eae7b6b7deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WayPoints: []
+  CurHealth: 220
+  CurMana: 220
+  MaxHealth: 150
+  MaxMana: 150
+  WayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7354561406910048039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b053931b75b9284587035c43c0b9ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToWait: 0
   Health:
     Inverse: 0
     responseType: 2
@@ -211,7 +217,44 @@ MonoBehaviour:
     Inverse: 0
     responseType: 2
     M: 5
-    K: -0.99
+    K: 0.99
     B: 1
     C: 0.6
-  TotalScore: 0
+  _status: 4
+  _resetTimer: 10
+--- !u!114 &2084263992803212845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9201239ec3327484d86aa39e483b544b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeToWait: 20
+  Health:
+    Inverse: 0
+    responseType: 0
+    M: 5
+    K: 0.85
+    B: 0.155
+    C: 0.4
+  DistanceToTarget:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 0.95
+    B: 1
+    C: 0.6
+  WaitTimer:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 0.95
+    B: 0.05
+    C: 0.6
+  _status: 4
+  _resetTimer: 10
