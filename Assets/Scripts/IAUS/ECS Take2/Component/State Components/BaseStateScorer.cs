@@ -16,13 +16,13 @@ namespace IAUS.ECS2 {
 
     public enum ActionStatus   
     {
-        Failure, Succes, Running, Interrupted, Idle
+        Failure, Success, Running, Interrupted, Idle
     }
 
     public struct StateBuffer : IBufferElementData {
         public AIStates StateName;
-        float TotalScore { get; set; }
-        ActionStatus Status { get; set; }
+        public float TotalScore;
+        public ActionStatus Status;
 
     }
 }

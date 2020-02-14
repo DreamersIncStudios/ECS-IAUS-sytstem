@@ -22,25 +22,38 @@ namespace IAUS.ECS2
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            dstManager.AddComponent<TestAI>(entity);
+           
 
             dstManager.AddComponent<HealthConsideration>(entity);
             dstManager.AddComponent<DistanceToConsideration>(entity);
             dstManager.AddComponent<TimerConsideration>(entity);
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddBuffer<PatrolBuffer>(entity);
+            dstManager.AddBuffer<StateBuffer>(entity);
+            dstManager.AddComponent<TestAI>(entity);
+            dstManager.AddComponent<ECS.Component.Movement>(entity);
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
 
 
             DynamicBuffer<PatrolBuffer> buffer = dstManager.GetBuffer<PatrolBuffer>(entity);
+            DynamicBuffer<StateBuffer> buffer2 = dstManager.GetBuffer<StateBuffer>(entity);
 
             foreach (Transform point in WayPoints)
             {
                 buffer.Add(new PatrolBuffer() { Point = point.position });
             }
+            buffer2.Add(new StateBuffer()
+            {
+                StateName = AIStates.Wait,
+                Status = ActionStatus.Idle
+            });
 
-
+            buffer2.Add(new StateBuffer()
+            {
+                StateName = AIStates.Patrol,
+                Status = ActionStatus.Idle
+            });
 
 
         }
@@ -48,8 +61,6 @@ namespace IAUS.ECS2
     }
     public struct TestAI : IComponentData
     {
-        public float Patrol;
-        public float wait;
-
+        public StateBuffer CurrentState;
     }
 }

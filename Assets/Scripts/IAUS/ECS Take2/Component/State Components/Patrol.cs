@@ -14,6 +14,7 @@ namespace IAUS.ECS2
         [SerializeField] float _resetTime;
 
         [SerializeField]  float _totalScore;
+        public int index;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 
         

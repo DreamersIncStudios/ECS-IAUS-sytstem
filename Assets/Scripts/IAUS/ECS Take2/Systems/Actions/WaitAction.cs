@@ -9,14 +9,33 @@ namespace IAUS.ECS2
     [UpdateAfter(typeof(StateScoreSystem))]
     public class WaitAction : JobComponentSystem
     {
-        
+
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
+            //EntityCommandBuffer entityCommandBuffer = entityCommandBufferSys.CreateCommandBuffer();
             float DT = Time.DeltaTime;
-            JobHandle WaitAction = Entities.ForEach((ref WaitActionTag Wait, ref WaitTime Timer) => {
-                if (Timer.Timer>0.0f)
+            JobHandle WaitAction = Entities.ForEach((Entity entity,ref WaitActionTag Wait, ref WaitTime Timer) => {
+                //start
+                if (Timer.Status != ActionStatus.Success)
+                    return;
+
+                if (Timer.Status != ActionStatus.Running)
+                    Timer.Status = ActionStatus.Running;
+                //Running
+                if (Timer.Timer > 0.0f)
                     Timer.Timer -= DT;
-                }).Schedule(inputDeps);
+            //complete
+            if (Timer.Timer <= 0.0f) {
+                    Timer.Status = ActionStatus.Success;
+                    Timer.ResetTime = Timer.ResetTimer;
+                    //Consider removing or let system do that 
+                    //entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                }
+                
+
+
+
+            }).Schedule(inputDeps);
             return WaitAction;
         }
     }

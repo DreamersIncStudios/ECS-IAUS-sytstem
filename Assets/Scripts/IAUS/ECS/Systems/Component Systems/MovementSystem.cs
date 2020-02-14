@@ -16,17 +16,22 @@ namespace IAUS.ECS.System
                 if (move.CanMove)
                 {
 
-                    if (Agent.destination != (Vector3)move.TargetLocation)
+                    if (!move.TargetLocation.Equals(Agent.destination))
                     {
                         Agent.SetDestination(move.TargetLocation);
                         Agent.isStopped = false;
-                        Agent.speed = move.MovementSpeed;
+                      //  Agent.speed = move.MovementSpeed;
                     }
-                    if (move.StoppingDistance>=  Vector3.Distance(toWorld.Position,Agent.destination))
+                    if (move.StoppingDistance >= Agent.remainingDistance)
                     {
                         move.CanMove = false;
-                        Agent.isStopped=true;
+                        Agent.isStopped = true;
+                        move.Completed = true;
                     }
+                }
+                else {
+                    Agent.isStopped = false;
+
                 }
             });
 

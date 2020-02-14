@@ -73,6 +73,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\MovementSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\ConsiderationSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />

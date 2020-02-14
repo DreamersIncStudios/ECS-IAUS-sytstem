@@ -18,7 +18,7 @@ namespace IAUS.ECS2
                 Health.Ratio = Mathf.Clamp01((float)stats.CurHealth / (float)stats.MaxHealth) ;
 
             }).Schedule(inputDeps);
-
+            
             JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld) =>
             {
                 distanceTo.Ratio = 1.0f;
@@ -30,8 +30,10 @@ namespace IAUS.ECS2
                 Timer.Ratio = wait.Timer/wait.TimeToWait;
 
             }).Schedule(jobHandle2);
-
-            return jobHandle2;
+            jobHandle.Complete();
+            jobHandle2.Complete();
+            jobHandle3.Complete();
+            return jobHandle3;
         }
     }
 }
