@@ -203,8 +203,8 @@ MonoBehaviour:
     Inverse: 0
     responseType: 2
     M: 5
-    K: 0.85
-    B: 0.155
+    K: -0.85
+    B: 1
     C: 0.4
   DistanceToTarget:
     Inverse: 0
@@ -216,12 +216,13 @@ MonoBehaviour:
   WaitTimer:
     Inverse: 0
     responseType: 2
-    M: 5
-    K: 0.99
-    B: 1
-    C: 0.6
+    M: 50
+    K: 0.95
+    B: 0.05
+    C: 0.25
   _status: 4
   _resetTimer: 10
+  index: 0
 --- !u!114 &2084263992803212845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,26 +236,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeToWait: 20
+  Timer: 0
   Health:
     Inverse: 0
     responseType: 0
     M: 5
-    K: 0.85
-    B: 0.155
+    K: -0.95
+    B: 1
     C: 0.4
   DistanceToTarget:
     Inverse: 0
     responseType: 2
     M: 50
     K: 0.95
-    B: 1
-    C: 0.6
+    B: 0.05
+    C: 0.3
   WaitTimer:
     Inverse: 0
     responseType: 2
     M: 50
-    K: 0.95
-    B: 0.05
-    C: 0.6
+    K: -0.95
+    B: 0.95
+    C: 0.25
   _status: 4
   _resetTimer: 10

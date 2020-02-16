@@ -11,7 +11,8 @@ namespace IAUS.ECS2
     public struct DistanceToConsideration : IComponentData
     {
         public float Ratio;
-        public float MaxRange;
+        public float DistanceAtTimeAssigned;
+        public float DistanceRemaining;
     }
     public struct TimerConsideration : IComponentData
     {
@@ -34,10 +35,10 @@ namespace IAUS.ECS2
                     temp = M * Mathf.Pow((input - C), K) + B;
                     break;
                 case ResponseType.Log:
-                    temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), -input + C))) + B;
+                    temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), input - C))) + B;
                     break;
                 case ResponseType.Logistic:
-                    temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), -input + C))) + B;
+                    temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), input - C))) + B;
                     break;
             }
             return temp;

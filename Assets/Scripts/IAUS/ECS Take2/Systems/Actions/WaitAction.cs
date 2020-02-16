@@ -14,24 +14,33 @@ namespace IAUS.ECS2
         {
             //EntityCommandBuffer entityCommandBuffer = entityCommandBufferSys.CreateCommandBuffer();
             float DT = Time.DeltaTime;
-            JobHandle WaitAction = Entities.ForEach((Entity entity,ref WaitActionTag Wait, ref WaitTime Timer) => {
+            JobHandle WaitAction = Entities.ForEach((Entity entity,ref WaitActionTag Wait, ref WaitTime Timer, ref Patrol patrol) => {
                 //start
-                if (Timer.Status != ActionStatus.Success)
+                if (Timer.Status == ActionStatus.Success)
                     return;
 
-                if (Timer.Status != ActionStatus.Running)
-                    Timer.Status = ActionStatus.Running;
+
                 //Running
                 if (Timer.Timer > 0.0f)
+                {
+                    Timer.TimerStarted = true; 
                     Timer.Timer -= DT;
-            //complete
-            if (Timer.Timer <= 0.0f) {
-                    Timer.Status = ActionStatus.Success;
-                    Timer.ResetTime = Timer.ResetTimer;
-                    //Consider removing or let system do that 
-                    //entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                    Timer.Status = ActionStatus.Running;
                 }
-                
+                //complete
+                if (Timer.TimerStarted)
+                {
+                    if (Timer.Timer <= 0.0f)
+                    {
+                        Timer.Status = ActionStatus.Success;
+                        Timer.ResetTime = Timer.ResetTimer;
+                        Timer.Timer = 0.0f;
+                        Timer.TimerStarted = false;
+                        
+                        //Consider removing or let system do that 
+                        //entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                    }
+                }
 
 
 

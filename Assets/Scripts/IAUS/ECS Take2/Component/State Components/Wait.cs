@@ -9,7 +9,8 @@ namespace IAUS.ECS2
     public struct WaitTime : BaseStateScorer
     {
         public float TimeToWait;
-        public float Timer { get; set; }
+        public float Timer;
+        public bool TimerStarted;
         public ConsiderationData Health;
         public ConsiderationData DistanceToTarget;
         public ConsiderationData WaitTimer;

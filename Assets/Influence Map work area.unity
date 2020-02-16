@@ -534,6 +534,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: WayPoints.Array.data[0]
@@ -1217,6 +1222,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: WayPoints.Array.data[0]
@@ -1438,7 +1448,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.3509887e-38, z: 4.1543445e+34, w: 1.2325955e-32}
+  m_BoundingSphereOverride: {x: 0, y: 2.3509887e-38, z: -6.3384464e+29, w: 1.7592186e+13}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -2468,6 +2478,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: WayPoints.Array.data[0]
@@ -3285,6 +3300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4214,6 +4234,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: WayPoints.Array.data[0]
@@ -4776,7 +4801,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720518, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -33.4
+      value: -24.2
       objectReference: {fileID: 0}
     - target: {fileID: 214731906077720518, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4786,7 +4811,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720518, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -36.2
+      value: -26.2
       objectReference: {fileID: 0}
     - target: {fileID: 214731906077720518, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4828,10 +4853,55 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 214731906077720525, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: m_StoppingDistance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.K
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.B
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.C
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.M
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.K
+      value: -0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.B
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: DistanceToTarget.C
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: Health.M
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}

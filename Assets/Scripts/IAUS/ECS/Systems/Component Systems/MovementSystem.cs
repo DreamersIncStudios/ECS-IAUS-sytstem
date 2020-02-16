@@ -22,11 +22,16 @@ namespace IAUS.ECS.System
                         Agent.isStopped = false;
                       //  Agent.speed = move.MovementSpeed;
                     }
-                    if (move.StoppingDistance >= Agent.remainingDistance)
+                    if (Agent.hasPath)
                     {
-                        move.CanMove = false;
-                        Agent.isStopped = true;
-                        move.Completed = true;
+                        float dist = Vector3.Distance(Agent.destination, Agent.transform.position);
+                        if ( dist<=.7f)
+                        {
+                            Debug.Log(true);
+                            move.CanMove = false;
+                            Agent.isStopped = true;
+                            move.Completed = true;
+                        }
                     }
                 }
                 else {

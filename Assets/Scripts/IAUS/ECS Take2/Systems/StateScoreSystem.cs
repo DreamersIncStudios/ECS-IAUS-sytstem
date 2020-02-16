@@ -33,7 +33,7 @@ namespace IAUS.ECS2
                 }
 
                 float mod = 1.0f - (1.0f / 3.0f);
-                float TotalScore = patrol.Health.Output(health.Ratio) *
+                float TotalScore = patrol.Health.Output(health.Ratio)*
                  patrol.DistanceToTarget.Output(distanceTo.Ratio) *
                  patrol.WaitTimer.Output(timer.Ratio);
                 patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
@@ -66,7 +66,7 @@ namespace IAUS.ECS2
             return tester;
         }
     }
-    [BurstCompile]
+  
     public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,TestAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;
@@ -118,7 +118,7 @@ namespace IAUS.ECS2
                         Ptemp.ResetTime = Ptemp.ResetTimer;
                         break;
                     case AIStates.Wait:
-                        entityCommandBuffer.RemoveComponent<WaitAction>(entity);
+                        entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
                         Patrol temp = Patrol[entity];
                         if (temp.Status == ActionStatus.Running)
                             temp.Status = ActionStatus.Interrupted;

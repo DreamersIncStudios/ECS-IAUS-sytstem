@@ -19,9 +19,10 @@ namespace IAUS.ECS2
 
             }).Schedule(inputDeps);
             
-            JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld) =>
+            JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld, ref ECS.Component.Movement move, ref Patrol patrol) =>
             {
-                distanceTo.Ratio = 1.0f;
+                float distanceRemaining = Vector3.Distance(move.TargetLocation, toWorld.Position);
+                distanceTo.Ratio =  distanceRemaining/patrol.DistanceAtStart;
 
             }).Schedule(jobHandle);
 
