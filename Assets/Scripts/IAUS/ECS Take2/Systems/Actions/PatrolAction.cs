@@ -14,7 +14,22 @@ namespace IAUS.ECS2
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
             float DT = Time.DeltaTime;
-            JobHandle PatrolAction = Entities.ForEach((Entity entity, ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move, ref DynamicBuffer<PatrolBuffer> buffer, ref WaitTime wait, ref LocalToWorld toWorld) => {
+            JobHandle PatrolPointUpdate = Entities.ForEach((ref Patrol patrol,
+            ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld
+             ) =>
+            {
+                if (patrol.Status == ActionStatus.Idle&& patrol.UpdatePostition)
+                {
+                    if (patrol.index < buffer.Length)
+                        patrol.index = 0;
+                    patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].Point);
+                    patrol.UpdatePostition = false;
+                }
+
+            }).Schedule(inputDeps);
+            JobHandle PatrolAction = Entities.ForEach((Entity entity, ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
+                ref DynamicBuffer<PatrolBuffer> buffer, ref WaitTime wait, ref LocalToWorld toWorld
+                ) => {
                 //start
                 if (patrol.Status == ActionStatus.Success)
                     return;
@@ -32,11 +47,10 @@ namespace IAUS.ECS2
                 }
                 //complete
 
-                if (move.Completed)
+                if (move.Completed && !move.CanMove)
                 {
                     patrol.Status = ActionStatus.Success;
-                    patrol.ResetTime = patrol.ResetTimer;
-                    wait.Timer = wait.TimeToWait;
+
                 }
 
             }).Schedule(inputDeps);

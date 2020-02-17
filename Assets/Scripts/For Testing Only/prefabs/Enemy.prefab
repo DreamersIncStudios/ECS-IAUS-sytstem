@@ -148,7 +148,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -202,17 +202,17 @@ MonoBehaviour:
   Health:
     Inverse: 0
     responseType: 2
-    M: 5
+    M: 50
     K: -0.85
     B: 1
     C: 0.4
   DistanceToTarget:
     Inverse: 0
     responseType: 2
-    M: 50
-    K: 0.85
-    B: 0.15
-    C: 0.6
+    M: 600
+    K: -0.95
+    B: 1
+    C: 0.3
   WaitTimer:
     Inverse: 0
     responseType: 2
@@ -222,6 +222,7 @@ MonoBehaviour:
     C: 0.25
   _status: 4
   _resetTimer: 10
+  DistanceAtStart: 0
   index: 0
 --- !u!114 &2084263992803212845
 MonoBehaviour:
@@ -237,25 +238,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TimeToWait: 20
   Timer: 0
+  TimerStarted: 0
   Health:
     Inverse: 0
-    responseType: 0
-    M: 5
-    K: -0.95
+    responseType: 2
+    M: 50
+    K: -0.85
     B: 1
     C: 0.4
   DistanceToTarget:
     Inverse: 0
     responseType: 2
     M: 50
-    K: 0.95
-    B: 0.05
-    C: 0.3
+    K: 1
+    B: 0
+    C: 0.4
   WaitTimer:
     Inverse: 0
     responseType: 2
     M: 50
-    K: -0.95
+    K: -1
     B: 0.95
     C: 0.25
   _status: 4

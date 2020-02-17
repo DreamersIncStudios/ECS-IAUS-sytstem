@@ -27,7 +27,7 @@ namespace IAUS.ECS.System
                         float dist = Vector3.Distance(Agent.destination, Agent.transform.position);
                         if ( dist<=.7f)
                         {
-                            Debug.Log(true);
+
                             move.CanMove = false;
                             Agent.isStopped = true;
                             move.Completed = true;

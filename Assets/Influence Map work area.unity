@@ -4853,55 +4853,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 214731906077720525, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_Name
       value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.K
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.B
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.C
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.M
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.K
-      value: -0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.B
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: DistanceToTarget.C
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: Health.M
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}

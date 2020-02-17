@@ -11,8 +11,7 @@ namespace IAUS.ECS2
     public struct DistanceToConsideration : IComponentData
     {
         public float Ratio;
-        public float DistanceAtTimeAssigned;
-        public float DistanceRemaining;
+
     }
     public struct TimerConsideration : IComponentData
     {

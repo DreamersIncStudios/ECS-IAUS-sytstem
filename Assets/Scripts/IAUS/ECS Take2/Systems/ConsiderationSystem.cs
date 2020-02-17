@@ -31,6 +31,7 @@ namespace IAUS.ECS2
                 Timer.Ratio = wait.Timer/wait.TimeToWait;
 
             }).Schedule(jobHandle2);
+
             jobHandle.Complete();
             jobHandle2.Complete();
             jobHandle3.Complete();

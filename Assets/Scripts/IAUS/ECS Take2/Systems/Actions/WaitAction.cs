@@ -33,8 +33,7 @@ namespace IAUS.ECS2
                     if (Timer.Timer <= 0.0f)
                     {
                         Timer.Status = ActionStatus.Success;
-                        Timer.ResetTime = Timer.ResetTimer;
-                        Timer.Timer = 0.0f;
+
                         Timer.TimerStarted = false;
                         
                         //Consider removing or let system do that 
