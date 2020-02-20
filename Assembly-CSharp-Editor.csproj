@@ -73,9 +73,6 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Build.Internals">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Build.Internals.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.CacheServer">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
     </Reference>
@@ -93,9 +90,6 @@
     </Reference>
     <Reference Include="Unity.ProBuilder">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Build.Common">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Build.Common.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Entities.Properties">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Properties.dll</HintPath>
@@ -180,9 +174,6 @@
     </Reference>
     <Reference Include="Unity.Transforms.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Build">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Build.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.AddOns.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
@@ -395,10 +386,10 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.2.2/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.2.3/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.5.1-preview.11/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.5.2-preview.8/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>

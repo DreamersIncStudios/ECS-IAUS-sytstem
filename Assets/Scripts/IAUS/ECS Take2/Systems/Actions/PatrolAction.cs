@@ -18,24 +18,22 @@ namespace IAUS.ECS2
             ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld
              ) =>
             {
-                if (patrol.Status == ActionStatus.Idle&& patrol.UpdatePostition)
-                {
-                    if (patrol.index < buffer.Length)
-                        patrol.index = 0;
-                    patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].Point);
-                    patrol.UpdatePostition = false;
-                }
+                if (patrol.Status == ActionStatus.Idle || patrol.Status == ActionStatus.CoolDown)
+                    if (patrol.UpdatePostition)
+                    {
+                        if (patrol.index >= buffer.Length)
+                            patrol.index = 0;
+                        patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].Point);
+                        patrol.UpdatePostition = false;
+                    }
 
             }).Schedule(inputDeps);
-            JobHandle PatrolAction = Entities.ForEach((Entity entity, ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
-                ref DynamicBuffer<PatrolBuffer> buffer, ref WaitTime wait, ref LocalToWorld toWorld
+            JobHandle PatrolAction = Entities.ForEach((ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
+                ref DynamicBuffer<PatrolBuffer> buffer
                 ) => {
                 //start
                 if (patrol.Status == ActionStatus.Success)
                     return;
-                if (patrol.Status == ActionStatus.Idle) {
-                    patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].Point);
-                }
 
                 //Running
                if(!buffer[patrol.index].Point.Equals( move.TargetLocation)) 
@@ -45,15 +43,19 @@ namespace IAUS.ECS2
                     move.Completed = false;
                     move.CanMove = true;
                 }
-                //complete
-
-                if (move.Completed && !move.CanMove)
+                    //complete
+                if (patrol.Status == ActionStatus.Running)
                 {
-                    patrol.Status = ActionStatus.Success;
+                    if (move.Completed && !move.CanMove)
+                    {
+                        patrol.Status = ActionStatus.Success;
 
+                    }
                 }
 
-            }).Schedule(inputDeps);
+            }).Schedule(PatrolPointUpdate);
+
+            
 
             return PatrolAction;
         }

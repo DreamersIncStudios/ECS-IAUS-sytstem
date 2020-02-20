@@ -24,32 +24,95 @@ namespace IAUS.ECS2
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
             float DT = Time.DeltaTime;
-
+            var tester = new TestScore()
+            {
+                Patrol = GetComponentDataFromEntity<Patrol>(false),
+                Wait = GetComponentDataFromEntity<WaitTime>(false),
+                Move = GetComponentDataFromEntity<Movement>(false),
+                entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer()
+            }.Schedule(this, inputDeps);
+            tester.Complete();
             JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
             {
-                if (patrol.Status != ActionStatus.Running && patrol.ResetTime>0.0f )
+
+                if (patrol.Status != ActionStatus.Running)
                 {
-                    patrol.ResetTime -= DT;
+                    switch (patrol.Status)
+                    {
+                        case ActionStatus.CoolDown:
+                            if (patrol.ResetTime > 0.0f)
+                            {
+                                patrol.ResetTime -= DT;
+                            }
+                            else {
+                                patrol.Status = ActionStatus.Idle;
+                                patrol.ResetTime = 0.0f;
+                            }
+                            break;
+                        case ActionStatus.Failure:
+                            patrol.ResetTime = patrol.ResetTimer / 2.0f;
+                            patrol.Status = ActionStatus.CoolDown;
+                            break;
+                        case ActionStatus.Interrupted:
+                            patrol.ResetTime = patrol.ResetTimer / 2.0f;
+                            patrol.Status = ActionStatus.CoolDown;
+
+                            break;
+                        case ActionStatus.Success:
+                            patrol.ResetTime = patrol.ResetTimer;
+                            patrol.Status = ActionStatus.CoolDown;
+                            break;
+                    }
                 }
-                if (patrol.ResetTime <= 0.0f && patrol.Status != ActionStatus.Idle)
-                    patrol.Status = ActionStatus.Idle;
+
+
                 float mod = 1.0f - (1.0f / 3.0f);
                 float TotalScore = patrol.Health.Output(health.Ratio)*
                  patrol.DistanceToTarget.Output(distanceTo.Ratio) *
                  patrol.WaitTimer.Output(timer.Ratio);
                 patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
 
-            }).Schedule(inputDeps   );
+            }).Schedule(tester);
             PatrolJob.Complete();
+            DT = Time.DeltaTime;
+
             JobHandle WaitJob = Entities.ForEach((ref WaitTime Wait, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
             {
-                if (Wait.Status != ActionStatus.Running && Wait.ResetTime > 0.0f)
+                if (Wait.Status != ActionStatus.Running)
                 {
-                    Wait.ResetTime -= DT;
-                }
+                    switch (Wait.Status)
+                    {
+                        case ActionStatus.CoolDown:
+                            if (Wait.ResetTime > 0.0f)
+                            {
+                                Wait.ResetTime -= DT;
+                            }
+                            else {
+                                Wait.Status = ActionStatus.Idle;
+                                Wait.ResetTime = 0.0f;
+                            }
+                            break;
+                        case ActionStatus.Failure:
+                            Wait.ResetTime = Wait.ResetTimer / 2.0f;
+                            Wait.Status = ActionStatus.CoolDown;
 
-                if (Wait.ResetTime <= 0.0f && Wait.Status != ActionStatus.Idle)
-                    Wait.Status = ActionStatus.Idle;
+                            break;
+                        case ActionStatus.Interrupted:
+                            Wait.ResetTime = Wait.ResetTimer / 2.0f;
+                            Wait.Status = ActionStatus.CoolDown;
+
+                            break;
+                        case ActionStatus.Success:
+                            Wait.ResetTime = Wait.ResetTimer;
+                            Wait.Status = ActionStatus.CoolDown;
+
+                            break;
+                    }
+                }
+         
+
+
+
                 float mod = 1.0f - (1.0f / 3.0f);
                 float TotalScore = Wait.Health.Output(health.Ratio) *
                 Wait.DistanceToTarget.Output(distanceTo.Ratio) *
@@ -59,19 +122,12 @@ namespace IAUS.ECS2
             }).Schedule(PatrolJob);
             WaitJob.Complete();
 
-            var tester = new ScoreAIJob()
-            {
-                Patrol = GetComponentDataFromEntity<Patrol>(false),
-                Wait = GetComponentDataFromEntity<WaitTime>(false),
-                Move= GetComponentDataFromEntity<Movement>(false),
-                entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer()
-            }.Schedule(this, WaitJob);
-            tester.Complete();
-            return tester;
+
+            return PatrolJob;
         }
     }
-  
-    public struct ScoreAIJob : IJobForEachWithEntity_EBC<StateBuffer,AITag>
+  [BurstCompile]
+    public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,TestAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<WaitTime> Wait;
@@ -80,7 +136,7 @@ namespace IAUS.ECS2
         [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
         StateBuffer CheckState;
 
-        public void Execute(Entity entity, int Tindex, DynamicBuffer<StateBuffer> State, ref AITag AI)
+        public void Execute(Entity entity, int Tindex, DynamicBuffer<StateBuffer> State, ref TestAI AI)
         {
             for (int index = 0; index < State.Length; index++)
             {
@@ -111,10 +167,6 @@ namespace IAUS.ECS2
               //  Debug.Log(AI.CurrentState.StateName + "is "+ AI.CurrentState.Status);
               //move update to here;
 
-
-
-
-
                 if (State[index].Status == ActionStatus.Idle || State[index].Status == ActionStatus.Running)
                 {
                     if (State[index].TotalScore > CheckState.TotalScore)
@@ -124,7 +176,6 @@ namespace IAUS.ECS2
 
             //Update states when a state finishes based on states in Map
             if (AI.CurrentState.Status == ActionStatus.Success) {
-                Debug.Log(AI.CurrentState.StateName + " Success");
                 Patrol Ptemp = Patrol[entity];
                 WaitTime WTemp = Wait[entity];
                 for (int index = 0; index < State.Length; index++)
@@ -134,14 +185,12 @@ namespace IAUS.ECS2
                         case AIStates.Patrol:
                             switch (AI.CurrentState.StateName) {
                                 case AIStates.Patrol:
-                                    Ptemp.ResetTime = Ptemp.ResetTimer;
                                     break;
 
                                 case AIStates.Wait:
                                     Ptemp.index++;
                                     Ptemp.UpdatePostition = true;
                                     break;
-
                             }
                             break;
 
@@ -153,7 +202,6 @@ namespace IAUS.ECS2
                                     break;
 
                                 case AIStates.Wait:
-                                    WTemp.ResetTime = WTemp.ResetTimer;
                                     WTemp.Timer = 0.0f;
                                     break;
 
@@ -177,18 +225,23 @@ namespace IAUS.ECS2
                         Patrol Ptemp = Patrol[entity];
                         Movement move = Move[entity];
                         move.CanMove = false;
+                        move.Completed = false;
                         Move[entity] = move;
                         if (Ptemp.Status == ActionStatus.Running)
+                        {
                             Ptemp.Status = ActionStatus.Interrupted;
-                        Ptemp.ResetTime = Ptemp.ResetTimer/2.0f;
+                            Ptemp.ResetTime = Ptemp.ResetTimer / 2.0f;
+                        }
                         Patrol[entity] = Ptemp;
                         break;
                     case AIStates.Wait:
                         entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
                         WaitTime Wtemp = Wait[entity];
                         if (Wtemp.Status == ActionStatus.Running)
+                        {
                             Wtemp.Status = ActionStatus.Interrupted;
-                        Wtemp.ResetTime = Wtemp.ResetTimer / 2.0f;
+                            Wtemp.ResetTime = Wtemp.ResetTimer / 2.0f;
+                        }
                         Wait[entity] = Wtemp;
                         break;
                 }

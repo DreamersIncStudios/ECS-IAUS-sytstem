@@ -16,7 +16,7 @@ namespace IAUS.ECS2 {
 
     public enum ActionStatus   
     {
-        Failure, Success, Running, Interrupted, Idle
+        Failure, Success, Running, Interrupted, Idle, CoolDown,
     }
 
     public struct StateBuffer : IBufferElementData {

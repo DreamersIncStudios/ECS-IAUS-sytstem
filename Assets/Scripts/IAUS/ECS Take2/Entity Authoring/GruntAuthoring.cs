@@ -30,7 +30,7 @@ namespace IAUS.ECS2
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddBuffer<PatrolBuffer>(entity);
             dstManager.AddBuffer<StateBuffer>(entity);
-            dstManager.AddComponent<AITag>(entity);
+            dstManager.AddComponent<TestAI>(entity);
             dstManager.AddComponent<ECS.Component.Movement>(entity);
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
@@ -59,7 +59,7 @@ namespace IAUS.ECS2
         }
     
     }
-    public struct AITag : IComponentData
+    public struct TestAI : IComponentData
     {
         public StateBuffer CurrentState;
     }
