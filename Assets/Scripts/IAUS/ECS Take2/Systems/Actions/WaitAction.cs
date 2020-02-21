@@ -44,7 +44,6 @@ namespace IAUS.ECS2
 
 
             }).Schedule(inputDeps);
-            WaitAction.Complete();
             return WaitAction;
         }
     }

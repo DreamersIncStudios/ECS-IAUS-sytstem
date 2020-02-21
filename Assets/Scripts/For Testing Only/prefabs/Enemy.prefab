@@ -175,6 +175,7 @@ MonoBehaviour:
   WayPoints:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7354561406910048039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +222,8 @@ MonoBehaviour:
     B: 0.05
     C: 0.25
   _status: 4
-  _resetTimer: 10
+  _resetTimer: 25
+  UpdatePostition: 1
   DistanceAtStart: 0
   index: 0
 --- !u!114 &2084263992803212845
@@ -236,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9201239ec3327484d86aa39e483b544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToWait: 20
+  TimeToWait: 14
   Timer: 0
   TimerStarted: 0
   Health:
@@ -258,7 +260,8 @@ MonoBehaviour:
     responseType: 2
     M: 50
     K: -1
-    B: 0.95
-    C: 0.25
+    B: 0.75
+    C: 0.1
   _status: 4
   _resetTimer: 10
+  _resetTime: 0

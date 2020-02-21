@@ -32,9 +32,9 @@ namespace IAUS.ECS2
 
             }).Schedule(jobHandle2);
 
-            jobHandle.Complete();
-            jobHandle2.Complete();
-            jobHandle3.Complete();
+            //jobHandle.Complete();
+            //jobHandle2.Complete();
+            //jobHandle3.Complete();
             return jobHandle3;
         }
     }

@@ -31,7 +31,7 @@ namespace IAUS.ECS2
                 Move = GetComponentDataFromEntity<Movement>(false),
                 entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer()
             }.Schedule(this, inputDeps);
-            tester.Complete();
+            //tester.Complete();
             JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
             {
 
@@ -73,7 +73,7 @@ namespace IAUS.ECS2
                 patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
 
             }).Schedule(tester);
-            PatrolJob.Complete();
+           // PatrolJob.Complete();
             DT = Time.DeltaTime;
 
             JobHandle WaitJob = Entities.ForEach((ref WaitTime Wait, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
@@ -120,13 +120,13 @@ namespace IAUS.ECS2
                 Wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
           
             }).Schedule(PatrolJob);
-            WaitJob.Complete();
+            //WaitJob.Complete();
 
 
-            return PatrolJob;
+            return WaitJob;
         }
     }
-  [BurstCompile]
+    [BurstCompile]
     public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,TestAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;
@@ -157,7 +157,7 @@ namespace IAUS.ECS2
                 State[index] = Teststate;
             }
 
-
+            CheckState = new StateBuffer();
  
 
             for (int index = 0; index < State.Length; index++)
@@ -216,6 +216,8 @@ namespace IAUS.ECS2
             // Rebalance Consider values for time wait;
             if (CheckState.StateName == AIStates.none)
                 return;
+
+
             if (CheckState.StateName != AI.CurrentState.StateName)
             {
                 switch (AI.CurrentState.StateName) {
@@ -224,8 +226,8 @@ namespace IAUS.ECS2
                         entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
                         Patrol Ptemp = Patrol[entity];
                         Movement move = Move[entity];
-                        move.CanMove = false;
-                        move.Completed = false;
+                        //move.CanMove = false;
+                        //move.Completed = false;
                         Move[entity] = move;
                         if (Ptemp.Status == ActionStatus.Running)
                         {

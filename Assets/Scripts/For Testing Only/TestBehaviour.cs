@@ -73,11 +73,11 @@ namespace InfluenceMap
         [NativeDisableParallelForRestriction] public NativeList<Gridpoint> GridpointWithValue;
         public void Execute(DynamicBuffer<Gridpoint> buffer)
         {
-            for (int index = 0; index < buffer.Length; index++)
-            {
-                if (buffer[index].Player.Proximity.x > 0.0f)
-                    GridpointWithValue.Add(buffer[index]);
-            }
+                for (int index = 0; index < buffer.Length; index++)
+                {
+                    if (buffer[index].Player.Proximity.x > 0.0f)
+                        GridpointWithValue.Add(buffer[index]);
+                }
         }
     }
     [Unity.Burst.BurstCompile]

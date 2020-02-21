@@ -26,31 +26,34 @@ namespace InfluenceMap
             base.OnCreate();
             entityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
-
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
             if (gridpoints.IsCreated)
                 gridpoints.Dispose();
 
-            gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
-            var get = new GetGridPointWithValueOnly()
-            {
-                GridpointWithValue = gridpoints
-            };
+                gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
+                var get = new GetGridPointWithValueOnly()
+                {
+                    GridpointWithValue = gridpoints
+                };
 
-            JobHandle job1 = get.Schedule(this, inputDeps);
-            job1.Complete();
-            var playerTarget = new PlayerTargetingInfluenceJob()
-            {
-                GridPointsInRange = get.GridpointWithValue,
-                PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
-                PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
-                entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
-                PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
-            };
-            JobHandle job2 = playerTarget.Schedule(this, job1);
-            job2.Complete();
+                JobHandle job1 = get.Schedule(this, inputDeps);
+                var playerTarget = new PlayerTargetingInfluenceJob()
+                {
+                    GridPointsInRange = get.GridpointWithValue,
+                    PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
+                    PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
+                    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
+                    PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
+                };
+                JobHandle job2 = playerTarget.Schedule(this, job1);
+
+                job1.Complete();
+                job2.Complete();
+
+            
             return job2;
+            
         }
 
         protected override void OnDestroy()
@@ -77,6 +80,8 @@ namespace InfluenceMap
 
         public void Execute(Entity entity, int ThreadIndex, ref EnemyCharacter c0, ref Influencer influencer, ref LookForPlayer look)
         {
+
+
             List<tempstruct> temps = new List<tempstruct>();
             for (int index2 = 0; index2 < PlayerEntities.Length; index2++)
             {
@@ -120,7 +125,6 @@ namespace InfluenceMap
                 }
                 End: index++;
             }
-
         }
     }
 

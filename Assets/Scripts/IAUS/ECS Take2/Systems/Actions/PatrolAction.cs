@@ -9,6 +9,7 @@ using IAUS.ECS.Component;
 namespace IAUS.ECS2
 {
     [UpdateAfter(typeof(StateScoreSystem))]
+    
     public class PatrolAction : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)

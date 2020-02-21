@@ -25,7 +25,7 @@ namespace IAUS.ECS.System
                     if (Agent.hasPath)
                     {
                         float dist = Vector3.Distance(Agent.destination, Agent.transform.position);
-                        if ( dist<=.7f)
+                        if (dist <= .7f)
                         {
 
                             move.CanMove = false;
@@ -38,6 +38,8 @@ namespace IAUS.ECS.System
                     Agent.isStopped = false;
 
                 }
+
+
             });
 
 
