@@ -48,4 +48,11 @@ namespace IAUS.ECS2
         none, Patrol, Heal_Item, Heal_Magic, Attack_Melee, Attack_Range,
         Attack_Magic, Retreat, FindCover,Talk, Guard, GroupUp, Wait, Rally, 
     }
+    public enum ResponseType
+    {
+        LinearQuad,
+        Log,
+        Logistic
+
+    }
 }
