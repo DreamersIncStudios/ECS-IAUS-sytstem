@@ -2,6 +2,7 @@
 using Unity.Entities;
 using Unity.Mathematics;
 namespace IAUS.ECS.Component {
+    [GenerateAuthoringComponent]
     public struct Movement : IComponentData {
         public float3 TargetLocation;
         public float MovementSpeed;
@@ -11,7 +12,7 @@ namespace IAUS.ECS.Component {
 
         //public float SprintSpeed // To Be Added if needed
         public bool CanMove;
-
+        public bool Completed;
         public float StoppingDistance;
         public float Acceleration;
 
