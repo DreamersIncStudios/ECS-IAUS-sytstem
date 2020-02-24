@@ -127,7 +127,7 @@ namespace IAUS.ECS2
         }
     }
     [BurstCompile]
-    public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,TestAI>
+    public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,BaseAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<WaitTime> Wait;
@@ -136,7 +136,7 @@ namespace IAUS.ECS2
         [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
         StateBuffer CheckState;
 
-        public void Execute(Entity entity, int Tindex, DynamicBuffer<StateBuffer> State, ref TestAI AI)
+        public void Execute(Entity entity, int Tindex, DynamicBuffer<StateBuffer> State, ref BaseAI AI)
         {
             for (int index = 0; index < State.Length; index++)
             {

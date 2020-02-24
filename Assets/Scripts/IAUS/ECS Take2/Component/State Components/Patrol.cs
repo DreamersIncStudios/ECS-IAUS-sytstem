@@ -3,6 +3,8 @@ using UnityEngine;
 using Unity.Entities;
 namespace IAUS.ECS2
 {
+    [RequireComponentTag(typeof(PatrolBuffer))]
+
     //PatrolAction requires WaitAction just set wait to lowValue;
     [GenerateAuthoringComponent]
     public struct Patrol : BaseStateScorer

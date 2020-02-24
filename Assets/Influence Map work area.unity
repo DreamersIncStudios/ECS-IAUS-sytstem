@@ -537,7 +537,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -1240,7 +1240,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -2511,7 +2511,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -3349,7 +3349,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4297,7 +4297,7 @@ PrefabInstance:
     - target: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4933,15 +4933,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2084263992803212845, guid: 4b0dc03e06e16b942836b1b8ac143908,
+    - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
-      propertyPath: TimeToWait
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3968187185008346539, guid: 4b0dc03e06e16b942836b1b8ac143908,
-        type: 3}
-      propertyPath: _resetTimer
-      value: 12
+      propertyPath: WayPoints.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
         type: 3}
@@ -4958,8 +4953,68 @@ PrefabInstance:
       propertyPath: WayPoints.Array.data[2]
       value: 
       objectReference: {fileID: 719329304}
+    - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: CurHealth
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: CurMana
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: MaxHealth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246178431700659747, guid: 4b0dc03e06e16b942836b1b8ac143908,
+        type: 3}
+      propertyPath: MaxMana
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b0dc03e06e16b942836b1b8ac143908, type: 3}
+--- !u!1 &214731904716259772 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 214731906077720526, guid: 4b0dc03e06e16b942836b1b8ac143908,
+    type: 3}
+  m_PrefabInstance: {fileID: 214731904716259771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &214731904716259773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731904716259772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066b9d01b3afe8449b17be88dd0263bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Values:
+  - x: 40
+    y: 1.5
+    z: -37
+  - x: -12.5
+    y: 1.5
+    z: -12.5
+--- !u!114 &214731904716259787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731904716259772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c010d0ed1e9b9bb47a541ff16f6382fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WayPoints:
+  - {fileID: 1290123622}
+  - {fileID: 502048190}
 --- !u!1001 &8403614174016683337
 PrefabInstance:
   m_ObjectHideFlags: 0

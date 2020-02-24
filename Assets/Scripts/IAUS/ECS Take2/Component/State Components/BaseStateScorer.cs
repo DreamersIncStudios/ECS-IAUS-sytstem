@@ -18,11 +18,4 @@ namespace IAUS.ECS2 {
     {
         Failure, Success, Running, Interrupted, Idle, CoolDown,
     }
-
-    public struct StateBuffer : IBufferElementData {
-        public AIStates StateName;
-        public float TotalScore;
-        public ActionStatus Status;
-
-    }
 }

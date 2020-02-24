@@ -13,12 +13,14 @@ GameObject:
   - component: {fileID: 214731906077720512}
   - component: {fileID: 214731906077720513}
   - component: {fileID: 214731906077720514}
+  - component: {fileID: 214731904716259787}
   - component: {fileID: 214731906077720524}
   - component: {fileID: 214731906077720525}
   - component: {fileID: 5246178431700659747}
   - component: {fileID: 7354561406910048039}
   - component: {fileID: 3968187185008346539}
   - component: {fileID: 2084263992803212845}
+  - component: {fileID: 214731904716259773}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -113,6 +115,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
+--- !u!114 &214731904716259787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c010d0ed1e9b9bb47a541ff16f6382fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &214731906077720524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,11 +144,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 1
-      y: 6
+      x: 0
+      y: 0
     Threat:
-      x: 1
-      y: 20
+      x: 0
+      y: 0
   RingWidth: 0
   fallOff: 0
 --- !u!195 &214731906077720525
@@ -172,10 +189,6 @@ MonoBehaviour:
   CurMana: 220
   MaxHealth: 150
   MaxMana: 150
-  WayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &7354561406910048039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,28 +215,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health:
     Inverse: 0
-    responseType: 2
-    M: 50
-    K: -0.85
-    B: 1
-    C: 0.4
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
   DistanceToTarget:
     Inverse: 0
-    responseType: 2
-    M: 600
-    K: -0.95
-    B: 1
-    C: 0.3
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
   WaitTimer:
     Inverse: 0
-    responseType: 2
-    M: 50
-    K: 0.95
-    B: 0.05
-    C: 0.25
-  _status: 4
-  _resetTimer: 25
-  UpdatePostition: 1
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  _status: 0
+  _resetTimer: 12
+  UpdatePostition: 0
   DistanceAtStart: 0
   index: 0
 --- !u!114 &2084263992803212845
@@ -238,30 +251,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9201239ec3327484d86aa39e483b544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToWait: 14
+  TimeToWait: 10
   Timer: 0
   TimerStarted: 0
   Health:
     Inverse: 0
-    responseType: 2
-    M: 50
-    K: -0.85
-    B: 1
-    C: 0.4
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
   DistanceToTarget:
     Inverse: 0
-    responseType: 2
-    M: 50
-    K: 1
+    responseType: 0
+    M: 0
+    K: 0
     B: 0
-    C: 0.4
+    C: 0
   WaitTimer:
     Inverse: 0
-    responseType: 2
-    M: 50
-    K: -1
-    B: 0.75
-    C: 0.1
-  _status: 4
-  _resetTimer: 10
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  _status: 0
+  _resetTimer: 0
   _resetTime: 0
+--- !u!114 &214731904716259773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066b9d01b3afe8449b17be88dd0263bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Values:
+  - x: 40
+    y: 1.5
+    z: -37
+  - x: -12.5
+    y: 1.5
+    z: -12.5
