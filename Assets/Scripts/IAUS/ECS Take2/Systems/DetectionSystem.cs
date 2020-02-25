@@ -17,23 +17,54 @@ namespace IAUS.ECS2
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            JobHandle tester = Entities.ForEach((ref Detection detect,ref DynamicBuffer<TargetBuffer> targets)=>{
+            JobHandle handle = new GetListOfTarget()
+            {
+                attackableEntities = GetEntityQuery(AttackableQuery).ToEntityArray(Allocator.TempJob),
+                Positions = GetComponentDataFromEntity<LocalToWorld>(true)
 
-    
-
-            }).Schedule(inputDeps);
-
-            return tester;
-
+            }.Schedule(this, inputDeps);
+          
+            return handle;
         }
     }
 
 
-    struct GetListOfTarget : IJobForEachWithEntity<Detection, LocalToWorld>
+    struct GetListOfTarget : IJobForEachWithEntity_EBC<TargetBuffer,Detection>
     {
-        public void Execute(Entity entity, int index, ref Detection c0, ref LocalToWorld c1)
+        [DeallocateOnJobCompletion] [ReadOnly]public NativeArray<Entity> attackableEntities;
+        [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<LocalToWorld> Positions;
+
+        public void Execute(Entity entity, int Tindex, DynamicBuffer<TargetBuffer> Target, ref Detection c1)
         {
-            throw new System.NotImplementedException();
+            Target.Clear();
+
+            for (int index = 0; index < Target.Length; index++) {
+                float dist = Vector3.Distance(Positions[attackableEntities[index]].Position, Positions[entity].Position);
+                if (dist <= c1.viewRadius)
+                {
+                    Vector3 dirToTarget = ((Vector3)Positions[attackableEntities[index]].Position - (Vector3)Positions[entity].Position).normalized;
+                    if (Vector3.Angle(Positions[entity].Position, dirToTarget) < c1.viewAngleXZ / 2.0f) {
+                        RaycastCommand tempRaycast = new RaycastCommand()
+                        {
+                            from = Positions[entity].Position,
+                            direction = dirToTarget,
+                            distance = dist,
+                            layerMask = ~c1.ObstacleMask,
+                            maxHits = 1
+                        };
+                        Target.Add(new TargetBuffer()
+                        {
+                            TargetToLookFor = new Target() {
+                                target = attackableEntities[index],
+                                RaycastCom = tempRaycast
+                            }
+
+                        } );
+
+                    }
+                }
+
+            }
         }
     }
 }

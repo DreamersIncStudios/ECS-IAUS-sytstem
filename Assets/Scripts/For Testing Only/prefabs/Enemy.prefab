@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 3968187185008346539}
   - component: {fileID: 2084263992803212845}
   - component: {fileID: 214731904716259773}
+  - component: {fileID: 3199197339933607337}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -144,11 +145,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 0
-      y: 0
+      x: 1
+      y: 10
     Threat:
-      x: 0
-      y: 0
+      x: 1
+      y: 10
   RingWidth: 0
   fallOff: 0
 --- !u!195 &214731906077720525
@@ -291,9 +292,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Values:
-  - x: 40
-    y: 1.5
-    z: -37
-  - x: -12.5
-    y: 1.5
-    z: -12.5
+  - Point:
+      x: 40
+      y: 1.5
+      z: -37
+    WaitTime: 10
+  - Point:
+      x: -12.5
+      y: 1.5
+      z: 12.5
+    WaitTime: 15
+--- !u!114 &3199197339933607337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 250
+  viewAngleXZ: 80
+  viewAngleYZ: 80
+  EngageRadius: 15
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 512
+  distanceToClosetEnemy: 0
+  distanceToClosetTarget: 0
+  AggressionLevels:
+    Humans: 0
+    Daemons: 0
+    Angels: 0
+  AlertModifer: 0

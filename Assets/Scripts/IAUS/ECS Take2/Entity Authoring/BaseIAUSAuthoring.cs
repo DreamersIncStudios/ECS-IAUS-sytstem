@@ -18,29 +18,7 @@ namespace IAUS.ECS2
             dstManager.AddComponent<CreateAIBufferTag>(entity);
 
             dstManager.AddComponent<BaseAI>(entity);
-           // dstManager.AddComponent<HealthConsideration>(entity);
-           // dstManager.AddComponent<DistanceToConsideration>(entity);
-           // dstManager.AddComponent<TimerConsideration>(entity);
-
-            //DynamicBuffer<PatrolBuffer> buffer = dstManager.GetBuffer<PatrolBuffer>(entity);
-            DynamicBuffer<StateBuffer> buffer2 = dstManager.GetBuffer<StateBuffer>(entity);
-
-            //foreach (Transform point in WayPoints)
-            //{
-            //    buffer.Add(new PatrolBuffer() { Point = point.position });
-            //}
-
-            buffer2.Add(new StateBuffer()
-            {
-                StateName = AIStates.Wait,
-                Status = ActionStatus.Idle
-            });
-
-            //buffer2.Add(new StateBuffer()
-            //{
-            //    StateName = AIStates.Patrol,
-            //    Status = ActionStatus.Idle
-            //});
+           
 
 
         }

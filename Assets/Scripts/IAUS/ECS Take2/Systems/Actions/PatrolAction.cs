@@ -24,7 +24,7 @@ namespace IAUS.ECS2
                     {
                         if (patrol.index >= buffer.Length)
                             patrol.index = 0;
-                        patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].Point);
+                        patrol.DistanceAtStart = Vector3.Distance(toWorld.Position, buffer[patrol.index].WayPoint.Point);
                         patrol.UpdatePostition = false;
                     }
 
@@ -37,9 +37,9 @@ namespace IAUS.ECS2
                     return;
 
                 //Running
-               if(!buffer[patrol.index].Point.Equals( move.TargetLocation)) 
+               if(!buffer[patrol.index].WayPoint.Equals( move.TargetLocation)) 
                 {
-                    move.TargetLocation = buffer[patrol.index].Point;
+                    move.TargetLocation = buffer[patrol.index].WayPoint.Point;
                     patrol.Status = ActionStatus.Running;
                     move.Completed = false;
                     move.CanMove = true;
