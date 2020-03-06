@@ -31,7 +31,7 @@ namespace IAUS.ECS2
                 Move = GetComponentDataFromEntity<Movement>(false),
                 entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer()
             }.Schedule(this, inputDeps);
-            //tester.Complete();
+
             JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
             {
 
@@ -64,12 +64,12 @@ namespace IAUS.ECS2
                             break;
                     }
                 }
+                //add math.clamp01
+                // make sure all outputs goto zero
 
-
-                float mod = 1.0f - (1.0f / 3.0f);
-                float TotalScore = patrol.Health.Output(health.Ratio)*
-                 patrol.DistanceToTarget.Output(distanceTo.Ratio) *
-                 patrol.WaitTimer.Output(timer.Ratio);
+                float mod = 1.0f - (1.0f / 2.0f);
+                float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio)*
+                 patrol.DistanceToTarget.Output(distanceTo.Ratio)) ;
                 patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
 
             }).Schedule(tester);
@@ -113,10 +113,9 @@ namespace IAUS.ECS2
 
 
 
-                float mod = 1.0f - (1.0f / 3.0f);
-                float TotalScore = Wait.Health.Output(health.Ratio) *
-                Wait.DistanceToTarget.Output(distanceTo.Ratio) *
-                 Wait.WaitTimer.Output(timer.Ratio);
+                float mod = 1.0f - (1.0f / 2.0f);
+                float TotalScore = Mathf.Clamp01( Wait.Health.Output(health.Ratio) *
+                 Wait.WaitTimer.Output(timer.Ratio));
                 Wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
           
             }).Schedule(PatrolJob);
@@ -126,7 +125,7 @@ namespace IAUS.ECS2
             return WaitJob;
         }
     }
-    [BurstCompile]
+    //[BurstCompile]
     public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,BaseAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;
@@ -186,7 +185,6 @@ namespace IAUS.ECS2
                             switch (AI.CurrentState.StateName) {
                                 case AIStates.Patrol:
                                     break;
-
                                 case AIStates.Wait:
                                     Ptemp.index++;
                                     Ptemp.UpdatePostition = true;

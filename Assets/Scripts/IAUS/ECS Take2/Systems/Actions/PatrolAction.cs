@@ -36,8 +36,9 @@ namespace IAUS.ECS2
                 if (patrol.Status == ActionStatus.Success)
                     return;
 
+
                 //Running
-               if(!buffer[patrol.index].WayPoint.Equals( move.TargetLocation)) 
+               if(!buffer[patrol.index].WayPoint.Point.Equals( move.TargetLocation)) 
                 {
                     move.TargetLocation = buffer[patrol.index].WayPoint.Point;
                     patrol.Status = ActionStatus.Running;

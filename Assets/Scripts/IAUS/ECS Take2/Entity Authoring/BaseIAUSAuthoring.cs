@@ -8,7 +8,7 @@ namespace IAUS.ECS2
 {
     public class BaseIAUSAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
-        public List<Transform> WayPoints;
+
         // use Buffer instead 
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

@@ -36,8 +36,6 @@ namespace IAUS.ECS2
 
                         Timer.TimerStarted = false;
                         
-                        //Consider removing or let system do that 
-                        //entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
                     }
                 }
 

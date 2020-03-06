@@ -11,7 +11,7 @@ namespace IAUS.ECS2
     {
         public ConsiderationData Health;
         public ConsiderationData DistanceToTarget;
-        public ConsiderationData WaitTimer;
+
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;

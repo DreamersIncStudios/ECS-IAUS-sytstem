@@ -128,9 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c010d0ed1e9b9bb47a541ff16f6382fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &214731906077720524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,28 +213,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 1
+    C: 0.35
   DistanceToTarget:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 0.935
+    C: 0.35
   WaitTimer:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
+    responseType: 2
+    M: 50
+    K: 0.85
     B: 0
-    C: 0
-  _status: 0
-  _resetTimer: 12
-  UpdatePostition: 0
+    C: 0.15
+  _status: 4
+  _resetTimer: 5
+  UpdatePostition: 1
   DistanceAtStart: 0
   index: 0
 --- !u!114 &2084263992803212845
@@ -252,32 +249,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9201239ec3327484d86aa39e483b544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToWait: 10
+  TimeToWait: 15
   Timer: 0
   TimerStarted: 0
   Health:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 1
+    C: 0.35
   DistanceToTarget:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
+    responseType: 2
+    M: 50
+    K: 0.85
     B: 0
-    C: 0
+    C: 0.1
   WaitTimer:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
-  _status: 0
-  _resetTimer: 0
+    responseType: 2
+    M: 50
+    K: -0.9
+    B: 0.8
+    C: 0.2
+  _status: 4
+  _resetTimer: 5
   _resetTime: 0
 --- !u!114 &214731904716259773
 MonoBehaviour:
@@ -317,15 +314,15 @@ MonoBehaviour:
   viewRadius: 250
   viewAngleXZ: 80
   viewAngleYZ: 80
-  EngageRadius: 15
+  EngageRadius: 45
   TargetMask:
     serializedVersion: 2
     m_Bits: 256
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 512
-  distanceToClosetEnemy: 0
-  distanceToClosetTarget: 0
+  distanceToClosetEnemy: 1000
+  distanceToClosetTarget: 1000
   AggressionLevels:
     Humans: 0
     Daemons: 0
