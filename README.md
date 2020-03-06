@@ -1,4 +1,4 @@
-This project has not been abandon. I intend on refactor and update this project in the coming months. If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
+If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
 
 The utility system works by identifying options available to the AI and selecting the best option by scoring each option based on the circumstances. This has proven a remarkable well-working method for several reasons.
 
