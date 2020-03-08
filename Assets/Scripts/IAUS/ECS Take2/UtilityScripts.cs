@@ -1,22 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.Entities;
+﻿using UnityEngine;
 namespace IAUS.ECS2
 {
-    public struct HealthConsideration:IComponentData {
-        public float Ratio;
-    }
 
-    public struct DistanceToConsideration : IComponentData
-    {
-        public float Ratio;
-
-    }
-    public struct TimerConsideration : IComponentData
-    {
-        public float Ratio;
-    }
     [System.Serializable]
     public struct ConsiderationData {
         public bool Inverse; // Is Invense Required if m is negatives? Inverse to be removed for response curves
@@ -47,6 +32,7 @@ namespace IAUS.ECS2
     public enum AIStates {
         none, Patrol, Heal_Item, Heal_Magic, Attack_Melee, Attack_Range,
         Attack_Magic, Retreat, FindCover,Talk, Guard, GroupUp, Wait, Rally, 
+        InvestigateArea, SearchArea
     }
     public enum ResponseType
     {

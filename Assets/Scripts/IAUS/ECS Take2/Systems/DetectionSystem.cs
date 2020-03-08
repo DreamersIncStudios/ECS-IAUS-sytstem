@@ -116,6 +116,8 @@ namespace IAUS.ECS2
                 {
                     Vector3 dirToTarget = ((Vector3)Positions[attackableEntities[index]].Position - (Vector3)Positions[entity].Position).normalized;
                     if (Vector3.Angle(Positions[entity].Forward, dirToTarget) < c1.viewAngleXZ / 2.0f) {
+                        //add logic for sort by type
+
                         Target.Add(new TargetBuffer()
                         {
                             target = attackableEntities[index],
@@ -127,6 +129,7 @@ namespace IAUS.ECS2
             }
         }
     }
+   
     [BurstCompile]
     public struct SetupHumanRayCast : IJob
     {

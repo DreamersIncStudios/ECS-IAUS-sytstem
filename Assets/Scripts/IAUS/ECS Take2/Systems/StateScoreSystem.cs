@@ -125,7 +125,7 @@ namespace IAUS.ECS2
             return WaitJob;
         }
     }
-    //[BurstCompile]
+    [BurstCompile]
     public struct TestScore : IJobForEachWithEntity_EBC<StateBuffer,BaseAI>
     {
         [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> Patrol;

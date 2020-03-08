@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 2084263992803212845}
   - component: {fileID: 214731904716259773}
   - component: {fileID: 3199197339933607337}
+  - component: {fileID: 2466848989992003490}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -159,7 +160,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -215,8 +216,8 @@ MonoBehaviour:
     Inverse: 0
     responseType: 2
     M: 50
-    K: -0.95
-    B: 1
+    K: -1
+    B: 0.91
     C: 0.35
   DistanceToTarget:
     Inverse: 0
@@ -225,13 +226,6 @@ MonoBehaviour:
     K: -0.95
     B: 0.935
     C: 0.35
-  WaitTimer:
-    Inverse: 0
-    responseType: 2
-    M: 50
-    K: 0.85
-    B: 0
-    C: 0.15
   _status: 4
   _resetTimer: 5
   UpdatePostition: 1
@@ -259,19 +253,12 @@ MonoBehaviour:
     K: -0.95
     B: 1
     C: 0.35
-  DistanceToTarget:
-    Inverse: 0
-    responseType: 2
-    M: 50
-    K: 0.85
-    B: 0
-    C: 0.1
   WaitTimer:
     Inverse: 0
     responseType: 2
     M: 50
-    K: -0.9
-    B: 0.8
+    K: -1
+    B: 0.91
     C: 0.2
   _status: 4
   _resetTimer: 5
@@ -328,3 +315,38 @@ MonoBehaviour:
     Daemons: 0
     Angels: 0
   AlertModifer: 0
+--- !u!114 &2466848989992003490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec3761b14dbaa24fa4cce4597cb6949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.25
+  DistanceToTarget:
+    Inverse: 0
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  DetectionLevel:
+    Inverse: 0
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  _status: 0
+  _resetTimer: 0

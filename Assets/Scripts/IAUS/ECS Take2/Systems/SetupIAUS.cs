@@ -41,14 +41,19 @@ namespace IAUS.ECS2
                 entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
         }.Schedule(this, patrolAdd);
 
-            JobHandle DetectionAdd = new LocateTargetAdd()
+            JobHandle DetectionAdd = new AttackEnemyAdd()
             {
                 targetBuffer = GetBufferFromEntity<TargetBuffer>(true),
                 health = GetComponentDataFromEntity<HealthConsideration>(true),
-                TimeC = GetComponentDataFromEntity<TimerConsideration>(true),
-                Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
                 entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
             }.Schedule(this, waitAdd);
+
+            //JobHandle InvestigateAreaAdd = new InvestigateAreaAdd()
+            //{
+            //    health = GetComponentDataFromEntity<HealthConsideration>(true),
+            //    Detect = GetComponentDataFromEntity<Detection>(true),
+            //    entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
+            //}.Schedule(this, DetectionAdd);
 
 
             // This is to be the last job of this system
@@ -151,13 +156,11 @@ namespace IAUS.ECS2
     }
 
     [BurstCompile]
-    public struct LocateTargetAdd : IJobForEachWithEntity_EBCC<StateBuffer, Detection, CreateAIBufferTag>
+    public struct AttackEnemyAdd : IJobForEachWithEntity_EBCC<StateBuffer, Detection, CreateAIBufferTag>
     {
 
         [ReadOnly] [NativeDisableParallelForRestriction] public BufferFromEntity<TargetBuffer> targetBuffer;
         [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<HealthConsideration> health;
-        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<TimerConsideration> TimeC;// possible removing as it is not valid
-        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<DistanceToConsideration> Distance;
 
         [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
 
@@ -186,16 +189,7 @@ namespace IAUS.ECS2
                     entityCommandBuffer.AddComponent<HealthConsideration>(entity);
 
                 }
-                if (!TimeC.Exists(entity))
-                {
-                    entityCommandBuffer.AddComponent<TimerConsideration>(entity);
 
-                }
-                if (!Distance.Exists(entity))
-                {
-                    entityCommandBuffer.AddComponent<DistanceToConsideration>(entity);
-
-                }
             }
         }
     }
