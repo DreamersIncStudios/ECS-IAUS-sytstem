@@ -304,10 +304,10 @@ MonoBehaviour:
   EngageRadius: 45
   TargetMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
   ObstacleMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 7936
   distanceToClosetEnemy: 1000
   distanceToClosetTarget: 1000
   AggressionLevels:

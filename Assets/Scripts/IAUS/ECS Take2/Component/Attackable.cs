@@ -17,7 +17,7 @@ namespace IAUS.ECS2
     }
     public enum ObjectType {
         Structure,
-        Animal,
+        Creature,
         Humaniod,
     }
     public enum Factions {

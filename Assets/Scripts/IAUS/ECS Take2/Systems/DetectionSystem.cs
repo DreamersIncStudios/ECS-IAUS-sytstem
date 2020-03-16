@@ -7,11 +7,13 @@ using Unity.Collections;
 using Unity.Transforms;
 using Unity.Burst;
 using IAUS.ECS2.BackGround.Raycasting;
+
+
 namespace IAUS.ECS2
 {
 
     [UpdateAfter(typeof(StateScoreSystem))]
-    public class DetectionSystem : ComponentSystem
+    public partial class DetectionSystem : ComponentSystem
     {
         public NativeArray<Entity> AttackableEntityInScene;
         public EntityQueryDesc AttackableQuery = new EntityQueryDesc()
@@ -40,6 +42,7 @@ namespace IAUS.ECS2
             {
                 BufferFromEntity<TargetBuffer> targetBuffer = GetBufferFromEntity<TargetBuffer>(true);
                 int check = new int();
+                List<float> EnemyDetectionLevels = new List<float>();
 
                 if (targetBuffer.Exists(entity))
                 {
@@ -51,7 +54,7 @@ namespace IAUS.ECS2
                         NativeList<RaycastCommand> CastRayEnemy = new NativeList<RaycastCommand>(Allocator.Persistent);
 
                         switch (temp.Type) {
-                            case ObjectType.Animal:
+                            case ObjectType.Creature:
                                 break;
                             case ObjectType.Humaniod:
                                 var HumanRaySetup = new SetupHumanRayCast()
@@ -72,32 +75,33 @@ namespace IAUS.ECS2
 
                         NativeArray<RaycastHit> results = new NativeArray<RaycastHit>(CastRayEnemy.Length, Allocator.Persistent);
                         RaycastCommand.ScheduleBatch(CastRayEnemy, results, 1).Complete();
+                        float alert = new float();
+                        switch (temp.Type)
+                        {
+                            case ObjectType.Creature:
+                                break;
+                            case ObjectType.Humaniod:
+                                alert = CheckHumanRays(results, c1);
+                                break;
+                            case ObjectType.Structure:
+                                break;
 
+                        }
                         results.Dispose();
                        CastRayEnemy.Dispose();
-
-
+                        EnemyDetectionLevels.Add(alert);
 
                         check++;
                     }
                 }
+                
+                int indexofMaxDetection = EnemyDetectionLevels.IndexOf(Mathf.Max(EnemyDetectionLevels.ToArray()));
+                Debug.Log(indexofMaxDetection);
               // CastRayEnemy.Dispose();
 
             });
-
-
         }
 
-        public bool Hit(RaycastHit Result, Detection DetectSpecs)
-        {
-            Collider col = Result.collider;
-
-            if (Result.collider != null)
-            {
-                return col.gameObject.layer == 8;
-            }
-            return false;
-        }
     }
 
     [BurstCompile]
@@ -130,93 +134,5 @@ namespace IAUS.ECS2
         }
     }
    
-    [BurstCompile]
-    public struct SetupHumanRayCast : IJob
-    {
-        public LocalToWorld AgentPos;
-        public Detection detect;
-        public HumanRayCastPoints humanRaysTargets;
-        public NativeList<RaycastCommand> RaysToSetup;
-        public void Execute()
-        {
-            //Chest Ray
-            float dist = Vector3.Distance(humanRaysTargets.Chest, AgentPos.Position);
-            Vector3 DirTo = ((Vector3)humanRaysTargets.Chest - (Vector3)AgentPos.Position).normalized;
-            RaycastCommand temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
 
-            };
-            RaysToSetup.Add(temp);
-            //Head Ray
-            dist = Vector3.Distance(humanRaysTargets.Head, AgentPos.Position);
-            DirTo = ((Vector3)humanRaysTargets.Head - (Vector3)AgentPos.Position).normalized;
-            temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
-
-            };
-            RaysToSetup.Add(temp);
-            //Right arm Ray
-            dist = Vector3.Distance(humanRaysTargets.Right_Arm, AgentPos.Position);
-            DirTo = ((Vector3)humanRaysTargets.Right_Arm - (Vector3)AgentPos.Position).normalized;
-            temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
-
-            };
-            RaysToSetup.Add(temp);
-            //Left arm Ray
-            dist = Vector3.Distance(humanRaysTargets.Left_Arm, AgentPos.Position);
-            DirTo = ((Vector3)humanRaysTargets.Left_Arm - (Vector3)AgentPos.Position).normalized;
-            temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
-
-            };
-            RaysToSetup.Add(temp);
-            //Righ LegRay
-            dist = Vector3.Distance(humanRaysTargets.Right_Leg, AgentPos.Position);
-            DirTo = ((Vector3)humanRaysTargets.Right_Leg - (Vector3)AgentPos.Position).normalized;
-            temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
-
-            };
-            RaysToSetup.Add(temp);
-            //Left leg Ray
-            dist = Vector3.Distance(humanRaysTargets.Left_Leg, AgentPos.Position);
-            DirTo = ((Vector3)humanRaysTargets.Left_Leg - (Vector3)AgentPos.Position).normalized;
-            temp = new RaycastCommand()
-            {
-                from = AgentPos.Position,
-                direction = DirTo,
-                distance = dist,
-                layerMask = ~detect.ObstacleMask,
-                maxHits = 1
-
-            };
-            RaysToSetup.Add(temp);
-        }
-    }
 }
