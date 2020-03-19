@@ -66,7 +66,6 @@
     <Compile Include="Assets\Scripts\For Testing Only\CreateEnemy.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\TakeTwo.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Debugspecial.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Detection.cs" />
@@ -89,11 +88,13 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJob.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\ConsiderationSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\SetupIAUS.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\UpdateRacastTargetPoints.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\TakeTwo.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\UtilityScripts.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Components\Basic Actions\Movement.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />

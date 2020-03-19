@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
@@ -48,19 +46,20 @@ namespace IAUS.ECS2
                 entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
             }.Schedule(this, waitAdd);
 
-            //JobHandle InvestigateAreaAdd = new InvestigateAreaAdd()
-            //{
-            //    health = GetComponentDataFromEntity<HealthConsideration>(true),
-            //    Detect = GetComponentDataFromEntity<Detection>(true),
-            //    entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
-            //}.Schedule(this, DetectionAdd);
+            JobHandle InvestigateAreaAddJob = new InvestigateAreaAdd()
+            {
+                health = GetComponentDataFromEntity<HealthConsideration>(true),
+                Detect = GetComponentDataFromEntity<Detection>(true),
+                DetectConsider =  GetComponentDataFromEntity<DetectionConsideration>(true),
+                entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
+            }.Schedule(this, DetectionAdd);
 
 
             // This is to be the last job of this system
             JobHandle ClearCreateTag = new ClearCreateTagJob()
             {
                 entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer()
-        }.Schedule(this, DetectionAdd);
+        }.Schedule(this, InvestigateAreaAddJob);
             return ClearCreateTag;
         }
         [BurstCompile]

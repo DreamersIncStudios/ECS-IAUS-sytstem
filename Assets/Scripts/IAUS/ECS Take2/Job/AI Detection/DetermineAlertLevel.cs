@@ -1,16 +1,27 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
-using Unity.Transforms;
 
 namespace IAUS.ECS2
 {
 
     public partial class DetectionSystem :ComponentSystem
     {
+        public bool Hit(RaycastHit Result)
+        {
+            Collider col = Result.collider;
+
+            if (Result.collider != null)
+            {
+                return Result.collider.gameObject.layer == 11 ||
+                    Result.collider.gameObject.layer == 12 ||
+                    Result.collider.gameObject.layer == 10;
+
+            }
+            return false;
+        }
+
         float CheckHumanRays(NativeArray<RaycastHit> Results, Detection DetectSpecs)
         {
             float AlertLevel = new float();
@@ -59,19 +70,7 @@ namespace IAUS.ECS2
             return AlertLevel;
         }
 
-        public bool Hit(RaycastHit Result)
-        {
-            Collider col = Result.collider;
-
-            if (Result.collider != null)
-            {
-                return Result.collider.gameObject.layer == 11 ||
-                    Result.collider.gameObject.layer == 12 ||
-                    Result.collider.gameObject.layer == 10;
-
-            }
-            return false;
-        }
+        
     }
     
 }

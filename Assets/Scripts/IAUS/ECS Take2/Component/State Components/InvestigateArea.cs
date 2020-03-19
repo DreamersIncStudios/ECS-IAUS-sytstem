@@ -34,19 +34,14 @@ namespace IAUS.ECS2
     public struct InvestigateAreaTag : IComponentData { }
 
 
-    //public class InvestigateAreaAction : JobComponentSystem
-    //{
-    //    protected override JobHandle OnUpdate(JobHandle inputDeps)
-    //    {
-    //        throw new System.NotImplementedException();
-    //    }
-    //}
     [Unity.Burst.BurstCompile]
     public struct InvestigateAreaAdd : IJobForEachWithEntity_EBCC<StateBuffer, InvestigateArea, CreateAIBufferTag>
     {
 
         [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<HealthConsideration> health;
         [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Detection> Detect;
+        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<DetectionConsideration> DetectConsider;
+
 
         [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
 
@@ -75,6 +70,9 @@ namespace IAUS.ECS2
                 {
                     entityCommandBuffer.AddComponent<Detection>(entity);
                     throw new System.Exception(" this does not have Detection component attached to game object. Please attach detection in editor and set default value in order to use");
+                }
+                if (!DetectConsider.Exists(entity)) {
+                    entityCommandBuffer.AddComponent<DetectionConsideration>(entity);
                 }
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
@@ -23,8 +22,9 @@ namespace IAUS.ECS2
 
         ComponentDataFromEntity<Attackable> AttackableComponents;
         ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoints;
-       // ComponentDataFromEntity<Attackable> AttackableComponents;
-       // ComponentDataFromEntity<Attackable> AttackableComponents;
+
+        // ComponentDataFromEntity<Attackable> AttackableComponents;
+        // ComponentDataFromEntity<Attackable> AttackableComponents;
 
         protected override  void OnUpdate()
         {
@@ -53,7 +53,8 @@ namespace IAUS.ECS2
                         JobHandle jobHandle;
                         NativeList<RaycastCommand> CastRayEnemy = new NativeList<RaycastCommand>(Allocator.Persistent);
 
-                        switch (temp.Type) {
+                        switch (temp.Type)
+                        {
                             case ObjectType.Creature:
                                 break;
                             case ObjectType.Humaniod:
@@ -88,16 +89,24 @@ namespace IAUS.ECS2
 
                         }
                         results.Dispose();
-                       CastRayEnemy.Dispose();
+                        CastRayEnemy.Dispose();
                         EnemyDetectionLevels.Add(alert);
 
                         check++;
                     }
                 }
-                
-                int indexofMaxDetection = EnemyDetectionLevels.IndexOf(Mathf.Max(EnemyDetectionLevels.ToArray()));
-                Debug.Log(indexofMaxDetection);
-              // CastRayEnemy.Dispose();
+
+                if (EnemyDetectionLevels.Count > 0)
+                {
+                    c1.TargetVisibility = Mathf.Max(EnemyDetectionLevels.ToArray());
+                    int indexofMaxDetection = EnemyDetectionLevels.IndexOf(c1.TargetVisibility);
+                    c1.TargetRef = targetBuffer[entity][indexofMaxDetection].target;
+                }
+                else
+                {
+                    c1.TargetVisibility = 0.0f;
+                    c1.TargetRef = Entity.Null;
+                }
 
             });
         }

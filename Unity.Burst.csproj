@@ -63,33 +63,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\BurstCompileAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\BurstCompiler.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\BurstCompilerOptions.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\BurstExecutionEnvironment.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\BurstRuntime.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\CompilerServices\Aliasing.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\CompilerServices\AssumeRangeAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\DiagnosticId.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\FunctionPointer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\Common.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\SimdDebugViews.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\v128.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\v256.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\v64.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Avx.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Avx2.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Common.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Csr.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Sse.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Sse2.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Sse3.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Sse4_1.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Sse4_2.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Intrinsics\x86\Ssse3.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\NoAliasAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\SharedStatic.cs" />
-    <None Include="Library\PackageCache\com.unity.burst@1.3.0-preview.4\Runtime\Unity.Burst.asmdef" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\BurstCompileAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\BurstCompiler.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\BurstCompilerOptions.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\BurstExecutionEnvironment.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\BurstRuntime.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\CompilerServices\Aliasing.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\CompilerServices\AssumeRangeAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\DiagnosticId.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\FunctionPointer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\Common.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\SimdDebugViews.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\v128.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\v256.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\v64.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Avx.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Avx2.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Common.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Csr.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Sse.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Sse2.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Sse3.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Sse4_1.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Sse4_2.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Intrinsics\x86\Ssse3.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\NoAliasAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\SharedStatic.cs" />
+    <None Include="Library\PackageCache\com.unity.burst@1.3.0-preview.6\Runtime\Unity.Burst.asmdef" />
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -279,17 +279,17 @@
     <Reference Include="UnityEditor.UWP.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.3f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.4/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.6/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.6.0-preview.9/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.3f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

@@ -26,34 +26,37 @@ namespace InfluenceMap
             base.OnCreate();
             entityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
+        int interval = 360;
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
+
             if (gridpoints.IsCreated)
                 gridpoints.Dispose();
 
-                gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
-                var get = new GetGridPointWithValueOnly()
-                {
-                    GridpointWithValue = gridpoints
-                };
+            gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
+            var get = new GetGridPointWithValueOnly()
+            {
+                GridpointWithValue = gridpoints
+            };
 
-                JobHandle job1 = get.Schedule(this, inputDeps);
-                var playerTarget = new PlayerTargetingInfluenceJob()
-                {
-                    GridPointsInRange = get.GridpointWithValue,
-                    PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
-                    PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
-                    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
-                    PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
-                };
-                JobHandle job2 = playerTarget.Schedule(this, job1);
+            JobHandle job1 = get.Schedule(this, inputDeps);
+            //var playerTarget = new PlayerTargetingInfluenceJob()
+            //{
+            //    GridPointsInRange = get.GridpointWithValue,
+            //    PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
+            //    PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
+            //    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
+            //    PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
+            //};
+            //JobHandle job2 = playerTarget.Schedule(this, job1);
 
-                job1.Complete();
-                job2.Complete();
+            //job1.Complete();
+            //job2.Complete();
 
-            
-            return job2;
-            
+
+            return job1;
+
+
         }
 
         protected override void OnDestroy()

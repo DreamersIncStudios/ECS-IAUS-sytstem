@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Unity.Collections;
 using UnityEngine;
 using Unity.Transforms;
 using Unity.Entities;
@@ -35,10 +34,12 @@ namespace IAUS.ECS2
 
             }).Schedule(jobHandle2);
 
-            //jobHandle.Complete();
-            //jobHandle2.Complete();
-            //jobHandle3.Complete();
-            return jobHandle3;
+            JobHandle DetectionEnemy = new DetectionScore() {
+                Transforms =  GetComponentDataFromEntity<LocalToWorld>(true)
+                }.Schedule(this,jobHandle3);
+
+            return DetectionEnemy;
+
         }
     }
 }

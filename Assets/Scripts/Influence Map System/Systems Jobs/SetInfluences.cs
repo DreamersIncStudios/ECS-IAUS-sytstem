@@ -28,12 +28,14 @@ namespace InfluenceMap
             Any = new ComponentType[] { typeof(EnemyCharacter) }
 
         };
+        int interval = 360;
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
+            if (UnityEngine.Time.frameCount % interval == 2)
+            {
 
-
-            EntityQuery GlobalQ = GetEntityQuery(influencersGlobal);
+                EntityQuery GlobalQ = GetEntityQuery(influencersGlobal);
             EntityQuery PlayerQ = GetEntityQuery(influencersPlayer);
             EntityQuery EnemyQ = GetEntityQuery(influencersEnemy);
 
@@ -51,6 +53,9 @@ namespace InfluenceMap
 
             JobHandle handle = setinf.Schedule(this, inputDeps);
             return handle;
+        }
+            else
+                return inputDeps;
             
         }
     }
