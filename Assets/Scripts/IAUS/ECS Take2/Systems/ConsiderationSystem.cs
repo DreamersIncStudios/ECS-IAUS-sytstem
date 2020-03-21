@@ -7,7 +7,7 @@ using CharacterStats;
 
 namespace IAUS.ECS2
 {
-    [UpdateBefore(typeof(InfluenceMap.TakeTwo))]
+    [UpdateBefore(typeof(StateScoreSystem))]
     public class ConsiderationSystem : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
@@ -34,11 +34,12 @@ namespace IAUS.ECS2
 
             }).Schedule(jobHandle2);
 
-            JobHandle DetectionEnemy = new DetectionScore() {
-                Transforms =  GetComponentDataFromEntity<LocalToWorld>(true)
-                }.Schedule(this,jobHandle3);
+            JobHandle DetectionEnemy = new DetectionScore()
+            {
+                Transforms = GetComponentDataFromEntity<LocalToWorld>(true)
+            }.Schedule(this, jobHandle3);
 
-            return DetectionEnemy;
+            return DetectionEnemy; ;
 
         }
     }

@@ -23,8 +23,6 @@ namespace IAUS.ECS2
         ComponentDataFromEntity<Attackable> AttackableComponents;
         ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoints;
 
-        // ComponentDataFromEntity<Attackable> AttackableComponents;
-        // ComponentDataFromEntity<Attackable> AttackableComponents;
 
         protected override  void OnUpdate()
         {

@@ -17,7 +17,7 @@ namespace InfluenceMap
             All = new ComponentType[] { typeof(Entity), typeof(PlayerCharacter), typeof(LocalToWorld) }
         };
 
-        NativeList<Gridpoint> gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
+        //NativeList<Gridpoint> gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
 
         EntityCommandBufferSystem entityCommandBuffer;
 
@@ -30,31 +30,31 @@ namespace InfluenceMap
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
 
-            if (gridpoints.IsCreated)
-                gridpoints.Dispose();
+            //if (gridpoints.IsCreated)
+            //    gridpoints.Dispose();
 
-            gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
-            var get = new GetGridPointWithValueOnly()
-            {
-                GridpointWithValue = gridpoints
-            };
-
-            JobHandle job1 = get.Schedule(this, inputDeps);
-            //var playerTarget = new PlayerTargetingInfluenceJob()
+            //gridpoints = new NativeList<Gridpoint>(Allocator.TempJob);
+            //var get = new GetGridPointWithValueOnly()
             //{
-            //    GridPointsInRange = get.GridpointWithValue,
-            //    PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
-            //    PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
-            //    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
-            //    PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
+            //    GridpointWithValue = gridpoints
             //};
-            //JobHandle job2 = playerTarget.Schedule(this, job1);
 
-            //job1.Complete();
-            //job2.Complete();
+            //JobHandle job1 = get.Schedule(this, inputDeps);
+            ////var playerTarget = new PlayerTargetingInfluenceJob()
+            ////{
+            ////    GridPointsInRange = get.GridpointWithValue,
+            ////    PlayerCharPositions = GetComponentDataFromEntity<LocalToWorld>(true),
+            ////    PlayerChars = GetComponentDataFromEntity<PlayerCharacter>(false),
+            ////    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer(),
+            ////    PlayerEntities = GetEntityQuery(Player).ToEntityArray(Allocator.TempJob)
+            ////};
+            ////JobHandle job2 = playerTarget.Schedule(this, job1);
+
+            ////job1.Complete();
+            ////job2.Complete();
 
 
-            return job1;
+            return inputDeps;
 
 
         }
@@ -62,8 +62,8 @@ namespace InfluenceMap
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            if (gridpoints.IsCreated)
-                gridpoints.Dispose();
+            //if (gridpoints.IsCreated)
+            //    gridpoints.Dispose();
         }
     }
     //Unable to burst  due to line 77

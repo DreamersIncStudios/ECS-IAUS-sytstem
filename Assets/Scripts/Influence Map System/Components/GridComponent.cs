@@ -18,8 +18,7 @@ namespace InfluenceMap
         public Influence Player;
         public Influence Enemy;
         public Influence Global;
-
+       
         public Vector3 Position;
-        public float dist;
     }
 }

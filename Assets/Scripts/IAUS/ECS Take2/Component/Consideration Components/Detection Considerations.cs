@@ -9,7 +9,7 @@ namespace IAUS.ECS2
         public float RangeRatio;
 
     }
-
+    [Unity.Burst.BurstCompile]
     public struct DetectionScore : IJobForEachWithEntity<DetectionConsideration, Detection>
     {
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<LocalToWorld> Transforms;

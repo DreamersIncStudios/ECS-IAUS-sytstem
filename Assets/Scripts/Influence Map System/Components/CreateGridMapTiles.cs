@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
-
-namespace InfluenceMap {
-    public class TestBehaviour : MonoBehaviour, IConvertGameObjectToEntity
+using System.Collections.Generic;
+namespace InfluenceMap
+{
+    public class CreateGridMapTiles : MonoBehaviour, IConvertGameObjectToEntity
     {
         GameObject Go;
         Collider collider;
@@ -24,7 +23,8 @@ namespace InfluenceMap {
             var gridSpecs = new GridComponent() { width = width, height = height, cellsize = CellSize };
             dstManager.AddComponentData(entity, gridSpecs);
             DynamicBuffer<Gridpoint> Buffer = dstManager.AddBuffer<Gridpoint>(entity);
-            foreach (Vector3 Pos in CellPositions) {
+            foreach (Vector3 Pos in CellPositions)
+            {
                 Buffer.Add(new Gridpoint()
                 {
                     Position = Pos
@@ -39,7 +39,8 @@ namespace InfluenceMap {
         }
 
 
-        void createHeatMapTile() {
+        void createHeatMapTile()
+        {
             Go = this.gameObject;
             collider = Go.GetComponent<Collider>();
             width = collider.bounds.size.x;
@@ -62,7 +63,5 @@ namespace InfluenceMap {
 
             }
         }
-
     }
-
 }
