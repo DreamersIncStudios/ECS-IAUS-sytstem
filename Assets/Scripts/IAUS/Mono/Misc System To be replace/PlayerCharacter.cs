@@ -23,6 +23,7 @@ namespace CharacterStats
         {
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
+            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
 
         }
 

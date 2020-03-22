@@ -161,7 +161,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -323,7 +323,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -1391,7 +1391,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -1553,7 +1553,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -1715,7 +1715,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -1976,7 +1976,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -2735,7 +2735,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -2897,7 +2897,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -3059,7 +3059,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -3221,7 +3221,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -3383,7 +3383,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -3545,7 +3545,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -3707,7 +3707,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -4093,7 +4093,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -4255,7 +4255,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -4417,7 +4417,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -4658,7 +4658,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -4939,7 +4939,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -5101,7 +5101,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -5322,7 +5322,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -5734,7 +5734,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -5995,7 +5995,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -6231,7 +6231,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -6467,7 +6467,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0
@@ -6555,7 +6555,7 @@ MonoBehaviour:
   influence:
     Proximity:
       x: 3.5
-      y: 6
+      y: 10
     Threat:
       x: 0
       y: 0

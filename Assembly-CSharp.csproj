@@ -72,7 +72,6 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\HumanRayCastPoints.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\BaseConsiderations.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\Detection Considerations.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Faction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\IAUSBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\PatrolBuffer.cs" />
@@ -88,8 +87,9 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJob.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJobSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\ConsiderationSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionConsideration.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\SetupIAUS.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />
@@ -108,9 +108,7 @@
     <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\SetInfluences.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\SetMobileGlobal.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\SetStaticGlobal.cs" />
-    <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\TakeTwo.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
-    <Compile Include="Assets\Scripts\UtilitySystems\TransfomSync.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -412,7 +410,7 @@
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.6/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.6.0-preview.9/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.7.0-preview.2/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>

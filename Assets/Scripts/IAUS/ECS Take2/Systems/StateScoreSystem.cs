@@ -2,38 +2,27 @@
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
-using IAUS.ECS.Component;
 
 
 namespace IAUS.ECS2
 {
     [UpdateAfter(typeof(ConsiderationSystem))]
-    [UpdateBefore(typeof(InfluenceMap.TakeTwo))]
     public class StateScoreSystem : JobComponentSystem
     {
-        EntityCommandBufferSystem entityCommandBuffer;
+        EntityCommandBufferSystem entityCommandBufferSystem;
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            entityCommandBuffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
-        int interval = 120;
+
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            if (UnityEngine.Time.frameCount % interval == 5)
-            {
-                float DT = Time.DeltaTime;
-                var tester = new CheckScores()
-                {
-                    Patrol = GetComponentDataFromEntity<Patrol>(false),
-                    Wait = GetComponentDataFromEntity<WaitTime>(false),
-                    Move = GetComponentDataFromEntity<Movement>(false),
-                    entityCommandBuffer = entityCommandBuffer.CreateCommandBuffer()
-                }.Schedule(this, inputDeps);
 
-                JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
+            float DT = Time.DeltaTime;
+                JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, in HealthConsideration health, in DistanceToConsideration distanceTo, in TimerConsideration timer) =>
                 {
 
                     if (patrol.Status != ActionStatus.Running)
@@ -74,11 +63,12 @@ namespace IAUS.ECS2
                      patrol.DistanceToTarget.Output(distanceTo.Ratio));
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
 
-                }).Schedule(tester);
+                }).Schedule(inputDeps);
                 // PatrolJob.Complete();
                 DT = Time.DeltaTime;
 
-                JobHandle WaitJob = Entities.ForEach((ref WaitTime Wait, ref HealthConsideration health, ref DistanceToConsideration distanceTo, ref TimerConsideration timer) =>
+                JobHandle WaitJob = Entities
+                    .ForEach((ref WaitTime Wait, in DistanceToConsideration distanceTo, in TimerConsideration timer, in HealthConsideration health ) =>
                 {
                     if (Wait.Status != ActionStatus.Running)
                     {
@@ -126,9 +116,9 @@ namespace IAUS.ECS2
 
 
                 return WaitJob;
-            }
-            else
-                return inputDeps;
+            
+
+ 
         }
     }
 }

@@ -34,10 +34,22 @@ namespace IAUS.ECS2
 
             }).Schedule(jobHandle2);
 
-            JobHandle DetectionEnemy = new DetectionScore()
-            {
-                Transforms = GetComponentDataFromEntity<LocalToWorld>(true)
-            }.Schedule(this, jobHandle3);
+            ComponentDataFromEntity<LocalToWorld> Transforms = GetComponentDataFromEntity<LocalToWorld>(true);
+            JobHandle DetectionEnemy = Entities
+                .WithNativeDisableParallelForRestriction(Transforms)
+                .ForEach((Entity entity, ref DetectionConsideration detectionConsider,  in Detection c1) =>
+                {
+                    detectionConsider.VisibilityRatio = c1.TargetVisibility;
+                    if (c1.TargetRef != Entity.Null)
+                    {
+                        float dist = Vector3.Distance(Transforms[entity].Position, Transforms[c1.TargetRef].Position);
+                        detectionConsider.RangeRatio = dist / c1.viewRadius;
+                    }
+                    else { detectionConsider.RangeRatio = 1.0f; }
+
+                })
+                .WithReadOnly(Transforms)
+                .Schedule(jobHandle3);
 
             return DetectionEnemy; ;
 

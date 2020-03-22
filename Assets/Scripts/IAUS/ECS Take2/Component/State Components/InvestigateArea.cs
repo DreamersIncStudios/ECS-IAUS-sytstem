@@ -34,48 +34,5 @@ namespace IAUS.ECS2
     public struct InvestigateAreaTag : IComponentData { }
 
 
-    [Unity.Burst.BurstCompile]
-    public struct InvestigateAreaAdd : IJobForEachWithEntity_EBCC<StateBuffer, InvestigateArea, CreateAIBufferTag>
-    {
 
-        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<HealthConsideration> health;
-        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Detection> Detect;
-        [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<DetectionConsideration> DetectConsider;
-
-
-        [NativeDisableParallelForRestriction] public EntityCommandBuffer entityCommandBuffer;
-
-        public void Execute(Entity entity, int Tindex, DynamicBuffer<StateBuffer> stateBuffer, [ReadOnly] ref InvestigateArea c1, [ReadOnly]ref CreateAIBufferTag c2)
-        {
-            bool add = true;
-            for (int index = 0; index < stateBuffer.Length; index++)
-            {
-                if (stateBuffer[index].StateName == AIStates.InvestigateArea)
-                { add = false; }
-            }
-
-            if (add)
-            {
-                stateBuffer.Add(new StateBuffer()
-                {
-                    StateName = AIStates.InvestigateArea,
-                    Status = ActionStatus.Idle
-                });
-                if (!health.Exists(entity))
-                {
-                    entityCommandBuffer.AddComponent<HealthConsideration>(entity);
-
-                }
-                if (!Detect.Exists(entity))
-                {
-                    entityCommandBuffer.AddComponent<Detection>(entity);
-                    throw new System.Exception(" this does not have Detection component attached to game object. Please attach detection in editor and set default value in order to use");
-                }
-                if (!DetectConsider.Exists(entity)) {
-                    entityCommandBuffer.AddComponent<DetectionConsideration>(entity);
-                }
-            }
-        }
-    }
-    
 }
