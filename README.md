@@ -1,3 +1,5 @@
+This project currently uses IJobForEach api which will be obselete on 6-20-2020.
+I am just beginnning to refactor system to using either IJobChuck or Entities.Foreach. 
 If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
 
 The utility system works by identifying options available to the AI and selecting the best option by scoring each option based on the circumstances. This has proven a remarkable well-working method for several reasons.
