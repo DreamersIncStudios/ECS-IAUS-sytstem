@@ -3,4 +3,5 @@
 namespace InfluenceMap {
     [GenerateAuthoringComponent]
     public struct StaticInfluencer : IComponentData { }
+
 }

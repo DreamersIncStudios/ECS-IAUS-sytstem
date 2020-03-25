@@ -11,7 +11,54 @@ using IAUS.ECS2.BackGround.Raycasting;
 namespace IAUS.ECS2
 {
 
-    [UpdateAfter(typeof(StateScoreSystem))]
+    [UpdateBefore(typeof(StateScoreSystem))]
+    public partial class DetectionSystemJob : JobComponentSystem
+    {
+        public NativeArray<Entity> AttackableEntityInScene;
+        public EntityQueryDesc AttackableQuery = new EntityQueryDesc()
+        {
+            All = new ComponentType[] { typeof(Attackable), typeof(LocalToWorld) }
+        };
+
+
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            ComponentDataFromEntity<LocalToWorld> Positions = GetComponentDataFromEntity<LocalToWorld>(true);
+            NativeArray<Entity> attackableEntities = GetEntityQuery(AttackableQuery).ToEntityArray(Allocator.TempJob);
+            JobHandle Gettargets = Entities
+                .WithNativeDisableParallelForRestriction(Positions)
+                .WithReadOnly(Positions)
+                .WithDeallocateOnJobCompletion(attackableEntities)
+                .WithReadOnly(attackableEntities)
+
+                .ForEach((Entity entity, ref DynamicBuffer<TargetBuffer> buffer, ref Detection c1) =>
+                {
+                    buffer.Clear();
+
+                    for (int index = 0; index < attackableEntities.Length; index++)
+                    {
+                        float dist = Vector3.Distance(Positions[attackableEntities[index]].Position, Positions[entity].Position);
+                        if (dist <= c1.viewRadius)
+                        {
+                            Vector3 dirToTarget = ((Vector3)Positions[attackableEntities[index]].Position - (Vector3)Positions[entity].Position).normalized;
+                            if (Vector3.Angle(Positions[entity].Forward, dirToTarget) < c1.viewAngleXZ / 2.0f)
+                            {
+                                buffer.Add(new TargetBuffer()
+                                {
+                                    target = attackableEntities[index],
+                                });
+                            }
+                        }
+                    }
+                })
+                .Schedule(inputDeps);
+            return Gettargets;
+
+        }
+
+    }
+    [UpdateAfter(typeof(DetectionSystemJob))]
+
     public partial class DetectionSystem : ComponentSystem
     {
         public NativeArray<Entity> AttackableEntityInScene;
@@ -24,27 +71,16 @@ namespace IAUS.ECS2
         ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoints;
 
 
-        protected override  void OnUpdate()
+        protected override void OnUpdate()
         {
             AttackableComponents = GetComponentDataFromEntity<Attackable>();
             HumanRayCastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
-            JobHandle handle = new GetListOfTarget()
-            {
-                attackableEntities = GetEntityQuery(AttackableQuery).ToEntityArray(Allocator.TempJob),
-                Positions = GetComponentDataFromEntity<LocalToWorld>(true)
 
-            }.Schedule(this);
-            handle.Complete();
-             
-            Entities.ForEach((Entity entity, ref Detection c1, ref LocalToWorld localToWorld)=>
+            Entities.ForEach(( DynamicBuffer<TargetBuffer> Targets,ref LocalToWorld localToWorld, ref Detection c1) =>
             {
-                BufferFromEntity<TargetBuffer> targetBuffer = GetBufferFromEntity<TargetBuffer>(true);
                 int check = new int();
                 List<float> EnemyDetectionLevels = new List<float>();
 
-                if (targetBuffer.Exists(entity))
-                {
-                    DynamicBuffer<TargetBuffer> Targets = targetBuffer[entity];
                     while (check < Targets.Length)
                     {
                         Attackable temp = AttackableComponents[Targets[check].target];
@@ -92,13 +128,13 @@ namespace IAUS.ECS2
 
                         check++;
                     }
-                }
+                
 
                 if (EnemyDetectionLevels.Count > 0)
                 {
                     c1.TargetVisibility = Mathf.Max(EnemyDetectionLevels.ToArray());
                     int indexofMaxDetection = EnemyDetectionLevels.IndexOf(c1.TargetVisibility);
-                    c1.TargetRef = targetBuffer[entity][indexofMaxDetection].target;
+                    c1.TargetRef = Targets[indexofMaxDetection].target;
                 }
                 else
                 {
@@ -110,36 +146,5 @@ namespace IAUS.ECS2
         }
 
     }
-
-    [BurstCompile]
-    struct GetListOfTarget : IJobForEachWithEntity_EBC<TargetBuffer,Detection>
-    {
-        [DeallocateOnJobCompletion] [ReadOnly]public NativeArray<Entity> attackableEntities;
-        [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<LocalToWorld> Positions;
-
-        public void Execute(Entity entity, int Tindex, DynamicBuffer<TargetBuffer> Target, ref Detection c1)
-        {
-            Target.Clear();
-
-            for (int index = 0; index < attackableEntities.Length; index++) {
-                float dist = Vector3.Distance(Positions[attackableEntities[index]].Position, Positions[entity].Position);
-                if (dist <= c1.viewRadius)
-                {
-                    Vector3 dirToTarget = ((Vector3)Positions[attackableEntities[index]].Position - (Vector3)Positions[entity].Position).normalized;
-                    if (Vector3.Angle(Positions[entity].Forward, dirToTarget) < c1.viewAngleXZ / 2.0f) {
-                        //add logic for sort by type
-
-                        Target.Add(new TargetBuffer()
-                        {
-                            target = attackableEntities[index],
-                        } );
-
-                    }
-                }
-
-            }
-        }
-    }
-   
-
+    
 }

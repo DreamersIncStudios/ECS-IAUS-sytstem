@@ -6,7 +6,7 @@ using Unity.Collections;
 namespace IAUS.ECS2
 {
 
-    public partial class DetectionSystem :ComponentSystem
+    public partial class DetectionSystem : ComponentSystem
     {
         public bool Hit(RaycastHit Result)
         {
@@ -32,7 +32,7 @@ namespace IAUS.ECS2
                     case 0:
                         if (Hit(Results[index]))
                         {
-                            AlertLevel +=.36f;
+                            AlertLevel += .36f;
                         }
                         break;
                     case 1:
@@ -70,7 +70,7 @@ namespace IAUS.ECS2
             return AlertLevel;
         }
 
-        
+
     }
-    
+
 }
