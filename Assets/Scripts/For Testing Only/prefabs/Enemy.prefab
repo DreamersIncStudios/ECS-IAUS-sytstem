@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 3968187185008346539}
   - component: {fileID: 2084263992803212845}
   - component: {fileID: 214731904716259773}
+  - component: {fileID: 3199197339933607337}
+  - component: {fileID: 2466848989992003490}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -127,9 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c010d0ed1e9b9bb47a541ff16f6382fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WayPoints:
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &214731906077720524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,11 +143,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 0
-      y: 0
+      x: 1
+      y: 10
     Threat:
-      x: 0
-      y: 0
+      x: 1
+      y: 10
   RingWidth: 0
   fallOff: 0
 --- !u!195 &214731906077720525
@@ -161,7 +160,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 4.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -215,28 +214,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
   DistanceToTarget:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
-  WaitTimer:
-    Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
-  _status: 0
-  _resetTimer: 12
-  UpdatePostition: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 0.935
+    C: 0.35
+  _status: 4
+  _resetTimer: 5
+  UpdatePostition: 1
   DistanceAtStart: 0
   index: 0
 --- !u!114 &2084263992803212845
@@ -251,32 +243,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9201239ec3327484d86aa39e483b544b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeToWait: 10
+  TimeToWait: 15
   Timer: 0
   TimerStarted: 0
   Health:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
-  DistanceToTarget:
-    Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 1
+    C: 0.35
   WaitTimer:
     Inverse: 0
-    responseType: 0
-    M: 0
-    K: 0
-    B: 0
-    C: 0
-  _status: 0
-  _resetTimer: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  _status: 4
+  _resetTimer: 5
   _resetTime: 0
 --- !u!114 &214731904716259773
 MonoBehaviour:
@@ -291,9 +276,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Values:
-  - x: 40
-    y: 1.5
-    z: -37
-  - x: -12.5
-    y: 1.5
-    z: -12.5
+  - Point:
+      x: 40
+      y: 1.5
+      z: -37
+    WaitTime: 10
+  - Point:
+      x: -12.5
+      y: 1.5
+      z: 12.5
+    WaitTime: 15
+--- !u!114 &3199197339933607337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 250
+  viewAngleXZ: 80
+  viewAngleYZ: 80
+  EngageRadius: 45
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  ObstacleMask:
+    serializedVersion: 2
+    m_Bits: 7936
+  distanceToClosetEnemy: 1000
+  distanceToClosetTarget: 1000
+  AggressionLevels:
+    Humans: 0
+    Daemons: 0
+    Angels: 0
+  AlertModifer: 0
+--- !u!114 &2466848989992003490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec3761b14dbaa24fa4cce4597cb6949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.25
+  DistanceToTarget:
+    Inverse: 0
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  DetectionLevel:
+    Inverse: 0
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  _status: 0
+  _resetTimer: 0

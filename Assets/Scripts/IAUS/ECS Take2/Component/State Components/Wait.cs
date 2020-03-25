@@ -12,7 +12,6 @@ namespace IAUS.ECS2
         public float Timer;
         public bool TimerStarted;
         public ConsiderationData Health;
-        public ConsiderationData DistanceToTarget;
         public ConsiderationData WaitTimer;
 
         [SerializeField] float _totalScore;

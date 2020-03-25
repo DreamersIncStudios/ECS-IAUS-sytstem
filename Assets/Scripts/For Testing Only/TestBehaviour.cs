@@ -6,7 +6,6 @@ using Unity.Transforms;
 using UnityEngine.AI;
 using Unity.Collections;
 using Unity.Jobs;
-
 namespace InfluenceMap
 {
     //    [UpdateAfter(typeof(SetInfluences))]
@@ -68,6 +67,8 @@ namespace InfluenceMap
 
     //Add a tag for this to run when needed
     [Unity.Burst.BurstCompile]
+    [System.Obsolete]
+
     public struct GetGridPointWithValueOnly : IJobForEach_B<Gridpoint>
     {
         [NativeDisableParallelForRestriction] public NativeList<Gridpoint> GridpointWithValue;
@@ -81,6 +82,7 @@ namespace InfluenceMap
         }
     }
     [Unity.Burst.BurstCompile]
+    [System.Obsolete]
     public struct MoveToGridPoint : IJobForEachWithEntity<EnemyCharacter, Influencer, LookForPlayer>
     {
         [NativeDisableParallelForRestriction] [ReadOnly] public NativeList<Gridpoint> GridPointsInRange;

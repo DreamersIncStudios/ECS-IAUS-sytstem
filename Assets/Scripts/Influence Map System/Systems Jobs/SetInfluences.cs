@@ -17,7 +17,7 @@ namespace InfluenceMap
             Any = new ComponentType[] {  typeof(Cover) }
 
         };
-        public EntityQueryDesc influencersPlayer = new EntityQueryDesc()
+        public EntityQueryDesc influencersPlayers = new EntityQueryDesc()
         {
             All = new ComponentType[] { typeof(Influencer), typeof(LocalToWorld) },
             Any = new ComponentType[] { typeof(PlayerCharacter) }
@@ -28,102 +28,127 @@ namespace InfluenceMap
             Any = new ComponentType[] { typeof(EnemyCharacter) }
 
         };
+        public EntityQueryDesc StaticInfluencer = new EntityQueryDesc()
+        {
+            All = new ComponentType[] { typeof(Influencer), typeof(LocalToWorld) , typeof(StaticInfluencer) }
+
+        };
+        int interval = 360;
+
+        protected override void OnStartRunning()
+        {
+            base.OnStartRunning();
+
+
+        }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-
-
-            EntityQuery GlobalQ = GetEntityQuery(influencersGlobal);
-            EntityQuery PlayerQ = GetEntityQuery(influencersPlayer);
-            EntityQuery EnemyQ = GetEntityQuery(influencersEnemy);
-
-            var setinf = new Set()
+            if (UnityEngine.Time.frameCount % interval == 2)
             {
-                InfPosGlobal = GlobalQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                influencersGlobal = GlobalQ.ToComponentDataArray<Influencer>(Allocator.TempJob),
 
-                InfPosPlayer = PlayerQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                influencersPlayer = PlayerQ.ToComponentDataArray<Influencer>(Allocator.TempJob),
+                EntityQuery PlayerQ = GetEntityQuery(influencersPlayers);
+                EntityQuery EnemyQ = GetEntityQuery(influencersEnemy);
+                NativeArray<LocalToWorld> InfPosPlayer = PlayerQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
+                NativeArray<Influencer> influencersPlayer = PlayerQ.ToComponentDataArray<Influencer>(Allocator.TempJob);
 
-                InfPosEnemies = EnemyQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                influencersEnemies = EnemyQ.ToComponentDataArray<Influencer>(Allocator.TempJob)
-            };
+                NativeArray<LocalToWorld> InfPosEnemies = EnemyQ.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
+                   NativeArray<Influencer> influencersEnemies = EnemyQ.ToComponentDataArray<Influencer>(Allocator.TempJob);
 
-            JobHandle handle = setinf.Schedule(this, inputDeps);
-            return handle;
-            
-        }
-    }
-
-
-    [BurstCompile]
-    public struct Set : IJobForEach_B<Gridpoint>
-    {
-       [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosGlobal;
-        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersGlobal;
-
-        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersPlayer;
-        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosPlayer;
-
-        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<Influencer> influencersEnemies;
-        [DeallocateOnJobCompletion] [ReadOnly] public NativeArray<LocalToWorld> InfPosEnemies;
-
-
-        public void Execute(DynamicBuffer<Gridpoint> gridpoints)
-        {
-            for(int cnt = 0; cnt< gridpoints.Length;cnt++) {
-                Gridpoint temp= gridpoints[cnt];
-                temp.Global = new Influence();
-                temp.Player = new Influence();
-                temp.Enemy = new Influence();
-
-
-                for (int index = 0; index < InfPosGlobal.Length; index++) {
-
-                    if(temp.dist==0.0f)
-                        temp.dist = Vector3.Distance(temp.Position, InfPosGlobal[index].Position);
-
-                    if (influencersGlobal[index].influence.Proximity.y > temp.dist)  
-                        temp.Global.Proximity.x += influencersGlobal[index].influence.Proximity.x;
-
-                    if (influencersGlobal[index].influence. Threat.y > temp.dist)
-                        temp.Global.Threat.x += influencersGlobal[index].influence.Threat.x;
-                }
-
-                for (int index = 0; index < InfPosPlayer.Length; index++)
-                {
-
-                        float dist = Vector3.Distance(temp.Position, InfPosPlayer[index].Position);
-
-                    if (influencersPlayer[index].influence.Proximity.y > dist)
+                NativeArray<Entity> Static = GetEntityQuery(StaticInfluencer).ToEntityArray(Allocator.TempJob);
+                ComponentDataFromEntity<Influencer> Influence = GetComponentDataFromEntity<Influencer>(true);
+                ComponentDataFromEntity<LocalToWorld> Position = GetComponentDataFromEntity<LocalToWorld>(true);
+              
+                JobHandle CoverSet = Entities
+                    .WithDeallocateOnJobCompletion(Static)
+                    .WithNativeDisableParallelForRestriction(Influence)
+                    .WithNativeDisableParallelForRestriction(Position)
+                    .ForEach((DynamicBuffer<Gridpoint> gridpoints) =>
                     {
-                        temp.Player.Proximity.x += influencersPlayer[index].influence.Proximity.x;
-                       // temp.Global.Proximity.x -= influencersPlayer[index].influence.Proximity.x;
-                    }
-                    if (influencersPlayer[index].influence.Threat.y > dist)
-                    {
-                        temp.Player.Threat.x += influencersPlayer[index].influence.Threat.x;
-                    }
-                }
+                        for (int cnt = 0; cnt < gridpoints.Length; cnt++)
+                        {
+                            Gridpoint gridSquare = gridpoints[cnt];
 
-                for (int index = 0; index < InfPosEnemies.Length; index++)
-                {
+                            for (int j = 0; j < Static.Length; j++)
+                            {
+                                float dist = Vector3.Distance(gridSquare.Position, Position[Static[j]].Position);
 
-                    float dist = Vector3.Distance(temp.Position, InfPosEnemies[index].Position);
+                                if (Influence[Static[j]].influence.Proximity.y > dist)
+                                {
+                                    gridSquare.Global.Proximity.x = Influence[Static[j]].influence.Proximity.x / dist;
+                                }
+                                if (Influence[Static[j]].influence.Threat.y > dist)
+                                {
+                                    gridSquare.Global.Threat.x = Influence[Static[j]].influence.Threat.x / dist;
+                                }
+                            }
+                            gridpoints[cnt] = gridSquare;
+                        }
 
-                    if (influencersEnemies[index].influence.Proximity.y > dist)
+                    })
+                    .WithReadOnly(Influence)
+                    .WithReadOnly(Position)
+                    .Schedule(inputDeps);
+                    
+
+                JobHandle setinf = Entities
+                    .WithDeallocateOnJobCompletion(InfPosEnemies)
+                    .WithDeallocateOnJobCompletion(InfPosPlayer)
+                    .WithDeallocateOnJobCompletion(influencersEnemies)
+                    .WithDeallocateOnJobCompletion(influencersPlayer)
+
+                    .ForEach((ref DynamicBuffer < Gridpoint > gridpoints) =>
+                    
                     {
-                        temp.Enemy.Proximity.x += influencersEnemies[index].influence.Proximity.x;
-                        //temp.Global.Proximity.x -= influencersEnemies[index].influence.Proximity.x;
-                    }
-                    if (influencersEnemies[index].influence.Threat.y > dist)
-                    {
-                        temp.Enemy.Threat.x += influencersEnemies[index].influence.Threat.x;
-                    }
-                }
-                gridpoints[cnt] = temp;
+                        for (int cnt = 0; cnt < gridpoints.Length; cnt++)
+                        {
+                            Gridpoint temp = gridpoints[cnt];
+                            temp.Player = new Influence();
+                            temp.Enemy = new Influence();
+
+                            for (int index = 0; index < InfPosPlayer.Length; index++)
+                            {
+
+                                float dist = Vector3.Distance(temp.Position, InfPosPlayer[index].Position);
+
+                                if (influencersPlayer[index].influence.Proximity.y > dist)
+                                {
+                                    temp.Player.Proximity.x += influencersPlayer[index].influence.Proximity.x;
+                                }
+                                if (influencersPlayer[index].influence.Threat.y > dist)
+                                {
+                                    temp.Player.Threat.x += influencersPlayer[index].influence.Threat.x;
+                                }
+                            }
+
+                            for (int index = 0; index < InfPosEnemies.Length; index++)
+                            {
+
+                                float dist = Vector3.Distance(temp.Position, InfPosEnemies[index].Position);
+
+                                if (influencersEnemies[index].influence.Proximity.y > dist)
+                                {
+                                    temp.Enemy.Proximity.x += influencersEnemies[index].influence.Proximity.x;
+                                }
+                                if (influencersEnemies[index].influence.Threat.y > dist)
+                                {
+                                    temp.Enemy.Threat.x += influencersEnemies[index].influence.Threat.x;
+                                }
+                            }
+                            gridpoints[cnt] = temp;
+                        }
+
+
+
+                    }).Schedule( CoverSet);
+
+
+                return setinf;
             }
+            else
 
+                return inputDeps;
+            
         }
     }
 

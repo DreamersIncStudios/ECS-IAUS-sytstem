@@ -24,6 +24,7 @@ namespace IAUS.ECS2
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddBuffer<PatrolBuffer>(entity);
             dstManager.AddComponent<ECS.Component.Movement>(entity);
+            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
 

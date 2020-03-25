@@ -7,7 +7,7 @@ namespace IAUS.ECS2
     [GenerateAuthoringComponent]
     public struct TargetBuffer : IBufferElementData
     {
-        //public int test;
         public Entity target;
     }
+
 }

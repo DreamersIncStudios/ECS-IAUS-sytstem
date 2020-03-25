@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Unity.Collections;
 using UnityEngine;
 using Unity.Transforms;
 using Unity.Entities;
@@ -8,7 +7,7 @@ using CharacterStats;
 
 namespace IAUS.ECS2
 {
-    [UpdateBefore(typeof(InfluenceMap.TakeTwo))]
+    [UpdateBefore(typeof(StateScoreSystem))]
     public class ConsiderationSystem : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
@@ -19,9 +18,12 @@ namespace IAUS.ECS2
 
             }).Schedule(inputDeps);
             
-            JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld, ref ECS.Component.Movement move, ref Patrol patrol) =>
+            JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld,  ref Patrol patrol, ref DynamicBuffer<PatrolBuffer> buffer) =>
             {
-                float distanceRemaining = Vector3.Distance(move.TargetLocation, toWorld.Position);
+                float distanceRemaining = Vector3.Distance(buffer[patrol.index].WayPoint.Point, toWorld.Position);
+                // make .7f a variable 
+                if (distanceRemaining < .7f)
+                    distanceRemaining = 0.0f;
                 distanceTo.Ratio =  distanceRemaining/patrol.DistanceAtStart;
 
             }).Schedule(jobHandle);
@@ -32,10 +34,25 @@ namespace IAUS.ECS2
 
             }).Schedule(jobHandle2);
 
-            //jobHandle.Complete();
-            //jobHandle2.Complete();
-            //jobHandle3.Complete();
-            return jobHandle3;
+            ComponentDataFromEntity<LocalToWorld> Transforms = GetComponentDataFromEntity<LocalToWorld>(true);
+            JobHandle DetectionEnemy = Entities
+                .WithNativeDisableParallelForRestriction(Transforms)
+                .ForEach((Entity entity, ref DetectionConsideration detectionConsider,  in Detection c1) =>
+                {
+                    detectionConsider.VisibilityRatio = c1.TargetVisibility;
+                    if (c1.TargetRef != Entity.Null)
+                    {
+                        float dist = Vector3.Distance(Transforms[entity].Position, Transforms[c1.TargetRef].Position);
+                        detectionConsider.RangeRatio = dist / c1.viewRadius;
+                    }
+                    else { detectionConsider.RangeRatio = 1.0f; }
+
+                })
+                .WithReadOnly(Transforms)
+                .Schedule(jobHandle3);
+
+            return DetectionEnemy; ;
+
         }
     }
 }
