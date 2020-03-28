@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - Player
+  - NPC
   - Environement
-  - 
-  - 
-  - 
+  - Player
+  - Attackable NPC
+  - Attackable Structure
   - 
   - 
   - 

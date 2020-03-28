@@ -1,3 +1,7 @@
+This project currently uses IJobForEach api which will be obselete on 6-20-2020.
+I am just beginnning to refactor system to using either IJobChuck or Entities.Foreach. 
+
+
 The utility system works by identifying options available to the AI and selecting the best option by scoring each option based on the circumstances. This has proven a remarkable well-working method for several reasons.
 
 Simple to Design - The Utility AI can often be designed in natural language, which makes it easy for the AI programmer to speak with game designers. There is no need to talk about arcane concepts such as conditions, states, sequences and decorators. Instead you can explain the intended AI behavior in terms such as “If the AI is under fire, prioritize finding cover”. Note how fuzzy terms - such as “prioritize” - can be used, which comes natural to human conversation.
@@ -18,11 +22,5 @@ http://intrinsicalgorithm.com/IAonAI/2013/02/both-my-gdc-lectures-on-utility-the
 
 https://www.gdcvault.com/play/1018040/Architecture-Tricks-Managing-Behaviors-in starts at 33 min mark
 
-Rev 0.1.0A: Consideration  and Actions States Functional 
-To Be Added in next revision
-	Response Curves
-	Action OnStateEnter, OnStateExit, 
-	Example Codes Improvement
-	Possible Removal of Inverse bool in considerations
 
 

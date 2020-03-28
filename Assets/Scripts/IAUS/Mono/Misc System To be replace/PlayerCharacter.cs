@@ -6,7 +6,7 @@ using Unity.Entities;
 /*Generic Player Character Class
  * Will be using BurgZergArcade Derived Player Character System  that is already in main project file
  */
-namespace Stats
+namespace CharacterStats
 {
     public class PlayerCharacter : MonoBehaviour, IConvertGameObjectToEntity
     {
@@ -23,6 +23,7 @@ namespace Stats
         {
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
+            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
 
         }
 
