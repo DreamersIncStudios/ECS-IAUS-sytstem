@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Debugspecial : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour
 {
-    public LayerMask Mask;
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log((int)Mask);
+        
     }
 
     // Update is called once per frame

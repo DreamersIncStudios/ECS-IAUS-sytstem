@@ -67,7 +67,6 @@
     <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Debugspecial.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Detection.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\HumanRayCastPoints.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable.cs" />
@@ -99,14 +98,13 @@
     <Compile Include="Assets\Scripts\IAUS\ECS\Systems\Component Systems\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS\Utilities.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\General\Interfaces\Prototype.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Components\CreateGridMapTiles.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Components\GridComponent.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Components\Influencer.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Components\Setting Components\Cover.cs" />
     <Compile Include="Assets\Scripts\Influence Map System\Components\Setting Components\Static.cs" />
-    <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\SetInfluences.cs" />
-    <Compile Include="Assets\Scripts\Influence Map System\Systems Jobs\SetMobileGlobal.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
