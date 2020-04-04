@@ -4,9 +4,8 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Transforms;
-using Unity.Burst;
 using IAUS.ECS2.BackGround.Raycasting;
-
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {

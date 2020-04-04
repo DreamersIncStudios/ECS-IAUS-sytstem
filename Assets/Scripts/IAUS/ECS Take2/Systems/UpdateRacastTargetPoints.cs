@@ -1,7 +1,7 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS2.BackGround.Raycasting;
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2.BackGround
 {

@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using CharacterStats;
 
-namespace IAUS.ECS2
+namespace IAUS.ECS2.Charaacter
 {
     public class GruntAuthoring : MonoBehaviour,IConvertGameObjectToEntity
     {
@@ -22,7 +22,6 @@ namespace IAUS.ECS2
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponent<EnemyCharacter>(entity);
-            dstManager.AddBuffer<PatrolBuffer>(entity);
             dstManager.AddComponent<ECS.Component.Movement>(entity);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };

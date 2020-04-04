@@ -76,7 +76,7 @@ namespace InfluenceMap
         {
                 for (int index = 0; index < buffer.Length; index++)
                 {
-                    if (buffer[index].Player.Proximity.x > 0.0f)
+                    if (buffer[index].Ally.Proximity.x > 0.0f)
                         GridpointWithValue.Add(buffer[index]);
                 }
         }
@@ -99,7 +99,7 @@ namespace InfluenceMap
 
                     if (dist < 2.0f)
                     {
-                        if (GridPointsInRange[index].Player.Proximity.x > influencer.influence.Proximity.x)
+                        if (GridPointsInRange[index].Ally.Proximity.x > influencer.influence.Proximity.x)
                         {
                            // c0.Target = PlayerCharPositions[index2];
                             entityCommandBuffer.RemoveComponent<LookForPlayer>(entity);

@@ -12,28 +12,29 @@ namespace IAUS.ECS2
     {
 
         EntityCommandBufferSystem entityCommandBufferSystem;
-        [NativeDisableParallelForRestriction]EntityCommandBuffer commandBuffer;
         protected override void OnCreate()
         {
             base.OnCreate();
-            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-           EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
+            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
            ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>();
            ComponentDataFromEntity<DistanceToConsideration> Distance = GetComponentDataFromEntity<DistanceToConsideration>();
            ComponentDataFromEntity<TimerConsideration> TimeC = GetComponentDataFromEntity<TimerConsideration>();
             BufferFromEntity<TargetBuffer> targetBuffer = GetBufferFromEntity<TargetBuffer>(true);
             ComponentDataFromEntity<Detection> Detect = GetComponentDataFromEntity<Detection>();
+
             JobHandle patrolAdd = Entities
                 .WithNativeDisableParallelForRestriction(health)
                 .WithNativeDisableParallelForRestriction(Distance)
                 .WithNativeDisableParallelForRestriction(TimeC)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
 
-                .ForEach((Entity entity, ref DynamicBuffer<StateBuffer> stateBuffer, in Patrol c1, in CreateAIBufferTag c2) =>
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in Patrol c1, in CreateAIBufferTag c2) =>
                 {
                     bool add = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
@@ -51,15 +52,15 @@ namespace IAUS.ECS2
                         });
                         if (!health.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<HealthConsideration>(entity);
+                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex,entity);
                         }
                         if (!TimeC.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<TimerConsideration>(entity);
+                            entityCommandBuffer.AddComponent<TimerConsideration>(nativeThreadIndex, entity);
                         }
                         if (!Distance.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<DistanceToConsideration>(entity);
+                            entityCommandBuffer.AddComponent<DistanceToConsideration>(nativeThreadIndex, entity);
                         }
                     }
                 })
@@ -73,7 +74,7 @@ namespace IAUS.ECS2
                 .WithNativeDisableParallelForRestriction(TimeC)
                 .WithNativeDisableParallelForRestriction(Distance)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
-                .ForEach((Entity entity, ref DynamicBuffer<StateBuffer> stateBuffer, in WaitTime c1, in CreateAIBufferTag c2)=> 
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in WaitTime c1, in CreateAIBufferTag c2)=> 
                 {
                     bool add = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
@@ -91,17 +92,17 @@ namespace IAUS.ECS2
                         });
                         if (!health.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<HealthConsideration>(entity);
+                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
 
                         }
                         if (!TimeC.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<TimerConsideration>(entity);
+                            entityCommandBuffer.AddComponent<TimerConsideration>(nativeThreadIndex, entity);
 
                         }
                         if (!Distance.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<DistanceToConsideration>(entity);
+                            entityCommandBuffer.AddComponent<DistanceToConsideration>(nativeThreadIndex, entity);
 
                         }
                     }
@@ -115,7 +116,7 @@ namespace IAUS.ECS2
                 .WithNativeDisableParallelForRestriction(targetBuffer)
                 .WithNativeDisableParallelForRestriction(health)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
-                .ForEach((Entity entity, ref DynamicBuffer<StateBuffer> stateBuffer, in Detection c1, in CreateAIBufferTag c2) =>
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in Detection c1, in CreateAIBufferTag c2) =>
                 {
                     bool add = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
@@ -133,11 +134,11 @@ namespace IAUS.ECS2
                         });
                         if (!targetBuffer.Exists(entity))
                         {
-                            entityCommandBuffer.AddBuffer<TargetBuffer>(entity);
+                            entityCommandBuffer.AddBuffer<TargetBuffer>(nativeThreadIndex, entity);
                         }
                         if (!health.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<HealthConsideration>(entity);
+                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
 
                         }
                     }
@@ -151,7 +152,7 @@ namespace IAUS.ECS2
                     .WithNativeDisableParallelForRestriction(health)
                     .WithNativeDisableParallelForRestriction(Detect)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
-                .ForEach((Entity entity, ref DynamicBuffer<StateBuffer> stateBuffer, in InvestigateArea c1, in CreateAIBufferTag c2) =>
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in InvestigateArea c1, in CreateAIBufferTag c2) =>
                 {
                     bool add = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
@@ -169,12 +170,12 @@ namespace IAUS.ECS2
                         });
                         if (!health.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<HealthConsideration>(entity);
+                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
 
                         }
                         if (!Detect.Exists(entity))
                         {
-                            entityCommandBuffer.AddComponent<Detection>(entity);
+                            entityCommandBuffer.AddComponent<Detection>(nativeThreadIndex, entity);
                             throw new System.Exception(" this does not have Detection component attached to game object. Please attach detection in editor and set default value in order to use");
                         }
                     }
@@ -188,9 +189,9 @@ namespace IAUS.ECS2
             JobHandle ClearCreateTag = Entities
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
 
-                .ForEach((Entity entity, in CreateAIBufferTag Tag) =>
+                .ForEach((Entity entity, int nativeThreadIndex, in CreateAIBufferTag Tag) =>
                 {
-                    entityCommandBuffer.RemoveComponent<CreateAIBufferTag>(entity);
+                    entityCommandBuffer.RemoveComponent<CreateAIBufferTag>(nativeThreadIndex, entity);
 
                 })
                 .Schedule(InvestigateAreaAddJob);

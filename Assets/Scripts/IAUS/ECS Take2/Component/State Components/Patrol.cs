@@ -15,7 +15,7 @@ namespace IAUS.ECS2
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
-
+        public float BufferZone;
         [SerializeField]  float _totalScore;
         public bool UpdatePostition;
         public float DistanceAtStart;

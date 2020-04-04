@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Unity.Entities;
 using UnityEngine;
-using Unity.Entities;
-using Unity.Mathematics;
-namespace IAUS.ECS2
+namespace InfluenceMap.Factions
 {
     [GenerateAuthoringComponent]
     public struct Attackable : IComponentData
     {
-        public Factions Faction;
+        public FactionTypes Faction;
         public ObjectType Type;
+        public FactionAggression AggressionLevels; // This might need to be moved to factionTag
 
         // system to get this points Break out to subclass
 
@@ -20,9 +18,20 @@ namespace IAUS.ECS2
         Creature,
         Humaniod,
     }
-    public enum Factions {
+    public enum FactionTypes {
         Human,
         Angel,
-        Daemon
+        Daemon,
+        Robot,
+    }
+    [System.Serializable]
+    public struct FactionAggression
+    {
+        [Range(-10,10)]
+        public float Humans;
+        [Range(-10, 10)]
+        public float Daemons;
+        [Range(-10, 10)]
+        public float Angels;
     }
 }

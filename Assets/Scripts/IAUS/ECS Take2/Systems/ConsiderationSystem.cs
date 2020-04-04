@@ -22,7 +22,7 @@ namespace IAUS.ECS2
             {
                 float distanceRemaining = Vector3.Distance(buffer[patrol.index].WayPoint.Point, toWorld.Position);
                 // make .7f a variable 
-                if (distanceRemaining < .7f)
+                if (distanceRemaining < patrol.BufferZone)
                     distanceRemaining = 0.0f;
                 distanceTo.Ratio =  distanceRemaining/patrol.DistanceAtStart;
 

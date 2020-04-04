@@ -2,7 +2,7 @@
 using Unity.Entities;
 
 
-namespace IAUS.ECS2
+namespace InfluenceMap.Factions
 {
     public class Faction : MonoBehaviour
     {

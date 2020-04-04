@@ -15,7 +15,7 @@ namespace InfluenceMap
     }
     public struct Gridpoint : IBufferElementData {
         
-        public Influence Player;
+        public Influence Ally;
         public Influence Enemy;
         public Influence Global;
        

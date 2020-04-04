@@ -8,6 +8,7 @@ using Unity.Mathematics;
 using Unity.Jobs;
 using IAUS.ECS.Component;
 using InfluenceMap;
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {
@@ -21,11 +22,9 @@ namespace IAUS.ECS2
         Any = new ComponentType[]{typeof(Cover) }
         };
 
-        public EntityQueryDesc DynamicObjectQuery = new EntityQueryDesc()
+        public EntityQueryDesc DynamicAttackaleObjectQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Influencer) },
-
-            Any = new ComponentType[] { typeof(Attackable) }
+            All = new ComponentType[] { typeof(Influencer), typeof(Attackable) }
         };
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
@@ -48,10 +47,11 @@ namespace IAUS.ECS2
 
          NativeArray<Entity> StaticObjects= GetEntityQuery(StaticObjectQuery).ToEntityArray(Allocator.TempJob);
             
-            NativeArray<Entity> DynamicObjects = GetEntityQuery(DynamicObjectQuery).ToEntityArray(Allocator.TempJob);
+            NativeArray<Entity> DynamicObjects = GetEntityQuery(DynamicAttackaleObjectQuery).ToEntityArray(Allocator.TempJob);
 
             ComponentDataFromEntity<LocalToWorld> positions = GetComponentDataFromEntity<LocalToWorld>(true);
             ComponentDataFromEntity<Influencer> Influence = GetComponentDataFromEntity<Influencer>(true);
+            ComponentDataFromEntity<Attackable> AttackableInfo = GetComponentDataFromEntity<Attackable>(true);
 
 
         JobHandle CheckInfluence = Entities.
@@ -63,8 +63,9 @@ namespace IAUS.ECS2
                 .WithReadOnly(positions)
                 .WithNativeDisableParallelForRestriction(Influence)
                 .WithReadOnly(Influence)
-                
-                .ForEach((DynamicBuffer<PatrolBuffer> buffer, ref Patrol patrol, ref PatrolActionTag tag) => 
+                .WithNativeDisableParallelForRestriction(AttackableInfo)
+                .WithReadOnly(AttackableInfo)
+                .ForEach((Entity entity, DynamicBuffer<PatrolBuffer> buffer, ref Patrol patrol, ref PatrolActionTag tag) => 
             {
 
                 // need to add a check to YZ vertial angle or do a raycast to see if below
@@ -83,18 +84,127 @@ namespace IAUS.ECS2
                         InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                     }
                 }
+                Attackable self = AttackableInfo[entity];
+
+
                 for (int index = 0; index < DynamicObjects.Length; index++)
                 {
                     float dist = Vector3.Distance(buffer[patrol.index].WayPoint.Point, positions[DynamicObjects[index]].Position);
                     Influencer Temp = Influence[DynamicObjects[index]];
-                    if (dist < Temp.influence.Proximity.y)
+
+
+                    switch (self.Faction)
                     {
-                        InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                        case FactionTypes.Angel:
+
+                        switch (AttackableInfo[DynamicObjects[index]].Faction)
+                            {
+                                case FactionTypes.Angel:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Human:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Daemon:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                            }
+
+                            break;
+                        case FactionTypes.Human:
+                            switch (AttackableInfo[DynamicObjects[index]].Faction)
+                            {
+                                case FactionTypes.Angel:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Human:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Daemon:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                            }
+                            break;
+                        case FactionTypes.Daemon:
+                            switch (AttackableInfo[DynamicObjects[index]].Faction)
+                            {
+                                case FactionTypes.Angel:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Human:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                                case FactionTypes.Daemon:
+                                    if (dist < Temp.influence.Proximity.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
+                                    }
+                                    if (dist < Temp.influence.Threat.y)
+                                    {
+                                        InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
+                                    }
+                                    break;
+                            }
+                            break;
                     }
-                    if (dist < Temp.influence.Threat.y)
-                    {
-                        InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
-                    }
+
+
                 }
 
                 //  Debug.Log(InfluenceAtPoint.Global.Proximity.x);

@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {
@@ -17,13 +18,7 @@ namespace IAUS.ECS2
         public LayerMask ObstacleMask;
         public float TargetVisibility;
         public Entity TargetRef;
-        public FactionsTypes AggressionLevels; // This might need to be moved to factionTag
         public float AlertModifer;
     }
-    [System.Serializable]
-    public struct FactionsTypes {
-        public float Humans;
-        public float Daemons;
-        public float Angels;
-    }
+
 }
