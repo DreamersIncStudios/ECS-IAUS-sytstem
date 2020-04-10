@@ -3,7 +3,8 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
-
+using IAUS.ECS2.BackGround.Raycasting;
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {
@@ -12,6 +13,7 @@ namespace IAUS.ECS2
     {
 
         EntityCommandBufferSystem entityCommandBufferSystem;
+
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -27,6 +29,7 @@ namespace IAUS.ECS2
            ComponentDataFromEntity<TimerConsideration> TimeC = GetComponentDataFromEntity<TimerConsideration>();
             BufferFromEntity<TargetBuffer> targetBuffer = GetBufferFromEntity<TargetBuffer>(true);
             ComponentDataFromEntity<Detection> Detect = GetComponentDataFromEntity<Detection>();
+            ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoint = GetComponentDataFromEntity<HumanRayCastPoints>();
 
             JobHandle patrolAdd = Entities
                 .WithNativeDisableParallelForRestriction(health)
@@ -34,7 +37,7 @@ namespace IAUS.ECS2
                 .WithNativeDisableParallelForRestriction(TimeC)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
 
-                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in Patrol c1, in CreateAIBufferTag c2) =>
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref Patrol c1, in CreateAIBufferTag c2, in DynamicBuffer<PatrolBuffer> buffer) =>
                 {
                     bool add = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
@@ -42,6 +45,7 @@ namespace IAUS.ECS2
                         if (stateBuffer[index].StateName == AIStates.Patrol)
                         { add = false; }
                     }
+                    c1.MaxNumWayPoint = buffer.Length;
 
                     if (add)
                     {
@@ -115,6 +119,7 @@ namespace IAUS.ECS2
             JobHandle DetectionAdd = Entities
                 .WithNativeDisableParallelForRestriction(targetBuffer)
                 .WithNativeDisableParallelForRestriction(health)
+                .WithNativeDisableParallelForRestriction(HumanRayCastPoint)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
                 .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in Detection c1, in CreateAIBufferTag c2) =>
                 {
@@ -141,8 +146,13 @@ namespace IAUS.ECS2
                             entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
 
                         }
+                        if (!HumanRayCastPoint.Exists(entity))
+                        { 
+                            entityCommandBuffer.AddComponent<HumanRayCastPoints>(nativeThreadIndex, entity);
+                        }
                     }
                 })
+                .WithReadOnly(HumanRayCastPoint)
                 .WithReadOnly(health)
                 .WithReadOnly(targetBuffer)
                 .Schedule(waitAdd);

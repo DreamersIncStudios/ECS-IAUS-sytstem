@@ -34,6 +34,8 @@ namespace IAUS.ECS2
                     .WithNativeDisableParallelForRestriction(entityCommandBuffer)
                     .ForEach((Entity entity, DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
                     {
+                        if (State.Length == 0)
+                            return;
                         for (int index = 0; index < State.Length; index++)
                         {
                             StateBuffer Teststate = State[index];
@@ -87,6 +89,8 @@ namespace IAUS.ECS2
                                                 break;
                                             case AIStates.Wait:
                                                 Ptemp.index++;
+                                                if (Ptemp.index >= Ptemp.MaxNumWayPoint)
+                                                    Ptemp.index = 0;
                                                 Ptemp.UpdatePostition = true;
                                                 break;
                                         }

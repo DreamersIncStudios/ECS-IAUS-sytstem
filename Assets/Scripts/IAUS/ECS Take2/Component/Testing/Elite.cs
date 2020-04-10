@@ -6,7 +6,7 @@ using CharacterStats;
 
 namespace IAUS.ECS2.Charaacter
 {
-    public class Elite : GruntAuthoring
+    public class Elite : CharacterAuthoring
     {
 
 

@@ -67,13 +67,13 @@ namespace IAUS.ECS2
         };
 
         ComponentDataFromEntity<Attackable> AttackableComponents;
-        ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoints;
+        ComponentDataFromEntity<HumanRayCastPoints> RaycastPoints;
 
 
         protected override void OnUpdate()
         {
             AttackableComponents = GetComponentDataFromEntity<Attackable>();
-            HumanRayCastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
+            RaycastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
 
             Entities.ForEach(( DynamicBuffer<TargetBuffer> Targets,ref LocalToWorld localToWorld, ref Detection c1) =>
             {
@@ -95,7 +95,7 @@ namespace IAUS.ECS2
                                 {
                                     AgentPos = localToWorld,
                                     detect = c1,
-                                    humanRaysTargets = HumanRayCastPoints[Targets[check].target],
+                                    humanRaysTargets = RaycastPoints[Targets[check].target],
                                     RaysToSetup = CastRayEnemy
                                 };
                                 jobHandle = HumanRaySetup.Schedule();

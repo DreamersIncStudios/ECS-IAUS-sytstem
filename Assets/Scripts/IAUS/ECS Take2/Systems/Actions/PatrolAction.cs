@@ -31,9 +31,18 @@ namespace IAUS.ECS2
         {
             float DT = Time.DeltaTime;
             JobHandle PatrolPointUpdate = Entities.ForEach((ref Patrol patrol,
-            ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld, ref PatrolActionTag tag
+            ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld
              ) =>
             {
+                if (patrol.UpdatePatrolPoints)
+                {
+                    buffer.Clear();
+
+
+
+                    patrol.MaxNumWayPoint = buffer.Length;
+                }
+
                 if (patrol.Status == ActionStatus.Idle || patrol.Status == ActionStatus.CoolDown)
                     if (patrol.UpdatePostition)
                     {
@@ -223,6 +232,11 @@ namespace IAUS.ECS2
                     return;
                     if (patrol.UpdatePostition)
                         return;
+                    if (patrol.index >= buffer.Length)
+                    {
+                        patrol.UpdatePostition = true;
+                        return; 
+            }
                         //Running
                         if (!buffer[patrol.index].WayPoint.Point.Equals( move.TargetLocation)) 
                 {
