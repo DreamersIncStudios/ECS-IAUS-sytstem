@@ -19,14 +19,21 @@ namespace IAUS.ECS2.Charaacter
         public int MaxMana;
 
 
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        public virtual void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddComponent<ECS.Component.Movement>(entity);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
             dstManager.AddComponentData(entity, data);
-
+            dstManager.AddComponent<NPC>(entity);
         }
+    }
+
+    public struct NPC : IComponentData
+    {
+
+        public Entity HomeEntity { get; set; }
+
     }
 }

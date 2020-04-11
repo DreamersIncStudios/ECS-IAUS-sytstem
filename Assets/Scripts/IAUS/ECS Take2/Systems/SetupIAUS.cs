@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
 using IAUS.ECS2.BackGround.Raycasting;
-using InfluenceMap.Factions;
+using InfluenceMap;
 
 namespace IAUS.ECS2
 {
@@ -29,12 +29,14 @@ namespace IAUS.ECS2
            ComponentDataFromEntity<TimerConsideration> TimeC = GetComponentDataFromEntity<TimerConsideration>();
             BufferFromEntity<TargetBuffer> targetBuffer = GetBufferFromEntity<TargetBuffer>(true);
             ComponentDataFromEntity<Detection> Detect = GetComponentDataFromEntity<Detection>();
+            ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>();
             ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoint = GetComponentDataFromEntity<HumanRayCastPoints>();
 
             JobHandle patrolAdd = Entities
                 .WithNativeDisableParallelForRestriction(health)
                 .WithNativeDisableParallelForRestriction(Distance)
                 .WithNativeDisableParallelForRestriction(TimeC)
+                .WithNativeDisableParallelForRestriction(Influences)
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
 
                 .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref Patrol c1, in CreateAIBufferTag c2, in DynamicBuffer<PatrolBuffer> buffer) =>
@@ -65,6 +67,12 @@ namespace IAUS.ECS2
                         if (!Distance.Exists(entity))
                         {
                             entityCommandBuffer.AddComponent<DistanceToConsideration>(nativeThreadIndex, entity);
+                        }
+                        if (!Influences.Exists(entity))
+                        { 
+                            entityCommandBuffer.AddComponent<InfluenceValues>(nativeThreadIndex, entity);
+
+
                         }
                     }
                 })
@@ -195,6 +203,38 @@ namespace IAUS.ECS2
                 .Schedule(DetectionAdd);
 
 
+            JobHandle RetreatActionAdd =
+                Entities
+                    .WithNativeDisableParallelForRestriction(health)
+                    .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, in Retreat retreat, in CreateAIBufferTag c2) =>
+                    {
+                        bool add = true;
+                        for (int index = 0; index < stateBuffer.Length; index++)
+                        {
+                            if (stateBuffer[index].StateName == AIStates.Retreat)
+                            { add = false; }
+
+                        }
+
+                        if (add)
+                        {
+                            stateBuffer.Add(new StateBuffer()
+                            {
+                                StateName = AIStates.Retreat,
+                                Status = ActionStatus.Idle
+                            });
+                            if (!health.Exists(entity))
+                            {
+                                entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
+
+                            }
+                        }
+                    })
+
+                     .WithReadOnly(health)
+                     .Schedule(InvestigateAreaAddJob);
+
+
             // This is to be the last job of this system
             JobHandle ClearCreateTag = Entities
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
@@ -204,7 +244,7 @@ namespace IAUS.ECS2
                     entityCommandBuffer.RemoveComponent<CreateAIBufferTag>(nativeThreadIndex, entity);
 
                 })
-                .Schedule(InvestigateAreaAddJob);
+                .Schedule(RetreatActionAdd);
                 return ClearCreateTag;
         }
 

@@ -13,6 +13,7 @@ namespace InfluenceMap
         
 
     }
+    // rename required;
     public struct Gridpoint : IBufferElementData {
         
         public Influence Ally;

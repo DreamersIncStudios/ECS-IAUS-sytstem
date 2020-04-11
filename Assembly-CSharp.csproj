@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\For Testing Only\CreateEnemy.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
@@ -77,6 +76,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\BaseStateScorer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\InvestigateArea.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Patrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Retreat.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\ReturnToBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\StateBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\TargetBuffer.cs" />
@@ -84,10 +85,13 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\BaseIAUSAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\Bases\Base.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\CharacterAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\EnemyCharacterAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJobSystem.cs" />

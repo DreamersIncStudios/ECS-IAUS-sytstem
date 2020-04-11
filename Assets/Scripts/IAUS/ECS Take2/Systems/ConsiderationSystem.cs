@@ -20,8 +20,7 @@ namespace IAUS.ECS2
             
             JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld,  ref Patrol patrol, ref DynamicBuffer<PatrolBuffer> buffer) =>
             {
-                //if (patrol.index >= buffer.Length)
-                //   return;
+                
                 float distanceRemaining = Vector3.Distance(buffer[patrol.index].WayPoint.Point, toWorld.Position);
                 // make .7f a variable 
                 if (distanceRemaining < patrol.BufferZone)

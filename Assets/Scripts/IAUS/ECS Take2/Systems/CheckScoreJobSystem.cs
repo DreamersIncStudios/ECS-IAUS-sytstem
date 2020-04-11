@@ -23,7 +23,7 @@ namespace IAUS.ECS2
             ComponentDataFromEntity<Patrol> Patrol = GetComponentDataFromEntity<Patrol>(false);
             ComponentDataFromEntity<WaitTime> Wait = GetComponentDataFromEntity<WaitTime>(false);
             ComponentDataFromEntity<Movement> Move = GetComponentDataFromEntity<Movement>(false);
-            EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
+            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
 
 
                 float DT = Time.DeltaTime;
@@ -32,7 +32,7 @@ namespace IAUS.ECS2
                     .WithNativeDisableParallelForRestriction(Wait)
                     .WithNativeDisableParallelForRestriction(Move)
                     .WithNativeDisableParallelForRestriction(entityCommandBuffer)
-                    .ForEach((Entity entity, DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
+                    .ForEach((Entity entity, int nativeThreadIndex, DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
                     {
                         if (State.Length == 0)
                             return;
@@ -126,7 +126,7 @@ namespace IAUS.ECS2
                             {
                                 // Get compemenet set timer and status to completed
                                 case AIStates.Patrol:
-                                    entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex, entity);
                                     Patrol Ptemp = Patrol[entity];
                                     Movement move = Move[entity];
                                     //move.CanMove = false;
@@ -140,7 +140,7 @@ namespace IAUS.ECS2
                                     Patrol[entity] = Ptemp;
                                     break;
                                 case AIStates.Wait:
-                                    entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<WaitActionTag>(nativeThreadIndex, entity);
                                     WaitTime Wtemp = Wait[entity];
                                     if (Wtemp.Status == ActionStatus.Running)
                                     {
@@ -159,11 +159,11 @@ namespace IAUS.ECS2
                             {
                                 // Get compemenet set timer and status to completed
                                 case AIStates.Patrol:
-                                    entityCommandBuffer.AddComponent(entity, new PatrolActionTag());
+                                    entityCommandBuffer.AddComponent<PatrolActionTag>(nativeThreadIndex, entity);
 
                                     break;
                                 case AIStates.Wait:
-                                    entityCommandBuffer.AddComponent(entity, new WaitActionTag());
+                                    entityCommandBuffer.AddComponent<WaitActionTag>(nativeThreadIndex,entity);
                                     break;
                             }
 
