@@ -15,11 +15,13 @@ namespace IAUS.ECS2
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
-        public float BufferZone;
         [SerializeField] float _totalScore;
         public bool UpdatePostition;
         public float DistanceAtStart;
         public int index;
+        public float BufferZone;
+        public int MaxInfluenceAtPoint;
+        public float DistInfluence;
         public int MaxNumWayPoint{ get;set; }
         public Entity HomeEntity { get; set; }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

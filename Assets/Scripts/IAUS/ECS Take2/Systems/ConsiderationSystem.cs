@@ -51,8 +51,20 @@ namespace IAUS.ECS2
                 })
                 .WithReadOnly(Transforms)
                 .Schedule(jobHandle3);
+            JobHandle LeaderCheck = Entities
+                .ForEach((ref LeaderConsideration Check, in Party party) => 
+                {
 
-            return DetectionEnemy; ;
+                    if (party.Leader == Entity.Null)
+                    { Check.score = 1; }
+                    else
+                        Check.score = 0;
+
+                })
+                .Schedule(DetectionEnemy);
+
+
+            return LeaderCheck; ;
 
         }
     }

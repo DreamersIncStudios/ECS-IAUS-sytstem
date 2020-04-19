@@ -55,33 +55,43 @@ namespace IAUS.ECS2
 
             JobHandle PatrolAction = Entities.ForEach((ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
                 ref DynamicBuffer<PatrolBuffer> buffer, ref InfluenceValues InfluValues
-                ) => {
+                ) =>
+            {
                 //start
                 if (patrol.Status == ActionStatus.Success)
                     return;
-                    if (patrol.UpdatePostition)
-                        return;
-                    //if (patrol.index >= buffer.Length)
-                    //{
-                    //    patrol.UpdatePostition = true;
-                    //    return; 
-            //}
-                        //Running
-                        if (!buffer[patrol.index].WayPoint.Point.Equals( move.TargetLocation)) 
+                if (patrol.UpdatePostition)
+                    return;
+
+                //Running
+                if (!buffer[patrol.index].WayPoint.Point.Equals(move.TargetLocation))
                 {
                     move.TargetLocation = buffer[patrol.index].WayPoint.Point;
-                        InfluValues.TargetLocation = buffer[patrol.index].WayPoint.Point;
+                    InfluValues.TargetLocation = buffer[patrol.index].WayPoint.Point;
                     patrol.Status = ActionStatus.Running;
                     move.Completed = false;
                     move.CanMove = true;
                 }
-                    //complete
+                if (move.DistanceRemaining <= 10.5f && move.DistanceRemaining >= 3.5)
+                {
+
+                    if (InfluValues.InfluenceAtTarget.Ally.Proximity.x > patrol.MaxInfluenceAtPoint)
+                    {
+                        patrol.index++;
+                        if (patrol.index >= patrol.MaxNumWayPoint)
+                            patrol.index = 0;
+
+                        move.TargetLocation = buffer[patrol.index].WayPoint.Point;
+                        InfluValues.TargetLocation = buffer[patrol.index].WayPoint.Point;
+                        patrol.Status = ActionStatus.Running;
+                    }
+                }
+                //complete
                 if (patrol.Status == ActionStatus.Running)
                 {
                     if (move.Completed && !move.CanMove)
                     {
                         patrol.Status = ActionStatus.Success;
-
                     }
                 }
 

@@ -64,7 +64,6 @@ namespace IAUS.ECS2
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
 
                 }).Schedule(inputDeps);
-                // PatrolJob.Complete();
                 DT = Time.DeltaTime;
 
                 JobHandle WaitJob = Entities
@@ -113,9 +112,56 @@ namespace IAUS.ECS2
 
                 }).Schedule(PatrolJob);
 
+            JobHandle FindLeader = Entities.ForEach
+            ((ref Party party, in HealthConsideration health, in LeaderConsideration LeaderCon, in DetectionConsideration detectConsider,
+            in Detection Detect
+            ) =>
+            {
+                if (party.Status != ActionStatus.Running)
+                {
+                    switch (party.Status)
+                    {
+                        case ActionStatus.CoolDown:
+                            if (party.ResetTime > 0.0f)
+                            {
+                                party.ResetTime -= DT;
+                            }
+                            else
+                            {
+                                party.Status = ActionStatus.Idle;
+                                party.ResetTime = 0.0f;
+                            }
+                            break;
+                        case ActionStatus.Failure:
+                            party.ResetTime = party.ResetTimer / 2.0f;
+                            party.Status = ActionStatus.CoolDown;
+
+                            break;
+                        case ActionStatus.Interrupted:
+                            party.ResetTime = party.ResetTimer / 2.0f;
+                            party.Status = ActionStatus.CoolDown;
+
+                            break;
+                        case ActionStatus.Success:
+                            party.ResetTime = party.ResetTimer;
+                            party.Status = ActionStatus.CoolDown;
+                            
+                            break;
+                    }
+                }
+                    float mod = 1.0f - (1.0f / 3.0f);
+
+                // fix later
+                    float TotalScore = Mathf.Clamp01(party.Health.Output(health.Ratio) *
+                     LeaderCon.score * party.ThreatInArea.Output(detectConsider.ThreatInArea));
+                    party.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
+               
 
 
-                return WaitJob;
+
+            }).Schedule(WaitJob);
+
+                return FindLeader;
             
 
  

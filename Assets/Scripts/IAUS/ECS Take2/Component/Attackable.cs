@@ -28,10 +28,10 @@ namespace InfluenceMap.Factions
     public struct FactionAggression
     {
         [Range(-10,10)]
-        public float Humans;
+        public int Humans;
         [Range(-10, 10)]
-        public float Daemons;
+        public int Daemons;
         [Range(-10, 10)]
-        public float Angels;
+        public int Angels;
     }
 }

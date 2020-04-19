@@ -5,6 +5,11 @@ using Unity.Mathematics;
 using Unity.Jobs;
 using Unity.Transforms;
 using InfluenceMap.Factions;
+
+
+/// <summary> Work to Do 
+/// Rewrite this as A single job 
+/// </summary>
 namespace InfluenceMap
 {
     [GenerateAuthoringComponent]

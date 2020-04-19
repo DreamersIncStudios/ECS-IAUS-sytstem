@@ -7,6 +7,7 @@ namespace IAUS.ECS2
     {
         public float VisibilityRatio;
         public float RangeRatio;
+        public float ThreatInArea;
 
     }
 }
