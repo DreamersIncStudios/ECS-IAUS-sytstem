@@ -6,8 +6,10 @@ using Unity.Jobs;
 using Unity.Transforms;
 using InfluenceMap.Factions;
 using Unity.Collections;
-
+using IAUS.Core;
 namespace IAUS.ECS2 {
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
+
     public class CheckBase : JobComponentSystem
     {
         EntityQueryDesc BasesQuery = new EntityQueryDesc()

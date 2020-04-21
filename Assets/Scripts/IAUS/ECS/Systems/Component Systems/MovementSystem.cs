@@ -39,7 +39,7 @@ namespace IAUS.ECS.System
                     }
                 }
                 else {
-                    Agent.isStopped = false;
+                    Agent.isStopped = true;
 
                 }
 

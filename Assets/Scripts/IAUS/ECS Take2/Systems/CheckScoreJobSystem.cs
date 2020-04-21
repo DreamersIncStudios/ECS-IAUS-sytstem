@@ -4,9 +4,11 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
 using IAUS.ECS.Component;
-
+using IAUS.Core;
 namespace IAUS.ECS2
 {
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
+
     [UpdateBefore(typeof(StateScoreSystem))]
     public class CheckScoreJobSystem : ComponentSystem
     {
@@ -75,7 +77,7 @@ namespace IAUS.ECS2
                     }
 
                     //Update states when a state finishes based on states in Map
-                    if (AI.CurrentState.Status == ActionStatus.Success)
+                    if (AI.CurrentState.Status == ActionStatus.Success )
                     {
                         Patrol Ptemp = PatrolFromEntity.Exists(entity) ? PatrolFromEntity[entity] : new Patrol();
                         WaitTime WTemp = Wait.Exists(entity) ? Wait[entity] : new WaitTime();
@@ -130,11 +132,13 @@ namespace IAUS.ECS2
                                     break;
                             }
                         }
+
                         if (PatrolFromEntity.Exists(entity))
                             PatrolFromEntity[entity] = Ptemp;
                         if (Wait.Exists(entity))
                             Wait[entity] = WTemp;
                     }
+
                     // Rebalance Consider values for time wait;
                     if (CheckState.StateName == AIStates.none)
                         return;

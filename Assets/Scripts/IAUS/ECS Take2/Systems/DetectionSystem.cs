@@ -6,11 +6,12 @@ using Unity.Collections;
 using Unity.Transforms;
 using IAUS.ECS2.BackGround.Raycasting;
 using InfluenceMap.Factions;
+using IAUS.Core;
 
 namespace IAUS.ECS2
 {
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))] // make a separate group
 
-    [UpdateBefore(typeof(StateScoreSystem))]
     public partial class DetectionSystemJob : JobComponentSystem
     {
         public NativeArray<Entity> AttackableEntityInScene;
@@ -57,6 +58,7 @@ namespace IAUS.ECS2
 
     }
     [UpdateAfter(typeof(DetectionSystemJob))]
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
 
     public partial class DetectionSystem : ComponentSystem
     {

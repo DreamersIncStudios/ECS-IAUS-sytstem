@@ -6,11 +6,11 @@ using Unity.Jobs;
 using IAUS.ECS.Component;
 using InfluenceMap;
 using InfluenceMap.Factions;
-
+using IAUS.Core;
 namespace IAUS.ECS2
 {
     [UpdateAfter(typeof(StateScoreSystem))]
-    
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
     public class PatrolAction : JobComponentSystem
     {
 

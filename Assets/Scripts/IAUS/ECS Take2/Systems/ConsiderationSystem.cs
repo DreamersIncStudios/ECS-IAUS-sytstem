@@ -3,11 +3,13 @@ using UnityEngine;
 using Unity.Transforms;
 using Unity.Entities;
 using Unity.Jobs;
+using IAUS.Core;
 using CharacterStats;
 
 namespace IAUS.ECS2
 {
-    [UpdateBefore(typeof(StateScoreSystem))]
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
+  
     public class ConsiderationSystem : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)

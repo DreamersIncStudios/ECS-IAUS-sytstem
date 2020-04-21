@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Burst;
+using IAUS.Core;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
@@ -8,16 +9,11 @@ using InfluenceMap;
 
 namespace IAUS.ECS2
 {
-    [UpdateBefore(typeof(ConsiderationSystem))]
+    [UpdateInGroup(typeof(IAUS_Initialization))]
     public partial class SetupIAUS : JobComponentSystem
     {
 
         EntityCommandBufferSystem entityCommandBufferSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-        }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
@@ -153,7 +149,7 @@ namespace IAUS.ECS2
                         {
                             entityCommandBuffer.AddBuffer<TargetBuffer>(nativeThreadIndex, entity);
                         }
-                        if(!DetectConsider.Exists(entity))
+                        if (!DetectConsider.Exists(entity))
                             entityCommandBuffer.AddComponent<DetectionConsideration>(nativeThreadIndex, entity);
 
                         if (!health.Exists(entity))
@@ -244,7 +240,7 @@ namespace IAUS.ECS2
             //         .WithReadOnly(health)
             //         .Schedule(InvestigateAreaAddJob);
 
-            JobHandle AddLeader = Entities
+            JobHandle AddLeaderAndRally = Entities
                     .WithNativeDisableParallelForRestriction(health)
                     .WithNativeDisableParallelForRestriction(Leaders)
                     .WithNativeDisableParallelForRestriction(Detect)
@@ -254,22 +250,41 @@ namespace IAUS.ECS2
                 .WithNativeDisableParallelForRestriction(HumanRayCastPoint)
                 .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref Party party, in CreateAIBufferTag c2) =>
                 {
-                    bool add = true;
+                    bool addLeader = true;
                     for (int index = 0; index < stateBuffer.Length; index++)
                     {
                         if (stateBuffer[index].StateName == AIStates.GotoLeader)
-                        { add = false; }
+                        { addLeader = false; }
+
+                    }
+                    bool addRally = true;
+                    for (int index = 0; index < stateBuffer.Length; index++)
+                    {
+                        if (stateBuffer[index].StateName == AIStates.GotoLeader)
+                        { addRally = false; }
 
                     }
 
 
-                    if (add)
+                    if (addLeader)
                     {
                         stateBuffer.Add(new StateBuffer()
                         {
                             StateName = AIStates.GotoLeader,
                             Status = ActionStatus.Idle
                         });
+                    }
+
+                    if (addRally)
+                    {
+                        stateBuffer.Add(new StateBuffer()
+                        {
+                            StateName = AIStates.Rally,
+                            Status = ActionStatus.Idle
+                        });
+                    }
+                    if (addLeader || addRally)
+                    {
                         if (!health.Exists(entity))
                         {
                             entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
@@ -316,7 +331,7 @@ namespace IAUS.ECS2
                     entityCommandBuffer.RemoveComponent<CreateAIBufferTag>(nativeThreadIndex, entity);
 
                 })
-                .Schedule(AddLeader);
+                .Schedule(AddLeaderAndRally);
             return ClearCreateTag;
         }
 

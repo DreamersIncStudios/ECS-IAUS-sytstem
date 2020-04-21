@@ -5,26 +5,32 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 using Unity.Collections;
-using IAUS.ECS.Component;
+using IAUS.Core;
 
 using IAUS.ECS2.Charaacter;
 namespace IAUS.ECS2 {
     [GenerateAuthoringComponent]
-    public struct Party :BaseStateScorer
+    public struct Party : BaseStateScorer
     {
-
+        [Header("Considerations")]
         public ConsiderationData Health;
         public ConsiderationData ThreatInArea;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
-        public float _totalScore;
-        public float Range;
-        public Entity Leader ;
+
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float ResetTimer { get { return _resetTimer; } set { _resetTimer = value; } }
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
+
+        [Header("Data")]
+        public float _totalScore;
+        public float Range;
+        public float MaxDistanceFromLeader;
+        public Entity Leader;
+        [HideInInspector] public float distanceToLeader;
+        public float DistanceLeaderScore { get { return Mathf.Clamp01(distanceToLeader / MaxDistanceFromLeader);  } }
     }
 
     public struct LeaderConsideration: IComponentData
@@ -33,6 +39,8 @@ namespace IAUS.ECS2 {
     }
  
     public struct GetLeaderTag : IComponentData { }
+    
+    [UpdateInGroup(typeof(IAUS_UpdateSystem))]
 
     public class GetLeaderSystem : JobComponentSystem
     {
@@ -51,13 +59,15 @@ namespace IAUS.ECS2 {
                 .WithDeallocateOnJobCompletion(LeaderEntities)
                 .WithNativeDisableParallelForRestriction(positions)
                 .WithNativeDisableParallelForRestriction(elite)
-                 .ForEach((ref Party party, in LocalToWorld transform, in GetLeaderTag getlead) =>
+                 .ForEach((ref Party party, ref Patrol patrol, in LocalToWorld transform, in GetLeaderTag getlead) =>
                  {
                      if (party.Status == ActionStatus.Success)
                          return;
+
                      Entity TempLeader = party.Leader;
                      if (party.Leader == Entity.Null)
                      {
+                         patrol.CanPatrol = false;
                          party.Status = ActionStatus.Running;
                          for (int i = 0; i < LeaderEntities.Length; i++)
                          {
@@ -72,18 +82,43 @@ namespace IAUS.ECS2 {
                              }
                          }
                      }
-                         Finish:
-                   if(TempLeader!=Entity.Null)
-                     { 
+                     Finish:
+                     if (TempLeader != Entity.Null)
+                     {
                          EliteComponent temp = elite[TempLeader];
                          temp.NumOfSubs++;
                          elite[TempLeader] = temp;
                          party.Status = ActionStatus.Success;
+
                      }
                  })
                  .WithReadOnly(positions)
                  .Schedule(inputDeps);
+
+
             return getleader;
         }
     }
+
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
+    public class UpdateDistanceToLeader : JobComponentSystem
+    {
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            ComponentDataFromEntity<LocalToWorld> position = GetComponentDataFromEntity<LocalToWorld>(false);
+            JobHandle DistanceUpdate = Entities
+                .WithNativeDisableParallelForRestriction(position)
+                .WithReadOnly(position)
+                 .ForEach((ref Party party, in LocalToWorld toWorld) => 
+                 {
+                 if(party.Leader!=Entity.Null)
+                     party.distanceToLeader = Vector3.Distance(toWorld.Position, position[party.Leader].Position);
+                 })
+                 
+                 .Schedule(inputDeps);
+            
+            return DistanceUpdate;
+        }
+    }
+
 }

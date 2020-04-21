@@ -2,11 +2,12 @@
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
-
+using IAUS.Core;
 
 namespace IAUS.ECS2
 {
-    [UpdateAfter(typeof(ConsiderationSystem))]
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
+
     public class StateScoreSystem : JobComponentSystem
     {
         EntityCommandBufferSystem entityCommandBufferSystem;
@@ -24,6 +25,11 @@ namespace IAUS.ECS2
             float DT = Time.DeltaTime;
                 JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, in HealthConsideration health, in DistanceToConsideration distanceTo, in TimerConsideration timer) =>
                 {
+                    if (!patrol.CanPatrol) {
+                        patrol.Status = ActionStatus.Disabled;
+                        patrol.TotalScore = 0.0f;
+                        return;
+                    }
 
                     if (patrol.Status != ActionStatus.Running)
                     {

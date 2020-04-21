@@ -4,12 +4,13 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
 using IAUS.ECS.Component;
-
+using IAUS.Core;
 using IAUS.ECS2.Charaacter;
 
 namespace IAUS.ECS2
 {
     [UpdateAfter(typeof(StateScoreSystem))]
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
 
     public class ReturnToBaseAction : JobComponentSystem
     {

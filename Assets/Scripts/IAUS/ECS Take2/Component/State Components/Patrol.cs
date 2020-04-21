@@ -30,6 +30,8 @@ namespace IAUS.ECS2
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float ResetTimer { get { return _resetTimer; } set { _resetTimer = value; } }
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
+
+        public bool CanPatrol;
     }
 
 }
