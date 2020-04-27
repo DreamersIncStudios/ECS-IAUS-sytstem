@@ -17,6 +17,7 @@ namespace InfluenceMap {
     }
     public struct MoveToPlayer : IComponentData {
         public Gridpoint Location;
+   
         public bool CanMoveToPlayer;
     }
 

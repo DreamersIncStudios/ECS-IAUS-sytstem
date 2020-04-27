@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
-
+using IAUS.Core;
 namespace IAUS.ECS2
 {
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
+
     [UpdateAfter(typeof(StateScoreSystem))]
     public class WaitAction : JobComponentSystem
     {

@@ -3,11 +3,13 @@ using UnityEngine;
 using Unity.Transforms;
 using Unity.Entities;
 using Unity.Jobs;
+using IAUS.Core;
 using CharacterStats;
 
 namespace IAUS.ECS2
 {
-    [UpdateBefore(typeof(StateScoreSystem))]
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
+  
     public class ConsiderationSystem : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
@@ -20,9 +22,10 @@ namespace IAUS.ECS2
             
             JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, ref LocalToWorld toWorld,  ref Patrol patrol, ref DynamicBuffer<PatrolBuffer> buffer) =>
             {
+                
                 float distanceRemaining = Vector3.Distance(buffer[patrol.index].WayPoint.Point, toWorld.Position);
                 // make .7f a variable 
-                if (distanceRemaining < .7f)
+                if (distanceRemaining < patrol.BufferZone)
                     distanceRemaining = 0.0f;
                 distanceTo.Ratio =  distanceRemaining/patrol.DistanceAtStart;
 
@@ -50,8 +53,20 @@ namespace IAUS.ECS2
                 })
                 .WithReadOnly(Transforms)
                 .Schedule(jobHandle3);
+            JobHandle LeaderCheck = Entities
+                .ForEach((ref LeaderConsideration Check, in Party party) => 
+                {
 
-            return DetectionEnemy; ;
+                    if (party.Leader == Entity.Null)
+                    { Check.score = 1; }
+                    else
+                        Check.score = 0;
+
+                })
+                .Schedule(DetectionEnemy);
+
+
+            return LeaderCheck; ;
 
         }
     }

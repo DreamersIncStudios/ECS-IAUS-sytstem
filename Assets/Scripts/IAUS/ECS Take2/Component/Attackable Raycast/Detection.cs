@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
+using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {
@@ -15,15 +16,12 @@ namespace IAUS.ECS2
         public float EngageRadius;
         public LayerMask TargetMask;
         public LayerMask ObstacleMask;
-        public float TargetVisibility;
         public Entity TargetRef;
-        public FactionsTypes AggressionLevels; // This might need to be moved to factionTag
-        public float AlertModifer;
+        public float AlertModifer; // If AI is on high alert they will notice the enemy sooner
+        public float EnemyAwarnessLevel;  // how aware of the enemy is the AI. IE there are enemies in the area the AI has already noticed but can not longer see
+
+        public float TargetVisibility; //How much of the enemy can the AI see
+
     }
-    [System.Serializable]
-    public struct FactionsTypes {
-        public float Humans;
-        public float Daemons;
-        public float Angels;
-    }
+
 }

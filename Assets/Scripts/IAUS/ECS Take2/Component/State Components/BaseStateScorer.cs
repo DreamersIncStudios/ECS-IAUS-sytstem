@@ -16,6 +16,6 @@ namespace IAUS.ECS2 {
 
     public enum ActionStatus   
     {
-        Failure, Success, Running, Interrupted, Idle, CoolDown,
+        Failure, Success, Running, Interrupted, Idle, CoolDown, Disabled
     }
 }

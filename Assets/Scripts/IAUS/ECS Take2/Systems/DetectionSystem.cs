@@ -4,14 +4,14 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Transforms;
-using Unity.Burst;
 using IAUS.ECS2.BackGround.Raycasting;
-
+using InfluenceMap.Factions;
+using IAUS.Core;
 
 namespace IAUS.ECS2
 {
-
-    [UpdateBefore(typeof(StateScoreSystem))]
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))] // make a separate group
+    [DisableAutoCreation]
     public partial class DetectionSystemJob : JobComponentSystem
     {
         public NativeArray<Entity> AttackableEntityInScene;
@@ -58,6 +58,7 @@ namespace IAUS.ECS2
 
     }
     [UpdateAfter(typeof(DetectionSystemJob))]
+    [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
 
     public partial class DetectionSystem : ComponentSystem
     {
@@ -68,13 +69,13 @@ namespace IAUS.ECS2
         };
 
         ComponentDataFromEntity<Attackable> AttackableComponents;
-        ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoints;
+        ComponentDataFromEntity<HumanRayCastPoints> RaycastPoints;
 
 
         protected override void OnUpdate()
         {
             AttackableComponents = GetComponentDataFromEntity<Attackable>();
-            HumanRayCastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
+            RaycastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
 
             Entities.ForEach(( DynamicBuffer<TargetBuffer> Targets,ref LocalToWorld localToWorld, ref Detection c1) =>
             {
@@ -96,7 +97,7 @@ namespace IAUS.ECS2
                                 {
                                     AgentPos = localToWorld,
                                     detect = c1,
-                                    humanRaysTargets = HumanRayCastPoints[Targets[check].target],
+                                    humanRaysTargets = RaycastPoints[Targets[check].target],
                                     RaysToSetup = CastRayEnemy
                                 };
                                 jobHandle = HumanRaySetup.Schedule();

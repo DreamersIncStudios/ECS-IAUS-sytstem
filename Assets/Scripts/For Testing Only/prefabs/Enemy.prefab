@@ -17,12 +17,12 @@ GameObject:
   - component: {fileID: 214731906077720524}
   - component: {fileID: 214731906077720525}
   - component: {fileID: 5246178431700659747}
-  - component: {fileID: 7354561406910048039}
   - component: {fileID: 3968187185008346539}
   - component: {fileID: 2084263992803212845}
   - component: {fileID: 214731904716259773}
   - component: {fileID: 3199197339933607337}
   - component: {fileID: 2466848989992003490}
+  - component: {fileID: 66810950}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -188,18 +188,6 @@ MonoBehaviour:
   CurMana: 220
   MaxHealth: 150
   MaxMana: 150
---- !u!114 &7354561406910048039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 214731906077720526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5b1771da3596ee409d26761dcc099e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3968187185008346539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,8 +214,10 @@ MonoBehaviour:
     K: -0.95
     B: 0.935
     C: 0.35
+  UpdatePatrolPoints: 0
   _status: 4
   _resetTimer: 5
+  BufferZone: 0.5
   UpdatePostition: 1
   DistanceAtStart: 0
   index: 0
@@ -308,12 +298,8 @@ MonoBehaviour:
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 7936
-  distanceToClosetEnemy: 1000
-  distanceToClosetTarget: 1000
-  AggressionLevels:
-    Humans: 0
-    Daemons: 0
-    Angels: 0
+  TargetVisibility: 0
+  TargetRef: {fileID: 0}
   AlertModifer: 0
 --- !u!114 &2466848989992003490
 MonoBehaviour:
@@ -350,3 +336,21 @@ MonoBehaviour:
     C: 0
   _status: 0
   _resetTimer: 0
+--- !u!114 &66810950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214731906077720526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d28da63bdbe73d42be154d36ab9b4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Faction: 0
+  Type: 2
+  AggressionLevels:
+    Humans: 0
+    Daemons: 0
+    Angels: 0
