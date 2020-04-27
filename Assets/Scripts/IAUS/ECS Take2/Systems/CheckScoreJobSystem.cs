@@ -25,6 +25,7 @@ namespace IAUS.ECS2
             ComponentDataFromEntity<Patrol> PatrolFromEntity = GetComponentDataFromEntity<Patrol>(false);
             ComponentDataFromEntity<WaitTime> Wait = GetComponentDataFromEntity<WaitTime>(false);
             ComponentDataFromEntity<Party> party = GetComponentDataFromEntity<Party>(false);
+            ComponentDataFromEntity<Rally> rally = GetComponentDataFromEntity<Rally>(false);
 
             EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
 
@@ -54,7 +55,11 @@ namespace IAUS.ECS2
                                 Teststate.TotalScore = tempParty.TotalScore;
                                 Teststate.Status = tempParty.Status;
                                 break;
-
+                            case AIStates.Rally:
+                                Rally tempRally= rally.Exists(entity) ? rally[entity] : new Rally();
+                                Teststate.TotalScore = tempRally.TotalScore;
+                                Teststate.Status = tempRally.Status;
+                                break;
                         }
                         State[index] = Teststate;
                     }
@@ -95,8 +100,17 @@ namespace IAUS.ECS2
                                                 Ptemp.index = 0;
                                             Ptemp.UpdatePostition = true;
                                             break;
+
+                                        case AIStates.Rally:
+                                            Ptemp.CanPatrol = true;
+                                            Ptemp.Status = ActionStatus.Idle;
+
+                                            break;
+                                        case AIStates.Patrol:
+                                            entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
+
+                                            break;
                                     }
-                                    entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
 
                                     break;
 
@@ -109,10 +123,11 @@ namespace IAUS.ECS2
 
                                         case AIStates.Wait:
                                             WTemp.Timer = 0.0f;
+                                            entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
                                             break;
 
                                     }
-                                    entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                                 
 
                                     break;
 
@@ -126,8 +141,30 @@ namespace IAUS.ECS2
                                             break;
                                         case AIStates.Wait:
                                             break;
+                                        case AIStates.GotoLeader:
+                                            entityCommandBuffer.RemoveComponent<GetLeaderTag>(entity);
+
+                                            break;
                                     }
-                                    entityCommandBuffer.RemoveComponent<GetLeaderTag>(entity);
+
+                                    break;
+                                case AIStates.Rally:
+
+                                    //consider first updating all patrol points
+                                    switch (AI.CurrentState.StateName)
+                                    {
+                                        // copy partol list of points from leader
+
+                                        case AIStates.Patrol:
+
+                                            break;
+                                        case AIStates.Wait:
+                                            break;
+                                        case AIStates.Rally:
+                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(entity);
+
+                                            break;
+                                    }
 
                                     break;
                             }
@@ -190,6 +227,20 @@ namespace IAUS.ECS2
                                     party[entity] = tempParty;
                                 }
                                 break;
+                            case AIStates.Rally:
+                                if (rally.Exists(entity))
+                                {
+                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(entity);
+
+                                    Rally tempRally = rally[entity];
+                                    if (tempRally.Status == ActionStatus.Running)
+                                    {
+                                        tempRally.Status = ActionStatus.Interrupted;
+                                        tempRally.ResetTime = tempRally.ResetTimer / 2.0f;
+                                    }
+                                   rally[entity] = tempRally;
+                                }
+                                break;
                         }
 
                         CheckState.Status = ActionStatus.Running;
@@ -208,6 +259,9 @@ namespace IAUS.ECS2
                                 break;
                             case AIStates.GotoLeader:
                                 entityCommandBuffer.AddComponent<GetLeaderTag>(entity);
+                                break;
+                            case AIStates.Rally:
+                                entityCommandBuffer.AddComponent<RallyActionTag>(entity);
                                 break;
                         }
 

@@ -16,7 +16,7 @@ namespace IAUS.ECS.Component {
         public float StoppingDistance;
         public float Acceleration;
         public float DistanceRemaining;
-      
+        public bool SetTargetLocation { get; set; }
     }
 
 }

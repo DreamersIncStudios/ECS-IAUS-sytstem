@@ -15,6 +15,8 @@ namespace IAUS.ECS2 {
         [Header("Considerations")]
         public ConsiderationData Health;
         public ConsiderationData ThreatInArea;
+        public ConsiderationData HaveLeader;
+
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
@@ -59,7 +61,7 @@ namespace IAUS.ECS2 {
                 .WithDeallocateOnJobCompletion(LeaderEntities)
                 .WithNativeDisableParallelForRestriction(positions)
                 .WithNativeDisableParallelForRestriction(elite)
-                 .ForEach((ref Party party, ref Patrol patrol, in LocalToWorld transform, in GetLeaderTag getlead) =>
+                 .ForEach((ref Party party, ref Patrol patrol, ref Rally rally, in LocalToWorld transform, in GetLeaderTag getlead) =>
                  {
                      if (party.Status == ActionStatus.Success)
                          return;
@@ -89,12 +91,13 @@ namespace IAUS.ECS2 {
                          temp.NumOfSubs++;
                          elite[TempLeader] = temp;
                          party.Status = ActionStatus.Success;
-
+                         rally.RallyPoint = positions[party.Leader].Position;
+                         rally.SetPosition = true;
                      }
                  })
                  .WithReadOnly(positions)
                  .Schedule(inputDeps);
-
+           
 
             return getleader;
         }
@@ -109,10 +112,12 @@ namespace IAUS.ECS2 {
             JobHandle DistanceUpdate = Entities
                 .WithNativeDisableParallelForRestriction(position)
                 .WithReadOnly(position)
-                 .ForEach((ref Party party, in LocalToWorld toWorld) => 
+                 .ForEach((ref Party party,  in LocalToWorld toWorld) => 
                  {
-                 if(party.Leader!=Entity.Null)
-                     party.distanceToLeader = Vector3.Distance(toWorld.Position, position[party.Leader].Position);
+                     if (party.Leader != Entity.Null)
+                     {
+                         party.distanceToLeader = Vector3.Distance(toWorld.Position, position[party.Leader].Position);
+                     }
                  })
                  
                  .Schedule(inputDeps);

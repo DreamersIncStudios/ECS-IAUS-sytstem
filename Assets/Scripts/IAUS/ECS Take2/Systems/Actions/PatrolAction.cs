@@ -68,6 +68,7 @@ namespace IAUS.ECS2
                 {
                     move.TargetLocation = buffer[patrol.index].WayPoint.Point;
                     InfluValues.TargetLocation = buffer[patrol.index].WayPoint.Point;
+                    move.SetTargetLocation = true;
                     patrol.Status = ActionStatus.Running;
                     move.Completed = false;
                     move.CanMove = true;
@@ -82,6 +83,7 @@ namespace IAUS.ECS2
                             patrol.index = 0;
 
                         move.TargetLocation = buffer[patrol.index].WayPoint.Point;
+                        move.SetTargetLocation = true;
                         InfluValues.TargetLocation = buffer[patrol.index].WayPoint.Point;
                         patrol.Status = ActionStatus.Running;
                     }

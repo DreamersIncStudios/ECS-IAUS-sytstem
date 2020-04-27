@@ -42,6 +42,7 @@ namespace IAUS.ECS2
                             entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
                             Movement temp = move[entity];
                             temp.CanMove = false;
+                            move[entity] = temp;
                             break;
                     }
                    

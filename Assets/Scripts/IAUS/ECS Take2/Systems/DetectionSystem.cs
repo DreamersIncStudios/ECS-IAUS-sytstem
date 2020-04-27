@@ -11,7 +11,7 @@ using IAUS.Core;
 namespace IAUS.ECS2
 {
     [UpdateInGroup(typeof(IAUS_UpdateConsideration))] // make a separate group
-
+    [DisableAutoCreation]
     public partial class DetectionSystemJob : JobComponentSystem
     {
         public NativeArray<Entity> AttackableEntityInScene;

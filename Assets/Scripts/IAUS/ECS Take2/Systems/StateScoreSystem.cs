@@ -6,7 +6,7 @@ using IAUS.Core;
 
 namespace IAUS.ECS2
 {
-    [UpdateInGroup(typeof(IAUS_UpdateState))]
+    [UpdateInGroup(typeof(IAUS_UpdateScore))]
 
     public class StateScoreSystem : JobComponentSystem
     {
@@ -61,14 +61,16 @@ namespace IAUS.ECS2
                                 break;
                         }
                     }
-                    //add math.clamp01
-                    // make sure all outputs goto zero
-
-                    float mod = 1.0f - (1.0f / 2.0f);
-                    float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio) *
-                     patrol.DistanceToTarget.Output(distanceTo.Ratio));
-                    patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
-
+                    if (patrol.Status != ActionStatus.Disabled)
+                    {
+                        float mod = 1.0f - (1.0f / 2.0f);
+                        float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio) *
+                         patrol.DistanceToTarget.Output(distanceTo.Ratio));
+                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
+                    }
+                    else {
+                        patrol.TotalScore = 0.0f;
+                    }
                 }).Schedule(inputDeps);
                 DT = Time.DeltaTime;
 
