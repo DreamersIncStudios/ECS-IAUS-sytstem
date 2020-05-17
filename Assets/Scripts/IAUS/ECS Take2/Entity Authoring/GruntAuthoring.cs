@@ -1,4 +1,5 @@
 ﻿using Unity.Entities;
+using UnityEngine;
 namespace IAUS.ECS2.Charaacter
 {
     public class GruntAuthoring :CharacterAuthoring
@@ -9,7 +10,6 @@ namespace IAUS.ECS2.Charaacter
 
             dstManager.AddComponent<GruntComponent>(entity);
         }
-
 
 
     }

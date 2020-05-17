@@ -29,8 +29,10 @@ namespace IAUS.ECS2
                     Timer.Timer -= DT;
                     Timer.Status = ActionStatus.Running;
                 }
-                //complete
-                if (Timer.TimerStarted)
+
+ 
+                    //complete
+                    if (Timer.TimerStarted)
                 {
                     if (Timer.Timer <= 0.0f)
                     {
