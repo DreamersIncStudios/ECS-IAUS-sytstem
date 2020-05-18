@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{F4949810-3088-227A-DEF0-248CEB0907DF}</ProjectGuid>
+    <ProjectGuid>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>SpawnerSystem</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -63,141 +63,62 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
-    <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.CacheServer">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProGrids">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VSCode.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Jobs">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Jobs.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Burst.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Collections">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Properties.UI">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Properties.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Serialization.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Serialization.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Properties">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProGrids.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Scenes.Hybrid">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Scenes.Hybrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Scenes.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Extensions">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Searcher.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Extensions.Hybrid">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Timeline">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.BuildUtils">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Serialization">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Rider.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities.Hybrid">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Database\EnemyDatabase.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Editor\SOEditor.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Editor\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\ICharacterStat.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\IObject.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\NPC Names List.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\iDroppable.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\iRecoverable.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\GenericNPC.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\RecoveryItemSO.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\SpawnableSO.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\CitizenNPCTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\EnemyTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\NpcTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnController.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\EnemySpawnData.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\ItemSpawnData.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnPointComponent.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnTags\EnemySpawnTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\BaseEnemySpecsForWave.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\WaveBuffer.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WaveSpawnMasterComponents.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WorldComponents\WorldSpawn.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\Authoring\EnemyGOC.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\Authoring\Test.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\SpawnMaster.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\CharacterStats.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\PickupRecoverItem.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\System\Loot System\LootTable.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\System\SpawnSystem.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\System\WaveMasterSystem.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Prefabs\Utility Scripts\CleanUpHybridEntity.cs" />
+    <None Include="Assets\Scripts\Spawer System\Spawner System.asmdef" />
+    <Reference Include="Unity.Entities">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Deformations">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Deformations.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Properties.UI.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Properties.UI.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Entities">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
+    <Reference Include="Unity.Burst">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Transforms">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Transforms.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ProBuilder.AddOns.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ProBuilder.AddOns.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    <Reference Include="Unity.Entities.Hybrid">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Transforms.Hybrid">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -375,6 +296,21 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UWP.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.13/Unity.Burst.Unsafe.dll</HintPath>
@@ -730,20 +666,6 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{177C5D63-9AB4-DF4D-197E-6B020C7F40FD}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
-    <ProjectReference Include="SpawnerSystem.csproj">
-      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
-      <Name>SpawnerSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="IAUS.csproj">
-      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
-      <Name>IAUS</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

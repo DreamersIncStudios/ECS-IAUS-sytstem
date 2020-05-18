@@ -390,10 +390,10 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.10/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.0-preview.13/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.7.1-preview.3/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.8.0-preview.5/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0-preview/Runtime/Newtonsoft.Json.dll</HintPath>
@@ -743,6 +743,16 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="SpawnerSystem.csproj">
+      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
+      <Name>SpawnerSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="IAUS.csproj">
+      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
+      <Name>IAUS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
