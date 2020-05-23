@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
@@ -53,11 +53,12 @@ namespace SpawnerSystem
 
         static private void ValidateDatebase()
         {
-            if (droppables== null) 
-                droppables= new List<Droppable>();
+            if (droppables == null)
+                droppables = new List<Droppable>();
         }
 
-        static public void LoadDatabase() {
+        static public void LoadDatabase()
+        {
             if (isLoaded)
                 return;
             LoadDatabaseForce();
@@ -67,7 +68,7 @@ namespace SpawnerSystem
             ValidateDatebase();
             isLoaded = true;
             RecoveryItemSO[] resources = Resources.LoadAll<RecoveryItemSO>(@"Item");
-            foreach (RecoveryItemSO item  in resources)
+            foreach (RecoveryItemSO item in resources)
             {
                 if (!droppables.Contains((Droppable)item))
                     droppables.Add(item);
@@ -92,6 +93,8 @@ namespace SpawnerSystem
             return null;
         }
 
-    }
 
+
+    
+    }
 }

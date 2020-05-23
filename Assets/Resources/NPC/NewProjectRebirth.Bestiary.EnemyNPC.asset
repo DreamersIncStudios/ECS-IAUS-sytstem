@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33091ef9618c21643b44f45bfbffbb19, type: 3}
+  m_Name: NewProjectRebirth.Bestiary.EnemyNPC
+  m_EditorClassIdentifier: 
+  _spawnID: 0
+  _spawnOffset: {x: 0, y: 0, z: 0}
+  _GO: {fileID: 7156922708338286578, guid: ecd9b53ab9c467547baa8b86a7d5fb1b, type: 3}
+  _scale: {x: 1, y: 1, z: 1}
+  _name: 
+  _level: 0
+  _baseHealth: 0
+  _baseMana: 0
+  _gender: 0
+  _health:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _distanceToTarget:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 0.935
+    C: 0.35
+  _waitTimer:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  _bufferZone: 0.5
+  _timeToWait: 20
+  _resetTimer: 5.5
+  _activeAIStates:
+    Patrol: 0
+    Wait: 0
+    Attack: 0
+    Investiage: 0
+    Detection: 0
+  _factionData:
+    Faction: 1
+    Type: 2
+    AggressionLevels:
+      Humans: 0
+      Daemons: 0
+      Angels: 0
+  _canAttack: 1

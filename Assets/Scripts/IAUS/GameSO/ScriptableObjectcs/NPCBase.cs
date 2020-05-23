@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
+using InfluenceMap.Factions;
 using SpawnerSystem;
 
 namespace ProjectRebirth.Bestiary
 {
-    public class NPCBase : SpawnableSO, ICharacterStat, ICharacterBase
+    public abstract class NPCBase : SpawnableSO, ICharacterStat, ICharacterBase
     {
         [SerializeField] string _name;
         [SerializeField] uint _level;
@@ -18,6 +19,11 @@ namespace ProjectRebirth.Bestiary
         public uint Level { get { return _level; } }
         public int BaseHealth { get { return _baseHealth; } }
         public int BaseMana { get { return _baseMana; } }
+
+
+        public abstract void Spawn(Vector3 pos);
+
+
 
     }
 }

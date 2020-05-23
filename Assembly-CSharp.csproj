@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\For Testing Only\Blanks\TestSOSpawn.cs" />
+    <Compile Include="Assets\Scripts\For Testing Only\Blanks\authoring test.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
