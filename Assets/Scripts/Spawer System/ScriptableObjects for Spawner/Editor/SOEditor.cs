@@ -1,5 +1,8 @@
 ﻿using UnityEditor;
+using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
+using IAUS.SpawnerSystem;
+
 namespace SpawnerSystem.Editors
 {
 
@@ -7,11 +10,13 @@ namespace SpawnerSystem.Editors
     {
         [MenuItem("Assets/Create/RPG/Enemy")]
 
-        static public void CreateEnemy() {
+        static public void CreateEnemy()
+        {
             Enemy enemy;
-            ScriptableObjectUtility.CreateAsset<Enemy>("Enemy" ,  out enemy);
+            ScriptableObjectUtility.CreateAsset<Enemy>("Enemy", out enemy);
             EnemyDatabase.LoadDatabaseForce();
             enemy.SpawnID = EnemyDatabase._Enemies.Count + 1;
+            enemy.Scale = Vector3.one;
         }
 
         [MenuItem("Assets/Create/RPG/Recovery Item")]
@@ -22,6 +27,23 @@ namespace SpawnerSystem.Editors
             ScriptableObjectUtility.CreateAsset<RecoveryItemSO>("Item", out Item);
            ItemDatabase.LoadDatabaseForce();
             Item.SpawnID = ItemDatabase.droppables.Count + 1;
+        }
+
+        [MenuItem("Assets/Create/RPG/Squad")]
+        static public void CreateSquadSO()
+        {
+            SquadSO squad;
+            ScriptableObjectUtility.CreateAsset<SquadSO>("Squad", out squad);
+            SquadDatabase.LoadDatabaseForce();
+            squad.SpawnID = SquadDatabase.Squads.Count + 1;
+        }
+        [MenuItem("Assets/Create/RPG/Squad-IAUS")]
+        static public void CreateIAUSSquadSO()
+        {
+            IAUSSquadSO squad;
+            ScriptableObjectUtility.CreateAsset<IAUSSquadSO>("Squad", out squad);
+            IAUSSquadDatabase.LoadDatabaseForce();
+            squad.SpawnID = IAUSSquadDatabase.Squads.Count + 1;
         }
     }
 }

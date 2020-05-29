@@ -4,7 +4,7 @@ using Unity.Transforms;
 using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
-using CharacterStats;
+using Test.CharacterStats;
 
 namespace IAUS.ECS2
 {

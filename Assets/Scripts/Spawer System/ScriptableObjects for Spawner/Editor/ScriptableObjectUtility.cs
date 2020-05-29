@@ -11,7 +11,6 @@ namespace SpawnerSystem.Editors
         static public void CreateAsset<T>(string pathExt, out T test) where T : ScriptableObject {
             T asset = ScriptableObject.CreateInstance<T>();
             string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            
             if (path == "")
             {
                 path = "Assets/" + pathExt;

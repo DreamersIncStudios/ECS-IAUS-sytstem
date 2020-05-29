@@ -12,7 +12,7 @@ namespace SpawnerSystem
     public class EnemyGOC : MonoBehaviour, IConvertGameObjectToEntity
     {
 
-        Entity reference;
+        [HideInInspector] public Entity reference;
         public bool DestroyGO;
 
         [SerializeField] public List<ItemSpawnData> LootTable;

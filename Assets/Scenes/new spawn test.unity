@@ -224,7 +224,6 @@ GameObject:
   - component: {fileID: 609909051}
   - component: {fileID: 609909050}
   - component: {fileID: 609909049}
-  - component: {fileID: 609909052}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -297,24 +296,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &609909052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 609909048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d28da63bdbe73d42be154d36ab9b4b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Faction: 0
-  Type: 0
-  AggressionLevels:
-    Humans: 0
-    Daemons: 0
-    Angels: 0
 --- !u!1 &912032471
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,10 +322,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 912032471}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38b0ecb3187d5744d9f23b380a6fc146, type: 3}
+  m_Script: {fileID: 11500000, guid: c24ded86dca81a34592e98b52801fdcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawntest: {fileID: 11400000, guid: 170ecb97fe88b564b909b0b6444d8175, type: 2}
+  CountInScene: 0
+  MaxCountInScene: 0
+  ControlMode: 0
 --- !u!4 &912032473
 Transform:
   m_ObjectHideFlags: 0

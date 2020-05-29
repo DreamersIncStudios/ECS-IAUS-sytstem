@@ -160,8 +160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -474,8 +474,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -636,8 +636,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -798,8 +798,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -960,8 +960,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -1122,8 +1122,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -1284,8 +1284,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -1446,8 +1446,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -1581,8 +1581,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -1895,8 +1895,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -2307,8 +2307,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -2469,8 +2469,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -2631,8 +2631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -7386,8 +7386,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -7548,8 +7548,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -7710,8 +7710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -7932,8 +7932,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -8594,8 +8594,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -8756,8 +8756,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -8918,8 +8918,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -9080,8 +9080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -9215,8 +9215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -9377,8 +9377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -9566,8 +9566,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -9728,8 +9728,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -10026,8 +10026,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -10215,8 +10215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -10326,7 +10326,6 @@ GameObject:
   - component: {fileID: 549373420}
   - component: {fileID: 549373419}
   - component: {fileID: 549373418}
-  - component: {fileID: 549373417}
   - component: {fileID: 549373423}
   - component: {fileID: 549373424}
   m_Layer: 0
@@ -10336,24 +10335,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!114 &549373417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549373416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e44ecdb922872204c9908414aa436b7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CurHealth: 330
-  CurMana: 300
-  MaxHealth: 250
-  MaxMana: 250
-  StoppingDistance: 0
-  MaxNumOfSubs: 1000000
 --- !u!114 &549373418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10545,8 +10526,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -10707,8 +10688,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -10994,8 +10975,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -11254,8 +11235,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -11443,8 +11424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -11697,8 +11678,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -12365,8 +12346,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -12527,8 +12508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -12689,8 +12670,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -12944,8 +12925,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -13106,8 +13087,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -13268,8 +13249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -13403,8 +13384,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -13685,7 +13666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d28da63bdbe73d42be154d36ab9b4b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Faction: 2
+  Faction: 0
   Type: 0
   AggressionLevels:
     Humans: 0
@@ -13703,7 +13684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b9ec450e8036e4f911893630d03f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 200
+  Health: 0
   Resources: 0
 --- !u!114 &733358880
 MonoBehaviour:
@@ -13719,13 +13700,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 20
-      y: 30
+      x: 0
+      y: 0
     Threat:
-      x: 20
-      y: 30
+      x: 0
+      y: 0
   RingWidth: 0
-  fallOff: 3
+  fallOff: 0
 --- !u!114 &733358881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13955,8 +13936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14156,8 +14137,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14306,8 +14287,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14468,8 +14449,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14630,8 +14611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14792,8 +14773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -14927,8 +14908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -15089,8 +15070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -15240,10 +15221,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 892298918}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38b0ecb3187d5744d9f23b380a6fc146, type: 3}
+  m_Script: {fileID: 11500000, guid: c24ded86dca81a34592e98b52801fdcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawntest: {fileID: 0}
+  CountInScene: 0
+  MaxCountInScene: 0
+  ControlMode: 0
 --- !u!4 &892298920
 Transform:
   m_ObjectHideFlags: 0
@@ -15322,8 +15305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -15457,8 +15440,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -15646,8 +15629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -15945,8 +15928,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -16095,8 +16078,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -16382,8 +16365,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -16517,8 +16500,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -16679,8 +16662,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -16854,13 +16837,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 20
-      y: 30
+      x: 0
+      y: 0
     Threat:
-      x: 20
-      y: 30
+      x: 0
+      y: 0
   RingWidth: 0
-  fallOff: 3
+  fallOff: 0
 --- !u!114 &1136330560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17098,8 +17081,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -17472,8 +17455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -17634,8 +17617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -18900,8 +18883,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -19023,8 +19006,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -19212,8 +19195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -19347,8 +19330,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -20628,8 +20611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -20790,8 +20773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -25624,8 +25607,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -25786,8 +25769,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -25921,8 +25904,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -26235,8 +26218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -26754,8 +26737,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -26889,8 +26872,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -27051,8 +27034,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -27240,8 +27223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -27402,8 +27385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -27564,8 +27547,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -27884,8 +27867,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -28073,8 +28056,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -28360,8 +28343,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -28522,8 +28505,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -28744,8 +28727,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29156,8 +29139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29291,8 +29274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29480,8 +29463,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29642,8 +29625,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29777,8 +29760,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -29966,8 +29949,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -30128,8 +30111,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -30453,8 +30436,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -30615,8 +30598,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -30777,8 +30760,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -30939,8 +30922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -31074,8 +31057,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -31263,8 +31246,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -31425,8 +31408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -31759,8 +31742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -31999,8 +31982,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -32161,8 +32144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -32323,8 +32306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -32485,8 +32468,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0
@@ -32620,8 +32603,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   influence:
     Proximity:
-      x: 3.5
-      y: 10
+      x: 0
+      y: 0
     Threat:
       x: 0
       y: 0

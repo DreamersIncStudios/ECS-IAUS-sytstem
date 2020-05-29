@@ -13,11 +13,12 @@ namespace SpawnerSystem.ScriptableObjects
     
         public int RecoverAmount { get { return recoveryAmount; } }
 
-        public override void Spawn(Vector3 Pos) {
-            GameObject temp = Instantiate(GO,Pos,Quaternion.identity);
+        public override GameObject Spawn(Vector3 Position) {
+            GameObject temp = Instantiate(GO,Position,Quaternion.identity);
             PickupRecoverItem PRI = temp.GetComponent<PickupRecoverItem>();
             PRI.RecoverWhat = recoverType;
             PRI.Amount = RecoverAmount;
+            return temp;
         }
 
     }

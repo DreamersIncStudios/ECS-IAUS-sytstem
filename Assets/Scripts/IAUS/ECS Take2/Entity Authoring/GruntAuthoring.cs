@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 using UnityEngine;
-namespace IAUS.ECS2.Charaacter
+namespace IAUS.ECS2.Character
 {
     public class GruntAuthoring :CharacterAuthoring
     {

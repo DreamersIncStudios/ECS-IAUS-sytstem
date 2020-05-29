@@ -6,7 +6,7 @@ using Unity.Transforms;
 using Unity.Collections;
 using IAUS.ECS.Component;
 using Unity.Mathematics;
-using IAUS.ECS2.Charaacter;
+using IAUS.ECS2.Character;
 namespace IAUS.ECS2
 { using InfluenceMap;
     [GenerateAuthoringComponent]

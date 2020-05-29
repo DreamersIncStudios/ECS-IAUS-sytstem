@@ -104,11 +104,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\UpdateRacastTargetPoints.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\UtilityScripts.cs" />
-    <Compile Include="Assets\Scripts\IAUS\GameSO\Database\Game Spawn Databases.cs" />
     <Compile Include="Assets\Scripts\IAUS\GameSO\Interfaces\Enemy Interfaces.cs" />
     <Compile Include="Assets\Scripts\IAUS\GameSO\Interfaces\IFaction.cs" />
-    <Compile Include="Assets\Scripts\IAUS\GameSO\ScriptableObjectcs\EnemyNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\GameSO\ScriptableObjectcs\NPCBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\GameSO\Utilitytest.cs" />
     <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\CreateGridMapTiles.cs" />
     <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\GridComponent.cs" />
@@ -142,6 +139,9 @@
     </Reference>
     <Reference Include="Unity.Entities.Hybrid.CodeGen">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.CodeGen.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.CodeGen">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.CodeGen.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
@@ -695,12 +695,6 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.3.10f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="SpawnerSystem.csproj">
-      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
-      <Name>SpawnerSystem</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

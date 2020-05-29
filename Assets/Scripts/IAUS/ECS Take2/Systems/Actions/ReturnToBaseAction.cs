@@ -5,7 +5,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using IAUS.ECS.Component;
 using IAUS.Core;
-using IAUS.ECS2.Charaacter;
+using IAUS.ECS2.Character;
 
 namespace IAUS.ECS2
 {

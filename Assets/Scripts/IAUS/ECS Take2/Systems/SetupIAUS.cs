@@ -30,6 +30,7 @@ namespace IAUS.ECS2
             ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>();
             ComponentDataFromEntity<HumanRayCastPoints> HumanRayCastPoint = GetComponentDataFromEntity<HumanRayCastPoints>();
             ComponentDataFromEntity<LeaderConsideration> Leaders = GetComponentDataFromEntity<LeaderConsideration>();
+
             JobHandle patrolAdd = Entities
                 .WithNativeDisableParallelForRestriction(health)
                 .WithNativeDisableParallelForRestriction(Distance)

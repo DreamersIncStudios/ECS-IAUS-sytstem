@@ -7,7 +7,7 @@ using Unity.Transforms;
 using Unity.Collections;
 using IAUS.Core;
 
-using IAUS.ECS2.Charaacter;
+using IAUS.ECS2.Character;
 namespace IAUS.ECS2 {
     [GenerateAuthoringComponent]
     public struct Party : BaseStateScorer

@@ -27,6 +27,6 @@ namespace SpawnerSystem.ScriptableObjects
         public float probabilityRangeFrom { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public float probabilityRangeTo { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-        public virtual void Spawn(Vector3 Pos) { }
+        
     }
 }

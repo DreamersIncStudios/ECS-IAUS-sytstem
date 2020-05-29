@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using CharacterStats;
+using Test.CharacterStats;
 
-namespace IAUS.ECS2.Charaacter
+namespace IAUS.ECS2.Character
 {
     public class Elite : CharacterAuthoring
     {

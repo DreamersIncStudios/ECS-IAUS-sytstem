@@ -14,5 +14,11 @@ namespace SpawnerSystem.ScriptableObjects {
         public uint Level { get { return _level; } }
         public int BaseHealth { get { return _baseHealth; } }
         public int BaseMana { get { return _baseMana; } }
+
+        public override GameObject Spawn(Vector3 Position)
+        {
+         return  Instantiate(GO, Position+SpawnOffset, Quaternion.identity);
+
+        }
     }
 }

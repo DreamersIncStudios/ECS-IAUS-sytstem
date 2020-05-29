@@ -6,7 +6,7 @@ using Unity.Entities;
 /*Generic Player Character Class
  * Will be using BurgZergArcade Derived Player Character System  that is already in main project file
  */
-namespace CharacterStats
+namespace Test.CharacterStats
 {
     public class PlayerCharacter : MonoBehaviour, IConvertGameObjectToEntity
     {

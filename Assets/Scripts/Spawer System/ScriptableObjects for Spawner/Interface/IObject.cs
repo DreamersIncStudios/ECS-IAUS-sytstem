@@ -11,6 +11,6 @@ namespace SpawnerSystem.ScriptableObjects
     public interface IObject 
     {
         GameObject GO { get; }
-        Vector3 Scale { get;}
+        Vector3 Scale { get; set; }
     }
 }

@@ -63,7 +63,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Components\LeaderComponent.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Database\EnemyDatabase.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Database\SquadDatabase.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Editor\SOEditor.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Editor\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Interface\ICharacterStat.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\GenericNPC.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\RecoveryItemSO.cs" />
     <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\SpawnableSO.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\ScriptableObjects for Spawner\Scriptable Objects\SquadSO.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\CitizenNPCTag.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\EnemyTag.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\NpcTag.cs" />
@@ -84,13 +87,13 @@
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\ItemSpawnData.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnPointComponent.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnTags\EnemySpawnTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnTags\NPCSpawnTag.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Spawner.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\BaseEnemySpecsForWave.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\WaveBuffer.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WaveSpawnMasterComponents.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WorldComponents\WorldSpawn.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\Authoring\EnemyGOC.cs" />
-    <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\Authoring\Test.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Entities\SpawnMaster.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\PickupRecoverItem.cs" />
@@ -98,21 +101,31 @@
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\WaveMasterSystem.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Prefabs\Utility Scripts\CleanUpHybridEntity.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\SquadSpawn.cs" />
     <None Include="Assets\Scripts\Spawer System\Spawner System.asmdef" />
     <Reference Include="Unity.Entities">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Mathematics">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    <Reference Include="Unity.Entities.CodeGen">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.CodeGen.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Transforms">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Entities.Hybrid">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Entities.Hybrid.CodeGen">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Entities.Hybrid.CodeGen.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Jobs">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Transforms">
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

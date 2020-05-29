@@ -101,7 +101,7 @@ namespace SpawnerSystem.WaveSystem {
                                         if (spawnnumber == 0)
                                             goto End;
 
-                                        Object.Instantiate(EnemyDatabase.GetEnemy(Buffer[i].spawnData.SpawnID).GO, transform.Position, transform.Rotation);
+                                        EnemyDatabase.GetEnemy(Buffer[i].spawnData.SpawnID).Spawn(transform.Position);
                                         EnemySpawnData tempData = Buffer[i];
                                         tempData.spawnData.SpawnCount--;
                                         Buffer[i] = tempData;
