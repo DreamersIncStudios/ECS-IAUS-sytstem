@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using Unity.Entities;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 using Unity.Transforms;
 using InfluenceMap;
 using IAUS.Core;

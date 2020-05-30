@@ -4,7 +4,7 @@ using Unity.Jobs;
 using IAUS.Core;
 using Unity.Transforms;
 using Unity.Collections;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 using Unity.Mathematics;
 using IAUS.ECS2.Character;
 namespace IAUS.ECS2

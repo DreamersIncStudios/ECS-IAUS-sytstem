@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine.AI;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 using IAUS.Core;
 using IAUS.ECS2.Character;
 

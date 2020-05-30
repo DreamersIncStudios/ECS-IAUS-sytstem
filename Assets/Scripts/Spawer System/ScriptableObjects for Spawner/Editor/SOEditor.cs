@@ -2,6 +2,8 @@
 using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
 using IAUS.SpawnerSystem;
+using IAUS.SpawnerSystem.Database;
+
 
 namespace SpawnerSystem.Editors
 {
@@ -37,6 +39,7 @@ namespace SpawnerSystem.Editors
             SquadDatabase.LoadDatabaseForce();
             squad.SpawnID = SquadDatabase.Squads.Count + 1;
         }
+
         [MenuItem("Assets/Create/RPG/Squad-IAUS")]
         static public void CreateIAUSSquadSO()
         {
@@ -45,5 +48,14 @@ namespace SpawnerSystem.Editors
             IAUSSquadDatabase.LoadDatabaseForce();
             squad.SpawnID = IAUSSquadDatabase.Squads.Count + 1;
         }
+        [MenuItem("Assets/Create/RPG/Enemy-IAUS")]
+        static public void CreateIAUSEnemySO()
+        {
+            IAUSEnemySO enemy;
+            ScriptableObjectUtility.CreateAsset<IAUSEnemySO>("Enemy", out enemy);
+            IAUSEnemyDatabase.LoadDatabaseForce();
+            enemy.SpawnID = IAUSEnemyDatabase.Enemy.Count + 1;
+        }
     }
+   
 }

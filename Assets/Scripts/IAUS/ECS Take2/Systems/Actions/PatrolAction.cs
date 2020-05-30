@@ -3,7 +3,7 @@ using Unity.Transforms;
 using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 using InfluenceMap;
 using InfluenceMap.Factions;
 using IAUS.Core;
@@ -28,7 +28,7 @@ namespace IAUS.ECS2
         {
             float DT = Time.DeltaTime;
             JobHandle PatrolPointUpdate = Entities.ForEach((ref Patrol patrol,
-            ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld
+            ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld, in BaseAI baseAi
              ) =>
             {
                 if (patrol.UpdatePatrolPoints)
@@ -54,7 +54,7 @@ namespace IAUS.ECS2
 
 
             JobHandle PatrolAction = Entities.ForEach((ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
-                ref DynamicBuffer<PatrolBuffer> buffer, ref InfluenceValues InfluValues
+                ref DynamicBuffer<PatrolBuffer> buffer, ref InfluenceValues InfluValues, in BaseAI baseAi
                 ) =>
             {
                 //start

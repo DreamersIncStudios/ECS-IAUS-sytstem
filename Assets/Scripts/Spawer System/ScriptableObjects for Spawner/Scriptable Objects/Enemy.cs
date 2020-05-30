@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 namespace SpawnerSystem.ScriptableObjects {
-    public class Enemy : SpawnableSO, IObject, ICharacterStat, ICharacterBase
+    public class Enemy : SpawnableSO,  ICharacterStat, ICharacterBase
     {
         [SerializeField] string _name;
         [SerializeField] uint _level;

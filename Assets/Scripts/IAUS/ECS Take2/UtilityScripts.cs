@@ -6,6 +6,7 @@ namespace IAUS.ECS2
     public struct ConsiderationData {
         public bool Inverse; // Is Invense Required if m is negatives? Inverse to be removed for response curves
         public ResponseType responseType;
+        // add getter setters
         public float M;
         public float K; // Value of K is to be between -1 and 1 for Logistic Responses
         public float B;

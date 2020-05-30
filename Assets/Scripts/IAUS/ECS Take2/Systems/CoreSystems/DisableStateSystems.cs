@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 
 using IAUS.Core;
 namespace IAUS.ECS2
