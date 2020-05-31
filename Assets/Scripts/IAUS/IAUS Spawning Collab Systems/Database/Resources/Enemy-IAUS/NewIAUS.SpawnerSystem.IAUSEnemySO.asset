@@ -17,13 +17,13 @@ MonoBehaviour:
   _GO: {fileID: 3839674532096685530, guid: f90006a582aae6943b289841e04ce2ce, type: 3}
   _scale: {x: 1, y: 1, z: 1}
   _name: 
-  _level: 0
-  _baseHealth: 0
-  _baseMana: 0
+  _level: 1
+  _baseHealth: 500
+  _baseMana: 100
   _gender: 0
   NPCAIStates:
     Patrol: 1
-    Wait: 0
+    Wait: 1
     Attack: 0
     Investiage: 0
     Detection: 0
@@ -42,14 +42,17 @@ MonoBehaviour:
     B: 0.935
     C: 0.35
   bufferZone: 0.5
-  move:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    CanMove: 0
-    Completed: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
+  timeToWait: 20
+  waitTimer:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  speed: 5
+  stoppingDistance: 0.5
+  acceleration: 8
+  height: 1
+  radius: 0.5
+  useNavMeshAgent: 1

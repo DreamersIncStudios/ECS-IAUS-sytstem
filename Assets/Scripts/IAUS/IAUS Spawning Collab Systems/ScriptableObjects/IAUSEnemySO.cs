@@ -4,13 +4,14 @@ using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
 using IAUS.ECS2;
 using ProjectRebirth.Bestiary.Interfaces;
-using Unity.Entities;
+using UnityEngine.AI;
 using Components.MovementSystem;
+using IAUS.SpawnerSystem.interfaces;
 
 namespace IAUS.SpawnerSystem
 {
 
-    public class IAUSEnemySO : Enemy, iPatrol
+    public class IAUSEnemySO : Enemy, iMovement, iPatrol, iWait
     {
         [Header("Patrol")]
         [SerializeField] ActiveAIStates NPCAIStates;
@@ -32,9 +33,26 @@ namespace IAUS.SpawnerSystem
             C = .35f
         };
         [SerializeField] float bufferZone = .5f;
+        [Header("Wait")]
+        [SerializeField] float timeToWait = 20;
+        [SerializeField]
+        ConsiderationData waitTimer = new ConsiderationData()
+        {
+            responseType = ResponseType.Logistic,
+            M = 50,
+            K = -1f,
+            B = .91f,
+            C = .2f
+        };
 
         [Header("Movement")]
-        [SerializeField] Movement move;
+        [SerializeField] float speed = 4.5f;
+        [SerializeField] float stoppingDistance = .5f;
+        [SerializeField] float acceleration = 8f;
+        [SerializeField] float height = 1f;
+        [SerializeField] float radius = .5f;
+       //  Movement _movement;
+        [SerializeField] bool useNavMeshAgent = true;
         float resetTime = 5;// decide if this standardized or not
         public ConsiderationData Health { get { return health; } }
 
@@ -44,9 +62,25 @@ namespace IAUS.SpawnerSystem
 
         public float ResetTime { get { return resetTime; } }
 
-        public GameObject Spawn(Vector3 Position, List<GameObject> Points) {
+        public float MaxSpeed { get { return speed; }set { speed = value; } }
+        public float StoppingDistance { get { return stoppingDistance; } set { stoppingDistance = value; } }
+        public float Acceleration { get { return acceleration; } set { acceleration = value; } }
+        public bool UseNavMeshAgent { get { return useNavMeshAgent; } set { useNavMeshAgent = value; } }
+
+        public float Height { get { return height; }  set { height = value; } }
+        public float Radius { get { return radius; } set { radius = value; } }
+        public float TimeToWait { get { return timeToWait; } private set { timeToWait = value; } }
+
+        public ConsiderationData WaitTimer { get { return waitTimer; } set { waitTimer = value; } }
+
+        public GameObject SpawnAsLeader(Vector3 Position, List<PatrolBuffer> Points) {
             GameObject NPC = Spawn(Position);
                    IAUSAuthoring AIAuthor = NPC.AddComponent<IAUSAuthoring>();
+            //replace with CharacterSystem
+            AIAuthor.CurHealth = AIAuthor.MaxHealth = BaseHealth;
+            AIAuthor.MaxMana = AIAuthor.CurMana = BaseMana;
+   
+
             AIAuthor.StatesToAdd = NPCAIStates;
             if (NPCAIStates.Patrol)
             {
@@ -61,12 +95,44 @@ namespace IAUS.SpawnerSystem
                    CanPatrol =true
                 
                 };
+                AIAuthor.Waypoints = Points;
+                AIAuthor.Move = new Movement() 
+                {
+                    MovementSpeed = speed,
+                   StoppingDistance= stoppingDistance,
+                   Acceleration=acceleration,
+                };
+              
+                if (UseNavMeshAgent)
+                { NavMeshAgent agent = NPC.AddComponent<NavMeshAgent>();
+                    agent.speed = MaxSpeed;
+                    agent.height =Height;
+                    agent.radius =Radius;
+
                 
+                }
             }
-            //NPC.AddComponent<BaseIAUSAuthoring>();
+
+            if (NPCAIStates.Wait) 
+            {
+                AIAuthor.Wait = new WaitTime()
+                {
+                    Health = health,
+                    WaitTimer = WaitTimer,
+                    TimeToWait = TimeToWait,
+                    Status = ActionStatus.Idle,
+                    ResetTimer=resetTime
+
+                };
+            
+            }
+                //Uncommment once scene is built
+            NPC.AddComponent<BaseIAUSAuthoring>();
             return NPC;
 
         }
+
+
 
     }
 }

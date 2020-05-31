@@ -4,15 +4,16 @@ using UnityEngine;
 using SpawnerSystem.ScriptableObjects;
 using SpawnerSystem;
 using IAUS.SpawnerSystem.Database;
+using IAUS.ECS2;
 
 namespace IAUS.SpawnerSystem
 {
 
     public class IAUSSquadSO : SquadSO
     {
-        public override void Spawn(Vector3 Position) 
+        public void Spawn(Vector3 Position, List<PatrolBuffer> PatrolPoints) 
         {
-            GameObject leaderGO = IAUSEnemyDatabase.GetEnemy(LeaderID).Spawn(Position, new List<GameObject>());
+            GameObject leaderGO = IAUSEnemyDatabase.GetEnemy(LeaderID).SpawnAsLeader(Position, PatrolPoints);
             GameObject BackupGO = IAUSEnemyDatabase.GetEnemy(BackupLeaderID).Spawn(Position);
             BackupGO.AddComponent<SquadMember>();
             LeaderComponent test = leaderGO.AddComponent<LeaderComponent>();

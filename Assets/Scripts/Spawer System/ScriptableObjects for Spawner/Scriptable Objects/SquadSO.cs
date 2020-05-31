@@ -20,8 +20,8 @@ namespace SpawnerSystem.ScriptableObjects
 
         public List<SquadMemberID> SquadMemberIDs { get { return squadMemberID; }}
 
-        public virtual void Spawn(Vector3 Position) {
-            GameObject leaderGO = EnemyDatabase.GetEnemy(leaderID).Spawn( Position);
+        public void Spawn(Vector3 Position) {
+            GameObject leaderGO = EnemyDatabase.GetEnemy(LeaderID).Spawn( Position);
             GameObject BackupGO = EnemyDatabase.GetEnemy(BackupLeaderID).Spawn( Position);
             BackupGO.AddComponent<SquadMember>();
             LeaderComponent test = leaderGO.AddComponent<LeaderComponent>();

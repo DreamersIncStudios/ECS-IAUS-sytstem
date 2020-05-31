@@ -14,7 +14,8 @@ namespace SpawnerSystem.ScriptableObjects {
         public uint Level { get { return _level; } }
         public int BaseHealth { get { return _baseHealth; } }
         public int BaseMana { get { return _baseMana; } }
-
+        // add logic for determine max health and mana 
+        // Will Just use base Health for Max health until we add character system to project
         public override GameObject Spawn(Vector3 Position)
         {
          return  Instantiate(GO, Position+SpawnOffset, Quaternion.identity);

@@ -160,6 +160,7 @@
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Prefabs\Utility Scripts\CleanUpHybridEntity.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\SquadSpawn.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
+    <Compile Include="Assets\Scripts\Utility Scripts\GlobalFunctions.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
