@@ -7,6 +7,8 @@ using Unity.Transforms;
 using Unity.Collections;
 using IAUS.Core;
 
+
+// Consider deleting ???
 using IAUS.ECS2.Character;
 namespace IAUS.ECS2 {
     [GenerateAuthoringComponent]

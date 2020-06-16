@@ -8,7 +8,7 @@ using SpawnerSystem.WorldLevel;
 using Unity.Collections;
 using Unity.Mathematics;
 using SpawnerSystem.ScriptableObjects;
-
+using Utilities;
 namespace SpawnerSystem
 {
     [UpdateAfter(typeof(WaveSystem.WaveMasterSystem))]
@@ -66,13 +66,13 @@ namespace SpawnerSystem
                         {
                             // Separate in to 3 functions
                             Vector3 FemalePoint;
-                            if (RandomPoint(transform.Position, 10.5f, out FemalePoint))
+                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out FemalePoint))
                             {
                                 // Move RandomPoint to Utility Class
                                 GenericNPC.SpawnGO(Gender.Female, FemalePoint);
                             }
                                 Vector3 MalePoint;
-                            if (RandomPoint(transform.Position, 10.5f, out MalePoint))
+                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out MalePoint))
                             {
                                 GenericNPC.SpawnGO(Gender.Male, MalePoint);
 
@@ -97,7 +97,7 @@ namespace SpawnerSystem
                                     if (TempArea.SpawnCount != 0)
                                     {
                                         Vector3 SpawnPoint;
-                                        if (RandomPoint(transform.Position, 10.5f, out SpawnPoint))
+                                        if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out SpawnPoint))
                                         {
                                             EnemyDatabase.GetEnemy(Buffer[cnt].spawnData.SpawnID).Spawn(SpawnPoint);
                                             EnemySpawnData tempData = Buffer[cnt];
@@ -116,24 +116,6 @@ namespace SpawnerSystem
 
             }
         }
-
-
-        bool RandomPoint(Vector3 center, float range, out Vector3 result)
-        {
-            for (int i = 0; i < 30; i++)
-            {
-                Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-                {
-                    result = hit.position;
-                    return true;
-                }
-            }
-            result = Vector3.zero;
-            return false;
-        }
-
        
 
     }

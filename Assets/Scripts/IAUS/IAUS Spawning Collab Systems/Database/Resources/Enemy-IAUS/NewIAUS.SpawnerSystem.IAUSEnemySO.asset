@@ -42,7 +42,7 @@ MonoBehaviour:
     B: 0.935
     C: 0.35
   bufferZone: 0.5
-  timeToWait: 20
+  timeToWait: 15
   waitTimer:
     Inverse: 0
     responseType: 2

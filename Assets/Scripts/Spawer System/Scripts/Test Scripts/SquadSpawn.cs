@@ -28,7 +28,7 @@ namespace SpawnerSystem.Test
         void UpdatePoint() {
             while (Points.Count < 5) {
                 Vector3 position;
-                if (GlobalFunctions.RandomPoint(transform.position, 35, out position))
+                if (GlobalFunctions.RandomPoint(transform.position, 40, out position))
                 {
                     PatrolBuffer temp = new PatrolBuffer()
                     {

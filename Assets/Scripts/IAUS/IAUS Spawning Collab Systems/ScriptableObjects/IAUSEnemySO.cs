@@ -102,14 +102,13 @@ namespace IAUS.SpawnerSystem
                    StoppingDistance= stoppingDistance,
                    Acceleration=acceleration,
                 };
-              
-                if (UseNavMeshAgent)
-                { NavMeshAgent agent = NPC.AddComponent<NavMeshAgent>();
-                    agent.speed = MaxSpeed;
-                    agent.height =Height;
-                    agent.radius =Radius;
 
-                
+                if (UseNavMeshAgent)
+                {
+                    NavMeshAgent agent = NPC.AddComponent<NavMeshAgent>();
+                    agent.speed = MaxSpeed;
+                    agent.height = Height;
+                    agent.radius = Radius;
                 }
             }
 

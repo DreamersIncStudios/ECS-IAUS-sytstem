@@ -33,7 +33,7 @@ namespace IAUS.ECS2
     public enum AIStates {
         none, Patrol, Heal_Item, Heal_Magic, Attack_Melee, Attack_Range,
         Attack_Magic, Retreat, FindCover,Talk, Guard, GroupUp, Wait, GotoLeader, 
-        InvestigateArea, SearchArea, Rally
+        InvestigateArea, SearchArea, Rally, FollowTarget
 
     }
     public enum ResponseType

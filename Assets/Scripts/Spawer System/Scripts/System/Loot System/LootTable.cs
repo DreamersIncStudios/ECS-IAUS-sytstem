@@ -58,7 +58,7 @@ namespace SpawnerSystem.Loot
                 foreach (ItemSpawnData Item in Dropped)
                 {
                     Vector3 point;
-                    if (RandomPoint(Pos.Position, Tag.spawnrange, out point))
+                    if (Utilities.GlobalFunctions.RandomPoint(Pos.Position, Tag.spawnrange, out point))
                     {
                         ItemDatabase.GetItem(Item.spawnData.SpawnID).Spawn(point);
                     }
@@ -68,21 +68,7 @@ namespace SpawnerSystem.Loot
             });
               
         }
-        bool RandomPoint(Vector3 center, float range, out Vector3 result)
-        {
-            for (int i = 0; i < 30; i++)
-            {
-                Vector3 randomPoint = center + UnityEngine.Random.insideUnitSphere * range;
-                NavMeshHit hit;
-                if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
-                {
-                    result = hit.position;
-                    return true;
-                }
-            }
-            result = Vector3.zero;
-            return false;
-        }
+
     }
 
 

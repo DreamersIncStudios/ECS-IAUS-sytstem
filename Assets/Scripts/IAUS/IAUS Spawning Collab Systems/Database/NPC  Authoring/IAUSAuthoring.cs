@@ -61,11 +61,6 @@ namespace IAUS.SpawnerSystem
 
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
 
     }
