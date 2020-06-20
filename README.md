@@ -1,5 +1,4 @@
-Notice: Due to unfortunate circumstances, this project will be temporary shelfed as I have some pressing matter to take care of that will leave me with out access to a pc  for at least 2 or 3 weeks. I will continue to update this project and other projects when I return. If you have any questions regarding the code, please log and issues in the appropriate and I will try to answer them when possible. 
-
+Notice: Back to work as normally. Alpha Branch has been updated to 2019.4 LTS
 This project currently uses IJobForEach api which will be obselete on 6-20-2020.
 I am just beginnning to refactor system to using either IJobChuck or Entities.Foreach. 
 
