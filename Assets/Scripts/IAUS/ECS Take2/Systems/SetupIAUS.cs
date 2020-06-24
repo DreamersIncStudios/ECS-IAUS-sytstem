@@ -13,11 +13,16 @@ namespace IAUS.ECS2
     public partial class SetupIAUS : JobComponentSystem
     {
 
-        EntityCommandBufferSystem entityCommandBufferSystem;
+            EntityCommandBufferSystem entityCommandBufferSystem;
+            protected override void OnCreate()
+            {
+                base.OnCreate();
+                entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            }
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
             EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
             ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>();

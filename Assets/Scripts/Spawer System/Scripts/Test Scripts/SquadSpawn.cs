@@ -12,11 +12,16 @@ namespace SpawnerSystem.Test
     {
         public IAUSSquadSO Squad1;
         public List<PatrolBuffer> Points;
+        public int NumOfSquads;
         // Start is called before the first frame update
         void Start()
         {
-            UpdatePoint();
-            Squad1.Spawn(this.transform.position, Points);
+            for (int i = 0; i < NumOfSquads; i++)
+            {
+                UpdatePoint();
+                Squad1.Spawn(this.transform.position, Points);
+            }
+
         }
 
         // Update is called once per frame
@@ -26,6 +31,7 @@ namespace SpawnerSystem.Test
         }
 
         void UpdatePoint() {
+            Points = new List<PatrolBuffer>();
             while (Points.Count < 5) {
                 Vector3 position;
                 if (GlobalFunctions.RandomPoint(transform.position, 40, out position))

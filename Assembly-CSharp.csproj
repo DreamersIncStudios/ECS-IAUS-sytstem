@@ -120,6 +120,7 @@
     <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Influencer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Cover.cs" />
     <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Static.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\General\Interfaces\Prototype.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\Movement.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\PlayerCharacter.cs" />

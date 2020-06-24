@@ -70,9 +70,9 @@ namespace SpawnerSystem
             MGR.AddComponentData(entity, new Translation() { Value = position });
             MGR.AddComponentData(entity, new LocalToWorld() { Value = transform.localToWorldMatrix});
             MGR.AddComponentData(entity, new ProbTotal() { probabilityTotalWeight = 0.0f });
-
+#if UNITY_EDITOR
             MGR.SetName(entity,"Loot Spawn Point");// This wont build why ?
-
+#endif
 
         }
 

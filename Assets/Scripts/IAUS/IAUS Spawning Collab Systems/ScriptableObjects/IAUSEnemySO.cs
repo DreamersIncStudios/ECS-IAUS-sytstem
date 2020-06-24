@@ -7,14 +7,16 @@ using ProjectRebirth.Bestiary.Interfaces;
 using UnityEngine.AI;
 using Components.MovementSystem;
 using IAUS.SpawnerSystem.interfaces;
+using System.Security.Policy;
 
 namespace IAUS.SpawnerSystem
 {
 
-    public class IAUSEnemySO : Enemy, iMovement, iPatrol, iWait
+    public class IAUSEnemySO : Enemy, iMovement, iPatrol, iWait, iFollow
     {
-        [Header("Patrol")]
         [SerializeField] ActiveAIStates NPCAIStates;
+        [Header("Patrol")]
+     
         [SerializeField] ConsiderationData health = new ConsiderationData
         {
             responseType = ResponseType.Logistic,
@@ -33,6 +35,7 @@ namespace IAUS.SpawnerSystem
             C = .35f
         };
         [SerializeField] float bufferZone = .5f;
+        [SerializeField] int maxInfluenceAtPoint;
         [Header("Wait")]
         [SerializeField] float timeToWait = 20;
         [SerializeField]
@@ -44,6 +47,10 @@ namespace IAUS.SpawnerSystem
             B = .91f,
             C = .2f
         };
+        [Header("FollowCharacter")]
+
+        [SerializeField] float distanceToMantainFromTarget;
+        public float DistanceToMantainFromTarget { get { return distanceToMantainFromTarget; } }
 
         [Header("Movement")]
         [SerializeField] float speed = 4.5f;
@@ -59,7 +66,7 @@ namespace IAUS.SpawnerSystem
         public ConsiderationData DistanceToTarget { get { return distanceToPatrolTarget; } }
 
         public float BufferZone{ get { return bufferZone; } }
-
+        public int MaxInfluenceAtPoint { get { return maxInfluenceAtPoint; } }
         public float ResetTime { get { return resetTime; } }
 
         public float MaxSpeed { get { return speed; }set { speed = value; } }
@@ -91,8 +98,10 @@ namespace IAUS.SpawnerSystem
                     BufferZone = BufferZone,
                     ResetTimer = ResetTime,
                     Status = ActionStatus.Idle,
-                   UpdatePostition = true,
-                   CanPatrol =true
+                    UpdatePostition = true,
+                    CanPatrol = true,
+                    LeaderUpdate = true
+                   
                 
                 };
                 AIAuthor.Waypoints = Points;
@@ -101,6 +110,7 @@ namespace IAUS.SpawnerSystem
                     MovementSpeed = speed,
                    StoppingDistance= stoppingDistance,
                    Acceleration=acceleration,
+                    MaxInfluenceAtPoint = MaxInfluenceAtPoint
                 };
 
                 if (UseNavMeshAgent)
@@ -130,8 +140,53 @@ namespace IAUS.SpawnerSystem
             return NPC;
 
         }
+        public GameObject SpawnAsSquadMember(Vector3 Position)
+        {
+            GameObject NPC = Spawn(Position);
+             IAUSAuthoring AIAuthor = NPC.AddComponent<IAUSAuthoring>();
+            NPCAIStates.Follow = true;
+            NPCAIStates.Patrol = false;
+            AIAuthor.StatesToAdd = NPCAIStates;
+
+            AIAuthor.CurHealth = AIAuthor.MaxHealth = BaseHealth;
+            AIAuthor.MaxMana = AIAuthor.CurMana = BaseMana;
+            if (UseNavMeshAgent)
+            {
+                NavMeshAgent agent = NPC.AddComponent<NavMeshAgent>();
+                agent.speed = MaxSpeed;
+                agent.height = Height;
+                agent.radius = Radius;
+            }
+
+            if (NPCAIStates.Follow) {
+                AIAuthor.Follow = new FollowCharacter()
+                {
+                    Health= health,
+                    DistanceToMantainFromTarget = 7.5f,
+                    IsTargetMoving=false
+                };
+            }
+
+            if (NPCAIStates.Wait)
+            {
+                AIAuthor.Wait = new WaitTime()
+                {
+                    Health = health,
+                    WaitTimer = WaitTimer,
+                    TimeToWait = TimeToWait,
+                    Status = ActionStatus.Idle,
+                    ResetTimer = resetTime
+
+                };
+
+            }
+            NPC.AddComponent<BaseIAUSAuthoring>();
+
+            return NPC;
+    
+        }
 
 
-
+       
     }
 }

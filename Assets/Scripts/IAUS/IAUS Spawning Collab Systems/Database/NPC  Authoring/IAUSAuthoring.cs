@@ -20,6 +20,7 @@ namespace IAUS.SpawnerSystem
         public Patrol PatrolState;
         public Movement Move;
         public WaitTime Wait;
+        public FollowCharacter Follow;
         public List<PatrolBuffer> Waypoints;
         [Range(0, 999)]
         public int CurHealth;
@@ -49,6 +50,10 @@ namespace IAUS.SpawnerSystem
                 }
                 // add for loop adding patrol points;
             }
+            if (StatesToAdd.Follow) {
+                dstManager.AddComponentData(entity, Follow);
+            }
+
             if (StatesToAdd.Wait)
             { dstManager.AddComponentData(entity,Wait); }
 

@@ -32,11 +32,11 @@ namespace IAUS.ECS.System
                     
                     if (Agent.hasPath)
                     {
-                        float dist = move.DistanceRemaining = Vector3.Distance(Agent.destination, Agent.transform.position);
+                        float dist = move.DistanceRemaining = Vector3.Distance(move.TargetLocation, Agent.transform.position);
                       
-                        if (dist <= move.StoppingDistance)
+                        if (dist < move.StoppingDistance)
                         {
-                            // need to improve logic for picking a locatio to stand at 
+                            // need to improve logic for picking a location to stand at 
                             move.CanMove = false;
                             Agent.isStopped = true;
                         Agent.ResetPath();

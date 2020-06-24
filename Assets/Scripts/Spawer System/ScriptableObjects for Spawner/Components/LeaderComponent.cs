@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using IAUS.ECS2;
 
 namespace SpawnerSystem.ScriptableObjects
 {
@@ -22,7 +23,8 @@ namespace SpawnerSystem.ScriptableObjects
             var leader = new LeaderTag() {};
 
             dstManager.AddComponentData(entity, leader);
-            dstManager.AddBuffer<SquadMemberBuffer>(entity);
+            DynamicBuffer<SquadMemberBuffer> buffer = dstManager.AddBuffer<SquadMemberBuffer>(entity);
+
             selfRef = entity;
         }
 
@@ -33,9 +35,12 @@ namespace SpawnerSystem.ScriptableObjects
     {
         public Entity Self { get { return selfRef; } }
         Entity selfRef;
+      
+        
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             selfRef = entity;
+         
         }
     }
     public struct LeaderTag : IComponentData
@@ -67,10 +72,11 @@ namespace SpawnerSystem.ScriptableObjects
                 Tag.BackupLeader = Leader.BackupLeader.GetComponent<SquadMember>().Self;
             
             });
-
+            ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
+                // add leader ref to follow character command
             Entities.ForEach((DynamicBuffer<SquadMemberBuffer> Buffer, LeaderComponent Leader) => {
                 //foreach (SquadEntityAdder Adder in Leader.Squad)
-                for (int i = 0; i < Leader.Squad.Count-1; i++)
+                for (int i = 0; i < Leader.Squad.Count; i++)
                 {
                     SquadEntityAdder Adder = Leader.Squad[i];
                     if (!Adder.Added)
@@ -82,6 +88,9 @@ namespace SpawnerSystem.ScriptableObjects
                         Buffer.Add(temp);
                         Adder.Added = true;
                         Leader.Squad[i] = Adder;
+                        FollowCharacter tempFollow = follow[Adder.GO.GetComponent<SquadMember>().Self];
+                        tempFollow.Target = Leader.Self;
+                        follow[Adder.GO.GetComponent<SquadMember>().Self] = tempFollow;
                     }
                 }
 

@@ -14,16 +14,22 @@ namespace IAUS.SpawnerSystem
         public void Spawn(Vector3 Position, List<PatrolBuffer> PatrolPoints) 
         {
             GameObject leaderGO = IAUSEnemyDatabase.GetEnemy(LeaderID).SpawnAsLeader(Position, PatrolPoints);
-            GameObject BackupGO = IAUSEnemyDatabase.GetEnemy(BackupLeaderID).Spawn(Position);
+            GameObject BackupGO = IAUSEnemyDatabase.GetEnemy(BackupLeaderID).SpawnAsSquadMember(Position);
             BackupGO.AddComponent<SquadMember>();
             LeaderComponent test = leaderGO.AddComponent<LeaderComponent>();
             test.BackupLeader = BackupGO;
             test.Squad = new List<SquadEntityAdder>();
+            test.Squad.Add(new SquadEntityAdder()
+            {
+                GO = BackupGO ,
+                Added = false
+            });
             foreach (SquadMemberID squadMember in SquadMemberIDs)
             {
                 for (int i = 0; i < squadMember.NumberOfSpawns; i++)
                 {
-                    GameObject memberGO = IAUSEnemyDatabase.GetEnemy(squadMember.ID).Spawn(Position);
+                    GameObject memberGO = IAUSEnemyDatabase.GetEnemy(squadMember.ID).SpawnAsSquadMember(Position);
+
                     memberGO.AddComponent<SquadMember>();
                     test.Squad.Add(new SquadEntityAdder()
                     {

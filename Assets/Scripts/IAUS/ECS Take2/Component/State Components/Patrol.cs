@@ -1,4 +1,4 @@
-﻿
+﻿using Unity.Mathematics;
 using UnityEngine;
 using Unity.Entities;
 namespace IAUS.ECS2
@@ -20,8 +20,10 @@ namespace IAUS.ECS2
         public float DistanceAtStart;
         public int index;
         public float BufferZone;
-        public int MaxInfluenceAtPoint;
+        //public int MaxInfluenceAtPoint;
         public float DistInfluence;
+        public bool LeaderUpdate;
+        public float3 waypointRef;
         public int MaxNumWayPoint{ get;set; }
         public Entity HomeEntity { get; set; }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

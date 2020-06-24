@@ -12,6 +12,8 @@ namespace Components.MovementSystem
     {
         public float3 TargetLocation;
         public float MovementSpeed;
+        public bool TargetLocationCrowded;
+        public int MaxInfluenceAtPoint;
 
 
         void SetMovementSpeed(float SpeedStat, float SpeedFactor) // Eqauation needs to be add later to account for Speed Stat or this is done in AI system;

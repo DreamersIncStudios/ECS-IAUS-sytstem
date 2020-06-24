@@ -26,6 +26,7 @@ namespace IAUS.ECS2
             ComponentDataFromEntity<WaitTime> Wait = GetComponentDataFromEntity<WaitTime>(false);
             ComponentDataFromEntity<Party> party = GetComponentDataFromEntity<Party>(false);
             ComponentDataFromEntity<Rally> rally = GetComponentDataFromEntity<Rally>(false);
+            ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
 
             EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
 
@@ -60,6 +61,11 @@ namespace IAUS.ECS2
                                 Teststate.TotalScore = tempRally.TotalScore;
                                 Teststate.Status = tempRally.Status;
                                 break;
+                            case AIStates.FollowTarget:
+                                FollowCharacter tempFollow= follow.Exists(entity) ? follow[entity] : new FollowCharacter();
+                                Teststate.TotalScore = tempFollow.TotalScore;
+                                Teststate.Status = tempFollow.Status;
+                                break;
                         }
                         State[index] = Teststate;
                     }
@@ -86,6 +92,7 @@ namespace IAUS.ECS2
                     {
                         Patrol Ptemp = PatrolFromEntity.Exists(entity) ? PatrolFromEntity[entity] : new Patrol();
                         WaitTime WTemp = Wait.Exists(entity) ? Wait[entity] : new WaitTime();
+                       // FollowCharacter tempFollow = follow.Exists(entity) ? follow[entity] : new FollowCharacter();
 
                         for (int index = 0; index < State.Length; index++)
                         {
@@ -167,6 +174,27 @@ namespace IAUS.ECS2
                                     }
 
                                     break;
+                                case AIStates.FollowTarget:
+
+                                    //consider first updating all patrol points
+                                    switch (AI.CurrentState.StateName)
+                                    {
+                                        // copy partol list of points from leader
+
+                                        case AIStates.Patrol:
+
+                                            break;
+                                        case AIStates.Wait:
+                                            break;
+                                        case AIStates.Rally:
+
+                                            break;
+                                        case AIStates.FollowTarget:
+                                            entityCommandBuffer.RemoveComponent<FollowTargetTag>(entity);
+                                            break;
+                                    }
+
+                                    break;
                             }
                         }
 
@@ -174,6 +202,7 @@ namespace IAUS.ECS2
                             PatrolFromEntity[entity] = Ptemp;
                         if (Wait.Exists(entity))
                             Wait[entity] = WTemp;
+                      
                     }
 
                     // Rebalance Consider values for time wait;
@@ -241,6 +270,20 @@ namespace IAUS.ECS2
                                    rally[entity] = tempRally;
                                 }
                                 break;
+                            case AIStates.FollowTarget:
+                                if (follow.Exists(entity))
+                                {
+                                    entityCommandBuffer.RemoveComponent<FollowTargetTag>(entity);
+
+                                    FollowCharacter tempFollow = follow[entity];
+                                    if (tempFollow.Status == ActionStatus.Running)
+                                    {
+                                        tempFollow.Status = ActionStatus.Interrupted;
+                                        tempFollow.ResetTime = tempFollow.ResetTimer / 2.0f;
+                                    }
+                                    follow[entity] = tempFollow;
+                                }
+                                break;
                         }
 
                         CheckState.Status = ActionStatus.Running;
@@ -262,6 +305,9 @@ namespace IAUS.ECS2
                                 break;
                             case AIStates.Rally:
                                 entityCommandBuffer.AddComponent<RallyActionTag>(entity);
+                                break;
+                            case AIStates.FollowTarget:
+                                entityCommandBuffer.AddComponent<FollowTargetTag>(entity);
                                 break;
                         }
 

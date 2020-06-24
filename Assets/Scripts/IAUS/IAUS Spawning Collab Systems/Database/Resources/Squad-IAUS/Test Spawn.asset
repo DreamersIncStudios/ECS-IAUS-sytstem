@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnID: 2
   leaderID: 2
-  backupLeaderID: 2
+  backupLeaderID: 3
   squadMemberID:
-  - ID: 2
-    NumberOfSpawns: 2
+  - ID: 3
+    NumberOfSpawns: 1
