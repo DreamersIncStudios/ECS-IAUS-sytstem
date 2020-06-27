@@ -6,21 +6,22 @@ using IAUS.ECS2;
 
 namespace SpawnerSystem.ScriptableObjects
 {
-    public class LeaderComponent : MonoBehaviour,IConvertGameObjectToEntity
+    public class LeaderComponent : MonoBehaviour, IConvertGameObjectToEntity
     {
         public GameObject BackupLeader;
         public List<SquadEntityAdder> Squad;
+        public bool Updated;
         public Entity Self { get { return selfRef; } }
         Entity selfRef;
         public LeaderComponent() { }
-        public LeaderComponent(GameObject Back, List<SquadEntityAdder> squad) 
+        public LeaderComponent(GameObject Back, List<SquadEntityAdder> squad)
         {
             BackupLeader = Back;
             Squad = squad;
         }
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            var leader = new LeaderTag() {};
+            var leader = new LeaderTag() { };
 
             dstManager.AddComponentData(entity, leader);
             DynamicBuffer<SquadMemberBuffer> buffer = dstManager.AddBuffer<SquadMemberBuffer>(entity);
@@ -28,24 +29,24 @@ namespace SpawnerSystem.ScriptableObjects
             selfRef = entity;
         }
 
- 
+
     }
 
     public class SquadMember : MonoBehaviour, IConvertGameObjectToEntity
     {
         public Entity Self { get { return selfRef; } }
         Entity selfRef;
-      
-        
+
+
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             selfRef = entity;
-         
+
         }
     }
     public struct LeaderTag : IComponentData
     {
-       public Entity BackupLeader;
+        public Entity BackupLeader;
 
     }
 
@@ -62,12 +63,13 @@ namespace SpawnerSystem.ScriptableObjects
         public GameObject GO;
         public bool Added;
     }
-
+    public struct AddSquadTag : IComponentData { };
    public class SquadUP : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((  ref LeaderTag Tag, LeaderComponent Leader) => {
+            Entities.ForEach((  ref LeaderTag Tag ,LeaderComponent Leader ) => {
+
                 if(Leader.BackupLeader !=null)
                 Tag.BackupLeader = Leader.BackupLeader.GetComponent<SquadMember>().Self;
             
@@ -75,25 +77,28 @@ namespace SpawnerSystem.ScriptableObjects
             ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
                 // add leader ref to follow character command
             Entities.ForEach((DynamicBuffer<SquadMemberBuffer> Buffer, LeaderComponent Leader) => {
-                //foreach (SquadEntityAdder Adder in Leader.Squad)
-                for (int i = 0; i < Leader.Squad.Count; i++)
-                {
-                    SquadEntityAdder Adder = Leader.Squad[i];
-                    if (!Adder.Added)
-                    {
-                        SquadMemberBuffer temp = new SquadMemberBuffer()
-                        {
-                            SquadMember = Adder.GO.GetComponent<SquadMember>().Self
-                        };
-                        Buffer.Add(temp);
-                        Adder.Added = true;
-                        Leader.Squad[i] = Adder;
-                        FollowCharacter tempFollow = follow[Adder.GO.GetComponent<SquadMember>().Self];
-                        tempFollow.Target = Leader.Self;
-                        follow[Adder.GO.GetComponent<SquadMember>().Self] = tempFollow;
-                    }
-                }
 
+                if (!Leader.Updated) {
+                    for (int i = 0; i < Leader.Squad.Count; i++)
+                    {
+                        SquadEntityAdder Adder = Leader.Squad[i];
+                        if (!Adder.Added)
+                        {
+                            SquadMemberBuffer temp = new SquadMemberBuffer()
+                            {
+                                SquadMember = Adder.GO.GetComponent<SquadMember>().Self
+                            };
+                            Buffer.Add(temp);
+                            Adder.Added = true;
+                            Leader.Squad[i] = Adder;
+                            FollowCharacter tempFollow = follow[Adder.GO.GetComponent<SquadMember>().Self];
+                            tempFollow.Target = Leader.Self;
+                            follow[Adder.GO.GetComponent<SquadMember>().Self] = tempFollow;
+                        }
+                    }
+                    Leader.Updated = true;
+                }
+             
             });
         }
     }

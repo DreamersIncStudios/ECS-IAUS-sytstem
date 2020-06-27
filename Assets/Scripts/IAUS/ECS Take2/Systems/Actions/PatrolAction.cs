@@ -108,7 +108,8 @@ namespace IAUS.ECS2
                     move.CanMove = true;
                 }
 
-             
+                // move to independent system. 
+
                 if (move.TargetLocationCrowded)
                 {
                     patrol.index++;
@@ -133,11 +134,29 @@ namespace IAUS.ECS2
                 }
 
             }).Schedule(LeaderPatrol);
-            // move to follow action job and set up
+            ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
+
+            JobHandle UpdateSquadOnMovement = Entities
+                .WithNativeDisableParallelForRestriction(follow)
+                .ForEach((int nativeThreadIndex, ref DynamicBuffer<SquadMemberBuffer> Buffer, in Movement move, in Patrol patrol, in LeaderTag leader, in PatrolActionTag tag)
+            =>
+            {
+                for (int i = 0; i < Buffer.Length; i++)
+                {
+                   FollowCharacter tempFollow = follow[Buffer[i].SquadMember];
+                    if (!move.Completed)
+                        tempFollow.IsTargetMoving = true;
+                    else
+                        tempFollow.IsTargetMoving = false;
+
+                    follow[Buffer[i].SquadMember] = tempFollow;
+                }
+
+            }
+            ).Schedule(PatrolAction);
 
 
-
-            return PatrolAction;
+            return UpdateSquadOnMovement;
         }
     }
 

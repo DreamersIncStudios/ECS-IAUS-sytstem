@@ -7,7 +7,7 @@ using ProjectRebirth.Bestiary.Interfaces;
 using UnityEngine.AI;
 using Components.MovementSystem;
 using IAUS.SpawnerSystem.interfaces;
-using System.Security.Policy;
+
 
 namespace IAUS.SpawnerSystem
 {

@@ -11,7 +11,7 @@ namespace IAUS.ECS2
     [UpdateInGroup(typeof(IAUS_UpdateState))]
 
     [UpdateBefore(typeof(StateScoreSystem))]
-    public class DisableStateSystems : ComponentSystem
+    public class DisableStateSystems : JobComponentSystem
     {
         EntityCommandBufferSystem entityCommandBufferSystem;
 
@@ -20,15 +20,19 @@ namespace IAUS.ECS2
             base.OnCreate();
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
-        protected override void OnUpdate()
+        protected override JobHandle OnUpdate( JobHandle inputDeps)
         {
             ComponentDataFromEntity<Patrol> PatrolFromEntity = GetComponentDataFromEntity<Patrol>(false);
             ComponentDataFromEntity<WaitTime> Wait = GetComponentDataFromEntity<WaitTime>(false);
-            ComponentDataFromEntity<Party> party = GetComponentDataFromEntity<Party>(false);
             ComponentDataFromEntity<Movement> move = GetComponentDataFromEntity<Movement>(false);
 
-            EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
-            Entities.ForEach((Entity entity, DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
+
+            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
+         return   Entities
+               .WithNativeDisableParallelForRestriction(PatrolFromEntity)
+                .WithNativeDisableParallelForRestriction(Wait)
+                .WithNativeDisableParallelForRestriction(move)
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer <StateBuffer> State, ref BaseAI AI) =>
             {
             //Update states when a state finishes based on states in Map
             if (AI.CurrentState.Status == ActionStatus.Disabled)
@@ -39,7 +43,7 @@ namespace IAUS.ECS2
                     switch (AI.CurrentState.StateName)
                     {
                         case AIStates.Patrol:
-                            entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
+                            entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex, entity);
                             Movement temp = move[entity];
                             temp.CanMove = false;
                             move[entity] = temp;
@@ -53,7 +57,7 @@ namespace IAUS.ECS2
                     if (Wait.Exists(entity))
                         Wait[entity] = WTemp;
                 }
-            });
+            }).Schedule(inputDeps);
         }
     }
 }

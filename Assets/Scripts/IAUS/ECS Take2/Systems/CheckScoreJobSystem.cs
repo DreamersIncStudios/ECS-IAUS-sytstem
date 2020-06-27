@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
 using Unity.Entities;
-using Unity.Jobs;
-using Components.MovementSystem;
+
 using IAUS.Core;
+using Unity.Jobs;
+
 namespace IAUS.ECS2
 {
     [UpdateInGroup(typeof(IAUS_UpdateState))]
 
     [UpdateBefore(typeof(StateScoreSystem))]
-    public class CheckScoreJobSystem : ComponentSystem
+    public class CheckScoreJobSystem :JobComponentSystem
     {
         EntityCommandBufferSystem entityCommandBufferSystem;
 
@@ -19,7 +18,7 @@ namespace IAUS.ECS2
             base.OnCreate();
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
-        protected override void OnUpdate()
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
 
             ComponentDataFromEntity<Patrol> PatrolFromEntity = GetComponentDataFromEntity<Patrol>(false);
@@ -28,11 +27,18 @@ namespace IAUS.ECS2
             ComponentDataFromEntity<Rally> rally = GetComponentDataFromEntity<Rally>(false);
             ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
 
-            EntityCommandBuffer entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer();
+            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
 
 
             float DT = Time.DeltaTime;
-            Entities.ForEach((Entity entity, DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
+           JobHandle test = Entities.
+                WithNativeDisableParallelForRestriction(PatrolFromEntity)
+                .WithNativeDisableParallelForRestriction(Wait)
+                .WithNativeDisableParallelForRestriction(party)
+                .WithNativeDisableParallelForRestriction(rally)
+                .WithNativeDisableParallelForRestriction(follow)
+              //  .WithoutBurst()
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
                 {
                     if (State.Length == 0)
                         return;
@@ -114,7 +120,7 @@ namespace IAUS.ECS2
 
                                             break;
                                         case AIStates.Patrol:
-                                            entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
+                                            entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex,entity);
 
                                             break;
                                     }
@@ -130,7 +136,7 @@ namespace IAUS.ECS2
 
                                         case AIStates.Wait:
                                             WTemp.Timer = 0.0f;
-                                            entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                                            entityCommandBuffer.RemoveComponent<WaitActionTag>(nativeThreadIndex,entity);
                                             break;
 
                                     }
@@ -149,7 +155,7 @@ namespace IAUS.ECS2
                                         case AIStates.Wait:
                                             break;
                                         case AIStates.GotoLeader:
-                                            entityCommandBuffer.RemoveComponent<GetLeaderTag>(entity);
+                                            entityCommandBuffer.RemoveComponent<GetLeaderTag>(nativeThreadIndex,entity);
 
                                             break;
                                     }
@@ -168,7 +174,7 @@ namespace IAUS.ECS2
                                         case AIStates.Wait:
                                             break;
                                         case AIStates.Rally:
-                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(nativeThreadIndex,entity);
 
                                             break;
                                     }
@@ -190,7 +196,7 @@ namespace IAUS.ECS2
 
                                             break;
                                         case AIStates.FollowTarget:
-                                            entityCommandBuffer.RemoveComponent<FollowTargetTag>(entity);
+                                            entityCommandBuffer.RemoveComponent<FollowTargetTag>(nativeThreadIndex,entity);
                                             break;
                                     }
 
@@ -218,7 +224,7 @@ namespace IAUS.ECS2
                             case AIStates.Patrol:
                                 if (PatrolFromEntity.Exists(entity))
                                 {
-                                    entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex, entity);
                                     Patrol Ptemp = PatrolFromEntity[entity];
                                     if (Ptemp.Status == ActionStatus.Running)
                                     {
@@ -231,7 +237,7 @@ namespace IAUS.ECS2
                             case AIStates.Wait:
                                 if (Wait.Exists(entity))
                                 {
-                                    entityCommandBuffer.RemoveComponent<WaitActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<WaitActionTag>(nativeThreadIndex, entity);
                                     WaitTime Wtemp = Wait[entity];
                                     if (Wtemp.Status == ActionStatus.Running)
                                     {
@@ -245,7 +251,7 @@ namespace IAUS.ECS2
                             case AIStates.GotoLeader:
                                 if (party.Exists(entity))
                                 {
-                                    entityCommandBuffer.RemoveComponent<GetLeaderTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<GetLeaderTag>(nativeThreadIndex,entity);
 
                                     Party tempParty = party[entity];
                                     if (tempParty.Status == ActionStatus.Running)
@@ -259,7 +265,7 @@ namespace IAUS.ECS2
                             case AIStates.Rally:
                                 if (rally.Exists(entity))
                                 {
-                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<RallyActionTag>(nativeThreadIndex, entity);
 
                                     Rally tempRally = rally[entity];
                                     if (tempRally.Status == ActionStatus.Running)
@@ -273,7 +279,7 @@ namespace IAUS.ECS2
                             case AIStates.FollowTarget:
                                 if (follow.Exists(entity))
                                 {
-                                    entityCommandBuffer.RemoveComponent<FollowTargetTag>(entity);
+                                    entityCommandBuffer.RemoveComponent<FollowTargetTag>(nativeThreadIndex,entity);
 
                                     FollowCharacter tempFollow = follow[entity];
                                     if (tempFollow.Status == ActionStatus.Running)
@@ -294,28 +300,29 @@ namespace IAUS.ECS2
                         {
                             // Get compemenet set timer and status to completed
                             case AIStates.Patrol:
-                                entityCommandBuffer.AddComponent<PatrolActionTag>(entity);
+                                entityCommandBuffer.AddComponent<PatrolActionTag>(nativeThreadIndex,entity);
 
                                 break;
                             case AIStates.Wait:
-                                entityCommandBuffer.AddComponent<WaitActionTag>(entity);
+                                entityCommandBuffer.AddComponent<WaitActionTag>(nativeThreadIndex,entity);
                                 break;
                             case AIStates.GotoLeader:
-                                entityCommandBuffer.AddComponent<GetLeaderTag>(entity);
+                                entityCommandBuffer.AddComponent<GetLeaderTag>(nativeThreadIndex,entity);
                                 break;
                             case AIStates.Rally:
-                                entityCommandBuffer.AddComponent<RallyActionTag>(entity);
+                                entityCommandBuffer.AddComponent<RallyActionTag>(nativeThreadIndex,entity);
                                 break;
                             case AIStates.FollowTarget:
-                                entityCommandBuffer.AddComponent<FollowTargetTag>(entity);
+                                entityCommandBuffer.AddComponent<FollowTargetTag>(nativeThreadIndex,entity);
                                 break;
                         }
 
                     }
 
-                });
+                }).Schedule(inputDeps)
+            ;
 
-
+            return test;
         }
     }
 }

@@ -65,14 +65,14 @@ namespace SpawnerSystem
                         if (Mathf.Abs(displacementFromCenterOfArea.x) < TempArea.MaxDisplacementFromCenter.x && Mathf.Abs(displacementFromCenterOfArea.y) < TempArea.MaxDisplacementFromCenter.y && Mathf.Abs(displacementFromCenterOfArea.z) < TempArea.MaxDisplacementFromCenter.z)
                         {
                             // Separate in to 3 functions
-                            Vector3 FemalePoint;
-                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out FemalePoint))
+                      
+                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out Vector3 FemalePoint))
                             {
                                 // Move RandomPoint to Utility Class
                                 GenericNPC.SpawnGO(Gender.Female, FemalePoint);
                             }
-                                Vector3 MalePoint;
-                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out MalePoint))
+                                
+                            if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out  Vector3 MalePoint))
                             {
                                 GenericNPC.SpawnGO(Gender.Male, MalePoint);
 
@@ -96,8 +96,7 @@ namespace SpawnerSystem
                                 {
                                     if (TempArea.SpawnCount != 0)
                                     {
-                                        Vector3 SpawnPoint;
-                                        if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out SpawnPoint))
+                                        if (GlobalFunctions.RandomPoint(transform.Position, 10.5f, out  Vector3 SpawnPoint))
                                         {
                                             EnemyDatabase.GetEnemy(Buffer[cnt].spawnData.SpawnID).Spawn(SpawnPoint);
                                             EnemySpawnData tempData = Buffer[cnt];

@@ -91,3 +91,6 @@ UnityEngine.TestRunner.csproj
 UnityEngine.UI.csproj
 Assets/Scripts/IAUS/ECS Take2/Component/State Components/FollowCharacter.cs
 Assets/Scripts/IAUS/ECS Take2/Component/State Components/FollowCharacter.cs.meta
+Assets/Scenes/new spawn test/Lightmap-1_comp_light.exr.meta
+Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png
+Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png.meta

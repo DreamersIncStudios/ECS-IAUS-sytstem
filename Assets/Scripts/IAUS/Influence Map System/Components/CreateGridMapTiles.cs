@@ -6,7 +6,7 @@ namespace InfluenceMap
     public class CreateGridMapTiles : MonoBehaviour, IConvertGameObjectToEntity
     {
         GameObject Go;
-        Collider collider;
+        //Collider collider;
         public float width, height;
         public int NumCells;
         public Vector2 CellSize;
@@ -42,7 +42,7 @@ namespace InfluenceMap
         void createHeatMapTile()
         {
             Go = this.gameObject;
-            collider = Go.GetComponent<Collider>();
+           Collider  collider = Go.GetComponent<Collider>();
             width = collider.bounds.size.x;
             height = collider.bounds.size.z;
             CellSize = new Vector2((float)width / (float)NumCells, (float)height / (float)NumCells);

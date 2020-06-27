@@ -75,14 +75,13 @@ namespace IAUS.ECS2
                         if (!Influences.Exists(entity))
                         {
                             entityCommandBuffer.AddComponent<InfluenceValues>(nativeThreadIndex, entity);
-
-
                         }
                     }
                 })
                 .WithReadOnly(health)
                .WithReadOnly(TimeC)
                .WithReadOnly(Distance)
+               .WithReadOnly(Influences)
                 .Schedule(inputDeps);
 
             JobHandle waitAdd = Entities
