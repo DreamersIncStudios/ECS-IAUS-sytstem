@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\WaveMasterSystem.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Prefabs\Utility Scripts\CleanUpHybridEntity.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\FrequencyUp.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\SquadSpawn.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\GlobalFunctions.cs" />
