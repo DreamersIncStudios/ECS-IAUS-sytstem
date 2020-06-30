@@ -43,6 +43,7 @@ MonoBehaviour:
     B: 0.935
     C: 0.35
   bufferZone: 0.5
+  maxInfluenceAtPoint: 0
   timeToWait: 20
   waitTimer:
     Inverse: 0
@@ -51,6 +52,7 @@ MonoBehaviour:
     K: -1
     B: 0.91
     C: 0.2
+  distanceToMantainFromTarget: 0
   speed: 4.5
   stoppingDistance: 0.5
   acceleration: 8

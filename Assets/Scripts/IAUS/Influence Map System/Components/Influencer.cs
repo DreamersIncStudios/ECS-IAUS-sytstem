@@ -76,6 +76,7 @@ namespace InfluenceMap
 
             JobHandle CheckInfluenceAtPoint = Entities
             .WithReadOnly(StaticObjects)
+            .WithNativeDisableParallelForRestriction(StaticObjects)
             .WithReadOnly(DynamicObjects)
             .WithNativeDisableParallelForRestriction(positions)
             .WithReadOnly(positions)
@@ -228,6 +229,8 @@ namespace InfluenceMap
             JobHandle CheckInfluenceAtSelf = Entities
                 .WithDeallocateOnJobCompletion(StaticObjects)
                 .WithReadOnly(StaticObjects)
+            .WithNativeDisableParallelForRestriction(StaticObjects)
+
                 .WithDeallocateOnJobCompletion(DynamicObjects)
                 .WithReadOnly(DynamicObjects)
                 .WithNativeDisableParallelForRestriction(positions)
@@ -378,6 +381,7 @@ namespace InfluenceMap
                     influenceValues.InfluenceAtSelf = InfluenceAtSelf;
                 })
                 .Schedule(CheckInfluenceAtPoint);
+
             return CheckInfluenceAtSelf;
         }
 

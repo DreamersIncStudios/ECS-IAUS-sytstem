@@ -160,5 +160,5 @@ namespace IAUS.ECS2
         }
     }
 
-    public struct PatrolActionTag : IComponentData { }
+ 
 }

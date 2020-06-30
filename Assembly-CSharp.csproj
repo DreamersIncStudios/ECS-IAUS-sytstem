@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -93,6 +93,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactorTagsTest.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
@@ -159,10 +160,10 @@
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\Loot System\LootTable.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\System\WaveMasterSystem.cs" />
-    <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Prefabs\Utility Scripts\CleanUpHybridEntity.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\FrequencyUp.cs" />
     <Compile Include="Assets\Scripts\Spawer System\Scripts\Test Scripts\SquadSpawn.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
+    <Compile Include="Assets\Scripts\Utility Scripts\CleanUpHybridEntity.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\GlobalFunctions.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2018.3.8f1/Unity/Editor/2019.4.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

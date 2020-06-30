@@ -43,6 +43,7 @@ namespace IAUS.SpawnerSystem
             if (StatesToAdd.Patrol)
             {
                 dstManager.AddComponentData(entity, PatrolState);
+
                 DynamicBuffer<PatrolBuffer> buffer = dstManager.AddBuffer<PatrolBuffer>(entity);
                 foreach (var item in Waypoints)
                 {
