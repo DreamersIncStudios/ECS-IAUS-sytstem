@@ -11,11 +11,21 @@ namespace Test.CharacterStats
     public class PlayerCharacter : MonoBehaviour, IConvertGameObjectToEntity
     {
         [Range(0, 999)]
-        public int CurHealth;
+        [SerializeField] int CurHealth;
+        public int curHealth{ 
+            get { return CurHealth; }
+           private set { if (value > MaxHealth)
+                    CurHealth = MaxHealth;
+                else
+                    CurHealth = value;
+                        }
+        }
+        
+        [Range(0, 999)]
+        public int MaxHealth ;
+        
         [Range(0, 999)]
         public int CurMana;
-        [Range(0, 999)]
-        public int MaxHealth;
         [Range(0, 999)]
         public int MaxMana;
 

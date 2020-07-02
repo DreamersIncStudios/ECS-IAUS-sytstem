@@ -25,98 +25,50 @@ namespace IAUS.ECS2
             float DT = Time.DeltaTime;
                 JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, in HealthConsideration health, in DistanceToConsideration distanceTo, in TimerConsideration timer) =>
                 {
-                    if (!patrol.CanPatrol) {
-                        patrol.Status = ActionStatus.Disabled;
-                        patrol.TotalScore = 0.0f;
+
+                    if (patrol.Status == ActionStatus.Disabled)
                         return;
-                    }
 
-                    if (patrol.Status != ActionStatus.Running)
+                    if (patrol.Status == ActionStatus.CoolDown)
                     {
-                        switch (patrol.Status)
+                        if (patrol.ResetTime > 0.0f)
                         {
-                            case ActionStatus.CoolDown:
-                                if (patrol.ResetTime > 0.0f)
-                                {
-                                    patrol.ResetTime -= DT;
-                                }
-                                else
-                                {
-                                    patrol.Status = ActionStatus.Idle;
-                                    patrol.ResetTime = 0.0f;
-                                }
-                                break;
-                            case ActionStatus.Failure:
-                                patrol.ResetTime = patrol.ResetTimer / 2.0f;
-                                patrol.Status = ActionStatus.CoolDown;
-                                break;
-                            case ActionStatus.Interrupted:
-                                patrol.ResetTime = patrol.ResetTimer / 2.0f;
-                                patrol.Status = ActionStatus.CoolDown;
-
-                                break;
-                            case ActionStatus.Success:
-                                patrol.ResetTime = patrol.ResetTimer;
-                                patrol.Status = ActionStatus.CoolDown;
-                                break;
+                            patrol.ResetTime -= DT;
                         }
+                        else
+                        {
+                            patrol.Status = ActionStatus.Idle;
+                            patrol.ResetTime = 0.0f;
+                        }
+
                     }
-                    if (patrol.Status != ActionStatus.Disabled)
-                    {
-                        float mod = 1.0f - (1.0f / 2.0f);
+                 
                         float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio) *
                          patrol.DistanceToTarget.Output(distanceTo.Ratio));
-                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
-                    }
-                    else {
-                        patrol.TotalScore = 0.0f;
-                    }
+                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
+                  
                 }).Schedule(inputDeps);
-                DT = Time.DeltaTime;
+           
 
                 JobHandle WaitJob = Entities
                     .ForEach((ref WaitTime Wait, in DistanceToConsideration distanceTo, in TimerConsideration timer, in HealthConsideration health ) =>
                 {
-                    if (Wait.Status != ActionStatus.Running)
+                    if (Wait.Status == ActionStatus.CoolDown)
                     {
-                        switch (Wait.Status)
+                        if (Wait.ResetTime > 0.0f)
                         {
-                            case ActionStatus.CoolDown:
-                                if (Wait.ResetTime > 0.0f)
-                                {
-                                    Wait.ResetTime -= DT;
-                                }
-                                else
-                                {
-                                    Wait.Status = ActionStatus.Idle;
-                                    Wait.ResetTime = 0.0f;
-                                }
-                                break;
-                            case ActionStatus.Failure:
-                                Wait.ResetTime = Wait.ResetTimer / 2.0f;
-                                Wait.Status = ActionStatus.CoolDown;
-
-                                break;
-                            case ActionStatus.Interrupted:
-                                Wait.ResetTime = Wait.ResetTimer / 2.0f;
-                                Wait.Status = ActionStatus.CoolDown;
-
-                                break;
-                            case ActionStatus.Success:
-                                Wait.ResetTime = Wait.ResetTimer;
-                                Wait.Status = ActionStatus.CoolDown;
-
-                                break;
+                            Wait.ResetTime -= DT;
+                        }
+                        else
+                        {
+                            Wait.Status = ActionStatus.Idle;
+                            Wait.ResetTime = 0.0f;
                         }
                     }
 
-
-
-
-                    float mod = 1.0f - (1.0f / 2.0f);
                     float TotalScore = Mathf.Clamp01(Wait.Health.Output(health.Ratio) *
                      Wait.WaitTimer.Output(timer.Ratio));
-                    Wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
+                    Wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * Wait.mod) * TotalScore);
 
                 }).Schedule(PatrolJob);
 
@@ -157,12 +109,12 @@ namespace IAUS.ECS2
                             break;
                     }
                 }
-                    float mod = 1.0f - (1.0f / 3.0f);
+            
 
                 // fix later
                     float TotalScore = Mathf.Clamp01(party.Health.Output(health.Ratio) *
                      LeaderCon.score * party.ThreatInArea.Output(detectConsider.ThreatInArea));
-                    party.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
+                    party.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * party.mod) * TotalScore);
                
 
 

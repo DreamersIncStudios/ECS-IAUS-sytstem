@@ -51,5 +51,5 @@ namespace IAUS.ECS2
     }
 
 
-    public struct WaitActionTag : IComponentData { }
+   
 }

@@ -37,7 +37,6 @@ namespace IAUS.ECS2
                 .WithNativeDisableParallelForRestriction(party)
                 .WithNativeDisableParallelForRestriction(rally)
                 .WithNativeDisableParallelForRestriction(follow)
-              //  .WithoutBurst()
                 .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
                 {
                     if (State.Length == 0)

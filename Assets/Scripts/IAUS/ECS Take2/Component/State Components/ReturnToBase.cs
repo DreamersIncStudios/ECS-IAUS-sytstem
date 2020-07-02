@@ -9,6 +9,7 @@ namespace IAUS.ECS2 {
         public ConsiderationData DistenceToLeader;
         public ConsiderationData LeaderAlive;
         public ConsiderationData DistanceToPlayer;
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
 
 
 

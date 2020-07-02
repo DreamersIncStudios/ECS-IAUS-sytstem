@@ -5,7 +5,7 @@ using Utilities.ReactiveSystem;
 using System;
 using ProjectRebirth.Bestiary.Interfaces;
 
-[assembly: RegisterGenericComponentType(typeof(ReactiveComponentSystem<IAUS.ECS2.PatrolActionTag, IAUS.ECS2.Patrol, IAUS.ECS2.PatrolTagReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(ReactiveComponentTagSystem<IAUS.ECS2.PatrolActionTag, IAUS.ECS2.Patrol, IAUS.ECS2.PatrolTagReactor>.StateComponent))]
 
 namespace IAUS.ECS2
 {
@@ -25,6 +25,7 @@ namespace IAUS.ECS2
         public bool UpdatePostition;
         public float DistanceAtStart;
         public int index;
+        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         public float BufferZone;
         //public int MaxInfluenceAtPoint;
         public float DistInfluence;
@@ -43,41 +44,45 @@ namespace IAUS.ECS2
     }
     public struct PatrolActionTag : IComponentData {
         public bool test;
-    }
-    public struct PatrolTagReactor : IComponentReactor<PatrolActionTag,Patrol>
-    {
-        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIState)
-        {
-            newComponent.test = true;
-            switch (AIState.Status)
-            {
-                case ActionStatus.Running:
-                    break;
-                case ActionStatus.Interrupted:
-                    break;
-                case ActionStatus.Success:
-                  //  entityCommandBuffer.RemoveComponent<PatrolActionTag>(entity);
 
-                    break;
-                case ActionStatus.Failure:
-                    break;
-                case ActionStatus.Disabled:
-                    break;
-            }
+    }
+    public struct PatrolTagReactor : IComponentReactorTags<PatrolActionTag,Patrol>
+    {
+        public void ComponentAdded(Entity entity,ref PatrolActionTag newComponent, ref Patrol AIState)
+        {
+            if (AIState.Status == ActionStatus.Running)
+                return;
+
+            AIState.Status = ActionStatus.Running;
         }
 
         public void ComponentRemoved(Entity entity, ref Patrol AIState, in PatrolActionTag oldComponent)
         {
+       
+            if (!AIState.CanPatrol)
+            {
+                AIState.Status = ActionStatus.Disabled;
+                // patrol.TotalScore = 0.0f;
+               
+            }
+
             switch (AIState.Status) {
                 case ActionStatus.Running:
                     break;
                 case ActionStatus.Interrupted:
+                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
+                    AIState.Status = ActionStatus.CoolDown;
                     break;
                 case ActionStatus.Success:
+                    AIState.ResetTime = AIState.ResetTimer;
+                    AIState.Status = ActionStatus.CoolDown;
                     break;
                 case ActionStatus.Failure:
+                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
+                    AIState.Status = ActionStatus.CoolDown;
                     break;
                 case ActionStatus.Disabled:
+                    AIState.TotalScore = 0.0f;
                     break;
             }
         }
@@ -89,7 +94,7 @@ namespace IAUS.ECS2
 
         }
 
-        public class PatrolReactiveSystem : ReactiveComponentSystem<PatrolActionTag,Patrol, PatrolTagReactor>
+        public class PatrolReactiveSystem : ReactiveComponentTagSystem<PatrolActionTag,Patrol, PatrolTagReactor>
         {
             protected override PatrolTagReactor CreateComponentReactor()
             {

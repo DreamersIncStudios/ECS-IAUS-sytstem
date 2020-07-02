@@ -8,16 +8,17 @@ using System.Diagnostics;
 
 namespace Utilities.ReactiveSystem
 {
-    public interface IComponentReactor<COMPONENT, AICOMPONENT>
+    public interface IComponentReactorTags<COMPONENT, AICOMPONENT>
     {
+       
         void ComponentAdded(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT AIStateCompoment);
         void ComponentRemoved(Entity entity, ref AICOMPONENT AIStateCompoment, in COMPONENT oldComponent);
         void ComponentValueChanged(Entity entity, ref AICOMPONENT AIStateCompoment, ref COMPONENT newComponent, in COMPONENT oldComponent);
     }
-    public abstract class ReactiveComponentSystem<COMPONENT, AICOMPONENT , COMPONENT_REACTOR> : SystemBase
+    public abstract class ReactiveComponentTagSystem<COMPONENT, AICOMPONENT , COMPONENT_REACTOR> : SystemBase
         where COMPONENT : unmanaged, IComponentData
         where AICOMPONENT : unmanaged, IComponentData
-        where COMPONENT_REACTOR : struct, IComponentReactor<COMPONENT, AICOMPONENT>
+        where COMPONENT_REACTOR : struct, IComponentReactorTags<COMPONENT, AICOMPONENT>
     {
         /// <summary>
         /// Struct implmenting IComponentReactor<COMPONENT> that implements the behavior when COMPONENT is added, removed or changed value.
@@ -105,6 +106,7 @@ namespace Utilities.ReactiveSystem
                     Entity entity = entities[i];
                     Reactor.ComponentAdded(entity, ref component,ref AIcomponent);
                     components[i] = component;
+                    aiComponents[i] = AIcomponent;
                     // Add the system state component and set it's value that on the next frame, the ManageComponentValueChangeJob can handle any change in the COMPONENT value.
                     EntityCommandBuffer.AddComponent<StateComponent>(chunkIndex, entities[i]);
                     EntityCommandBuffer.SetComponent(chunkIndex, entities[i], new StateComponent() { Value = component });
@@ -134,6 +136,7 @@ namespace Utilities.ReactiveSystem
                     AICOMPONENT AIcomponent = aiComponents[i];
                     StateComponent stateComponent = stateComponents[i];
                     Reactor.ComponentRemoved(entity, ref AIcomponent, in stateComponent.Value);
+                    aiComponents[i] = AIcomponent;
                     // Remove the state component so that the entiyt can be destroyed or listen again for COMPONENT addition.
                     EntityCommandBuffer.RemoveComponent<StateComponent>(chunkIndex, entities[i]);
                 }
@@ -169,6 +172,8 @@ namespace Utilities.ReactiveSystem
                     Reactor.ComponentValueChanged(entity, ref AIcomponent, ref component, in stateComponent.Value);
                     // Ressign the COMPONENT to take into account any modification that may have accured during the method call.
                     components[i] = component;
+                    aiComponents[i] = AIcomponent;
+
                     // Update the copy of the COMPONENT.
                     stateComponent.Value = component;
                     stateComponents[i] = stateComponent;
