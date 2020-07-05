@@ -9,7 +9,7 @@ using IAUS.Core;
 using Unity.Mathematics;
 namespace IAUS.ECS.System
 {
-    [UpdateAfter(typeof(IAUS_UpdateState))]
+   //[UpdateAfter(typeof(IAUS_UpdateState))]
     public class MovementSystem : ComponentSystem
     {
         protected override void OnUpdate()

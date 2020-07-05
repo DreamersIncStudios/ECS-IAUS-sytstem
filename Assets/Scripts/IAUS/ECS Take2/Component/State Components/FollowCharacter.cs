@@ -90,65 +90,66 @@ namespace IAUS.ECS2
     }
 
 
-    //[UpdateInGroup(typeof(IAUS_Initialization))]
-    //public class SetupFollowState : JobComponentSystem
-    //{
+    [UpdateInGroup(typeof(IAUS_Initialization))]
+    [UpdateBefore(typeof(SetupIAUS))]
+    public class SetupFollowState : JobComponentSystem
+    {
 
-    //    EntityCommandBufferSystem entityCommandBufferSystem;
-    //    protected override void OnCreate()
-    //    {
-    //        base.OnCreate();
-    //        entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        EntityCommandBufferSystem entityCommandBufferSystem;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
-    //    }
-    //    protected override JobHandle OnUpdate(JobHandle inputDeps)
-    //    {
-    //        EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
-    //        ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>(true);
-    //        ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>(true);
+        }
+        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        {
+            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
+            ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>(true);
+            ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>(true);
 
-    //        JobHandle SetupFollow = Entities
-    //        .WithNativeDisableParallelForRestriction(health)
-    //        .WithReadOnly(health)
-    //        .WithReadOnly(Influences)
-    //            .WithNativeDisableParallelForRestriction(Influences)
+            JobHandle SetupFollow = Entities
+            .WithNativeDisableParallelForRestriction(health)
+            .WithReadOnly(health)
+            .WithReadOnly(Influences)
+                .WithNativeDisableParallelForRestriction(Influences)
+                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref FollowCharacter follow,
+                in CreateAIBufferTag c2
+               ) =>
+                {
+                    bool added = true;
+                    for (int index = 0; index < stateBuffer.Length; index++)
+                    {
+                        if (stateBuffer[index].StateName == AIStates.FollowTarget)
+                        { added = false; }
+                    }
 
-    //            .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref FollowCharacter follow,
-    //            in CreateAIBufferTag c2
-    //            ) =>
-    //            {
-    //                bool added = true;
-    //                for (int index = 0; index < stateBuffer.Length; index++)
-    //                {
-    //                    if (stateBuffer[index].StateName == AIStates.FollowTarget)
-    //                    { added = false; }
-    //                }
 
 
-    //                if (added)
-    //                {
-    //                    Debug.Log("WTF");
-    //                    stateBuffer.Add(new StateBuffer()
-    //                    {
-    //                        StateName = AIStates.FollowTarget,
-    //                        Status = ActionStatus.Idle
-    //                    });
-    //                    if (!health.Exists(entity))
-    //                    {
-    //                        entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
-    //                    }
-    //                    if (!Influences.Exists(entity))
-    //                    {
-    //                        entityCommandBuffer.AddComponent<InfluenceValues>(nativeThreadIndex, entity);
-    //                    }
-    //                    entityCommandBuffer.AddComponent<getpointTag>(nativeThreadIndex, entity);
-    //                }
-    //            })
-    //            .Schedule(inputDeps);
+                    if (added)
+                    {
 
-    //        return SetupFollow;
-    //    }
-    //}
+                        stateBuffer.Add(new StateBuffer()
+                        {
+                            StateName = AIStates.FollowTarget,
+                            Status = ActionStatus.Idle
+                        });
+                        if (!health.Exists(entity))
+                        {
+                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
+                        }
+                        if (!Influences.Exists(entity))
+                        {
+                            entityCommandBuffer.AddComponent<InfluenceValues>(nativeThreadIndex, entity);
+                        }
+                        entityCommandBuffer.AddComponent<getpointTag>(nativeThreadIndex, entity);
+                    }
+                })
+                .Schedule(inputDeps);
+
+            return SetupFollow;
+        }
+    }
 
 
     [UpdateInGroup(typeof(IAUS_UpdateState))]
@@ -176,10 +177,16 @@ namespace IAUS.ECS2
             });
         }
     }
-    public struct FollowTargetTag : IComponentData { }
+    
+    public struct FollowTargetTag : IComponentData
+    {
+        bool test;
+    }
 
-    [UpdateAfter(typeof(StateScoreSystem))]
+  
     [UpdateInGroup(typeof(IAUS_UpdateState))]
+    [UpdateAfter(typeof(PatrolAction))]
+
     public class FollowAction : JobComponentSystem
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
