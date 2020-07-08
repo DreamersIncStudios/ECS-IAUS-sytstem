@@ -32,7 +32,7 @@ namespace IAUS.ECS2
         bool test;
     }
 
-    public struct WaitTagReactor : IComponentReactorTags<WaitActionTag, WaitTime>
+    public struct WaitTagReactor : IComponentReactorTagsForAIStates<WaitActionTag, WaitTime>
     {
         public void ComponentAdded(Entity entity, ref WaitActionTag newComponent, ref WaitTime AIState)
         {
@@ -68,10 +68,11 @@ namespace IAUS.ECS2
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref WaitTime AIStateCompoment, ref WaitActionTag newComponent, in WaitActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref WaitTime AIStateCompoment, in WaitActionTag oldComponent)
         {
             throw new System.NotImplementedException();
         }
+
         public class WaitReactiveSystem : ReactiveComponentTagSystem<WaitActionTag, WaitTime, WaitTagReactor>
         {
             protected override WaitTagReactor CreateComponentReactor()

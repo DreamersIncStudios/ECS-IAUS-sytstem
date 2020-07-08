@@ -61,18 +61,6 @@ namespace IAUS.ECS2
 
             JobHandle FollowScore = Entities.ForEach((ref FollowCharacter follow, in HealthConsideration health) =>
             {
-                if (follow.Status == ActionStatus.CoolDown)
-                {
-
-                    if (follow.ResetTime > 0.0f)
-                        follow.ResetTime -= DT;
-                    else
-                    {
-                        follow.Status = ActionStatus.Idle;
-                        follow.ResetTime = 0.0f;
-                    }
-                }
-
                 float targetcheck = follow.IsTargetMoving ? 1.0f : 0.0f;
 
                 float TotalScore = Mathf.Clamp01(follow.Health.Output(health.Ratio)
@@ -81,9 +69,7 @@ namespace IAUS.ECS2
                 ;
                 follow.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * follow.mod) * TotalScore);
 
-            }).
-
-                Schedule(CheckLeaderStatus);
+            }).Schedule(CheckLeaderStatus);
 
             return FollowScore;
         }
@@ -224,7 +210,7 @@ namespace IAUS.ECS2
             return Action;
         }
     }
-    public struct FollowTagReactor : IComponentReactorTags<FollowTargetTag, FollowCharacter>
+    public struct FollowTagReactor : IComponentReactorTagsForAIStates<FollowTargetTag, FollowCharacter>
     {
         public void ComponentAdded(Entity entity, ref FollowTargetTag newComponent, ref FollowCharacter AIState)
         {
@@ -258,7 +244,7 @@ namespace IAUS.ECS2
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref FollowCharacter AIStateCompoment, ref FollowTargetTag newComponent, in FollowTargetTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref FollowTargetTag newComponent, ref FollowCharacter AIStateCompoment, in FollowTargetTag oldComponent)
         {
             throw new System.NotImplementedException();
         }

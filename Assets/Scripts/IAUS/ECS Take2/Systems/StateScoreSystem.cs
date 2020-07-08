@@ -8,7 +8,7 @@ namespace IAUS.ECS2
 {
     [UpdateInGroup(typeof(IAUS_UpdateScore))]
 
-    public class StateScoreSystem : JobComponentSystem
+    public class StateScoreSystem : SystemBase
     {
         EntityCommandBufferSystem entityCommandBufferSystem;
 
@@ -19,60 +19,35 @@ namespace IAUS.ECS2
         }
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
 
             float DT = Time.DeltaTime;
-                JobHandle PatrolJob = Entities.ForEach((ref Patrol patrol, in HealthConsideration health, in DistanceToConsideration distanceTo, in TimerConsideration timer) =>
+
+            JobHandle systemDeps = Dependency;
+            systemDeps = Entities.ForEach((ref Patrol patrol, in HealthConsideration health, in DistanceToConsideration distanceTo, in TimerConsideration timer) =>
                 {
 
                     if (patrol.Status == ActionStatus.Disabled)
                         return;
 
-                    if (patrol.Status == ActionStatus.CoolDown)
-                    {
-                        if (patrol.ResetTime > 0.0f)
-                        {
-                            patrol.ResetTime -= DT;
-                        }
-                        else
-                        {
-                            patrol.Status = ActionStatus.Idle;
-                            patrol.ResetTime = 0.0f;
-                        }
+                    float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio) *
+                     patrol.DistanceToTarget.Output(distanceTo.Ratio));
+                    patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
 
-                    }
-                 
-                        float TotalScore = Mathf.Clamp01(patrol.Health.Output(health.Ratio) *
-                         patrol.DistanceToTarget.Output(distanceTo.Ratio));
-                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
-                  
-                }).Schedule(inputDeps);
-           
+                }).ScheduleParallel(systemDeps);
 
-                JobHandle WaitJob = Entities
+
+               systemDeps = Entities
                     .ForEach((ref WaitTime Wait, in DistanceToConsideration distanceTo, in TimerConsideration timer, in HealthConsideration health ) =>
                 {
-                    if (Wait.Status == ActionStatus.CoolDown)
-                    {
-                        if (Wait.ResetTime > 0.0f)
-                        {
-                            Wait.ResetTime -= DT;
-                        }
-                        else
-                        {
-                            Wait.Status = ActionStatus.Idle;
-                            Wait.ResetTime = 0.0f;
-                        }
-                    }
-
                     float TotalScore = Mathf.Clamp01(Wait.Health.Output(health.Ratio) *
                      Wait.WaitTimer.Output(timer.Ratio));
                     Wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * Wait.mod) * TotalScore);
 
-                }).Schedule(PatrolJob);
-
-            JobHandle FindLeader = Entities.ForEach
+                }).ScheduleParallel(systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = Entities.ForEach
             ((ref Party party, in HealthConsideration health, in LeaderConsideration LeaderCon, in DetectionConsideration detectConsider,
             in Detection Detect
             ) =>
@@ -119,12 +94,11 @@ namespace IAUS.ECS2
 
 
 
-            }).Schedule(WaitJob);
+            }).ScheduleParallel(systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            Dependency = systemDeps;
 
-                return FindLeader;
-            
 
- 
         }
     }
 }

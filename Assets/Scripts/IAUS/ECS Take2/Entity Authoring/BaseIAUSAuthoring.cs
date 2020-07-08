@@ -16,8 +16,16 @@ namespace IAUS.ECS2
 
             dstManager.AddBuffer<StateBuffer>(entity);
             dstManager.AddComponent<CreateAIBufferTag>(entity);
+            var addAI = new BaseAI()
+            {
+                CurrentState = new StateBuffer()
+                {
+                    StateName = AIStates.none,
+                    Status = ActionStatus.Failure
+                }
+            };
 
-            dstManager.AddComponent<BaseAI>(entity);
+            dstManager.AddComponentData(entity,addAI);
            
 
 
@@ -26,6 +34,7 @@ namespace IAUS.ECS2
     public struct BaseAI : IComponentData
     {
         public StateBuffer CurrentState;
+        public bool Set;
     }
 
     public struct CreateAIBufferTag : IComponentData { }

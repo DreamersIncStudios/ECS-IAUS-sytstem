@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\SystemGroup\IAUSCore.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\TargetBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\Elite.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\UpdateTimersSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\BaseIAUSAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\Bases\Base.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\CharacterAuthoring.cs" />
@@ -92,7 +93,10 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\AIStateReactionSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\React.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactorTags.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />

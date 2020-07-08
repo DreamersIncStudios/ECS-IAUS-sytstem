@@ -4,21 +4,13 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
 
-using System.Diagnostics;
 
 namespace Utilities.ReactiveSystem
 {
-    public interface IComponentReactorTags<COMPONENT, AICOMPONENT>
-    {
-       
-        void ComponentAdded(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT AIStateCompoment);
-        void ComponentRemoved(Entity entity, ref AICOMPONENT AIStateCompoment, in COMPONENT oldComponent);
-        void ComponentValueChanged(Entity entity, ref AICOMPONENT AIStateCompoment, ref COMPONENT newComponent, in COMPONENT oldComponent);
-    }
     public abstract class ReactiveComponentTagSystem<COMPONENT, AICOMPONENT , COMPONENT_REACTOR> : SystemBase
         where COMPONENT : unmanaged, IComponentData
         where AICOMPONENT : unmanaged, IComponentData
-        where COMPONENT_REACTOR : struct, IComponentReactorTags<COMPONENT, AICOMPONENT>
+        where COMPONENT_REACTOR : struct, IComponentReactorTagsForAIStates<COMPONENT, AICOMPONENT>
     {
         /// <summary>
         /// Struct implmenting IComponentReactor<COMPONENT> that implements the behavior when COMPONENT is added, removed or changed value.
@@ -169,7 +161,7 @@ namespace Utilities.ReactiveSystem
                     // If it did not change, move to the next entity in chunk.
                     if (ByteBufferUtility.AreEqualStruct(stateComponent.Value, component)) continue;
                     // If it did change, call the method with the new value and the old value (from the last know copy of the COMPONENT)
-                    Reactor.ComponentValueChanged(entity, ref AIcomponent, ref component, in stateComponent.Value);
+                    Reactor.ComponentValueChanged(entity, ref component, ref AIcomponent, in stateComponent.Value);
                     // Ressign the COMPONENT to take into account any modification that may have accured during the method call.
                     components[i] = component;
                     aiComponents[i] = AIcomponent;
@@ -238,5 +230,5 @@ namespace Utilities.ReactiveSystem
 
         }
     }
-
+   
 }

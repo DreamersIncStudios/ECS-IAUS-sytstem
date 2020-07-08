@@ -2,10 +2,11 @@
 using UnityEngine;
 using Unity.Entities;
 using Utilities.ReactiveSystem;
-using System;
-using ProjectRebirth.Bestiary.Interfaces;
+using IAUS.Core;
+
 
 [assembly: RegisterGenericComponentType(typeof(ReactiveComponentTagSystem<IAUS.ECS2.PatrolActionTag, IAUS.ECS2.Patrol, IAUS.ECS2.PatrolTagReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(ReactiveAIComponentTagSystem<IAUS.ECS2.PatrolActionTag, IAUS.ECS2.Patrol, IAUS.ECS2.WaitTime, IAUS.ECS2.PatrolWaitTagReactor>.StateComponent))]
 
 namespace IAUS.ECS2
 {
@@ -46,7 +47,7 @@ namespace IAUS.ECS2
         public bool test;
 
     }
-    public struct PatrolTagReactor : IComponentReactorTags<PatrolActionTag,Patrol>
+    public struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag,Patrol>
     {
         public void ComponentAdded(Entity entity,ref PatrolActionTag newComponent, ref Patrol AIState)
         {
@@ -87,11 +88,8 @@ namespace IAUS.ECS2
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref Patrol AIState, ref PatrolActionTag  newComponent, in PatrolActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            Debug.Log("Changed");
-      //      newComponent.test = false; ;
-
         }
 
         public class PatrolReactiveSystem : ReactiveComponentTagSystem<PatrolActionTag,Patrol, PatrolTagReactor>
@@ -102,6 +100,37 @@ namespace IAUS.ECS2
             }
 
 
+        }
+    }
+
+    [UpdateInGroup(typeof(IAUS_UpdateState))]
+    [UpdateBefore(typeof(StateScoreSystem))]
+    [UpdateAfter(typeof(CheckScoreJobSystem))]
+    public struct PatrolWaitTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol, WaitTime>
+    {
+        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment, ref WaitTime UpdatingComponent)
+        {
+        
+            //  entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex, entity);
+
+        }
+
+        public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, ref WaitTime UpdatingComponent, in PatrolActionTag oldComponent)
+        {
+            if (AIStateCompoment.Status == ActionStatus.Success) {
+                UpdatingComponent.Timer = UpdatingComponent.TimeToWait;
+            }
+        }
+
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment, ref WaitTime UpdatingComponent, in PatrolActionTag oldComponent)
+        {
+        }
+        public class PatrolWait : ReactiveAIComponentTagSystem<PatrolActionTag, Patrol, WaitTime, PatrolWaitTagReactor>
+        {
+            protected override PatrolWaitTagReactor CreateComponentReactor()
+            {
+                return new PatrolWaitTagReactor();
+            }
         }
     }
 }

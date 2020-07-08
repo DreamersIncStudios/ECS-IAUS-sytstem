@@ -14,7 +14,7 @@ namespace IAUS.ECS2
 {
     [UpdateAfter(typeof(StateScoreSystem))]
     [UpdateInGroup(typeof(IAUS_UpdateState))]
-    public class PatrolAction : JobComponentSystem
+    public class PatrolAction : SystemBase
     {
 
         public EntityQueryDesc StaticObjectQuery = new EntityQueryDesc() { All = new ComponentType[] { typeof(Influencer) },
@@ -26,19 +26,20 @@ namespace IAUS.ECS2
         {
             All = new ComponentType[] { typeof(Influencer), typeof(Attackable) }
         };
-        EntityCommandBufferSystem entityCommandBufferSystem;
+        EntityCommandBufferSystem _entityCommandBufferSystem;
         protected override void OnCreate()
         {
             base.OnCreate();
-            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void  OnUpdate()
         {
+            JobHandle systemDeps = Dependency;
             float DT = Time.DeltaTime;
-            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
+            EntityCommandBuffer.Concurrent entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
 
-            JobHandle PatrolPointUpdate = Entities.ForEach((ref Patrol patrol,
+            systemDeps = Entities.ForEach((ref Patrol patrol,
             ref DynamicBuffer<PatrolBuffer> buffer, ref LocalToWorld toWorld, in BaseAI baseAi
              ) =>
             {
@@ -61,10 +62,10 @@ namespace IAUS.ECS2
                         patrol.LeaderUpdate = true;
                     }
 
-            }).Schedule(inputDeps);
+            }).Schedule(systemDeps);
 
             ComponentDataFromEntity<getpointTag> getpoint = GetComponentDataFromEntity<getpointTag>(true);
-            JobHandle LeaderPatrol = Entities
+           systemDeps = Entities
                 .WithNativeDisableParallelForRestriction(getpoint)
                 .WithReadOnly(getpoint)
                 .ForEach((int nativeThreadIndex, ref DynamicBuffer<SquadMemberBuffer> Buffer, ref DynamicBuffer<PatrolBuffer> buffer, ref Patrol patrol, in LeaderTag leader ) =>
@@ -83,17 +84,22 @@ namespace IAUS.ECS2
                      }
              })
 
-            .Schedule(PatrolPointUpdate);
+            .Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
 
 
-            JobHandle PatrolAction = Entities.ForEach((ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
+            systemDeps = Entities.ForEach((Entity entity, int nativeThreadIndex, ref PatrolActionTag PatrolTag, ref Patrol patrol, ref Movement move,
                 ref DynamicBuffer<PatrolBuffer> buffer, ref InfluenceValues InfluValues, in BaseAI baseAi
                 ) =>
             {
                 //start
                 if (patrol.Status == ActionStatus.Success)
+                {
+                          entityCommandBuffer.RemoveComponent<PatrolActionTag>(nativeThreadIndex, entity);
+
                     return;
+                }
                 if (patrol.UpdatePostition)
                     return;
 
@@ -130,13 +136,17 @@ namespace IAUS.ECS2
                     if (move.Completed && !move.CanMove)
                     {
                         patrol.Status = ActionStatus.Success;
+
                     }
                 }
 
-            }).Schedule(LeaderPatrol);
+
+            }).Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
 
-            JobHandle UpdateSquadOnMovement = Entities
+           systemDeps = Entities
                 .WithNativeDisableParallelForRestriction(follow)
                 .ForEach((int nativeThreadIndex, ref DynamicBuffer<SquadMemberBuffer> Buffer, in Movement move, in Patrol patrol, in LeaderTag leader, in PatrolActionTag tag)
             =>
@@ -153,10 +163,11 @@ namespace IAUS.ECS2
                 }
 
             }
-            ).Schedule(PatrolAction);
+            ).Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            Dependency = systemDeps;
 
-
-            return UpdateSquadOnMovement;
+          
         }
     }
 

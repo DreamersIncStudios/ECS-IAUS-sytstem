@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 3
+  m_CurrentQuality: 1
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -228,9 +228,9 @@ QualitySettings:
     Nintendo Switch: 5
     PS4: 5
     Stadia: 5
-    Standalone: 4
+    Standalone: 1
     WebGL: 3
-    Windows Store Apps: 4
+    Windows Store Apps: 1
     XboxOne: 5
     iPhone: 2
     tvOS: 2
