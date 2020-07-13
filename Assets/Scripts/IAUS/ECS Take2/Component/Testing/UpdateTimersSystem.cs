@@ -31,13 +31,11 @@ namespace Utilities.ReactiveSystem
         private struct ManageStateResetTimerJob : IJobChunk
         {
             public ArchetypeChunkComponentType<AISTATE> StateChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
             [ReadOnly]public float DT;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<AISTATE> AIStates = chunk.GetNativeArray(StateChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; ++i)
                 {
                     AISTATE state = AIStates[i];
@@ -63,7 +61,6 @@ namespace Utilities.ReactiveSystem
             systemDeps = new ManageStateResetTimerJob()
             {
                 StateChunk = GetArchetypeChunkComponentType<AISTATE>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
                 DT = Time.DeltaTime
 
             }.ScheduleParallel(_EntitiesWithState, systemDeps);

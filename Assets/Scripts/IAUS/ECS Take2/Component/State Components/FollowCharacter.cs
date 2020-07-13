@@ -7,10 +7,7 @@ using Unity.Mathematics;
 using IAUS.Core;
 using Utilities;
 using Utilities.ReactiveSystem;
-
-
-[assembly: RegisterGenericComponentType(typeof(ReactiveComponentTagSystem<IAUS.ECS2.FollowTargetTag , IAUS.ECS2.FollowCharacter, IAUS.ECS2.FollowTagReactor>.StateComponent))]
-
+using Unity.Collections;
 
 namespace IAUS.ECS2
 {
@@ -48,18 +45,13 @@ namespace IAUS.ECS2
     public struct getpointTag : IComponentData { }
 
     [UpdateInGroup(typeof(IAUS_UpdateScore))]
-    public class FollowStateScore : JobComponentSystem
+    public class FollowStateScore :SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void  OnUpdate()
         {
             float DT = Time.DeltaTime;
-            JobHandle CheckLeaderStatus = Entities.ForEach((ref FollowCharacter follow) =>
-            {
-                
-            })
-                .Schedule(inputDeps);
-
-            JobHandle FollowScore = Entities.ForEach((ref FollowCharacter follow, in HealthConsideration health) =>
+            JobHandle systemDeps = Dependency;
+            systemDeps = Entities.ForEach((ref FollowCharacter follow, in HealthConsideration health) =>
             {
                 float targetcheck = follow.IsTargetMoving ? 1.0f : 0.0f;
 
@@ -69,9 +61,8 @@ namespace IAUS.ECS2
                 ;
                 follow.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * follow.mod) * TotalScore);
 
-            }).Schedule(CheckLeaderStatus);
-
-            return FollowScore;
+            }).ScheduleParallel(systemDeps);
+            Dependency = systemDeps;
         }
     }
 
@@ -93,8 +84,7 @@ namespace IAUS.ECS2
             EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
             ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>(true);
             ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>(true);
-
-            JobHandle SetupFollow = Entities
+            JobHandle systemDeps = Entities
             .WithNativeDisableParallelForRestriction(health)
             .WithReadOnly(health)
             .WithReadOnly(Influences)
@@ -132,34 +122,37 @@ namespace IAUS.ECS2
                     }
                 })
                 .Schedule(inputDeps);
+            return systemDeps;
 
-            return SetupFollow;
         }
     }
 
 
     [UpdateInGroup(typeof(IAUS_UpdateState))]
-    [UpdateAfter(typeof(PatrolAction))]
+    [UpdateBefore(typeof(PatrolAction))]
     public class FollowPosition : ComponentSystem
     {
 
         protected override void OnUpdate()
         {
-            ComponentDataFromEntity<Patrol> patrol = GetComponentDataFromEntity<Patrol>(true);
+       // ComponentDataFromEntity<Patrol> patrol = GetComponentDataFromEntity<Patrol>(true);
 
-            Entities.ForEach((Entity entity, ref FollowCharacter Follow, ref getpointTag tag) =>
+            Entities
+                .ForEach((Entity entity, ref FollowCharacter Follow, ref getpointTag tag) =>
             {
+                Patrol patrol = EntityManager.GetComponentData<Patrol>(Follow.Target);
                 Vector3 tempPoint = new Vector3();
-                float3 Center = patrol[Follow.Target].waypointRef;
+                float3 Center = patrol.waypointRef;
                 retry:
                 if (GlobalFunctions.RandomPoint(Center, 10, out tempPoint))
                 {
                     Follow.TargetLocation = tempPoint;
                 }
-                else { 
-                goto retry;
+                else
+                {
+                    goto retry;
                 }
-                PostUpdateCommands.RemoveComponent<getpointTag>(entity);
+                EntityManager.RemoveComponent<getpointTag>(entity);
             });
         }
     }
@@ -171,18 +164,69 @@ namespace IAUS.ECS2
 
   
     [UpdateInGroup(typeof(IAUS_UpdateState))]
-    [UpdateAfter(typeof(PatrolAction))]
+    [UpdateAfter(typeof(FollowPosition))]
 
-    public class FollowAction : JobComponentSystem
+    public class FollowAction : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        EntityCommandBufferSystem _entityCommandBufferSystem;
+        private EntityQuery _followCharacterQuery;
+        protected override void OnCreate()
         {
-            
-            JobHandle Action = Entities.ForEach((ref FollowCharacter follow, ref Movement move, ref InfluenceValues InfluValues,
-                in FollowTargetTag tag) =>
+            base.OnCreate();
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            _followCharacterQuery = GetEntityQuery(new EntityQueryDesc() {
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(FollowCharacter)),ComponentType.ReadWrite(typeof(Movement)), /* ComponentType.ReadWrite(typeof(InfluenceValues)),*/
+                    ComponentType.ReadOnly(typeof(FollowTargetTag)),ComponentType.ReadOnly(typeof(BaseAI)) }
+            });
+
+        }
+        protected override void OnUpdate( )
+        {
+            JobHandle systemDeps = Dependency;
+                
+            systemDeps = new FollowCharacterActionJob()
             {
+                EntityChunk=GetArchetypeChunkEntityType(),
+                FollowChunk = GetArchetypeChunkComponentType<FollowCharacter>(false),
+                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
+             //   InfluenceChunk = GetArchetypeChunkComponentType<InfluenceValues>(false),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
+        }
+            .ScheduleParallel(_followCharacterQuery, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            Dependency = systemDeps;
+        }
+    }
+
+    /// <summary>
+    /// Influnces code need to be write for group of followers ??
+    /// </summary>
+
+    public struct FollowCharacterActionJob : IJobChunk
+    {
+        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+       [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+        public ArchetypeChunkComponentType<FollowCharacter> FollowChunk;
+        public ArchetypeChunkComponentType<Movement> MovementChunk;
+      //  public ArchetypeChunkComponentType<InfluenceValues> InfluenceChunk;
+        public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        {
+            NativeArray<FollowCharacter> follows = chunk.GetNativeArray<FollowCharacter>(FollowChunk);
+            NativeArray<Movement> moves = chunk.GetNativeArray<Movement>(MovementChunk);
+            NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+
+            for (int i = 0; i < chunk.Count; i++)
+            {
+                FollowCharacter follow = follows[i];
+                Movement move = moves[i];
+                Entity entity = entities[i];
+
                 if (follow.Status == ActionStatus.Success)
+                {
+                    entityCommandBuffer.RemoveComponent < FollowTargetTag>(chunkIndex, entity);
                     return;
+                }
 
 
                 if (!follow.TargetLocation.Equals(move.TargetLocation)) 
@@ -202,62 +246,15 @@ namespace IAUS.ECS2
                         follow.Status = ActionStatus.Success;
                     }
                 }
-      
 
+
+                follows[i] = follow;
+                moves[i] = move;
             }
-            ).Schedule(inputDeps);
-
-            return Action;
         }
     }
-    public struct FollowTagReactor : IComponentReactorTagsForAIStates<FollowTargetTag, FollowCharacter>
-    {
-        public void ComponentAdded(Entity entity, ref FollowTargetTag newComponent, ref FollowCharacter AIState)
-        {
-            if (AIState.Status == ActionStatus.Running)
-                return;
 
-            AIState.Status = ActionStatus.Running;
-        }
 
-        public void ComponentRemoved(Entity entity, ref FollowCharacter AIState, in FollowTargetTag oldComponent)
-        {
-            switch (AIState.Status)
-            {
-                case ActionStatus.Running:
-                    break;
-                case ActionStatus.Interrupted:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Success:
-                    AIState.ResetTime = AIState.ResetTimer;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Failure:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Disabled:
-                    AIState.TotalScore = 0.0f;
-                    break;
-            }
-        }
-
-        public void ComponentValueChanged(Entity entity, ref FollowTargetTag newComponent, ref FollowCharacter AIStateCompoment, in FollowTargetTag oldComponent)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public class FollowReactiveSystem : ReactiveComponentTagSystem<FollowTargetTag,FollowCharacter, FollowTagReactor>
-        {
-            protected override FollowTagReactor CreateComponentReactor()
-            {
-                return new FollowTagReactor();
-            }
-        }
-
-    }
 }
 
 

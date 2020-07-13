@@ -8,7 +8,7 @@ using Components.MovementSystem;
 using IAUS.Core;
 namespace IAUS.ECS2
 {
-    [UpdateInGroup(typeof(IAUS_UpdateState))]
+    [UpdateInGroup(typeof(IAUS_UpdateScore))]
 
     [UpdateBefore(typeof(StateScoreSystem))]
     public class DisableStateSystems : JobComponentSystem

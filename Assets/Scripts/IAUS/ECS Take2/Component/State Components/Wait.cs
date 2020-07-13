@@ -3,7 +3,6 @@ using UnityEngine;
 using Unity.Entities;
 using Utilities.ReactiveSystem;
 
-[assembly: RegisterGenericComponentType(typeof(ReactiveComponentTagSystem<IAUS.ECS2.WaitActionTag, IAUS.ECS2.WaitTime, IAUS.ECS2.WaitTagReactor>.StateComponent))]
 
 namespace IAUS.ECS2
 {
@@ -32,55 +31,6 @@ namespace IAUS.ECS2
         bool test;
     }
 
-    public struct WaitTagReactor : IComponentReactorTagsForAIStates<WaitActionTag, WaitTime>
-    {
-        public void ComponentAdded(Entity entity, ref WaitActionTag newComponent, ref WaitTime AIState)
-        {
-            if (AIState.Status == ActionStatus.Running)
-                return;
 
-            AIState.Status = ActionStatus.Running;
-         
-        }
-
-        public void ComponentRemoved(Entity entity, ref WaitTime AIState, in WaitActionTag oldComponent)
-        {
-        
-            switch (AIState.Status)
-            {
-                case ActionStatus.Running:
-                    break;
-                case ActionStatus.Interrupted:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Success:
-                    AIState.ResetTime = AIState.ResetTimer;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Failure:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
-                case ActionStatus.Disabled:
-                    AIState.TotalScore = 0.0f;
-                    break;
-            }
-        }
-
-        public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref WaitTime AIStateCompoment, in WaitActionTag oldComponent)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public class WaitReactiveSystem : ReactiveComponentTagSystem<WaitActionTag, WaitTime, WaitTagReactor>
-        {
-            protected override WaitTagReactor CreateComponentReactor()
-            {
-                return new WaitTagReactor();
-            }
-        }
-
-    }
 
 }

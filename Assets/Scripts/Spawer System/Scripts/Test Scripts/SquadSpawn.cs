@@ -17,7 +17,7 @@ namespace SpawnerSystem.Test
         // Start is called before the first frame update
         void Start()
         {
-            StartCoroutine(InvokeMethod(spawn, 5, NumOfSquads));
+            StartCoroutine(InvokeMethod(spawn, 2, NumOfSquads));
 
 
         }
