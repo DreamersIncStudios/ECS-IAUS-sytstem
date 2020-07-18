@@ -1,9 +1,12 @@
-﻿using Unity.Entities;
+﻿using System;
+using Unity.Entities;
 using UnityEngine;
 namespace InfluenceMap.Factions
 {
-    [GenerateAuthoringComponent]
-    public struct Attackable : IComponentData
+
+   [Serializable]
+   [GenerateAuthoringComponent]
+    public struct Attackable : IComponentData 
     {
         public FactionTypes Faction;
         public ObjectType Type;
@@ -24,7 +27,7 @@ namespace InfluenceMap.Factions
         Daemon,
         Robot,
     }
-    [System.Serializable]
+    [Serializable]
     public struct FactionAggression
     {
         [Range(-10,10)]

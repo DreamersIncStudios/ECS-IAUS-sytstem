@@ -10,3 +10,85 @@ Assets/Programing Playground/Lightmap-0_comp_light.exr.meta
 Assets/Programing Playground/ReflectionProbe-0.exr.meta
 /Assets/Standard Assets
 Assets/Models/
+Assets/Scenes/Influence Map work area/NavMesh.asset
+Assets/Scenes/Influence Map work area/NavMesh.asset.meta
+Assets/Scenes/Influence Map work area/OcclusionCullingData.asset
+Assets/Scenes/Influence Map work area/OcclusionCullingData.asset.meta
+Assets/Scenes/Programing Playground/LightingData.asset.meta
+Assets/Scenes/Programing Playground/Lightmap-0_comp_dir.png
+Assets/Scenes/Programing Playground/Lightmap-0_comp_dir.png.meta
+Assets/Scenes/Programing Playground/Lightmap-0_comp_light.exr.meta
+Assets/Scenes/Programing Playground/NavMesh.asset
+Assets/Scenes/Programing Playground/NavMesh.asset.meta
+Assets/Scenes/Programing Playground/ReflectionProbe-0.exr.meta
+Unity.Build.Classic.csproj
+Unity.Build.Classic.Private.csproj
+Unity.Build.Common.csproj
+Unity.Build.csproj
+Unity.Build.DotsRuntime.csproj
+Unity.Build.Editor.csproj
+Unity.Build.Internals.csproj
+Unity.Burst.csproj
+Unity.Burst.Editor.csproj
+Unity.CollabProxy.Editor.csproj
+Unity.Collections.csproj
+Unity.Deformations.csproj
+Unity.Entities.BuildUtils.csproj
+Unity.Entities.CodeGen.csproj
+Unity.Entities.CodeGen.Tests.TestTypes.csproj
+Unity.Entities.csproj
+Unity.Entities.Editor.csproj
+Unity.Entities.Hybrid.CodeGen.csproj
+Unity.Entities.Hybrid.csproj
+Unity.Entities.Hybrid.EndToEnd.Tests.csproj
+Unity.InternalAPIEditorBridge.012.csproj
+Unity.Jobs.csproj
+Unity.Jobs.Editor.csproj
+Unity.Mathematics.csproj
+Unity.Mathematics.Editor.csproj
+Unity.Mathematics.Extensions.csproj
+Unity.Mathematics.Extensions.Hybrid.csproj
+Unity.PerformanceTesting.csproj
+Unity.PerformanceTesting.Editor.csproj
+Unity.Platforms.Common.csproj
+Unity.Platforms.csproj
+Unity.ProBuilder.AddOns.Editor.csproj
+Unity.ProBuilder.AssetIdRemapUtility.csproj
+Unity.ProBuilder.csproj
+Unity.ProBuilder.Editor.csproj
+Unity.ProBuilder.KdTree.csproj
+Unity.ProBuilder.Poly2Tri.csproj
+Unity.ProBuilder.Stl.csproj
+Unity.ProGrids.csproj
+Unity.ProGrids.Editor.csproj
+Unity.Properties.CodeGen.csproj
+Unity.Properties.csproj
+Unity.Properties.Editor.csproj
+Unity.Properties.Reflection.csproj
+Unity.Properties.UI.csproj
+Unity.Properties.UI.Editor.csproj
+Unity.Rider.Editor.csproj
+Unity.Scenes.Editor.csproj
+Unity.Scenes.Hybrid.csproj
+Unity.ScriptableBuildPipeline.csproj
+Unity.ScriptableBuildPipeline.Editor.csproj
+Unity.Searcher.Editor.csproj
+Unity.Serialization.csproj
+Unity.Serialization.Editor.csproj
+Unity.Settings.Editor.csproj
+Unity.TextMeshPro.csproj
+Unity.TextMeshPro.Editor.csproj
+Unity.Timeline.csproj
+Unity.Timeline.Editor.csproj
+Unity.Transforms.csproj
+Unity.Transforms.Editor.csproj
+Unity.Transforms.Hybrid.csproj
+Unity.VSCode.Editor.csproj
+UnityEditor.CacheServer.csproj
+UnityEditor.TestRunner.csproj
+UnityEditor.UI.csproj
+UnityEngine.TestRunner.csproj
+UnityEngine.UI.csproj
+Assets/Scenes/new spawn test/Lightmap-1_comp_light.exr.meta
+Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png
+Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png.meta

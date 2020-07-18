@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 namespace IAUS.ECS2
 {
+    [System.Serializable]
     [GenerateAuthoringComponent]
     public struct PatrolBuffer : IBufferElementData {
 

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4472d955ae14f2d4aad56213c521bb84, type: 3}
+  m_Name: Leader Drone
+  m_EditorClassIdentifier: 
+  _spawnID: 2
+  _spawnOffset: {x: 0, y: 0, z: 0}
+  _GO: {fileID: 3707275338677854005, guid: 90575fa43c217c84fb8f702541d96e0d, type: 3}
+  _scale: {x: 1, y: 1, z: 1}
+  _name: 
+  _level: 3
+  _baseHealth: 500
+  _baseMana: 100
+  _gender: 1
+  NPCAIStates:
+    Patrol: 1
+    Follow: 0
+    Wait: 1
+    Attack: 0
+    Investiage: 0
+    Detection: 0
+  health:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  distanceToPatrolTarget:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 0.935
+    C: 0.35
+  bufferZone: 0.75
+  maxInfluenceAtPoint: 2
+  timeToWait: 8
+  waitTimer:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  distanceToMantainFromTarget: 0
+  speed: 5
+  stoppingDistance: 0.75
+  acceleration: 8
+  height: 1
+  radius: 0.5
+  useNavMeshAgent: 1

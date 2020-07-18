@@ -31,7 +31,7 @@ namespace IAUS.ECS2 {
                 .WithReadOnly(transform)
                 .WithReadOnly(BaseEntities)
                 .WithReadOnly(FactionInfo)
-                .ForEach((Entity entity, ref Patrol c1) =>
+                .ForEach((Entity entity, ref Patrol c1, in BaseAI baseAI) =>
             {
                 if (c1.HomeEntity != Entity.Null)
                 { return; }

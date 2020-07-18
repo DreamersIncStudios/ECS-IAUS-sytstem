@@ -1,11 +1,11 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
-using CharacterStats;
+using Test.CharacterStats;
 using UnityEngine.AI;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 
-namespace IAUS.ECS2.Charaacter
+namespace IAUS.ECS2.Character
 {
     public class CharacterAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {

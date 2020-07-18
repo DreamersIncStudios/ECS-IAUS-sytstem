@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS2;
+using UnityEngine.PlayerLoop;
+
 namespace IAUS.Core
 {
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public class IAUS_UpdateSystem : ComponentSystemGroup { }
 
     [UpdateInGroup(typeof(IAUS_UpdateSystem))]
+    [UpdateAfter(typeof(IAUS_UpdateScore))]
     public class IAUS_UpdateState: ComponentSystemGroup { }
 
     
@@ -19,7 +22,10 @@ namespace IAUS.Core
     [UpdateAfter(typeof(IAUS_UpdateConsideration))]
     [UpdateInGroup(typeof(IAUS_UpdateSystem))]
     public class IAUS_UpdateScore: ComponentSystemGroup { }
+    [UpdateAfter(typeof(IAUS_UpdateSystem))]
+   // [UpdateInGroup(typeof(PresentationSystemGroup))]
 
+    public class IAUS_Reactions : ComponentSystemGroup { }
 
 
     [UpdateInGroup(typeof(InitializationSystemGroup))]

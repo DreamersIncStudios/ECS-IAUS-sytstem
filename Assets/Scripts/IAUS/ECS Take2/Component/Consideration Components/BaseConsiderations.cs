@@ -20,5 +20,7 @@ namespace IAUS.ECS2
         public float Ratio;
     }
 
-
+    public struct ThreatInAreaConsideration : IComponentData {
+        public float Ratio;
+    }
 }

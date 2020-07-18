@@ -7,7 +7,9 @@ using Unity.Transforms;
 using Unity.Collections;
 using IAUS.Core;
 
-using IAUS.ECS2.Charaacter;
+
+// Consider deleting ???
+using IAUS.ECS2.Character;
 namespace IAUS.ECS2 {
     [GenerateAuthoringComponent]
     public struct Party : BaseStateScorer
@@ -16,6 +18,7 @@ namespace IAUS.ECS2 {
         public ConsiderationData Health;
         public ConsiderationData ThreatInArea;
         public ConsiderationData HaveLeader;
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
 
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;

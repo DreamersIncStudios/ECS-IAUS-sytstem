@@ -4,9 +4,9 @@ using Unity.Jobs;
 using IAUS.Core;
 using Unity.Transforms;
 using Unity.Collections;
-using IAUS.ECS.Component;
+using Components.MovementSystem;
 using Unity.Mathematics;
-using IAUS.ECS2.Charaacter;
+using IAUS.ECS2.Character;
 namespace IAUS.ECS2
 { using InfluenceMap;
     [GenerateAuthoringComponent]
@@ -16,9 +16,12 @@ namespace IAUS.ECS2
         public ConsiderationData ThreatInArea;
         public ConsiderationData DistanceToLeader;
         public ConsiderationData HaveLeader;
+        public float mod { get { return 1.0f - (1.0f / 4.0f); } }
+
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
+
         public float _totalScore;
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -80,11 +83,11 @@ namespace IAUS.ECS2
                 // make sure all outputs goto zero
                 if (!rally.Rallied)
                 {
-                    float mod = 1.0f - (1.0f / 2.0f);
+                
                     float TotalScore = Mathf.Clamp01(rally.Health.Output(health.Ratio) * rally.DistanceToLeader.Output(party.DistanceLeaderScore) *
                         rally.HaveLeader.Output(LeaderCon.score) * rally.ThreatInArea.Output(detectConsider.ThreatInArea));
 
-                    rally.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * mod) * TotalScore);
+                    rally.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * rally.mod) * TotalScore);
                 }
                 else
                     rally.TotalScore = 0.0f;
