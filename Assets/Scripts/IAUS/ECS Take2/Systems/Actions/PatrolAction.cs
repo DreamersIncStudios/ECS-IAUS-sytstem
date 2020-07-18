@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Transforms;
-using Unity.Collections.LowLevel.Unsafe;
+using Unity.Burst;
 
 using Unity.Entities;
 using Unity.Collections;
@@ -10,8 +10,7 @@ using InfluenceMap;
 using InfluenceMap.Factions;
 using IAUS.Core;
 using SpawnerSystem.ScriptableObjects;
-using System;
-using JetBrains.Annotations;
+
 
 namespace IAUS.ECS2
 {
@@ -58,16 +57,17 @@ namespace IAUS.ECS2
         {
             JobHandle systemDeps = Dependency;
             float DT = Time.DeltaTime;
-            EntityCommandBuffer.Concurrent entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
+          //  EntityCommandBuffer.Concurrent entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
 
             systemDeps = new UpdatePatrol()
             {
                 PositionsChunk=GetArchetypeChunkComponentType<LocalToWorld>(false),
                 PatrolBufferChunk= GetArchetypeChunkBufferType<PatrolBuffer>(false),
                 PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false)
-            }.ScheduleParallel(_patrolUpdatesQuery, systemDeps);
-
-           systemDeps = new UpdateSquadMembersJobs()
+            }.Schedule(_patrolUpdatesQuery, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps.Complete();
+            systemDeps = new UpdateSquadMembersJobs()
            {
                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
                PatrolBufferChunk = GetArchetypeChunkBufferType<PatrolBuffer>(false),
@@ -94,7 +94,6 @@ namespace IAUS.ECS2
             }.ScheduleParallel(_PatrolActionQuery ,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            // ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
 
             systemDeps = new FollowStatusUpdate()
             {
@@ -110,6 +109,7 @@ namespace IAUS.ECS2
           
         }
     }
+    [BurstCompile]
     public struct UpdatePatrol : IJobChunk
     {
 
@@ -153,6 +153,7 @@ namespace IAUS.ECS2
         }
 
     }
+    [BurstCompile]
     public struct UpdateSquadMembersJobs : IJobChunk
     {
         public ArchetypeChunkBufferType<SquadMemberBuffer> SquadBufferChunk;
@@ -196,7 +197,7 @@ namespace IAUS.ECS2
             }
         }
     }
-
+    [BurstCompile]
     public struct PatrolActionJob : IJobChunk
     {
         public ArchetypeChunkBufferType<PatrolBuffer> PatrolBufferChunk;
@@ -273,7 +274,7 @@ namespace IAUS.ECS2
             }
         }
     }
-
+    [BurstCompile]
     public struct FollowStatusUpdate : IJobChunk
     {
        [NativeDisableParallelForRestriction] public ComponentDataFromEntity<FollowCharacter> Follow;

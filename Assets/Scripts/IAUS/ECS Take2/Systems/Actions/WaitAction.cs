@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
 using Unity.Collections;
+using Unity.Burst;
 
 namespace IAUS.ECS2
 {
@@ -40,6 +41,7 @@ namespace IAUS.ECS2
      
         }
     }
+    [BurstCompile]
     public struct WaitActionJob : IJobChunk
     {
         public ArchetypeChunkComponentType<WaitTime> WaitStateChunk;

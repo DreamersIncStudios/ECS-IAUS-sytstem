@@ -30,6 +30,9 @@ namespace IAUS.ECS2.Reactions
             switch (AIState.Status)
             {
                 case ActionStatus.Running:
+                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
+                    AIState.Status = ActionStatus.CoolDown;
+                    AIState.Timer = 0.0f;
                     break;
                 case ActionStatus.Interrupted:
                     AIState.ResetTime = AIState.ResetTimer / 2.0f;
@@ -70,6 +73,7 @@ namespace IAUS.ECS2.Reactions
     {
         public void ComponentAdded(Entity entity, ref WaitActionTag newComponent, ref WaitTime AIStateCompoment, ref Patrol UpdatingComponent)
         {
+       
         }
 
         public void ComponentRemoved(Entity entity, ref WaitTime AIStateCompoment, ref Patrol UpdatingComponent, in WaitActionTag oldComponent)
@@ -80,7 +84,7 @@ namespace IAUS.ECS2.Reactions
                 if (UpdatingComponent.index >= UpdatingComponent.MaxNumWayPoint)
                     UpdatingComponent.index = 0;
                 UpdatingComponent.UpdatePostition = true;
-                Vector2 test = new Vector2(1, 0);
+
             }
         }
 

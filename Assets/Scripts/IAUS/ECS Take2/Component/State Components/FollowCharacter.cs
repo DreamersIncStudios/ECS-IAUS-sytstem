@@ -1,4 +1,4 @@
-﻿using InfluenceMap;
+﻿
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
@@ -6,8 +6,8 @@ using Components.MovementSystem;
 using Unity.Mathematics;
 using IAUS.Core;
 using Utilities;
-using Utilities.ReactiveSystem;
 using Unity.Collections;
+using Unity.Burst;
 
 namespace IAUS.ECS2
 {
@@ -27,7 +27,7 @@ namespace IAUS.ECS2
         public bool IsTargetMoving;
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
 
-        [SerializeField] public ActionStatus _status;
+        [SerializeField] ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
@@ -49,7 +49,6 @@ namespace IAUS.ECS2
     {
         protected override void  OnUpdate()
         {
-            float DT = Time.DeltaTime;
             JobHandle systemDeps = Dependency;
             systemDeps = Entities.ForEach((ref FollowCharacter follow, in HealthConsideration health) =>
             {
@@ -63,67 +62,6 @@ namespace IAUS.ECS2
 
             }).ScheduleParallel(systemDeps);
             Dependency = systemDeps;
-        }
-    }
-
-
-    [UpdateInGroup(typeof(IAUS_Initialization))]
-    [UpdateBefore(typeof(SetupIAUS))]
-    public class SetupFollowState : JobComponentSystem
-    {
-
-        EntityCommandBufferSystem entityCommandBufferSystem;
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-        }
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
-        {
-            EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
-            ComponentDataFromEntity<InfluenceValues> Influences = GetComponentDataFromEntity<InfluenceValues>(true);
-            ComponentDataFromEntity<HealthConsideration> health = GetComponentDataFromEntity<HealthConsideration>(true);
-            JobHandle systemDeps = Entities
-            .WithNativeDisableParallelForRestriction(health)
-            .WithReadOnly(health)
-            .WithReadOnly(Influences)
-                .WithNativeDisableParallelForRestriction(Influences)
-                .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> stateBuffer, ref FollowCharacter follow,
-                in CreateAIBufferTag c2
-               ) =>
-                {
-                    bool added = true;
-                    for (int index = 0; index < stateBuffer.Length; index++)
-                    {
-                        if (stateBuffer[index].StateName == AIStates.FollowTarget)
-                        { added = false; }
-                    }
-
-
-
-                    if (added)
-                    {
-
-                        stateBuffer.Add(new StateBuffer()
-                        {
-                            StateName = AIStates.FollowTarget,
-                            Status = ActionStatus.Idle
-                        });
-                        if (!health.Exists(entity))
-                        {
-                            entityCommandBuffer.AddComponent<HealthConsideration>(nativeThreadIndex, entity);
-                        }
-                        if (!Influences.Exists(entity))
-                        {
-                            entityCommandBuffer.AddComponent<InfluenceValues>(nativeThreadIndex, entity);
-                        }
-                        entityCommandBuffer.AddComponent<getpointTag>(nativeThreadIndex, entity);
-                    }
-                })
-                .Schedule(inputDeps);
-            return systemDeps;
-
         }
     }
 
@@ -189,7 +127,6 @@ namespace IAUS.ECS2
                 EntityChunk=GetArchetypeChunkEntityType(),
                 FollowChunk = GetArchetypeChunkComponentType<FollowCharacter>(false),
                 MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-             //   InfluenceChunk = GetArchetypeChunkComponentType<InfluenceValues>(false),
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
         }
             .ScheduleParallel(_followCharacterQuery, systemDeps);
@@ -202,7 +139,7 @@ namespace IAUS.ECS2
     /// <summary>
     /// Influnces code need to be write for group of followers ??
     /// </summary>
-
+    [BurstCompile]
     public struct FollowCharacterActionJob : IJobChunk
     {
         public EntityCommandBuffer.Concurrent entityCommandBuffer;

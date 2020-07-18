@@ -83,6 +83,7 @@ namespace IAUS.ECS2.Reactions
             if (AIStateCompoment.Status == ActionStatus.Success)
             {
                 UpdatingComponent.Timer = UpdatingComponent.TimeToWait;
+             
             }
         }
 

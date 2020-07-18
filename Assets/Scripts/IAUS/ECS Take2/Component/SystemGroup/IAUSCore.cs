@@ -22,8 +22,8 @@ namespace IAUS.Core
     [UpdateAfter(typeof(IAUS_UpdateConsideration))]
     [UpdateInGroup(typeof(IAUS_UpdateSystem))]
     public class IAUS_UpdateScore: ComponentSystemGroup { }
-   // [UpdateAfter(typeof(LateSimulationSystemGroup))]
-    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    [UpdateAfter(typeof(IAUS_UpdateSystem))]
+   // [UpdateInGroup(typeof(PresentationSystemGroup))]
 
     public class IAUS_Reactions : ComponentSystemGroup { }
 
