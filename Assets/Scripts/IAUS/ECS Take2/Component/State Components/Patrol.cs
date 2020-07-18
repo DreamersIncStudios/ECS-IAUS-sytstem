@@ -1,6 +1,9 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 using Unity.Entities;
+
+
+
 namespace IAUS.ECS2
 {
     [RequireComponentTag(typeof(PatrolBuffer))]
@@ -19,6 +22,7 @@ namespace IAUS.ECS2
         public bool UpdatePostition;
         public float DistanceAtStart;
         public int index;
+        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         public float BufferZone;
         //public int MaxInfluenceAtPoint;
         public float DistInfluence;
@@ -35,5 +39,9 @@ namespace IAUS.ECS2
 
         public bool CanPatrol;
     }
+    public struct PatrolActionTag : IComponentData
+    {
+        public bool test;
 
+    }
 }

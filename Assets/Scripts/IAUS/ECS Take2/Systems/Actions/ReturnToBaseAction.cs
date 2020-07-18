@@ -9,7 +9,6 @@ using IAUS.ECS2.Character;
 
 namespace IAUS.ECS2
 {
-    [UpdateAfter(typeof(StateScoreSystem))]
     [UpdateInGroup(typeof(IAUS_UpdateState))]
 
     public class ReturnToBaseAction : JobComponentSystem

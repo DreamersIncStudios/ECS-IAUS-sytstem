@@ -27,7 +27,8 @@ namespace IAUS.ECS2
                 // make .7f a variable 
                 if (distanceRemaining < patrol.BufferZone)
                     distanceRemaining = 0.0f;
-                distanceTo.Ratio =  distanceRemaining/patrol.DistanceAtStart;
+
+                distanceTo.Ratio = distanceRemaining / patrol.DistanceAtStart > .1f ? distanceRemaining / patrol.DistanceAtStart : 0.0f;
 
             }).Schedule(jobHandle);
 

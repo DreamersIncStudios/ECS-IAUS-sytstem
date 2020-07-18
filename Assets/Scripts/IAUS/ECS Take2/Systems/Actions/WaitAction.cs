@@ -4,52 +4,89 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
+using Unity.Collections;
+using Unity.Burst;
+
 namespace IAUS.ECS2
 {
     [UpdateInGroup(typeof(IAUS_UpdateState))]
 
-    [UpdateAfter(typeof(StateScoreSystem))]
-    public class WaitAction : JobComponentSystem
+    public class WaitAction : SystemBase
     {
-
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        EntityCommandBufferSystem _entityCommandBufferSystem;
+        private EntityQuery WaitStateQuery;
+        protected override void OnCreate()
         {
-            //EntityCommandBuffer entityCommandBuffer = entityCommandBufferSys.CreateCommandBuffer();
-            float DT = Time.DeltaTime;
-            JobHandle WaitAction = Entities.ForEach((Entity entity,ref WaitActionTag Wait, ref WaitTime Timer, ref Patrol patrol) => {
-                //start
-                if (Timer.Status == ActionStatus.Success)
-                    return;
+            base.OnCreate();
+            WaitStateQuery = GetEntityQuery(new EntityQueryDesc() {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(WaitTime)), ComponentType .ReadOnly(typeof(WaitActionTag)), ComponentType.ReadOnly(typeof(BaseAI))}
+            });
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
+        }
+        protected override void  OnUpdate()
+        {
+
+            JobHandle systemDeps = Dependency;
+            systemDeps = new WaitActionJob() {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                DT = Time.DeltaTime,
+                WaitStateChunk = GetArchetypeChunkComponentType<WaitTime>(false),
+                EntityChunk = GetArchetypeChunkEntityType()
+            }
+                .ScheduleParallel(WaitStateQuery, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            Dependency = systemDeps;
+     
+        }
+    }
+    [BurstCompile]
+    public struct WaitActionJob : IJobChunk
+    {
+        public ArchetypeChunkComponentType<WaitTime> WaitStateChunk;
+        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public float DT;
+        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+        public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        {
+            NativeArray<WaitTime> Timers = chunk.GetNativeArray(WaitStateChunk);
+            NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+            for (int i = 0; i < chunk.Count; i++)
+            {
+                WaitTime Timer = Timers[i];
+                Entity entity = entities[i];
+                if (Timer.Status == ActionStatus.Success)
+                {
+                    entityCommandBuffer.RemoveComponent<WaitActionTag>(chunkIndex, entity);
+                    return;
+                }
 
                 //Running
                 if (Timer.Timer > 0.0f)
                 {
-                    Timer.TimerStarted = true; 
+                    Timer.TimerStarted = true;
                     Timer.Timer -= DT;
                     Timer.Status = ActionStatus.Running;
                 }
 
- 
-                    //complete
-                    if (Timer.TimerStarted)
+
+                //complete
+                if (Timer.TimerStarted)
                 {
                     if (Timer.Timer <= 0.0f)
                     {
                         Timer.Status = ActionStatus.Success;
 
                         Timer.TimerStarted = false;
-                        
+
                     }
                 }
 
-
-
-            }).Schedule(inputDeps);
-            return WaitAction;
+                Timers[i] = Timer;
+            }
         }
     }
 
 
-    public struct WaitActionTag : IComponentData { }
 }

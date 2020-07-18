@@ -1,6 +1,8 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
+using Utilities.ReactiveSystem;
+
 
 namespace IAUS.ECS2
 {
@@ -13,6 +15,7 @@ namespace IAUS.ECS2
         public bool TimerStarted;
         public ConsiderationData Health;
         public ConsiderationData WaitTimer;
+        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
 
         [SerializeField] float _totalScore;
         [SerializeField] public ActionStatus _status;
@@ -22,6 +25,12 @@ namespace IAUS.ECS2
 
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float ResetTimer { get { return _resetTimer; } set { _resetTimer = value; } }
-        public float ResetTime { get { return _resetTime; }  set { _resetTime = value; } }
+        public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
     }
+    public struct WaitActionTag : IComponentData {
+        bool test;
+    }
+
+
+
 }

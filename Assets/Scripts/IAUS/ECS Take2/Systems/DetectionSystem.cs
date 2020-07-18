@@ -57,8 +57,8 @@ namespace IAUS.ECS2
         }
 
     }
-    [UpdateAfter(typeof(DetectionSystemJob))]
     [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
+    [UpdateAfter(typeof(DetectionSystemJob))]
 
     public partial class DetectionSystem : ComponentSystem
     {

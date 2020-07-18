@@ -163,7 +163,10 @@ namespace IAUS.SpawnerSystem
                 {
                     Health= health,
                     DistanceToMantainFromTarget = 7.5f,
-                    IsTargetMoving=false
+                    IsTargetMoving=false,
+                    Status=ActionStatus.Idle,
+                    ResetTimer = resetTime
+
                 };
             }
 

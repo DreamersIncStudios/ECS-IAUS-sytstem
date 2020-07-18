@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnID: 3
   _spawnOffset: {x: 0, y: 0, z: 0}
-  _GO: {fileID: 3839674532096685530, guid: f90006a582aae6943b289841e04ce2ce, type: 3}
+  _GO: {fileID: 3707275338677854005, guid: 90575fa43c217c84fb8f702541d96e0d, type: 3}
   _scale: {x: 1, y: 1, z: 1}
   _name: 
   _level: 1
@@ -42,7 +42,8 @@ MonoBehaviour:
     K: -0.95
     B: 0.935
     C: 0.35
-  bufferZone: 0.5
+  bufferZone: 0.75
+  maxInfluenceAtPoint: 0
   timeToWait: 20
   waitTimer:
     Inverse: 0
@@ -51,8 +52,9 @@ MonoBehaviour:
     K: -1
     B: 0.91
     C: 0.2
+  distanceToMantainFromTarget: 0
   speed: 4.5
-  stoppingDistance: 0.5
+  stoppingDistance: 0.75
   acceleration: 8
   height: 1
   radius: 0.5

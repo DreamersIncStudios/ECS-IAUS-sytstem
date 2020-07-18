@@ -13,6 +13,8 @@ namespace IAUS.ECS2
         public ConsiderationData Health;
         public ConsiderationData DistanceToTarget;
         public ConsiderationData DetectionLevel;
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+
         #endregion
 
 

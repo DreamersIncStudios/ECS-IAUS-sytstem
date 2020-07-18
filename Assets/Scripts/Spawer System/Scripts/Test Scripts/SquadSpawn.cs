@@ -5,6 +5,7 @@ using IAUS.SpawnerSystem;
 using IAUS.ECS2;
 using Utilities;
 using Unity.Mathematics;
+using System;
 
 namespace SpawnerSystem.Test
 {
@@ -16,25 +17,22 @@ namespace SpawnerSystem.Test
         // Start is called before the first frame update
         void Start()
         {
-            for (int i = 0; i < NumOfSquads; i++)
-            {
-                UpdatePoint();
-                Squad1.Spawn(this.transform.position, Points);
-            }
+            StartCoroutine(InvokeMethod(spawn, 2, NumOfSquads));
+
 
         }
 
         // Update is called once per frame
-        void Update()
+        void spawn()
         {
-
+            UpdatePoint();
+            Squad1.Spawn(this.transform.position, Points);
         }
-
         void UpdatePoint() {
             Points = new List<PatrolBuffer>();
             while (Points.Count < 5) {
                 Vector3 position;
-                if (GlobalFunctions.RandomPoint(transform.position, 150, out position))
+                if (GlobalFunctions.RandomPoint(transform.position, 60, out position))
                 {
                     PatrolBuffer temp = new PatrolBuffer()
                     {
@@ -50,6 +48,16 @@ namespace SpawnerSystem.Test
             
             }
         
+        }
+
+        public IEnumerator InvokeMethod(Action method, float interval, int invokeCount)
+        {
+            for (int i = 0; i < invokeCount; i++)
+            {
+                method();
+
+                yield return new WaitForSeconds(interval);
+            }
         }
     }
 }

@@ -12,10 +12,11 @@ namespace IAUS.ECS2 {
         ActionStatus Status { get; set; }
         float ResetTimer { get; set; }
         float ResetTime { get; set; }
+        float mod { get; }
     }
 
     public enum ActionStatus   
     {
-        Failure, Success, Running, Interrupted, Idle, CoolDown, Disabled
+         Success, Running, Interrupted, Idle, CoolDown, Disabled, Failure
     }
 }
