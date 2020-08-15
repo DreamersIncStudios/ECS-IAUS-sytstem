@@ -648,9 +648,9 @@
       <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
       <Name>Unity.Burst</Name>
     </ProjectReference>
-    <ProjectReference Include="Global.csproj">
-      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
-      <Name>Global</Name>
+    <ProjectReference Include="Global2.csproj">
+      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
+      <Name>Global2</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

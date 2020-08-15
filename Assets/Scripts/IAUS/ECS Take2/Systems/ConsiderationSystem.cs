@@ -4,7 +4,7 @@ using Unity.Transforms;
 using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
-using Test.CharacterStats;
+using Stats;
 
 namespace IAUS.ECS2
 {
@@ -14,7 +14,7 @@ namespace IAUS.ECS2
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            JobHandle jobHandle = Entities.ForEach((ref HealthConsideration Health, in Stats stats) =>
+            JobHandle jobHandle = Entities.ForEach((ref HealthConsideration Health, in PlayerStatComponent stats) =>
             {
                 Health.Ratio = Mathf.Clamp01((float)stats.CurHealth / (float)stats.MaxHealth) ;
 

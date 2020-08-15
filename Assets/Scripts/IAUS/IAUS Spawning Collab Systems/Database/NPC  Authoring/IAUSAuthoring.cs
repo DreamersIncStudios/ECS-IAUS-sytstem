@@ -6,7 +6,7 @@ using IAUS.ECS2;
 using ProjectRebirth.Bestiary.Interfaces;
 using Components.MovementSystem;
 using IAUS.ECS2.Character;
-using Test.CharacterStats;
+using Stats;
 using InfluenceMap.Factions;
 
 namespace IAUS.SpawnerSystem
@@ -36,7 +36,7 @@ namespace IAUS.SpawnerSystem
             dstManager.AddComponentData(entity, Move);
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
-            var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
+            var data = new PlayerStatComponent() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana  };
             dstManager.AddComponentData(entity, data);
             dstManager.AddComponent<NPC>(entity);
 

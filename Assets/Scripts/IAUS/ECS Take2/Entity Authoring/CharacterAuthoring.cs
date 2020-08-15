@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
-using Test.CharacterStats;
+using Stats;
 using UnityEngine.AI;
 using Components.MovementSystem;
 
@@ -31,8 +31,7 @@ namespace IAUS.ECS2.Character
             dstManager.AddComponent<EnemyCharacter>(entity);
            dstManager.AddComponentData(entity, move);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
-            var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
-            dstManager.AddComponentData(entity, data);
+
             dstManager.AddComponent<NPC>(entity);
         }
     }

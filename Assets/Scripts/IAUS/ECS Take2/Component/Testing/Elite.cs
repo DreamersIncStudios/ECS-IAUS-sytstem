@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using Test.CharacterStats;
 
 namespace IAUS.ECS2.Character
 {

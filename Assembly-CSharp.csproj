@@ -798,9 +798,21 @@
       <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
       <Name>IAUS</Name>
     </ProjectReference>
+    <ProjectReference Include="InventorySystem.csproj">
+      <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
+      <Name>InventorySystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Global.csproj">
       <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
       <Name>Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayerCharacterSystem.csproj">
+      <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
+      <Name>PlayerCharacterSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Global2.csproj">
+      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
+      <Name>Global2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
