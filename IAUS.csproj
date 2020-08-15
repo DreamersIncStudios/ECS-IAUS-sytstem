@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CCB59A4F-15AF-2C7B-1476-A18989001D10}</ProjectGuid>
+    <ProjectGuid>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Unity.Build.SlimPlayerRuntime</AssemblyName>
+    <AssemblyName>IAUS</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -63,8 +63,99 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.platforms@0.4.0-preview.5\Runtime\Unity.Build.SlimPlayerRuntime\SlimRuntimeStartup.cs" />
-    <None Include="Library\PackageCache\com.unity.platforms@0.4.0-preview.5\Runtime\Unity.Build.SlimPlayerRuntime\Unity.Build.SlimPlayerRuntime.asmdef" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Detection.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\HumanRayCastPoints.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Components\LeaderComponent.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\BaseConsiderations.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\IAUSBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\PatrolBuffer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\BaseStateScorer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\FollowCharacter.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\HealState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\InvestigateArea.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Party.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Patrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Rally.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Retreat.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\ReturnToBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Follow reactions.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Patrol Reaction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Wait Reaction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Wait.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\StateBuffer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\SystemGroup\IAUSCore.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\TargetBuffer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\Elite.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\UpdateTimersSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\BaseIAUSAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\Bases\Base.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\CharacterAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\EnemyCharacterAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\AIStateReactionSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\React.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactorTags.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJobSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\ConsiderationSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CoreSystems\DisableStateSystems.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionConsideration.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\MovementSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupFollowState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupHealSelfstate.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupIAUS.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupPatrolState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupWaitState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\UpdateRacastTargetPoints.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\UtilityScripts.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Database\IAUSDatabasesSpawning.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Database\NPC  Authoring\IAUSAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Entities\Authoring\EnemyGOC.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Entities\SpawnMaster.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Interfaces\Enemy Interfaces.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Interfaces\IFaction.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Interfaces\iMovement.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Database\EnemyDatabase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Database\SquadDatabase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Editor\SOEditor.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Editor\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\ICharacterStat.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\IObject.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\NPC Names List.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\iDroppable.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\iRecoverable.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\Enemy.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\GenericNPC.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\RecoveryItemSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\SpawnableSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\SquadSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects\IAUSEnemySO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects\IAUSSquadSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\System\Loot System\LootTable.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\System\SpawnSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\System\WaveMasterSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Test Scripts\FrequencyUp.cs" />
+    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Test Scripts\SquadSpawn.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\CreateGridMapTiles.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\GridComponent.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Influencer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Cover.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Static.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Mono\General\Interfaces\Prototype.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\Movement.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\PlayerCharacter.cs" />
+    <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -616,6 +707,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.Entities.csproj">
+      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
+      <Name>Unity.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
+      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
+      <Name>Unity.Entities.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.csproj">
+      <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
+      <Name>Unity.Transforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Collections.csproj">
+      <Project>{5026C8AD-AC8C-5C9F-EA66-7D2E7D869FE9}</Project>
+      <Name>Unity.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="SpawnerSystem.csproj">
+      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
+      <Name>SpawnerSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Global.csproj">
+      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
+      <Name>Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
+      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
+      <Name>Unity.Transforms.Hybrid</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>
