@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using Unity.Jobs;
-using SpawnerSystem;
+
 
 namespace Utilities.ECS
 {

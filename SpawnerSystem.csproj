@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{CCB59A4F-15AF-2C7B-1476-A18989001D10}</ProjectGuid>
+    <ProjectGuid>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Unity.Build.SlimPlayerRuntime</AssemblyName>
+    <AssemblyName>SpawnerSystem</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -63,8 +63,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.platforms@0.4.0-preview.5\Runtime\Unity.Build.SlimPlayerRuntime\SlimRuntimeStartup.cs" />
-    <None Include="Library\PackageCache\com.unity.platforms@0.4.0-preview.5\Runtime\Unity.Build.SlimPlayerRuntime\Unity.Build.SlimPlayerRuntime.asmdef" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\CitizenNPCTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\EnemyTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\NPC Type Tags\NpcTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnController.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\EnemySpawnData.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\ItemSpawnData.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnPointComponent.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnTags\EnemySpawnTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\SpawnPoint\SpawnTags\NPCSpawnTag.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\BaseEnemySpecsForWave.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\Wave Control\WaveBuffer.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WaveSpawnMasterComponents.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Components\WorldComponents\WorldSpawn.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\CharacterStats.cs" />
+    <Compile Include="Assets\Scripts\Spawer System\Scripts\Scripts to be replace with fully Develop system\PickupRecoverItem.cs" />
+    <None Include="Assets\Scripts\Spawer System\Spawner System.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -616,6 +632,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.Entities.csproj">
+      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
+      <Name>Unity.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
+      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
+      <Name>Unity.Entities.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Global.csproj">
+      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
+      <Name>Global</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>
