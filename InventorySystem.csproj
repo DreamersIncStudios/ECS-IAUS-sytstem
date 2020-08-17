@@ -71,10 +71,12 @@
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\ArmorSO.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IArmor.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IEquipable.cs" />
+    <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IGeneral.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IItemBase.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IWeapon.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\RecoveryItemSO.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\WeaponSO.cs" />
+    <Compile Include="Assets\Systems\Inventory System\Scripts\ItemDatabases.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\TestSO.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\UI System\DisplayMenu.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\UI System\DisplayStore.cs" />

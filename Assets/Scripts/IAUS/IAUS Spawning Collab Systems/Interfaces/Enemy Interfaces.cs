@@ -27,6 +27,16 @@ namespace ProjectRebirth.Bestiary.Interfaces
     {
         float DistanceToMantainFromTarget { get; }
     }
+    public interface IHealSelf : BaseAIState {
+        ConsiderationData Health { get; }
+        ConsiderationData ResetTimer { get; }
+        
+        // To be Implement Later
+        ConsiderationData ThreatInArea { get; }
+        
+        float TimeBetweenHeals { get; }
+    }
+
 
     public interface iAttack : BaseAIState { }
     public interface iInvesigate : BaseAIState { }

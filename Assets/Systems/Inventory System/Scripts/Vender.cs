@@ -20,7 +20,6 @@ public class Vender : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.V) && Store.Displayed) { Store.CloseStore(); }
-
         if (Input.GetKeyUp(KeyCode.V) && !Store.Displayed) {
             Base.CharacterInventory = player.GetComponent<CharacterInventory>();
             Store = new DisplayStore(Base, player.GetComponent<CharacterInventory>().Inventory); }

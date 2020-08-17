@@ -11,12 +11,10 @@ namespace Stats
         private string _name;
         private int _level;
         private uint _freeExp;
-        private Profession _class;
         private Attributes[] _primaryAttribute;
         private Vital[] _vital;
         private Stat[] _stats;
         private Abilities[] _ability;
-        private MagicClass[] _MagicClasses;
         private Elemental[] _ElementalMods;
 
  
@@ -44,22 +42,15 @@ namespace Stats
             _name = string.Empty;
             _level = 0;
             _freeExp = 0;
-            _class = new Profession
-            {
-                Class = Professions.Dragoon
-            }; _primaryAttribute = new Attributes[Enum.GetValues(typeof(AttributeName)).Length];
+             _primaryAttribute = new Attributes[Enum.GetValues(typeof(AttributeName)).Length];
             _vital = new Vital[Enum.GetValues(typeof(VitalName)).Length];
             _stats = new Stat[Enum.GetValues(typeof(StatName)).Length];
             _ability = new Abilities[Enum.GetValues(typeof(AbilityName)).Length];
-            _MagicClasses = new MagicClass[Enum.GetValues(typeof(MagicClasses)).Length];
            // _ElementalMods = new Elemental[Enum.GetValues(typeof(Elements)).Length];
             SetupPrimaryAttributes();
-            SetupMagicClasses();
             SetupVitals();
             SetupStats();
             SetupAbilities();
-            SetupAttributeLevelup();
-     
 
             CurHealth = MaxHealth;
             CurMana = MaxMana;
@@ -71,12 +62,14 @@ namespace Stats
         public DynamicBuffer<EffectStatusBuffer> StatusBuffers;
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            var data = new PlayerStatComponent() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
+            selfEntityRef = entity;
+            var data = new PlayerStatComponent() {  MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana };
             dstManager.AddComponentData(entity, data);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             dstManager.AddBuffer<ChangeVitalBuffer>(entity);
             StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
-            selfEntityRef = entity;
+            StatUpdate();
+           
         }
 
         public string Name
@@ -133,17 +126,6 @@ namespace Stats
                 _ElementalMods[cnt] = new Elemental();
 
             }
-        }
-
-        private void SetupMagicClasses()
-        {
-            for (int cnt = 0; cnt < _MagicClasses.Length; cnt++)
-                _MagicClasses[cnt] = new MagicClass();
-        }
-
-        public MagicClass GetMagicClass(int index)
-        {
-            return _MagicClasses[index];
         }
 
         private void  SetupVitals()
@@ -254,34 +236,22 @@ namespace Stats
 
         }
 
-        public void SetupAttributeLevelup() {
-            switch (_class.Class)
-                {
-                case Professions.Dragoon:
-                    PrimaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    SecondaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    break;
-                case Professions.Medic:
-                    PrimaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                        SecondaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    break;
-                case Professions.Aria:
-                    PrimaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                        SecondaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    break;
-                case Professions.Knight:
-                    PrimaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                        SecondaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    break;
-                case Professions.Summoner:
-                    PrimaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                        SecondaryMod(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
-                    break;
-            }
-
-
-
+        public void SetAttributeBaseValue(int level, int BaseHealth, int BaseMana, int Str, int vit, int Awr, int Spd, int Skl, int Res, int Con, int Will, int Chars, int Lck) {
+            _level = GetPrimaryAttribute((int)AttributeName.Level).BaseValue = level;
+            GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = Str;
+            GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = vit;
+            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = Awr;
+            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = Spd;
+            GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = Skl;
+            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = Res;
+            GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = Con;
+            GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = Will;
+            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = Chars;
+            GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = Lck;
+            GetVital((int)VitalName.Health).BuffValue = BaseHealth;
+            GetVital((int)VitalName.Mana).BuffValue = BaseMana;
         }
+
 
         public  void StatUpdate()
         {
@@ -294,55 +264,25 @@ namespace Stats
 
             CurHealth = MaxHealth = GetVital((int)VitalName.Health).AdjustBaseValue;
             CurMana = MaxMana = GetVital((int)VitalName.Mana).AdjustBaseValue;
-             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(selfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, MagicDef = MagicDef, MeleeAttack = MeleeAttack, MeleeDef = MeleeDef });
+             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(selfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana, MagicDef = MagicDef, MeleeAttack = MeleeAttack, MeleeDef = MeleeDef });
         }
 
 
-        void PrimaryMod(int level, int Str, int vit, int Awr, int Spd, int Skl, int Res, int Con, int Will, int Chars, int Lck)
-        {
-            _class.PrimaryStatLevelUP = new int[System.Enum.GetValues(typeof(AttributeName)).Length];
-            _class.PrimaryStatLevelUP[0] = level;
-            _class.PrimaryStatLevelUP[1] = Str;
-            _class.PrimaryStatLevelUP[2] = vit;
-            _class.PrimaryStatLevelUP[3] = Awr;
-            _class.PrimaryStatLevelUP[4] = Spd;
-            _class.PrimaryStatLevelUP[5] = Skl;
-            _class.PrimaryStatLevelUP[6] = Res;
-            _class.PrimaryStatLevelUP[7] = Con;
-            _class.PrimaryStatLevelUP[8] = Will;
-            _class.PrimaryStatLevelUP[9] = Chars;
-            _class.PrimaryStatLevelUP[10] = Lck;
-        }
-        void SecondaryMod(int level, int Str, int vit, int Awr, int Spd, int Skl, int Res, int Con, int Will, int Chars, int Lck)
-        {
-            _class.SecondaryStatLevelUP = new int[System.Enum.GetValues(typeof(AttributeName)).Length];
 
-            _class.SecondaryStatLevelUP[0] = level;
-            _class.SecondaryStatLevelUP[1] = Str;
-            _class.SecondaryStatLevelUP[2] = vit;
-            _class.SecondaryStatLevelUP[3] = Awr;
-            _class.SecondaryStatLevelUP[4] = Spd;
-            _class.SecondaryStatLevelUP[5] = Skl;
-            _class.SecondaryStatLevelUP[6] = Res;
-            _class.SecondaryStatLevelUP[7] = Con;
-            _class.SecondaryStatLevelUP[8] = Will;
-            _class.SecondaryStatLevelUP[9] = Chars;
-            _class.SecondaryStatLevelUP[10] = Lck;
-        }
-        public void AdjustHealth(int adj)
-        {
-            CurHealth += adj;
-            if (CurHealth < 0) { CurHealth = 0; }
-            if (CurHealth > MaxHealth) { CurHealth = MaxHealth; }
+        //public void AdjustHealth(int adj)
+        //{
+        //    CurHealth += adj;
+        //    if (CurHealth < 0) { CurHealth = 0; }
+        //    if (CurHealth > MaxHealth) { CurHealth = MaxHealth; }
 
-        }
-        public void AdjustMana(int adj)
-        {
-            CurMana += adj;
-            if (CurMana < 0) { CurMana = 0; }
-            if (CurMana > MaxMana) { CurMana = MaxMana; }
+        //}
+        //public void AdjustMana(int adj)
+        //{
+        //    CurMana += adj;
+        //    if (CurMana < 0) { CurMana = 0; }
+        //    if (CurMana > MaxMana) { CurMana = MaxMana; }
 
-        }
+        //}
         public void IncreaseHealth(int Change, uint Iterations, float Frequency)
         {
             World.DefaultGameObjectInjectionWorld.EntityManager.GetBuffer<ChangeVitalBuffer>(selfEntityRef).Add(new ChangeVitalBuffer()

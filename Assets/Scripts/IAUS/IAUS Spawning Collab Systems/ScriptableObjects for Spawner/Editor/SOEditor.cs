@@ -7,7 +7,7 @@ using IAUS.SpawnerSystem.Database;
 
 namespace SpawnerSystem.Editors
 {
-
+#if UNITY_EDITOR
     static public class SOEditor
     {
         [MenuItem("Assets/Create/RPG/Enemy")]
@@ -57,5 +57,5 @@ namespace SpawnerSystem.Editors
             enemy.SpawnID = IAUSEnemyDatabase.Enemy.Count + 1;
         }
     }
-   
+#endif
 }

@@ -7,6 +7,7 @@ using ProjectRebirth.Bestiary.Interfaces;
 using UnityEngine.AI;
 using Components.MovementSystem;
 using IAUS.SpawnerSystem.interfaces;
+using Stats;
 
 
 namespace IAUS.SpawnerSystem
@@ -83,10 +84,10 @@ namespace IAUS.SpawnerSystem
         public GameObject SpawnAsLeader(Vector3 Position, List<PatrolBuffer> Points) {
             GameObject NPC = Spawn(Position);
                    IAUSAuthoring AIAuthor = NPC.AddComponent<IAUSAuthoring>();
+
+
             //replace with CharacterSystem
-            AIAuthor.CurHealth = AIAuthor.MaxHealth = BaseHealth;
-            AIAuthor.MaxMana = AIAuthor.CurMana = BaseMana;
-   
+
 
             AIAuthor.StatesToAdd = NPCAIStates;
             if (NPCAIStates.Patrol)
@@ -148,8 +149,6 @@ namespace IAUS.SpawnerSystem
             NPCAIStates.Patrol = false;
             AIAuthor.StatesToAdd = NPCAIStates;
 
-            AIAuthor.CurHealth = AIAuthor.MaxHealth = BaseHealth;
-            AIAuthor.MaxMana = AIAuthor.CurMana = BaseMana;
             if (UseNavMeshAgent)
             {
                 NavMeshAgent agent = NPC.AddComponent<NavMeshAgent>();
@@ -163,7 +162,7 @@ namespace IAUS.SpawnerSystem
                 {
                     Health= health,
                     DistanceToMantainFromTarget = 7.5f,
-                    IsTargetMoving=false,
+                    IsTargetMoving = false,
                     Status=ActionStatus.Idle,
                     ResetTimer = resetTime
 

@@ -746,6 +746,10 @@
       <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
       <Name>PlayerCharacterSystem</Name>
     </ProjectReference>
+    <ProjectReference Include="InventorySystem.csproj">
+      <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
+      <Name>InventorySystem</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>

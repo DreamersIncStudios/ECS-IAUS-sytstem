@@ -71,9 +71,7 @@
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\PlayerCharacter.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\CharaterGenerator.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Elemental.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\MagicClass.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\ModifiedStat.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Profession.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Stats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Vital.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatus.cs" />

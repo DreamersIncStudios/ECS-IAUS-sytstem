@@ -21,7 +21,10 @@ namespace Stats
             systemDeps = Entities.ForEach((Entity entity, ref PlayerStatComponent PC, ref LevelUpComponent StatUpdate) =>
             {
                 PC.MaxHealth = StatUpdate.MaxHealth;
+                PC.CurHealth = StatUpdate.CurHealth;
                 PC.MaxMana = StatUpdate.MaxMana;
+                PC.CurMana = StatUpdate.CurMana;
+
                 PC.MeleeAttack = StatUpdate.MeleeAttack;
                 PC.MeleeDef = StatUpdate.MeleeDef;
                 PC.MagicDef = StatUpdate.MagicDef;
@@ -36,7 +39,8 @@ namespace Stats
     public struct LevelUpComponent : IComponentData {
         public int MaxHealth;
         public int MaxMana;
-
+        public int CurMana;
+        public int CurHealth;
         public float MagicDef;
         public float MeleeAttack;
         public float MeleeDef;

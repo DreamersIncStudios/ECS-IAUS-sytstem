@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\Global\Scripts\PopUpMouseControl.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\UIManager.cs" />
     <None Include="Assets\Systems\Global\Global.asmdef" />
     <Reference Include="UnityEngine">

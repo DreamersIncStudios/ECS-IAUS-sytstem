@@ -18,7 +18,6 @@ namespace IAUS.ECS2
         public Entity Target;
 
         public float DistanceToMantainFromTarget;
-        public ConsiderationData DistanceToNextPoint;
         // do we need a enemy in range consideration?
         public ConsiderationData Health;
 

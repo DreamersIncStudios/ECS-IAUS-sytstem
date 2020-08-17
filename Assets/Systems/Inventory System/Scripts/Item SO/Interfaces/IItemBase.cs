@@ -8,7 +8,7 @@ namespace Dreamers.InventorySystem
 
     public interface IItemBase
     {
-        uint ItemID { get; }
+        uint ItemID { get; set; }
         string ItemName { get; }
         string Description {get;}
         Sprite Icon { get; }
@@ -27,8 +27,8 @@ namespace Dreamers.InventorySystem
     [System.Serializable]
     public abstract class ItemBaseSO : ScriptableObject, IItemBase
     {
-        [SerializeField] uint _itemID;
-        public uint ItemID { get { return _itemID; } } // To be implemented with Database system/CSV Editor creator 
+  
+        public uint ItemID { get; set; } // To be implemented with Database system/CSV Editor creator 
         [SerializeField] private string _itemName;
         public string ItemName { get { return _itemName; } }
         [TextArea(3,6)]

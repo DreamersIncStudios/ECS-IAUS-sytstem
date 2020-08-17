@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Stats;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace SpawnerSystem.ScriptableObjects
@@ -42,7 +43,7 @@ namespace SpawnerSystem.ScriptableObjects
             GenericNPC test = new GenericNPC(gender);
             GameObject GOtest = Object.Instantiate(test.GO, position + new Vector3(0, 0, 0), Quaternion.identity);
             GOtest.GetComponent<Renderer>().material.color = test.BaseColor;
-            GOtest.GetComponent<CharacterStats>().Name = test.Name;
+            GOtest.GetComponent<BaseCharacter>().Name = test.Name;
 
             return GOtest;
         }

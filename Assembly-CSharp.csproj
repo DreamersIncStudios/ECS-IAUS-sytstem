@@ -63,9 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
+    <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -646,6 +644,10 @@
       <Project>{7655DE51-92AD-7F7B-D531-673129CEED83}</Project>
       <Name>Unity.Jobs.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="SpawnerSystem.csproj">
+      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
+      <Name>SpawnerSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Entities.Editor.csproj">
       <Project>{DACB4B4B-B3FE-568F-F23F-747602F77151}</Project>
       <Name>Unity.Entities.Editor</Name>
@@ -718,6 +720,10 @@
       <Project>{C699C3C6-8A75-4833-0F7A-FDC45519A1F6}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
+    <ProjectReference Include="Global2.csproj">
+      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
+      <Name>Global2</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.CollabProxy.Editor.csproj">
       <Project>{9BD7C8E7-5617-68E8-0470-1F837D9753CF}</Project>
       <Name>Unity.CollabProxy.Editor</Name>
@@ -754,6 +760,14 @@
       <Project>{AA74BFFE-85EF-1361-74A8-947803A82FA2}</Project>
       <Name>Unity.Properties.UI.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="IAUS.csproj">
+      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
+      <Name>IAUS</Name>
+    </ProjectReference>
+    <ProjectReference Include="InventorySystem.csproj">
+      <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
+      <Name>InventorySystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Entities.csproj">
       <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
       <Name>Unity.Entities</Name>
@@ -782,26 +796,6 @@
       <Project>{FA88BBE6-AEC5-ED63-EA54-80E4F8BA4533}</Project>
       <Name>Unity.TextMeshPro</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEditor.UI.csproj">
-      <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
-      <Name>UnityEditor.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
-      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
-      <Name>Unity.Transforms.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="SpawnerSystem.csproj">
-      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
-      <Name>SpawnerSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="IAUS.csproj">
-      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
-      <Name>IAUS</Name>
-    </ProjectReference>
-    <ProjectReference Include="InventorySystem.csproj">
-      <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
-      <Name>InventorySystem</Name>
-    </ProjectReference>
     <ProjectReference Include="Global.csproj">
       <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
       <Name>Global</Name>
@@ -810,9 +804,13 @@
       <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
       <Name>PlayerCharacterSystem</Name>
     </ProjectReference>
-    <ProjectReference Include="Global2.csproj">
-      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
-      <Name>Global2</Name>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
+      <Name>UnityEditor.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
+      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
+      <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

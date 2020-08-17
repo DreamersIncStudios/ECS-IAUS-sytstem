@@ -36,8 +36,8 @@ namespace IAUS.SpawnerSystem
             dstManager.AddComponentData(entity, Move);
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
-            var data = new PlayerStatComponent() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana  };
-            dstManager.AddComponentData(entity, data);
+            //var data = new PlayerStatComponent() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana  };
+            //dstManager.AddComponentData(entity, data);
             dstManager.AddComponent<NPC>(entity);
 
             if (StatesToAdd.Patrol)

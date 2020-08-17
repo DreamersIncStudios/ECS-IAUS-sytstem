@@ -17,10 +17,21 @@ MonoBehaviour:
   _GO: {fileID: 3707275338677854005, guid: 90575fa43c217c84fb8f702541d96e0d, type: 3}
   _scale: {x: 1, y: 1, z: 1}
   _name: 
-  _level: 3
-  _baseHealth: 500
-  _baseMana: 100
   _gender: 1
+  _stats:
+    level: 2
+    Str: 10
+    vit: 10
+    Awr: 10
+    Spd: 10
+    Skl: 10
+    Res: 10
+    Con: 10
+    Will: 10
+    Chars: 10
+    Lck: 10
+    BaseHealth: 500
+    BaseMana: 100
   NPCAIStates:
     Patrol: 1
     Follow: 0
