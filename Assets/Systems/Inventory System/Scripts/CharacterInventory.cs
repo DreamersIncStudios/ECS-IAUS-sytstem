@@ -11,6 +11,13 @@ namespace Dreamers.InventorySystem
         public EquipmentBase Equipment;
 
         public int Gold;
+
+        void Awake() {
+            Inventory = new InventoryBase();
+            Equipment = new EquipmentBase();
+        
+        }
+
         // Start is called before the first frame update
 
     }

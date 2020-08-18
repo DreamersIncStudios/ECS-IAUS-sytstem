@@ -32,6 +32,12 @@ MonoBehaviour:
     Lck: 10
     BaseHealth: 500
     BaseMana: 100
+  Inventory:
+    ItemsInInventory:
+    - Item: {fileID: 11400000, guid: 5fa69137951380a40bd60918be05ae65, type: 2}
+      Count: 10
+    MaxInventorySize: 1
+    Gold: 0
   NPCAIStates:
     Patrol: 1
     Follow: 0

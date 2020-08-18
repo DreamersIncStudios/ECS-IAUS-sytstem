@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Components\LeaderComponent.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\BaseConsiderations.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\InventoryConsiderationBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\IAUSBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\PatrolBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\BaseStateScorer.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Interface\iRecoverable.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\Enemy.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\GenericNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\RecoveryItemSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\SpawnableSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects for Spawner\Scriptable Objects\SquadSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\ScriptableObjects\IAUSEnemySO.cs" />

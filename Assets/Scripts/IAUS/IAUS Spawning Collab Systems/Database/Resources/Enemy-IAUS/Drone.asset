@@ -32,6 +32,10 @@ MonoBehaviour:
     Lck: 10
     BaseHealth: 500
     BaseMana: 100
+  Inventory:
+    ItemsInInventory: []
+    MaxInventorySize: 0
+    Gold: 0
   NPCAIStates:
     Patrol: 0
     Follow: 1
@@ -63,7 +67,7 @@ MonoBehaviour:
     K: -1
     B: 0.91
     C: 0.2
-  distanceToMantainFromTarget: 0
+  distanceToMantainFromTarget: 1
   speed: 4.5
   stoppingDistance: 0.75
   acceleration: 8

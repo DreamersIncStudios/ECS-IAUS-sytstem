@@ -7,7 +7,11 @@ namespace Dreamers.InventorySystem.Base {
     {
         public List<ItemSlot> ItemsInInventory;
         public uint MaxInventorySize;
-
+        public InventoryBase() 
+        {
+            ItemsInInventory = new List<ItemSlot>();
+            MaxInventorySize = 5;
+        }
         // Need to Update for Stackable items;
         public bool OpenSlots(ItemSlot Slot) {
             if (Slot.Item.Stackable) 

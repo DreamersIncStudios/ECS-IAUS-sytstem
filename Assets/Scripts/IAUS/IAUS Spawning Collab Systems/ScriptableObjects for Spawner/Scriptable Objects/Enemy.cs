@@ -2,6 +2,7 @@
 using UnityEngine;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
+using UnityEngine.UIElements.Experimental;
 
 namespace SpawnerSystem.ScriptableObjects {
     public class Enemy : SpawnableSO,  ICharacterStat, ICharacterBase
@@ -25,8 +26,24 @@ namespace SpawnerSystem.ScriptableObjects {
           EC =spawn.AddComponent<EnemyCharacter>();
             EC.SetAttributeBaseValue(Stats.level, Stats.BaseHealth, Stats.BaseMana, Stats.Str, Stats.vit, Stats.Awr, Stats.Spd, Stats.Skl, Stats.Res, Stats.Con, Stats.Will, Stats.Chars, Stats.Lck);
             spawn.AddComponent<Rigidbody>();
-            spawn.AddComponent<CharacterInventory>();
+            CharacterInventory InventoryChar = spawn.AddComponent<CharacterInventory>();
+            InventoryChar.Inventory.MaxInventorySize = 20;
 
+            foreach (ItemSlot itemSlot in Inventory.ItemsInInventory)
+            {
+                if (itemSlot.Item.Stackable)
+                {
+                    for (int i = 0; i < itemSlot.Count; i++)
+                    {
+                        itemSlot.Item.AddToInventory(InventoryChar.Inventory);
+                    }
+                }
+                else
+                {
+                    itemSlot.Item.AddToInventory(InventoryChar.Inventory);
+                }
+
+            }
 
             return spawn;
 

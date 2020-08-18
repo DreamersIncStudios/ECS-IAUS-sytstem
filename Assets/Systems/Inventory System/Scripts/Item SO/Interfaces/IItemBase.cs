@@ -62,22 +62,22 @@ namespace Dreamers.InventorySystem
         public virtual void AddToInventory(InventoryBase inventory)
         {
             bool addNewSlot = true; ;
-            for (int i = 0; i < inventory.ItemsInInventory.Count; i++)
-            {
-                ItemSlot itemInInventory = inventory.ItemsInInventory[i];
-                if (Stackable && itemInInventory.Item.ItemID == ItemID && itemInInventory.Count < 99)
+              for (int i = 0; i < inventory.ItemsInInventory.Count; i++)
                 {
-                    itemInInventory.Count++;
-                    addNewSlot = false;
+                    ItemSlot itemInInventory = inventory.ItemsInInventory[i];
+                    if (Stackable && itemInInventory.Item.ItemID == ItemID && itemInInventory.Count < 99)
+                    {
+                        itemInInventory.Count++;
+                        addNewSlot = false;
+                    }
+                    inventory.ItemsInInventory[i] = itemInInventory;
                 }
-                inventory.ItemsInInventory[i] = itemInInventory;
-            }
 
-            if (inventory.OpenSlot && addNewSlot) 
+            if (inventory.OpenSlot && addNewSlot)
                 inventory.ItemsInInventory.Add(
                     new ItemSlot() {
-                    Item = this,
-                    Count=1});
+                        Item = ScriptableObject.Instantiate(this),
+                    Count = 1 }) ;
 
         }
 
