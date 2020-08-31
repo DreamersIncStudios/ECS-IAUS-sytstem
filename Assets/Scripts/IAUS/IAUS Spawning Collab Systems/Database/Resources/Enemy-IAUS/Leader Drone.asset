@@ -36,7 +36,8 @@ MonoBehaviour:
     ItemsInInventory:
     - Item: {fileID: 11400000, guid: 5fa69137951380a40bd60918be05ae65, type: 2}
       Count: 10
-    MaxInventorySize: 1
+    MaxInventorySize: 20
+    AttachedCharacter: {fileID: 0}
     Gold: 0
   NPCAIStates:
     Patrol: 1
@@ -45,13 +46,22 @@ MonoBehaviour:
     Attack: 0
     Investiage: 0
     Detection: 0
-  health:
+    HealSelfViaItem: 1
+    HealSelfViaMagic: 0
+  fullhealth:
     Inverse: 0
     responseType: 2
     M: 50
     K: -1
     B: 0.91
     C: 0.35
+  healthTilDeath:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 2
+    B: 0
+    C: 0
   distanceToPatrolTarget:
     Inverse: 0
     responseType: 2
@@ -76,3 +86,19 @@ MonoBehaviour:
   height: 1
   radius: 0.5
   useNavMeshAgent: 1
+  ItemUsageIntervals: 60
+  MaxCountOfItems: 5
+  HealIntervals:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  InventoryCheck:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 1
+    B: 0
+    C: 0.65

@@ -10,7 +10,7 @@ namespace Dreamers.InventorySystem
         TypeOfGeneralItem GeneralItemType{get;}
     }
     public enum TypeOfGeneralItem { 
-        Health, Mana, Attack, Status, Key, 
+        Recovery, Attack, Status, Key, 
     
     }
 }

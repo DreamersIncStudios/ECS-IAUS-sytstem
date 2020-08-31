@@ -10,7 +10,7 @@ namespace Dreamers.InventorySystem
 
     public class ArmorSO : ItemBaseSO, IEquipable, IArmor
     {
-        [SerializeField] Quality quality;
+        [SerializeField] private Quality quality;
         public Quality Quality { get { return quality; } }
         public EquipmentType Equipment { get { return EquipmentType.Armor; } }
 

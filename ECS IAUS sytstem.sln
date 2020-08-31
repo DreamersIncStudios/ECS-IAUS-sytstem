@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Serialization", "Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Mathematics", "Unity.Mathematics.csproj", "{1405852F-5842-6065-FE37-0E6A145CAC68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F4949810-3088-227A-DEF0-248CEB0907DF}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Burst", "Unity.Burst.csproj", "{DBC48231-0756-9ABB-731A-A36E45417703}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ProBuilder.Poly2Tri", "Unity.ProBuilder.Poly2Tri.csproj", "{DD9800F8-2132-9D3A-3D77-99B2D6E7273F}"
@@ -66,8 +68,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Platforms.Common", "Unity.Platforms.Common.csproj", "{BCA19F69-5EF1-BC21-111E-5EBDC9F949BB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ProGrids", "Unity.ProGrids.csproj", "{FCF567C4-F219-43FB-B8EF-3329C1B2AB93}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{F4949810-3088-227A-DEF0-248CEB0907DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Build.SlimPlayerRuntime", "Unity.Build.SlimPlayerRuntime.csproj", "{CCB59A4F-15AF-2C7B-1476-A18989001D10}"
 EndProject
@@ -225,6 +225,10 @@ Global
 		{1405852F-5842-6065-FE37-0E6A145CAC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1405852F-5842-6065-FE37-0E6A145CAC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1405852F-5842-6065-FE37-0E6A145CAC68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4949810-3088-227A-DEF0-248CEB0907DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4949810-3088-227A-DEF0-248CEB0907DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4949810-3088-227A-DEF0-248CEB0907DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4949810-3088-227A-DEF0-248CEB0907DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBC48231-0756-9ABB-731A-A36E45417703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBC48231-0756-9ABB-731A-A36E45417703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBC48231-0756-9ABB-731A-A36E45417703}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -293,10 +297,6 @@ Global
 		{FCF567C4-F219-43FB-B8EF-3329C1B2AB93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF567C4-F219-43FB-B8EF-3329C1B2AB93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCF567C4-F219-43FB-B8EF-3329C1B2AB93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4949810-3088-227A-DEF0-248CEB0907DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4949810-3088-227A-DEF0-248CEB0907DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4949810-3088-227A-DEF0-248CEB0907DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4949810-3088-227A-DEF0-248CEB0907DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CCB59A4F-15AF-2C7B-1476-A18989001D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CCB59A4F-15AF-2C7B-1476-A18989001D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCB59A4F-15AF-2C7B-1476-A18989001D10}.Release|Any CPU.ActiveCfg = Release|Any CPU

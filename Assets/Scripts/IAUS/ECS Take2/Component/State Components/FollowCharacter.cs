@@ -8,6 +8,7 @@ using IAUS.Core;
 using Utilities;
 using Unity.Collections;
 using Unity.Burst;
+using Stats;
 
 namespace IAUS.ECS2
 {
@@ -49,11 +50,11 @@ namespace IAUS.ECS2
         protected override void  OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-            systemDeps = Entities.ForEach((ref FollowCharacter follow, in HealthConsideration health) =>
+            systemDeps = Entities.ForEach((ref FollowCharacter follow, in PlayerStatComponent stats) =>
             {
                 float targetcheck = follow.IsTargetMoving ? 1.0f : 0.0f;
 
-                float TotalScore = Mathf.Clamp01(follow.Health.Output(health.Ratio)
+                float TotalScore = Mathf.Clamp01(follow.Health.Output(stats.HealthRatio)
                     * targetcheck
                     )
                 ;

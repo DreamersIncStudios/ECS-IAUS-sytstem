@@ -64,7 +64,7 @@ namespace IAUS.ECS2 {
                 .WithDeallocateOnJobCompletion(LeaderEntities)
                 .WithNativeDisableParallelForRestriction(positions)
                 .WithNativeDisableParallelForRestriction(elite)
-                 .ForEach((ref Party party, ref Patrol patrol, ref Rally rally, in LocalToWorld transform, in GetLeaderTag getlead) =>
+                 .ForEach((ref Party party, ref Patrol patrol, ref RetreatToLocation rally, in LocalToWorld transform, in GetLeaderTag getlead) =>
                  {
                      if (party.Status == ActionStatus.Success)
                          return;

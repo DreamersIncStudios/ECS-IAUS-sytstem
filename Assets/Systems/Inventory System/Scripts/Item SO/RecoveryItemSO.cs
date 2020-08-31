@@ -7,8 +7,7 @@ using Dreamers.InventorySystem.Base;
 
 namespace Dreamers.InventorySystem {
     [System.Serializable]
-    [CreateAssetMenu(fileName = "Recovery Item Data", menuName = "Item System/Recovery Item", order = 1)]
-    public class RecoveryItemSO : ItemBaseSO, IRecoverItems,IGeneral
+    public class RecoveryItemSO : GeneralItemSO, IRecoverItems
     {
         
         [SerializeField] private uint _recoverAmount;
@@ -21,8 +20,7 @@ namespace Dreamers.InventorySystem {
         public RecoverType RecoverWhat { get { return _recoverWhat; } }
         [SerializeField] private StatusEffect _removeStatus;
         public StatusEffect RemoveStatus { get { return _removeStatus; } }
-        [SerializeField] private TypeOfGeneralItem _GeneralType;
-        public TypeOfGeneralItem GeneralItemType { get { return _GeneralType; } }
+
         public override void Use(InventoryBase inventoryBase, int IndexOf, BaseCharacter player)
         {
             Use(inventoryBase, IndexOf);

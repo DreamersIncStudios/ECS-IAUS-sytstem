@@ -3,7 +3,9 @@ using Unity.Entities;
 using IAUS.Core;
 using Unity.Jobs;
 using Utilities.ReactiveSystem;
-
+using Unity.Collections;
+using Unity.Burst;
+using Dreamers.InventorySystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactorSystem<IAUS.ECS2.BaseAI,  IAUS.ECS2.BaseAIReactor>.StateComponent))]
 
@@ -16,73 +18,117 @@ namespace IAUS.ECS2
     public class CheckScoreJobSystem : SystemBase
     {
         EntityCommandBufferSystem entityCommandBufferSystem;
-
+        EntityQuery patroller;
+        EntityQuery Waiting;
+        EntityQuery SelfHealers;
+        EntityQuery Partyer;
+        EntityQuery Retreat;
+        EntityQuery Followers;
         protected override void OnCreate()
         {
             base.OnCreate();
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            patroller = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
+            Waiting = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitTime)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
+           SelfHealers = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(HealSelfViaItem)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
+            Partyer = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Party)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
+            Retreat = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Retreat)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
+            Followers = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(FollowCharacter)), ComponentType.ReadWrite(typeof(StateBuffer)) }
+            });
         }
         protected override void OnUpdate()
         {
 
-            ComponentDataFromEntity<Patrol> PatrolFromEntity = GetComponentDataFromEntity<Patrol>(false);
-            ComponentDataFromEntity<WaitTime> Wait = GetComponentDataFromEntity<WaitTime>(false);
-            ComponentDataFromEntity<Party> party = GetComponentDataFromEntity<Party>(false);
-            ComponentDataFromEntity<Rally> rally = GetComponentDataFromEntity<Rally>(false);
-            ComponentDataFromEntity<FollowCharacter> follow = GetComponentDataFromEntity<FollowCharacter>(false);
+
 
             EntityCommandBuffer.Concurrent entityCommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent();
 
 
             //   float DT = Time.DeltaTime;
             JobHandle systemDeps = Dependency;
-            systemDeps = Entities.
-              WithNativeDisableParallelForRestriction(PatrolFromEntity)
-              .WithNativeDisableParallelForRestriction(Wait)
-              .WithNativeDisableParallelForRestriction(party)
-              .WithNativeDisableParallelForRestriction(rally)
-              .WithNativeDisableParallelForRestriction(follow)
-              .ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
+            systemDeps = new AISTATESCOREJOB<Patrol>() {
+                AIStateChunk = GetArchetypeChunkComponentType<Patrol>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.Patrol
+            
+            }.ScheduleParallel(patroller, systemDeps);
+
+            systemDeps = new AISTATESCOREJOB<WaitTime>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<WaitTime>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.Wait
+
+            }.ScheduleParallel(Waiting, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AISTATESCOREJOB<HealSelfViaItem>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<HealSelfViaItem>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.Heal_Self_Item
+
+            }.ScheduleParallel(SelfHealers, systemDeps); 
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+     
+            systemDeps = new AISTATESCOREJOB<Party>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<Party>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.GotoLeader
+
+            }.ScheduleParallel(Partyer, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AISTATESCOREJOB<RetreatToLocation>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<RetreatToLocation>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.RetreatToLocation
+
+            }.ScheduleParallel(Retreat, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AISTATESCOREJOB<FollowCharacter>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<FollowCharacter>(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
+                StateToUpdate = AIStates.FollowTarget
+
+            }.ScheduleParallel(Followers, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+
+            systemDeps = Entities.ForEach((Entity entity, int nativeThreadIndex, ref DynamicBuffer<StateBuffer> State, ref BaseAI AI) =>
               {
                   if (State.Length == 0)
                       return;
                   for (int index = 0; index < State.Length; index++)
                   {
-                      StateBuffer Teststate = State[index];
-                      switch (Teststate.StateName)
-                      {
-                          case AIStates.Wait:
-                              WaitTime WTemp = Wait.Exists(entity) ? Wait[entity] : new WaitTime();
-                              Teststate.TotalScore = WTemp.TotalScore;
-                              Teststate.Status = WTemp.Status;
-                              break;
-                          case AIStates.Patrol:
-                              Patrol PTemp = PatrolFromEntity.Exists(entity) ? PatrolFromEntity[entity] : new Patrol();
-                              Teststate.TotalScore = PTemp.TotalScore;
-                              Teststate.Status = PTemp.Status;
-                              break;
-                          case AIStates.GotoLeader:
-                              Party tempParty = party.Exists(entity) ? party[entity] : new Party();
-                              Teststate.TotalScore = tempParty.TotalScore;
-                              Teststate.Status = tempParty.Status;
-                              break;
-                          case AIStates.Rally:
-                              Rally tempRally = rally.Exists(entity) ? rally[entity] : new Rally();
-                              Teststate.TotalScore = tempRally.TotalScore;
-                              Teststate.Status = tempRally.Status;
-                              break;
-                          case AIStates.FollowTarget:
-                              FollowCharacter tempFollow = follow.Exists(entity) ? follow[entity] : new FollowCharacter();
-                              Teststate.TotalScore = tempFollow.TotalScore;
-                              Teststate.Status = tempFollow.Status;
-                              break;
-                      }
+                   
 
                       if (State[index].StateName == AI.CurrentState.StateName)
                       {
                           AI.CurrentState = State[index];
                       }
-                      State[index] = Teststate;
+                   
                   }
 
                   StateBuffer CheckState = new StateBuffer();
@@ -115,6 +161,43 @@ namespace IAUS.ECS2
 
             Dependency = systemDeps;
         }
+
+
+        [BurstCompile]
+    struct AISTATESCOREJOB<AISTATE> : IJobChunk
+            where AISTATE: unmanaged, BaseStateScorer
+        {
+            public ArchetypeChunkComponentType<AISTATE> AIStateChunk;
+            public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
+            public AIStates StateToUpdate;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<AISTATE> AISTATES = chunk.GetNativeArray(AIStateChunk);
+                BufferAccessor<StateBuffer> accessor = chunk.GetBufferAccessor(StateBufferChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    AISTATE aistate = AISTATES[i];
+                    DynamicBuffer<StateBuffer> State = accessor[i];
+
+                    if (State.Length == 0)
+                        return;
+                    for (int index = 0; index < State.Length; index++)
+                    {
+                        StateBuffer Teststate = State[index];
+                        if (Teststate.StateName == StateToUpdate)
+                        {
+                            Teststate.TotalScore = aistate.TotalScore;
+                            Teststate.Status = aistate.Status;
+                        }      
+                        State[index] = Teststate;
+                    }
+                }
+            }
+        }
+     
+
+
     }
     public struct BaseAIReactor : AIComponentReactor<BaseAI>
     {
@@ -137,11 +220,14 @@ namespace IAUS.ECS2
                 case AIStates.GotoLeader:
                     ECB.AddComponent<GetLeaderTag>(ChunkID, entity);
                     break;
-                case AIStates.Rally:
+                case AIStates.RetreatToLocation:
                     ECB.AddComponent<RallyActionTag>(ChunkID, entity);
                     break;
                 case AIStates.FollowTarget:
                     ECB.AddComponent<FollowTargetTag>(ChunkID, entity);
+                    break;
+                case AIStates.Heal_Self_Item:
+                    ECB.AddComponent<HealSelfActionTag>(ChunkID, entity);
                     break;
             }
             
@@ -166,11 +252,14 @@ namespace IAUS.ECS2
                     case AIStates.GotoLeader:
                         ECB.RemoveComponent<GetLeaderTag>(ChunkID, entity);
                         break;
-                    case AIStates.Rally:
+                    case AIStates.RetreatToLocation:
                         ECB.RemoveComponent<RallyActionTag>(ChunkID, entity);
                         break;
                     case AIStates.FollowTarget:
                         ECB.RemoveComponent<FollowTargetTag>(ChunkID, entity);
+                        break;
+                    case AIStates.Heal_Self_Item:
+                        ECB.RemoveComponent<HealSelfActionTag>(ChunkID, entity);
                         break;
                 }
             }
@@ -188,11 +277,14 @@ namespace IAUS.ECS2
                 case AIStates.GotoLeader:
                     ECB.AddComponent<GetLeaderTag>(ChunkID, entity);
                     break;
-                case AIStates.Rally:
+                case AIStates.RetreatToLocation:
                     ECB.AddComponent<RallyActionTag>(ChunkID, entity);
                     break;
                 case AIStates.FollowTarget:
                     ECB.AddComponent<FollowTargetTag>(ChunkID, entity);
+                    break;
+                case AIStates.Heal_Self_Item:
+                    ECB.AddComponent<HealSelfActionTag>(ChunkID, entity);
                     break;
             }
             newComponent.Set = false;
@@ -211,4 +303,6 @@ namespace IAUS.ECS2
             }
         }
     }
+
+   
 }

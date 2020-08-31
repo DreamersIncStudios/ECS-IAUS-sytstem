@@ -69,6 +69,7 @@
     <Compile Include="Assets\Systems\Inventory System\Scripts\CharacterInventory.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Components\Wallet.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\ArmorSO.cs" />
+    <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\GeneralItemSO.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IArmor.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IEquipable.cs" />
     <Compile Include="Assets\Systems\Inventory System\Scripts\Item SO\Interfaces\IGeneral.cs" />

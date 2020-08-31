@@ -9,8 +9,10 @@ using Unity.Mathematics;
 using IAUS.ECS2.Character;
 namespace IAUS.ECS2
 { using InfluenceMap;
+    using Stats;
+
     [GenerateAuthoringComponent]
-    public struct Rally : BaseStateScorer
+    public struct RetreatToLocation : BaseStateScorer
     {
         public ConsiderationData Health;
         public ConsiderationData ThreatInArea;
@@ -42,7 +44,7 @@ namespace IAUS.ECS2
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
             float DT = Time.DeltaTime;
-            JobHandle RallyScoreUpdate = Entities.ForEach((ref Rally rally, ref Patrol patrol, in Party party, in HealthConsideration health, in DetectionConsideration detectConsider,
+            JobHandle RallyScoreUpdate = Entities.ForEach((ref RetreatToLocation rally, ref Patrol patrol, in Party party, in PlayerStatComponent Stats, in DetectionConsideration detectConsider,
                 in LeaderConsideration LeaderCon
                 ) =>
             {
@@ -84,7 +86,7 @@ namespace IAUS.ECS2
                 if (!rally.Rallied)
                 {
                 
-                    float TotalScore = Mathf.Clamp01(rally.Health.Output(health.Ratio) * rally.DistanceToLeader.Output(party.DistanceLeaderScore) *
+                    float TotalScore = Mathf.Clamp01(rally.Health.Output(Stats.HealthRatio) * rally.DistanceToLeader.Output(party.DistanceLeaderScore) *
                         rally.HaveLeader.Output(LeaderCon.score) * rally.ThreatInArea.Output(detectConsider.ThreatInArea));
 
                     rally.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * rally.mod) * TotalScore);
@@ -103,7 +105,7 @@ namespace IAUS.ECS2
     {
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
-            JobHandle rallyAtLeader = Entities.ForEach((ref Rally rally, ref Movement move, ref InfluenceValues InfluValues,
+            JobHandle rallyAtLeader = Entities.ForEach((ref RetreatToLocation rally, ref Movement move, ref InfluenceValues InfluValues,
                 in Party party, in RallyActionTag tag) => 
             {
 

@@ -15,6 +15,7 @@ namespace IAUS.ECS2
         public bool TimerStarted;
         public ConsiderationData Health;
         public ConsiderationData WaitTimer;
+        public float RatioForScore { get { return Timer / TimeToWait; } }
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
 
         [SerializeField] float _totalScore;

@@ -802,7 +802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &332271165
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4877,7 +4877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Squad1: {fileID: 11400000, guid: 50a6cb6565dfec44ba9790b63c8b4c4c, type: 2}
   Points: []
-  NumOfSquads: 3
+  NumOfSquads: 2
 --- !u!43 &1007403070
 Mesh:
   m_ObjectHideFlags: 0
@@ -5079,7 +5079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &1065315729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6399,7 +6399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &1287490786
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6669,7 +6669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &1371709951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6850,7 +6850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &1627660474
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8098,7 +8098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &2062958648
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8205,7 +8205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8735776000a89424697c14c69751580a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 100
 --- !u!65 &2086682618
 BoxCollider:
   m_ObjectHideFlags: 0

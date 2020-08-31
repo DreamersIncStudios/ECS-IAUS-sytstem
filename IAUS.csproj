@@ -77,10 +77,11 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\InvestigateArea.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Party.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Patrol.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Rally.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Retreat.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\RetreatToLocation.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\ReturnToBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Follow reactions.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\HealReaction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Patrol Reaction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Wait Reaction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Wait.cs" />
@@ -112,7 +113,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupFollowState.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupHealSelfstate.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupHealSelfViaItemState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupIAUS.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupWaitState.cs" />

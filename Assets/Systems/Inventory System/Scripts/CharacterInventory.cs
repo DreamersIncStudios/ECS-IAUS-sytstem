@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Dreamers.InventorySystem.Base;
+using Stats;
+
 namespace Dreamers.InventorySystem
 {
     public class CharacterInventory : MonoBehaviour
@@ -13,7 +15,7 @@ namespace Dreamers.InventorySystem
         public int Gold;
 
         void Awake() {
-            Inventory = new InventoryBase();
+            Inventory = new InventoryBase(this.GetComponent<BaseCharacter>());
             Equipment = new EquipmentBase();
         
         }

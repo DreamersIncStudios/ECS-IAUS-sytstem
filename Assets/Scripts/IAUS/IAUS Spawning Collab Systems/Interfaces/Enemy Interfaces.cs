@@ -9,7 +9,7 @@ namespace ProjectRebirth.Bestiary.Interfaces
 
     }
     public interface iPatrol : BaseAIState {
-        ConsiderationData Health { get; }
+        ConsiderationData FullHealth { get; }
         ConsiderationData DistanceToTarget { get; }
         float BufferZone { get; }
         int MaxInfluenceAtPoint { get; }
@@ -19,7 +19,7 @@ namespace ProjectRebirth.Bestiary.Interfaces
     {
         float TimeToWait { get; }
 
-        ConsiderationData Health { get; }
+        ConsiderationData FullHealth { get; }
         ConsiderationData WaitTimer { get; }
     }
 
@@ -28,13 +28,16 @@ namespace ProjectRebirth.Bestiary.Interfaces
         float DistanceToMantainFromTarget { get; }
     }
     public interface IHealSelf : BaseAIState {
-        ConsiderationData Health { get; }
-        ConsiderationData ResetTimer { get; }
-        
+        ConsiderationData HealthTilDeath { get; }
+        ConsiderationData TimeBetweenHeals { get; }
+         ConsiderationData RecoveryItemsInInventory { get; }
+
         // To be Implement Later
-        ConsiderationData ThreatInArea { get; }
+       // ConsiderationData ThreatInArea { get; }
+        int FullInventoryofItem { get; }
         
-        float TimeBetweenHeals { get; }
+
+        float timeBetweenHeals { get; }
     }
 
 
@@ -54,9 +57,11 @@ namespace ProjectRebirth.Bestiary.Interfaces
         public bool Attack;
         public bool Investiage;
         public bool Detection;
+        public bool HealSelfViaItem;
+        public bool HealSelfViaMagic;
 
 
-    
+
     }
 
 }
