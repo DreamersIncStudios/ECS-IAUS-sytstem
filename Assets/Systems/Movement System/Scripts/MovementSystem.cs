@@ -4,7 +4,6 @@ using UnityEngine.AI;
 using Unity.Entities;
 using Components.MovementSystem;
 using Unity.Transforms;
-using InfluenceMap;
 using IAUS.Core;
 using Unity.Mathematics;
 using Unity.Collections;

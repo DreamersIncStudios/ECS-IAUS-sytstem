@@ -63,9 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\Detection.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable Raycast\HumanRayCastPoints.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Attackable.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Components\LeaderComponent.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Consideration Components\InventoryConsiderationBuffer.cs" />
@@ -86,8 +83,6 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Wait Reaction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\StateBuffer.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\SystemGroup\IAUSCore.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\TargetBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\Elite.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\Testing\UpdateTimersSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\BaseIAUSAuthoring.cs" />
@@ -95,8 +90,6 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\CharacterAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\EnemyCharacterAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Entity Authoring\GruntAuthoring.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\DetermineAlertLevel.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Job\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\AIStateReactionSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\React.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\ReactiveSystemBase.cs" />
@@ -110,15 +103,12 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\ConsiderationSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CoreSystems\DisableStateSystems.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionConsideration.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\DetectionSystem.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupFollowState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupHealSelfViaItemState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupIAUS.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Setup IAUS Jobs\SetupWaitState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\StateScoreSystem.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\UpdateRacastTargetPoints.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\UtilityScripts.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Database\IAUSDatabasesSpawning.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Database\NPC  Authoring\IAUSAuthoring.cs" />
@@ -147,14 +137,7 @@
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\System\WaveMasterSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Test Scripts\FrequencyUp.cs" />
     <Compile Include="Assets\Scripts\IAUS\IAUS Spawning Collab Systems\Test Scripts\SquadSpawn.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\CreateGridMapTiles.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\GridComponent.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Influencer.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Cover.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Components\Setting Components\Static.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Mono\General\Interfaces\Prototype.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Mono\Misc System To be replace\Movement.cs" />
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -750,6 +733,18 @@
     <ProjectReference Include="InventorySystem.csproj">
       <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
       <Name>InventorySystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="AggressionandTargeting.csproj">
+      <Project>{E71ADF45-7E05-7E57-2327-C6C7BFBD4B59}</Project>
+      <Name>AggressionandTargeting</Name>
+    </ProjectReference>
+    <ProjectReference Include="Global.csproj">
+      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
+      <Name>Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="MovementSystem.csproj">
+      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
+      <Name>MovementSystem</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

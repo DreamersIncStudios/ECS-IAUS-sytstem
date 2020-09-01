@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿
 using Unity.Entities;
-using IAUS.ECS2;
-using UnityEngine.PlayerLoop;
+
 
 namespace IAUS.Core
 {

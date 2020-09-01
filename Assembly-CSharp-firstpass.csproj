@@ -822,6 +822,14 @@
       <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
       <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
+    <ProjectReference Include="AggressionandTargeting.csproj">
+      <Project>{E71ADF45-7E05-7E57-2327-C6C7BFBD4B59}</Project>
+      <Name>AggressionandTargeting</Name>
+    </ProjectReference>
+    <ProjectReference Include="MovementSystem.csproj">
+      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
+      <Name>MovementSystem</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
