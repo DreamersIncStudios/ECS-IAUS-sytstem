@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Jobs;
 using Unity.Transforms;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 
 
 /// <summary> Work to Do 
@@ -60,7 +60,7 @@ namespace InfluenceMap
 
         public EntityQueryDesc DynamicAttackaleObjectQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Influencer), typeof(Attackable) }
+            All = new ComponentType[] { typeof(Influencer), typeof(CharacterAlignment) }
         };
 
 
@@ -72,7 +72,7 @@ namespace InfluenceMap
 
             ComponentDataFromEntity<LocalToWorld> positions = GetComponentDataFromEntity<LocalToWorld>(true);
             ComponentDataFromEntity<Influencer> Influence = GetComponentDataFromEntity<Influencer>(true);
-            ComponentDataFromEntity<Attackable> AttackableInfo = GetComponentDataFromEntity<Attackable>(true);
+            ComponentDataFromEntity<CharacterAlignment> AttackableInfo = GetComponentDataFromEntity<CharacterAlignment>(true);
 
             JobHandle CheckInfluenceAtPoint = Entities
             .WithReadOnly(StaticObjects)
@@ -100,7 +100,7 @@ namespace InfluenceMap
                         InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                     }
                 }
-                Attackable self = AttackableInfo[entity];
+                CharacterAlignment self = AttackableInfo[entity];
 
 
                 for (int index = 0; index < DynamicObjects.Length; index++)
@@ -111,11 +111,11 @@ namespace InfluenceMap
 
                     switch (self.Faction)
                     {
-                        case FactionTypes.Angel:
+                        case Alignment.Angel:
 
                             switch (AttackableInfo[DynamicObjects[index]].Faction)
                             {
-                                case FactionTypes.Angel:
+                                case Alignment.Angel:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -125,7 +125,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Human:
+                                case Alignment.Human:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -135,7 +135,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Daemon:
+                                case Alignment.Daemon:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -148,10 +148,10 @@ namespace InfluenceMap
                             }
 
                             break;
-                        case FactionTypes.Human:
+                        case Alignment.Human:
                             switch (AttackableInfo[DynamicObjects[index]].Faction)
                             {
-                                case FactionTypes.Angel:
+                                case Alignment.Angel:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -161,7 +161,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Human:
+                                case Alignment.Human:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -171,7 +171,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Daemon:
+                                case Alignment.Daemon:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -183,10 +183,10 @@ namespace InfluenceMap
                                     break;
                             }
                             break;
-                        case FactionTypes.Daemon:
+                        case Alignment.Daemon:
                             switch (AttackableInfo[DynamicObjects[index]].Faction)
                             {
-                                case FactionTypes.Angel:
+                                case Alignment.Angel:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -196,7 +196,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Human:
+                                case Alignment.Human:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -206,7 +206,7 @@ namespace InfluenceMap
                                         InfluenceAtPoint.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                     }
                                     break;
-                                case FactionTypes.Daemon:
+                                case Alignment.Daemon:
                                     if (dist < Temp.influence.Proximity.y)
                                     {
                                         InfluenceAtPoint.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -255,7 +255,7 @@ namespace InfluenceMap
                             InfluenceAtSelf.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                         }
                     }
-                    Attackable self = AttackableInfo[entity];
+                    CharacterAlignment self = AttackableInfo[entity];
 
 
                     for (int index = 0; index < DynamicObjects.Length; index++)
@@ -266,11 +266,11 @@ namespace InfluenceMap
 
                         switch (self.Faction)
                         {
-                            case FactionTypes.Angel:
+                            case Alignment.Angel:
 
                                 switch (AttackableInfo[DynamicObjects[index]].Faction)
                                 {
-                                    case FactionTypes.Angel:
+                                    case Alignment.Angel:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -280,7 +280,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Human:
+                                    case Alignment.Human:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -290,7 +290,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Daemon:
+                                    case Alignment.Daemon:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -303,10 +303,10 @@ namespace InfluenceMap
                                 }
 
                                 break;
-                            case FactionTypes.Human:
+                            case Alignment.Human:
                                 switch (AttackableInfo[DynamicObjects[index]].Faction)
                                 {
-                                    case FactionTypes.Angel:
+                                    case Alignment.Angel:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -316,7 +316,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Human:
+                                    case Alignment.Human:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -326,7 +326,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Ally.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Daemon:
+                                    case Alignment.Daemon:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -338,10 +338,10 @@ namespace InfluenceMap
                                         break;
                                 }
                                 break;
-                            case FactionTypes.Daemon:
+                            case Alignment.Daemon:
                                 switch (AttackableInfo[DynamicObjects[index]].Faction)
                                 {
-                                    case FactionTypes.Angel:
+                                    case Alignment.Angel:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -351,7 +351,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Human:
+                                    case Alignment.Human:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Enemy.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);
@@ -361,7 +361,7 @@ namespace InfluenceMap
                                             InfluenceAtSelf.Enemy.Threat.x += Temp.influence.Threat.x * (1 - dist / Temp.influence.Threat.y);
                                         }
                                         break;
-                                    case FactionTypes.Daemon:
+                                    case Alignment.Daemon:
                                         if (dist < Temp.influence.Proximity.y)
                                         {
                                             InfluenceAtSelf.Ally.Proximity.x += Temp.influence.Proximity.x * (1 - dist / Temp.influence.Proximity.y);

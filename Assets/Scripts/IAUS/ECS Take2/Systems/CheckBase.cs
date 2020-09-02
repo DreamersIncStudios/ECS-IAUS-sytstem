@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 using Unity.Collections;
 using IAUS.Core;
 namespace IAUS.ECS2 {
@@ -14,14 +14,14 @@ namespace IAUS.ECS2 {
     {
         EntityQueryDesc BasesQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Base), typeof(Attackable) }
+            All = new ComponentType[] { typeof(Base), typeof(CharacterAlignment) }
 
         };
 
         protected override JobHandle OnUpdate(JobHandle inputDeps)
         {
             ComponentDataFromEntity<LocalToWorld> transform = GetComponentDataFromEntity<LocalToWorld>(true);
-            ComponentDataFromEntity<Attackable> FactionInfo = GetComponentDataFromEntity<Attackable>(true);
+            ComponentDataFromEntity<CharacterAlignment> FactionInfo = GetComponentDataFromEntity<CharacterAlignment>(true);
             NativeArray<Entity> BaseEntities = GetEntityQuery(BasesQuery).ToEntityArray(Allocator.TempJob);
 
             JobHandle test = Entities
@@ -35,7 +35,7 @@ namespace IAUS.ECS2 {
             {
                 if (c1.HomeEntity != Entity.Null)
                 { return; }
-                Attackable Self = FactionInfo[entity];
+                CharacterAlignment Self = FactionInfo[entity];
                 Entity ClosestBase = new Entity();
                 float DistanceToClosest = new float();
                 for (int i = 0; i < BaseEntities.Length; i++)

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS2.BackGround.Raycasting;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 
 namespace IAUS.ECS2.BackGround
 {
@@ -10,7 +10,7 @@ namespace IAUS.ECS2.BackGround
         protected override void OnUpdate()
         {
 
-            Entities.ForEach(( Animator Anim, ref Attackable attackable, ref HumanRayCastPoints humanRayCast) => {
+            Entities.ForEach(( Animator Anim, ref CharacterAlignment attackable, ref HumanRayCastPoints humanRayCast) => {
                 humanRayCast.Head = Anim.GetBoneTransform(HumanBodyBones.Head).position;
                 humanRayCast.Chest = Anim.GetBoneTransform(HumanBodyBones.Chest).position;
                 humanRayCast.Left_Arm = Anim.GetBoneTransform(HumanBodyBones.LeftUpperArm).position;

@@ -26,6 +26,8 @@ namespace SpawnerSystem
             if(SpawnControl==null)
             SpawnControl = SpawnController.Instance;
 
+            if (SpawnControl == null)
+                return;
 
             if (!SpawnControl.CanSpawn)
                 return;

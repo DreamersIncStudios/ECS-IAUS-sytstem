@@ -7,7 +7,8 @@ using ProjectRebirth.Bestiary.Interfaces;
 using Components.MovementSystem;
 using IAUS.ECS2.Character;
 using Stats;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
+
 
 namespace IAUS.SpawnerSystem
 {
@@ -61,7 +62,7 @@ namespace IAUS.SpawnerSystem
                 dstManager.AddComponentData(entity, HealSelf);
                 
             }
-            dstManager.AddComponent<Attackable>(entity);
+            dstManager.AddComponent<CharacterAlignment>(entity);
             dstManager.AddBuffer<InventoryConsiderationBuffer>(entity);
         }
 

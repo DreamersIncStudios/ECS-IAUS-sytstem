@@ -7,7 +7,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Components.MovementSystem;
 using InfluenceMap;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 using IAUS.Core;
 using SpawnerSystem.ScriptableObjects;
 
@@ -25,7 +25,7 @@ namespace IAUS.ECS2
 
         public EntityQueryDesc DynamicAttackaleObjectQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Influencer), typeof(Attackable) }
+            All = new ComponentType[] { typeof(Influencer), typeof(CharacterAlignment) }
         };
         private EntityQuery _patrolUpdatesQuery;
         private EntityQuery _squadMemberUpdateQuery;

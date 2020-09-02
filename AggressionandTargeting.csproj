@@ -69,7 +69,10 @@
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\DetectionSystem.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\DetermineAlertLevel.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\RayCastSetupJobs.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\Attackable.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\Authoring\FactionAuthoring.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\CharacterAlignment.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\FactionBase.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\Systems\CheckSystem.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\CreateGridMapTiles.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\GridComponent.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Influencer.cs" />

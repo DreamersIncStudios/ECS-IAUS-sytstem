@@ -1,7 +1,6 @@
 ﻿
 using UnityEngine;
 using Unity.Entities;
-using InfluenceMap.Factions;
 
 namespace IAUS.ECS2
 {

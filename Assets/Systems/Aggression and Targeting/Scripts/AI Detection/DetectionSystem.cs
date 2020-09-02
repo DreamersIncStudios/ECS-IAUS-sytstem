@@ -5,7 +5,7 @@ using Unity.Jobs;
 using Unity.Collections;
 using Unity.Transforms;
 using IAUS.ECS2.BackGround.Raycasting;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 using IAUS.Core;
 
 namespace IAUS.ECS2
@@ -17,7 +17,7 @@ namespace IAUS.ECS2
         public NativeArray<Entity> AttackableEntityInScene;
         public EntityQueryDesc AttackableQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Attackable), typeof(LocalToWorld) }
+            All = new ComponentType[] { typeof(CharacterAlignment), typeof(LocalToWorld) }
         };
 
 
@@ -65,16 +65,16 @@ namespace IAUS.ECS2
         public NativeArray<Entity> AttackableEntityInScene;
         public EntityQueryDesc AttackableQuery = new EntityQueryDesc()
         {
-            All = new ComponentType[] { typeof(Attackable), typeof(LocalToWorld) }
+            All = new ComponentType[] { typeof(CharacterAlignment), typeof(LocalToWorld) }
         };
 
-        ComponentDataFromEntity<Attackable> AttackableComponents;
+        ComponentDataFromEntity<CharacterAlignment> AttackableComponents;
         ComponentDataFromEntity<HumanRayCastPoints> RaycastPoints;
 
 
         protected override void OnUpdate()
         {
-            AttackableComponents = GetComponentDataFromEntity<Attackable>();
+            AttackableComponents = GetComponentDataFromEntity<CharacterAlignment>();
             RaycastPoints = GetComponentDataFromEntity<HumanRayCastPoints>();
 
             Entities.ForEach(( DynamicBuffer<TargetBuffer> Targets,ref LocalToWorld localToWorld, ref Detection c1) =>
@@ -84,7 +84,7 @@ namespace IAUS.ECS2
 
                     while (check < Targets.Length)
                     {
-                        Attackable temp = AttackableComponents[Targets[check].target];
+                        CharacterAlignment temp = AttackableComponents[Targets[check].target];
                         JobHandle jobHandle;
                         NativeList<RaycastCommand> CastRayEnemy = new NativeList<RaycastCommand>(Allocator.Persistent);
 
