@@ -616,6 +616,10 @@
       <Project>{5C562472-C991-8A56-63EA-BF4BA2255165}</Project>
       <Name>UnityEditor.CacheServer</Name>
     </ProjectReference>
+    <ProjectReference Include="AggressionandTargeting.csproj">
+      <Project>{E71ADF45-7E05-7E57-2327-C6C7BFBD4B59}</Project>
+      <Name>AggressionandTargeting</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.ScriptableBuildPipeline.Editor.csproj">
       <Project>{85AE7F4A-337F-4C61-CA3A-145AF52AF5D9}</Project>
       <Name>Unity.ScriptableBuildPipeline.Editor</Name>
@@ -740,6 +744,10 @@
       <Project>{0D8B0EA2-CD4D-CBCC-155D-2EC5ECD53C3E}</Project>
       <Name>Unity.Rider.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="MovementSystem.csproj">
+      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
+      <Name>MovementSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Entities.Hybrid.EndToEnd.Tests.csproj">
       <Project>{2B41588D-3AFC-E69D-D088-5341D981B630}</Project>
       <Name>Unity.Entities.Hybrid.EndToEnd.Tests</Name>
@@ -811,14 +819,6 @@
     <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
       <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
       <Name>Unity.Transforms.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="AggressionandTargeting.csproj">
-      <Project>{E71ADF45-7E05-7E57-2327-C6C7BFBD4B59}</Project>
-      <Name>AggressionandTargeting</Name>
-    </ProjectReference>
-    <ProjectReference Include="MovementSystem.csproj">
-      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
-      <Name>MovementSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

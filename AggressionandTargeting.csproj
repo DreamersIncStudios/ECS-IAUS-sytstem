@@ -79,6 +79,8 @@
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Setting Components\Cover.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Setting Components\Static.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\VisionSystemJobs.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\TargetBuffer.cs" />
     <None Include="Assets\Systems\Aggression and Targeting\Aggression and Targeting.asmdef" />
     <Reference Include="UnityEngine">
@@ -663,6 +665,10 @@
     <ProjectReference Include="Unity.Entities.Hybrid.csproj">
       <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
       <Name>Unity.Entities.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayerCharacterSystem.csproj">
+      <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
+      <Name>PlayerCharacterSystem</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
