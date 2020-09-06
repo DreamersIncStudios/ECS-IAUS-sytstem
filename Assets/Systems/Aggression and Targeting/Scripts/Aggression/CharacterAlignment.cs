@@ -36,13 +36,7 @@ namespace CharacterAlignmentSystem
         [Range(-10,10)]
         [SerializeField]private int _humans;
         [SerializeField] public int Humans { get { return _humans; }
-            set { if (value < 10 && value > -10)
-                    _humans = value;
-                if (value > 10)
-                    _humans = 10;
-                if (value < -10)
-                    _humans = -10;
-            }
+            set { _humans = Mathf.Clamp(value, -10, 10); }
         }
 
         [Range(-10, 10)]
@@ -51,15 +45,7 @@ namespace CharacterAlignmentSystem
         public int Daemons
         {
             get { return _daemons; }
-            set
-            {
-                if (value < 10 && value > -10)
-                    _daemons = value;
-                if (value > 10)
-                    _daemons = 10;
-                if (value < -10)
-                    _daemons = -10;
-            }
+            set { _daemons = Mathf.Clamp(value, -10, 10); }
         }
         [Range(-10, 10)]
         [SerializeField] private int _angels;
@@ -69,12 +55,7 @@ namespace CharacterAlignmentSystem
             get { return _angels; }
             set
             {
-                if (value < 10 && value > -10)
-                    _angels = value;
-                if (value > 10)
-                    _angels = 10;
-                if (value < -10)
-                    _angels = -10;
+                _angels = Mathf.Clamp(value, -10, 10);
             }
         }
         [Range(-10, 10)]
@@ -82,15 +63,8 @@ namespace CharacterAlignmentSystem
         public int Mechas
         {
             get { return _mechas; }
-            set
-            {
-                if (value < 10 && value > -10)
-                    _mechas = value;
-                if (value > 10)
-                    _mechas = 10;
-                if (value < -10)
-                    _mechas = -10;
-            }
+            set { _mechas= Mathf.Clamp(value, -10, 10); }
+        
         }
     }
 }

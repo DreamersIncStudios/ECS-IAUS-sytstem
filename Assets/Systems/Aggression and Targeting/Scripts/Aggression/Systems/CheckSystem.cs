@@ -11,8 +11,9 @@ namespace CharacterAlignmentSystem
         protected override void OnCreate()
         {
             base.OnCreate();
-            testingFactions = GetEntityQuery(new EntityQueryDesc() { 
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(FactionBase)) }
+            testingFactions = GetEntityQuery(new EntityQueryDesc() {
+                Any = new ComponentType[] { ComponentType.ReadOnly(typeof(Angel)),ComponentType.ReadOnly(typeof(Human)),ComponentType.ReadOnly(typeof(Daemon)),
+                    ComponentType.ReadOnly(typeof(Mecha)) }
             });
         }
 

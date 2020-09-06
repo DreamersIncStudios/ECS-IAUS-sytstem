@@ -79,6 +79,8 @@
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Setting Components\Cover.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Setting Components\Static.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\AISensesAuthoring.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Editor\AISensesAuthoringEditor.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\VisionSystemJobs.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\TargetBuffer.cs" />

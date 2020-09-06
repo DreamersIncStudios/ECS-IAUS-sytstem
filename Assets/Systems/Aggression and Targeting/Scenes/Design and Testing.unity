@@ -257,23 +257,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 145896353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
 --- !u!1 &587893627
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,23 +413,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 587893627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
 --- !u!1 &867775678
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,23 +652,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1100981148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
 --- !u!1 &1325754374
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,23 +808,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325754374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
 --- !u!1 &1735100948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,23 +1056,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765460353}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
 --- !u!1 &2058332218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,20 +1212,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 2058332218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c82931fc2bb0543a103f3233a48526, type: 3}
+  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 0
-  viewAngleXZ: 0
-  viewAngleYZ: 0
-  EngageRadius: 0
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 0
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
-  TargetRef: {fileID: 0}
-  AlertModifer: 0
-  EnemyAwarnessLevel: 0
-  TargetVisibility: 0
+  Vision: 1
+  VisionData:
+    EnemyAwarnessLevel: 1
+    viewRadius: 15
+    ViewAngle: 80
+    EngageRadius: 0
+    TargetMask:
+      serializedVersion: 2
+      m_Bits: 7168
+    ObstacleMask:
+      serializedVersion: 2
+      m_Bits: 512
+    AlertModifer: 0
+    TargetVisibility: 0
+  Hearing: 0
+  Touch: 0
+  Editing: 0
