@@ -80,9 +80,13 @@
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Components\Setting Components\Static.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Influence Map System\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\AISensesAuthoring.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\AlertLevel.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Editor\AISensesAuthoringEditor.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\VisionSystemJobs.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses\Senses.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses\SoundEmitter.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\ShotTest.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Systems\HearingSystem.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Systems\VisionSystemJobs.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\TargetBuffer.cs" />
     <None Include="Assets\Systems\Aggression and Targeting\Aggression and Targeting.asmdef" />
     <Reference Include="UnityEngine">
@@ -671,6 +675,10 @@
     <ProjectReference Include="PlayerCharacterSystem.csproj">
       <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
       <Name>PlayerCharacterSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
+      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
+      <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

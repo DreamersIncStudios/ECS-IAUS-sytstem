@@ -136,7 +136,8 @@ GameObject:
   - component: {fileID: 145896355}
   - component: {fileID: 145896354}
   - component: {fileID: 145896360}
-  m_Layer: 0
+  - component: {fileID: 145896361}
+  m_Layer: 11
   m_Name: Test Mecha Character (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,13 +242,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145896353}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.9068146, z: -0, w: 0.42152974}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 130.138, z: 0}
 --- !u!114 &145896360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +263,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
     viewRadius: 15
     ViewAngle: 80
     EngageRadius: 0
@@ -277,6 +282,19 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &145896361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145896353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1
 --- !u!1 &587893627
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +310,8 @@ GameObject:
   - component: {fileID: 587893629}
   - component: {fileID: 587893628}
   - component: {fileID: 587893634}
-  m_Layer: 0
+  - component: {fileID: 587893635}
+  m_Layer: 11
   m_Name: Test Mecha Character (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +417,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587893627}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: 0, z: -14.34}
+  m_LocalPosition: {x: 0.09, y: 0.5, z: -14.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -418,7 +437,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
     viewRadius: 15
     ViewAngle: 80
     EngageRadius: 0
@@ -433,6 +456,19 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &587893635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587893627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1
 --- !u!1 &867775678
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +567,8 @@ GameObject:
   - component: {fileID: 1100981150}
   - component: {fileID: 1100981149}
   - component: {fileID: 1100981155}
-  m_Layer: 0
+  - component: {fileID: 1100981156}
+  m_Layer: 11
   m_Name: 'Test Mecha Character '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +674,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1100981148}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6.83, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -657,7 +694,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
     viewRadius: 15
     ViewAngle: 80
     EngageRadius: 0
@@ -672,6 +713,19 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &1100981156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100981148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1
 --- !u!1 &1325754374
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,7 +741,8 @@ GameObject:
   - component: {fileID: 1325754376}
   - component: {fileID: 1325754375}
   - component: {fileID: 1325754381}
-  m_Layer: 0
+  - component: {fileID: 1325754382}
+  m_Layer: 11
   m_Name: Test Mecha Character (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +848,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1325754374}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.26, y: 0, z: -16.96}
+  m_LocalPosition: {x: 5.26, y: 0.5, z: -16.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -813,9 +868,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
-    viewRadius: 15
-    ViewAngle: 80
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
+    viewRadius: 20
+    ViewAngle: 120
     EngageRadius: 0
     TargetMask:
       serializedVersion: 2
@@ -828,6 +887,19 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &1325754382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325754374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1
 --- !u!1 &1735100948
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,7 +1007,8 @@ GameObject:
   - component: {fileID: 1765460355}
   - component: {fileID: 1765460354}
   - component: {fileID: 1765460360}
-  m_Layer: 0
+  - component: {fileID: 1765460361}
+  m_Layer: 11
   m_Name: Test Mecha Character (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1041,7 +1114,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1765460353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.51, y: 0, z: -10.17}
+  m_LocalPosition: {x: 7.51, y: 0.5, z: -10.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1061,7 +1134,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
     viewRadius: 15
     ViewAngle: 80
     EngageRadius: 0
@@ -1076,6 +1153,19 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &1765460361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765460353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1
 --- !u!1 &2058332218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,7 +1181,8 @@ GameObject:
   - component: {fileID: 2058332220}
   - component: {fileID: 2058332219}
   - component: {fileID: 2058332225}
-  m_Layer: 0
+  - component: {fileID: 2058332226}
+  m_Layer: 11
   m_Name: Test Mecha Character (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1197,7 +1288,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058332218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.01, y: 0, z: -7.04}
+  m_LocalPosition: {x: -5.01, y: 0.5, z: -7.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1217,7 +1308,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Vision: 1
   VisionData:
-    EnemyAwarnessLevel: 1
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
     viewRadius: 15
     ViewAngle: 80
     EngageRadius: 0
@@ -1232,3 +1327,16 @@ MonoBehaviour:
   Hearing: 0
   Touch: 0
   Editing: 0
+--- !u!114 &2058332226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058332218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db6c49cf76db77b45b26d9a0260c1ded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Phasing: 1

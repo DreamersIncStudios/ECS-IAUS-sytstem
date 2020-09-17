@@ -6,6 +6,7 @@ using System.IO;
 
 namespace Dreamers.Global
 {
+#if UNITY_EDITOR
     static public class ScriptableObjectUtility
     {
         static public void CreateAsset<T>(string pathExt, out T test) where T : ScriptableObject {
@@ -29,4 +30,5 @@ namespace Dreamers.Global
         }
 
     }
+#endif
 }

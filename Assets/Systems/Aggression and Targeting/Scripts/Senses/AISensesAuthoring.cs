@@ -1,17 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CharacterAlignmentSystem;
 using Unity.Entities;
 
-namespace CharacterAlignmentSystem.Authoring
+namespace AISenses.Authoring
 {
     public class AISensesAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         public bool Vision;
         public Vision VisionData;
         public bool Hearing;
-   
+        public Hearing HearingData;
         // hearing component
 
         public bool Touch;
@@ -27,23 +26,16 @@ namespace CharacterAlignmentSystem.Authoring
         }
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
+            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
+
             dstManager.AddBuffer<ScanPositionBuffer>(entity);
             if (Vision) 
                 dstManager.AddComponentData(entity, VisionData);
+            if (Hearing)
+                dstManager.AddComponentData(entity, HearingData);
 
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
 
         public enum SenseToEdit { 
             vison, hear, Touch

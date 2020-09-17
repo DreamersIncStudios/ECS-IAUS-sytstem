@@ -54,13 +54,5 @@ namespace CharacterAlignmentSystem
                     break;          
             }
         }
-
-        public void Start()
-        {
-            AggressionMod.Humans = 25;
-
-            Debug.Log(AggressionMod.Humans);
-
-        }
     }
 }

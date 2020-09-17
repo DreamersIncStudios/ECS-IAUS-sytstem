@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace CharacterAlignmentSystem.Authoring.Editors
+#if UNITY_EDITOR
+namespace AISenses.Authoring.Editors
 {
     [CustomEditor(typeof(AISensesAuthoring))]
     [CanEditMultipleObjects]
@@ -32,3 +33,4 @@ namespace CharacterAlignmentSystem.Authoring.Editors
         }
     }
 }
+#endif
