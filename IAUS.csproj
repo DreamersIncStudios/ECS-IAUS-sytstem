@@ -746,6 +746,10 @@
       <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
       <Name>MovementSystem</Name>
     </ProjectReference>
+    <ProjectReference Include="InfluenceSystem.csproj">
+      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
+      <Name>InfluenceSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>

@@ -1,15 +1,12 @@
 {
-    "name": "AggressionandTargeting",
+    "name": "InfluenceSystem",
     "references": [
+        "GUID:6dcc8ad9d24e4ea438f75a1d7a68c4d7",
         "GUID:734d92eba21c94caba915361bd5ac177",
         "GUID:a5baed0c9693541a5bd947d336ec7659",
-        "GUID:2665a8d13d1b3f18800f46e256720795",
         "GUID:d8b63aba1907145bea998dd612889d6b",
-        "GUID:e0cd26848372d4e5c891c569017e11f1",
-        "GUID:fdfe7c4f6f1c7b54c93302017fc876a0",
-        "GUID:27fbc99f6a1cdf944a05c31320c04f5e",
-        "GUID:8819f35a0fc84499b990e90a4ca1911f",
-        "GUID:44dcb2bf5b9be4b5aa76674c8edcd1d5"
+        "GUID:f4427dd0c4f0c6347b94a12fb348ee7b",
+        "GUID:8819f35a0fc84499b990e90a4ca1911f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

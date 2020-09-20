@@ -117,7 +117,7 @@ namespace IAUS.ECS2
                             case ObjectType.Creature:
                                 break;
                             case ObjectType.Humaniod:
-                                alert = CheckHumanRays(results, c1);
+                                alert = CheckHumanRays(results);
                                 break;
                             case ObjectType.Structure:
                                 break;

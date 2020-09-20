@@ -63,28 +63,69 @@ namespace AISenses.HearingSystem
             {
                 Hearing hearing = Hearings[i];
                 LocalToWorld position = toWorlds[i];
-                List<SoundData> sounds = new List<SoundData>();
+                List<SoundData> ambientSounds = new List<SoundData>();
+                List<SoundData> alertSounds = new List<SoundData>();
+                List<SoundData> alarmSounds = new List<SoundData>();
                 for (int j = 0; j < SoundEmitters.Length; j++)
                 {
-                    if (SoundEmitters[j].Sound == SoundType.Ambient)
-                    {
+                 
                         float dist = Vector3.Distance(position.Position, SoundPosition[j].Position);
-                        if (dist > 0)
-                        {
-                            sounds.Add(new SoundData()
+                    switch (SoundEmitters[j].Sound)
+                    {
+                        case SoundType.Ambient:
+                            if (dist > 0)
                             {
-                                soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
-                            });
-                        }
+                                ambientSounds.Add(new SoundData()
+                                {
+                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
+                                });
+                            }
+                            break;
+                        case SoundType.Alarm:
+                            if (dist > 0)
+                            {
+                                alarmSounds.Add(new SoundData()
+                                {
+                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
+                                });
+                            }
+                            break;
+                        case SoundType.Suspicious:
+                            if (dist > 0)
+                            {
+                                alertSounds.Add(new SoundData()
+                                {
+                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
+                                });
+                            }
+
+                            break;
                     }
+                    
                 }
 
-                float totalnoise = new float();
-                foreach (SoundData sound in sounds) {
-                    totalnoise += sound.SoundPressureRMS;
+                float totalAmbientNoise = new float();
+                float totalAlertNoise = new float();
+                float totalAlarmNoise = new float();
+
+                foreach (SoundData sound in ambientSounds) {
+                    totalAmbientNoise += sound.SoundPressureRMS;
                 
                 }
-                hearing.AmbientNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalnoise,.5f) / 20);
+                foreach (SoundData sound in alertSounds)
+                {
+                    totalAlertNoise += sound.SoundPressureRMS;
+
+                }
+                foreach (SoundData sound in alarmSounds)
+                {
+                    totalAlarmNoise += sound.SoundPressureRMS;
+
+                }
+                hearing.AmbientNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAmbientNoise,.5f) / 20);
+                hearing.AlertNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlertNoise, .5f) / 20);
+                hearing.AlarmNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlarmNoise, .5f) / 20);
+
 
                 Hearings[i] = hearing;
             }

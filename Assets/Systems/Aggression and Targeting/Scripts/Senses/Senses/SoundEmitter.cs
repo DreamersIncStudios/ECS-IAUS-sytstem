@@ -13,7 +13,8 @@ namespace AISenses.HearingSystem
     public enum SoundType
     {
         Ambient,
-        Alert,
+        Alarm,
+        Suspicious
 
     }
 }

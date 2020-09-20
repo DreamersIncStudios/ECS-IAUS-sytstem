@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/new spawn test.unity
     guid: 340725f018aaf744a998b7482c6a4c22
   - enabled: 1
-    path: Assets/Systems/Aggression and Targeting/Scenes/Influence Map work area.unity
+    path: Assets/Systems/InfluenceSystem/Scenes/Influence Map work area.unity
     guid: 606927d9aac755549af47d2309ceb42e
   - enabled: 1
     path: Assets/Systems/Aggression and Targeting/Scenes/Design and Testing.unity

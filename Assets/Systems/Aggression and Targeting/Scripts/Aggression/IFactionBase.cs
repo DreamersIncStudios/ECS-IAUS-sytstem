@@ -5,7 +5,7 @@ using Unity.Entities;
 
 namespace CharacterAlignmentSystem
 {
-    public interface FactionBase : IComponentData
+    public interface IFactionBase : IComponentData
     {
         FactionAggression Aggression { get; }
         bool Corrupted { get; set; }
@@ -13,21 +13,21 @@ namespace CharacterAlignmentSystem
     public struct FactionModifier : IComponentData {
         public FactionAggression AggressionMod;
     }
-    public struct Human : FactionBase {
+    public struct Human : IFactionBase {
         [SerializeField] public bool Corrupted { get; set; }
         [SerializeField] public FactionAggression Aggression { get; set; }
     }
-    public struct Angel : FactionBase {
+    public struct Angel : IFactionBase {
         [SerializeField] public bool Corrupted { get; set; }
         [SerializeField] public FactionAggression Aggression { get; set; }
 
     }
-    public struct Daemon : FactionBase {
+    public struct Daemon : IFactionBase {
       [SerializeField] public bool Corrupted { get { return true; } set { } }
         [SerializeField] public FactionAggression Aggression { get; set; }
 
     }
-    public struct Mecha : FactionBase {
+    public struct Mecha : IFactionBase {
         [SerializeField] public bool Corrupted { get; set; }
         [SerializeField] public FactionAggression Aggression {get;set;}
 

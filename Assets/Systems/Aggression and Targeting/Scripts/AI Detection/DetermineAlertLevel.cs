@@ -10,8 +10,6 @@ namespace IAUS.ECS2
     {
         public bool Hit(RaycastHit Result)
         {
-            Collider col = Result.collider;
-
             if (Result.collider != null)
             {
                 return Result.collider.gameObject.layer == 11 ||
@@ -22,7 +20,7 @@ namespace IAUS.ECS2
             return false;
         }
 
-        float CheckHumanRays(NativeArray<RaycastHit> Results, Detection DetectSpecs)
+        float CheckHumanRays(NativeArray<RaycastHit> Results)
         {
             float AlertLevel = new float();
             for (int index = 0; index < Results.Length; index++)

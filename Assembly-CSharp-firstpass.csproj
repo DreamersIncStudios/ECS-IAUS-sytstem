@@ -830,6 +830,10 @@
       <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
       <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
+    <ProjectReference Include="InfluenceSystem.csproj">
+      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
+      <Name>InfluenceSystem</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -26,6 +26,7 @@ namespace SpawnerSystem.ScriptableObjects {
          GameObject spawn =   Instantiate(GO, Position + SpawnOffset, Quaternion.identity);
           EC =spawn.AddComponent<EnemyCharacter>();
             EC.SetAttributeBaseValue(Stats.level, Stats.BaseHealth, Stats.BaseMana, Stats.Str, Stats.vit, Stats.Awr, Stats.Spd, Stats.Skl, Stats.Res, Stats.Con, Stats.Will, Stats.Chars, Stats.Lck);
+
             spawn.AddComponent<Rigidbody>();
             CharacterInventory InventoryChar = spawn.AddComponent<CharacterInventory>();
             InventoryChar.Inventory.MaxInventorySize = 20;

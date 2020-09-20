@@ -110,8 +110,6 @@ namespace AISenses.VisionSystems
 
         public bool Hit(RaycastHit Result)
         {
-            Collider col = Result.collider;
-
             if (Result.collider != null)
             {
                 return Result.collider.gameObject.layer == 11 ||

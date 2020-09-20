@@ -54,6 +54,7 @@ namespace Stats
 
             CurHealth = MaxHealth;
             CurMana = MaxMana;
+
             // SetupElementalMods();
         }
 
@@ -231,11 +232,13 @@ namespace Stats
         }
         public void SetupAbilitesModifiers()
         {
-            GetAbility((int)AbilityName.Libra).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .25f));
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .75f));
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Skill), .75f));
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .75f));
-            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Luck), .15f));
+            GetAbility((int)AbilityName.Libra).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
+            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), .55f));
+
+            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Awareness), 2.75f));
+            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 2.75f));
+            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), 2.75f));
+            GetAbility((int)AbilityName.Detection).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Luck), 2.15f));
 
 
 
@@ -255,6 +258,8 @@ namespace Stats
             GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = Lck;
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
+
+            Invoke("StatUpdate", 10);
         }
 
 
@@ -269,6 +274,7 @@ namespace Stats
 
             CurHealth = MaxHealth = GetVital((int)VitalName.Health).AdjustBaseValue;
             CurMana = MaxMana = GetVital((int)VitalName.Mana).AdjustBaseValue;
+            Debug.Log((GetAbility((int)AbilityName.Detection).AdjustBaseValue));
              World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(selfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana, MagicDef = MagicDef, MeleeAttack = MeleeAttack, MeleeDef = MeleeDef });
         }
 
