@@ -259,7 +259,7 @@ namespace Stats
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
 
-            Invoke("StatUpdate", 10);
+            Invoke("StatUpdate", 1);
         }
 
 

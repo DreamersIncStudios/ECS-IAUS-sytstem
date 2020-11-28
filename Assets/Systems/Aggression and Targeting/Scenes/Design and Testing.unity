@@ -1652,5 +1652,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 231ffdb70b4ccea4c8b455fa4330f635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundLevel: 80
+  SoundLevel: 0
   Sound: 0

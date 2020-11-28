@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.8f1</UnityVersion>
@@ -249,7 +250,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.3/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.9/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -604,13 +605,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{177C5D63-9AB4-DF4D-197E-6B020C7F40FD}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
       <Project>{7C8D23A2-BD2F-D0DD-19A5-35516A77C27D}</Project>
       <Name>Unity.Timeline.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{4065FB89-E685-8925-62DD-51EC49498937}</Project>
+      <Name>Cinemachine</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.CacheServer.csproj">
       <Project>{5C562472-C991-8A56-63EA-BF4BA2255165}</Project>
@@ -760,6 +761,10 @@
       <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
       <Name>Unity.Mathematics</Name>
     </ProjectReference>
+    <ProjectReference Include="InfluenceSystem.csproj">
+      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
+      <Name>InfluenceSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Deformations.csproj">
       <Project>{9244C19B-1839-4E11-EC2E-567B21900241}</Project>
       <Name>Unity.Deformations</Name>
@@ -788,6 +793,10 @@
       <Project>{64A276E8-8B6C-1F43-9249-8A6020E7CCA1}</Project>
       <Name>Unity.Transforms.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{30734BE2-02F8-3777-693A-22C0F62F3C3C}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.ProBuilder.AddOns.Editor.csproj">
       <Project>{FE88C919-8264-5639-BD20-44996660614B}</Project>
       <Name>Unity.ProBuilder.AddOns.Editor</Name>
@@ -799,6 +808,10 @@
     <ProjectReference Include="Unity.Mathematics.Editor.csproj">
       <Project>{F3B5100D-540F-9025-C6E8-7E9127B0D75D}</Project>
       <Name>Unity.Mathematics.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="StandardAssets.csproj">
+      <Project>{712D62E3-733C-5D36-2CBE-D35816FB7BBA}</Project>
+      <Name>StandardAssets</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{FA88BBE6-AEC5-ED63-EA54-80E4F8BA4533}</Project>
@@ -819,10 +832,6 @@
     <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
       <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
       <Name>Unity.Transforms.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="InfluenceSystem.csproj">
-      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
-      <Name>InfluenceSystem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

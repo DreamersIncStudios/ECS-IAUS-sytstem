@@ -9,10 +9,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</ProjectGuid>
+    <ProjectGuid>{712D62E3-733C-5D36-2CBE-D35816FB7BBA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>PlayerCharacterSystem</AssemblyName>
+    <AssemblyName>StandardAssets</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -64,23 +64,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Abilities.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Attribute.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseStat.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\EnemyCharacter.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\PlayerCharacter.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\CharaterGenerator.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Elemental.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\ModifiedStat.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Stats.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Vital.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatus.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatusBuffer.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\PlayerCharacterStatComponents.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\AdjustHealthSystem.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\LevelUpSystem.cs" />
-    <None Include="Assets\Systems\PlayerCharacter System\PlayerCharacter System.asmdef" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\Joystick.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
+    <Compile Include="Assets\Standard Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
+    <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\AICharacterControl.cs" />
+    <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\ThirdPersonCharacter.cs" />
+    <Compile Include="Assets\Standard Assets\ThirdPersonCharacter\Scripts\ThirdPersonUserControl.cs" />
+    <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
+    <None Include="Assets\Standard Assets\StandardAssets.asmdef" />
+    <None Include="Assets\Standard Assets\ThirdPersonCharacter\ThirdPersonCharacterGuidelines.txt" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -632,22 +632,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Entities.csproj">
-      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
-      <Name>Unity.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
-      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
-      <Name>Unity.Entities.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.csproj">
-      <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
-      <Name>Unity.Transforms</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
-      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
-      <Name>Unity.Transforms.Hybrid</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>
