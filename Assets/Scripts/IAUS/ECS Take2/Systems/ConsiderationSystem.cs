@@ -5,7 +5,8 @@ using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
 using Stats;
-using UnityEngine.Rendering;
+using Components.MovementSystem;
+
 
 namespace IAUS.ECS2
 {
@@ -26,7 +27,7 @@ namespace IAUS.ECS2
             PatrolDisntaceCheckers = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[]{ ComponentType.ReadWrite(typeof(DistanceToConsideration)), ComponentType.ReadOnly(typeof(LocalToWorld)),
-                    ComponentType.ReadOnly(typeof(Patrol)),ComponentType.ReadOnly(typeof(PatrolBuffer))}
+                    ComponentType.ReadOnly(typeof(Patrol)),ComponentType.ReadOnly(typeof(Movement))}
             });
 
         }
@@ -39,7 +40,7 @@ namespace IAUS.ECS2
                 DistanceToChunk = GetArchetypeChunkComponentType<DistanceToConsideration>(),
                 PatrolChunk = GetArchetypeChunkComponentType<Patrol>(),
                 ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(),
-                PatrolBufferChunk = GetArchetypeChunkBufferType<PatrolBuffer>()
+                MovementChunk = GetArchetypeChunkComponentType<Movement>()
             }.ScheduleParallel(PatrolDisntaceCheckers, systemDeps);
         
 
@@ -85,22 +86,22 @@ namespace IAUS.ECS2
             public ArchetypeChunkComponentType<DistanceToConsideration> DistanceToChunk;
            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
             [ReadOnly] public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkBufferType<PatrolBuffer> PatrolBufferChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<Movement> MovementChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<DistanceToConsideration> Consider = chunk.GetNativeArray(DistanceToChunk);
                 NativeArray<LocalToWorld> toWorld = chunk.GetNativeArray(ToWorldChunk);
                 NativeArray<Patrol> patrol = chunk.GetNativeArray(PatrolChunk);
-                BufferAccessor<PatrolBuffer> bufferAccessor = chunk.GetBufferAccessor(PatrolBufferChunk);
+                NativeArray<Movement> Movers= chunk.GetNativeArray(MovementChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     DistanceToConsideration distanceTo = Consider[i];
-                    DynamicBuffer<PatrolBuffer> buffer = bufferAccessor[i];
 
-                    float distanceRemaining = Vector3.Distance(buffer[patrol[i].index].WayPoint.Point, toWorld[i].Position);
+                    float distanceRemaining = distanceTo.test=  Vector3.Distance(patrol[i].waypointRef, toWorld[i].Position);
+
                     // make .7f a variable 
-                    if (distanceRemaining < patrol[i].BufferZone)
+                    if (Movers[i].Completed && !Movers[i].CanMove)
                         distanceRemaining = 0.0f;
 
                     distanceTo.Ratio = distanceRemaining / patrol[i].DistanceAtStart > .1f ? distanceRemaining / patrol[i].DistanceAtStart : 0.0f;

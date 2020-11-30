@@ -3722,8 +3722,11 @@ MonoBehaviour:
     MovementSpeed: 0
     TargetLocationCrowded: 0
     MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
     CanMove: 0
-    Completed: 0
     StoppingDistance: 0
     Acceleration: 0
     DistanceRemaining: 0
@@ -4889,7 +4892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Squad1: {fileID: 11400000, guid: 50a6cb6565dfec44ba9790b63c8b4c4c, type: 2}
   Points: []
-  NumOfSquads: 2
+  NumOfSquads: 5
 --- !u!43 &1007403070
 Mesh:
   m_ObjectHideFlags: 0

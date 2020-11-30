@@ -19,7 +19,8 @@ namespace IAUS.ECS2
         public ConsiderationData DistanceToLeader;
         public ConsiderationData HaveLeader;
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
-
+        public bool RemoveTag => Status == ActionStatus.Success || Status == ActionStatus.Interrupted || Status == ActionStatus.CoolDown ||
+    Status == ActionStatus.Disabled;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
@@ -115,14 +116,14 @@ namespace IAUS.ECS2
                 rally.Status = ActionStatus.Running;
                     move.TargetLocation = rally.RallyPoint;
                     InfluValues.TargetLocation = rally.RallyPoint;
-                    move.Completed = false;
+                  
                     move.CanMove = true;
                     move.SetTargetLocation = true;
                     rally.SetPosition = false;
                 }
 
             //complete
-            if (rally.Status == ActionStatus.Running)
+            if (rally.RemoveTag)
                 {
                     if (move.Completed && !move.CanMove)
                     {

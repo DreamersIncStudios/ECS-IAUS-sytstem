@@ -29,11 +29,7 @@ namespace IAUS.ECS2.Reactions
 
             switch (AIState.Status)
             {
-                case ActionStatus.Running:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    AIState.Timer = 0.0f;
-                    break;
+                case ActionStatus.Failure:
                 case ActionStatus.Interrupted:
                     AIState.ResetTime = AIState.ResetTimer / 2.0f;
                     AIState.Status = ActionStatus.CoolDown;
@@ -42,10 +38,7 @@ namespace IAUS.ECS2.Reactions
                     AIState.ResetTime = AIState.ResetTimer;
                     AIState.Status = ActionStatus.CoolDown;
                     break;
-                case ActionStatus.Failure:
-                    AIState.ResetTime = AIState.ResetTimer / 2.0f;
-                    AIState.Status = ActionStatus.CoolDown;
-                    break;
+                case ActionStatus.Idle:
                 case ActionStatus.Disabled:
                     AIState.TotalScore = 0.0f;
                     break;
@@ -78,12 +71,13 @@ namespace IAUS.ECS2.Reactions
 
         public void ComponentRemoved(Entity entity, ref WaitTime AIStateCompoment, ref Patrol UpdatingComponent, in WaitActionTag oldComponent)
         {
+            //AIStateCompoment.WaitTimer
             if (AIStateCompoment.Status == ActionStatus.Success)
             {
                 UpdatingComponent.index++;
                 if (UpdatingComponent.index >= UpdatingComponent.MaxNumWayPoint)
                     UpdatingComponent.index = 0;
-                UpdatingComponent.UpdatePostition = true;
+                UpdatingComponent.UpdatePosition = true;
 
             }
         }

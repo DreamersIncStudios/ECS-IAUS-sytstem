@@ -73,7 +73,7 @@ MonoBehaviour:
     K: -0.95
     B: 0.935
     C: 0.35
-  bufferZone: 0.75
+  bufferZone: 0.5
   maxInfluenceAtPoint: 0
   timeToWait: 20
   waitTimer:
@@ -90,6 +90,10 @@ MonoBehaviour:
   height: 1
   radius: 0.5
   useNavMeshAgent: 1
+  _offset:
+    x: 0
+    y: 0.25
+    z: 0
   ItemUsageIntervals: 120
   MaxCountOfItems: 5
   HealIntervals:

@@ -212,7 +212,7 @@ namespace IAUS.ECS2
                 // Get compemenet set timer and status to completed
                 case AIStates.Patrol:
                     ECB.AddComponent<PatrolActionTag>(ChunkID, entity);
-
+                    ECB.AddComponent<PatrolUpdateTag>(ChunkID, entity);
                     break;
                 case AIStates.Wait:
                     ECB.AddComponent<WaitActionTag>(ChunkID, entity);
@@ -269,6 +269,7 @@ namespace IAUS.ECS2
                 // Get compemenet set timer and status to completed
                 case AIStates.Patrol:
                     ECB.AddComponent<PatrolActionTag>(ChunkID, entity);
+                    ECB.AddComponent<PatrolUpdateTag>(ChunkID, entity);
 
                     break;
                 case AIStates.Wait:

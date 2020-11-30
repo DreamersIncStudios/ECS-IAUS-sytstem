@@ -17,9 +17,9 @@ public class CitizenNPCAuthoring : MonoBehaviour, IConvertGameObjectToEntity
         BufferZone = .75f,
         ResetTimer = 4.5f,
         Status = ActionStatus.Idle,
-        UpdatePostition = true,
+   //     UpdatePostition = true,
         CanPatrol = true,
-        LeaderUpdate = true
+   //     LeaderUpdate = true
 
 
     };

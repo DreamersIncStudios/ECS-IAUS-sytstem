@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Unity.Mathematics;
 namespace IAUS.SpawnerSystem.interfaces
 {
 
@@ -13,5 +13,6 @@ namespace IAUS.SpawnerSystem.interfaces
         bool UseNavMeshAgent { get; set; }
         float Height { get; set; }
         float Radius { get; set; }
+        float3 Offset { get; }
     }
 }

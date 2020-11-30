@@ -9,6 +9,7 @@ using Utilities;
 using Unity.Collections;
 using Unity.Burst;
 using Stats;
+using Unity.Transforms;
 
 namespace IAUS.ECS2
 {
@@ -17,7 +18,7 @@ namespace IAUS.ECS2
     public struct FollowCharacter : BaseStateScorer
     {
         public Entity Target;
-
+        public bool HasTarget => Target == Entity.Null;
         public float DistanceToMantainFromTarget;
         // do we need a enemy in range consideration?
         public ConsiderationData Health;
@@ -26,7 +27,8 @@ namespace IAUS.ECS2
         public float DistanceAtStart;
         public bool IsTargetMoving;
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
-
+        public bool RemoveTag => Status == ActionStatus.Success || Status == ActionStatus.Interrupted ||
+    Status == ActionStatus.Disabled;
         [SerializeField] ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
@@ -100,7 +102,7 @@ namespace IAUS.ECS2
         bool test;
     }
 
-  
+
     [UpdateInGroup(typeof(IAUS_UpdateState))]
     [UpdateAfter(typeof(FollowPosition))]
 
@@ -114,83 +116,122 @@ namespace IAUS.ECS2
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             _followCharacterQuery = GetEntityQuery(new EntityQueryDesc() {
                 All = new ComponentType[] {ComponentType.ReadWrite(typeof(FollowCharacter)),ComponentType.ReadWrite(typeof(Movement)), /* ComponentType.ReadWrite(typeof(InfluenceValues)),*/
-                    ComponentType.ReadOnly(typeof(FollowTargetTag)),ComponentType.ReadOnly(typeof(BaseAI)) }
+                    ComponentType.ReadOnly(typeof(BaseAI)) }
             });
 
         }
-        protected override void OnUpdate( )
+        protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-                
+
             systemDeps = new FollowCharacterActionJob()
             {
-                EntityChunk=GetArchetypeChunkEntityType(),
+                EntityChunk = GetArchetypeChunkEntityType(),
                 FollowChunk = GetArchetypeChunkComponentType<FollowCharacter>(false),
                 MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
-        }
+            }
             .ScheduleParallel(_followCharacterQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new UpdateSquadMembersJobs()
+            {
+                FollowChunk = GetArchetypeChunkComponentType<FollowCharacter>(false),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                PositionEntity = GetComponentDataFromEntity<LocalToWorld>(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                MovementFromEntity = GetComponentDataFromEntity<Movement>(true),
+            }
+                  .ScheduleParallel(_followCharacterQuery, systemDeps);
 
             Dependency = systemDeps;
         }
-    }
 
-    /// <summary>
-    /// Influnces code need to be write for group of followers ??
-    /// </summary>
-    [BurstCompile]
-    public struct FollowCharacterActionJob : IJobChunk
-    {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
-       [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<FollowCharacter> FollowChunk;
-        public ArchetypeChunkComponentType<Movement> MovementChunk;
-      //  public ArchetypeChunkComponentType<InfluenceValues> InfluenceChunk;
-        public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+
+        /// <summary>
+        /// Influnces code need to be write for group of followers ??
+        /// </summary>
+        [BurstCompile]
+        public struct FollowCharacterActionJob : IJobChunk
         {
-            NativeArray<FollowCharacter> follows = chunk.GetNativeArray<FollowCharacter>(FollowChunk);
-            NativeArray<Movement> moves = chunk.GetNativeArray<Movement>(MovementChunk);
-            NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-
-            for (int i = 0; i < chunk.Count; i++)
+            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+            public ArchetypeChunkComponentType<FollowCharacter> FollowChunk;
+            public ArchetypeChunkComponentType<Movement> MovementChunk;
+            //  public ArchetypeChunkComponentType<InfluenceValues> InfluenceChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                FollowCharacter follow = follows[i];
-                Movement move = moves[i];
-                Entity entity = entities[i];
+                NativeArray<FollowCharacter> follows = chunk.GetNativeArray<FollowCharacter>(FollowChunk);
+                NativeArray<Movement> moves = chunk.GetNativeArray<Movement>(MovementChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
 
-                if (follow.Status == ActionStatus.Success)
+                for (int i = 0; i < chunk.Count; i++)
                 {
-                    entityCommandBuffer.RemoveComponent < FollowTargetTag>(chunkIndex, entity);
-                    return;
-                }
+                    FollowCharacter follow = follows[i];
+                    Movement move = moves[i];
+                    Entity entity = entities[i];
 
-
-                if (!follow.TargetLocation.Equals(move.TargetLocation)) 
-                {
-                    move.TargetLocation = follow.TargetLocation;
-                    move.SetTargetLocation = true;
-                    follow.Status = ActionStatus.Running;
-                    move.Completed = false;
-                    move.CanMove = true;
-                }
-
-                //complete
-                if (follow.Status == ActionStatus.Running)
-                {
-                    if (move.Completed && !move.CanMove)
+                    if (follow.RemoveTag)
                     {
-                        follow.Status = ActionStatus.Success;
+                        entityCommandBuffer.RemoveComponent<FollowTargetTag>(chunkIndex, entity);
+                        return;
                     }
+
+
+                    if (!follow.TargetLocation.Equals(move.TargetLocation))
+                    {
+                        move.TargetLocation = follow.TargetLocation;
+                        move.SetTargetLocation = true;
+                        follow.Status = ActionStatus.Running;
+                        move.CanMove = true;
+                    }
+
+                    //complete
+                    if (follow.Status == ActionStatus.Running)
+                    {
+                        if (move.Completed && !move.CanMove)
+                        {
+                            follow.Status = ActionStatus.Success;
+                        }
+                    }
+
+
+                    follows[i] = follow;
+                    moves[i] = move;
                 }
-
-
-                follows[i] = follow;
-                moves[i] = move;
             }
         }
-    }
+        public struct UpdateSquadMembersJobs : IJobChunk
+        {
+            public ArchetypeChunkComponentType<FollowCharacter> FollowChunk;
+            public ArchetypeChunkEntityType EntityChunk;
+           [ReadOnly] public ComponentDataFromEntity<LocalToWorld> PositionEntity;
+            [ReadOnly] public ComponentDataFromEntity<Movement> MovementFromEntity;
+            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<FollowCharacter> Follows = chunk.GetNativeArray<FollowCharacter>(FollowChunk);
+                NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    FollowCharacter Follow = Follows[i];
+                    Entity entity = Entities[i];
+                    if (Follow.HasTarget)
+                        return;
+                    Movement MoveEntity = MovementFromEntity[Follow.Target];
+                    Follow.IsTargetMoving = MoveEntity.CanMove;
 
+                    float distToFollowTarget = Vector3.Distance(PositionEntity[Follow.Target].Position, PositionEntity[entity].Position);
+                    if (distToFollowTarget > 20)
+                        entityCommandBuffer.AddComponent<getpointTag>(chunkIndex, entity);
+
+                    Follows[i] = Follow;
+                }
+            }
+        }
+
+
+    }
+   
 
 }
 

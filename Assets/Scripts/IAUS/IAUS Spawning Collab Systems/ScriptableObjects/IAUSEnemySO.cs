@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using Components.MovementSystem;
 using IAUS.SpawnerSystem.interfaces;
 using Stats;
+using Unity.Mathematics;
 
 
 namespace IAUS.SpawnerSystem
@@ -72,7 +73,7 @@ namespace IAUS.SpawnerSystem
         [SerializeField] private float radius = .5f;
         //  Movement _movement;
         [SerializeField] private bool useNavMeshAgent = true;
-
+        [SerializeField] private float3 _offset = new float3(0, .5f, 0);
         [Header("Heal Self")]
         [SerializeField] private float ItemUsageIntervals;
         [SerializeField] private int MaxCountOfItems;
@@ -106,7 +107,7 @@ namespace IAUS.SpawnerSystem
         public float StoppingDistance { get { return stoppingDistance; } set { stoppingDistance = value; } }
         public float Acceleration { get { return acceleration; } set { acceleration = value; } }
         public bool UseNavMeshAgent { get { return useNavMeshAgent; } set { useNavMeshAgent = value; } }
-
+        public float3 Offset { get { return _offset; } }
         public float Height { get { return height; }  set { height = value; } }
         public float Radius { get { return radius; } set { radius = value; } }
         public float TimeToWait { get { return timeToWait; } private set { timeToWait = value; } }
@@ -140,19 +141,20 @@ namespace IAUS.SpawnerSystem
                     BufferZone = BufferZone,
                     ResetTimer = ResetTime,
                     Status = ActionStatus.Idle,
-                    UpdatePostition = true,
+              //      UpdatePostition = true,
                     CanPatrol = true,
-                    LeaderUpdate = true
+            //        LeaderUpdate = true
                    
                 
                 };
                 AIAuthor.Waypoints = Points;
-                AIAuthor.Move = new Movement() 
+                AIAuthor.Move = new Movement()
                 {
                     MovementSpeed = speed,
-                   StoppingDistance= stoppingDistance,
-                   Acceleration=acceleration,
-                    MaxInfluenceAtPoint = MaxInfluenceAtPoint
+                    StoppingDistance = stoppingDistance,
+                    Acceleration = acceleration,
+                    MaxInfluenceAtPoint = MaxInfluenceAtPoint,
+                    Offset = Offset
                 };
 
                 if (UseNavMeshAgent)

@@ -95,6 +95,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\React.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactorTags.cs" />
+    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\NewPatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
