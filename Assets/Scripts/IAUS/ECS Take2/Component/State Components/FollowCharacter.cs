@@ -29,6 +29,7 @@ namespace IAUS.ECS2
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         public bool RemoveTag => Status == ActionStatus.Success || Status == ActionStatus.Interrupted ||
     Status == ActionStatus.Disabled;
+
         [SerializeField] ActionStatus _status;
         [SerializeField] public float _resetTimer;
         [SerializeField] float _resetTime;
@@ -133,6 +134,7 @@ namespace IAUS.ECS2
             }
             .ScheduleParallel(_followCharacterQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             systemDeps = new UpdateSquadMembersJobs()
             {
                 FollowChunk = GetArchetypeChunkComponentType<FollowCharacter>(false),
@@ -203,8 +205,8 @@ namespace IAUS.ECS2
         public struct UpdateSquadMembersJobs : IJobChunk
         {
             public ArchetypeChunkComponentType<FollowCharacter> FollowChunk;
-            public ArchetypeChunkEntityType EntityChunk;
-           [ReadOnly] public ComponentDataFromEntity<LocalToWorld> PositionEntity;
+            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+            [ReadOnly] public ComponentDataFromEntity<LocalToWorld> PositionEntity;
             [ReadOnly] public ComponentDataFromEntity<Movement> MovementFromEntity;
             public EntityCommandBuffer.Concurrent entityCommandBuffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)

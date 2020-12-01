@@ -234,7 +234,7 @@ namespace IAUS.ECS2
 
                     if (move.Completed)
                     {
-                        Debug.Log("are you being called");
+                    
                         patrol.Status = ActionStatus.Success;
 
                     }

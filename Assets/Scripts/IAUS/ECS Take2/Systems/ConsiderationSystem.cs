@@ -59,21 +59,6 @@ namespace IAUS.ECS2
             }).Schedule(systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            ComponentDataFromEntity<LocalToWorld> Transforms = GetComponentDataFromEntity<LocalToWorld>(true);
-
-
-            systemDeps= Entities
-                .ForEach((ref LeaderConsideration Check, in Party party) =>
-                {
-
-                    if (party.Leader == Entity.Null)
-                    { Check.score = 1; }
-                    else
-                        Check.score = 0;
-
-                })
-                .Schedule(systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
 
             Dependency = systemDeps;

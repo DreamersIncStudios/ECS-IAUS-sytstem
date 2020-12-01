@@ -649,11 +649,7 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\FollowCharacter.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\HealState.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\InvestigateArea.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Party.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Patrol.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\Retreat.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\RetreatToLocation.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\ReturnToBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Follow reactions.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\HealReaction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Component\State Components\State Reactions\Patrol Reaction.cs" />
@@ -671,10 +667,8 @@
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\React.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\Reaction System\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Reactive System\ReactorTags.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\NewPatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\PatrolAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\RetreatAction.cs" />
-    <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\ReturnToBaseAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\Actions\WaitAction.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\ECS Take2\Systems\CheckScoreJobSystem.cs" />

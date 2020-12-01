@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Squad1: {fileID: 11400000, guid: 50a6cb6565dfec44ba9790b63c8b4c4c, type: 2}
   Points: []
-  NumOfSquads: 5
+  NumOfSquads: 60
 --- !u!43 &1007403070
 Mesh:
   m_ObjectHideFlags: 0

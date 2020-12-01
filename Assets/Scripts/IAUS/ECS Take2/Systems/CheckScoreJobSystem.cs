@@ -21,8 +21,6 @@ namespace IAUS.ECS2
         EntityQuery patroller;
         EntityQuery Waiting;
         EntityQuery SelfHealers;
-        EntityQuery Partyer;
-        EntityQuery Retreat;
         EntityQuery Followers;
         protected override void OnCreate()
         {
@@ -39,14 +37,6 @@ namespace IAUS.ECS2
            SelfHealers = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(HealSelfViaItem)), ComponentType.ReadWrite(typeof(StateBuffer)) }
-            });
-            Partyer = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Party)), ComponentType.ReadWrite(typeof(StateBuffer)) }
-            });
-            Retreat = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Retreat)), ComponentType.ReadWrite(typeof(StateBuffer)) }
             });
             Followers = GetEntityQuery(new EntityQueryDesc()
             {
@@ -87,24 +77,7 @@ namespace IAUS.ECS2
 
             }.ScheduleParallel(SelfHealers, systemDeps); 
             entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-     
-            systemDeps = new AISTATESCOREJOB<Party>()
-            {
-                AIStateChunk = GetArchetypeChunkComponentType<Party>(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
-                StateToUpdate = AIStates.GotoLeader
 
-            }.ScheduleParallel(Partyer, systemDeps);
-            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-            systemDeps = new AISTATESCOREJOB<RetreatToLocation>()
-            {
-                AIStateChunk = GetArchetypeChunkComponentType<RetreatToLocation>(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(),
-                StateToUpdate = AIStates.RetreatToLocation
-
-            }.ScheduleParallel(Retreat, systemDeps);
-            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new AISTATESCOREJOB<FollowCharacter>()
             {
@@ -217,12 +190,6 @@ namespace IAUS.ECS2
                 case AIStates.Wait:
                     ECB.AddComponent<WaitActionTag>(ChunkID, entity);
                     break;
-                case AIStates.GotoLeader:
-                    ECB.AddComponent<GetLeaderTag>(ChunkID, entity);
-                    break;
-                case AIStates.RetreatToLocation:
-                    ECB.AddComponent<RallyActionTag>(ChunkID, entity);
-                    break;
                 case AIStates.FollowTarget:
                     ECB.AddComponent<FollowTargetTag>(ChunkID, entity);
                     break;
@@ -249,12 +216,6 @@ namespace IAUS.ECS2
                     case AIStates.Wait:
                         ECB.RemoveComponent<WaitActionTag>(ChunkID, entity);
                         break;
-                    case AIStates.GotoLeader:
-                        ECB.RemoveComponent<GetLeaderTag>(ChunkID, entity);
-                        break;
-                    case AIStates.RetreatToLocation:
-                        ECB.RemoveComponent<RallyActionTag>(ChunkID, entity);
-                        break;
                     case AIStates.FollowTarget:
                         ECB.RemoveComponent<FollowTargetTag>(ChunkID, entity);
                         break;
@@ -270,16 +231,9 @@ namespace IAUS.ECS2
                 case AIStates.Patrol:
                     ECB.AddComponent<PatrolActionTag>(ChunkID, entity);
                     ECB.AddComponent<PatrolUpdateTag>(ChunkID, entity);
-
                     break;
                 case AIStates.Wait:
                     ECB.AddComponent<WaitActionTag>(ChunkID, entity);
-                    break;
-                case AIStates.GotoLeader:
-                    ECB.AddComponent<GetLeaderTag>(ChunkID, entity);
-                    break;
-                case AIStates.RetreatToLocation:
-                    ECB.AddComponent<RallyActionTag>(ChunkID, entity);
                     break;
                 case AIStates.FollowTarget:
                     ECB.AddComponent<FollowTargetTag>(ChunkID, entity);
