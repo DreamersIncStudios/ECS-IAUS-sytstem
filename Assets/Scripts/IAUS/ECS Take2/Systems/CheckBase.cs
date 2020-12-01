@@ -4,61 +4,109 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
-using InfluenceMap.Factions;
+using CharacterAlignmentSystem;
 using Unity.Collections;
 using IAUS.Core;
 namespace IAUS.ECS2 {
     [UpdateInGroup(typeof(IAUS_UpdateState))]
 
-    public class CheckBase : JobComponentSystem
+    public class CheckBase : SystemBase
     {
-        EntityQueryDesc BasesQuery = new EntityQueryDesc()
+        EntityQuery BasesQuery;
+        EntityQuery Checkers;
+        protected override void OnCreate()
         {
-            All = new ComponentType[] { typeof(Base), typeof(Attackable) }
-
-        };
-
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
-        {
-            ComponentDataFromEntity<LocalToWorld> transform = GetComponentDataFromEntity<LocalToWorld>(true);
-            ComponentDataFromEntity<Attackable> FactionInfo = GetComponentDataFromEntity<Attackable>(true);
-            NativeArray<Entity> BaseEntities = GetEntityQuery(BasesQuery).ToEntityArray(Allocator.TempJob);
-
-            JobHandle test = Entities
-                .WithNativeDisableParallelForRestriction(transform)
-                .WithNativeDisableParallelForRestriction(FactionInfo)
-                .WithDeallocateOnJobCompletion(BaseEntities)
-                .WithReadOnly(transform)
-                .WithReadOnly(BaseEntities)
-                .WithReadOnly(FactionInfo)
-                .ForEach((Entity entity, ref Patrol c1, in BaseAI baseAI) =>
+            base.OnCreate();
+            BasesQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                if (c1.HomeEntity != Entity.Null)
-                { return; }
-                Attackable Self = FactionInfo[entity];
-                Entity ClosestBase = new Entity();
-                float DistanceToClosest = new float();
-                for (int i = 0; i < BaseEntities.Length; i++)
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Base)), ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadOnly(typeof(CharacterAlignment)) }
+
+            });
+            Checkers = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterAlignment)),
+                    ComponentType.ReadOnly(typeof(LocalToWorld)) }
+            }
+
+                );
+
+        } 
+
+        protected override void OnUpdate()
+        {
+    
+            NativeArray<Entity> BaseEntities =BasesQuery.ToEntityArray(Allocator.TempJob);
+            if (BaseEntities.Length == 0)
+            {
+                BaseEntities.Dispose();
+                return;
+            }
+            JobHandle systemDeps = Dependency;
+
+            systemDeps = new CheckBaseJob() {
+                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
+                AlignmentChunk = GetArchetypeChunkComponentType<CharacterAlignment>(true),
+                PositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                BaseEntities = BaseEntities,
+                BasesPositions = BasesQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+                BasesFactions = BasesQuery.ToComponentDataArray<CharacterAlignment>(Allocator.TempJob)
+
+
+            }.ScheduleParallel(Checkers, systemDeps);
+
+        }
+
+
+        public struct CheckBaseJob : IJobChunk
+        {
+            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> PositionChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<CharacterAlignment> AlignmentChunk;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<Entity> BaseEntities;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> BasesPositions;
+            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<CharacterAlignment> BasesFactions;
+
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Patrol> Patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<LocalToWorld> Positions = chunk.GetNativeArray(PositionChunk);
+                NativeArray<CharacterAlignment> alignments = chunk.GetNativeArray(AlignmentChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
                 {
-                    if (Self.Faction == FactionInfo[BaseEntities[i]].Faction) {
-                        float dist = Vector3.Distance(transform[entity].Position, transform[BaseEntities[i]].Position);
-                        if (ClosestBase == Entity.Null)
+                    Patrol patrol = Patrols[i];
+                    LocalToWorld Pos = Positions[i];
+                    CharacterAlignment alignment = alignments[i];
+
+                    if (patrol.HomeEntity != Entity.Null)
+                    { return; }
+                    Entity ClosestBase = new Entity();
+                    float DistanceToClosest = new float();
+                    for (int j = 0; j < BaseEntities.Length; j++)
+                    {
+                        if (alignment.Faction == BasesFactions[j].Faction)
                         {
-                            ClosestBase = BaseEntities[i];
-                            DistanceToClosest = dist;
-                        }
-                        else if (dist < DistanceToClosest) {
-                            ClosestBase = BaseEntities[i];
-                            DistanceToClosest = dist;
+                            float dist = Vector3.Distance(Pos.Position, BasesPositions[j].Position);
+                            if (ClosestBase == Entity.Null)
+                            {
+                                ClosestBase = BaseEntities[j];
+                                DistanceToClosest = dist;
+                            }
+                            else if (dist < DistanceToClosest)
+                            {
+                                ClosestBase = BaseEntities[j];
+                                DistanceToClosest = dist;
+                            }
                         }
                     }
+                    if (ClosestBase != Entity.Null)
+                        patrol.HomeEntity = ClosestBase;
+
+                    Patrols[i] = patrol;
                 }
-                if (ClosestBase != Entity.Null)
-                    c1.HomeEntity = ClosestBase;
 
-            }).Schedule(inputDeps);
-
-            return test;
+            }
         }
     }
 }

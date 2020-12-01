@@ -9,7 +9,7 @@ namespace IAUS.ECS2.IAUSSetup
     public struct SetupFollowState : IJobChunk
     {
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
-        [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<HealthConsideration> health;
+
         [ReadOnly] [NativeDisableParallelForRestriction] 
         public ComponentDataFromEntity<InfluenceValues> Influences;
 
@@ -40,10 +40,6 @@ namespace IAUS.ECS2.IAUSSetup
                         StateName = AIStates.FollowTarget,
                         Status = ActionStatus.Idle
                     });
-                    if (!health.Exists(entity))
-                    {
-                        entityCommandBuffer.AddComponent<HealthConsideration>(chunkIndex, entity);
-                    }
                     if (!Influences.Exists(entity))
                     {
                         entityCommandBuffer.AddComponent<InfluenceValues>(chunkIndex, entity);

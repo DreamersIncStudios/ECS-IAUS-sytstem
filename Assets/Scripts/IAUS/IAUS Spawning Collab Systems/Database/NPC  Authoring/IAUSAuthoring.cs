@@ -6,8 +6,9 @@ using IAUS.ECS2;
 using ProjectRebirth.Bestiary.Interfaces;
 using Components.MovementSystem;
 using IAUS.ECS2.Character;
-using Test.CharacterStats;
-using InfluenceMap.Factions;
+using Stats;
+using CharacterAlignmentSystem;
+
 
 namespace IAUS.SpawnerSystem
 {
@@ -21,6 +22,7 @@ namespace IAUS.SpawnerSystem
         public Movement Move;
         public WaitTime Wait;
         public FollowCharacter Follow;
+        public HealSelfViaItem HealSelf;
         public List<PatrolBuffer> Waypoints;
         [Range(0, 999)]
         public int CurHealth;
@@ -36,8 +38,7 @@ namespace IAUS.SpawnerSystem
             dstManager.AddComponentData(entity, Move);
             dstManager.AddComponent<EnemyCharacter>(entity);
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
-            var data = new Stats() { CurHealth = CurHealth, CurMana = CurMana, MaxHealth = MaxHealth, MaxMana = MaxMana };
-            dstManager.AddComponentData(entity, data);
+
             dstManager.AddComponent<NPC>(entity);
 
             if (StatesToAdd.Patrol)
@@ -57,8 +58,12 @@ namespace IAUS.SpawnerSystem
 
             if (StatesToAdd.Wait)
             { dstManager.AddComponentData(entity,Wait); }
-
-            dstManager.AddComponent<Attackable>(entity);
+            if (StatesToAdd.HealSelfViaItem) {
+                dstManager.AddComponentData(entity, HealSelf);
+                
+            }
+            dstManager.AddComponent<CharacterAlignment>(entity);
+            dstManager.AddBuffer<InventoryConsiderationBuffer>(entity);
         }
 
         // Start is called before the first frame update

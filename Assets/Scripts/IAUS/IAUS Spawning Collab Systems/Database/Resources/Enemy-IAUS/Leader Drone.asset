@@ -17,10 +17,28 @@ MonoBehaviour:
   _GO: {fileID: 3707275338677854005, guid: 90575fa43c217c84fb8f702541d96e0d, type: 3}
   _scale: {x: 1, y: 1, z: 1}
   _name: 
-  _level: 3
-  _baseHealth: 500
-  _baseMana: 100
   _gender: 1
+  _stats:
+    level: 2
+    Str: 10
+    vit: 10
+    Awr: 10
+    Spd: 10
+    Skl: 10
+    Res: 10
+    Con: 10
+    Will: 10
+    Chars: 10
+    Lck: 10
+    BaseHealth: 500
+    BaseMana: 100
+  Inventory:
+    ItemsInInventory:
+    - Item: {fileID: 11400000, guid: 5fa69137951380a40bd60918be05ae65, type: 2}
+      Count: 10
+    MaxInventorySize: 20
+    AttachedCharacter: {fileID: 0}
+    Gold: 0
   NPCAIStates:
     Patrol: 1
     Follow: 0
@@ -28,13 +46,22 @@ MonoBehaviour:
     Attack: 0
     Investiage: 0
     Detection: 0
-  health:
+    HealSelfViaItem: 1
+    HealSelfViaMagic: 0
+  fullhealth:
     Inverse: 0
     responseType: 2
     M: 50
     K: -1
     B: 0.91
     C: 0.35
+  healthTilDeath:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 2
+    B: 0
+    C: 0
   distanceToPatrolTarget:
     Inverse: 0
     responseType: 2
@@ -42,7 +69,7 @@ MonoBehaviour:
     K: -0.95
     B: 0.935
     C: 0.35
-  bufferZone: 0.75
+  bufferZone: 0.5
   maxInfluenceAtPoint: 2
   timeToWait: 8
   waitTimer:
@@ -59,3 +86,23 @@ MonoBehaviour:
   height: 1
   radius: 0.5
   useNavMeshAgent: 1
+  _offset:
+    x: 0
+    y: 0.25
+    z: 0
+  ItemUsageIntervals: 60
+  MaxCountOfItems: 5
+  HealIntervals:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.2
+  InventoryCheck:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: 1
+    B: 0
+    C: 0.65

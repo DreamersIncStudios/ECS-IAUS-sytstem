@@ -12,11 +12,13 @@ namespace IAUS.ECS2
     {
         public float TimeToWait;
         public float Timer;
-        public bool TimerStarted;
+        public bool TimerRunning => Timer > 0.0f;
         public ConsiderationData Health;
         public ConsiderationData WaitTimer;
+        public float RatioForScore { get { return Timer / TimeToWait; } }
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
-
+        public bool RemoveTag => Status == ActionStatus.Success || Status == ActionStatus.Interrupted ||
+            Status == ActionStatus.Disabled;
         [SerializeField] float _totalScore;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _resetTimer;

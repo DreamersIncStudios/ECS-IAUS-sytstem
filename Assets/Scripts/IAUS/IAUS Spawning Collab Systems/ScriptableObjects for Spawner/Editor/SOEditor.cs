@@ -7,7 +7,7 @@ using IAUS.SpawnerSystem.Database;
 
 namespace SpawnerSystem.Editors
 {
-
+#if UNITY_EDITOR
     static public class SOEditor
     {
         [MenuItem("Assets/Create/RPG/Enemy")]
@@ -21,15 +21,6 @@ namespace SpawnerSystem.Editors
             enemy.Scale = Vector3.one;
         }
 
-        [MenuItem("Assets/Create/RPG/Recovery Item")]
-
-        static public void CreateRecoveryItem()
-        {
-            RecoveryItemSO Item;
-            ScriptableObjectUtility.CreateAsset<RecoveryItemSO>("Item", out Item);
-           ItemDatabase.LoadDatabaseForce();
-            Item.SpawnID = ItemDatabase.droppables.Count + 1;
-        }
 
         [MenuItem("Assets/Create/RPG/Squad")]
         static public void CreateSquadSO()
@@ -57,5 +48,5 @@ namespace SpawnerSystem.Editors
             enemy.SpawnID = IAUSEnemyDatabase.Enemy.Count + 1;
         }
     }
-   
+#endif
 }

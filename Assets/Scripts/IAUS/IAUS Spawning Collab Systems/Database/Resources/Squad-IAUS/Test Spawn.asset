@@ -17,4 +17,4 @@ MonoBehaviour:
   backupLeaderID: 3
   squadMemberID:
   - ID: 3
-    NumberOfSpawns: 8
+    NumberOfSpawns: 3

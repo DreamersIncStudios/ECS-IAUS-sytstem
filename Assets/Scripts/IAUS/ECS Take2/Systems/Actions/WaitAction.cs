@@ -56,31 +56,27 @@ namespace IAUS.ECS2
             {
                 WaitTime Timer = Timers[i];
                 Entity entity = entities[i];
-                if (Timer.Status == ActionStatus.Success)
+                if (Timer.RemoveTag)
                 {
                     entityCommandBuffer.RemoveComponent<WaitActionTag>(chunkIndex, entity);
+                    entityCommandBuffer.AddComponent<PatrolUpdateTag>(chunkIndex, entity);
+
+                    Timer.Timer = 0.0f;
                     return;
                 }
 
                 //Running
-                if (Timer.Timer > 0.0f)
+                if (Timer.TimerRunning)
                 {
-                    Timer.TimerStarted = true;
                     Timer.Timer -= DT;
                     Timer.Status = ActionStatus.Running;
                 }
 
 
                 //complete
-                if (Timer.TimerStarted)
+                if (!Timer.TimerRunning)
                 {
-                    if (Timer.Timer <= 0.0f)
-                    {
                         Timer.Status = ActionStatus.Success;
-
-                        Timer.TimerStarted = false;
-
-                    }
                 }
 
                 Timers[i] = Timer;

@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.8f1</UnityVersion>
@@ -63,9 +64,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Utility Scripts\CleanUpHybridEntity.cs" />
-    <Compile Include="Assets\Scripts\Utility Scripts\GlobalFunctions.cs" />
-    <None Include="Assets\Scripts\Utility Scripts\Global.asmdef" />
+    <Compile Include="Assets\Systems\Global\Player_Control.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\FreqPhasing.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\PopUpMouseControl.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\SystemGroup\IAUSCore.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\UIManager.cs" />
+    <None Include="Assets\Systems\Global\Global.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -262,7 +267,7 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.3/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.9/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -620,6 +625,10 @@
     <ProjectReference Include="Unity.Entities.csproj">
       <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
       <Name>Unity.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
+      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
+      <Name>Unity.Entities.Hybrid</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

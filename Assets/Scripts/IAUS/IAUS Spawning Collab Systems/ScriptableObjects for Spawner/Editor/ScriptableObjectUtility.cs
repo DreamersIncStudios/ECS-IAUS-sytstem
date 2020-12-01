@@ -6,6 +6,8 @@ using System.IO;
 
 namespace SpawnerSystem.Editors
 {
+#if UNITY_EDITOR
+
     static public class ScriptableObjectUtility
     {
         static public void CreateAsset<T>(string pathExt, out T test) where T : ScriptableObject {
@@ -29,4 +31,5 @@ namespace SpawnerSystem.Editors
         }
 
     }
+#endif
 }

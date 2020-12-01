@@ -4,41 +4,50 @@ using Unity.Transforms;
 using Unity.Entities;
 using Unity.Jobs;
 using IAUS.Core;
-using Test.CharacterStats;
+using Stats;
+using Components.MovementSystem;
+
 
 namespace IAUS.ECS2
 {
     [UpdateInGroup(typeof(IAUS_UpdateConsideration))]
   
-    public class ConsiderationSystem : JobComponentSystem
+    public class ConsiderationSystem : SystemBase
     {
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+
+        EntityQuery PatrolDisntaceCheckers;
+        EntityCommandBufferSystem _entityCommandBufferSystem;
+
+        protected override void OnCreate()
         {
-            JobHandle jobHandle = Entities.ForEach((ref HealthConsideration Health, in Stats stats) =>
+            base.OnCreate();
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+       
+            PatrolDisntaceCheckers = GetEntityQuery(new EntityQueryDesc()
             {
-                Health.Ratio = Mathf.Clamp01((float)stats.CurHealth / (float)stats.MaxHealth) ;
+                All = new ComponentType[]{ ComponentType.ReadWrite(typeof(DistanceToConsideration)), ComponentType.ReadOnly(typeof(LocalToWorld)),
+                    ComponentType.ReadOnly(typeof(Patrol)),ComponentType.ReadOnly(typeof(Movement))}
+            });
 
-            }).Schedule(inputDeps);
-            
-            JobHandle jobHandle2 = Entities.ForEach((ref DistanceToConsideration distanceTo, in LocalToWorld toWorld,  in Patrol patrol, in DynamicBuffer<PatrolBuffer> buffer) =>
+        }
+        protected override void OnUpdate()
+        {
+            JobHandle systemDeps = Dependency;
+
+            systemDeps = new DistanceToPatrolPointCheck()
             {
-                
-                float distanceRemaining = Vector3.Distance(buffer[patrol.index].WayPoint.Point, toWorld.Position);
-                // make .7f a variable 
-                if (distanceRemaining < patrol.BufferZone)
-                    distanceRemaining = 0.0f;
+                DistanceToChunk = GetArchetypeChunkComponentType<DistanceToConsideration>(),
+                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(),
+                ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(),
+                MovementChunk = GetArchetypeChunkComponentType<Movement>()
+            }.ScheduleParallel(PatrolDisntaceCheckers, systemDeps);
+        
 
-                distanceTo.Ratio = distanceRemaining / patrol.DistanceAtStart > .1f ? distanceRemaining / patrol.DistanceAtStart : 0.0f;
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            }).Schedule(jobHandle);
 
-            JobHandle jobHandle3 = Entities.ForEach((ref TimerConsideration Timer,in WaitTime wait) =>
-            {
-                Timer.Ratio = wait.Timer/wait.TimeToWait;
-
-            }).Schedule(jobHandle2);
-
-            JobHandle jobHandle4 = Entities.ForEach((ref DistanceToConsideration distanceTo, in LocalToWorld toWorld, in FollowCharacter follow) =>
+           systemDeps = Entities.ForEach((ref DistanceToConsideration distanceTo, in LocalToWorld toWorld, in FollowCharacter follow) =>
             {
 
                 float distanceRemaining = Vector3.Distance(follow.TargetLocation, toWorld.Position);
@@ -47,40 +56,51 @@ namespace IAUS.ECS2
                     distanceRemaining = 0.0f;
                 distanceTo.Ratio = distanceRemaining / follow.DistanceAtStart;
 
-            }).Schedule(jobHandle3);
-
-            ComponentDataFromEntity<LocalToWorld> Transforms = GetComponentDataFromEntity<LocalToWorld>(true);
-           
-            JobHandle DetectionEnemy = Entities
-                .WithNativeDisableParallelForRestriction(Transforms)
-                .ForEach((Entity entity, ref DetectionConsideration detectionConsider,  in Detection c1) =>
-                {
-                    detectionConsider.VisibilityRatio = c1.TargetVisibility;
-                    if (c1.TargetRef != Entity.Null)
-                    {
-                        float dist = Vector3.Distance(Transforms[entity].Position, Transforms[c1.TargetRef].Position);
-                        detectionConsider.RangeRatio = dist / c1.viewRadius;
-                    }
-                    else { detectionConsider.RangeRatio = 1.0f; }
-
-                })
-                .WithReadOnly(Transforms)
-                .Schedule(jobHandle4);
-            JobHandle LeaderCheck = Entities
-                .ForEach((ref LeaderConsideration Check, in Party party) => 
-                {
-
-                    if (party.Leader == Entity.Null)
-                    { Check.score = 1; }
-                    else
-                        Check.score = 0;
-
-                })
-                .Schedule(DetectionEnemy);
+            }).Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
 
-            return LeaderCheck; ;
+
+            Dependency = systemDeps;
 
         }
+
+        //Rewrite to be more openended variable
+        struct DistanceToPatrolPointCheck : IJobChunk
+        {
+            public ArchetypeChunkComponentType<DistanceToConsideration> DistanceToChunk;
+           [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<Patrol> PatrolChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<Movement> MovementChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<DistanceToConsideration> Consider = chunk.GetNativeArray(DistanceToChunk);
+                NativeArray<LocalToWorld> toWorld = chunk.GetNativeArray(ToWorldChunk);
+                NativeArray<Patrol> patrol = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<Movement> Movers= chunk.GetNativeArray(MovementChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    DistanceToConsideration distanceTo = Consider[i];
+
+                    float distanceRemaining = distanceTo.test=  Vector3.Distance(patrol[i].waypointRef, toWorld[i].Position);
+
+                    // make .7f a variable 
+                    if (Movers[i].Completed && !Movers[i].CanMove)
+                        distanceRemaining = 0.0f;
+
+                    distanceTo.Ratio = distanceRemaining / patrol[i].DistanceAtStart > .1f ? distanceRemaining / patrol[i].DistanceAtStart : 0.0f;
+                    Consider[i] = distanceTo;
+
+                }
+            }
+        }
+
+
     }
+
+
+
+
+
 }

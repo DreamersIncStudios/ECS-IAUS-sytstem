@@ -60,7 +60,10 @@ namespace SpawnerSystem.Loot
                     Vector3 point;
                     if (Utilities.GlobalFunctions.RandomPoint(Pos.Position, Tag.spawnrange, out point))
                     {
-                        ItemDatabase.GetItem(Item.spawnData.SpawnID).Spawn(point);
+                        //update with new Item system.
+
+
+                   //     ItemDatabase.GetItem(Item.spawnData.SpawnID).Spawn(point);
                     }
                 }
                  PostUpdateCommands.DestroyEntity(entity);

@@ -13,8 +13,11 @@ namespace IAUS.SpawnerSystem
     {
         public void Spawn(Vector3 Position, List<PatrolBuffer> PatrolPoints) 
         {
+            Utilities.GlobalFunctions.RandomPoint(Position, 2, out Vector3 pos);
+
             GameObject leaderGO = IAUSEnemyDatabase.GetEnemy(LeaderID).SpawnAsLeader(Position, PatrolPoints);
-            GameObject BackupGO = IAUSEnemyDatabase.GetEnemy(BackupLeaderID).SpawnAsSquadMember(Position);
+
+            GameObject BackupGO = IAUSEnemyDatabase.GetEnemy(BackupLeaderID).SpawnAsSquadMember(pos);
             BackupGO.AddComponent<SquadMember>();
             LeaderComponent test = leaderGO.AddComponent<LeaderComponent>();
             test.BackupLeader = BackupGO;
@@ -28,7 +31,9 @@ namespace IAUS.SpawnerSystem
             {
                 for (int i = 0; i < squadMember.NumberOfSpawns; i++)
                 {
-                    GameObject memberGO = IAUSEnemyDatabase.GetEnemy(squadMember.ID).SpawnAsSquadMember(Position);
+                    Utilities.GlobalFunctions.RandomPoint(Position, 2, out Vector3 pos2);
+
+                    GameObject memberGO = IAUSEnemyDatabase.GetEnemy(squadMember.ID).SpawnAsSquadMember(pos2);
 
                     memberGO.AddComponent<SquadMember>();
                     test.Squad.Add(new SquadEntityAdder()

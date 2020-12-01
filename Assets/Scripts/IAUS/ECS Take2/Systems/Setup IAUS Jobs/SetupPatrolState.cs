@@ -9,11 +9,9 @@ namespace IAUS.ECS2.IAUSSetup
     public struct SetupPatrolState : IJobChunk
     {
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
-        [NativeDisableParallelForRestriction] [ReadOnly]public ComponentDataFromEntity<HealthConsideration> health;
+
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<DistanceToConsideration> Distance;
-        [NativeDisableParallelForRestriction]
-        [ReadOnly]
-        public ComponentDataFromEntity<TimerConsideration> TimeC;
+
         [NativeDisableParallelForRestriction]
         [ReadOnly] public ComponentDataFromEntity<InfluenceValues> Influences;
 
@@ -50,14 +48,7 @@ namespace IAUS.ECS2.IAUSSetup
                         StateName = AIStates.Patrol,
                         Status = ActionStatus.Idle
                     });
-                    if (!health.Exists(entity))
-                    {
-                        entityCommandBuffer.AddComponent<HealthConsideration>(chunkIndex, entity);
-                    }
-                    if (!TimeC.Exists(entity))
-                    {
-                        entityCommandBuffer.AddComponent<TimerConsideration>(chunkIndex, entity);
-                    }
+
                     if (!Distance.Exists(entity))
                     {
                         entityCommandBuffer.AddComponent<DistanceToConsideration>(chunkIndex, entity);

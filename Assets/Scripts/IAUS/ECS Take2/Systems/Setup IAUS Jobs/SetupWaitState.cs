@@ -8,9 +8,9 @@ namespace IAUS.ECS2.IAUSSetup
     public struct SetupWaitState : IJobChunk
     {
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
-        [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<HealthConsideration> health;
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<DistanceToConsideration> Distance;
-        [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<TimerConsideration> TimeC;
+  
+
         [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
         public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -36,16 +36,7 @@ namespace IAUS.ECS2.IAUSSetup
                         StateName = AIStates.Wait,
                         Status = ActionStatus.Idle
                     });
-                    if (!health.Exists(entity))
-                    {
-                        entityCommandBuffer.AddComponent<HealthConsideration>(chunkIndex, entity);
-
-                    }
-                    if (!TimeC.Exists(entity))
-                    {
-                        entityCommandBuffer.AddComponent<TimerConsideration>(chunkIndex, entity);
-
-                    }
+              
                     if (!Distance.Exists(entity))
                     {
                         entityCommandBuffer.AddComponent<DistanceToConsideration>(chunkIndex, entity);

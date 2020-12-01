@@ -15,6 +15,7 @@ namespace IAUS.ECS2
         private EntityQuery _partolStateEntity;
         private EntityQuery _WaitStateEntity;
         private EntityQuery _followCharEntity;
+        private EntityQuery _healStateEntity;
             EntityCommandBufferSystem _entityCommandBufferSystem;
         protected override void OnCreate()
         {
@@ -37,6 +38,13 @@ namespace IAUS.ECS2
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(CreateAIBufferTag)), 
                         ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(FollowCharacter)) }
             });
+            _healStateEntity = GetEntityQuery(new EntityQueryDesc() 
+            {
+                All= new ComponentType[] { ComponentType.ReadOnly(typeof(CreateAIBufferTag)), 
+                ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(HealSelfViaItem)),
+                ComponentType.ReadWrite(typeof(InventoryConsiderationBuffer))}
+            
+            });
         }
 
         protected override void OnUpdate()
@@ -50,22 +58,19 @@ namespace IAUS.ECS2
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
                 EntityChunk = GetArchetypeChunkEntityType(),
-                health = GetComponentDataFromEntity<HealthConsideration>(true),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                TimeC = GetComponentDataFromEntity<TimerConsideration>(true),
+
                 Influences = GetComponentDataFromEntity<InfluenceValues>(true),
                 PatrolBufferChunk = GetArchetypeChunkBufferType<PatrolBuffer>(false),
                 PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
                 StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false)
             }.ScheduleParallel(_partolStateEntity ,systemDeps);
-        //    _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new SetupWaitState() {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
                 EntityChunk = GetArchetypeChunkEntityType(),
-                health = GetComponentDataFromEntity<HealthConsideration>(true),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                TimeC = GetComponentDataFromEntity<TimerConsideration>(true),
+
                 StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false)
 
             } .Schedule(_WaitStateEntity, systemDeps);
@@ -75,17 +80,27 @@ namespace IAUS.ECS2
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
                 EntityChunk = GetArchetypeChunkEntityType(),
-                health = GetComponentDataFromEntity<HealthConsideration>(true),
                 Influences = GetComponentDataFromEntity<InfluenceValues>(true),
                FollowChunk= GetArchetypeChunkComponentType<FollowCharacter>(false),
                 StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false)
             }.ScheduleParallel(_followCharEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
+            systemDeps = new SetupHealSelfViaItemState() {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                Influences = GetComponentDataFromEntity<InfluenceValues>(true),
+                HealChunk = GetArchetypeChunkComponentType< HealSelfViaItem>(false),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
+                BufferChunk = GetArchetypeChunkBufferType<InventoryConsiderationBuffer>(false),
+                HealTimer = GetComponentDataFromEntity<HealTimerConsideration>(true)
 
+            }.ScheduleParallel(_healStateEntity, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             // This is to be the last job of this system
-             systemDeps = Entities
+            systemDeps = Entities
                 .WithNativeDisableParallelForRestriction(entityCommandBuffer)
 
                 .ForEach((Entity entity, int nativeThreadIndex, in CreateAIBufferTag Tag) =>

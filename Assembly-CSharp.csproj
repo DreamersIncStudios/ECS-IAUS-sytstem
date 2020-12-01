@@ -47,6 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
+    <UnityProjectGeneratorVersion>4.8.2.0</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2019.4.8f1</UnityVersion>
@@ -63,9 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\For Testing Only\EnemyCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\PlayerCharacter.cs" />
-    <Compile Include="Assets\Scripts\For Testing Only\TestBehaviour.cs" />
+    <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -251,7 +250,7 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.8f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.3/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.9/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -606,17 +605,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{177C5D63-9AB4-DF4D-197E-6B020C7F40FD}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
       <Project>{7C8D23A2-BD2F-D0DD-19A5-35516A77C27D}</Project>
       <Name>Unity.Timeline.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{4065FB89-E685-8925-62DD-51EC49498937}</Project>
+      <Name>Cinemachine</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.CacheServer.csproj">
       <Project>{5C562472-C991-8A56-63EA-BF4BA2255165}</Project>
       <Name>UnityEditor.CacheServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="AggressionandTargeting.csproj">
+      <Project>{E71ADF45-7E05-7E57-2327-C6C7BFBD4B59}</Project>
+      <Name>AggressionandTargeting</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.ScriptableBuildPipeline.Editor.csproj">
       <Project>{85AE7F4A-337F-4C61-CA3A-145AF52AF5D9}</Project>
@@ -645,6 +648,10 @@
     <ProjectReference Include="Unity.Jobs.Editor.csproj">
       <Project>{7655DE51-92AD-7F7B-D531-673129CEED83}</Project>
       <Name>Unity.Jobs.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="SpawnerSystem.csproj">
+      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
+      <Name>SpawnerSystem</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.Editor.csproj">
       <Project>{DACB4B4B-B3FE-568F-F23F-747602F77151}</Project>
@@ -718,6 +725,10 @@
       <Project>{C699C3C6-8A75-4833-0F7A-FDC45519A1F6}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
+    <ProjectReference Include="Global2.csproj">
+      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
+      <Name>Global2</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.CollabProxy.Editor.csproj">
       <Project>{9BD7C8E7-5617-68E8-0470-1F837D9753CF}</Project>
       <Name>Unity.CollabProxy.Editor</Name>
@@ -734,6 +745,10 @@
       <Project>{0D8B0EA2-CD4D-CBCC-155D-2EC5ECD53C3E}</Project>
       <Name>Unity.Rider.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="MovementSystem.csproj">
+      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
+      <Name>MovementSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Entities.Hybrid.EndToEnd.Tests.csproj">
       <Project>{2B41588D-3AFC-E69D-D088-5341D981B630}</Project>
       <Name>Unity.Entities.Hybrid.EndToEnd.Tests</Name>
@@ -746,6 +761,10 @@
       <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
       <Name>Unity.Mathematics</Name>
     </ProjectReference>
+    <ProjectReference Include="InfluenceSystem.csproj">
+      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
+      <Name>InfluenceSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Deformations.csproj">
       <Project>{9244C19B-1839-4E11-EC2E-567B21900241}</Project>
       <Name>Unity.Deformations</Name>
@@ -753,6 +772,14 @@
     <ProjectReference Include="Unity.Properties.UI.Editor.csproj">
       <Project>{AA74BFFE-85EF-1361-74A8-947803A82FA2}</Project>
       <Name>Unity.Properties.UI.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="IAUS.csproj">
+      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
+      <Name>IAUS</Name>
+    </ProjectReference>
+    <ProjectReference Include="InventorySystem.csproj">
+      <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
+      <Name>InventorySystem</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.csproj">
       <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
@@ -766,6 +793,10 @@
       <Project>{64A276E8-8B6C-1F43-9249-8A6020E7CCA1}</Project>
       <Name>Unity.Transforms.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="com.unity.cinemachine.editor.csproj">
+      <Project>{30734BE2-02F8-3777-693A-22C0F62F3C3C}</Project>
+      <Name>com.unity.cinemachine.editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.ProBuilder.AddOns.Editor.csproj">
       <Project>{FE88C919-8264-5639-BD20-44996660614B}</Project>
       <Name>Unity.ProBuilder.AddOns.Editor</Name>
@@ -778,9 +809,21 @@
       <Project>{F3B5100D-540F-9025-C6E8-7E9127B0D75D}</Project>
       <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="StandardAssets.csproj">
+      <Project>{712D62E3-733C-5D36-2CBE-D35816FB7BBA}</Project>
+      <Name>StandardAssets</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{FA88BBE6-AEC5-ED63-EA54-80E4F8BA4533}</Project>
       <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="Global.csproj">
+      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
+      <Name>Global</Name>
+    </ProjectReference>
+    <ProjectReference Include="PlayerCharacterSystem.csproj">
+      <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
+      <Name>PlayerCharacterSystem</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
@@ -789,18 +832,6 @@
     <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
       <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
       <Name>Unity.Transforms.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="SpawnerSystem.csproj">
-      <Project>{B6FDD43D-8FB6-B376-F590-B1E96E089D9F}</Project>
-      <Name>SpawnerSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="IAUS.csproj">
-      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
-      <Name>IAUS</Name>
-    </ProjectReference>
-    <ProjectReference Include="Global.csproj">
-      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
-      <Name>Global</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
