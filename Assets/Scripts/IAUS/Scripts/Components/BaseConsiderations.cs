@@ -8,4 +8,12 @@ namespace IAUS.ECS2
 
     }
 
+    /// <summary>
+    /// this will be update as part of the health change buffer 
+    /// </summary>
+    public struct CharacterHealthConsideration : IBaseConsiderations
+    {
+        public float Ratio { get; set; }
+
+    }
 }
