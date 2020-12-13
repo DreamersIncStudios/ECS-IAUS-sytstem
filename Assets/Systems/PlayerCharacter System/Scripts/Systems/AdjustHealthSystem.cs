@@ -23,7 +23,7 @@ namespace Stats
             base.OnCreate();
             _ChangeVitals = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(PlayerStatComponent)), ComponentType.ReadWrite(typeof(ChangeVitalBuffer)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(CharacterStatComponent)), ComponentType.ReadWrite(typeof(ChangeVitalBuffer)) }
             });
           
             _entityCommandBufferSystem = GetCommandBufferSystem();
@@ -36,7 +36,7 @@ namespace Stats
             {
                 DeltaTime = Time.DeltaTime,
                 IncreaseChunk = GetArchetypeChunkBufferType<ChangeVitalBuffer>(false),
-                StatsChunk = GetArchetypeChunkComponentType<PlayerStatComponent>(false),
+                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(false),
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
             }.Schedule(_ChangeVitals, systemDeps);
 
@@ -52,18 +52,18 @@ namespace Stats
 
     public struct IncreaseVitalJob : IJobChunk
     {
-        public ArchetypeChunkComponentType<PlayerStatComponent> StatsChunk;
+        public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
         public ArchetypeChunkBufferType<ChangeVitalBuffer> IncreaseChunk;
         public float DeltaTime;
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
-            NativeArray<PlayerStatComponent> stats = chunk.GetNativeArray<PlayerStatComponent>(StatsChunk);
+            NativeArray<CharacterStatComponent> stats = chunk.GetNativeArray<CharacterStatComponent>(StatsChunk);
             BufferAccessor<ChangeVitalBuffer> VitalChanges = chunk.GetBufferAccessor<ChangeVitalBuffer>(IncreaseChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
-                PlayerStatComponent stat = stats[i];
+                CharacterStatComponent stat = stats[i];
                 DynamicBuffer<ChangeVitalBuffer> buffer = VitalChanges[i];
                 for (int j = 0; j < buffer.Length; j++)
                 {

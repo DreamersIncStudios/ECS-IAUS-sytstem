@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Stats
 {
-    public class EnemyCharacter : PlayerCharacter
+    public class EnemyCharacter : BaseCharacter
     {
-
-        private void Update()
+        private void Start()
         {
-            if (CurHealth <= 0) {
-                Debug.Log("Dead");
-
-             
-            }
+            SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
         }
- 
+
     }
 }

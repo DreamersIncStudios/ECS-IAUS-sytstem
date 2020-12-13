@@ -5,6 +5,9 @@ using Unity.Entities;
 
 namespace IAUS.ECS2.Component
 {
+
+
+
     [System.Serializable]
     [GenerateAuthoringComponent]
     public struct IAUSBrain : IComponentData

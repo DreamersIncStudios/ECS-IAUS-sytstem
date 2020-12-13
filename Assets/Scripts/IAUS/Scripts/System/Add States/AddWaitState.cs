@@ -37,7 +37,7 @@ namespace IAUS.ECS2.Systems
                 {
                     stateBuffer.Add(new StateBuffer()
                     {
-                        StateName = AIStates.Patrol,
+                        StateName = AIStates.Wait,
                         Status = ActionStatus.Idle
                     });
 

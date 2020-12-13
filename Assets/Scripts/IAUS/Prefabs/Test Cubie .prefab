@@ -14,12 +14,11 @@ GameObject:
   - component: {fileID: 5035651290871127928}
   - component: {fileID: 9016657128764782114}
   - component: {fileID: 3558965051088143632}
-  - component: {fileID: 7475114185316728780}
-  - component: {fileID: 710132630818646771}
   - component: {fileID: 243980736577237904}
   - component: {fileID: 3572365743511301892}
   - component: {fileID: 1422237330}
   - component: {fileID: 5183818717872024007}
+  - component: {fileID: 7152985113982230723}
   m_Layer: 0
   m_Name: 'Test Cubie '
   m_TagString: Untagged
@@ -136,34 +135,6 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!208 &7475114185316728780
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211861381076278515}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.5
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 1.5
---- !u!114 &710132630818646771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1211861381076278515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a7bf187be521e4c899272665e30c7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &243980736577237904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +148,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberOfWayPoints: 0
+  DistanceToPoint:
+    Inverse: 0
+    responseType: 2
+    M: 50
+    K: -0.95
+    B: 0.935
+    C: 0.35
   distanceToPoint: 0
+  StartingDistance: 0
   CurWaypoint:
     point:
       Type: 0
@@ -201,7 +180,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babd182f399551a4694e7126dcc1b3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UpdatePatrolPoints: 0
+  TimeLeft:
+    Inverse: 0
+    responseType: 0
+    M: 0
+    K: 0
+    B: 0
+    C: 0
+  Timer: 0
+  StartTime: 0
   _status: 6
   _resetTimer: 0
 --- !u!114 &1422237330
@@ -234,4 +221,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9caabc24a00ad02448370d9edd984835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Values: []
+  Values:
+  - point:
+      Type: 2
+      Position:
+        x: 20
+        y: 0.5
+        z: 20
+    TimeToWaitatWaypoint: 10
+  - point:
+      Type: 2
+      Position:
+        x: 15
+        y: 0.5
+        z: -30
+    TimeToWaitatWaypoint: 10
+--- !u!114 &7152985113982230723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1211861381076278515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurHealth: 300
+  maxHealth: 300
+  CurMana: 100
+  maxMana: 100

@@ -871,7 +871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332271163}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 3, z: 73.3}
+  m_LocalPosition: {x: 7.64, y: 3, z: 73.3}
   m_LocalScale: {x: 6, y: 5, z: 6}
   m_Children: []
   m_Father: {fileID: 0}
@@ -8371,65 +8371,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 243980736577237904, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: HealthRatio.B
+      value: 0.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 243980736577237904, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: HealthRatio.C
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 243980736577237904, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: HealthRatio.K
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 243980736577237904, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: HealthRatio.M
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 243980736577237904, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: HealthRatio.responseType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Name
       value: 'Test Cubie '
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[0].point.Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[1].point.Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[0].point.Position.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[0].point.Position.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[0].point.Position.z
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[1].point.Position.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[1].point.Position.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[1].point.Position.z
-      value: -30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[0].TimeToWaitatWaypoint
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5183818717872024007, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: Values.Array.data[1].TimeToWaitatWaypoint
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6198918470580978635, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}

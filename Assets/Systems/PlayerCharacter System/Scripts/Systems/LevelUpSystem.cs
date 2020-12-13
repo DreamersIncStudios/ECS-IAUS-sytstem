@@ -18,7 +18,7 @@ namespace Stats
         {
             JobHandle systemDeps = Dependency;
             EntityCommandBuffer buffer = _entityCommandBufferSystem.CreateCommandBuffer();
-            systemDeps = Entities.ForEach((Entity entity, ref PlayerStatComponent PC, ref LevelUpComponent StatUpdate) =>
+            systemDeps = Entities.ForEach((Entity entity, ref CharacterStatComponent PC, ref LevelUpComponent StatUpdate) =>
             {
                 PC.MaxHealth = StatUpdate.MaxHealth;
                 PC.CurHealth = StatUpdate.CurHealth;

@@ -64,9 +64,9 @@ namespace Stats
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             selfEntityRef = entity;
-            var data = new PlayerStatComponent() {  MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana };
+            var data = new CharacterStatComponent() {  MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana };
             dstManager.AddComponentData(entity, data);
-            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
+            //dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             dstManager.AddBuffer<ChangeVitalBuffer>(entity);
             StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
             StatUpdate();

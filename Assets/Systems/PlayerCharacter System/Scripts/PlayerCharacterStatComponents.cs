@@ -36,7 +36,7 @@ namespace Stats
  
 
     // add safe checks
-    public struct PlayerStatComponent: IComponentData {
+    public struct CharacterStatComponent: IComponentData {
         [Range(0, 999)]
         [SerializeField] int _curHealth;
         public int CurHealth { get { return _curHealth; } 
