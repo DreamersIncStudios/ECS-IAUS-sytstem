@@ -117,7 +117,7 @@ namespace IAUS.ECS2.Systems
 
                     if (tester.StateName != brain.CurrentState)
                     {
-                        //remove old action tag
+
                         switch (brain.CurrentState)
                         {
                             case AIStates.Patrol:
@@ -127,17 +127,20 @@ namespace IAUS.ECS2.Systems
                                 ConcurrentBuffer.RemoveComponent<WaitActionTag>(chunkIndex, entity);
                                 break;
                         }
-                        brain.CurrentState = tester.StateName;
                         //add new action tag
-                        switch (brain.CurrentState)
+                        switch (tester.StateName)
                         {
                             case AIStates.Patrol:
-                                ConcurrentBuffer.AddComponent<PatrolActionTag>(chunkIndex, entity);
+                                if (brain.CurrentState==AIStates.Wait) {
+                                    ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = true });
+                                } else
+                                    ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = false });
                                 break;
                             case AIStates.Wait:
                                 ConcurrentBuffer.AddComponent<WaitActionTag>(chunkIndex, entity);
                                 break;
                         }
+                        brain.CurrentState = tester.StateName;
                     }
 
                     Brains[i] = brain;

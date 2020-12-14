@@ -82,6 +82,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Patrol\UpdatePatrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Wait\UpdateWait.cs" />

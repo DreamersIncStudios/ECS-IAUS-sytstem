@@ -12,6 +12,7 @@ namespace IAUS.ECS2.Systems
     {
         private EntityQuery DistanceCheck;
         private EntityQuery PatrolScore;
+        private EntityQuery CompleteCheck;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -26,6 +27,10 @@ namespace IAUS.ECS2.Systems
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
+            });
+           CompleteCheck = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(PatrolActionTag)) }
             });
         }
 
@@ -44,6 +49,14 @@ namespace IAUS.ECS2.Systems
                 PatrolChunk = GetArchetypeChunkComponentType<Patrol>(),
                 StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new CompletionChecker()
+            {
+                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(true),
+                Buffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                EntityChunk = GetArchetypeChunkEntityType()
+            }.Schedule(CompleteCheck, systemDeps);
+
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;
@@ -65,7 +78,6 @@ namespace IAUS.ECS2.Systems
                     Patrol patrol = patrols[i];
                     LocalToWorld transform = toWorlds[i];
                     patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.point.Position, transform.Position);
-
                     patrols[i] = patrol;
                 }
 
@@ -87,12 +99,28 @@ namespace IAUS.ECS2.Systems
                 {
                     Patrol patrol = patrols[i];
                     CharacterStatComponent stats = Stats[i];
-                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio)* patrol.HealthRatio.Output(stats.HealthRatio);
+                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(stats.HealthRatio);
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
                     patrols[i] = patrol;
                 }
             }
         }
-
+        [BurstCompile]
+        public struct CompletionChecker : IJobChunk
+        {
+            [ReadOnly]public ArchetypeChunkComponentType<Patrol> PatrolChunk;
+            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+            public EntityCommandBuffer.Concurrent Buffer;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    if (patrols[i].Complete)
+                        Buffer.RemoveComponent<PatrolActionTag>(chunkIndex, entities[i]);
+                }
+            }
+        }
     }
 }

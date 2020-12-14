@@ -6,7 +6,7 @@ namespace IAUS.ECS2.Component {
     {
         float TotalScore { get; set; }
         ActionStatus Status { get; set; }
-        float ResetTimer { get; set; }
+        float CoolDownTime { get; }
         float ResetTime { get; set; }
         float mod { get; }
     }
