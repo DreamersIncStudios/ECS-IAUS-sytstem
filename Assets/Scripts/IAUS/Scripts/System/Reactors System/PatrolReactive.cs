@@ -2,7 +2,7 @@
 using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
-using Unity.Transforms;
+using Unity.Transforms; 
 using IAUS.ECS2.Component;
 using Unity.Entities;
 using Unity.Burst;
@@ -23,12 +23,12 @@ namespace IAUS.ECS2.Systems.Reactive
         {
             if (AIStateCompoment.Complete)
             {
-                AIStateCompoment.Status = ActionStatus.Success;
+                AIStateCompoment.Status = ActionStatus.CoolDown;
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
             }
             else
             {
-                AIStateCompoment.Status = ActionStatus.Interrupted;
+                AIStateCompoment.Status = ActionStatus.CoolDown;
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime*2;
 
             }
@@ -64,7 +64,13 @@ namespace IAUS.ECS2.Systems.Reactive
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent)) }
             });
-      
+            _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(Movement))
+                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
+            });
+
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
@@ -72,7 +78,7 @@ namespace IAUS.ECS2.Systems.Reactive
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-            systemDeps = new PatrolMovementUpdateJob() 
+            systemDeps = new PatrolMovementUpdateJob()
             {
                 MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
                 PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
@@ -81,6 +87,13 @@ namespace IAUS.ECS2.Systems.Reactive
                 ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new OnCompletionUpdateJob()
+            {
+                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
+                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(true),
+                WaitChunk = GetArchetypeChunkComponentType<Wait>(false)
+            }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;
@@ -91,31 +104,22 @@ namespace IAUS.ECS2.Systems.Reactive
         {
             public ArchetypeChunkComponentType<Movement> MovementChunk;
             public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<PatrolActionTag> TagChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<PatrolActionTag> TagChunk;
             [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
-            [ReadOnly]public ArchetypeChunkBufferType<PatrolWaypointBuffer> WaypointChunk;
+            [ReadOnly] public ArchetypeChunkBufferType<PatrolWaypointBuffer> WaypointChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
-                NativeArray<PatrolActionTag> Tags = chunk.GetNativeArray(TagChunk);
                 NativeArray<LocalToWorld> ToWorlds = chunk.GetNativeArray(ToWorldChunk);
-                BufferAccessor<PatrolWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
-
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Movement move = movements[i];
                     Patrol patrol = patrols[i];
-                    DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
-                    if (Tags[i].UpdateWayPoint) {
-                        patrol.WaypointIndex++;
-                        if (patrol.WaypointIndex > patrol.NumberOfWayPoints)
-                            patrol.WaypointIndex = 0;
-                        patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex];
-                    }
-                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.point.Position);
 
-                    move.TargetLocation = patrol.CurWaypoint.point.Position;
+                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Point.Position);
+
+                    move.TargetLocation = patrol.CurWaypoint.Point.Position;
                     move.CanMove = true;
                     move.SetTargetLocation = true;
 
@@ -136,18 +140,14 @@ namespace IAUS.ECS2.Systems.Reactive
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
                 NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
-
-
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Wait wait = Waits[i];
                     Patrol patrol = patrols[i];
                     Movement move = Moves[i];
-                    wait.Timer = patrol.CurWaypoint.TimeToWaitatWaypoint;
+                    wait.Timer=wait.StartTime = patrol.CurWaypoint.TimeToWaitatWaypoint;
                     move.CanMove = false;
-                    
-                    
-                    
+
                     Waits[i] = wait;
                     Moves[i] = move;
                 }

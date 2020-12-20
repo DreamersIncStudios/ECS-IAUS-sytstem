@@ -3,8 +3,9 @@ using Unity.Collections;
 using Unity.Jobs;
 using IAUS.ECS2.Component;
 using Unity.Burst;
-using Unity.Transforms;
 using UnityEngine;
+using Stats;
+
 namespace IAUS.ECS2.Systems
 {
     public class UpdateWait : SystemBase
@@ -23,7 +24,8 @@ namespace IAUS.ECS2.Systems
             });
             WaitScore = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)), 
+                    ComponentType.ReadOnly(typeof(CharacterStatComponent)) }
             });
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
@@ -44,7 +46,9 @@ namespace IAUS.ECS2.Systems
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             systemDeps = new UpdateWaitScore()
             {
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false)
+                WaitChunk = GetArchetypeChunkComponentType<Wait>(false),
+                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true)
+                
             }.ScheduleParallel(WaitScore, systemDeps);
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             systemDeps.Complete();
@@ -81,16 +85,21 @@ namespace IAUS.ECS2.Systems
         public struct UpdateWaitScore : IJobChunk
         {
             public ArchetypeChunkComponentType<Wait> WaitChunk;
+            [ReadOnly] public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
+                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Wait wait = Waits[i];
-                    float TotalScore = wait.TimeLeft.Output(wait.TimePercent);
+                    CharacterStatComponent stats = Stats[i];
+                    float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);
                     wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.mod) * TotalScore);
+
+                    Waits[i] = wait;
                 }
             }
         }

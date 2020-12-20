@@ -15,7 +15,7 @@ namespace IAUS.ECS2.Systems
         protected override void OnCreate()
         {
             base.OnCreate();
-
+            
             IAUSBrains = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(StateBuffer)) },
@@ -70,16 +70,20 @@ namespace IAUS.ECS2.Systems
                     Entity entity = Entities[i];
                     DynamicBuffer<StateBuffer> states = Buffers[i];
 
-                    for (int j = 0; j < states.Length-1; j++)
+                    for (int j = 0; j < states.Length; j++)
                     {
                         StateBuffer temp = states[j];
                         switch (states[j].StateName)
                         {
                             case AIStates.Patrol:
+                                temp.StateName = AIStates.Patrol;
                                 temp.TotalScore = Patrols[entity].TotalScore;
+                                temp.Status = Patrols[entity].Status;
                                 break;
                             case AIStates.Wait:
+                                temp.StateName = AIStates.Wait;
                                 temp.TotalScore = Waits[entity].TotalScore;
+                                temp.Status = Waits[entity].Status;
                                 break;
                         }
                         states[j] = temp;
@@ -108,14 +112,14 @@ namespace IAUS.ECS2.Systems
                     Entity entity = Entities[i];
                     DynamicBuffer<StateBuffer> states = Buffers[i];
                     IAUSBrain brain = Brains[i];
-                    StateBuffer tester = new StateBuffer();
-                    for (int j = 0; j < states.Length - 1; j++)
+                    StateBuffer tester =  new StateBuffer();
+                    for (int j = 0; j < states.Length; j++)
                     {
-                        if (tester.TotalScore < states[j].TotalScore)
+                        if(tester.TotalScore < states[j].TotalScore && states[j].ConsiderScore)
                             tester = states[j];
                     }
 
-                    if (tester.StateName != brain.CurrentState)
+                    if (tester.StateName != brain.CurrentState && tester.Status==ActionStatus.Idle)
                     {
 
                         switch (brain.CurrentState)
@@ -131,10 +135,10 @@ namespace IAUS.ECS2.Systems
                         switch (tester.StateName)
                         {
                             case AIStates.Patrol:
-                                if (brain.CurrentState==AIStates.Wait) {
-                                    ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = true });
-                                } else
-                                    ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = false });
+                                //if (brain.CurrentState==AIStates.Wait) {
+                                //    ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = true });
+                                //} else
+                                ConcurrentBuffer.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = false });
                                 break;
                             case AIStates.Wait:
                                 ConcurrentBuffer.AddComponent<WaitActionTag>(chunkIndex, entity);

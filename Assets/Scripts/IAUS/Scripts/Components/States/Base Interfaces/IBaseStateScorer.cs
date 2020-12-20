@@ -7,12 +7,13 @@ namespace IAUS.ECS2.Component {
         float TotalScore { get; set; }
         ActionStatus Status { get; set; }
         float CoolDownTime { get; }
+        bool InCooldown { get; }
         float ResetTime { get; set; }
         float mod { get; }
     }
 
     public enum ActionStatus   
     {
-         Success, Running, Interrupted, Idle, CoolDown, Disabled, Failure
+        Idle, Success, Running, Interrupted, CoolDown, Disabled, Failure
     }
 }

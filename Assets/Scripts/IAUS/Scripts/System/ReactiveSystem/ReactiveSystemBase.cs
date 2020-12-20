@@ -42,7 +42,7 @@ namespace Utilities.ReactiveSystem
         /// EnityCommandBufferSystem used to add and remove the StateComponent.
         /// </summary>
         private EntityCommandBufferSystem _entityCommandBufferSystem;
-        private bool _isZeroSized;
+
         /// <summary>
         /// The state component for this reactive system.
         /// It contains a copy of the COMPONENT data.
@@ -56,8 +56,6 @@ namespace Utilities.ReactiveSystem
         {
             base.OnCreate();
             _reactor = CreateComponentReactor();
-            int m_TypeIndex = TypeManager.GetTypeIndex<COMPONENT>();
-            _isZeroSized = TypeManager.GetTypeInfo(m_TypeIndex).IsZeroSized;
 
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
@@ -96,14 +94,14 @@ namespace Utilities.ReactiveSystem
         {
             public EntityCommandBuffer.Concurrent EntityCommandBuffer;
             public ArchetypeChunkComponentType<COMPONENT> ComponentChunk;
-            public bool IsZeroSized;
+
             public ArchetypeChunkComponentType<AICOMPONENT> AIComponentChunk;
             [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
             [ReadOnly] public COMPONENT_REACTOR Reactor;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<COMPONENT> components  = IsZeroSized ? default : chunk.GetNativeArray(ComponentChunk);
-                NativeArray<AICOMPONENT> aiComponents = IsZeroSized ? default : chunk.GetNativeArray(AIComponentChunk);
+                NativeArray<COMPONENT> components = chunk.GetNativeArray(ComponentChunk);
+                NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(AIComponentChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; ++i)
                 {
@@ -112,11 +110,8 @@ namespace Utilities.ReactiveSystem
                     AICOMPONENT AIcomponent = aiComponents[i];
                     Entity entity = entities[i];
                     Reactor.ComponentAdded(entity, ref component, ref AIcomponent);
-                    if (!IsZeroSized)
-                    {
                         components[i] = component;
                         aiComponents[i] = AIcomponent;
-                    }
                     // Add the system state component and set it's value that on the next frame, the ManageComponentValueChangeJob can handle any change in the COMPONENT value.
                     EntityCommandBuffer.AddComponent<StateComponent>(chunkIndex, entities[i]);
                     EntityCommandBuffer.SetComponent(chunkIndex, entities[i], new StateComponent() { Value = component });
@@ -134,13 +129,12 @@ namespace Utilities.ReactiveSystem
             [ReadOnly] public ArchetypeChunkComponentType<StateComponent> StateComponentChunk;
             [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
             [ReadOnly] public COMPONENT_REACTOR Reactor;
-            public bool IsZeroSized;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<StateComponent> stateComponents = IsZeroSized ? default : chunk.GetNativeArray(StateComponentChunk);
+                NativeArray<StateComponent> stateComponents =  chunk.GetNativeArray(StateComponentChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-                NativeArray<AICOMPONENT> aiComponents = IsZeroSized ? default : chunk.GetNativeArray(AIComponentChunk);
+                NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(AIComponentChunk);
                 for (int i = 0; i < chunk.Count; ++i)
                 {
                     // Calls the mathod with the last know copy of the component, this copy is read only has the component will be remove by hte end of the frame.
@@ -148,10 +142,8 @@ namespace Utilities.ReactiveSystem
                     AICOMPONENT AIcomponent = aiComponents[i];
                     StateComponent stateComponent = stateComponents[i];
                     Reactor.ComponentRemoved(entity, ref AIcomponent, in stateComponent.Value);
-                    if (!IsZeroSized)
-                    {
+
                         aiComponents[i] = AIcomponent;
-                    }
                     // Remove the state component so that the entiyt can be destroyed or listen again for COMPONENT addition.
                     EntityCommandBuffer.RemoveComponent<StateComponent>(chunkIndex, entities[i]);
                 }
@@ -199,17 +191,18 @@ namespace Utilities.ReactiveSystem
         {
 
             JobHandle systemDeps = Dependency;
-            if (!_isZeroSized)
-            {
-                systemDeps = new ManageComponentValueChangeJob()
-                {
-                    ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
-                    AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
-                    StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
-                    EntityChunk = GetArchetypeChunkEntityType(),
-                    Reactor = _reactor
-                }.ScheduleParallel(_componentValueChangedQuery, systemDeps);
-            }
+             // Removing as it is not used right now .15ms performance hit
+            //    systemDeps = new ManageComponentValueChangeJob()
+            //    {
+            //        ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
+            //        AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
+            //        StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
+            //        EntityChunk = GetArchetypeChunkEntityType(),
+            //        Reactor = _reactor
+            //    }.ScheduleParallel(_componentValueChangedQuery, systemDeps);
+            
+            //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             systemDeps = new ManageComponentAdditionJob()
             {
                 ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
@@ -217,7 +210,7 @@ namespace Utilities.ReactiveSystem
                 EntityChunk = GetArchetypeChunkEntityType(),
                 EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
                 Reactor = _reactor,
-                IsZeroSized = _isZeroSized
+
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -227,10 +220,11 @@ namespace Utilities.ReactiveSystem
                 StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
                 EntityChunk = GetArchetypeChunkEntityType(),
                 EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                IsZeroSized = _isZeroSized,
+   
                 Reactor = _reactor
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps.Complete();
             Dependency = systemDeps;
         }
         public static class ByteBufferUtility

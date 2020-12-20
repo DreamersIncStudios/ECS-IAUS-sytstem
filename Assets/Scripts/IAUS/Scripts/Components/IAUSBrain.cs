@@ -22,6 +22,7 @@ namespace IAUS.ECS2.Component
         public AIStates StateName;
         public float TotalScore;
         public ActionStatus Status;
+        public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;
 
     }
 }

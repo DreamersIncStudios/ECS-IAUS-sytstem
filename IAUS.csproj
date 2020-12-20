@@ -72,17 +72,25 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\Follow.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\StayInRange.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Leader\Leader.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolActionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolWaypointBuffer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\WaypointCreation.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\WaitActionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\CooldownCountdownSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Patrol\UpdatePatrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Wait\UpdateWait.cs" />
@@ -283,7 +291,7 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.3.9/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.4.3/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>

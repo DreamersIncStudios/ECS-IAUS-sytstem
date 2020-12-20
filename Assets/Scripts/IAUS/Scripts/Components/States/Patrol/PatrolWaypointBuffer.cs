@@ -15,7 +15,7 @@ namespace IAUS.ECS2.Component {
 
     [System.Serializable]
     public struct Waypoint {
-        public AITarget point;
+        public AITarget Point;
         public float TimeToWaitatWaypoint;
 
     }

@@ -7,16 +7,17 @@ namespace IAUS.ECS2.Component
     public struct Patrol : IBaseStateScorer
     {
 
-        public float NumberOfWayPoints;
+        public int NumberOfWayPoints;
         public ConsiderationScoringData DistanceToPoint;
         public ConsiderationScoringData HealthRatio;
-        public bool Complete => DistanceRatio <= .1f;
+        public bool Complete => InBufferZone;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }}
+        public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public float distanceToPoint;
-        public float StartingDistance;
+        public float distanceToPoint, StartingDistance, BufferZone ;
+        public bool InBufferZone => BufferZone > distanceToPoint;
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
         public Waypoint CurWaypoint;
         public int WaypointIndex { get; set; }
