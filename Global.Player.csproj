@@ -605,7 +605,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\Global\Player_Control.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\AITarget.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\CleanUpHybridEntity.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\FreqPhasing.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\GlobalFunctions.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\PopUpMouseControl.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\SystemGroup\IAUSCore.cs" />

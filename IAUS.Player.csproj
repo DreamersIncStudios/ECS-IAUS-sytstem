@@ -74,9 +74,6 @@
     <Reference Include="SpawnerSystem">
       <HintPath>Library/ScriptAssemblies/SpawnerSystem.dll</HintPath>
     </Reference>
-    <Reference Include="Global2">
-      <HintPath>Library/ScriptAssemblies/Global2.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Transforms.Hybrid">
       <HintPath>Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
     </Reference>
@@ -645,12 +642,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\AITarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\Follow.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\StayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Leader\Leader.cs" />
@@ -661,6 +658,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\WaitActionSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
@@ -671,7 +669,9 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\MoveToTarget\UpdateMoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Patrol\UpdatePatrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRange\StayInRangeUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Wait\UpdateWait.cs" />
   </ItemGroup>
   <ItemGroup>

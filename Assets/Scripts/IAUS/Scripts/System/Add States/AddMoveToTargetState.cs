@@ -6,32 +6,32 @@ using Unity.Collections;
 namespace IAUS.ECS2.Systems
 {
     [BurstCompile]
-    public struct AddStayInRange : IJobChunk
+    public struct AddMoveToTargetState : IJobChunk
     {
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<CharacterHealthConsideration> HealthRatio;
 
         [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<StayInRange> StayInRangeChunk;
+        public ArchetypeChunkComponentType<MoveToTarget> MoveToTargetChunk;
         public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-            NativeArray<StayInRange> Stay = chunk.GetNativeArray(StayInRangeChunk);
+            NativeArray<MoveToTarget> Move = chunk.GetNativeArray(MoveToTargetChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(StateBufferChunk);
 
             for (int i = 0; i < chunk.Count; i++)
             {
                 Entity entity = entities[i];
-                StayInRange c1 = Stay[i];
+                MoveToTarget c1 = Move[i];
                 DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
 
                 bool add = true;
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
-                    if (stateBuffer[index].StateName == AIStates.GotoLeader)
+                    if (stateBuffer[index].StateName == AIStates.ChaseMoveToTarget)
                     { add = false; }
                 }
                 c1.Status = ActionStatus.Idle;
@@ -39,7 +39,7 @@ namespace IAUS.ECS2.Systems
                 {
                     stateBuffer.Add(new StateBuffer()
                     {
-                        StateName = AIStates.GotoLeader,
+                        StateName = AIStates.ChaseMoveToTarget,
                         Status = ActionStatus.Idle
                     });
 
@@ -49,7 +49,7 @@ namespace IAUS.ECS2.Systems
                     }
 
                 }
-                Stay[i] = c1;
+                Move[i] = c1;
             }
         }
     }

@@ -117,9 +117,9 @@ namespace IAUS.ECS2.Systems.Reactive
                     Movement move = movements[i];
                     Patrol patrol = patrols[i];
 
-                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Point.Position);
+                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
 
-                    move.TargetLocation = patrol.CurWaypoint.Point.Position;
+                    move.TargetLocation = patrol.CurWaypoint.Position;
                     move.CanMove = true;
                     move.SetTargetLocation = true;
 

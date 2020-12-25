@@ -103,7 +103,7 @@ namespace IAUS.ECS2.Systems.Reactive
                             patrol.WaypointIndex = 0;
                         patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
 
-                        patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Point.Position);
+                        patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
                         patrols[i] = patrol;
                     }
 

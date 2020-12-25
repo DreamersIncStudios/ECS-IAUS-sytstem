@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using IAUS.ECS2.Component;
+using Global.Component;
 
 public class BaseAIAuthoring : MonoBehaviour,IConvertGameObjectToEntity
 {

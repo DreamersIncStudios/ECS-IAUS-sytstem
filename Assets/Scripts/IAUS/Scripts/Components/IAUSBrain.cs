@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-
+using Global.Component;
+    
 namespace IAUS.ECS2.Component
 {
 

@@ -704,6 +704,10 @@
       <Project>{7094A782-2EC2-D866-65E8-808EC439CB56}</Project>
       <Name>Unity.Scenes.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Physics.csproj">
+      <Project>{0A84E2CD-C171-3283-D717-03BEA1853284}</Project>
+      <Name>Unity.Physics</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
       <Project>{779C1C59-A8FD-1EA6-0976-3E74F439E505}</Project>
       <Name>Unity.TextMeshPro.Editor</Name>
@@ -728,9 +732,9 @@
       <Project>{C699C3C6-8A75-4833-0F7A-FDC45519A1F6}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
-    <ProjectReference Include="Global2.csproj">
-      <Project>{C087C494-B142-FBEB-D6A9-F3BA9042ED08}</Project>
-      <Name>Global2</Name>
+    <ProjectReference Include="Unity.Physics.Hybrid.csproj">
+      <Project>{11E19E6D-6AF3-9F73-31C1-83906CE1BBE0}</Project>
+      <Name>Unity.Physics.Hybrid</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.CollabProxy.Editor.csproj">
       <Project>{9BD7C8E7-5617-68E8-0470-1F837D9753CF}</Project>
@@ -771,6 +775,10 @@
     <ProjectReference Include="Unity.Deformations.csproj">
       <Project>{9244C19B-1839-4E11-EC2E-567B21900241}</Project>
       <Name>Unity.Deformations</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Editor.csproj">
+      <Project>{7F8C8885-E843-1245-6068-48683A55DCE3}</Project>
+      <Name>Unity.Physics.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Properties.UI.Editor.csproj">
       <Project>{AA74BFFE-85EF-1361-74A8-947803A82FA2}</Project>

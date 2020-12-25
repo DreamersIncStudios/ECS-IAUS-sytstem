@@ -4,10 +4,16 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Utilities;
+using Global.Component;
+
 namespace IAUS.ECS2.Component
 {
     public class WaypointCreation : MonoBehaviour, IConvertGameObjectToEntity
     {
+
+        /// <summary>
+        /// Need to rewrite to get gameobject in world with this AITarget tag at runtime. Consider making a component system or job;
+        /// </summary>
         List<PatrolWaypointBuffer> GetPoints
         {
             get
@@ -21,9 +27,10 @@ namespace IAUS.ECS2.Component
                         {
                             WayPoint = new Waypoint()
                             {
+                                Position = (float3)position,
                                 Point = new AITarget() 
                                 {
-                                    Position= (float3)position },
+                                    Type = TargetType.Location},
                                 TimeToWaitatWaypoint = UnityEngine.Random.Range(10,20)
                             }
                         }

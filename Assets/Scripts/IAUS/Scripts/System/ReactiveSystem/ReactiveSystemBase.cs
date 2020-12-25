@@ -152,41 +152,41 @@ namespace Utilities.ReactiveSystem
         /// <summary>
         /// This system call the COMPONENT_REACTOR.ComponentValueChanged method on all entity that had their COMPONENT value changed.
         /// </summary>
-        [BurstCompile]
-        private struct ManageComponentValueChangeJob : IJobChunk
-        {
-            public ArchetypeChunkComponentType<COMPONENT> ComponentChunk;
-            public ArchetypeChunkComponentType<AICOMPONENT> AIComponentChunk;
-            public ArchetypeChunkComponentType<StateComponent> StateComponentChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            [ReadOnly] public COMPONENT_REACTOR Reactor;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<COMPONENT> components = chunk.GetNativeArray(ComponentChunk);
-                NativeArray<StateComponent> stateComponents = chunk.GetNativeArray(StateComponentChunk);
-                NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(AIComponentChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-                for (int i = 0; i < chunk.Count; ++i)
-                {
-                    // Chaeck if the value changed since last frame.
-                    StateComponent stateComponent = stateComponents[i];
-                    COMPONENT component = components[i];
-                    Entity entity = entities[i];
-                    AICOMPONENT AIcomponent = aiComponents[i];
-                    // If it did not change, move to the next entity in chunk.
-                    if (ByteBufferUtility.AreEqualStruct(stateComponent.Value, component)) continue;
-                    // If it did change, call the method with the new value and the old value (from the last know copy of the COMPONENT)
-                    Reactor.ComponentValueChanged(entity, ref component, ref AIcomponent, in stateComponent.Value);
-                    // Ressign the COMPONENT to take into account any modification that may have accured during the method call.
-                    components[i] = component;
-                    aiComponents[i] = AIcomponent;
+        //[BurstCompile]
+        //private struct ManageComponentValueChangeJob : IJobChunk
+        //{
+        //    public ArchetypeChunkComponentType<COMPONENT> ComponentChunk;
+        //    public ArchetypeChunkComponentType<AICOMPONENT> AIComponentChunk;
+        //    public ArchetypeChunkComponentType<StateComponent> StateComponentChunk;
+        //    [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+        //    [ReadOnly] public COMPONENT_REACTOR Reactor;
+        //    public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        //    {
+        //        NativeArray<COMPONENT> components = chunk.GetNativeArray(ComponentChunk);
+        //        NativeArray<StateComponent> stateComponents = chunk.GetNativeArray(StateComponentChunk);
+        //        NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(AIComponentChunk);
+        //        NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+        //        for (int i = 0; i < chunk.Count; ++i)
+        //        {
+        //            // Chaeck if the value changed since last frame.
+        //            StateComponent stateComponent = stateComponents[i];
+        //            COMPONENT component = components[i];
+        //            Entity entity = entities[i];
+        //            AICOMPONENT AIcomponent = aiComponents[i];
+        //            // If it did not change, move to the next entity in chunk.
+        //            if (ByteBufferUtility.AreEqualStruct(stateComponent.Value, component)) continue;
+        //            // If it did change, call the method with the new value and the old value (from the last know copy of the COMPONENT)
+        //            Reactor.ComponentValueChanged(entity, ref component, ref AIcomponent, in stateComponent.Value);
+        //            // Ressign the COMPONENT to take into account any modification that may have accured during the method call.
+        //            components[i] = component;
+        //            aiComponents[i] = AIcomponent;
 
-                    // Update the copy of the COMPONENT.
-                    stateComponent.Value = component;
-                    stateComponents[i] = stateComponent;
-                }
-            }
-        }
+        //            // Update the copy of the COMPONENT.
+        //            stateComponent.Value = component;
+        //            stateComponents[i] = stateComponent;
+        //        }
+        //    }
+        //}
         protected override void OnUpdate()
         {
 

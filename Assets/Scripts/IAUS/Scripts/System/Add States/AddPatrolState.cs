@@ -1,7 +1,6 @@
 ﻿using Unity.Entities;
 using Unity.Burst;
 using IAUS.ECS2.Component;
-using UnityEngine;
 using Unity.Collections;
 namespace IAUS.ECS2.Systems {
     [BurstCompile]

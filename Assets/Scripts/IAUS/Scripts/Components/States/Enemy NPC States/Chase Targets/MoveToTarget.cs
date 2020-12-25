@@ -1,12 +1,11 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Entities;
 
 namespace IAUS.ECS2.Component
 {
     [GenerateAuthoringComponent]
-    public struct StayInRange : IBaseStateScorer
-    {
+    public struct MoveToTarget : IBaseStateScorer {
+
         public float MaxRangeToLeader; // will change to an influence score later 
         public float DistanceToLeader;
         public float DistanceRatio => DistanceToLeader / MaxRangeToLeader;
@@ -23,9 +22,8 @@ namespace IAUS.ECS2.Component
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
+        
     }
+    public struct MoveToTargetActionTag : IComponentData { bool Test; }
 
-    public struct StayInRangeActionTag : IComponentData {
-        bool test;
-    }
 }

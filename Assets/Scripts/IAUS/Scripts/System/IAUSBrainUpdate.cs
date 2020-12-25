@@ -34,7 +34,9 @@ namespace IAUS.ECS2.Systems
                 EntityChunk = GetArchetypeChunkEntityType(),
                 StateChunks = GetArchetypeChunkBufferType<StateBuffer>(false),
                 Patrols = GetComponentDataFromEntity<Patrol>(true),
-                Waits = GetComponentDataFromEntity<Wait>(true)
+                Waits = GetComponentDataFromEntity<Wait>(true),
+                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true)
             }.Schedule(IAUSBrains, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -60,6 +62,9 @@ namespace IAUS.ECS2.Systems
 
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Patrol> Patrols;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Wait> Waits;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<StayInRange> StayInRangeOfTarget;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
@@ -84,6 +89,16 @@ namespace IAUS.ECS2.Systems
                                 temp.StateName = AIStates.Wait;
                                 temp.TotalScore = Waits[entity].TotalScore;
                                 temp.Status = Waits[entity].Status;
+                                break;
+                            case AIStates.ChaseMoveToTarget:
+                                temp.StateName = AIStates.ChaseMoveToTarget;
+                                temp.TotalScore = GotoTarget[entity].TotalScore;
+                                temp.Status = GotoTarget[entity].Status;
+                                break;
+                            case AIStates.GotoLeader:
+                                temp.StateName = AIStates.GotoLeader;
+                                temp.TotalScore = StayInRangeOfTarget[entity].TotalScore;
+                                temp.Status = StayInRangeOfTarget[entity].Status;
                                 break;
                         }
                         states[j] = temp;
@@ -130,6 +145,12 @@ namespace IAUS.ECS2.Systems
                             case AIStates.Wait:
                                 ConcurrentBuffer.RemoveComponent<WaitActionTag>(chunkIndex, entity);
                                 break;
+                            case AIStates.ChaseMoveToTarget:
+                                ConcurrentBuffer.RemoveComponent<MoveToTargetActionTag>(chunkIndex, entity);
+                                break;
+                            case AIStates.GotoLeader:
+                                ConcurrentBuffer.RemoveComponent<StayInRangeActionTag>(chunkIndex, entity);
+                                break;
                         }
                         //add new action tag
                         switch (tester.StateName)
@@ -142,6 +163,12 @@ namespace IAUS.ECS2.Systems
                                 break;
                             case AIStates.Wait:
                                 ConcurrentBuffer.AddComponent<WaitActionTag>(chunkIndex, entity);
+                                break;
+                            case AIStates.ChaseMoveToTarget:
+                                ConcurrentBuffer.AddComponent<MoveToTargetActionTag>(chunkIndex, entity);
+                                break;
+                            case AIStates.GotoLeader:
+                                ConcurrentBuffer.AddComponent<StayInRangeActionTag>(chunkIndex, entity);
                                 break;
                         }
                         brain.CurrentState = tester.StateName;

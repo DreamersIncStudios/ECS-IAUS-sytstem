@@ -601,6 +601,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Utility Scripts\AITarget.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\CleanUpHybridEntity.cs" />
     <Compile Include="Assets\Scripts\Utility Scripts\GlobalFunctions.cs" />
   </ItemGroup>

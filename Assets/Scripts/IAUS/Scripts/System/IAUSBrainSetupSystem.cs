@@ -10,7 +10,10 @@ namespace IAUS.ECS2.Systems
     {
         EntityQuery Starter;
         EntityQuery _partolStateEntity;
-        EntityQuery __waitStateEntity;
+        EntityQuery _waitStateEntity;
+        EntityQuery _GetInRangeStateEntity;
+        EntityQuery _MoveToTargetStateEntity;
+
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -23,11 +26,22 @@ namespace IAUS.ECS2.Systems
                         ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)) }
 
             });
-            __waitStateEntity = GetEntityQuery(new EntityQueryDesc()
+            _waitStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),
                         ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Wait)) }
             });
+            _GetInRangeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            { 
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(StayInRange))}
+            }
+                );
+            _MoveToTargetStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(StayInRange))}
+            } );
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { typeof(IAUSBrain), typeof(StateBuffer), typeof(SetupBrainTag) }
@@ -58,8 +72,29 @@ namespace IAUS.ECS2.Systems
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
                 WaitChunk = GetArchetypeChunkComponentType<Wait>(false),
             }
-            .ScheduleParallel( __waitStateEntity, systemDeps);
+            .ScheduleParallel( _waitStateEntity, systemDeps);
             
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AddStayInRange()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
+                StayInRangeChunk = GetArchetypeChunkComponentType<StayInRange>(false),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            }.ScheduleParallel(_GetInRangeStateEntity, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AddMoveToTargetState() 
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
+                MoveToTargetChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            }.ScheduleParallel(_MoveToTargetStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
 

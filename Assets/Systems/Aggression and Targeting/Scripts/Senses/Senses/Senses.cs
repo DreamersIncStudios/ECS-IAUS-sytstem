@@ -72,14 +72,10 @@ namespace AISenses
     public struct ScanPositionBuffer : IBufferElementData {
         public Target target;
 
-        public static implicit operator Target(ScanPositionBuffer e) { return e; }
-        public static implicit operator ScanPositionBuffer(Target e) { return new ScanPositionBuffer { target = e }; }
+
     }
     public struct Target {
-        public RaycastCommand raycastCenter;
-        public RaycastCommand raycastCenterLeft;
-        public RaycastCommand raycastCenterRight;
-
+        public Entity entity;
         public int HitCount;
     }
    

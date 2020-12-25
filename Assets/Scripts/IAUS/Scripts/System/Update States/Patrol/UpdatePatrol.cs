@@ -77,7 +77,7 @@ namespace IAUS.ECS2.Systems
                 {
                     Patrol patrol = patrols[i];
                     LocalToWorld transform = toWorlds[i];
-                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Point.Position, transform.Position);
+                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, transform.Position);
                     if (patrol.InBufferZone)
                         patrol.distanceToPoint = 0.0f;
                     patrols[i] = patrol;

@@ -690,6 +690,14 @@
       <Project>{4065FB89-E685-8925-62DD-51EC49498937}</Project>
       <Name>Cinemachine</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Physics.csproj">
+      <Project>{0A84E2CD-C171-3283-D717-03BEA1853284}</Project>
+      <Name>Unity.Physics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Hybrid.csproj">
+      <Project>{11E19E6D-6AF3-9F73-31C1-83906CE1BBE0}</Project>
+      <Name>Unity.Physics.Hybrid</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
       <Name>UnityEditor.UI</Name>
