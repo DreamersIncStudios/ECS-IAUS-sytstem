@@ -11,6 +11,7 @@ namespace IAUS.ECS2.Component
         public float DistanceToLeader;
         public float DistanceRatio => DistanceToLeader / MaxRangeToLeader;
         public ConsiderationScoringData DistanceToLead;
+       
         public ConsiderationScoringData HealthRatio;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }

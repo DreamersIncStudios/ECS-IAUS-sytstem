@@ -18,8 +18,8 @@ namespace AISenses.Authoring.Editors
                     Handles.color = Color.white;
                     Handles.DrawWireArc(aiSenses.transform.position, Vector3.up, Vector3.forward, 360, aiSenses.VisionData.viewRadius);
 
-                    Vector3 viewAngleA = aiSenses.DirFromAngle(-aiSenses.VisionData.ViewAngle / 2, false);
-                    Vector3 viewAngleB = aiSenses.DirFromAngle(aiSenses.VisionData.ViewAngle / 2, false);
+                    Vector3 viewAngleA = aiSenses.DirFromAngle(-aiSenses.VisionData.ViewAngle / 2, true);
+                    Vector3 viewAngleB = aiSenses.DirFromAngle(aiSenses.VisionData.ViewAngle / 2, true);
 
                     Handles.DrawLine(aiSenses.transform.position, aiSenses.transform.position + viewAngleA * aiSenses.VisionData.viewRadius);
                     Handles.DrawLine(aiSenses.transform.position, aiSenses.transform.position + viewAngleB * aiSenses.VisionData.viewRadius);

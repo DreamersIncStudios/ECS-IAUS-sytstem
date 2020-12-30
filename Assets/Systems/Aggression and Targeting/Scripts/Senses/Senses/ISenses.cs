@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using Unity.Collections;
 
 namespace AISenses
-{    public interface Senses : IComponentData
+{    public interface ISenses : IComponentData
     {
         int DetectionRate { get; } // frame count phasing 
         int AlertRate { get; set; } // once the enemy is detected how fast is the alert raise
@@ -17,8 +17,10 @@ namespace AISenses
     }
 
     [System.Serializable]
-    public struct Vision : Senses
+    public struct Vision : ISenses
     {
+        public ScanPositionBuffer ClosestTarget;
+
         public int DetectionRate { get {
                 int returnValue = new int();
                 switch (EnemyAwarnessLevel) {
@@ -48,19 +50,13 @@ namespace AISenses
         [Range(0, 5)]
         public int EnemyAwarnessLevel;  // Character alert level
         public float3 HeadPositionOffset;
-
+        public float Scantimer;
+        public bool LookForTargets => Scantimer <= 0.0f;
         public float viewRadius;
         [Range(0, 360)]
         public float ViewAngle;
-
         public float EngageRadius;
-        public LayerMask TargetMask;
-        public LayerMask ObstacleMask;
-        public Entity TargetRef;
         public float AlertModifer; // If AI is on high alert they will notice the enemy sooner
-        
-        public float TargetVisibility; //How much of the enemy can the AI see
-
         public void InitializeSense(BaseCharacter baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
@@ -73,14 +69,18 @@ namespace AISenses
         public Target target;
 
 
+        public static implicit operator Target(ScanPositionBuffer e) { return e; }
+        public static implicit operator ScanPositionBuffer(Target e) { return new ScanPositionBuffer { target = e }; }
     }
     public struct Target {
         public Entity entity;
-        public int HitCount;
+        public float DistanceTo;
+        public float3 PositionSawAt;
+        public float angleTo;
     }
    
     [System.Serializable]
-    public struct Hearing : Senses
+    public struct Hearing : ISenses
     {
         public int DetectionRate
         {

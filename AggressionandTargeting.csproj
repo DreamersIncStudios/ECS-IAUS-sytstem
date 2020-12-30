@@ -78,7 +78,7 @@
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\AISensesAuthoring.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\AlertLevel.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Editor\AISensesAuthoringEditor.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses\Senses.cs" />
+    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses\ISenses.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Senses\SoundEmitter.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\ShotTest.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Senses\Systems\HearingSystem.cs" />
@@ -288,7 +288,7 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.4.3/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.4.4-preview.1/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>

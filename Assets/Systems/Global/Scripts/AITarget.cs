@@ -7,6 +7,8 @@ namespace Global.Component
     public struct AITarget : IComponentData
     {
         public TargetType Type;
+        public int NumOfEntityTargetingMe;
+        public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         //public float3 Position; // This need to be removed 
         // Reference Local To World Instead
 

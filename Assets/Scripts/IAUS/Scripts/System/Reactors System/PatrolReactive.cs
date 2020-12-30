@@ -36,7 +36,6 @@ namespace IAUS.ECS2.Systems.Reactive
 
         public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            Debug.Log("Change");
         }
 
         public class PatrolReactiveSystem : AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>
@@ -62,12 +61,12 @@ namespace IAUS.ECS2.Systems.Reactive
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(PatrolWaypointBuffer))
                 , ComponentType.ReadOnly(typeof(LocalToWorld))
                 },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent)) }
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
+                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
             });
 

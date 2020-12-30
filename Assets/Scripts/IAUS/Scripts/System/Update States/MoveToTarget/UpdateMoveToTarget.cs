@@ -42,6 +42,7 @@ namespace IAUS.ECS2.Systems
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
+
             systemDeps = new ScoreMoveState()
             {
                 MoveChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
@@ -55,7 +56,7 @@ namespace IAUS.ECS2.Systems
 
 
 
-        [BurstCompile]
+      //  [BurstCompile]
         struct CheckDistanceToLeader : IJobChunk
         {
             public ArchetypeChunkComponentType<MoveToTarget> MoveChunk;
@@ -71,13 +72,18 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     MoveToTarget move = Moves[i];
-
                     move.DistanceToLeader = Vector3.Distance(Positions[i].Position, EntityPositions[Followers[i].Leader].Position);
+                    if (move.HasTarget)
+                        move.DistanceToTarget = Vector3.Distance(Positions[i].Position, EntityPositions[move.Target.target.entity].Position);
+                    else
+                        move.DistanceToTarget = 0.0f;
 
-                   Moves[i] = move;
+                    Moves[i] = move;
                 }
             }
         }
+
+
         [BurstCompile]
         public struct ScoreMoveState : IJobChunk
         {
@@ -92,9 +98,14 @@ namespace IAUS.ECS2.Systems
                 {
                     MoveToTarget move = Moves[i];
                     CharacterStatComponent stats = Stats[i];
-                    float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio);
-                    move.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * move.mod) * TotalScore);
-
+                    if (move.HasTarget)
+                    {
+          
+                        float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio)*(move.AttackRange = true ? 1.0f : .15f);
+                        move.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * move.mod) * TotalScore);
+                    }
+                    else
+                    { move.TotalScore = 0.0f; }
                     Moves[i] = move;
 
                 }

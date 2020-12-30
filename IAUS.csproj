@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\Follow.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\StayInRange.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\MoveToTargetReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
@@ -294,7 +296,7 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Unsafe">
-      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.4.3/Unity.Burst.Unsafe.dll</HintPath>
+      <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.burst@1.4.4-preview.1/Unity.Burst.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>D:/Main Game Folder/ECS IAUS sytstem/Library/PackageCache/com.unity.collections@0.9.0-preview.6/System.Runtime.CompilerServices.Unsafe.dll</HintPath>

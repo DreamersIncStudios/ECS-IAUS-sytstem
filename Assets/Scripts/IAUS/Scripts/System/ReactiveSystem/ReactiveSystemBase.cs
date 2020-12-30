@@ -110,8 +110,8 @@ namespace Utilities.ReactiveSystem
                     AICOMPONENT AIcomponent = aiComponents[i];
                     Entity entity = entities[i];
                     Reactor.ComponentAdded(entity, ref component, ref AIcomponent);
-                        components[i] = component;
-                        aiComponents[i] = AIcomponent;
+                    components[i] = component;
+                    aiComponents[i] = AIcomponent;
                     // Add the system state component and set it's value that on the next frame, the ManageComponentValueChangeJob can handle any change in the COMPONENT value.
                     EntityCommandBuffer.AddComponent<StateComponent>(chunkIndex, entities[i]);
                     EntityCommandBuffer.SetComponent(chunkIndex, entities[i], new StateComponent() { Value = component });
@@ -132,7 +132,7 @@ namespace Utilities.ReactiveSystem
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<StateComponent> stateComponents =  chunk.GetNativeArray(StateComponentChunk);
+                NativeArray<StateComponent> stateComponents = chunk.GetNativeArray(StateComponentChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(AIComponentChunk);
                 for (int i = 0; i < chunk.Count; ++i)
@@ -143,7 +143,7 @@ namespace Utilities.ReactiveSystem
                     StateComponent stateComponent = stateComponents[i];
                     Reactor.ComponentRemoved(entity, ref AIcomponent, in stateComponent.Value);
 
-                        aiComponents[i] = AIcomponent;
+                    aiComponents[i] = AIcomponent;
                     // Remove the state component so that the entiyt can be destroyed or listen again for COMPONENT addition.
                     EntityCommandBuffer.RemoveComponent<StateComponent>(chunkIndex, entities[i]);
                 }
@@ -191,16 +191,16 @@ namespace Utilities.ReactiveSystem
         {
 
             JobHandle systemDeps = Dependency;
-             // Removing as it is not used right now .15ms performance hit
-            //    systemDeps = new ManageComponentValueChangeJob()
-            //    {
-            //        ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
-            //        AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
-            //        StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
-            //        EntityChunk = GetArchetypeChunkEntityType(),
-            //        Reactor = _reactor
-            //    }.ScheduleParallel(_componentValueChangedQuery, systemDeps);
-            
+            // Removing as it is not used right now .15ms performance hit
+            //systemDeps = new ManageComponentValueChangeJob()
+            //{
+            //    ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
+            //    AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
+            //    StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
+            //    EntityChunk = GetArchetypeChunkEntityType(),
+            //    Reactor = _reactor
+            //}.ScheduleParallel(_componentValueChangedQuery, systemDeps);
+
             //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new ManageComponentAdditionJob()
@@ -220,13 +220,14 @@ namespace Utilities.ReactiveSystem
                 StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
                 EntityChunk = GetArchetypeChunkEntityType(),
                 EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-   
+
                 Reactor = _reactor
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps.Complete();
             Dependency = systemDeps;
         }
+    }
         public static class ByteBufferUtility
         {
             public static bool AreEqualStruct<T>(T frist, T second) where T : unmanaged
@@ -252,6 +253,6 @@ namespace Utilities.ReactiveSystem
             }
 
         }
-    }
+    
 
 }
