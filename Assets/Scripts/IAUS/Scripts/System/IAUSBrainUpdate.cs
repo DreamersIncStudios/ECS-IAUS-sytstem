@@ -28,30 +28,33 @@ namespace IAUS.ECS2.Systems
 
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
-            systemDeps = new UpdateBrains()
+            if (UnityEngine.Time.frameCount % 120 == 5)
             {
-                EntityChunk = GetArchetypeChunkEntityType(),
-                StateChunks = GetArchetypeChunkBufferType<StateBuffer>(false),
-                Patrols = GetComponentDataFromEntity<Patrol>(true),
-                Waits = GetComponentDataFromEntity<Wait>(true),
-                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
-                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true)
-            }.Schedule(IAUSBrains, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                JobHandle systemDeps = Dependency;
+                systemDeps = new UpdateBrains()
+                {
+                    EntityChunk = GetArchetypeChunkEntityType(),
+                    StateChunks = GetArchetypeChunkBufferType<StateBuffer>(false),
+                    Patrols = GetComponentDataFromEntity<Patrol>(true),
+                    Waits = GetComponentDataFromEntity<Wait>(true),
+                    StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                    GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true)
+                }.Schedule(IAUSBrains, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            systemDeps = new FindHighestScore()
-            {
-                ConcurrentBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                StateChunks = GetArchetypeChunkBufferType<StateBuffer>(true),
-                BrainsChunk = GetArchetypeChunkComponentType<IAUSBrain>(false)
-                
-            }.Schedule(IAUSBrains, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            //systemDeps.Complete();
-            Dependency = systemDeps;
+                systemDeps = new FindHighestScore()
+                {
+                    ConcurrentBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                    EntityChunk = GetArchetypeChunkEntityType(),
+                    StateChunks = GetArchetypeChunkBufferType<StateBuffer>(true),
+                    BrainsChunk = GetArchetypeChunkComponentType<IAUSBrain>(false)
 
+                }.Schedule(IAUSBrains, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                //systemDeps.Complete();
+                Dependency = systemDeps;
+
+            }
         }
 
        [BurstCompile]

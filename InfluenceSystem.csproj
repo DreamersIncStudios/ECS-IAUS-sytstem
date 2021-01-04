@@ -64,12 +64,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\CreateGridMapTiles.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\GridComponent.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Influencer.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Setting Components\Cover.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Setting Components\Static.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\GruntInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceGridPoint.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceSampler.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\LeaderInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\ObjectInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\GridPointSpawner.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\InfluenceSystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\Testsystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\transformConversion.cs" />
     <None Include="Assets\Systems\InfluenceSystem\InfluenceSystem.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -648,6 +651,14 @@
     <ProjectReference Include="Unity.Entities.Hybrid.csproj">
       <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
       <Name>Unity.Entities.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
+      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
+      <Name>Unity.Transforms.Hybrid</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

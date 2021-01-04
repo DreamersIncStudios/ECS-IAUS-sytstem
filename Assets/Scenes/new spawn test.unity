@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39104
+  m_Name: pb_Mesh-1796
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -312,7 +312,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38992
+  m_Name: pb_Mesh18884
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -515,7 +515,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40142
+  m_Name: pb_Mesh-1820
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -781,6 +781,8 @@ GameObject:
   - component: {fileID: 99648493}
   - component: {fileID: 99648500}
   - component: {fileID: 99648501}
+  - component: {fileID: 99648503}
+  - component: {fileID: 99648502}
   m_Layer: 0
   m_Name: Evil Test Cubie Leader
   m_TagString: Untagged
@@ -903,7 +905,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99648492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.01818, y: 1.09, z: 52.444862}
+  m_LocalPosition: {x: 10.1, y: 1.09, z: 52.444862}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -956,6 +958,33 @@ MonoBehaviour:
     EnemyAwarnessLevel: 0
   Touch: 0
   Editing: 0
+--- !u!114 &99648502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99648492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74475a335a5196841a556bd20f4e3dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 2
+  Range: 38
+--- !u!114 &99648503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99648492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53ef0195ed814324b8e10e831335e7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &153925622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8275261834637000948, guid: 36498cd370e7802408964a72908fed13,
@@ -1406,6 +1435,7 @@ GameObject:
   - component: {fileID: 238533013}
   - component: {fileID: 238533012}
   - component: {fileID: 238533024}
+  - component: {fileID: 238533025}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (1)
   m_TagString: Untagged
@@ -1689,6 +1719,21 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
+--- !u!114 &238533025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238533011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 1
+  Range: 4
 --- !u!1 &260989426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
@@ -3271,6 +3316,7 @@ GameObject:
   - component: {fileID: 524945580}
   - component: {fileID: 524945579}
   - component: {fileID: 524945591}
+  - component: {fileID: 524945592}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (3)
   m_TagString: Untagged
@@ -3554,6 +3600,21 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
+--- !u!114 &524945592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524945578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 1
+  Range: 4
 --- !u!1001 &536390178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4206,7 +4267,82 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8275261833850935133, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097973, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000947, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989479, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241754012, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306390, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560893, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383628, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228334, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880357, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043813, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428309, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325090, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141353, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834079879400, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018017, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240041, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859699, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197675, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818600, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273176, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494341, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255100, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058901, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358900, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833850935111, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097983, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000949, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989481, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241753990, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306392, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560871, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383734, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228304, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880367, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043823, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428319, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325092, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141331, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834079879406, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018027, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240019, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859701, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197677, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818578, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273154, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494351, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255078, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058911, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358910, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833850935104, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097976, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000950, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989482, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241753991, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306393, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560864, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383735, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228305, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880360, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043816, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428312, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325093, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141356, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834079879407, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018020, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240044, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859702, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197678, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818579, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273155, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494344, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255079, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058904, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358911, guid: 36498cd370e7802408964a72908fed13, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 36498cd370e7802408964a72908fed13, type: 3}
 --- !u!1001 &546178058
 PrefabInstance:
@@ -4455,6 +4591,7 @@ GameObject:
   - component: {fileID: 551609754}
   - component: {fileID: 551609753}
   - component: {fileID: 551609765}
+  - component: {fileID: 551609766}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (4)
   m_TagString: Untagged
@@ -4738,6 +4875,21 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
+--- !u!114 &551609766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551609752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 1
+  Range: 4
 --- !u!1 &572087762 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
@@ -5140,7 +5292,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39476
+  m_Name: pb_Mesh-1274
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6193,7 +6345,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40284
+  m_Name: pb_Mesh19108
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6402,10 +6554,7 @@ GameObject:
   - component: {fileID: 740229177}
   - component: {fileID: 740229176}
   - component: {fileID: 740229175}
-  - component: {fileID: 740229174}
-  - component: {fileID: 740229173}
   - component: {fileID: 740229172}
-  - component: {fileID: 740229171}
   - component: {fileID: 740229170}
   m_Layer: 12
   m_Name: Cover (25)
@@ -6442,18 +6591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 2
   NumOfEntityTargetingMe: 0
---- !u!114 &740229171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740229168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0ba694310d976409e798738d4cf6b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &740229172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6467,46 +6604,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
---- !u!114 &740229173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740229168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f50b022b4f995e41b0c332938419ddc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  influence:
-    Proximity:
-      x: 0
-      y: 0
-    Threat:
-      x: 0
-      y: 0
-  RingWidth: 0
-  fallOff: 0
---- !u!114 &740229174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740229168}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d9e58194509a24eaec2cae8909a179, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Destruction: 0
-  Destroyed: 0
-  level: 0
-  CurHealth: 0
-  MaxHealth: 0
-  DamageRange: 0
-  Damage: 0
 --- !u!65 &740229175
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8334,7 +8431,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41408
+  m_Name: pb_Mesh-1400
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8517,7 +8614,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh38808
+  m_Name: pb_Mesh-1290
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -9383,7 +9480,82 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8275261834079879407, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141353, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880357, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000947, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228334, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058901, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560893, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358900, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834079879400, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383628, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494341, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241754012, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197675, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833850935133, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818600, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428309, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097973, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273176, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018017, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255100, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859699, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306390, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240041, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043813, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325090, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989479, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141331, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880367, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000949, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228304, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058911, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560871, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358910, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834079879406, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383734, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494351, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241753990, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197677, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833850935111, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818578, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428319, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097983, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273154, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018027, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255078, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859701, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306392, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240019, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043823, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325092, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989481, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834677141356, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833707880360, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834637000950, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833286228305, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834130058904, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834311560864, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835089358911, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833088383735, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833545494344, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833241753991, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833312197678, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833850935104, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834175818579, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834889428312, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834733097976, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833896273155, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834666018020, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834008255079, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834971859702, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833363306393, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833575240044, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261834914043816, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261835010325093, guid: 36498cd370e7802408964a72908fed13, type: 3}
+    - {fileID: 8275261833137989482, guid: 36498cd370e7802408964a72908fed13, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 36498cd370e7802408964a72908fed13, type: 3}
 --- !u!1 &1114955516 stripped
 GameObject:
@@ -9652,6 +9824,7 @@ GameObject:
   - component: {fileID: 1166486096}
   - component: {fileID: 1166486095}
   - component: {fileID: 1166486107}
+  - component: {fileID: 1166486108}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (2)
   m_TagString: Untagged
@@ -9935,6 +10108,21 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
+--- !u!114 &1166486108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166486094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 1
+  Range: 4
 --- !u!4 &1186079830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
@@ -9947,7 +10135,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40796
+  m_Name: pb_Mesh-1266
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10980,7 +11168,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40992
+  m_Name: pb_Mesh19230
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11331,7 +11519,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh39784
+  m_Name: pb_Mesh19020
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11621,7 +11809,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh41880
+  m_Name: pb_Mesh-1804
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12362,6 +12550,7 @@ GameObject:
   - component: {fileID: 1602334480}
   - component: {fileID: 1602334481}
   - component: {fileID: 1602334482}
+  - component: {fileID: 1602334483}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower
   m_TagString: Untagged
@@ -12645,13 +12834,28 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
+--- !u!114 &1602334483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602334469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faction: 0
+  InfluenceValue: 1
+  Range: 4
 --- !u!43 &1603577647
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40808
+  m_Name: pb_Mesh-1812
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12834,7 +13038,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh40926
+  m_Name: pb_Mesh-1928
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13330,7 +13534,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh42436
+  m_Name: pb_Mesh-1282
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

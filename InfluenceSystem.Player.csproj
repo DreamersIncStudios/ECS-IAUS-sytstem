@@ -71,6 +71,12 @@
     <Reference Include="Unity.Entities.Hybrid">
       <HintPath>Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Burst">
+      <HintPath>Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Transforms.Hybrid">
+      <HintPath>Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -616,12 +622,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\CreateGridMapTiles.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\GridComponent.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Influencer.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Setting Components\Cover.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Components\Setting Components\Static.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Systems Jobs\InfluenceMovementUpdateSystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\GruntInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceGridPoint.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceSampler.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\LeaderInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\ObjectInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\GridPointSpawner.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\InfluenceSystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\Testsystem.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\transformConversion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\InfluenceSystem\InfluenceSystem.asmdef" />
