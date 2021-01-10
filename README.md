@@ -1,4 +1,4 @@
-Notice: Back to work as normally. Alpha Branch has been updated to 2019.4 LTS
+Notice: Consider Using and reviewing Alhpa 0.7-new branch as there have been major changes. 
 
 
 If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
