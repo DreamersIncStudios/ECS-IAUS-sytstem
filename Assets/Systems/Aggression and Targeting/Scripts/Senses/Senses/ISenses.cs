@@ -75,8 +75,11 @@ namespace AISenses
     public struct Target {
         public Entity entity;
         public float DistanceTo;
-        public float3 PositionSawAt;
-        public float angleTo;
+        public float3 LastKnownPosition;
+        public bool CanSee;
+        public int LookAttempt;
+        public bool CantFind => LookAttempt > 3;
+     //   public float angleTo;
     }
    
     [System.Serializable]

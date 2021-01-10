@@ -22,7 +22,7 @@ namespace InfluenceSystem.Systems
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             GridPoints = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(InfluenceGridPoint)), ComponentType.ReadOnly(typeof(Translation))}
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(InfluenceGridPoint)), ComponentType.ReadWrite(typeof(Translation))}
             });
 
             Leaders = GetEntityQuery(new EntityQueryDesc() 
@@ -43,7 +43,7 @@ namespace InfluenceSystem.Systems
                 systemDeps = new UpdateInfluenceMapForLeaders()
                 {
                     GridChunk = GetArchetypeChunkComponentType<InfluenceGridPoint>(false),
-                    PositionChunk = GetArchetypeChunkComponentType<Translation>(true),
+                    PositionChunk = GetArchetypeChunkComponentType<Translation>(false),
                     Influe = Leaders.ToComponentDataArray<LeaderInfluence>(Allocator.TempJob),
                     transforms = Leaders.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
                 }.ScheduleParallel(GridPoints, systemDeps);
@@ -66,7 +66,7 @@ namespace InfluenceSystem.Systems
         struct UpdateInfluenceMapForLeaders : IJobChunk
         {
             public ArchetypeChunkComponentType<InfluenceGridPoint> GridChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<Translation> PositionChunk;
+            public ArchetypeChunkComponentType<Translation> PositionChunk;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LeaderInfluence> Influe;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> transforms;
 
@@ -80,10 +80,12 @@ namespace InfluenceSystem.Systems
                     InfluenceGridPoint grid = Grids[i];
                     grid.PlayerParty = new GridValues();
                     grid.Enemies = new GridValues();
-
+                    Translation pos = Positions[i];
                     for (int j = 0; j < Influe.Length; j++)
                     {
-                        float dist = Vector3.Distance(Positions[i].Value, transforms[j].Position);
+                        pos.Value = transforms[j].Position + new float3(grid.GridPoint.x - 50, 0, grid.GridPoint.y - 50);
+                        Positions[i] = pos;
+                        float dist = Vector3.Distance(pos.Value, transforms[j].Position);
                         if (dist < 2 * Influe[j].Range)
                         {
                             switch (Influe[j].faction)
@@ -99,6 +101,7 @@ namespace InfluenceSystem.Systems
                             }
                         }
                     }
+
                     Grids[i] = grid;
                 }
 

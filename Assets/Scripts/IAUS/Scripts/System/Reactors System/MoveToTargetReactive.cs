@@ -2,7 +2,6 @@
 using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
-using Unity.Transforms;
 using IAUS.ECS2.Component;
 using Unity.Entities;
 using Unity.Burst;
@@ -18,14 +17,29 @@ namespace IAUS.ECS2.Systems.Reactive
     {
         public void ComponentAdded(Entity entity, ref MoveToTargetActionTag newComponent, ref MoveToTarget AIStateCompoment)
         {
+            AIStateCompoment.Status = ActionStatus.Running;
+
         }
 
         public void ComponentRemoved(Entity entity, ref MoveToTarget AIStateCompoment, in MoveToTargetActionTag oldComponent)
         {
+
+            if (AIStateCompoment.InRange)
+            {
+                AIStateCompoment.Status = ActionStatus.CoolDown;
+                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+            }
+            else
+            {
+                AIStateCompoment.Status = ActionStatus.CoolDown;
+                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+
+            }
         }
 
         public void ComponentValueChanged(Entity entity, ref MoveToTargetActionTag newComponent, ref MoveToTarget AIStateCompoment, in MoveToTargetActionTag oldComponent)
         {
+            Debug.Log("charnged");
         }
         public class MoveToReactive : AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, MoveToTargetReactor>
         {
@@ -119,18 +133,14 @@ namespace IAUS.ECS2.Systems.Reactive
         public struct UpdateMoveTarget : IJobChunk
 
         {
-        //    public ArchetypeChunkComponentType<Movement> MoveChunk;
             public ArchetypeChunkComponentType<MoveToTarget> MoveToChunk;
             [ReadOnly] public ArchetypeChunkComponentType<Vision> SeersChunk;
             [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> AItargetFromEntity;
             public float DT;
-            //   public ArchetypeChunkComponentType<AIReactiveSystemBase<Vision, MoveToTarget, VisionReactor>.StateComponent> StateChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-           //     NativeArray<Movement> movements = chunk.GetNativeArray(MoveChunk);
                 NativeArray<MoveToTarget> moveToTargets = chunk.GetNativeArray(MoveToChunk);
                 NativeArray<Vision> Seers = chunk.GetNativeArray(SeersChunk);
-                //NativeArray<AIReactiveSystemBase<Vision, MoveToTarget, VisionReactor>.StateComponent> stateComponents = chunk.GetNativeArray(StateChunk);
 
 
                 for (int i = 0; i < chunk.Count; i++)
@@ -139,7 +149,6 @@ namespace IAUS.ECS2.Systems.Reactive
 
 
                     MoveToTarget moveTo = moveToTargets[i];
-                    //        Movement move = movements[i];
                     if (!moveTo.CheckForTarget) 
                     {
                         moveTo.CheckTimer -= DT;
@@ -156,11 +165,8 @@ namespace IAUS.ECS2.Systems.Reactive
                         moveTo.Target = Seers[i].ClosestTarget;
                         check.NumOfEntityTargetingMe++;
                         AItargetFromEntity[moveTo.Target.target.entity] = check;
-                    //    move.TargetLocation = moveTo.Target.target.PositionSawAt;
-                    //    move.CanMove = true;
-                    //    move.SetTargetLocation = true;
+
                     }
-                    //movements[i] = move;
 
                     moveToTargets[i] = moveTo;
                 }
@@ -185,7 +191,7 @@ namespace IAUS.ECS2.Systems.Reactive
 
                     if (moveTo.HasTarget )
                     {
-                        move.TargetLocation = moveTo.Target.target.PositionSawAt;
+                        move.TargetLocation = moveTo.Target.target.LastKnownPosition;
                         move.CanMove = true;
                         move.SetTargetLocation = true;
                     }

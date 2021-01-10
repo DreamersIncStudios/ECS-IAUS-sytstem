@@ -6,18 +6,18 @@ namespace IAUS.ECS2.Component
     [GenerateAuthoringComponent]
     public struct MoveToTarget : IBaseStateScorer {
 
+        // Need to adjust state to position character based on attackStyle
+
+
         public float MaxRangeToLeader; // will change to an influence score later 
         public float DistanceToLeader;
-        public float DistanceToTarget;
-
+        public bool InRange;
         public ScanPositionBuffer Target;
         public bool HasTarget => Target.target.entity != Entity.Null;
 
         public float CheckTimer;
         public bool CheckForTarget => CheckTimer <= 0.0f;
-        public bool WithinAttackRadius => AttackRange > DistanceToTarget;
         public float DistanceRatio => DistanceToLeader / MaxRangeToLeader;
-        public float AttackRange; //Need to be set in spawner 
 
         public float UpdateTimer; // check if target is still visable and in range
 

@@ -12,6 +12,10 @@ namespace IAUS.ECS2.Systems
     {
         private EntityQuery PatrolCooldown;
         private EntityQuery WaitCooldown;
+        private EntityQuery MoveToCooldown;
+        private EntityQuery AttackCooldown;
+
+
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -31,6 +35,15 @@ namespace IAUS.ECS2.Systems
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
 
             });
+            MoveToCooldown = GetEntityQuery(new EntityQueryDesc() {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget))},
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(MoveToTargetActionTag))}
+            });
+            AttackCooldown = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(MeleeAttackTarget)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AttackTargetActionTag)) }
+            });
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
@@ -49,6 +62,20 @@ namespace IAUS.ECS2.Systems
                 AIStateChunk = GetArchetypeChunkComponentType<Wait>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(WaitCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new CooldownJob<MoveToTarget>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(MoveToCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new CooldownJob<MeleeAttackTarget>()
+            {
+                AIStateChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(AttackCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;

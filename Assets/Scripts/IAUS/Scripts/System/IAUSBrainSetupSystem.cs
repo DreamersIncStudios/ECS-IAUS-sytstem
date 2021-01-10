@@ -13,6 +13,7 @@ namespace IAUS.ECS2.Systems
         EntityQuery _waitStateEntity;
         EntityQuery _GetInRangeStateEntity;
         EntityQuery _MoveToTargetStateEntity;
+        EntityQuery _AttackMeleeStateEntity;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -42,6 +43,13 @@ namespace IAUS.ECS2.Systems
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(StayInRange))}
             } );
+
+            _AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(MeleeAttackTarget))}
+            });
+
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { typeof(IAUSBrain), typeof(StateBuffer), typeof(SetupBrainTag) }
@@ -94,7 +102,17 @@ namespace IAUS.ECS2.Systems
                 MoveToTargetChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
                 EntityChunk = GetArchetypeChunkEntityType(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
-            }.ScheduleParallel(_MoveToTargetStateEntity, systemDeps);
+            }.ScheduleParallel(_MoveToTargetStateEntity ,systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AddAttackTargetState()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
+                AttackTargetChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
 

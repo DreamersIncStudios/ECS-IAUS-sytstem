@@ -31,45 +31,38 @@ namespace AISenses.VisionSystems
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadWrite(typeof(AITarget)) }
 
             });
-
-
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
-
-
-            systemDeps = new RaycastTargets()
+            if (UnityEngine.Time.frameCount % 240 == 10)
             {
-                SeersChunk = GetArchetypeChunkComponentType<Vision>(true),
-                SeersPositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
-                ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
-                PossibleTargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld,
-        }.ScheduleParallel(SeerEntityQuery, systemDeps);
-            systemDeps.Complete();
-            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                JobHandle systemDeps = Dependency;
+                systemDeps = new RaycastTargets()
+                {
+                    SeersChunk = GetArchetypeChunkComponentType<Vision>(true),
+                    SeersPositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                    ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
+                    PossibleTargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+                    physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld,
+                }.ScheduleParallel(SeerEntityQuery, systemDeps);
+                systemDeps.Complete();
+                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            systemDeps = new FindClosestTarget()
-            {
-                DT = Time.DeltaTime,
-                SeersChunk = GetArchetypeChunkComponentType<Vision>(false),
-                ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
-                AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false)
+                systemDeps = new FindClosestTarget()
+                {
+                    DT = Time.DeltaTime,
+                    SeersChunk = GetArchetypeChunkComponentType<Vision>(false),
+                    ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
+                    AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false)
 
-            }.ScheduleParallel(SeerEntityQuery, systemDeps);
+                }.ScheduleParallel(SeerEntityQuery, systemDeps);
 
-            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
+                Dependency = systemDeps;
 
-
-            Dependency = systemDeps;
-
-
-
-
-
+            }
         }
 
         [BurstCompile]
@@ -92,9 +85,6 @@ namespace AISenses.VisionSystems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Vision seer = Seers[i];
-                    if (!seer.LookForTargets) {
-                        continue;
-                    }
                     
                     LocalToWorld seerPosition = SeersPosition[i];
                     DynamicBuffer<ScanPositionBuffer> buffer = Buffers[i];
@@ -120,19 +110,15 @@ namespace AISenses.VisionSystems
                                     }
                                 };
 
-
                                 // cast rays
-
                                 ScanPositionBuffer scan = new ScanPositionBuffer();
 
                                 if (collisionWorld.CastRay(raycastCenter, out Unity.Physics.RaycastHit raycastHit))
                                 {
-                                    //Debug.Log("hit Something");
                                     scan.target.entity = physicsWorld.Bodies[raycastHit.RigidBodyIndex].Entity;
                                     scan.target.DistanceTo = raycastHit.Fraction*dist;
-                                    scan.target.PositionSawAt = raycastHit.Position;
-                                    scan.target.angleTo = Vector3.Angle(seerPosition.Forward, ((Vector3)raycastHit.Position - (Vector3)seerPosition.Position).normalized);
-                                    //
+                                    scan.target.LastKnownPosition = raycastHit.Position;
+                                    scan.target.CanSee = true;
                                     if(!ChecktoSeeIfwehitthisEntityBefore(buffer,scan))
                                         buffer.Add(scan);
                                 }
@@ -140,10 +126,7 @@ namespace AISenses.VisionSystems
                         }
 
                     }
-
-
                 }
-
             }
 
             bool ChecktoSeeIfwehitthisEntityBefore(DynamicBuffer<ScanPositionBuffer> Input, ScanPositionBuffer Check) { 
@@ -156,21 +139,17 @@ namespace AISenses.VisionSystems
                         return result;
                     }
                 }
-
-
                 return result;
             }
         }
 
-      //  [BurstCompile]
+        [BurstCompile]
         public struct FindClosestTarget : IJobChunk
         {
             public ArchetypeChunkComponentType<Vision> SeersChunk;
             public ArchetypeChunkBufferType<ScanPositionBuffer> ScanBufferChunk;
            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> AItargetFromEntity;
-
             public float DT;
-
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -181,12 +160,7 @@ namespace AISenses.VisionSystems
                     DynamicBuffer<ScanPositionBuffer> buffer = Buffers[i];
 
                     Vision seer = Seers[i];
-                    if (!seer.LookForTargets)
-                    {
-                        seer.Scantimer -= DT;
-                        Seers[i] = seer;
-                        continue;
-                    }
+
                     if (buffer.Length == 0)
                         continue;
 
@@ -203,7 +177,6 @@ namespace AISenses.VisionSystems
  
                     seer.Scantimer = 3.5f;
                         Seers[i] = seer;
-                        
                 }
             }
         }

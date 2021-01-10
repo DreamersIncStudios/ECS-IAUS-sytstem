@@ -8,7 +8,7 @@ using Unity.Collections;
 using Unity.Jobs;
 
 namespace InfluenceSystem.Component {
-    public class GridPointSpawner : MonoBehaviour
+    public class GridPointSpawner : MonoBehaviour,IConvertGameObjectToEntity
     {
         public static GridPointSpawner spawner;
         public DestoryGridSytstem destoryGridSytstem;
@@ -27,11 +27,11 @@ namespace InfluenceSystem.Component {
         void Start()
         {
             entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            CreateGrid((float3)transform.position, 10);
+            CreateGrid((float3)transform.position, 10,reference);
 
         }
 
-        public void CreateGrid(float3 Centerpoint, int GridID)
+        public void CreateGrid(float3 Centerpoint, int GridID, Entity center)
         {
             EntityArchetype prefab = entityManager.CreateArchetype(
              typeof(LocalToWorld),
@@ -46,9 +46,13 @@ namespace InfluenceSystem.Component {
                     var instance = entityManager.CreateEntity(prefab);
                     entityManager.SetComponentData(instance, new Translation
                     {
-                        Value = Centerpoint + new float3(i * 1 - 50, 0, j * 1 - 50)
+                        Value = Centerpoint + new float3(i - 50,  0, j - 50)
                     });
-                    entityManager.SetComponentData(instance, new InfluenceGridPoint { GridmapID = GridID });
+           
+                    entityManager.SetComponentData(instance, new InfluenceGridPoint { GridmapID = GridID,
+                        center = center,
+                        GridPoint = new int2() { x=i, y= j}
+                    });
 
                 }
             }
@@ -70,7 +74,11 @@ namespace InfluenceSystem.Component {
             }
             destoryGridSytstem.RunDestoryJobOnce(ID);
         }
-
+        Entity reference;
+        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        {
+            reference = entity;
+        }
     }
 
    [DisableAutoCreation]

@@ -64,12 +64,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\Attackable Raycast\Detection.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\Attackable Raycast\HumanRayCastPoints.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\Attackable Raycast\UpdateRacastTargetPoints.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\DetectionSystem.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\DetermineAlertLevel.cs" />
-    <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\AI Detection\RayCastSetupJobs.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\Authoring\FactionAuthoring.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\CharacterAlignment.cs" />
     <Compile Include="Assets\Systems\Aggression and Targeting\Scripts\Aggression\IFactionBase.cs" />

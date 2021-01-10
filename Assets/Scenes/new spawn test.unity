@@ -1436,6 +1436,8 @@ GameObject:
   - component: {fileID: 238533012}
   - component: {fileID: 238533024}
   - component: {fileID: 238533025}
+  - component: {fileID: 238533026}
+  - component: {fileID: 238533027}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (1)
   m_TagString: Untagged
@@ -1489,9 +1491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
-  DistanceToTarget: 0
+  InRange: 0
   CheckTimer: 5
-  AttackRange: 1.5
   UpdateTimer: 0
   DistanceToLead:
     Inverse: 0
@@ -1523,6 +1524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
+  influenceScoreAtPosition: 0
   DistanceToLead:
     Inverse: 0
     responseType: 2
@@ -1734,6 +1736,45 @@ MonoBehaviour:
   faction: 0
   InfluenceValue: 1
   Range: 4
+--- !u!114 &238533026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238533011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceToTarget: 0
+  AttackRange: 10
+  Attacktimer: 30
+  Target: {fileID: 0}
+--- !u!114 &238533027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238533011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 30
+  DistanceToTarget: 0
+  HealthRatio:
+    Inverse: 0
+    responseType: 1
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _status: 0
+  _coolDownTime: 5
 --- !u!1 &260989426 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
@@ -3317,6 +3358,8 @@ GameObject:
   - component: {fileID: 524945579}
   - component: {fileID: 524945591}
   - component: {fileID: 524945592}
+  - component: {fileID: 524945593}
+  - component: {fileID: 524945594}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (3)
   m_TagString: Untagged
@@ -3370,9 +3413,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
-  DistanceToTarget: 0
+  InRange: 0
   CheckTimer: 5
-  AttackRange: 1.5
   UpdateTimer: 0
   DistanceToLead:
     Inverse: 0
@@ -3404,6 +3446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
+  influenceScoreAtPosition: 0
   DistanceToLead:
     Inverse: 0
     responseType: 2
@@ -3615,6 +3658,45 @@ MonoBehaviour:
   faction: 0
   InfluenceValue: 1
   Range: 4
+--- !u!114 &524945593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524945578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceToTarget: 0
+  AttackRange: 10
+  Attacktimer: 30
+  Target: {fileID: 0}
+--- !u!114 &524945594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524945578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 30
+  DistanceToTarget: 0
+  HealthRatio:
+    Inverse: 0
+    responseType: 1
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _status: 0
+  _coolDownTime: 5
 --- !u!1001 &536390178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4592,6 +4674,8 @@ GameObject:
   - component: {fileID: 551609753}
   - component: {fileID: 551609765}
   - component: {fileID: 551609766}
+  - component: {fileID: 551609767}
+  - component: {fileID: 551609768}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (4)
   m_TagString: Untagged
@@ -4645,9 +4729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
-  DistanceToTarget: 0
+  InRange: 0
   CheckTimer: 5
-  AttackRange: 1.5
   UpdateTimer: 0
   DistanceToLead:
     Inverse: 0
@@ -4679,6 +4762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
+  influenceScoreAtPosition: 0
   DistanceToLead:
     Inverse: 0
     responseType: 2
@@ -4890,6 +4974,45 @@ MonoBehaviour:
   faction: 0
   InfluenceValue: 1
   Range: 4
+--- !u!114 &551609767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551609752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceToTarget: 0
+  AttackRange: 10
+  Attacktimer: 30
+  Target: {fileID: 0}
+--- !u!114 &551609768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551609752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 30
+  DistanceToTarget: 0
+  HealthRatio:
+    Inverse: 0
+    responseType: 1
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _status: 0
+  _coolDownTime: 5
 --- !u!1 &572087762 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
@@ -9425,6 +9548,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 8275261834889428318, guid: 36498cd370e7802408964a72908fed13,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8275261834914043817, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_Enabled
@@ -9825,6 +9953,8 @@ GameObject:
   - component: {fileID: 1166486095}
   - component: {fileID: 1166486107}
   - component: {fileID: 1166486108}
+  - component: {fileID: 1166486109}
+  - component: {fileID: 1166486110}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (2)
   m_TagString: Untagged
@@ -9878,9 +10008,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
-  DistanceToTarget: 0
+  InRange: 0
   CheckTimer: 5
-  AttackRange: 1.5
   UpdateTimer: 0
   DistanceToLead:
     Inverse: 0
@@ -9912,6 +10041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
+  influenceScoreAtPosition: 0
   DistanceToLead:
     Inverse: 0
     responseType: 2
@@ -10123,6 +10253,45 @@ MonoBehaviour:
   faction: 0
   InfluenceValue: 1
   Range: 4
+--- !u!114 &1166486109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166486094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceToTarget: 0
+  AttackRange: 10
+  Attacktimer: 30
+  Target: {fileID: 0}
+--- !u!114 &1166486110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166486094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 30
+  DistanceToTarget: 0
+  HealthRatio:
+    Inverse: 0
+    responseType: 1
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _status: 0
+  _coolDownTime: 5
 --- !u!4 &1186079830 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
@@ -12551,6 +12720,8 @@ GameObject:
   - component: {fileID: 1602334481}
   - component: {fileID: 1602334482}
   - component: {fileID: 1602334483}
+  - component: {fileID: 1602334484}
+  - component: {fileID: 1602334485}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower
   m_TagString: Untagged
@@ -12725,6 +12896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
+  influenceScoreAtPosition: 0
   DistanceToLead:
     Inverse: 0
     responseType: 2
@@ -12755,9 +12927,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxRangeToLeader: 60
   DistanceToLeader: 0
-  DistanceToTarget: 0
+  InRange: 0
   CheckTimer: 5
-  AttackRange: 1.5
   UpdateTimer: 0
   DistanceToLead:
     Inverse: 0
@@ -12849,6 +13020,45 @@ MonoBehaviour:
   faction: 0
   InfluenceValue: 1
   Range: 4
+--- !u!114 &1602334484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602334469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DistanceToTarget: 0
+  AttackRange: 10
+  Attacktimer: 30
+  Target: {fileID: 0}
+--- !u!114 &1602334485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602334469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timer: 30
+  DistanceToTarget: 0
+  HealthRatio:
+    Inverse: 0
+    responseType: 1
+    M: 50
+    K: -1
+    B: 0.91
+    C: 0.35
+  _status: 0
+  _coolDownTime: 5
 --- !u!43 &1603577647
 Mesh:
   m_ObjectHideFlags: 0
