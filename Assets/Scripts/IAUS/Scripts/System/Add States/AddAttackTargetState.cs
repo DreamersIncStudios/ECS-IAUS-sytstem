@@ -31,7 +31,10 @@ namespace IAUS.ECS2.Systems
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
                     if (stateBuffer[index].StateName == AIStates.Attack_Melee)
-                    { add = false; }
+                    {
+                        add = false;
+                        continue;
+                    }
                 }
                 c1.Status = ActionStatus.Idle;
                 if (add)

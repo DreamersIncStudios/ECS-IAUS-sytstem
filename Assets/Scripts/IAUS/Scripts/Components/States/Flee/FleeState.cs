@@ -1,18 +1,13 @@
-﻿using UnityEngine;
-using Unity.Entities;
+﻿using Unity.Entities;
+using UnityEngine;
 
 namespace IAUS.ECS2.Component
 {
-
-    [GenerateAuthoringComponent]
-    public struct MeleeAttackTarget : IBaseStateScorer
+    public struct FleeState : IBaseStateScorer
     {
-
-        public float Timer;
-        public float DistanceToTarget;
-       [SerializeField] public bool TimeToAttack => Timer <= 0.0f;
-
         public ConsiderationScoringData HealthRatio;
+        public ConsiderationScoringData InfluenceInAfter;
+        public ConsiderationScoringData Range;
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -25,9 +20,9 @@ namespace IAUS.ECS2.Component
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
-
     }
 
-    public struct AttackTargetActionTag : IComponentData { bool test; }
 
+
+    public struct FleeActionTag : IComponentData { bool test; }
 }

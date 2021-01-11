@@ -604,6 +604,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Systems\Global\GameMasterTest.cs" />
     <Compile Include="Assets\Systems\Global\Player_Control.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\AITarget.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\CleanUpHybridEntity.cs" />

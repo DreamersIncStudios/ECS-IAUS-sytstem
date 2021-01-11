@@ -14,7 +14,7 @@ namespace IAUS.ECS2.Systems
         EntityQuery _GetInRangeStateEntity;
         EntityQuery _MoveToTargetStateEntity;
         EntityQuery _AttackMeleeStateEntity;
-
+        EntityQuery _FleeStateEntity;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -49,7 +49,11 @@ namespace IAUS.ECS2.Systems
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(MeleeAttackTarget))}
             });
-
+            _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(FleeState))}
+            });
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { typeof(IAUSBrain), typeof(StateBuffer), typeof(SetupBrainTag) }
@@ -114,7 +118,16 @@ namespace IAUS.ECS2.Systems
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
+            
+            systemDeps = new AddFleeState()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
+                FleeChunk = GetArchetypeChunkComponentType<FleeState>(false),
+                EntityChunk = GetArchetypeChunkEntityType(),
+                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            }.ScheduleParallel(_FleeStateEntity, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             // This is to be the last job of this system
 

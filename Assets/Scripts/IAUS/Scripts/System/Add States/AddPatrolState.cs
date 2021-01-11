@@ -33,7 +33,10 @@ namespace IAUS.ECS2.Systems {
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
                     if (stateBuffer[index].StateName == AIStates.Patrol)
-                    { add = false; }
+                    {
+                        add = false;
+                        continue;
+                    }
                 }
                 c1.NumberOfWayPoints = buffer.Length;
                 c1.CurWaypoint = buffer[0].WayPoint;

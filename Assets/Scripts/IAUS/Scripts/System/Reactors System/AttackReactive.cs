@@ -5,6 +5,7 @@ using Unity.Jobs;
 using IAUS.ECS2.Component;
 using Unity.Entities;
 using Unity.Burst;
+using Stats;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackTargetActionTag,MeleeAttackTarget, IAUS.ECS2.Systems.Reactive.MeleeAttackReactor>.StateComponent))]
 
@@ -14,8 +15,6 @@ namespace IAUS.ECS2.Systems.Reactive
     {
         public void ComponentAdded(Entity entity, ref AttackTargetActionTag newComponent, ref MeleeAttackTarget AIStateCompoment)
         {
-            Debug.Log("Attacked Target");
-            AIStateCompoment.Timer = 30; 
         }
 
         public void ComponentRemoved(Entity entity, ref MeleeAttackTarget AIStateCompoment, in AttackTargetActionTag oldComponent)
@@ -42,10 +41,55 @@ namespace IAUS.ECS2.Systems.Reactive
     public class AttackSystem : SystemBase
     {
         EntityQuery MeleeAttackers;
+        EntityCommandBufferSystem entityCommandBufferSystem;
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            MeleeAttackers = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(MeleeAttackTarget)), ComponentType.ReadOnly(typeof(AttackTargetActionTag)), ComponentType.ReadOnly(typeof(CharacterStatComponent)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackTargetActionTag,MeleeAttackTarget, MeleeAttackReactor>.StateComponent))}
+
+            });
+        }
         protected override void OnUpdate()
         {
-            throw new System.NotImplementedException();
+            JobHandle systemDeps = Dependency;
+
+            systemDeps = new MeleeJob() {
+                StatsChunk = GetArchetypeChunkComponentType< CharacterStatComponent >(true),
+                MeleeChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false)
+            }.ScheduleParallel(MeleeAttackers, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            Dependency = systemDeps;
+
         }
+
+        //[BurstCompile]
+        struct MeleeJob : IJobChunk
+        {
+            public ArchetypeChunkComponentType<MeleeAttackTarget> MeleeChunk;
+            [ReadOnly]public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<MeleeAttackTarget> Melees = chunk.GetNativeArray(MeleeChunk);
+                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    MeleeAttackTarget melee = Melees[i];
+                    melee.Timer = 15; // need to create attack interval 
+
+                    Debug.Log("Attacked Target out damage = " + Stats[i].MeleeAttack.ToString());
+                    
+                }
+
+            }
+        }
+
     }
 
 }

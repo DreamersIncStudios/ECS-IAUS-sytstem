@@ -32,8 +32,12 @@ namespace IAUS.ECS2.Systems
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
                     if (stateBuffer[index].StateName == AIStates.ChaseMoveToTarget)
-                    { add = false; }
+                    { 
+                        add = false; 
+                        continue;
+                    }
                 }
+
                 c1.Status = ActionStatus.Idle;
                 if (add)
                 {

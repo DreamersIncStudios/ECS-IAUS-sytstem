@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\Follow.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Follow\StayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Stay in range of Leader\Leader\Leader.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\FleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolActionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolWaypointBuffer.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\WaitActionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttackTargetState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddFleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
@@ -98,11 +100,13 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Attack States\UpdateAttackMeleeState.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\MoveToTarget\UpdateMoveToTarget.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Patrol\UpdatePatrol.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRange\StayInRangeUpdate.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\Wait\UpdateWait.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\TestSingleUpdateSystem.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateAttackMeleeState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateWait.cs" />
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -295,6 +299,9 @@
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UWP.Extensions">
+      <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.16f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/16.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
