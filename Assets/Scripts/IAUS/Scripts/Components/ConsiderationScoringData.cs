@@ -13,6 +13,7 @@ namespace IAUS.ECS2
         public float K; // Value of K is to be between -1 and 1 for Logistic Responses
         public float B;
         public float C;
+
         public float Output(float input)
         {
             float temp = new float();
@@ -30,6 +31,7 @@ namespace IAUS.ECS2
             }
             return temp;
         }
+    }
         public enum ResponseType
         {
             LinearQuad,
@@ -38,5 +40,5 @@ namespace IAUS.ECS2
 
         }
 
-    }
+    
 }

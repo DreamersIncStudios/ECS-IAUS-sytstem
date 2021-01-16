@@ -169,10 +169,11 @@ MonoBehaviour:
   CurWaypoint:
     Point:
       Type: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
+      NumOfEntityTargetingMe: 0
+    Position:
+      x: 0
+      y: 0
+      z: 0
     TimeToWaitatWaypoint: 0
   UpdatePatrolPoints: 0
   _status: 0
@@ -221,10 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Self:
     Type: 1
-    Position:
-      x: 0
-      y: 0
-      z: 0
+    NumOfEntityTargetingMe: 0
 --- !u!114 &7152985113982230723
 MonoBehaviour:
   m_ObjectHideFlags: 0

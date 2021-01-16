@@ -122,3 +122,12 @@ The following packages were updated:
   com.unity.ext.nunit from version 1.0.0 to 1.0.5
   com.unity.scriptablebuildpipeline from version 1.7.3 to 1.14.1
   com.unity.test-framework from version 1.1.16 to 1.1.19
+
+=== Thu Jan 14 20:29:46 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ext.nunit from version 1.0.5 to 1.0.6
+  com.unity.test-framework from version 1.1.19 to 1.1.20

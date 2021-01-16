@@ -84,7 +84,7 @@ namespace IAUS.ECS2.Systems.Reactive
                     melee.Timer = 15; // need to create attack interval 
 
                     Debug.Log("Attacked Target out damage = " + Stats[i].MeleeAttack.ToString());
-                    
+                    Melees[i] = melee;
                 }
 
             }

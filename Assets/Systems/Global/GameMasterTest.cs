@@ -12,6 +12,9 @@ public class GameMasterTest : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_WSA
+        SMTOverride = true;
+#endif
         Debug.Log(SystemInfo.processorCount);
         if (SMTOverride)
         {
