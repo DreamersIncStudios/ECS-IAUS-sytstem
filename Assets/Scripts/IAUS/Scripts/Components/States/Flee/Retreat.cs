@@ -3,7 +3,9 @@ using UnityEngine;
 
 namespace IAUS.ECS2.Component
 {
-    public struct FleeState : IBaseStateScorer
+    [System.Serializable]
+    [GenerateAuthoringComponent]
+    public struct Retreat : IBaseStateScorer
     {
         public ConsiderationScoringData HealthRatio;
         public ConsiderationScoringData InfluenceInAfter;

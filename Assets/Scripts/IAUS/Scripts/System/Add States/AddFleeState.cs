@@ -12,7 +12,7 @@ namespace IAUS.ECS2.Systems
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<CharacterHealthConsideration> HealthRatio;
-        public ArchetypeChunkComponentType<FleeState> FleeChunk;
+        public ArchetypeChunkComponentType<Retreat> FleeChunk;
         [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
         public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
 
@@ -21,12 +21,12 @@ namespace IAUS.ECS2.Systems
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-            NativeArray<FleeState> Flee = chunk.GetNativeArray(FleeChunk);
+            NativeArray<Retreat> Flee = chunk.GetNativeArray(FleeChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(StateBufferChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
                 Entity entity = entities[i];
-                FleeState c1 = Flee[i];
+                Retreat c1 = Flee[i];
                 DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
 
                 bool add = true;

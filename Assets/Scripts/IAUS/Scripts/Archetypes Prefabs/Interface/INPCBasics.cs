@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using Global.Component;
 using IAUS.ECS2.Component;
 using IAUS.ECS2;
+using UnityEngine;
+using Components.MovementSystem;
 namespace IAUS.SO.Interfaces
 {
     public interface INPCBasics
     {
-        AITarget Self{get;}
-        List<SOAIState> AIStatesAvailable { get; }
+        AITarget Self { get; }
+        Movement AIMove { get; }
+        List<AIStates> AIStatesAvailable { get; }
+        GameObject Model { get; }
+        Patrol GetPatrol { get; }
+        Wait GetWait { get; }
+        Retreat GetRetreat { get; }
+    }
 
-    }
-    [System.Serializable]
-    public struct SOAIState {
-        public AIStates state;
-        public IBaseStateScorer stateInfo;
-    }
 }

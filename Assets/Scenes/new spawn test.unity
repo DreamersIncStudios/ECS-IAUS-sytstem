@@ -496,7 +496,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &46931448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,6 +718,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &46931458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,7 +932,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19080
+  m_Name: pb_Mesh18956
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1476,7 +1575,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &99648493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1613,6 +1712,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &99648501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2495,7 +2693,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &238533012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2636,6 +2834,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &238533018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5365,7 +5662,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &524945579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5506,6 +5803,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &524945585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6966,7 +7362,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1746
+  m_Name: pb_Mesh-1790
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8881,6 +9277,50 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 834441414}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &842482227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 842482229}
+  - component: {fileID: 842482228}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &842482228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842482227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e5b1b0a9c7a5fa4286d3077b07d6f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testing: {fileID: 11400000, guid: 69d5dcf845c8e374d90c66206b047df5, type: 2}
+--- !u!4 &842482229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842482227}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 59.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &847998454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10569,7 +11009,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1872
+  m_Name: pb_Mesh-1916
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10832,7 +11272,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1762
+  m_Name: pb_Mesh-1806
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12450,7 +12890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1166486095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12591,6 +13031,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &1166486101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12947,7 +13486,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1738
+  m_Name: pb_Mesh-1782
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14687,7 +15226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1292309257
 Transform:
   m_ObjectHideFlags: 0
@@ -16278,7 +16817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1602334470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16432,6 +16971,105 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
+  movement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  patrolState:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        NumOfEntityTargetingMe: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  AddPatrol: 0
+  AddWait: 0
+  AddRetreat: 0
+  waitState:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  retreatState:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInAfter:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Range:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
 --- !u!114 &1602334479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17148,7 +17786,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh19304
+  m_Name: pb_Mesh19104
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -17705,7 +18343,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1754
+  m_Name: pb_Mesh-1798
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -20263,11 +20901,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Test Cubie '
-      objectReference: {fileID: 0}
-    - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6198918470580978635, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}

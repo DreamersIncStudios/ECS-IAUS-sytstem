@@ -21,7 +21,7 @@ namespace IAUS.ECS2.Component
                 List<PatrolWaypointBuffer> Points = new List<PatrolWaypointBuffer>();
                 while (Points.Count < 10)
                 {
-                    if (GlobalFunctions.RandomPoint(transform.position, 60, out Vector3 position))
+                    if (GlobalFunctions.RandomPoint(transform.position, 200, out Vector3 position))
                     {
                         Points.Add(new PatrolWaypointBuffer()
                         {

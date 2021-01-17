@@ -13,7 +13,7 @@ namespace Global.Component
         // Reference Local To World Instead
 
     }
-
+    [System.Serializable]
     public enum TargetType
     {
         None, Character, Location, Vehicle

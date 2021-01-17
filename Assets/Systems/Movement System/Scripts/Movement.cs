@@ -6,7 +6,6 @@ using Unity.Mathematics;
 namespace Components.MovementSystem
 {
     [System.Serializable]
-
     [GenerateAuthoringComponent]
     public struct Movement : IComponentData
     {

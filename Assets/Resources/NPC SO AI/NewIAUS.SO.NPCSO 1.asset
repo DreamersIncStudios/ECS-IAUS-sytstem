@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c533abaf57b440b06330ec66d53ab, type: 3}
   m_Name: NewIAUS.SO.NPCSO 1
   m_EditorClassIdentifier: 
-  _self:
-    Type: 0
-    NumOfEntityTargetingMe: 0
-  states: []
+  _model: {fileID: 0}

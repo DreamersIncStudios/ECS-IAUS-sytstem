@@ -52,7 +52,7 @@ namespace IAUS.ECS2.Systems
             _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
-                    ComponentType.ReadWrite(typeof(FleeState))}
+                    ComponentType.ReadWrite(typeof(Retreat))}
             });
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
@@ -123,7 +123,7 @@ namespace IAUS.ECS2.Systems
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
                 StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                FleeChunk = GetArchetypeChunkComponentType<FleeState>(false),
+                FleeChunk = GetArchetypeChunkComponentType<Retreat>(false),
                 EntityChunk = GetArchetypeChunkEntityType(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_FleeStateEntity, systemDeps);
