@@ -13,9 +13,11 @@ namespace IAUS.SO
 {
     public class NPCSO : ScriptableObject, INPCBasics
     {
+        [SerializeField] uint spawnID;
+        public uint SpawnID { get { return spawnID; } }
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-
+        
         public AITarget Self => GetSelf;
         [SerializeField]AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;

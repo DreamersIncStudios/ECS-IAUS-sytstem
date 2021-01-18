@@ -21,24 +21,33 @@ namespace IAUS.SO.editor
             window.minSize = new Vector2(600, 800);
             window.Show();
         }
-
+        private void Awake()
+        {
+            SetStartValues();
+        }
         bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length] ;
+        EditorState editorState;
         TargetType GetTargetType;
         Patrol GetPatrol;
+            
         Wait GetWait;
-        Retreat GetFlee;
-        GameObject model;
+        Retreat GetRetreat;
+        GameObject GetModel;
         bool createRandomCharacter=false;
         Vector2 scrollPos;
         void OnGUI()
         {
+            EditorGUILayout.BeginHorizontal();
+            DisplayListOfExistingSO();
+
+            EditorGUILayout.BeginVertical("Box");
             GUILayout.Label("Base Settings", EditorStyles.boldLabel);
             scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
             EditorGUILayout.BeginVertical("Button");
             createRandomCharacter = EditorGUILayout.Foldout(createRandomCharacter, "Create RNG GO To Be Implement Later");
             if (!createRandomCharacter)
-                model = (GameObject)EditorGUILayout.ObjectField("Select Model", model, typeof(GameObject), false);
-            
+                GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
+
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
             switch (GetTargetType)
             {
@@ -52,12 +61,41 @@ namespace IAUS.SO.editor
 
             if (GetTargetType == TargetType.Character)
                 GetMove = SetupMove(GetMove);
+            // add a switch here
+            EditorGUILayout.BeginHorizontal("Box");
+            switch (editorState)
+            {
+                case EditorState.CreateNew:
 
-            if(GUILayout.Button("Submit")){
-                CreateSO("Assets/Resources/NPC SO AI");
+                    if (GUILayout.Button("Submit"))
+                    {
+                        CreateSO("Assets/Resources/NPC SO AI");
+                    }
+                        break;
+                case EditorState.EditExisting:
+
+                    if (GUILayout.Button("Update"))
+                    {
+                        SaveChanges();
+                    }
+                    if (GUILayout.Button("Update"))
+                    {
+                        CreateSO("Assets/Resources/NPC SO AI");
+                    }
+                    break;
             }
+            if (GUILayout.Button("Clear"))
+            {
+            // add nodal window to verfiy 
+                SetStartValues();
+                editorState = EditorState.CreateNew;
+            }
+
+
+            EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndScrollView();
-                
+            EditorGUILayout.EndVertical();
+            EditorGUILayout.EndHorizontal();
         }
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
@@ -130,6 +168,7 @@ namespace IAUS.SO.editor
         
 
         void CreateSO(string Path) {
+
             List<AIStates> StatesToAdd= new List<AIStates>();
             for (int i = 0; i < showBtn.Length; i++)
             {
@@ -148,11 +187,32 @@ namespace IAUS.SO.editor
             }
 
             ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-            SO.Setup(model,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
-                GetPatrol,GetWait,GetFlee
+            SO.Setup(GetModel,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
+                GetPatrol,GetWait,GetRetreat
                 );
-       
-        
+            SetStartValues();
         }
+
+       public void SetStartValues() {
+            GetModel = null;
+            GetTargetType = new TargetType();
+            GetPatrol = new Patrol()
+            {
+                BufferZone = .75f,
+                DistanceToPoint = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                _coolDownTime = 5
+
+            };
+            GetRetreat = new Retreat() { };
+            GetWait = new Wait() { 
+                TimeLeft = new ConsiderationScoringData() { M=50, K=-1, B=.91f,C= .2f, responseType = ResponseType.Logistic, Inverse =false},
+                HealthRatio =  new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                StartTime =1,
+                _coolDownTime =5
+            };
+
+        }
+
     }
 }

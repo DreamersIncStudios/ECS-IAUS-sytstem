@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 using Unity.Entities;
-
+using UnityEngine;
 namespace InfluenceSystem.Component
 {
     [GenerateAuthoringComponent]

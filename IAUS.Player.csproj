@@ -640,6 +640,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\INPCBasics.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
