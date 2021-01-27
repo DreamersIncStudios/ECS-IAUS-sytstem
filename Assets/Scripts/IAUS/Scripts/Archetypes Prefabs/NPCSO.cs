@@ -41,12 +41,12 @@ namespace IAUS.SO
             getPatrol = patrol;
             getWait = wait;
         }
-        BaseAIAuthoring test;
+        BaseAIAuthoringSO test;
         public void Spawn( Vector3 pos) {
             GameObject go = Instantiate(Model, pos, Quaternion.identity);
             go.AddComponent<NavMeshAgent>();
             go.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
-             test = go.AddComponent<BaseAIAuthoring>();
+             test = go.AddComponent<BaseAIAuthoringSO>();
             test.Self = Self;
             test.movement = AIMove;
             foreach (AIStates state in AIStatesAvailable) {

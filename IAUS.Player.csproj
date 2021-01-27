@@ -642,6 +642,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
@@ -677,7 +678,6 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\TestSingleUpdateSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateAttackMeleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
