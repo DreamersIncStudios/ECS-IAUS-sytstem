@@ -1,11 +1,6 @@
-Notice: Back to work as normally. Alpha Branch has been updated to 2019.4 LTS
-
 
 If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
 =======
-
-Rework is in progress. Attack State Branch is the current in progress branch . If there is anything you want to see in addition to increase readable code and documentation please add an issue/feature request.
-
 The utility system works by identifying options available to the AI and selecting the best option by scoring each option based on the circumstances. This has proven a remarkable well-working method for several reasons.
 
 Simple to Design - The Utility AI can often be designed in natural language, which makes it easy for the AI programmer to speak with game designers. There is no need to talk about arcane concepts such as conditions, states, sequences and decorators. Instead you can explain the intended AI behavior in terms such as “If the AI is under fire, prioritize finding cover”. Note how fuzzy terms - such as “prioritize” - can be used, which comes natural to human conversation.
@@ -26,5 +21,4 @@ http://intrinsicalgorithm.com/IAonAI/2013/02/both-my-gdc-lectures-on-utility-the
 
 https://www.gdcvault.com/play/1018040/Architecture-Tricks-Managing-Behaviors-in starts at 33 min mark
 
-
-
+System have been rewritten and optimized based on a  reactive component system. Actions are triggered by the adding and removed or Tag components. 
