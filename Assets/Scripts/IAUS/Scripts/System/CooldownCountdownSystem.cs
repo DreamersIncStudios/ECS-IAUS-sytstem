@@ -52,28 +52,28 @@ namespace IAUS.ECS2.Systems
             JobHandle systemDeps = Dependency;
             systemDeps = new CooldownJob<Patrol>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<Patrol>(false),
+                AIStateChunk = GetComponentTypeHandle<Patrol>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(PatrolCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<Wait>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<Wait>(false),
+                AIStateChunk = GetComponentTypeHandle<Wait>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(WaitCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<MoveToTarget>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+                AIStateChunk = GetComponentTypeHandle<MoveToTarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<MeleeAttackTarget>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
+                AIStateChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(AttackCooldown, systemDeps);
 
@@ -86,7 +86,7 @@ namespace IAUS.ECS2.Systems
            where AISTATE : unmanaged, IBaseStateScorer
         {
 
-            public ArchetypeChunkComponentType<AISTATE> AIStateChunk;
+            public ComponentTypeHandle<AISTATE> AIStateChunk;
             public float DT;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

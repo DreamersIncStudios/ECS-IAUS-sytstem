@@ -112,8 +112,8 @@ namespace IAUS.ECS2.Systems.Reactive
 
             systemDeps = new UpdateMoveTarget()
             {
-                MoveToChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                SeersChunk = GetArchetypeChunkComponentType<Vision>(true),
+                MoveToChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                SeersChunk = GetComponentTypeHandle<Vision>(true),
                 AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToTargetUpdate, systemDeps);
@@ -121,8 +121,8 @@ namespace IAUS.ECS2.Systems.Reactive
             entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new UpdateMoveTargetWhenActive()
             {
-               MoveChunk = GetArchetypeChunkComponentType<Movement>(false),
-                MoveToChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+               MoveChunk = GetComponentTypeHandle<Movement>(false),
+                MoveToChunk = GetComponentTypeHandle<MoveToTarget>(false),
    
             }.ScheduleParallel(ActionTagAdded, systemDeps);
 
@@ -133,8 +133,8 @@ namespace IAUS.ECS2.Systems.Reactive
         public struct UpdateMoveTarget : IJobChunk
 
         {
-            public ArchetypeChunkComponentType<MoveToTarget> MoveToChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<Vision> SeersChunk;
+            public ComponentTypeHandle<MoveToTarget> MoveToChunk;
+            [ReadOnly] public ComponentTypeHandle<Vision> SeersChunk;
             [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> AItargetFromEntity;
             public float DT;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -176,8 +176,8 @@ namespace IAUS.ECS2.Systems.Reactive
         [BurstCompile]
         public struct UpdateMoveTargetWhenActive : IJobChunk
         {   
-            public ArchetypeChunkComponentType<Movement> MoveChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<MoveToTarget> MoveToChunk;
+            public ComponentTypeHandle<Movement> MoveChunk;
+            [ReadOnly] public ComponentTypeHandle<MoveToTarget> MoveToChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                      NativeArray<Movement> movements = chunk.GetNativeArray(MoveChunk);

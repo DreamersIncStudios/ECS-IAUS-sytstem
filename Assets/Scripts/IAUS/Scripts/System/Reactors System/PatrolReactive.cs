@@ -9,6 +9,8 @@ using Unity.Burst;
 using Components.MovementSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS2.Systems.Reactive
 {
@@ -79,19 +81,19 @@ namespace IAUS.ECS2.Systems.Reactive
             JobHandle systemDeps = Dependency;
             systemDeps = new PatrolMovementUpdateJob()
             {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
-                TagChunk = GetArchetypeChunkComponentType<PatrolActionTag>(true),
-                WaypointChunk = GetArchetypeChunkBufferType<PatrolWaypointBuffer>(true),
-                ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                TagChunk = GetComponentTypeHandle<PatrolActionTag>(true),
+                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new OnCompletionUpdateJob()
             {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(true),
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(true),
+                WaitChunk = GetComponentTypeHandle<Wait>(false)
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -101,11 +103,11 @@ namespace IAUS.ECS2.Systems.Reactive
         [BurstCompile]
         public struct PatrolMovementUpdateJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
-            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<PatrolActionTag> TagChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
-            [ReadOnly] public ArchetypeChunkBufferType<PatrolWaypointBuffer> WaypointChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public ComponentTypeHandle<PatrolActionTag> TagChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
@@ -131,9 +133,9 @@ namespace IAUS.ECS2.Systems.Reactive
 
         public struct OnCompletionUpdateJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Wait> WaitChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
+            public ComponentTypeHandle<Wait> WaitChunk;
+            [ReadOnly]public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);

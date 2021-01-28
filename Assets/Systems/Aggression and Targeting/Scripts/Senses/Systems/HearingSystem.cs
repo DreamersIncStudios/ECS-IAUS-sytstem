@@ -34,8 +34,8 @@ namespace AISenses.HearingSystem
         {
             JobHandle systemDeps = Dependency;
             systemDeps = new SoundSystem() { 
-            HearingChunk = GetArchetypeChunkComponentType<Hearing>(false),
-            TransformChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+            HearingChunk = GetComponentTypeHandle<Hearing>(false),
+            TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
             SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
             SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
             }.ScheduleParallel(Listeners, systemDeps);
@@ -49,8 +49,8 @@ namespace AISenses.HearingSystem
 
     public struct SoundSystem : IJobChunk
     {
-        public ArchetypeChunkComponentType<Hearing> HearingChunk;
-        [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> TransformChunk;
+        public ComponentTypeHandle<Hearing> HearingChunk;
+        [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<SoundEmitter> SoundEmitters;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<LocalToWorld> SoundPosition;
 
@@ -136,8 +136,7 @@ namespace AISenses.HearingSystem
             public float SoundPressureRMS
             {
                 get {
-                    float pressure = new float();
-                    pressure =Mathf.Pow(Mathf.Pow(10, (soundlevel / 20)) * 20,2);
+                    float pressure  =Mathf.Pow(Mathf.Pow(10, (soundlevel / 20)) * 20,2);
                     return pressure;
                 }
             }

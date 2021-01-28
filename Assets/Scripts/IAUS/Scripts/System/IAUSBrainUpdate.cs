@@ -33,8 +33,8 @@ namespace IAUS.ECS2.Systems
                 JobHandle systemDeps = Dependency;
                 systemDeps = new UpdateBrains()
                 {
-                    EntityChunk = GetArchetypeChunkEntityType(),
-                    StateChunks = GetArchetypeChunkBufferType<StateBuffer>(false),
+                    EntityChunk = GetEntityTypeHandle(),
+                    StateChunks = GetBufferTypeHandle<StateBuffer>(false),
                     Patrols = GetComponentDataFromEntity<Patrol>(true),
                     Waits = GetComponentDataFromEntity<Wait>(true),
                     StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
@@ -46,10 +46,10 @@ namespace IAUS.ECS2.Systems
 
                 systemDeps = new FindHighestScore()
                 {
-                    ConcurrentBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                    EntityChunk = GetArchetypeChunkEntityType(),
-                    StateChunks = GetArchetypeChunkBufferType<StateBuffer>(true),
-                    BrainsChunk = GetArchetypeChunkComponentType<IAUSBrain>(false)
+                    ConcurrentBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                    EntityChunk = GetEntityTypeHandle(),
+                    StateChunks = GetBufferTypeHandle<StateBuffer>(true),
+                    BrainsChunk = GetComponentTypeHandle<IAUSBrain>(false)
 
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -62,8 +62,8 @@ namespace IAUS.ECS2.Systems
        [BurstCompile]
         public struct UpdateBrains : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            public ArchetypeChunkBufferType<StateBuffer> StateChunks;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            public BufferTypeHandle<StateBuffer> StateChunks;
 
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Patrol> Patrols;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Wait> Waits;
@@ -123,10 +123,10 @@ namespace IAUS.ECS2.Systems
 
         public struct FindHighestScore : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            [ReadOnly] public ArchetypeChunkBufferType<StateBuffer> StateChunks;
-            public ArchetypeChunkComponentType<IAUSBrain> BrainsChunk;
-            public EntityCommandBuffer.Concurrent ConcurrentBuffer;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            [ReadOnly] public BufferTypeHandle<StateBuffer> StateChunks;
+            public ComponentTypeHandle<IAUSBrain> BrainsChunk;
+            public EntityCommandBuffer.ParallelWriter ConcurrentBuffer;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

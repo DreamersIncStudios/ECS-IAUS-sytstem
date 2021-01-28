@@ -129,169 +129,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1902281668}
   m_PrefabAsset: {fileID: 0}
---- !u!43 &19745926
-Mesh:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2688
-  serializedVersion: 10
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 144
-    topology: 0
-    baseVertex: 0
-    firstVertex: 0
-    vertexCount: 54
-    localAABB:
-      m_Center: {x: 0, y: 0, z: 0}
-      m_Extent: {x: 25, y: 0.125, z: 25}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_BonesAABB: []
-  m_VariableBoneCountWeights:
-    m_Data: 
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexFormat: 0
-  m_IndexBuffer: 00000100020003000000020001000400050002000100050002000500060007000200060003000200070008000300070009000a000b000c0009000b000a000d000e000b000a000e000b000e000f0010000b000f000c000b00100011000c0010001200130014001200150013001400160017001400130016001800170019001800140017001a00140018001a00120014001b001c001d001b001e001c001d001f0020001d001c001f0021002000220021001d00200023001d00210023001b001d002400250026002700240026002800240027002900280027002a002b00240028002a0024002b002c00250024002b0025002d002e002f002d0030002e002f00310032002f002e00310033003200340033002f00320035002f00330035002d002f00
-  m_VertexData:
-    serializedVersion: 3
-    m_VertexCount: 54
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 48
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 3024
-    _typelessdata: 0000c8c1000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c841000000be0bd7a33cb6e80d3f00000000000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf00000000000000be7f77823eb6e80d3f00000000000000000000c84100000000000000000000803f000080bf0000000000000000000080bf00000000000000007f77823ea8350e3f0000c8c1000000000000c84100000000000000000000803f000080bf0000000000000000000080bf0000c841000000000bd7a33ca8350e3f0000c841000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c1000000be8eb1fa3eb6e80d3f0000c841000000000000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c1000000008eb1fa3ea8350e3f0000c8410000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c10000003e8eb1fa3e9a820e3f000000000000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf000000000000003e7f77823e9a820e3f0000c8c10000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8410000003e0bd7a33c9a820e3f0000c841000000be0000c8410000803f000000000000000000000000000000000000803f000080bf0000c841000000be0bd7a33c1a30083f0000c841000000be000000000000803f000000000000000000000000000000000000803f000080bf00000000000000be7f77823e1a30083f0000c84100000000000000000000803f000000000000000000000000000000000000803f000080bf00000000000000007f77823e0c7d083f0000c841000000000000c8410000803f000000000000000000000000000000000000803f000080bf0000c841000000000bd7a33c0c7d083f0000c841000000be0000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c1000000be8eb1fa3e1a30083f0000c841000000000000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c1000000008eb1fa3e0c7d083f0000c8410000003e0000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c10000003e8eb1fa3efec9083f0000c8410000003e000000000000803f000000000000000000000000000000000000803f000080bf000000000000003e7f77823efec9083f0000c8410000003e0000c8410000803f000000000000000000000000000000000000803f000080bf0000c8410000003e0bd7a33cfec9083f0000c841000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c841000000008d77023f4975ad3c00000000000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf00000000000000be91943e3f0bd7a33c00000000000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf000000000000000094943e3f4a75ad3c0000c841000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c841000000be8a77023f0bd7a33c0000c8c1000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c1000000be9eb17a3f0bd7a33c0000c8c1000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c100000000a1b17a3f4a75ad3c000000000000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf000000000000003e97943e3f8813b73c0000c8c10000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c10000003ea4b17a3f8913b73c0000c8410000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8410000003e9077023f8713b73c0000c8c1000000000000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c8410000000069d7a33c4975ad3c0000c8c1000000be00000000000080bf00000000000000000000000000000000000080bf000080bf00000080000000be7e77823e0bd7a33c0000c8c10000000000000000000080bf00000000000000000000000000000000000080bf000080bf00000000000000008477823e4a75ad3c0000c8c1000000be0000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c841000000be0bd7a33c0bd7a33c0000c8c1000000be0000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c1000000be98b1fa3e0bd7a33c0000c8c1000000000000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c1000000009eb1fa3e4a75ad3c0000c8c10000003e00000000000080bf00000000000000000000000000000000000080bf000080bf000000000000003e8a77823e8813b73c0000c8c10000003e0000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c10000003ea4b1fa3e8913b73c0000c8c10000003e0000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c8410000003ec8d7a33c8713b73c000000000000003e00000000000000000000803f000000000000803f0000000000000000000080bf00000000000000008a77823eb9e88d3e0000c8c10000003e00000000000000000000803f000000000000803f0000000000000000000080bf0000c8c1000000008877823e6a752d3d0000c8c10000003e0000c841000000000000803f000000000000803f0000000000000000000080bf0000c8c10000c841a1b1fa3e4a752d3d000000000000003e0000c841000000000000803f000000000000803f0000000000000000000080bf000000000000c8419fb1fa3ebce88d3e0000c8410000003e00000000000000000000803f000000000000803f0000000000000000000080bf0000c841000000008977823e6111033f0000c8410000003e0000c841000000000000803f000000000000803f0000000000000000000080bf0000c8410000c8419eb1fa3e6111033f0000c8410000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf0000c8410000c8c138d7a33c6111033f000000000000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf000000000000c8c12ed7a33cbae88d3e0000c8c10000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf0000c8c10000c8c10bd7a33c7d752d3d0000c8c1000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf0000c841000000008d943e3f82752d3d00000000000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf000000800000c8c197b17a3fc1e88d3e00000000000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf000000000000000090943e3fc8e88d3e0000c8c1000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf0000c8410000c8c193b17a3f4a752d3d0000c841000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000c8c19bb17a3f6d11033f0000c841000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000000091943e3f6e11033f00000000000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf000000000000c8418c77023fcce88d3e0000c841000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000c8418e77023f7011033f0000c8c1000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf0000c8410000c8418977023faf752d3d
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 25, y: 0.125, z: 25}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshMetrics[0]: 1
-  m_MeshMetrics[1]: 1
-  m_MeshOptimizationFlags: 1
-  m_StreamData:
-    offset: 0
-    size: 0
-    path: 
 --- !u!1001 &27407696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -303,6 +140,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (53)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -397,6 +239,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (57)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -718,105 +565,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &46931458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,6 +874,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (30)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -1488,6 +1241,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (88)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -1712,105 +1470,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &99648501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1887,6 +1546,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -1974,6 +1638,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (26)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -2060,6 +1729,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -2139,6 +1813,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (97)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -2266,6 +1945,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -2345,6 +2029,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -2595,6 +2284,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (94)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -2834,105 +2528,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &238533018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3141,6 +2736,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (34)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -3220,6 +2820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (63)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -3314,6 +2919,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (67)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -3454,6 +3064,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (81)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -4544,6 +4159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (45)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -4617,6 +4237,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -4698,6 +4323,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (68)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -4771,6 +4401,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (76)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -5035,6 +4670,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (36)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -5292,6 +4932,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (38)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -5378,6 +5023,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (98)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -5457,6 +5107,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (56)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -5557,6 +5212,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (82)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -5803,105 +5463,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &524945585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6833,6 +6394,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (18)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -6913,6 +6479,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -6992,6 +6563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -7188,6 +6764,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (37)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -7281,6 +6862,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -8401,6 +7987,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (28)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -8507,6 +8098,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (43)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -8580,6 +8176,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -8661,6 +8262,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (31)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -8741,6 +8347,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -8820,6 +8431,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (91)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -8981,6 +8597,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (89)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -9055,6 +8676,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (50)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -9128,6 +8754,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (66)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -9208,6 +8839,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -9307,6 +8943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testing: {fileID: 11400000, guid: 69d5dcf845c8e374d90c66206b047df5, type: 2}
+  spawnCNT: 0
 --- !u!4 &842482229
 Transform:
   m_ObjectHideFlags: 0
@@ -9332,6 +8969,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (62)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -10669,6 +10311,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (41)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -10835,6 +10482,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (92)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -10908,6 +10560,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -11204,6 +10861,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (48)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -11441,6 +11103,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (61)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -11520,6 +11187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -11817,7 +11489,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 19745926}
+      objectReference: {fileID: 1146167262}
     - target: {fileID: 7072853713119215191, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_Mesh
@@ -12192,7 +11864,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 19745926}
+      objectReference: {fileID: 1146167262}
     - target: {fileID: 8670027927618982199, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_IsActive
@@ -12292,6 +11964,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -12372,6 +12049,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (27)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -12451,6 +12133,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (39)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -12558,6 +12245,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (79)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -12638,6 +12330,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (58)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -12706,6 +12403,169 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 314665884}
   m_PrefabAsset: {fileID: 0}
+--- !u!43 &1146167262
+Mesh:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: pb_Mesh30126
+  serializedVersion: 10
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 144
+    topology: 0
+    baseVertex: 0
+    firstVertex: 0
+    vertexCount: 54
+    localAABB:
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 25, y: 0.125, z: 25}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_BonesAABB: []
+  m_VariableBoneCountWeights:
+    m_Data: 
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexFormat: 0
+  m_IndexBuffer: 00000100020003000000020001000400050002000100050002000500060007000200060003000200070008000300070009000a000b000c0009000b000a000d000e000b000a000e000b000e000f0010000b000f000c000b00100011000c0010001200130014001200150013001400160017001400130016001800170019001800140017001a00140018001a00120014001b001c001d001b001e001c001d001f0020001d001c001f0021002000220021001d00200023001d00210023001b001d002400250026002700240026002800240027002900280027002a002b00240028002a0024002b002c00250024002b0025002d002e002f002d0030002e002f00310032002f002e00310033003200340033002f00320035002f00330035002d002f00
+  m_VertexData:
+    serializedVersion: 3
+    m_VertexCount: 54
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 48
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 3024
+    _typelessdata: 0000c8c1000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c841000000be0bd7a33cb6e80d3f00000000000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf00000000000000be7f77823eb6e80d3f00000000000000000000c84100000000000000000000803f000080bf0000000000000000000080bf00000000000000007f77823ea8350e3f0000c8c1000000000000c84100000000000000000000803f000080bf0000000000000000000080bf0000c841000000000bd7a33ca8350e3f0000c841000000be0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c1000000be8eb1fa3eb6e80d3f0000c841000000000000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c1000000008eb1fa3ea8350e3f0000c8410000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8c10000003e8eb1fa3e9a820e3f000000000000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf000000000000003e7f77823e9a820e3f0000c8c10000003e0000c84100000000000000000000803f000080bf0000000000000000000080bf0000c8410000003e0bd7a33c9a820e3f0000c841000000be0000c8410000803f000000000000000000000000000000000000803f000080bf0000c841000000be0bd7a33c1a30083f0000c841000000be000000000000803f000000000000000000000000000000000000803f000080bf00000000000000be7f77823e1a30083f0000c84100000000000000000000803f000000000000000000000000000000000000803f000080bf00000000000000007f77823e0c7d083f0000c841000000000000c8410000803f000000000000000000000000000000000000803f000080bf0000c841000000000bd7a33c0c7d083f0000c841000000be0000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c1000000be8eb1fa3e1a30083f0000c841000000000000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c1000000008eb1fa3e0c7d083f0000c8410000003e0000c8c10000803f000000000000000000000000000000000000803f000080bf0000c8c10000003e8eb1fa3efec9083f0000c8410000003e000000000000803f000000000000000000000000000000000000803f000080bf000000000000003e7f77823efec9083f0000c8410000003e0000c8410000803f000000000000000000000000000000000000803f000080bf0000c8410000003e0bd7a33cfec9083f0000c841000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c841000000008d77023f4975ad3c00000000000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf00000000000000be91943e3f0bd7a33c00000000000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf000000000000000094943e3f4a75ad3c0000c841000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c841000000be8a77023f0bd7a33c0000c8c1000000be0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c1000000be9eb17a3f0bd7a33c0000c8c1000000000000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c100000000a1b17a3f4a75ad3c000000000000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf000000000000003e97943e3f8813b73c0000c8c10000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8c10000003ea4b17a3f8913b73c0000c8410000003e0000c8c10000000000000000000080bf0000803f0000000000000000000080bf0000c8410000003e9077023f8713b73c0000c8c1000000000000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c8410000000069d7a33c4975ad3c0000c8c1000000be00000000000080bf00000000000000000000000000000000000080bf000080bf00000080000000be7e77823e0bd7a33c0000c8c10000000000000000000080bf00000000000000000000000000000000000080bf000080bf00000000000000008477823e4a75ad3c0000c8c1000000be0000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c841000000be0bd7a33c0bd7a33c0000c8c1000000be0000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c1000000be98b1fa3e0bd7a33c0000c8c1000000000000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c1000000009eb1fa3e4a75ad3c0000c8c10000003e00000000000080bf00000000000000000000000000000000000080bf000080bf000000000000003e8a77823e8813b73c0000c8c10000003e0000c841000080bf00000000000000000000000000000000000080bf000080bf0000c8c10000003ea4b1fa3e8913b73c0000c8c10000003e0000c8c1000080bf00000000000000000000000000000000000080bf000080bf0000c8410000003ec8d7a33c8713b73c000000000000003e00000000000000000000803f000000000000803f0000000000000000000080bf00000000000000008a77823eb9e88d3e0000c8c10000003e00000000000000000000803f000000000000803f0000000000000000000080bf0000c8c1000000008877823e6a752d3d0000c8c10000003e0000c841000000000000803f000000000000803f0000000000000000000080bf0000c8c10000c841a1b1fa3e4a752d3d000000000000003e0000c841000000000000803f000000000000803f0000000000000000000080bf000000000000c8419fb1fa3ebce88d3e0000c8410000003e00000000000000000000803f000000000000803f0000000000000000000080bf0000c841000000008977823e6111033f0000c8410000003e0000c841000000000000803f000000000000803f0000000000000000000080bf0000c8410000c8419eb1fa3e6111033f0000c8410000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf0000c8410000c8c138d7a33c6111033f000000000000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf000000000000c8c12ed7a33cbae88d3e0000c8c10000003e0000c8c1000000000000803f000000000000803f0000000000000000000080bf0000c8c10000c8c10bd7a33c7d752d3d0000c8c1000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf0000c841000000008d943e3f82752d3d00000000000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf000000800000c8c197b17a3fc1e88d3e00000000000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf000000000000000090943e3fc8e88d3e0000c8c1000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf0000c8410000c8c193b17a3f4a752d3d0000c841000000be0000c8c100000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000c8c19bb17a3f6d11033f0000c841000000be0000000000000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000000091943e3f6e11033f00000000000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf000000000000c8418c77023fcce88d3e0000c841000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf0000c8c10000c8418e77023f7011033f0000c8c1000000be0000c84100000000000080bf00000000000080bf0000000000000000000080bf0000c8410000c8418977023faf752d3d
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 25, y: 0.125, z: 25}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshMetrics[0]: 1
+  m_MeshMetrics[1]: 1
+  m_MeshOptimizationFlags: 1
+  m_StreamData:
+    offset: 0
+    size: 0
+    path: 
 --- !u!1001 &1148118228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12717,6 +12577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (59)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -12791,6 +12656,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -13031,105 +12901,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &1166486101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13332,6 +13103,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (44)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -13411,6 +13187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (64)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -14505,6 +14286,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (99)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -14585,6 +14371,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (65)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -14658,6 +14449,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (84)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -14916,6 +14712,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -15128,6 +14929,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (78)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -15353,6 +15159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (52)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -15447,6 +15258,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (47)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -15538,6 +15354,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (51)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -15719,6 +15540,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (70)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -16096,6 +15922,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (60)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -16176,6 +16007,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (80)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -16249,6 +16085,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (87)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -16459,6 +16300,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (86)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -16544,6 +16390,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -16645,6 +16496,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -16724,6 +16580,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (42)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -16971,105 +16832,6 @@ MonoBehaviour:
   Self:
     Type: 0
     NumOfEntityTargetingMe: 0
-  movement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
-    MovementSpeed: 0
-    TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
-    Offset:
-      x: 0
-      y: 0
-      z: 0
-    CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
-    DistanceRemaining: 0
-  patrolState:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0
-    CurWaypoint:
-      Point:
-        Type: 0
-        NumOfEntityTargetingMe: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  AddPatrol: 0
-  AddWait: 0
-  AddRetreat: 0
-  waitState:
-    TimeLeft:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Timer: 0
-    StartTime: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
-  retreatState:
-    HealthRatio:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    InfluenceInAfter:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    Range:
-      Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
-    _status: 0
-    _coolDownTime: 0
-    _resetTime: 0
-    _totalScore: 0
 --- !u!114 &1602334479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17712,6 +17474,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (54)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -17955,6 +17722,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (83)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -18028,6 +17800,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (32)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -18108,6 +17885,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -18195,6 +17977,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (72)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -18268,6 +18055,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -18532,6 +18324,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -18617,6 +18414,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (96)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -18718,6 +18520,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (85)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -18791,6 +18598,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (74)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -18866,6 +18678,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (71)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -18940,6 +18757,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (75)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19013,6 +18835,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -19257,6 +19084,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (40)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19330,6 +19162,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -19410,6 +19247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -19511,6 +19353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19591,6 +19438,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (73)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19665,6 +19517,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (33)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19738,6 +19595,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (90)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -19819,6 +19681,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (95)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -19898,6 +19765,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (77)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -19979,6 +19851,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (46)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -20052,6 +19929,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (55)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -20127,6 +20009,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (93)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -20200,6 +20087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -20488,6 +20380,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Test Cubie (49)
       objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
       propertyPath: m_Enabled
@@ -20581,6 +20478,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Test Cubie (69)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5035651290871127928, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}
@@ -20901,6 +20803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 'Test Cubie '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1211861381076278515, guid: 9e5fb82f1a4caac41b947117538184de,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6198918470580978635, guid: 9e5fb82f1a4caac41b947117538184de,
         type: 3}

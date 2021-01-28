@@ -3,6 +3,9 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
+using IAUS.ECS2.Component;
+
+
 
 
 namespace Utilities.ReactiveSystem
@@ -37,7 +40,7 @@ namespace Utilities.ReactiveSystem
         /// <summary>
         /// Query to gateher all entity that need to check for change in value.
         /// </summary>
-        private EntityQuery _componentValueChangedQuery;
+       // private EntityQuery _componentValueChangedQuery;
         /// <summary>
         /// EnityCommandBufferSystem used to add and remove the StateComponent.
         /// </summary>
@@ -67,10 +70,10 @@ namespace Utilities.ReactiveSystem
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(StateComponent)), ComponentType.ReadWrite(typeof(AICOMPONENT)) },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(COMPONENT)) }
             });
-            _componentValueChangedQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(COMPONENT)), ComponentType.ReadWrite(typeof(StateComponent)), ComponentType.ReadWrite(typeof(AICOMPONENT)) }
-            });
+            //_componentValueChangedQuery = GetEntityQuery(new EntityQueryDesc()
+            //{
+            //    All = new ComponentType[] { ComponentType.ReadWrite(typeof(COMPONENT)), ComponentType.ReadWrite(typeof(StateComponent)), ComponentType.ReadWrite(typeof(AICOMPONENT)) }
+            //});
             _entityCommandBufferSystem = GetCommandBufferSystem();
         }
         /// <summary>
@@ -90,13 +93,13 @@ namespace Utilities.ReactiveSystem
         /// This system call the COMPONENT_REACTOR.ComponentAdded method on all enttiy that have a new COMPONENT.
         /// </summary>
         [BurstCompile]
-        private struct ManageComponentAdditionJob : IJobChunk
+        public struct ManageComponentAdditionJob : IJobChunk
         {
-            public EntityCommandBuffer.Concurrent EntityCommandBuffer;
-            public ArchetypeChunkComponentType<COMPONENT> ComponentChunk;
+            public EntityCommandBuffer.ParallelWriter EntityCommandBuffer;
+            public ComponentTypeHandle<COMPONENT> ComponentChunk;
 
-            public ArchetypeChunkComponentType<AICOMPONENT> AIComponentChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+            public ComponentTypeHandle<AICOMPONENT> AIComponentChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
             [ReadOnly] public COMPONENT_REACTOR Reactor;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -122,12 +125,12 @@ namespace Utilities.ReactiveSystem
         /// This system call the COMPONENT_REACTOR.ComponentRemoved method on all enttiy that were strip down of their COMPONENT.
         /// </summary>
         [BurstCompile]
-        private struct ManageComponentRemovalJob : IJobChunk
+        public struct ManageComponentRemovalJob : IJobChunk
         {
-            public EntityCommandBuffer.Concurrent EntityCommandBuffer;
-            public ArchetypeChunkComponentType<AICOMPONENT> AIComponentChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<StateComponent> StateComponentChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
+            public EntityCommandBuffer.ParallelWriter EntityCommandBuffer;
+            public ComponentTypeHandle<AICOMPONENT> AIComponentChunk;
+            [ReadOnly] public ComponentTypeHandle<StateComponent> StateComponentChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
             [ReadOnly] public COMPONENT_REACTOR Reactor;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -205,10 +208,10 @@ namespace Utilities.ReactiveSystem
 
             systemDeps = new ManageComponentAdditionJob()
             {
-                ComponentChunk = GetArchetypeChunkComponentType<COMPONENT>(false),
-                AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                ComponentChunk = GetComponentTypeHandle<COMPONENT>(false),
+                AIComponentChunk = GetComponentTypeHandle<AICOMPONENT>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 Reactor = _reactor,
 
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
@@ -216,10 +219,10 @@ namespace Utilities.ReactiveSystem
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new ManageComponentRemovalJob()
             {
-                AIComponentChunk = GetArchetypeChunkComponentType<AICOMPONENT>(false),
-                StateComponentChunk = GetArchetypeChunkComponentType<StateComponent>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
+                AIComponentChunk = GetComponentTypeHandle<AICOMPONENT>(false),
+                StateComponentChunk = GetComponentTypeHandle<StateComponent>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                EntityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
 
                 Reactor = _reactor
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);

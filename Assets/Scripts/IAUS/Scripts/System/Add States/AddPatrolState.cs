@@ -6,14 +6,14 @@ namespace IAUS.ECS2.Systems {
     [BurstCompile]
     public struct AddPatrolState : IJobChunk
     {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<DistanceToConsideration> Distance;
 
-        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-        public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
-        [ReadOnly] public ArchetypeChunkBufferType<PatrolWaypointBuffer> PatrolBufferChunk;
+        [ReadOnly] public EntityTypeHandle EntityChunk;
+        public ComponentTypeHandle<Patrol> PatrolChunk;
+        public BufferTypeHandle<StateBuffer> StateBufferChunk;
+        [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> PatrolBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -49,7 +49,7 @@ namespace IAUS.ECS2.Systems {
                         Status = ActionStatus.Idle
                     });
 
-                    if (!Distance.Exists(entity))
+                    if (!Distance.HasComponent(entity))
                     {
                         entityCommandBuffer.AddComponent<DistanceToConsideration>(chunkIndex, entity);
                     }

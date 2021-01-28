@@ -32,8 +32,8 @@ namespace IAUS.ECS.System
             JobHandle systemDeps = Dependency;
 
             systemDeps = new UpdateDistanceRemaining() {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                CurrentPointChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                CurrentPointChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(Mover, systemDeps);
 
             Dependency = systemDeps;
@@ -78,8 +78,8 @@ namespace IAUS.ECS.System
 
         public struct UpdateDistanceRemaining : IJobChunk
         {
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> CurrentPointChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> CurrentPointChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

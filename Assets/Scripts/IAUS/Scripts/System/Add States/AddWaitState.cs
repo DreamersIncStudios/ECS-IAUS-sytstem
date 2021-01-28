@@ -8,11 +8,11 @@ namespace IAUS.ECS2.Systems
     [BurstCompile]
     public struct AddWaitState : IJobChunk
     {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<DistanceToConsideration> Distance;
-        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<Wait> WaitChunk;
-        public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
+        [ReadOnly] public EntityTypeHandle EntityChunk;
+        public ComponentTypeHandle<Wait> WaitChunk;
+        public BufferTypeHandle<StateBuffer> StateBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -45,7 +45,7 @@ namespace IAUS.ECS2.Systems
                         Status = ActionStatus.Idle
                     });
 
-                    if (!Distance.Exists(entity))
+                    if (!Distance.HasComponent(entity))
                     {
                         entityCommandBuffer.AddComponent<DistanceToConsideration>(chunkIndex, entity);
                     }

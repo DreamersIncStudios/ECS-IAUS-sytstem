@@ -46,19 +46,19 @@ namespace Dreamers.InventorySystem
 
             systemDeps = new AddWalletValueJob()
             {
-                WalletChunk = GetArchetypeChunkComponentType<Wallet>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                ChangeChunk = GetArchetypeChunkComponentType<AddWalletValue>(true),
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
+                WalletChunk = GetComponentTypeHandle<Wallet>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                ChangeChunk = GetComponentTypeHandle<AddWalletValue>(true),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
 
             }.ScheduleParallel(_walletHolderAdd, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new SubtractWalletValueJob()
             {
-                WalletChunk = GetArchetypeChunkComponentType<Wallet>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                ChangeChunk = GetArchetypeChunkComponentType<SubtractWalletValue>(true),
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
+                WalletChunk = GetComponentTypeHandle<Wallet>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                ChangeChunk = GetComponentTypeHandle<SubtractWalletValue>(true),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
 
             }.ScheduleParallel(_walletHolderSubtract, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -68,10 +68,10 @@ namespace Dreamers.InventorySystem
 
         public struct AddWalletValueJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Wallet> WalletChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<AddWalletValue> ChangeChunk;
-            [ReadOnly]public ArchetypeChunkEntityType EntityChunk;
-            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+            public ComponentTypeHandle<Wallet> WalletChunk;
+            [ReadOnly]public ComponentTypeHandle<AddWalletValue> ChangeChunk;
+            [ReadOnly]public EntityTypeHandle EntityChunk;
+            public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -104,10 +104,10 @@ namespace Dreamers.InventorySystem
 
         public struct SubtractWalletValueJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Wallet> WalletChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<SubtractWalletValue> ChangeChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+            public ComponentTypeHandle<Wallet> WalletChunk;
+            [ReadOnly] public ComponentTypeHandle<SubtractWalletValue> ChangeChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

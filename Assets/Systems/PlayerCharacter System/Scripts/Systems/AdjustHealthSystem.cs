@@ -8,11 +8,7 @@ namespace Stats
 {
     public class AdjustHealthSystem : SystemBase
     {
-
-
         EntityQuery _ChangeVitals;
-
-
         EntityCommandBufferSystem _entityCommandBufferSystem;
         protected EntityCommandBufferSystem GetCommandBufferSystem()
         {
@@ -35,9 +31,9 @@ namespace Stats
             systemDeps = new IncreaseVitalJob()
             {
                 DeltaTime = Time.DeltaTime,
-                IncreaseChunk = GetArchetypeChunkBufferType<ChangeVitalBuffer>(false),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(false),
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
+                IncreaseChunk = GetBufferTypeHandle<ChangeVitalBuffer>(false),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(false),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
             }.Schedule(_ChangeVitals, systemDeps);
 
 
@@ -52,10 +48,10 @@ namespace Stats
 
     public struct IncreaseVitalJob : IJobChunk
     {
-        public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
-        public ArchetypeChunkBufferType<ChangeVitalBuffer> IncreaseChunk;
+        public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+        public BufferTypeHandle<ChangeVitalBuffer> IncreaseChunk;
         public float DeltaTime;
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {

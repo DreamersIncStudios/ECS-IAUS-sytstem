@@ -42,8 +42,8 @@ namespace InfluenceSystem.Systems
                 JobHandle systemDeps = Dependency;
                 systemDeps = new UpdateInfluenceMapForLeaders()
                 {
-                    GridChunk = GetArchetypeChunkComponentType<InfluenceGridPoint>(false),
-                    PositionChunk = GetArchetypeChunkComponentType<Translation>(false),
+                    GridChunk = GetComponentTypeHandle<InfluenceGridPoint>(false),
+                    PositionChunk = GetComponentTypeHandle<Translation>(false),
                     Influe = Leaders.ToComponentDataArray<LeaderInfluence>(Allocator.TempJob),
                     transforms = Leaders.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
                 }.ScheduleParallel(GridPoints, systemDeps);
@@ -51,8 +51,8 @@ namespace InfluenceSystem.Systems
 
                 systemDeps = new UpdateInfluenceMapForGrunts() 
                 {
-                    GridChunk = GetArchetypeChunkComponentType<InfluenceGridPoint>(false),
-                    PositionChunk = GetArchetypeChunkComponentType<Translation>(true),
+                    GridChunk = GetComponentTypeHandle<InfluenceGridPoint>(false),
+                    PositionChunk = GetComponentTypeHandle<Translation>(true),
                     Influe =Grunts.ToComponentDataArray<GruntInfluence>(Allocator.TempJob),
                     transforms = Grunts.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
                 }.ScheduleParallel(GridPoints, systemDeps);
@@ -65,8 +65,8 @@ namespace InfluenceSystem.Systems
         [BurstCompile]
         struct UpdateInfluenceMapForLeaders : IJobChunk
         {
-            public ArchetypeChunkComponentType<InfluenceGridPoint> GridChunk;
-            public ArchetypeChunkComponentType<Translation> PositionChunk;
+            public ComponentTypeHandle<InfluenceGridPoint> GridChunk;
+            public ComponentTypeHandle<Translation> PositionChunk;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LeaderInfluence> Influe;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> transforms;
 
@@ -110,8 +110,8 @@ namespace InfluenceSystem.Systems
         [BurstCompile]
         struct UpdateInfluenceMapForGrunts : IJobChunk
         {
-            public ArchetypeChunkComponentType<InfluenceGridPoint> GridChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<Translation> PositionChunk;
+            public ComponentTypeHandle<InfluenceGridPoint> GridChunk;
+            [ReadOnly] public ComponentTypeHandle<Translation> PositionChunk;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<GruntInfluence> Influe;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> transforms;
 

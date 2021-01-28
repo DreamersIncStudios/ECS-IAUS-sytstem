@@ -60,8 +60,8 @@ namespace IAUS.ECS2.Systems.Reactive
             JobHandle systemDeps = Dependency;
 
             systemDeps = new MeleeJob() {
-                StatsChunk = GetArchetypeChunkComponentType< CharacterStatComponent >(true),
-                MeleeChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false)
+                StatsChunk = GetComponentTypeHandle< CharacterStatComponent >(true),
+                MeleeChunk = GetComponentTypeHandle<MeleeAttackTarget>(false)
             }.ScheduleParallel(MeleeAttackers, systemDeps);
             entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
@@ -71,8 +71,8 @@ namespace IAUS.ECS2.Systems.Reactive
         //[BurstCompile]
         struct MeleeJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<MeleeAttackTarget> MeleeChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<MeleeAttackTarget> MeleeChunk;
+            [ReadOnly]public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<MeleeAttackTarget> Melees = chunk.GetNativeArray(MeleeChunk);

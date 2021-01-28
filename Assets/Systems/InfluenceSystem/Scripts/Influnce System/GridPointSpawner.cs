@@ -61,7 +61,7 @@ namespace InfluenceSystem.Component {
         }
 
 
-        public void test() {
+        public void Test() {
 
             DestoryGrid(10);
             Debug.Log("Destory launch");
@@ -102,9 +102,9 @@ namespace InfluenceSystem.Component {
           JobHandle  inputDeps = new DestoryGridByID()
             {
                 GridID = ID,
-                EntityChunk = GetArchetypeChunkEntityType(),
-                CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                GridpointChunk = GetArchetypeChunkComponentType<InfluenceGridPoint>(true)
+                EntityChunk = GetEntityTypeHandle(),
+                CommandBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                GridpointChunk = GetComponentTypeHandle<InfluenceGridPoint>(true)
 
             }.ScheduleParallel(Grids);
             inputDeps.Complete();
@@ -123,10 +123,10 @@ namespace InfluenceSystem.Component {
 
         public struct DestoryGridByID : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<InfluenceGridPoint> GridpointChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            [ReadOnly] public ComponentTypeHandle<InfluenceGridPoint> GridpointChunk;
             public int GridID;
-            public EntityCommandBuffer.Concurrent CommandBuffer;
+            public EntityCommandBuffer.ParallelWriter CommandBuffer;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

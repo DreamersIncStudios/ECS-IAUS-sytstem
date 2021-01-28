@@ -66,23 +66,23 @@ namespace IAUS.ECS2.Systems
         {
             JobHandle systemDeps = Dependency;
             systemDeps = new AddPatrolState() {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                PatrolBufferChunk = GetArchetypeChunkBufferType<PatrolWaypointBuffer>(true)
+                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true)
             }
             .ScheduleParallel(_partolStateEntity, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new AddWaitState() {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false),
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
             }
             .ScheduleParallel( _waitStateEntity, systemDeps);
             
@@ -90,10 +90,10 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new AddStayInRange()
             {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                StayInRangeChunk = GetArchetypeChunkComponentType<StayInRange>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                StayInRangeChunk = GetComponentTypeHandle<StayInRange>(false),
+                EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_GetInRangeStateEntity, systemDeps);
 
@@ -101,30 +101,30 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new AddMoveToTargetState() 
             {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                MoveToTargetChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                MoveToTargetChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_MoveToTargetStateEntity ,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new AddAttackTargetState()
             {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                AttackTargetChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk =GetBufferTypeHandle<StateBuffer>(false),
+                AttackTargetChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
+                EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             
             systemDeps = new AddFleeState()
             {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                StateBufferChunk = GetArchetypeChunkBufferType<StateBuffer>(false),
-                FleeChunk = GetArchetypeChunkComponentType<Retreat>(false),
-                EntityChunk = GetArchetypeChunkEntityType(),
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                FleeChunk = GetComponentTypeHandle<Retreat>(false),
+                EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_FleeStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -133,8 +133,8 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new RemoveSetupTag()
             {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                EntityChunk = GetArchetypeChunkEntityType()
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityChunk = GetEntityTypeHandle()
             }.ScheduleParallel(Starter, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -145,8 +145,8 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct RemoveSetupTag : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            public EntityCommandBuffer.Concurrent entityCommandBuffer;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

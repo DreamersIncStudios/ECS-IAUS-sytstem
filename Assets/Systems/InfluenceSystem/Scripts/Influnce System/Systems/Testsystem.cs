@@ -38,8 +38,8 @@ namespace InfluenceSystem.Systems
 
                 systemDeps = new GetValue()
                 {
-                    GridChunk = GetArchetypeChunkComponentType<InfluenceGridPoint>(true),
-                    PositionChunk = GetArchetypeChunkComponentType<Translation>(true),
+                    GridChunk = GetComponentTypeHandle<InfluenceGridPoint>(true),
+                    PositionChunk = GetComponentTypeHandle<Translation>(true),
                     Sampler = Samplers.ToComponentDataArray<InfluenceSampler>(Allocator.TempJob),
                     transforms = Samplers.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
                 }.ScheduleParallel(GridPoints, systemDeps);
@@ -54,8 +54,8 @@ namespace InfluenceSystem.Systems
         [BurstCompile]
         struct GetValue : IJobChunk
         {
-            [ReadOnly] public ArchetypeChunkComponentType<InfluenceGridPoint> GridChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<Translation> PositionChunk;
+            [ReadOnly] public ComponentTypeHandle<InfluenceGridPoint> GridChunk;
+            [ReadOnly] public ComponentTypeHandle<Translation> PositionChunk;
             [DeallocateOnJobCompletion] [NativeDisableParallelForRestriction] public NativeArray<InfluenceSampler> Sampler;
             [ReadOnly] [DeallocateOnJobCompletion] [NativeDisableParallelForRestriction] public NativeArray<LocalToWorld> transforms;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -70,8 +70,10 @@ namespace InfluenceSystem.Systems
                     {
                         if (Vector3.Distance(Positions[i].Value, transforms[j].Position) < 1)
                         {
-                            InfluenceSampler temp = new InfluenceSampler();
-                            temp.value = grid.Enemies.Protection;
+                            InfluenceSampler temp = new InfluenceSampler()
+                            {
+                                value = grid.Enemies.Protection
+                            };
                             Sampler[j] = temp;
                         }
 

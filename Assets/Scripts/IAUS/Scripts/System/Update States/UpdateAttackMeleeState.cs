@@ -35,9 +35,9 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new UpdateAttack()
             {
-                MeleeChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
-                AttackChunk = GetArchetypeChunkComponentType<AttackInfo>(true),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true),
+                MeleeChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
+                AttackChunk = GetComponentTypeHandle<AttackInfo>(true),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
                 DT = Time.DeltaTime
             }.ScheduleParallel(Melee, systemDeps);
 
@@ -49,9 +49,9 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         struct UpdateAttack : IJobChunk
         {
-            public ArchetypeChunkComponentType<MeleeAttackTarget> MeleeChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<AttackInfo> AttackChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<MeleeAttackTarget> MeleeChunk;
+            [ReadOnly]public ComponentTypeHandle<AttackInfo> AttackChunk;
+            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
 
             public float DT;
 

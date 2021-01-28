@@ -8,13 +8,13 @@ namespace IAUS.ECS2.Systems
     [BurstCompile]
     public struct AddMoveToTargetState : IJobChunk
     {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<CharacterHealthConsideration> HealthRatio;
 
-        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<MoveToTarget> MoveToTargetChunk;
-        public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
+        [ReadOnly] public EntityTypeHandle EntityChunk;
+        public ComponentTypeHandle<MoveToTarget> MoveToTargetChunk;
+        public BufferTypeHandle<StateBuffer> StateBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -47,7 +47,7 @@ namespace IAUS.ECS2.Systems
                         Status = ActionStatus.Idle
                     });
 
-                    if (!HealthRatio.Exists(entity))
+                    if (!HealthRatio.HasComponent(entity))
                     {
                         entityCommandBuffer.AddComponent<CharacterHealthConsideration>(chunkIndex, entity);
                     }

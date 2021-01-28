@@ -5,7 +5,7 @@ using Unity.Transforms;
 using Unity.Collections;
 using Unity.Jobs;
 using InfluenceSystem.Component;
-public class transformConversion : MonoBehaviour,IConvertGameObjectToEntity
+public class TransformConversion : MonoBehaviour,IConvertGameObjectToEntity
 {
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -35,8 +35,8 @@ public class stupidSystem : SystemBase
         JobHandle systemDeps = Dependency;
         systemDeps = new TranslationUpdate()
         {
-            LocalChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
-            TranslationChunk = GetArchetypeChunkComponentType<Translation>(false)
+            LocalChunk = GetComponentTypeHandle<LocalToWorld>(true),
+            TranslationChunk = GetComponentTypeHandle<Translation>(false)
         }.ScheduleParallel(stupidshit, systemDeps);
         entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
         Dependency = systemDeps;
@@ -46,8 +46,8 @@ public class stupidSystem : SystemBase
 
     [BurstCompile]
     struct TranslationUpdate : IJobChunk {
-        public ArchetypeChunkComponentType<Translation> TranslationChunk;
-        [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> LocalChunk;
+        public ComponentTypeHandle<Translation> TranslationChunk;
+        [ReadOnly] public ComponentTypeHandle<LocalToWorld> LocalChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {

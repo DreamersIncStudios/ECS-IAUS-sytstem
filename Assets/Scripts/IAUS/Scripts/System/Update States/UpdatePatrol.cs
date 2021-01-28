@@ -39,22 +39,22 @@ namespace IAUS.ECS2.Systems
             JobHandle systemDeps = Dependency;
             systemDeps = new GetDistanceToNextPoint()
             {
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
-                TransformChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(DistanceCheck, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             
             systemDeps = new ScoreState() 
             {
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true)
+                PatrolChunk = GetComponentTypeHandle<Patrol>(),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CompletionChecker()
             {
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(true),
-                Buffer = _entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent(),
-                EntityChunk = GetArchetypeChunkEntityType()
+                PatrolChunk = GetComponentTypeHandle<Patrol>(true),
+                Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityChunk = GetEntityTypeHandle()
             }.Schedule(CompleteCheck, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -66,8 +66,8 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct GetDistanceToNextPoint : IJobChunk
         {
-            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> TransformChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
@@ -89,8 +89,8 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct ScoreState : IJobChunk
         {
-            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly]public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -110,9 +110,9 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct CompletionChecker : IJobChunk
         {
-            [ReadOnly]public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-            public EntityCommandBuffer.Concurrent Buffer;
+            [ReadOnly]public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            public EntityCommandBuffer.ParallelWriter Buffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);

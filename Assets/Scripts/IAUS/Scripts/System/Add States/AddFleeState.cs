@@ -9,12 +9,12 @@ namespace IAUS.ECS2.Systems
 
     public struct AddFleeState : IJobChunk
     {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<CharacterHealthConsideration> HealthRatio;
-        public ArchetypeChunkComponentType<Retreat> FleeChunk;
-        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
+        public ComponentTypeHandle<Retreat> FleeChunk;
+        [ReadOnly] public EntityTypeHandle EntityChunk;
+        public BufferTypeHandle<StateBuffer> StateBufferChunk;
 
 
 
@@ -48,7 +48,7 @@ namespace IAUS.ECS2.Systems
                         Status = ActionStatus.Idle
                     });
 
-                    if (!HealthRatio.Exists(entity))
+                    if (!HealthRatio.HasComponent(entity))
                     {
                         entityCommandBuffer.AddComponent<CharacterHealthConsideration>(chunkIndex, entity);
                     }

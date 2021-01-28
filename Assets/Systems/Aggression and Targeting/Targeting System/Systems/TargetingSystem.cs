@@ -45,8 +45,8 @@ namespace DreamersStudio.TargetingSystem
             JobHandle systemDeps = Dependency;
             systemDeps = new GetTargetsList()
             {
-                BufferChunk = GetArchetypeChunkBufferType<TargetBuffer>(false),
-                PositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                BufferChunk = GetBufferTypeHandle<TargetBuffer>(false),
+                PositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
                 TargetablesArray = Targets.ToComponentDataArray<Targetable>(Allocator.TempJob),
                 TargetPositions = Targets.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
             }.ScheduleParallel(Targetters, systemDeps);
@@ -109,8 +109,8 @@ namespace DreamersStudio.TargetingSystem
     /// </summary>
     public struct GetTargetsList : IJobChunk
     {
-        public ArchetypeChunkBufferType<TargetBuffer> BufferChunk;
-        [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> PositionChunk;
+        public BufferTypeHandle<TargetBuffer> BufferChunk;
+        [ReadOnly] public ComponentTypeHandle<LocalToWorld> PositionChunk;
       //  [ReadOnly] public ArchetypeChunkComponentType<Vision> VisionChunk;
 
         [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<Targetable> TargetablesArray;

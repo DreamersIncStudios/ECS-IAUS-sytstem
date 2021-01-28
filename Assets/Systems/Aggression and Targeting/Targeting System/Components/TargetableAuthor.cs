@@ -5,7 +5,7 @@ using Unity.Entities;
 
 namespace DreamersStudio.TargetingSystem
 {
-    public class TargetableAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class TargetableAuthor : MonoBehaviour, IConvertGameObjectToEntity
     {
         public TargetType TargetType;
         public int ID;

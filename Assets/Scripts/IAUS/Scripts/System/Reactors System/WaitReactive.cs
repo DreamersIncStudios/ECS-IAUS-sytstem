@@ -9,6 +9,8 @@ using Unity.Burst;
 using Components.MovementSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS2.Systems.Reactive
 {
@@ -70,10 +72,10 @@ namespace IAUS.ECS2.Systems.Reactive
             JobHandle systemDeps = Dependency;
             systemDeps = new PatrolMovementUpdateJob()
             {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
-                WaypointChunk = GetArchetypeChunkBufferType<PatrolWaypointBuffer>(true),
-                ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -84,10 +86,10 @@ namespace IAUS.ECS2.Systems.Reactive
         [BurstCompile]
         public struct PatrolMovementUpdateJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
-            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
-            [ReadOnly] public ArchetypeChunkBufferType<PatrolWaypointBuffer> WaypointChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);

@@ -8,13 +8,14 @@ namespace IAUS.ECS2.Systems
     [BurstCompile]
     public struct AddStayInRange : IJobChunk
     {
-        public EntityCommandBuffer.Concurrent entityCommandBuffer;
+        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<CharacterHealthConsideration> HealthRatio;
 
-        [ReadOnly] public ArchetypeChunkEntityType EntityChunk;
-        public ArchetypeChunkComponentType<StayInRange> StayInRangeChunk;
-        public ArchetypeChunkBufferType<StateBuffer> StateBufferChunk;
+        [ReadOnly] public EntityTypeHandle EntityChunk;
+        public ComponentTypeHandle<StayInRange> StayInRangeChunk;
+
+        public BufferTypeHandle<StateBuffer> StateBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
@@ -46,7 +47,7 @@ namespace IAUS.ECS2.Systems
                         Status = ActionStatus.Idle
                     });
 
-                    if (!HealthRatio.Exists(entity))
+                    if (!HealthRatio.HasComponent(entity))
                     {
                         entityCommandBuffer.AddComponent<CharacterHealthConsideration>(chunkIndex, entity);
                     }

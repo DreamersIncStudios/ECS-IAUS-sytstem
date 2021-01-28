@@ -12,12 +12,13 @@ using Unity.Physics.Systems;
 
 namespace AISenses.VisionSystems
 {
+    [UpdateBefore(typeof(BuildPhysicsWorld))]
     public class VisionSystem : SystemBase
     {
         private EntityQuery SeerEntityQuery;
         private EntityQuery TargetEntityQuery;
         EntityCommandBufferSystem entityCommandBufferSystem;
-
+        EndFramePhysicsSystem m_EndFramePhysicsSystem;
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -32,34 +33,37 @@ namespace AISenses.VisionSystems
 
             });
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            m_EndFramePhysicsSystem = World.GetExistingSystem<EndFramePhysicsSystem>();
         }
         protected override void OnUpdate()
         {
             if (UnityEngine.Time.frameCount % 240 == 10)
             {
+                Dependency = JobHandle.CombineDependencies(Dependency, m_EndFramePhysicsSystem.GetOutputDependency());
                 JobHandle systemDeps = Dependency;
+
                 systemDeps = new RaycastTargets()
                 {
-                    SeersChunk = GetArchetypeChunkComponentType<Vision>(true),
-                    SeersPositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
-                    ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
+                    SeersChunk = GetComponentTypeHandle<Vision>(true),
+                    SeersPositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                    ScanBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
                     PossibleTargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
                     physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld,
-                }.ScheduleParallel(SeerEntityQuery, systemDeps);
-                systemDeps.Complete();
+                }.ScheduleSingle(SeerEntityQuery, systemDeps);
                 entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().AddInputDependency(systemDeps);
+                systemDeps.Complete();
 
                 systemDeps = new FindClosestTarget()
                 {
                     DT = Time.DeltaTime,
-                    SeersChunk = GetArchetypeChunkComponentType<Vision>(false),
-                    ScanBufferChunk = GetArchetypeChunkBufferType<ScanPositionBuffer>(false),
+                    SeersChunk =GetComponentTypeHandle<Vision>(false),
+                    ScanBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
                     AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false)
 
                 }.ScheduleParallel(SeerEntityQuery, systemDeps);
 
                 entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
                 Dependency = systemDeps;
 
             }
@@ -68,9 +72,9 @@ namespace AISenses.VisionSystems
         [BurstCompile]
         public struct RaycastTargets : IJobChunk
         {
-            [ReadOnly]public ArchetypeChunkComponentType<Vision> SeersChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> SeersPositionChunk;
-            public ArchetypeChunkBufferType<ScanPositionBuffer> ScanBufferChunk;
+            [ReadOnly]public ComponentTypeHandle<Vision> SeersChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> SeersPositionChunk;
+            public BufferTypeHandle<ScanPositionBuffer> ScanBufferChunk;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> PossibleTargetPosition;
             public PhysicsWorld physicsWorld;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -146,8 +150,8 @@ namespace AISenses.VisionSystems
         [BurstCompile]
         public struct FindClosestTarget : IJobChunk
         {
-            public ArchetypeChunkComponentType<Vision> SeersChunk;
-            public ArchetypeChunkBufferType<ScanPositionBuffer> ScanBufferChunk;
+            public ComponentTypeHandle<Vision> SeersChunk;
+            public BufferTypeHandle<ScanPositionBuffer> ScanBufferChunk;
            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> AItargetFromEntity;
             public float DT;
 

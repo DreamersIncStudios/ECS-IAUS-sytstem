@@ -38,11 +38,11 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new CheckDistanceToLeader()
             {
-                MoveChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                FollowerChunk = GetArchetypeChunkComponentType<FollowEntityTag>(true),
-                PositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                MoveChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                FollowerChunk = GetComponentTypeHandle<FollowEntityTag>(true),
+                PositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
                 EntityPositions = GetComponentDataFromEntity<LocalToWorld>(),
-                AttackChunk = GetArchetypeChunkComponentType<AttackInfo>(false)
+                AttackChunk = GetComponentTypeHandle<AttackInfo>(false)
             }.ScheduleParallel(Movers, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -50,9 +50,9 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new ScoreMoveState()
             {
-                MoveChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true),
-                AttackChunk = GetArchetypeChunkComponentType<AttackInfo>(true)
+                MoveChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
+                AttackChunk = GetComponentTypeHandle<AttackInfo>(true)
 
             }.ScheduleParallel(Movers, systemDeps);
 
@@ -62,9 +62,9 @@ namespace IAUS.ECS2.Systems
                 systemDeps = new CheckIfTargetIsStillInSightandUpdate()
                 { 
                     EntityPositions = GetComponentDataFromEntity<LocalToWorld>(true),
-                    MoveChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                    SeersPositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
-                    MovementChunk=GetArchetypeChunkComponentType<Movement>(false),
+                    MoveChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                    SeersPositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                    MovementChunk= GetComponentTypeHandle<Movement>(false),
                     physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld
                 }.ScheduleParallel(Movers, systemDeps);
 
@@ -81,11 +81,11 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         struct CheckDistanceToLeader : IJobChunk
         {
-            public ArchetypeChunkComponentType<MoveToTarget> MoveChunk;
-            public ArchetypeChunkComponentType<AttackInfo> AttackChunk;
+            public ComponentTypeHandle<MoveToTarget> MoveChunk;
+            public ComponentTypeHandle<AttackInfo> AttackChunk;
 
-            [ReadOnly] public ArchetypeChunkComponentType<FollowEntityTag> FollowerChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> PositionChunk;
+            [ReadOnly] public ComponentTypeHandle<FollowEntityTag> FollowerChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> PositionChunk;
             [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<LocalToWorld> EntityPositions;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -118,9 +118,9 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct ScoreMoveState : IJobChunk
         {
-            public ArchetypeChunkComponentType<MoveToTarget> MoveChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<AttackInfo> AttackChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<MoveToTarget> MoveChunk;
+            [ReadOnly] public ComponentTypeHandle<AttackInfo> AttackChunk;
+            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<MoveToTarget> Moves = chunk.GetNativeArray(MoveChunk);
@@ -150,10 +150,10 @@ namespace IAUS.ECS2.Systems
        // [BurstCompile]
         public struct CheckIfTargetIsStillInSightandUpdate : IJobChunk
         {
-            public ArchetypeChunkComponentType<MoveToTarget> MoveChunk;
+            public ComponentTypeHandle<MoveToTarget> MoveChunk;
             [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<LocalToWorld> EntityPositions;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> SeersPositionChunk;
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> SeersPositionChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
 
             public PhysicsWorld physicsWorld;
 
