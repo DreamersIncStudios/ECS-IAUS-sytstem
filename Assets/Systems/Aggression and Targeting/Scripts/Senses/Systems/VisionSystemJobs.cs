@@ -12,7 +12,6 @@ using Unity.Physics.Systems;
 
 namespace AISenses.VisionSystems
 {
-    [UpdateBefore(typeof(BuildPhysicsWorld))]
     public class VisionSystem : SystemBase
     {
         private EntityQuery SeerEntityQuery;

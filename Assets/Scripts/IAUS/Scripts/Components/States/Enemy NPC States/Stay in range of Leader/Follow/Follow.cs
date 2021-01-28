@@ -29,16 +29,18 @@ namespace IAUS.ECS2.Component
         protected override void OnCreate()
         {
             base.OnCreate();
-            buffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer();
+            buffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
         }
-        EntityCommandBuffer buffer;
+        EntityCommandBufferSystem buffer;
 
         protected override void OnUpdate()
         {
+            EntityCommandBuffer buff = buffer.CreateCommandBuffer();
             Entities.ForEach((Entity entity, Follow call, ref FollowEntityTag tag, ref SetupUpLeaderTag UP) => 
             {
                 tag.Leader = call.LeaderEntity.self;
-                buffer.RemoveComponent<SetupUpLeaderTag>(entity);
+                buff.RemoveComponent<SetupUpLeaderTag>(entity);
             });
         }
     }

@@ -69,8 +69,8 @@ namespace Stats
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             dstManager.AddBuffer<ChangeVitalBuffer>(entity);
             StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
-            StatUpdate();
-           
+           Invoke( "StatUpdate",1);
+          
         }
 
         public string Name
@@ -259,7 +259,7 @@ namespace Stats
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
 
-            Invoke("StatUpdate", 1);
+            Invoke("StatUpdate", 3);
         }
 
 
@@ -274,8 +274,8 @@ namespace Stats
 
             CurHealth = MaxHealth = GetVital((int)VitalName.Health).AdjustBaseValue;
             CurMana = MaxMana = GetVital((int)VitalName.Mana).AdjustBaseValue;
-
-             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(selfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana, MagicDef = MagicDef, MeleeAttack = MeleeAttack, MeleeDef = MeleeDef });
+            var data = new LevelUpComponent(){ MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana, MagicDef = MagicDef, MeleeAttack = MeleeAttack, MeleeDef = MeleeDef };
+             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(selfEntityRef,data);
         }
 
 
