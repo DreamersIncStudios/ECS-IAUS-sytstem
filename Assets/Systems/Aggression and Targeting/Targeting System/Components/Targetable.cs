@@ -2,7 +2,6 @@
 using UnityEngine;
 namespace DreamersStudio.TargetingSystem
 {
-    [GenerateAuthoringComponent]
     public struct Targetable : IComponentData
     {
         public TargetType TargetType;

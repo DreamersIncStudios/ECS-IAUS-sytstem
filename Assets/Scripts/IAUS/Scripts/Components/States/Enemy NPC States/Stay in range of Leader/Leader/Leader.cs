@@ -8,10 +8,10 @@ namespace IAUS.ECS2.Component
     
     public class Leader : MonoBehaviour, IConvertGameObjectToEntity
     {
-        public Entity self { get; private set; }
+        public Entity Self { get; private set; }
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            self = entity;
+            Self = entity;
             dstManager.AddComponent<LeaderEntityTag>(entity);
         }
 

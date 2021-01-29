@@ -47,6 +47,7 @@ namespace DreamersStudio.TargetingSystem
             {
                 BufferChunk = GetBufferTypeHandle<TargetBuffer>(false),
                 PositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                VisionChunk = GetComponentTypeHandle<Vision>(true),
                 TargetablesArray = Targets.ToComponentDataArray<Targetable>(Allocator.TempJob),
                 TargetPositions = Targets.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
             }.ScheduleParallel(Targetters, systemDeps);
@@ -111,15 +112,14 @@ namespace DreamersStudio.TargetingSystem
     {
         public BufferTypeHandle<TargetBuffer> BufferChunk;
         [ReadOnly] public ComponentTypeHandle<LocalToWorld> PositionChunk;
-      //  [ReadOnly] public ArchetypeChunkComponentType<Vision> VisionChunk;
-
+        [ReadOnly] public ComponentTypeHandle<Vision> VisionChunk;
         [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<Targetable> TargetablesArray;
         [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> TargetPositions;
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             BufferAccessor<TargetBuffer> Buffers = chunk.GetBufferAccessor(BufferChunk);
             NativeArray<LocalToWorld> Positions = chunk.GetNativeArray(PositionChunk);
-       //     NativeArray<Vision> Visions = chunk.GetNativeArray(VisionChunk);
+            NativeArray<Vision> Visions = chunk.GetNativeArray(VisionChunk);
 
             for (int i = 0; i < chunk.Count; i++)
             {
@@ -130,7 +130,7 @@ namespace DreamersStudio.TargetingSystem
                 for (int j = 0; j < TargetablesArray.Length; j++)
                 {
                     float dist = Vector3.Distance(Pos.Position, TargetPositions[j].Position);
-                    if(dist<100) // Create a character skill/stat for range or determine a hardcode number
+                    if(dist<Visions[i].viewRadius) // Create a character skill/stat for range or determine a hardcode number
                     {
 
                         Vector3 dir = ((Vector3)TargetPositions[j].Position - (Vector3)Pos.Position).normalized;

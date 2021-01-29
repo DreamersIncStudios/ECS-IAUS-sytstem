@@ -30,7 +30,12 @@ namespace IAUS.SO
         [SerializeField] Retreat getRetreat;
         public Movement AIMove => GetMovement;
         [SerializeField] Movement GetMovement;
-        public void Setup(GameObject model, AITarget self, List<AIStates> stateScorers, Movement movement
+
+        [SerializeField] TypeOfNPC getNPCType;
+        [SerializeField] AISenses.Authoring.AISensesAuthoring getAISenses;
+        public AISenses.Authoring.AISensesAuthoring GetAISenses => getAISenses;
+        public TypeOfNPC GetTypeOfNPC => getNPCType;
+        public void Setup(GameObject model, TypeOfNPC typeOf, AITarget self, List<AIStates> stateScorers, Movement movement
             ,Patrol patrol,Wait wait, Retreat flee
             ) {
             GetSelf = self;
@@ -40,6 +45,7 @@ namespace IAUS.SO
             getRetreat = flee;
             getPatrol = patrol;
             getWait = wait;
+            getNPCType = typeOf;
         }
         BaseAIAuthoringSO test;
         public void Spawn( Vector3 pos) {

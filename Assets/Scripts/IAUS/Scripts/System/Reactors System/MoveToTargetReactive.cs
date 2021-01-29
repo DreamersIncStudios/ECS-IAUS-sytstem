@@ -11,6 +11,13 @@ using AISenses;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.StateComponent))]
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.StateComponent))]
+
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentAdditionJob))]
+
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentRemovalJob))]
+
 namespace IAUS.ECS2.Systems.Reactive
 {
     public struct MoveToTargetReactor : IComponentReactorTagsForAIStates<MoveToTargetActionTag, MoveToTarget>
@@ -145,8 +152,10 @@ namespace IAUS.ECS2.Systems.Reactive
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-         
 
+                    if (Seers[i].ClosestTarget.target.entity==Entity.Null) {
+                        continue;
+                    }
 
                     MoveToTarget moveTo = moveToTargets[i];
                     if (!moveTo.CheckForTarget) 

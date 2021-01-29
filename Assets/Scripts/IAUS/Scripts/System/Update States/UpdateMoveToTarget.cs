@@ -155,7 +155,7 @@ namespace IAUS.ECS2.Systems
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> SeersPositionChunk;
             public ComponentTypeHandle<Movement> MovementChunk;
 
-            public PhysicsWorld physicsWorld;
+           [ReadOnly] public PhysicsWorld physicsWorld;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

@@ -12,8 +12,8 @@ namespace IAUS.SO.editor
 {
     public sealed partial class NPCEditor : EditorWindow {
 
-        void DisplayNPCSOForEditing(NPCSO SO) {
-            editorState = EditorState.EditExisting;
+        void DisplayNPCSOForEditing(NPCSO SO)
+        {
             if (SO.Model)
             {
                 GetModel = SO.Model;
@@ -21,12 +21,13 @@ namespace IAUS.SO.editor
             }
             else
                 createRandomCharacter = true;
-          GetPatrol = SO.GetPatrol;
+            GetPatrol = SO.GetPatrol;
             GetRetreat = SO.GetRetreat;
             GetTargetType = SO.Self.Type;
 
             GetWait = SO.GetWait;
         }
+
         NPCSO GetNPCSO;
         void DisplayListOfExistingSO() {
             EditorGUILayout.BeginVertical("Box");
@@ -36,9 +37,10 @@ namespace IAUS.SO.editor
             {
                 EditorGUILayout.BeginHorizontal();
                 //add names
-                if (GUILayout.Button("testing"))
-                    GetNPCSO = SO;
+                if (GUILayout.Button("testing")) { 
+                   GetNPCSO = SO;
                     DisplayNPCSOForEditing(SO);
+                }
                 // delete SO
                 GUILayout.Button("X", GUILayout.Width(20));
                 EditorGUILayout.EndHorizontal();
@@ -46,12 +48,13 @@ namespace IAUS.SO.editor
             if (GUILayout.Button("Create New SO"))
             {
                 editorState = EditorState.CreateNew;
+                SetStartValues();
                 //reset to start values;
             }
 
             EditorGUILayout.EndVertical();
         }
-        void SaveChanges() {
+        void SaveChangesToNPCSO() {
 
             List<AIStates> StatesToAdd = new List<AIStates>();
             for (int i = 0; i < showBtn.Length; i++)
@@ -72,7 +75,7 @@ namespace IAUS.SO.editor
                 }
             }
 
-            GetNPCSO.Setup(GetModel, new AITarget() { Type = GetTargetType }, StatesToAdd, GetMove,
+            GetNPCSO.Setup(GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, StatesToAdd, GetMove,
                 GetPatrol, GetWait, GetRetreat
                 );
             SetStartValues();

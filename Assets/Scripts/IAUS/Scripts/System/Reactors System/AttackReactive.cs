@@ -8,6 +8,10 @@ using Unity.Burst;
 using Stats;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackTargetActionTag,MeleeAttackTarget, IAUS.ECS2.Systems.Reactive.MeleeAttackReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackTargetActionTag, MeleeAttackTarget, IAUS.ECS2.Systems.Reactive.MeleeAttackReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackTargetActionTag, MeleeAttackTarget, IAUS.ECS2.Systems.Reactive.MeleeAttackReactor>.ManageComponentRemovalJob))]
+
+
 
 namespace IAUS.ECS2.Systems.Reactive
 {

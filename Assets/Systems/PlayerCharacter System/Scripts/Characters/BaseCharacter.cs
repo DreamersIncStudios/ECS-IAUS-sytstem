@@ -69,7 +69,7 @@ namespace Stats
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             dstManager.AddBuffer<ChangeVitalBuffer>(entity);
             StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
-           Invoke( "StatUpdate",1);
+           Invoke( nameof(StatUpdate), 1);
           
         }
 
@@ -259,7 +259,7 @@ namespace Stats
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
 
-            Invoke("StatUpdate", 3);
+            Invoke(nameof(StatUpdate), 1.5f);
         }
 
 

@@ -10,7 +10,7 @@ namespace IAUS.ECS2.Component
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             FollowEntityTag data = new FollowEntityTag() {
-                Leader = LeaderEntity.self
+                Leader = LeaderEntity.Self
         };
             dstManager.AddComponentData(entity, data);
             dstManager.AddComponent<SetupUpLeaderTag>(entity);
@@ -39,7 +39,7 @@ namespace IAUS.ECS2.Component
             EntityCommandBuffer buff = buffer.CreateCommandBuffer();
             Entities.ForEach((Entity entity, Follow call, ref FollowEntityTag tag, ref SetupUpLeaderTag UP) => 
             {
-                tag.Leader = call.LeaderEntity.self;
+                tag.Leader = call.LeaderEntity.Self;
                 buff.RemoveComponent<SetupUpLeaderTag>(entity);
             });
         }

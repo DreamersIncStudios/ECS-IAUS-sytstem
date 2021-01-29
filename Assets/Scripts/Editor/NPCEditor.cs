@@ -21,12 +21,14 @@ namespace IAUS.SO.editor
             window.minSize = new Vector2(600, 800);
             window.Show();
         }
-        private void Awake()
+        public void Awake()
         {
             SetStartValues();
+
         }
+
         bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length] ;
-        EditorState editorState;
+        EditorState editorState = EditorState.CreateNew;
         TargetType GetTargetType;
         Patrol GetPatrol;
             
@@ -34,10 +36,12 @@ namespace IAUS.SO.editor
         Retreat GetRetreat;
         GameObject GetModel;
         bool createRandomCharacter=false;
+        TypeOfNPC GetTypeOfNPC;
         Vector2 scrollPos;
+
         void OnGUI()
         {
-            EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.BeginHorizontal();
             DisplayListOfExistingSO();
 
             EditorGUILayout.BeginVertical("Box");
@@ -47,8 +51,9 @@ namespace IAUS.SO.editor
             createRandomCharacter = EditorGUILayout.Foldout(createRandomCharacter, "Create RNG GO To Be Implement Later");
             if (!createRandomCharacter)
                 GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
-
+            GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
+
             switch (GetTargetType)
             {
                 case TargetType.Character:
@@ -57,6 +62,17 @@ namespace IAUS.SO.editor
                     SetupFlee();
                     break;
             }
+            switch (GetTypeOfNPC) 
+            {
+                case TypeOfNPC.Neurtal:
+                    break;
+                case TypeOfNPC.Friendly:
+                    break;
+                case TypeOfNPC.Enemy:
+                    break;
+            }
+
+
             EditorGUILayout.EndVertical();
 
             if (GetTargetType == TargetType.Character)
@@ -76,9 +92,9 @@ namespace IAUS.SO.editor
 
                     if (GUILayout.Button("Update"))
                     {
-                        SaveChanges();
+                        SaveChangesToNPCSO();
                     }
-                    if (GUILayout.Button("Update"))
+                    if (GUILayout.Button("Create New SO"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
                     }
@@ -88,7 +104,7 @@ namespace IAUS.SO.editor
             {
             // add nodal window to verfiy 
                 SetStartValues();
-                editorState = EditorState.CreateNew;
+          
             }
 
 
@@ -185,9 +201,18 @@ namespace IAUS.SO.editor
                 
                 }
             }
-
+            //Create SO base of NPC Type
+            switch (GetTypeOfNPC)
+            {
+                case TypeOfNPC.Neurtal:
+                    break;
+                case TypeOfNPC.Friendly:
+                    break;
+                case TypeOfNPC.Enemy:
+                    break;
+            }
             ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-            SO.Setup(GetModel,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
+            SO.Setup(GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
                 GetPatrol,GetWait,GetRetreat
                 );
             SetStartValues();

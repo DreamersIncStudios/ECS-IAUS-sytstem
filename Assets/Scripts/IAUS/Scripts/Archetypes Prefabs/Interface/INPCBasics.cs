@@ -16,6 +16,11 @@ namespace IAUS.SO.Interfaces
         Patrol GetPatrol { get; }
         Wait GetWait { get; }
         Retreat GetRetreat { get; }
+        TypeOfNPC GetTypeOfNPC { get; }
+        AISenses.Authoring.AISensesAuthoring GetAISenses { get; }
     }
+    public enum TypeOfNPC{  
+        Neurtal, Friendly, Enemy
 
+    }
 }
