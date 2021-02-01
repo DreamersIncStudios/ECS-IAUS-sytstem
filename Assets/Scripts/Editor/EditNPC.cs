@@ -24,22 +24,24 @@ namespace IAUS.SO.editor
             GetPatrol = SO.GetPatrol;
             GetRetreat = SO.GetRetreat;
             GetTargetType = SO.Self.Type;
-
+            Name = SO.GetName;
             GetWait = SO.GetWait;
+            GetInfluence = SO.GetInfluence;
         }
 
         NPCSO GetNPCSO;
         void DisplayListOfExistingSO() {
             EditorGUILayout.BeginVertical("Box");
-            if (!NPCSODatabase.IsLoaded)
-                NPCSODatabase.LoadDatabase();
-            foreach (NPCSO SO in NPCSODatabase.NPCs)
+            //if (!NPCSODatabase.IsLoaded)
+                NPCSODatabase.LoadDatabaseForce();
+            foreach (INPCBasics SO in NPCSODatabase.NPCs)
             {
                 EditorGUILayout.BeginHorizontal();
                 //add names
-                if (GUILayout.Button("testing")) { 
-                   GetNPCSO = SO;
-                    DisplayNPCSOForEditing(SO);
+                if (GUILayout.Button(SO.GetName)) { 
+                   GetNPCSO = (NPCSO)SO;
+                    DisplayNPCSOForEditing((NPCSO)SO);
+                    editorState = EditorState.EditExisting;
                 }
                 // delete SO
                 GUILayout.Button("X", GUILayout.Width(20));
@@ -75,7 +77,7 @@ namespace IAUS.SO.editor
                 }
             }
 
-            GetNPCSO.Setup(GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, StatesToAdd, GetMove,
+            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                 GetPatrol, GetWait, GetRetreat
                 );
             SetStartValues();

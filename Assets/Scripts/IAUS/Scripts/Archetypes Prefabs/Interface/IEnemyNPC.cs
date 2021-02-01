@@ -13,7 +13,6 @@ namespace IAUS.SO
 {
     public interface IEnemyNPC
     {
-        AISenses.Authoring.AISensesAuthoring GetAISenses { get; }
 
     }
 }

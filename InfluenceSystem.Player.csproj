@@ -57,12 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceGridPoint.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\GruntInfluence.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\Testsystem.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Systems\InfluenceSystem.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\LeaderInfluence.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceSampler.cs" />
-    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\ObjectInfluence.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\Component\Influence.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\TransformConversion.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Scripts\Influnce System\GridPointSpawner.cs" />
   </ItemGroup>

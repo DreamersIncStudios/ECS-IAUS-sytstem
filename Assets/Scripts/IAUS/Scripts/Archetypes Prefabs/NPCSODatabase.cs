@@ -25,10 +25,16 @@ namespace IAUS.SO
             ValidateDatebase();
             IsLoaded = true;
             NPCSO[] resources = Resources.LoadAll<NPCSO>(@"NPC SO AI");
-            foreach (NPCSO squad in resources)
+            EnemyNPCSO[] resources1 = Resources.LoadAll<EnemyNPCSO>(@"NPC SO AI");
+            foreach (NPCSO npc in resources)
             {
-                if (!NPCs.Contains(squad))
-                    NPCs.Add(squad);
+                if (!NPCs.Contains(npc))
+                    NPCs.Add(npc);
+            }
+            foreach (EnemyNPCSO enemynpc in resources1)
+            {
+                if (!NPCs.Contains(enemynpc))
+                    NPCs.Add(enemynpc);
             }
         }
 

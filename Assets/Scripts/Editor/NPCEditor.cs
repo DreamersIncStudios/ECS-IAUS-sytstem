@@ -38,7 +38,7 @@ namespace IAUS.SO.editor
         bool createRandomCharacter=false;
         TypeOfNPC GetTypeOfNPC;
         Vector2 scrollPos;
-
+        string Name;
         void OnGUI()
         {
                 EditorGUILayout.BeginHorizontal();
@@ -46,13 +46,25 @@ namespace IAUS.SO.editor
 
             EditorGUILayout.BeginVertical("Box");
             GUILayout.Label("Base Settings", EditorStyles.boldLabel);
+            Name = EditorGUILayout.TextField("Name", Name);
             scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
             EditorGUILayout.BeginVertical("Button");
             createRandomCharacter = EditorGUILayout.Foldout(createRandomCharacter, "Create RNG GO To Be Implement Later");
+
             if (!createRandomCharacter)
+            {
                 GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
+            }
+            else {
+                GUILayout.Label("To Be Implemented at a later date......");
+            }
             GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
+            GetInfluence = SetupInfluence();
+            GetVision = SetupVision();
+            GetHearing = SetupHearing();
+
+
 
             switch (GetTargetType)
             {
@@ -62,7 +74,7 @@ namespace IAUS.SO.editor
                     SetupFlee();
                     break;
             }
-            switch (GetTypeOfNPC) 
+            switch (GetTypeOfNPC)
             {
                 case TypeOfNPC.Neurtal:
                     break;
@@ -75,6 +87,7 @@ namespace IAUS.SO.editor
 
             EditorGUILayout.EndVertical();
 
+            
             if (GetTargetType == TargetType.Character)
                 GetMove = SetupMove(GetMove);
             // add a switch here
@@ -86,8 +99,10 @@ namespace IAUS.SO.editor
                     if (GUILayout.Button("Submit"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
+
+
                     }
-                        break;
+                    break;
                 case EditorState.EditExisting:
 
                     if (GUILayout.Button("Update"))
@@ -211,10 +226,25 @@ namespace IAUS.SO.editor
                 case TypeOfNPC.Enemy:
                     break;
             }
-            ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-            SO.Setup(GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
-                GetPatrol,GetWait,GetRetreat
-                );
+            switch (GetTypeOfNPC)
+            {
+                case TypeOfNPC.Neurtal:
+                    ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
+                    SO.Setup(Name,GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+                        GetPatrol, GetWait, GetRetreat
+                        );
+                    break;
+                case TypeOfNPC.Friendly:
+                    break;
+                case TypeOfNPC.Enemy:
+                    ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, out EnemyNPCSO enemyNPCSO);
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+                        GetPatrol, GetWait, GetRetreat
+                        );
+                    break;
+            }
+
+        
             SetStartValues();
         }
 
@@ -236,7 +266,11 @@ namespace IAUS.SO.editor
                 StartTime =1,
                 _coolDownTime =5
             };
-
+            GetVision = new AISenses.Vision() { 
+                ViewAngle=120, viewRadius = 35, EngageRadius =10, Scantimer = 5
+            };
+            GetHearing = new AISenses.Hearing();
+            GetInfluence = new InfluenceSystem.Component.Influence();
         }
 
     }

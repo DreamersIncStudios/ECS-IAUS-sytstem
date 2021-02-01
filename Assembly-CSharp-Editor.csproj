@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\EditNPC.cs" />
     <Compile Include="Assets\Scripts\Editor\NPCEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\AISenseEditor.cs" />
+    <Compile Include="Assets\Scripts\Editor\InfluenceEdit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

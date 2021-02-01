@@ -54,7 +54,7 @@ namespace AISenses
         public bool LookForTargets => Scantimer <= 0.0f;
         public float viewRadius;
         [Range(0, 360)]
-        public float ViewAngle;
+        public int ViewAngle;
         public float EngageRadius;
         public float AlertModifer; // If AI is on high alert they will notice the enemy sooner
         public void InitializeSense(BaseCharacter baseCharacter)

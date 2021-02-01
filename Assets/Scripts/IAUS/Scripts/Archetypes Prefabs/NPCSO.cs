@@ -9,15 +9,24 @@ using IAUS.ECS2;
 using Components.MovementSystem;
 using IAUS.ECS2.Component;
 using Stats;
+using AISenses;
+using AISenses.Authoring;
+using InfluenceSystem.Component;
+
 namespace IAUS.SO
 {
-    public class NPCSO : ScriptableObject, INPCBasics
+    public abstract class NPCSO : ScriptableObject, INPCBasics
     {
+
         [SerializeField] uint spawnID;
         public uint SpawnID { get { return spawnID; } }
+        [SerializeField] string _getName;
+        public string GetName => _getName;
+
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-        
+        [SerializeField] Influence getInfluence;
+        public Influence GetInfluence => getInfluence;
         public AITarget Self => GetSelf;
         [SerializeField]AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
@@ -32,27 +41,36 @@ namespace IAUS.SO
         [SerializeField] Movement GetMovement;
 
         [SerializeField] TypeOfNPC getNPCType;
-        [SerializeField] AISenses.Authoring.AISensesAuthoring getAISenses;
-        public AISenses.Authoring.AISensesAuthoring GetAISenses => getAISenses;
         public TypeOfNPC GetTypeOfNPC => getNPCType;
-        public void Setup(GameObject model, TypeOfNPC typeOf, AITarget self, List<AIStates> stateScorers, Movement movement
+
+        [SerializeField]Vision getVision;
+        public Vision GetVision => getVision;
+        [SerializeField] Hearing getHearing;
+        public Hearing GetHearing => getHearing;
+
+        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Hearing hearing, Influence influence, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait, Retreat flee
             ) {
+            _getName = Name;
             GetSelf = self;
+            getInfluence = influence;
             GetMovement = movement;
-            states = stateScorers;
+            states = NpcStates;
             _model = model;
             getRetreat = flee;
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
+            getHearing = hearing;
+            getVision = vision;
         }
         BaseAIAuthoringSO test;
-        public void Spawn( Vector3 pos) {
-            GameObject go = Instantiate(Model, pos, Quaternion.identity);
-            go.AddComponent<NavMeshAgent>();
-            go.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
-             test = go.AddComponent<BaseAIAuthoringSO>();
+       public GameObject SpawnedGO { get; private set; }
+        public virtual void Spawn( Vector3 pos) {
+            SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
+            SpawnedGO.AddComponent<NavMeshAgent>();
+            SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
+             test = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
             test.Self = Self;
             test.movement = AIMove;
             foreach (AIStates state in AIStatesAvailable) {
@@ -73,9 +91,14 @@ namespace IAUS.SO
                    
                 }
             if (test.AddPatrol)
-                go.AddComponent<WaypointCreation>();
+                SpawnedGO.AddComponent<WaypointCreation>();
             if (Self.Type == TargetType.Character)
-                go.AddComponent<EnemyCharacter>();
+                SpawnedGO.AddComponent<EnemyCharacter>();
+            AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
+            Senses.Vision = true;
+            Senses.VisionData = GetVision;
+            Senses.HearingData = GetHearing;
+
         }
 
 

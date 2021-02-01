@@ -1275,7 +1275,6 @@ GameObject:
   - component: {fileID: 46931453}
   - component: {fileID: 46931452}
   - component: {fileID: 46931451}
-  - component: {fileID: 46931450}
   - component: {fileID: 46931449}
   - component: {fileID: 46931448}
   m_Layer: 0
@@ -1324,21 +1323,6 @@ MonoBehaviour:
   AttackRange: 10
   Attacktimer: 30
   Target: {fileID: 0}
---- !u!114 &46931450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46931447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
 --- !u!114 &46931451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1914,6 +1898,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 904fe225663b1e04981129c2ee593907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  influence:
+    faction: 0
+    InfluenceValue: 0
+    Range: 0
+    Level: 0
 --- !u!114 &99648494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2083,12 +2072,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 99648492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74475a335a5196841a556bd20f4e3dc0, type: 3}
+  m_Script: {fileID: 11500000, guid: b7dfc3a700271234580b2ea989e3df38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 2
-  Range: 38
+  faction: 1
+  InfluenceValue: 20
+  Range: 20
+  Level: 1
 --- !u!114 &99648503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3139,7 +3129,6 @@ GameObject:
   - component: {fileID: 238533013}
   - component: {fileID: 238533012}
   - component: {fileID: 238533024}
-  - component: {fileID: 238533025}
   - component: {fileID: 238533026}
   - component: {fileID: 238533027}
   m_Layer: 0
@@ -3429,21 +3418,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &238533025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238533011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
 --- !u!114 &238533026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4630,7 +4604,6 @@ GameObject:
   - component: {fileID: 524945580}
   - component: {fileID: 524945579}
   - component: {fileID: 524945591}
-  - component: {fileID: 524945592}
   - component: {fileID: 524945593}
   - component: {fileID: 524945594}
   m_Layer: 0
@@ -4920,21 +4893,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &524945592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524945578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
 --- !u!114 &524945593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8383,8 +8341,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e5b1b0a9c7a5fa4286d3077b07d6f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: {fileID: 11400000, guid: 69d5dcf845c8e374d90c66206b047df5, type: 2}
-  spawnCNT: 0
+  testing: {fileID: 11400000, guid: 30937b98be86f834ebf92c794a1aed42, type: 2}
+  spawnCNT: 9
 --- !u!4 &842482229
 Transform:
   m_ObjectHideFlags: 0
@@ -9581,7 +9539,6 @@ GameObject:
   - component: {fileID: 1166486096}
   - component: {fileID: 1166486095}
   - component: {fileID: 1166486107}
-  - component: {fileID: 1166486108}
   - component: {fileID: 1166486109}
   - component: {fileID: 1166486110}
   m_Layer: 0
@@ -9871,21 +9828,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &1166486108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166486094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
 --- !u!114 &1166486109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11810,7 +11752,6 @@ GameObject:
   - component: {fileID: 1602334480}
   - component: {fileID: 1602334481}
   - component: {fileID: 1602334482}
-  - component: {fileID: 1602334483}
   - component: {fileID: 1602334484}
   - component: {fileID: 1602334485}
   - component: {fileID: 1602334486}
@@ -11820,7 +11761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1602334470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12101,21 +12042,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &1602334483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602334469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
 --- !u!114 &1602334484
 MonoBehaviour:
   m_ObjectHideFlags: 0
