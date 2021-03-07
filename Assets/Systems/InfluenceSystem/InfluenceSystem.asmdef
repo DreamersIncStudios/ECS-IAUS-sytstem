@@ -1,5 +1,6 @@
 {
     "name": "InfluenceSystem",
+    "rootNamespace": "",
     "references": [
         "GUID:6dcc8ad9d24e4ea438f75a1d7a68c4d7",
         "GUID:734d92eba21c94caba915361bd5ac177",

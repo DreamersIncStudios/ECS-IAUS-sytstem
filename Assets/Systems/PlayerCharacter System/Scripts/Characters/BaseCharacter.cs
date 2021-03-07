@@ -69,7 +69,7 @@ namespace Stats
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
             dstManager.AddBuffer<ChangeVitalBuffer>(entity);
             StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
-           Invoke( nameof(StatUpdate), 1);
+           Invoke( nameof(StatUpdate), 3f);
           
         }
 
@@ -259,7 +259,7 @@ namespace Stats
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
 
-            Invoke(nameof(StatUpdate), 1.5f);
+            Invoke(nameof(StatUpdate), 4f);
         }
 
 
@@ -279,21 +279,6 @@ namespace Stats
         }
 
 
-
-        //public void AdjustHealth(int adj)
-        //{
-        //    CurHealth += adj;
-        //    if (CurHealth < 0) { CurHealth = 0; }
-        //    if (CurHealth > MaxHealth) { CurHealth = MaxHealth; }
-
-        //}
-        //public void AdjustMana(int adj)
-        //{
-        //    CurMana += adj;
-        //    if (CurMana < 0) { CurMana = 0; }
-        //    if (CurMana > MaxMana) { CurMana = MaxMana; }
-
-        //}
         public void IncreaseHealth(int Change, uint Iterations, float Frequency)
         {
             World.DefaultGameObjectInjectionWorld.EntityManager.GetBuffer<ChangeVitalBuffer>(selfEntityRef).Add(new ChangeVitalBuffer()

@@ -5,16 +5,30 @@ using IAUS.SO;
 public class TestSpawn : MonoBehaviour
 {
     public NPCSO testing;
-    [Range(1,200)]
+    [Range(1,2000)]
     public int spawnCNT;
+    public int spawned;
+
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < spawnCNT; i++)
-        {
-            testing.Spawn(this.transform.position);
-        }
+        spawned = new int();
+        InvokeRepeating("Spawn", 0, 2);
     }
 
+    private void Update()
+    {
+        if (spawned > spawnCNT)
+            CancelInvoke();
+    }
+
+    void Spawn()
+    {
+        testing.Spawn(this.transform.position);
+        testing.Spawn(this.transform.position);
+        testing.Spawn(this.transform.position);
+
+        spawned+=3;
+    }
 
 }

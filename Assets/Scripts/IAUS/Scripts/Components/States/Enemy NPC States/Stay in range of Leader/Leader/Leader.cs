@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using  InfluenceSystem.Component;
-
+using Unity.Mathematics;
 namespace IAUS.ECS2.Component
 {
     
@@ -16,8 +16,8 @@ namespace IAUS.ECS2.Component
             Self = entity;
             dstManager.AddComponent<LeaderEntityTag>(entity);
             dstManager.AddComponentData(entity, influence);
-        }
-
+        }   
+   
     }
 
     public struct LeaderEntityTag:IComponentData { }

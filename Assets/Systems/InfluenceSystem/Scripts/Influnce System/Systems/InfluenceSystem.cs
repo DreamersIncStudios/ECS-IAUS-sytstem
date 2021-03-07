@@ -6,17 +6,20 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Transforms;
 using InfluenceSystem.Component;
+using DataStructures.ViliWonka.KDTree;
+using System.Collections.Generic;
 
 namespace InfluenceSystem.Systems
 {
     public class InfluenceSystem : SystemBase
     {
         private EntityQuery GridPoints;
-        private EntityQuery Leaders;
-        private EntityQuery Grunts;
+        private EntityQuery Influencers;
 
         EntityCommandBufferSystem entityCommandBufferSystem;
-
+       NativeArray<Translation> PermListPosition;
+        NativeArray<Entity> GridEntities;
+       
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -26,97 +29,124 @@ namespace InfluenceSystem.Systems
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(InfluenceGridPoint)), ComponentType.ReadWrite(typeof(Translation))}
             });
 
-            Leaders = GetEntityQuery(new EntityQueryDesc() 
+            Influencers = GetEntityQuery(new EntityQueryDesc() 
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Influence)), ComponentType.ReadOnly(typeof(LocalToWorld))}
             });
 
-    ;
+
         }
+
         protected override void OnUpdate()
         {
-            if (UnityEngine.Time.frameCount % 120 == 1)
-            {
-                JobHandle systemDeps = Dependency;
-                systemDeps = new UpdateInfluenceMap()
-                {
-                    GridChunk = GetComponentTypeHandle<InfluenceGridPoint>(false),
-                    PositionChunk = GetComponentTypeHandle<Translation>(false),
-                    Influe = Leaders.ToComponentDataArray<Influence>(Allocator.TempJob),
-                    transforms = Leaders.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
-                }.ScheduleParallel(GridPoints, systemDeps);
-                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-   
-                Dependency = systemDeps;
+            if (PermListPosition.Length == 0)
+            {
+                PermListPosition = GridPoints.ToComponentDataArray<Translation>(Allocator.Persistent);
+                GridEntities = GridPoints.ToEntityArray(Allocator.Persistent);
             }
+
+            if (UnityEngine.Time.frameCount % 130== 1)
+            {
+            JobHandle systemDeps = Dependency;
+            systemDeps = new UpdateInfluenceMap()
+            {
+                GridEntities = GridEntities,
+                Positions = PermListPosition,
+                InfluenceChunk = GetComponentTypeHandle<Influence>(true),
+                LocalChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                Grids = GetComponentDataFromEntity<InfluenceGridPoint>(false)
+
+            }.ScheduleSingle(Influencers, systemDeps);
+
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            Dependency = systemDeps;
+
+
+             }
+        }
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            GridEntities.Dispose();
+            PermListPosition.Dispose();
         }
 
-        [BurstCompile]
         struct UpdateInfluenceMap : IJobChunk
         {
-            public ComponentTypeHandle<InfluenceGridPoint> GridChunk;
-            public ComponentTypeHandle<Translation> PositionChunk;
-            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<Influence> Influe;
-            [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> transforms;
+            public NativeArray <Entity> GridEntities;
+            public NativeArray<Translation> Positions;
+            [ReadOnly]public ComponentTypeHandle<Influence> InfluenceChunk;
+            [ReadOnly]public ComponentTypeHandle<LocalToWorld> LocalChunk;
+            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<InfluenceGridPoint> Grids;
+        
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<InfluenceGridPoint> Grids = chunk.GetNativeArray(GridChunk);
-                NativeArray<Translation> Positions = chunk.GetNativeArray(PositionChunk);
+                float3[] points = new float3[Positions.Length];
+                for (int i = 0; i < Positions.Length; i++)
+                {
+                    points[i] = Positions[i].Value;
+                    Grids[GridEntities[i]] = new InfluenceGridPoint();
+                }
 
+
+                KDQuery query = new KDQuery();
+
+                KDTree tree = new KDTree(points, 32);
+                NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(LocalChunk);
+                NativeArray<Influence> Influe = chunk.GetNativeArray(InfluenceChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    InfluenceGridPoint grid = Grids[i];
-                    grid.PlayerParty = new GridValues();
-                    grid.Enemies = new GridValues();
-                    Translation pos = Positions[i];
-                    for (int j = 0; j < Influe.Length; j++)
+                    List<int> results = new List<int>();
+                    // spherical query
+                    query.Radius(tree, toWorlds[i].Position, Influe[i].Range, results);
+                    foreach (int index in results)
                     {
-                        pos.Value = transforms[j].Position + new float3(grid.GridPoint.x - 50, 0, grid.GridPoint.y - 50);
-                        Positions[i] = pos;
-                        float dist = Vector3.Distance(pos.Value, transforms[j].Position);
-                        if (dist < 2 * Influe[j].Range)
+                        InfluenceGridPoint grid = new InfluenceGridPoint();
+                        Translation GridPos = Positions[index];
+
+                        float dist = Vector3.Distance(GridPos.Value, toWorlds[i].Position);
+                        switch (Influe[i].Level)
                         {
-                            switch (Influe[j].Level)
-                            {
-                                case NPCLevel.Leader:
-                                    switch (Influe[j].faction)
-                                    {
-                                        case Faction.Enemy:
-                                            grid.Enemies.Protection += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            grid.PlayerParty.Threat += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            break;
-                                        case Faction.PlayerParty:
-                                            grid.Enemies.Threat += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            grid.PlayerParty.Protection += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            break;
-                                    }
-                                    break;
+                            case NPCLevel.Leader:
+                                switch (Influe[i].faction)
+                                {
+                                    case Faction.Enemy:
+                                        grid.Enemies.Protection += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        grid.PlayerParty.Threat += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        break;
+                                    case Faction.Player:
+                                        grid.Enemies.Threat += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        grid.PlayerParty.Protection += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        break;
+                                }
+                                break;
 
-                                case NPCLevel.Grunt:
-                                    switch (Influe[j].faction)
-                                    {
-                                        case Faction.Enemy:
-                                            grid.Enemies.Protection -= dist > Influe[j].Range ? 0 : Influe[j].InfluenceValue;
-                                            grid.PlayerParty.Threat += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            break;
-                                        case Faction.PlayerParty:
-                                            grid.PlayerParty.Protection -= dist > Influe[j].Range ? 0 : Influe[j].InfluenceValue;
-                                            grid.Enemies.Threat += dist > Influe[j].Range ? 2 * Influe[j].InfluenceValue - (Influe[j].InfluenceValue / (float)Influe[j].Range) * dist : Influe[j].InfluenceValue;
-                                            break;
-                                    }
-                                    break;
+                            case NPCLevel.Grunt:
+                                switch (Influe[i].faction)
+                                {
+                                    case Faction.Enemy:
+                                        grid.Enemies.Protection -= dist > Influe[i].Range ? 0 : Influe[i].InfluenceValue;
+                                        grid.PlayerParty.Threat += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        break;
+                                    case Faction.Player:
+                                        grid.PlayerParty.Protection -= dist > Influe[i].Range ? 0 : Influe[i].InfluenceValue;
+                                        grid.Enemies.Threat += dist > Influe[i].Range ? 2 * Influe[i].InfluenceValue - (Influe[i].InfluenceValue / (float)Influe[i].Range) * dist : Influe[i].InfluenceValue;
+                                        break;
+                                }
+                                break;
 
-                                case NPCLevel.Object:
-                                    
-                                    
-                                    break;
-                            }
+                            case NPCLevel.Object:
+
+
+                                break;
+                        }
+                        Grids[GridEntities[index]] = grid;
+
+
                     }
-                    }
 
-                    Grids[i] = grid;
                 }
 
             }

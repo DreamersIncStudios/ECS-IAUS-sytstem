@@ -13,38 +13,38 @@ MonoBehaviour:
   m_Name: NewIAUS.SO.EnemyNPCSO
   m_EditorClassIdentifier: 
   spawnID: 0
-  _getName: 'Boss Level 1 '
+  _getName: Boss
   _model: {fileID: 4465180535401918593, guid: a1a1687c4ae3772469cb939983ce60ae, type: 3}
   getInfluence:
-    faction: 0
-    InfluenceValue: 20
+    faction: 1
+    InfluenceValue: 8
     Range: 20
-    Level: 0
+    Level: 1
   GetSelf:
     Type: 1
     NumOfEntityTargetingMe: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 
+  states: 010000000c000000
   getPatrol:
     NumberOfWayPoints: 0
     DistanceToPoint:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
     HealthRatio:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     distanceToPoint: 0
     StartingDistance: 0
-    BufferZone: 0
+    BufferZone: 0.75
     CurWaypoint:
       Point:
         Type: 0
@@ -58,28 +58,28 @@ MonoBehaviour:
       TimeToWaitatWaypoint: 0
     UpdatePatrolPoints: 0
     _status: 0
-    _coolDownTime: 0
+    _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
   getWait:
     TimeLeft:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     HealthRatio:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     Timer: 0
-    StartTime: 0
+    StartTime: 1
     _status: 0
-    _coolDownTime: 0
+    _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
   getRetreat:
@@ -113,7 +113,7 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    MovementSpeed: 0
+    MovementSpeed: 8
     TargetLocationCrowded: 0
     MaxInfluenceAtPoint: 0
     Offset:
@@ -121,8 +121,8 @@ MonoBehaviour:
       y: 0
       z: 0
     CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
+    StoppingDistance: 0.52
+    Acceleration: 5
     DistanceRemaining: 0
   getNPCType: 2
   getVision:

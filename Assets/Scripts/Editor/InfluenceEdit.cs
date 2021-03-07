@@ -12,7 +12,7 @@ namespace IAUS.SO.editor
         Influence SetupInfluence() {
             
             GetInfluence.faction = (Faction)EditorGUILayout.EnumPopup("Faction", GetInfluence.faction);
-            GetInfluence.Level = (NPCLevel)EditorGUILayout.EnumPopup("Faction", GetInfluence.Level);
+            GetInfluence.Level = (NPCLevel)EditorGUILayout.EnumPopup("Rank", GetInfluence.Level);
 
             GetInfluence.InfluenceValue = (uint)EditorGUILayout.IntSlider("Influence", (int)GetInfluence.InfluenceValue, 0, 20);
             GetInfluence.Range = (uint)EditorGUILayout.IntSlider("Range",(int)GetInfluence.Range, 0, 20);

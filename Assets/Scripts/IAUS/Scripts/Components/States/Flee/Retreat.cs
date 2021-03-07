@@ -1,5 +1,6 @@
 ﻿using Unity.Entities;
 using UnityEngine;
+using Unity.Mathematics;
 
 namespace IAUS.ECS2.Component
 {
@@ -16,7 +17,13 @@ namespace IAUS.ECS2.Component
         public float CoolDownTime { get { return _coolDownTime; } }
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-
+       
+        public float distanceToPoint, StartingDistance, BufferZone;
+        public bool InBufferZone => BufferZone > distanceToPoint;
+        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
+        public float HideTime;
+        public bool Escape;
+        public int EscapeRange;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
@@ -24,7 +31,9 @@ namespace IAUS.ECS2.Component
         [SerializeField] float _totalScore;
     }
 
+    public struct FleeActionTag : IComponentData { readonly bool test;
+        public float3 EscapePoint;
+    }
 
-
-    public struct FleeActionTag : IComponentData { bool test; }
+   
 }

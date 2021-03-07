@@ -92,8 +92,7 @@ namespace IAUS.SO
                 }
             if (test.AddPatrol)
                 SpawnedGO.AddComponent<WaypointCreation>();
-            if (Self.Type == TargetType.Character)
-                SpawnedGO.AddComponent<EnemyCharacter>();
+         
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;

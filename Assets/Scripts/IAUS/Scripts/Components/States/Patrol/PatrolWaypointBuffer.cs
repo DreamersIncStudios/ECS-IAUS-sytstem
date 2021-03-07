@@ -16,6 +16,7 @@ namespace IAUS.ECS2.Component {
         public AITarget Point;
         public float3 Position;
         public float TimeToWaitatWaypoint;
+        public bool IsDanerZone;
 
     }
 }

@@ -8,31 +8,68 @@ using Unity.Collections;
 using Unity.Jobs;
 
 namespace InfluenceSystem.Component {
-    public class GridPointSpawner : MonoBehaviour,IConvertGameObjectToEntity
+    public class GridPointSpawner : MonoBehaviour
     {
         public static GridPointSpawner spawner;
         public DestoryGridSytstem destoryGridSytstem;
         private void Awake()
         {
-            if (spawner == null)
-                spawner = this;
-            else
-            {
-                Debug.LogWarning("Two Gridpoint spawner systems in scene ");
-                Destroy(this.gameObject);
-            }
+            //if (spawner == null)
+            //    spawner = this;
+            //else
+            //{
+            //    Debug.LogWarning("Two Gridpoint spawner systems in scene ");
+            //    Destroy(this.gameObject);
+            //}
         }
 
         public EntityManager entityManager;
         void Start()
         {
             entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            CreateGrid((float3)transform.position, 10,reference);
+            CreateWorldGrid();
+
+        }
+        public Vector2 GridDims;
+        void CreateWorldGrid() {
+
+            if (entityManager == null)
+                entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+            EntityArchetype prefab = entityManager.CreateArchetype(
+           //  typeof(LocalToWorld),
+             typeof(Translation),
+             typeof(InfluenceGridPoint)
+
+         );
+            for (int i = 0; i < GridDims.x; i++)
+            {
+                for (int j = 0; j < GridDims.y; j++)
+                {
+                    var instance = entityManager.CreateEntity(prefab);
+                    entityManager.SetComponentData(instance, new Translation
+                    {
+                        Value =  new float3(i - GridDims.x/2, 0, j - GridDims.x/2)
+                    });
+
+                    entityManager.SetComponentData(instance, new InfluenceGridPoint
+                    {
+                        GridmapID = 10,
+                        center = Entity.Null,
+                        GridPoint = new int2() { x = i, y = j }
+                    });
+
+                }
+            }
+
 
         }
 
         public void CreateGrid(float3 Centerpoint, int GridID, Entity center)
         {
+            if(entityManager==null)
+                entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
             EntityArchetype prefab = entityManager.CreateArchetype(
              typeof(LocalToWorld),
              typeof(Translation),
@@ -74,11 +111,7 @@ namespace InfluenceSystem.Component {
             }
             destoryGridSytstem.RunDestoryJobOnce(ID);
         }
-        Entity reference;
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            reference = entity;
-        }
+ 
     }
 
    [DisableAutoCreation]

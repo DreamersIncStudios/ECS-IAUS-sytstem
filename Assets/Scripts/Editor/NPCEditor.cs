@@ -27,21 +27,21 @@ namespace IAUS.SO.editor
 
         }
 
-        bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length] ;
+        bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length];
         EditorState editorState = EditorState.CreateNew;
         TargetType GetTargetType;
         Patrol GetPatrol;
-            
+
         Wait GetWait;
         Retreat GetRetreat;
         GameObject GetModel;
-        bool createRandomCharacter=false;
+        bool createRandomCharacter = false;
         TypeOfNPC GetTypeOfNPC;
         Vector2 scrollPos;
         string Name;
         void OnGUI()
         {
-                EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.BeginHorizontal();
             DisplayListOfExistingSO();
 
             EditorGUILayout.BeginVertical("Box");
@@ -55,7 +55,8 @@ namespace IAUS.SO.editor
             {
                 GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
             }
-            else {
+            else
+            {
                 GUILayout.Label("To Be Implemented at a later date......");
             }
             GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
@@ -87,7 +88,7 @@ namespace IAUS.SO.editor
 
             EditorGUILayout.EndVertical();
 
-            
+
             if (GetTargetType == TargetType.Character)
                 GetMove = SetupMove(GetMove);
             // add a switch here
@@ -117,9 +118,9 @@ namespace IAUS.SO.editor
             }
             if (GUILayout.Button("Clear"))
             {
-            // add nodal window to verfiy 
+                // add nodal window to verfiy 
                 SetStartValues();
-          
+
             }
 
 
@@ -130,16 +131,16 @@ namespace IAUS.SO.editor
         }
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
-        Patrol SetupPatrol( Patrol state)
+        Patrol SetupPatrol(Patrol state)
         {
             showBtn[(int)AIStates.Patrol] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Patrol], "Patrol");
 
             if (showBtn[(int)AIStates.Patrol])
             {
-                if(PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
-                   state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
-                if(PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
-                    state.HealthRatio = DisplayConsideration( state.HealthRatio);
+                if (PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
+                    state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
+                if (PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
+                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
             }
@@ -177,17 +178,19 @@ namespace IAUS.SO.editor
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
 
-       ConsiderationScoringData DisplayConsideration( ConsiderationScoringData data) {
-            data.Inverse = EditorGUILayout.Toggle("Inverse",data.Inverse);
+        ConsiderationScoringData DisplayConsideration(ConsiderationScoringData data)
+        {
+            data.Inverse = EditorGUILayout.Toggle("Inverse", data.Inverse);
             data.responseType = (ResponseType)EditorGUILayout.EnumPopup("Response", data.responseType);
             data.M = EditorGUILayout.FloatField("M", data.M);
             data.K = EditorGUILayout.FloatField("K", data.K);
-            data.B = EditorGUILayout.FloatField("B", data.B );
+            data.B = EditorGUILayout.FloatField("B", data.B);
             data.C = EditorGUILayout.FloatField("C", data.C);
             return data;
         }
         Movement GetMove;
-        Movement SetupMove(Movement move) {
+        Movement SetupMove(Movement move)
+        {
             move.MovementSpeed = EditorGUILayout.FloatField("Movement Speed", move.MovementSpeed);
             move.StoppingDistance = EditorGUILayout.FloatField("Stopping Distance", move.StoppingDistance);
             move.Acceleration = EditorGUILayout.FloatField("Acceleration", move.Acceleration);
@@ -196,24 +199,27 @@ namespace IAUS.SO.editor
 
             return move;
         }
-        
 
-        void CreateSO(string Path) {
 
-            List<AIStates> StatesToAdd= new List<AIStates>();
+        void CreateSO(string Path)
+        {
+
+            List<AIStates> StatesToAdd = new List<AIStates>();
             for (int i = 0; i < showBtn.Length; i++)
             {
-                if (showBtn[i]) {
-                    switch ((AIStates)i) {
+                if (showBtn[i])
+                {
+                    switch ((AIStates)i)
+                    {
                         case AIStates.Patrol:
-                            StatesToAdd.Add( AIStates.Patrol);
+                            StatesToAdd.Add(AIStates.Patrol);
                             break;
                         case AIStates.Wait:
                             StatesToAdd.Add(AIStates.Wait);
                             break;
 
                     }
-                
+
                 }
             }
             //Create SO base of NPC Type
@@ -230,7 +236,7 @@ namespace IAUS.SO.editor
             {
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-                    SO.Setup(Name,GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
                     break;
@@ -244,11 +250,12 @@ namespace IAUS.SO.editor
                     break;
             }
 
-        
+
             SetStartValues();
         }
 
-       public void SetStartValues() {
+        public void SetStartValues()
+        {
             GetModel = null;
             GetTargetType = new TargetType();
             GetPatrol = new Patrol()
@@ -260,14 +267,19 @@ namespace IAUS.SO.editor
 
             };
             GetRetreat = new Retreat() { };
-            GetWait = new Wait() { 
-                TimeLeft = new ConsiderationScoringData() { M=50, K=-1, B=.91f,C= .2f, responseType = ResponseType.Logistic, Inverse =false},
-                HealthRatio =  new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
-                StartTime =1,
-                _coolDownTime =5
+            GetWait = new Wait()
+            {
+                TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                StartTime = 1,
+                _coolDownTime = 5
             };
-            GetVision = new AISenses.Vision() { 
-                ViewAngle=120, viewRadius = 35, EngageRadius =10, Scantimer = 5
+            GetVision = new AISenses.Vision()
+            {
+                ViewAngle = 120,
+                viewRadius = 35,
+                EngageRadius = 10,
+                Scantimer = 5
             };
             GetHearing = new AISenses.Hearing();
             GetInfluence = new InfluenceSystem.Component.Influence();

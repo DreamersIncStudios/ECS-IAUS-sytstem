@@ -1,5 +1,6 @@
 {
     "name": "IAUS",
+    "rootNamespace": "",
     "references": [
         "GUID:734d92eba21c94caba915361bd5ac177",
         "GUID:8819f35a0fc84499b990e90a4ca1911f",
@@ -10,12 +11,12 @@
         "GUID:44dcb2bf5b9be4b5aa76674c8edcd1d5",
         "GUID:27fbc99f6a1cdf944a05c31320c04f5e",
         "GUID:72451dcb1f704904e9d752c5a5750254",
-        "GUID:f4427dd0c4f0c6347b94a12fb348ee7b",
         "GUID:fdfe7c4f6f1c7b54c93302017fc876a0",
         "GUID:6dcc8ad9d24e4ea438f75a1d7a68c4d7",
         "GUID:51a5acea316364848a47044a15ba5cd3",
         "GUID:63afb046c8423dd448ae7aba042ea63d",
-        "GUID:2bafac87e7f4b9b418d9448d219b01ab"
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:c5aa70bde4dd1ba4091096faa19409d0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
