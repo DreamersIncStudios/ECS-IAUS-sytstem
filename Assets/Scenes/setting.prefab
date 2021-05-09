@@ -1825,11 +1825,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613619167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &261328969894293098
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,11 +1954,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 261328969894293098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &592283092276853839
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,11 +2083,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 592283092276853839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &728349329995505033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,11 +2212,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 728349329995505033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &844796316682870004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,11 +2341,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 844796316682870004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &879877580415469497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,11 +2470,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 879877580415469497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1139525051485684774
 GameObject:
   m_ObjectHideFlags: 0
@@ -2569,11 +2599,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1139525051485684774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1174690220634650208
 GameObject:
   m_ObjectHideFlags: 0
@@ -2693,11 +2728,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1174690220634650208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1246888389198070824
 GameObject:
   m_ObjectHideFlags: 0
@@ -2817,11 +2857,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1246888389198070824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1300715850714025148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2941,11 +2986,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1300715850714025148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1382946642312923279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3065,11 +3115,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1382946642312923279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1633978107290467100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,11 +3244,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1633978107290467100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &1872968763142055751
 GameObject:
   m_ObjectHideFlags: 0
@@ -3313,11 +3373,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1872968763142055751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &2024638853168212656
 GameObject:
   m_ObjectHideFlags: 0
@@ -3437,11 +3502,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2024638853168212656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &2181058435741323911
 GameObject:
   m_ObjectHideFlags: 0
@@ -3561,11 +3631,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2181058435741323911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &2709901991378019210
 GameObject:
   m_ObjectHideFlags: 0
@@ -3685,11 +3760,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2709901991378019210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &2734034038670610310
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,11 +3889,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2734034038670610310}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &2771869295858263478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3933,11 +4018,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2771869295858263478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &3347739827500720765
 GameObject:
   m_ObjectHideFlags: 0
@@ -4910,11 +5000,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3424450486337023170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &3665221847355059170
 GameObject:
   m_ObjectHideFlags: 0
@@ -5034,11 +5129,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3665221847355059170}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &4040519758694975239
 GameObject:
   m_ObjectHideFlags: 0
@@ -5158,11 +5258,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4040519758694975239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &4065139497807720507
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,11 +5387,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4065139497807720507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &4393281449578153665
 GameObject:
   m_ObjectHideFlags: 0
@@ -5406,11 +5516,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4393281449578153665}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &4516067631593806061
 GameObject:
   m_ObjectHideFlags: 0
@@ -6383,11 +6498,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4658231255895266265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &4914266472186163222
 GameObject:
   m_ObjectHideFlags: 0
@@ -6507,11 +6627,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4914266472186163222}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &5214671382447201544
 GameObject:
   m_ObjectHideFlags: 0
@@ -6631,11 +6756,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5214671382447201544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &5325919101082603017
 GameObject:
   m_ObjectHideFlags: 0
@@ -6755,11 +6885,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5325919101082603017}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &5649571286745632614
 GameObject:
   m_ObjectHideFlags: 0
@@ -6879,11 +7014,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5649571286745632614}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &5995275238239990332
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,11 +7143,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5995275238239990332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &6100093683353299843
 GameObject:
   m_ObjectHideFlags: 0
@@ -7127,11 +7272,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6100093683353299843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &6292489325605274481
 GameObject:
   m_ObjectHideFlags: 0
@@ -7251,11 +7401,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6292489325605274481}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &6536245292674636464
 GameObject:
   m_ObjectHideFlags: 0
@@ -8228,11 +8383,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6611234281316533042}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &6749204099322604743
 GameObject:
   m_ObjectHideFlags: 0
@@ -8352,11 +8512,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6749204099322604743}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &6844758371604503650
 GameObject:
   m_ObjectHideFlags: 0
@@ -8476,11 +8641,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6844758371604503650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7206804784439662083
 GameObject:
   m_ObjectHideFlags: 0
@@ -8600,11 +8770,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7206804784439662083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7224969718515478284
 GameObject:
   m_ObjectHideFlags: 0
@@ -8724,11 +8899,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7224969718515478284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7310143851861524476
 GameObject:
   m_ObjectHideFlags: 0
@@ -8848,11 +9028,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7310143851861524476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7500081605982260091
 GameObject:
   m_ObjectHideFlags: 0
@@ -9825,11 +10010,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7749310858513980613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7751976188975223313
 GameObject:
   m_ObjectHideFlags: 0
@@ -9949,11 +10139,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7751976188975223313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &7847831875672766164
 GameObject:
   m_ObjectHideFlags: 0
@@ -10073,11 +10268,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7847831875672766164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8150756270533966970
 GameObject:
   m_ObjectHideFlags: 0
@@ -10197,11 +10397,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8150756270533966970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8260877784241431168
 GameObject:
   m_ObjectHideFlags: 0
@@ -10321,11 +10526,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8260877784241431168}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8275261833681559939
 GameObject:
   m_ObjectHideFlags: 0
@@ -10530,11 +10740,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8585197353464805965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8670027927618982199
 GameObject:
   m_ObjectHideFlags: 0
@@ -11507,11 +11722,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8882290837131499116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8920970570765049433
 GameObject:
   m_ObjectHideFlags: 0
@@ -11631,11 +11851,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8920970570765049433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &8967379284921973355
 GameObject:
   m_ObjectHideFlags: 0
@@ -11755,11 +11980,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8967379284921973355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &9208784715373294007
 GameObject:
   m_ObjectHideFlags: 0
@@ -11879,11 +12109,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 9208784715373294007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!1 &9220773719300048829
 GameObject:
   m_ObjectHideFlags: 0
@@ -12003,8 +12238,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9220773719300048829}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 784b5566558f0b247a1dde43349cf2e0, type: 3}
+  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
-  NumOfEntityTargetingMe: 0
+  aITarget:
+    Type: 2
+    GetRace: 2
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0

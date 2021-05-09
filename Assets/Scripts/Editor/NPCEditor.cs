@@ -72,7 +72,7 @@ namespace IAUS.SO.editor
                 case TargetType.Character:
                     GetPatrol = SetupPatrol(GetPatrol);
                     GetWait = SetupWait(GetWait);
-                    SetupFlee();
+                    GetRetreat = SetupFlee(GetRetreat);
                     break;
             }
             switch (GetTypeOfNPC)
@@ -168,14 +168,28 @@ namespace IAUS.SO.editor
 
             return state;
         }
-        void SetupFlee()
+
+        bool RetreatDistance, RetreatHealthRatio;
+        Retreat SetupFlee(Retreat state)
         {
             showBtn[(int)AIStates.Retreat] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Retreat], "Flee from Target");
             if (showBtn[(int)AIStates.Retreat])
             {
-                GUILayout.Button("Submit");
+                if (RetreatDistance= EditorGUILayout.Foldout(RetreatDistance, "Distance To Consideration"))
+                    state.DistanceToSafe = DisplayConsideration(state.DistanceToSafe);
+                if (RetreatHealthRatio = EditorGUILayout.Foldout(RetreatHealthRatio, "CharacterHealth"))
+                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
+
+                state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
+                state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
+                state.HideTime = EditorGUILayout.FloatField("Cool Down Time", state.HideTime);
+                state.EscapeRange = EditorGUILayout.IntField("Cool Down Time", state.EscapeRange);
+
+
+
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
+            return state;
         }
 
         ConsiderationScoringData DisplayConsideration(ConsiderationScoringData data)
@@ -266,7 +280,16 @@ namespace IAUS.SO.editor
                 _coolDownTime = 5
 
             };
-            GetRetreat = new Retreat() { };
+            GetRetreat = new Retreat() {
+                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                BufferZone = .75f,
+                _coolDownTime = 5,
+                EscapeRange = 25,
+                HideTime = 30
+
+            };
             GetWait = new Wait()
             {
                 TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },

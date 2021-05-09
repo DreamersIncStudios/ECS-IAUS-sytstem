@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.unity.burst": {
-      "version": "1.5.0-pre.3",
+      "version": "1.5.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -10,7 +10,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.cinemachine": {
-      "version": "2.6.3",
+      "version": "2.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -140,7 +140,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
-      "version": "4.4.0",
+      "version": "4.5.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -186,7 +186,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.searcher": {
-      "version": "4.3.1",
+      "version": "4.3.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -229,7 +229,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.22",
+      "version": "1.1.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -240,7 +240,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework.performance": {
-      "version": "2.6.0-preview",
+      "version": "2.8.0-preview",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -250,7 +250,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.textmeshpro": {
-      "version": "3.0.3",
+      "version": "3.0.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -259,7 +259,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.6",
+      "version": "1.4.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {

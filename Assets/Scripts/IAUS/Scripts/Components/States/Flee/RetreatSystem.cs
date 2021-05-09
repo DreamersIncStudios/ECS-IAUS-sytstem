@@ -9,10 +9,13 @@ using Unity.Burst;
 using Components.MovementSystem;
 
 
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<FleeActionTag, Retreat, IAUS.ECS2.Systems.Reactive.RetreatTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<FleeActionTag, Retreat, IAUS.ECS2.Systems.Reactive.RetreatTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<FleeActionTag, Retreat, IAUS.ECS2.Systems.Reactive.RetreatTagReactor>.ManageComponentRemovalJob))]
+
+
 namespace IAUS.ECS2.Systems.Reactive
 {
-
-
     public struct RetreatTagReactor : IComponentReactorTagsForAIStates<FleeActionTag, Retreat>
     {
         public void ComponentAdded(Entity entity, ref FleeActionTag newComponent, ref Retreat AIStateCompoment)
@@ -59,7 +62,7 @@ namespace IAUS.ECS2.Systems.Reactive
             base.OnCreate();
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Retreat)), ComponentType.ReadWrite(typeof(RetreatTagReactor)), ComponentType.ReadWrite(typeof(Movement))
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Retreat)),  ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(LocalToWorld))
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<FleeActionTag, Retreat, RetreatTagReactor>.StateComponent)) }
@@ -117,7 +120,7 @@ namespace IAUS.ECS2.Systems.Reactive
                     Retreat retreat = States[i];
                     Utilities.GlobalFunctions.RandomPoint(transforms[i].Position, States[i].EscapeRange, out Vector3 temp);
                     retreat.StartingDistance = Vector3.Distance(transforms[i].Position, temp);
-                    move.TargetLocation = temp;
+                   retreat.EscapePoint= move.TargetLocation = temp;
                     move.CanMove = true;
                     move.SetTargetLocation = true;
 
@@ -130,7 +133,7 @@ namespace IAUS.ECS2.Systems.Reactive
         public struct ArriveAtRetreatPoint : IJobChunk
         {
             public ComponentTypeHandle<Wait> WaitChunk;
-            [ReadOnly] public ComponentTypeHandle<Retreat> RetreatChunk;
+            public ComponentTypeHandle<Retreat> RetreatChunk;
             public ComponentTypeHandle<Movement> MovementChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -141,9 +144,12 @@ namespace IAUS.ECS2.Systems.Reactive
                 {
                     Wait wait = Waits[i];
                     Movement move = Moves[i];
+                    Retreat retreat = Retreats[i];
                     wait.Timer = Retreats[i].HideTime;
                     move.CanMove = false;
+                    retreat.EscapePoint = new Unity.Mathematics.float3();
 
+                    Retreats[i] = retreat;
                     Waits[i] = wait;
                     Moves[i] = move;
                 }

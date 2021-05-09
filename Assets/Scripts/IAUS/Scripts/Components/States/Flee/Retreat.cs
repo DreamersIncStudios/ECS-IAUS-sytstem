@@ -8,9 +8,10 @@ namespace IAUS.ECS2.Component
     [GenerateAuthoringComponent]
     public struct Retreat : IBaseStateScorer
     {
+        //Need to add a check to see if escape is possible
         public ConsiderationScoringData HealthRatio;
-        public ConsiderationScoringData InfluenceInAfter;
-        public ConsiderationScoringData Range;
+        public ConsiderationScoringData InfluenceInArea;
+        public ConsiderationScoringData DistanceToSafe;
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -19,10 +20,13 @@ namespace IAUS.ECS2.Component
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
        
         public float distanceToPoint, StartingDistance, BufferZone;
+        public bool CanFlee;
         public bool InBufferZone => BufferZone > distanceToPoint;
-        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
+        public float DistanceRatio => CanFlee ? 0.0f : (float)distanceToPoint / (float)StartingDistance;
         public float HideTime;
-        public bool Escape;
+        public float3 EscapePoint;
+
+        public bool Escape => InBufferZone;
         public int EscapeRange;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
@@ -32,7 +36,6 @@ namespace IAUS.ECS2.Component
     }
 
     public struct FleeActionTag : IComponentData { readonly bool test;
-        public float3 EscapePoint;
     }
 
    

@@ -4,31 +4,39 @@ using UnityEngine;
 using IAUS.SO;
 public class TestSpawn : MonoBehaviour
 {
-    public NPCSO testing;
-    [Range(1,2000)]
-    public int spawnCNT;
-    public int spawned;
+    public List<NPCSpawn> test;
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void Start()
     {
-        spawned = new int();
-        InvokeRepeating("Spawn", 0, 2);
+        InvokeRepeating(nameof(Spawn), 0, 5);
     }
 
-    private void Update()
-    {
-        if (spawned > spawnCNT)
-            CancelInvoke();
-    }
+
 
     void Spawn()
     {
-        testing.Spawn(this.transform.position);
-        testing.Spawn(this.transform.position);
-        testing.Spawn(this.transform.position);
+        for (int i = 0; i < test.Count; i++)
+        {
+            if (test[i].SpawnSomething)
+            {
+                for (int j = 0; j < test[i].SpawnPerCall; j++)
+                {
+                    test[i].SOToSpawn.Spawn(this.transform.position);
+                    test[i].spawned++;
+                }
+            }   
+        }
 
-        spawned+=3;
     }
-
+    [System.Serializable]
+   public class NPCSpawn {
+        public NPCSO SOToSpawn;
+        [Range(1, 20)]
+        public int SpawnPerCall;
+        [Range(1, 2000)]
+        public int spawnCNT;
+        public int spawned;
+        public bool SpawnSomething => spawned < spawnCNT;
+    }
 }
