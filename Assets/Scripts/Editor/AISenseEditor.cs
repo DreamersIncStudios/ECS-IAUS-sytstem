@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using AISenses;
 
-namespace IAUS.SO.editor
+namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {

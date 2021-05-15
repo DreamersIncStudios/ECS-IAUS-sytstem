@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using UnityEngine.AI;
-using IAUS.SO.Interfaces;
+using IAUS.NPCSO.Interfaces;
 using Global.Component;
 using IAUS.ECS2;
 using Components.MovementSystem;
@@ -13,7 +13,7 @@ using AISenses;
 using AISenses.Authoring;
 using InfluenceSystem.Component;
 
-namespace IAUS.SO
+namespace IAUS.NPCSO
 {
     public abstract class NPCSO : ScriptableObject, INPCBasics
     {

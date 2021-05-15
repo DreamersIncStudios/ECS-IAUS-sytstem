@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.Entities;
-using UnityEngine.AI;
-using IAUS.SO.Interfaces;
-using Global.Component;
-using IAUS.ECS2;
-using Components.MovementSystem;
-using IAUS.ECS2.Component;
-using Stats;
-namespace IAUS.SO
+using InfluenceSystem.Component;
+using Dreamers.SquadSystem;
+namespace IAUS.NPCSO.Interfaces
 {
     public interface IEnemyNPC
     {
+         bool IsPartOfTeam { get; }
+        NPCLevel GetNPCLevel { get; }
 
     }
+ 
 }

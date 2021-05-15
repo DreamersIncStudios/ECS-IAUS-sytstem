@@ -74,6 +74,8 @@
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Aggression\Systems\CheckSystem.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\AITargetCreate.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\AITarget.cs" />
+    <Compile Include="Assets\Scripts\Systems\Movement System\GroupTeams\Team.cs" />
+    <Compile Include="Assets\Scripts\Systems\Movement System\GroupTeams\TeamAuthoring.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Scripts\Systems\Movement System\Movement System.asmdef" />

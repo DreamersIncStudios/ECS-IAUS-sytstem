@@ -7,7 +7,7 @@ using UnityEngine;
 using Components.MovementSystem;
 using AISenses;
 using InfluenceSystem.Component;
-namespace IAUS.SO.Interfaces
+namespace IAUS.NPCSO.Interfaces
 {
     public interface INPCBasics
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IAUS.SO
+namespace IAUS.NPCSO
 {
     public static  class NPCSODatabase 
     {

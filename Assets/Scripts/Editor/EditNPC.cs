@@ -6,9 +6,9 @@ using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
 using SpawnerSystem.Editors;
-using IAUS.SO.Interfaces;
+using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;
-namespace IAUS.SO.editor
+namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow {
 

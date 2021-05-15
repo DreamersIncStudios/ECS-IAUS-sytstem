@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using UnityEngine.AI;
-using IAUS.SO.Interfaces;
+using IAUS.NPCSO.Interfaces;
 using Global.Component;
 using IAUS.ECS2;
 using Components.MovementSystem;
@@ -11,15 +11,36 @@ using IAUS.ECS2.Component;
 using Stats;
 using AISenses.Authoring;
 using InfluenceSystem.Component;
-namespace IAUS.SO {
+using AISenses;
+using Dreamers.SquadSystem;
+namespace IAUS.NPCSO {
     public class EnemyNPCSO : NPCSO, IEnemyNPC
     {
+        public bool IsPartOfTeam => isPartofTeam;
+        [SerializeField] bool isPartofTeam = false;
+        public NPCLevel GetNPCLevel => _getNPCLevel;
+        [SerializeField] NPCLevel _getNPCLevel;
+        public bool IsLeader => (int)_getNPCLevel > 2;
+        [SerializeField] TeamInfo getTeamInfo;
+        public  void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Hearing hearing, Influence influence, List<AIStates> NpcStates, Movement movement, Patrol patrol, Wait wait, Retreat flee
+                , bool team, NPCLevel level)
+        {
+            Setup(Name, model, typeOf, self, vision, hearing, influence, NpcStates, movement, patrol, wait, flee);
+      
+        }
+
         public override void Spawn(Vector3 pos)
         {
             base.Spawn(pos);
             if (Self.Type == TargetType.Character)
                 SpawnedGO.AddComponent<EnemyCharacter>();
+            if (isPartofTeam) {
+                TeamAuthoring teamAuthoring = new TeamAuthoring() {
+                    Info = getTeamInfo,
+                    IsLeader = IsLeader
+              };
 
+            }
             switch (GetInfluence.Level) 
             {
                 case InfluenceSystem.Component.NPCLevel.Leader:

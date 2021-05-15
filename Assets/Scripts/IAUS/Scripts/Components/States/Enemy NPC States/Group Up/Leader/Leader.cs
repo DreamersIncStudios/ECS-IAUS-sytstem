@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using  InfluenceSystem.Component;
 using Unity.Mathematics;
+using Dreamers.SquadSystem;
 namespace IAUS.ECS2.Component
 {
     
@@ -16,10 +17,12 @@ namespace IAUS.ECS2.Component
             Self = entity;
             dstManager.AddComponent<LeaderEntityTag>(entity);
             dstManager.AddComponentData(entity, influence);
-        }   
-   
+            dstManager.AddBuffer<Team>(entity);
+
+        }
+
     }
 
-    public struct LeaderEntityTag:IComponentData { }
+
 
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using InfluenceSystem.Component;
+using Dreamers.SquadSystem;
+
 
 namespace IAUS.ECS2.Component
 {
@@ -16,8 +18,9 @@ namespace IAUS.ECS2.Component
             self = entity;
             dstManager.AddComponentData(entity, influence);
             dstManager.AddComponent<GruntEntityTag>(entity);
+            dstManager.AddBuffer<Team>(entity);
+
         }
     }
 
-    public struct GruntEntityTag : IComponentData { }
 }

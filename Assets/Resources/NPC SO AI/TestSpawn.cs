@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using IAUS.SO;
+using IAUS.NPCSO;
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;

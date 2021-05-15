@@ -11,7 +11,7 @@ namespace InfluenceSystem.Component
         public NPCLevel Level;
     }
 
-    public enum NPCLevel{None,Grunt, Leader, Object}
+    public enum NPCLevel{None, Object, Grunt, Leader}
     public enum Faction
     {
        None, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
