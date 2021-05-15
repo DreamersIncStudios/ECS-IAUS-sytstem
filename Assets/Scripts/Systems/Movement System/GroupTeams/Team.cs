@@ -14,8 +14,8 @@ namespace Dreamers.SquadSystem
     [System.Serializable]
     public struct TeamInfo : IComponentData
     {
-        public int CurrentTeamSize;
-        public int MaxTeamSize; // make this var based on roles later
+        public uint CurrentTeamSize;
+        public uint MaxTeamSize; // make this var based on roles later
         public bool IsFilled=> CurrentTeamSize < MaxTeamSize;
     }
     public struct TeamUpActionTag : IComponentData { 

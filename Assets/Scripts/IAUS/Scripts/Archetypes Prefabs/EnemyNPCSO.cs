@@ -21,12 +21,13 @@ namespace IAUS.NPCSO {
         public NPCLevel GetNPCLevel => _getNPCLevel;
         [SerializeField] NPCLevel _getNPCLevel;
         public bool IsLeader => (int)_getNPCLevel > 2;
+        public TeamInfo GetTeamInfo => getTeamInfo;
         [SerializeField] TeamInfo getTeamInfo;
-        public  void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Hearing hearing, Influence influence, List<AIStates> NpcStates, Movement movement, Patrol patrol, Wait wait, Retreat flee
-                , bool team, NPCLevel level)
+        public  void Setup(bool team, NPCLevel level, TeamInfo teamInfo)
         {
-            Setup(Name, model, typeOf, self, vision, hearing, influence, NpcStates, movement, patrol, wait, flee);
-      
+            isPartofTeam = team;
+            _getNPCLevel = level;
+            getTeamInfo = teamInfo;
         }
 
         public override void Spawn(Vector3 pos)

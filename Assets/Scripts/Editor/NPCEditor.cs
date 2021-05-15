@@ -62,6 +62,7 @@ namespace IAUS.NPCSO.editor
             GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
             GetInfluence = SetupInfluence();
+            GetTeam = SetupEnemy();
             GetVision = SetupVision();
             GetHearing = SetupHearing();
 
@@ -261,6 +262,7 @@ namespace IAUS.NPCSO.editor
                     enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo);
                     break;
             }
 

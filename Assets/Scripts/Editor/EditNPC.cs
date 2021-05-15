@@ -27,6 +27,12 @@ namespace IAUS.NPCSO.editor
             Name = SO.GetName;
             GetWait = SO.GetWait;
             GetInfluence = SO.GetInfluence;
+            if (GetTypeOfNPC == TypeOfNPC.Enemy)
+            {
+                EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
+                GetTeamInfo = enemy.GetTeamInfo;
+                GetTeam.IsLeader = enemy.IsLeader;
+            }
         }
 
         NPCSO GetNPCSO;
@@ -80,6 +86,11 @@ namespace IAUS.NPCSO.editor
             GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                 GetPatrol, GetWait, GetRetreat
                 );
+            if (GetTypeOfNPC == TypeOfNPC.Enemy)
+            {
+                EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
+                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo);
+            }
             SetStartValues();
 
         }
