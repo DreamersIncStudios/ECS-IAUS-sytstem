@@ -10206,8 +10206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test:
   - SOToSpawn: {fileID: 11400000, guid: 30937b98be86f834ebf92c794a1aed42, type: 2}
-    SpawnPerCall: 5
-    spawnCNT: 50
+    SpawnPerCall: 20
+    spawnCNT: 750
     spawned: 0
 --- !u!4 &842482229
 Transform:

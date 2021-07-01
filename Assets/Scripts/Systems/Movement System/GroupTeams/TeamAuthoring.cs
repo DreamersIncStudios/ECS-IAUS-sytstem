@@ -77,10 +77,9 @@ namespace Dreamers.SquadSystem
                 ECB = _entityCommandBufferSystem.CreateCommandBuffer()
             }.ScheduleSingle(Leaders, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            systemDeps = new UpdateTeamList<GruntEntityTag>() {
+            systemDeps = new UpdateTeamList() {
                 TeamBuffer = GetBufferFromEntity<Team>(false),
                 EntityChunk = GetEntityTypeHandle(),
-                GroupChunk = GetComponentTypeHandle<GruntEntityTag>(false),
                 ECB = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
             }.ScheduleParallel(TeamedGrunts, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -89,7 +88,7 @@ namespace Dreamers.SquadSystem
 
         }
     }
-    //[Unity.Burst.BurstCompile]
+    [Unity.Burst.BurstCompile]
     public struct TeamUP : IJobChunk
     {
          public ComponentTypeHandle<TeamInfo> TeamInfoChunk;
@@ -162,19 +161,16 @@ namespace Dreamers.SquadSystem
         }
     }
 
-
-    public struct UpdateTeamList<GROUP> : IJobChunk
-        where GROUP :unmanaged, IComponentData
+    [Unity.Burst.BurstCompile]
+    public struct UpdateTeamList : IJobChunk
     {
         [NativeDisableParallelForRestriction]public BufferFromEntity<Team> TeamBuffer;
-        public ComponentTypeHandle<GROUP> GroupChunk;
        [ReadOnly] public EntityTypeHandle EntityChunk;
         public EntityCommandBuffer.ParallelWriter ECB;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-            NativeArray<GROUP> GroupData = chunk.GetNativeArray(GroupChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
                 Entity entity = entities[i];

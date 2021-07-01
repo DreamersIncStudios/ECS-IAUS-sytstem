@@ -152,3 +152,19 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.ide.visualstudio from version 2.0.5 to 2.0.7
+
+=== Sun May 16 09:57:52 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.scriptablebuildpipeline from version 1.14.1 to 1.15.2
+
+=== Wed Jun 30 09:27:24 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.3.9 to 1.5.7

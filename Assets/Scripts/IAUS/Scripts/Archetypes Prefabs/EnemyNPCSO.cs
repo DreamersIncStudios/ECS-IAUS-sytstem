@@ -38,7 +38,8 @@ namespace IAUS.NPCSO {
             if (isPartofTeam) {
                 TeamAuthoring teamAuthoring = new TeamAuthoring() {
                     Info = getTeamInfo,
-                    IsLeader = IsLeader
+                    IsLeader = IsLeader,
+                    
               };
 
             }

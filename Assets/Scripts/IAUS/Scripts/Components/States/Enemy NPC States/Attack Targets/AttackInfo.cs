@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using Unity.Entities;
-using AISenses;
+﻿using Unity.Entities;
 namespace IAUS.ECS2.Component
 {
     [GenerateAuthoringComponent]

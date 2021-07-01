@@ -83,6 +83,8 @@ namespace IAUS.NPCSO.editor
                 case TypeOfNPC.Friendly:
                     break;
                 case TypeOfNPC.Enemy:
+                    GetAttacks = SetupAttacks();
+
                     break;
             }
 
@@ -308,6 +310,7 @@ namespace IAUS.NPCSO.editor
             };
             GetHearing = new AISenses.Hearing();
             GetInfluence = new InfluenceSystem.Component.Influence();
+            GetAttacks = new List<AttackTypeInfo>();
         }
 
     }

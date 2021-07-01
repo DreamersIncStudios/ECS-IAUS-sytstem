@@ -27,6 +27,10 @@ namespace IAUS.NPCSO.editor
             Name = SO.GetName;
             GetWait = SO.GetWait;
             GetInfluence = SO.GetInfluence;
+            GetMove = SO.AIMove;
+            GetVision = SO.GetVision;
+            GetHearing = SO.GetHearing;
+            GetTypeOfNPC = SO.GetTypeOfNPC;
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
