@@ -10,7 +10,8 @@ namespace IAUS.ECS2.Component
         public AttackStyle style;
         public ConsiderationScoringData RangeToTarget;
         public ConsiderationScoringData ManaAmmoAmount;
-
+        public bool Range;
+        public bool ManaAmmo;
 
         public uint DistanceToTarget;
         public uint AttackRange;
@@ -20,6 +21,6 @@ namespace IAUS.ECS2.Component
     }
 
     public enum AttackStyle { 
-        melee, Range, Magic
+        Melee, Range, MagicRange, MagicMelee
     }
 }

@@ -21,10 +21,15 @@ namespace IAUS.NPCSO.editor
             window.minSize = new Vector2(600, 800);
             window.Show();
         }
+
+        string[] menuOptions = new string[] { "Basic", "Level/Stats", "Detection", "AI States", };
+        string[] AIStatesTab = new string[] { "Patrol", "Wait", "Attack", "Retreat" };
+        int menuInt = 0;
+        int AiStateInt = 0;
         public void Awake()
         {
             SetStartValues();
-
+           
         }
 
         bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length];
@@ -41,59 +46,31 @@ namespace IAUS.NPCSO.editor
         string Name;
         void OnGUI()
         {
+            menuInt = GUILayout.Toolbar(menuInt, menuOptions);
+
             EditorGUILayout.BeginHorizontal();
             DisplayListOfExistingSO();
-
-            EditorGUILayout.BeginVertical("Box");
-            GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-            Name = EditorGUILayout.TextField("Name", Name);
-            scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-            EditorGUILayout.BeginVertical("Button");
-            createRandomCharacter = EditorGUILayout.Foldout(createRandomCharacter, "Create RNG GO To Be Implement Later");
-
-            if (!createRandomCharacter)
-            {
-                GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
-            }
-            else
-            {
-                GUILayout.Label("To Be Implemented at a later date......");
-            }
-            GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
-            GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
-            GetInfluence = SetupInfluence();
-            GetTeam = SetupEnemy();
-            GetVision = SetupVision();
-            GetHearing = SetupHearing();
-
-
-
-            switch (GetTargetType)
-            {
-                case TargetType.Character:
-                    GetPatrol = SetupPatrol(GetPatrol);
-                    GetWait = SetupWait(GetWait);
-                    GetRetreat = SetupFlee(GetRetreat);
+            switch (menuInt) {
+                case 0:
+                    DisplayBasicInfo();
                     break;
+                case 1:
+                    DisplayStatInfo();
+                    break;
+                case 2:
+                    DisplayDetectionInfo();
+                    break;
+                case 3:
+                    DisplayAIStates();
+                    break;
+            
             }
-            switch (GetTypeOfNPC)
-            {
-                case TypeOfNPC.Neurtal:
-                    break;
-                case TypeOfNPC.Friendly:
-                    break;
-                case TypeOfNPC.Enemy:
-                    GetAttacks = SetupAttacks();
+            //GetTeam = SetupEnemy();
 
-                    break;
-            }
 
 
             EditorGUILayout.EndVertical();
 
-
-            if (GetTargetType == TargetType.Character)
-                GetMove = SetupMove(GetMove);
             // add a switch here
             EditorGUILayout.BeginHorizontal("Box");
             switch (editorState)
@@ -103,8 +80,6 @@ namespace IAUS.NPCSO.editor
                     if (GUILayout.Button("Submit"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
-
-
                     }
                     break;
                 case EditorState.EditExisting:
@@ -123,15 +98,12 @@ namespace IAUS.NPCSO.editor
             {
                 // add nodal window to verfiy 
                 SetStartValues();
-
             }
-
-
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.EndScrollView();
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndHorizontal();
+
         }
+
+
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
         Patrol SetupPatrol(Patrol state)
@@ -275,6 +247,7 @@ namespace IAUS.NPCSO.editor
         public void SetStartValues()
         {
             GetModel = null;
+            GetTypeOfNPC = TypeOfNPC.Neurtal;
             GetTargetType = new TargetType();
             GetPatrol = new Patrol()
             {
@@ -314,4 +287,5 @@ namespace IAUS.NPCSO.editor
         }
 
     }
+
 }

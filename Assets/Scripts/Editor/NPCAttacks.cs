@@ -22,10 +22,19 @@ namespace IAUS.NPCSO.editor
 
                 temp.style = (AttackStyle)EditorGUILayout.EnumPopup("Attack Type", temp.style);
                 temp.AttackRange = (uint)EditorGUILayout.IntSlider("Distance to Target", (int)temp.AttackRange, 0, 100);
-                temp.Attacktimer = EditorGUILayout.Slider("Distance to Target", temp.Attacktimer, 0, 45);
+                temp.Attacktimer = EditorGUILayout.Slider("Time between attacks", temp.Attacktimer, 0, 45);
+                if (temp.Range = EditorGUILayout.Foldout(temp.Range, "Attack Range Consideration"))
+                    temp.RangeToTarget = DisplayConsideration(temp.RangeToTarget);
+                if (temp.ManaAmmo = EditorGUILayout.Foldout(temp.ManaAmmo, "Mana/Ammo Amount Consideration"))
+                    temp.ManaAmmoAmount = DisplayConsideration(temp.ManaAmmoAmount);
 
-                EditorGUILayout.EndVertical();
                 GetAttacks[i] = temp;
+                if (GUILayout.Button(("Remove Attack")))
+                {
+                    GetAttacks.Remove(temp);
+                }
+                EditorGUILayout.EndVertical();
+
             }
 
             if (GUILayout.Button(("Add Attack")))
