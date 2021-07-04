@@ -10,7 +10,7 @@ using Stats;
 namespace IAUS.ECS2.Systems
 {
 
-    public class UpdateAttackMeleeState : SystemBase
+    public class UpdateAttackStateSystem : SystemBase
     {
         private EntityQuery Melee;
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -20,7 +20,7 @@ namespace IAUS.ECS2.Systems
             base.OnCreate();
             Melee = GetEntityQuery(new EntityQueryDesc()
             { 
-                All= new ComponentType[] { ComponentType.ReadWrite(typeof(MeleeAttackTarget)), ComponentType.ReadOnly(typeof(AttackInfo)),
+                All= new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTypeInfo)), ComponentType.ReadOnly(typeof(AttackTargetState)),
                  ComponentType.ReadOnly(typeof(CharacterStatComponent))
                 }
             });
@@ -31,51 +31,58 @@ namespace IAUS.ECS2.Systems
 
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
 
-            systemDeps = new UpdateAttack()
+        }
+        [BurstCompile]
+        struct UpdateAttackState : IJobChunk
+        {
+           public  ComponentTypeHandle<CharacterStatComponent> CharacterStatChunk;
+            public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
+            public EntityTypeHandle EntityChunk;
+            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<LocalToWorld> LocalTransform;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                MeleeChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
-                AttackChunk = GetComponentTypeHandle<AttackInfo>(true),
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
-                DT = Time.DeltaTime
-            }.ScheduleParallel(Melee, systemDeps);
-
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-            Dependency = systemDeps;
+                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(CharacterStatChunk);
+                NativeArray<AttackTargetState> AttackStates = chunk.GetNativeArray(AttackStateChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    AttackTargetState State = AttackStates[i];
+                    State.HealthRatio = Stats[i].HealthRatio;
+                    State.ManaRatio = Stats[i].ManaRatio;
+                    if (State.Target == Entity.Null)
+                    {
+                        State.DistanceToTarget = 10000000000000;
+                    }
+                    else {
+                        State.DistanceToTarget = Vector3.Distance(LocalTransform[entities[i]].Position, LocalTransform[State.Target].Position); 
+                    }
+                   
+                    AttackStates[i] = State;
+                }
+            }
         }
 
-        [BurstCompile]
-        struct UpdateAttack : IJobChunk
+        struct UpdateAttackBuffer : IJobChunk
         {
-            public ComponentTypeHandle<MeleeAttackTarget> MeleeChunk;
-            [ReadOnly]public ComponentTypeHandle<AttackInfo> AttackChunk;
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
-
-            public float DT;
+            public BufferTypeHandle<AttackTypeInfo> AttackBuffer;
+            public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<MeleeAttackTarget> Melees = chunk.GetNativeArray(MeleeChunk);
-                NativeArray<AttackInfo> attackInfos = chunk.GetNativeArray(AttackChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                BufferAccessor<AttackTypeInfo> bufferAccessor = chunk.GetBufferAccessor(AttackBuffer);
+                NativeArray<AttackTargetState> AttackStates = chunk.GetNativeArray(AttackStateChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    AttackInfo attack = attackInfos[i];
-                    MeleeAttackTarget melee = Melees[i];
-                    CharacterStatComponent stats = Stats[i];
+                    AttackTargetState State = AttackStates[i];
 
-                    if (!melee.TimeToAttack && attack.InRangeForAttack) {
-                        melee.Timer -= DT;
+                    DynamicBuffer<AttackTypeInfo> AttckBuffer = bufferAccessor[i];
+                    for (int j = 0; j < AttckBuffer.Length; j++)
+                    {
+
                     }
-                    float TotalScore = (melee.TimeToAttack ? 1 : 0) * (attack.InRangeForAttack ? 1 : 0)*melee.HealthRatio.Output(stats.HealthRatio);
-                    melee.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * melee.mod) * TotalScore);
-
-                    Melees[i] = melee;
                 }
-
             }
         }
     }

@@ -44,11 +44,11 @@ namespace IAUS.ECS2.Systems
                     ComponentType.ReadWrite(typeof(StayInRange))}
             } );
 
-            _AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
-                    ComponentType.ReadWrite(typeof(MeleeAttackTarget))}
-            });
+            //_AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            //{
+            //    All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+            //        ComponentType.ReadWrite(typeof(MeleeAttackTarget))}
+            //});
             _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
@@ -109,15 +109,15 @@ namespace IAUS.ECS2.Systems
             }.ScheduleParallel(_MoveToTargetStateEntity ,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            systemDeps = new AddAttackTargetState()
-            {
-                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                StateBufferChunk =GetBufferTypeHandle<StateBuffer>(false),
-                AttackTargetChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
-                EntityChunk = GetEntityTypeHandle(),
-                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
-            }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            //systemDeps = new AddAttackTargetState()
+            //{
+            //    entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+            //    StateBufferChunk =GetBufferTypeHandle<StateBuffer>(false),
+            //    AttackTargetChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
+            //    EntityChunk = GetEntityTypeHandle(),
+            //    HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            //}.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
+            //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             
             systemDeps = new AddFleeState()
             {

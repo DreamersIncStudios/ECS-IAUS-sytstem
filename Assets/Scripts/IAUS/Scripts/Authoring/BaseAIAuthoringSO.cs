@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 using IAUS.ECS2.Component;
 using Global.Component;
@@ -14,6 +15,8 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public bool AddRetreat;
     public Wait waitState;
     public Retreat retreatState;
+    public AttackTargetState attackTargetState = new AttackTargetState();
+    public List<AttackTypeInfo> GetAttackType;
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddComponentData(entity, Self);
@@ -29,7 +32,14 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         if (Self.Type == TargetType.Character)
             dstManager.AddComponentData(entity, movement);
 
-
+        if (GetAttackType.Count > 1)
+        {
+            DynamicBuffer<AttackTypeInfo> ATI = dstManager.AddBuffer<AttackTypeInfo>(entity);
+            dstManager.AddComponentData(entity, attackTargetState);
+            foreach (AttackTypeInfo Info in GetAttackType)
+            {
+                ATI.Add(Info);
+            }
+        }
     }
-
 }

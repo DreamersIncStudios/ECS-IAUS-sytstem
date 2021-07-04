@@ -30,7 +30,10 @@ namespace IAUS.ECS2.Component
                                 Position = (float3)position,
                                 Point = new AITarget() 
                                 {
-                                    Type = TargetType.Location},
+                                    Type = TargetType.Location,
+                                    GetRace = Race.None
+                                },
+                                
                                 TimeToWaitatWaypoint = UnityEngine.Random.Range(10,20)
                             }
                         }

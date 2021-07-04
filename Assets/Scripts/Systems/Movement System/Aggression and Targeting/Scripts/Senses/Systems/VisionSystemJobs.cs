@@ -55,6 +55,7 @@ namespace AISenses.VisionSystems
                     SeersChunk = GetComponentTypeHandle<Vision>(true),
                     SeersPositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
                     ScanBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
+                    TargetInfo = GetComponentDataFromEntity<AITarget>(true),
                     PossibleTargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
                     physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld,
                 }.ScheduleSingle(SeerEntityQuery, systemDeps);
@@ -85,6 +86,7 @@ namespace AISenses.VisionSystems
             public BufferTypeHandle<ScanPositionBuffer> ScanBufferChunk;
             [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> PossibleTargetPosition;
             public PhysicsWorld physicsWorld;
+            [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> TargetInfo;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Vision> Seers = chunk.GetNativeArray(SeersChunk);
@@ -128,6 +130,8 @@ namespace AISenses.VisionSystems
                                 if (collisionWorld.CastRay(raycastCenter, out Unity.Physics.RaycastHit raycastHit))
                                 {
                                     scan.target.entity = physicsWorld.Bodies[raycastHit.RigidBodyIndex].Entity;
+                                    scan.target.TargetInfo = TargetInfo[scan.target.entity];
+
                                     scan.target.DistanceTo = raycastHit.Fraction*dist;
                                     scan.target.LastKnownPosition = raycastHit.Position;
                                     scan.target.CanSee = true;

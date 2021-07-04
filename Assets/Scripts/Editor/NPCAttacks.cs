@@ -16,7 +16,7 @@ namespace IAUS.NPCSO.editor
         public List<AttackTypeInfo> SetupAttacks() {
             for (int i = 0; i < GetAttacks.Count; i++)
             {
-                AttackTypeInfo temp = new AttackTypeInfo();
+                AttackTypeInfo temp;
                 temp = GetAttacks[i];
                 EditorGUILayout.BeginVertical("Box");
 

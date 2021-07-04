@@ -58,9 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttackTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\FriendNPCSO.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\MeleeAttackTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
@@ -74,7 +72,6 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\WaitActionSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\Retreat.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\AttackReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\RetreatSystem.cs" />
@@ -90,13 +87,12 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolWaypointBuffer.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTarget.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\Follow.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateWait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Leader.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackInfo.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\StayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />

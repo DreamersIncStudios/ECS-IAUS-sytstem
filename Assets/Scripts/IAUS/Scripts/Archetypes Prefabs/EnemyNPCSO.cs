@@ -23,11 +23,18 @@ namespace IAUS.NPCSO {
         public bool IsLeader => (int)_getNPCLevel > 2;
         public TeamInfo GetTeamInfo => getTeamInfo;
         [SerializeField] TeamInfo getTeamInfo;
-        public  void Setup(bool team, NPCLevel level, TeamInfo teamInfo)
+        public List<AttackTypeInfo> GetAttackType => getAttackTypes;
+        [SerializeField] List<AttackTypeInfo> getAttackTypes;
+
+        public AttackTargetState GetAttackTargetState => GetAttackTarget;
+        [SerializeField] AttackTargetState GetAttackTarget;
+
+        public  void Setup(bool team, NPCLevel level, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos)
         {
             isPartofTeam = team;
             _getNPCLevel = level;
             getTeamInfo = teamInfo;
+            getAttackTypes = attackTypeInfos;
         }
 
         public override void Spawn(Vector3 pos)
@@ -51,6 +58,12 @@ namespace IAUS.NPCSO {
                  //   SpawnedGO.AddComponent<GridPointSpawner>();
                     break;
             }
+
+            if (GetAttackType.Count > 1) {
+                AIAuthoring.GetAttackType = GetAttackType;
+                AIAuthoring.attackTargetState = GetAttackTargetState;
+            }
+
         }
 
     }

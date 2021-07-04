@@ -67,7 +67,7 @@ namespace Global.Component
 
     public enum Race
     {
-        Angel, Daemon, Human // More Types of be added 
+       None, Angel, Daemon, Human // More Types of be added 
 
     }
 }

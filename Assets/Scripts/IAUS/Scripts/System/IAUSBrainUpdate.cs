@@ -39,7 +39,7 @@ namespace IAUS.ECS2.Systems
                     Waits = GetComponentDataFromEntity<Wait>(true),
                     StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
                     GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
-                    MeleeAttackState = GetComponentDataFromEntity<MeleeAttackTarget>(true)
+
                     
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -69,7 +69,6 @@ namespace IAUS.ECS2.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Wait> Waits;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<StayInRange> StayInRangeOfTarget;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
-            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MeleeAttackTarget> MeleeAttackState;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -106,11 +105,7 @@ namespace IAUS.ECS2.Systems
                                 temp.TotalScore = StayInRangeOfTarget[entity].TotalScore;
                                 temp.Status = StayInRangeOfTarget[entity].Status;
                                 break;
-                            case AIStates.Attack_Melee:
-                                temp.StateName = AIStates.Attack_Melee;
-                                temp.TotalScore = MeleeAttackState[entity].TotalScore;
-                                temp.Status = MeleeAttackState[entity].Status;
-                                break;
+
 
                         }
                         states[j] = temp;

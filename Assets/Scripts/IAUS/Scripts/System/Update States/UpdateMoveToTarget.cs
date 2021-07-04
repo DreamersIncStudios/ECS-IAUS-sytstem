@@ -26,7 +26,7 @@ namespace IAUS.ECS2.Systems
             Movers = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget)), ComponentType.ReadOnly(typeof(FollowEntityTag)), ComponentType.ReadOnly(typeof(LocalToWorld)),
-                    ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadWrite(typeof(AttackInfo)), ComponentType.ReadWrite(typeof(Movement))
+                    ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement))
 
                 }
             });
@@ -42,7 +42,7 @@ namespace IAUS.ECS2.Systems
                 FollowerChunk = GetComponentTypeHandle<FollowEntityTag>(true),
                 PositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
                 EntityPositions = GetComponentDataFromEntity<LocalToWorld>(),
-                AttackChunk = GetComponentTypeHandle<AttackInfo>(false)
+                AttackChunk = GetComponentTypeHandle<AttackTargetState>(false)
             }.ScheduleParallel(Movers, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -52,7 +52,7 @@ namespace IAUS.ECS2.Systems
             {
                 MoveChunk = GetComponentTypeHandle<MoveToTarget>(false),
                 StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
-                AttackChunk = GetComponentTypeHandle<AttackInfo>(true)
+                AttackChunk = GetComponentTypeHandle<AttackTargetState>(true)
 
             }.ScheduleParallel(Movers, systemDeps);
 
@@ -82,7 +82,7 @@ namespace IAUS.ECS2.Systems
         struct CheckDistanceToLeader : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
-            public ComponentTypeHandle<AttackInfo> AttackChunk;
+            public ComponentTypeHandle<AttackTargetState> AttackChunk;
 
             [ReadOnly] public ComponentTypeHandle<FollowEntityTag> FollowerChunk;
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> PositionChunk;
@@ -92,12 +92,12 @@ namespace IAUS.ECS2.Systems
                 NativeArray<MoveToTarget> Moves = chunk.GetNativeArray(MoveChunk);
                 NativeArray<LocalToWorld> Positions = chunk.GetNativeArray(PositionChunk);
                 NativeArray<FollowEntityTag> Followers = chunk.GetNativeArray(FollowerChunk);
-                NativeArray<AttackInfo> Attack = chunk.GetNativeArray(AttackChunk);
+                NativeArray<AttackTargetState> Attack = chunk.GetNativeArray(AttackChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     MoveToTarget move = Moves[i];
-                    AttackInfo attack = Attack[i];
+                    AttackTargetState attack = Attack[i];
 
                     move.DistanceToLeader = Vector3.Distance(Positions[i].Position, EntityPositions[Followers[i].Leader].Position);
                     if (move.HasTarget)
@@ -119,19 +119,19 @@ namespace IAUS.ECS2.Systems
         public struct ScoreMoveState : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
-            [ReadOnly] public ComponentTypeHandle<AttackInfo> AttackChunk;
+            [ReadOnly] public ComponentTypeHandle<AttackTargetState> AttackChunk;
             [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<MoveToTarget> Moves = chunk.GetNativeArray(MoveChunk);
                 NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
-                NativeArray<AttackInfo> Attack = chunk.GetNativeArray(AttackChunk);
+                NativeArray<AttackTargetState> Attack = chunk.GetNativeArray(AttackChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     MoveToTarget move = Moves[i];
                     CharacterStatComponent stats = Stats[i];
-                    AttackInfo attack = Attack[i];
+                    AttackTargetState attack = Attack[i];
                     if (move.HasTarget)
                     {
 

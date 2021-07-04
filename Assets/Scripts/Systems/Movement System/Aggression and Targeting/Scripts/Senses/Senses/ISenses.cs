@@ -5,7 +5,7 @@ using UnityEngine;
 using Stats;
 using Unity.Mathematics;
 using Unity.Collections;
-
+using Global.Component;
 namespace AISenses
 {    public interface ISenses : IComponentData
     {
@@ -74,6 +74,7 @@ namespace AISenses
     }
     public struct Target {
         public Entity entity;
+        public AITarget TargetInfo;
         public float DistanceTo;
         public float3 LastKnownPosition;
         public bool CanSee;

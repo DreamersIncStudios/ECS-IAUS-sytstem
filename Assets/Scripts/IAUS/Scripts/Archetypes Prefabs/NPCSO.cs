@@ -64,33 +64,33 @@ namespace IAUS.NPCSO
             getHearing = hearing;
             getVision = vision;
         }
-        BaseAIAuthoringSO test;
+       public BaseAIAuthoringSO AIAuthoring;
        public GameObject SpawnedGO { get; private set; }
         public virtual void Spawn( Vector3 pos) {
             SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
             SpawnedGO.AddComponent<NavMeshAgent>();
             SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
-             test = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
-            test.Self = Self;
-            test.movement = AIMove;
+             AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
+            AIAuthoring.Self = Self;
+            AIAuthoring.movement = AIMove;
             foreach (AIStates state in AIStatesAvailable) {
                 switch (state) {
                     case AIStates.Patrol:
-                        test.AddPatrol = true;
-                        test.patrolState = GetPatrol;
+                        AIAuthoring.AddPatrol = true;
+                        AIAuthoring.patrolState = GetPatrol;
                         break;
                     case AIStates.Wait:
-                        test.AddWait = true;
-                        test.waitState = GetWait;
+                        AIAuthoring.AddWait = true;
+                        AIAuthoring.waitState = GetWait;
                         break;
                     case AIStates.Retreat:
-                        test.AddRetreat = true;
-                        test.retreatState = GetRetreat;
+                        AIAuthoring.AddRetreat = true;
+                        AIAuthoring.retreatState = GetRetreat;
                         break;
                 }        
                    
                 }
-            if (test.AddPatrol)
+            if (AIAuthoring.AddPatrol)
                 SpawnedGO.AddComponent<WaypointCreation>();
          
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();

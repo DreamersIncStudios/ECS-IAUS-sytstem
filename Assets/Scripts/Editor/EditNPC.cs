@@ -36,6 +36,7 @@ namespace IAUS.NPCSO.editor
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
                 GetTeamInfo = enemy.GetTeamInfo;
                 GetTeam.IsLeader = enemy.IsLeader;
+                GetAttacks = enemy.GetAttackType;
             }
         }
 
@@ -93,7 +94,7 @@ namespace IAUS.NPCSO.editor
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
-                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo);
+                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks);
             }
             SetStartValues();
 

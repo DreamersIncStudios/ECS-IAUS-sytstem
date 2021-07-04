@@ -215,15 +215,6 @@ namespace IAUS.NPCSO.editor
             switch (GetTypeOfNPC)
             {
                 case TypeOfNPC.Neurtal:
-                    break;
-                case TypeOfNPC.Friendly:
-                    break;
-                case TypeOfNPC.Enemy:
-                    break;
-            }
-            switch (GetTypeOfNPC)
-            {
-                case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
                     SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
@@ -236,7 +227,7 @@ namespace IAUS.NPCSO.editor
                     enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
-                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo);
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks);
                     break;
             }
 

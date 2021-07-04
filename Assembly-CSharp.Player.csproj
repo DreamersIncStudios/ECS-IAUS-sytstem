@@ -59,7 +59,6 @@
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Compile Include="Assets\Resources\NPC SO AI\TestSpawn.cs" />
-    <Compile Include="Assets\Scripts\UI Design\UIElements.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

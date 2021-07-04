@@ -1348,8 +1348,6 @@ GameObject:
   - component: {fileID: 46931453}
   - component: {fileID: 46931452}
   - component: {fileID: 46931451}
-  - component: {fileID: 46931449}
-  - component: {fileID: 46931448}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (4)
   m_TagString: Untagged
@@ -1357,45 +1355,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &46931448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46931447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5
---- !u!114 &46931449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 46931447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
 --- !u!114 &46931451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,7 +1743,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2602
+  m_Name: pb_Mesh27602
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2041,7 +2000,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1216
+  m_Name: pb_Mesh29652
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3425,7 +3384,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21310
+  m_Name: pb_Mesh28548
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3754,8 +3713,6 @@ GameObject:
   - component: {fileID: 238533013}
   - component: {fileID: 238533012}
   - component: {fileID: 238533024}
-  - component: {fileID: 238533026}
-  - component: {fileID: 238533027}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (1)
   m_TagString: Untagged
@@ -4045,45 +4002,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &238533026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238533011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
---- !u!114 &238533027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 238533011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5
 --- !u!1 &239553647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5995275238239990332, guid: 36498cd370e7802408964a72908fed13,
@@ -5742,8 +5660,6 @@ GameObject:
   - component: {fileID: 524945580}
   - component: {fileID: 524945579}
   - component: {fileID: 524945591}
-  - component: {fileID: 524945593}
-  - component: {fileID: 524945594}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (3)
   m_TagString: Untagged
@@ -6033,45 +5949,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &524945593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524945578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
---- !u!114 &524945594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524945578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5
 --- !u!1001 &536390178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7747,7 +7624,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1288
+  m_Name: pb_Mesh30014
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8036,7 +7913,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh20974
+  m_Name: pb_Mesh27614
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10206,8 +10083,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test:
   - SOToSpawn: {fileID: 11400000, guid: 30937b98be86f834ebf92c794a1aed42, type: 2}
-    SpawnPerCall: 20
-    spawnCNT: 750
+    SpawnPerCall: 5
+    spawnCNT: 20
     spawned: 0
 --- !u!4 &842482229
 Transform:
@@ -10254,7 +10131,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2542
+  m_Name: pb_Mesh29628
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10552,7 +10429,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1890
+  m_Name: pb_Mesh29558
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10835,7 +10712,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21120
+  m_Name: pb_Mesh28004
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11024,7 +10901,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2590
+  m_Name: pb_Mesh29354
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11827,7 +11704,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1938
+  m_Name: pb_Mesh29916
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12131,8 +12008,6 @@ GameObject:
   - component: {fileID: 1166486096}
   - component: {fileID: 1166486095}
   - component: {fileID: 1166486107}
-  - component: {fileID: 1166486109}
-  - component: {fileID: 1166486110}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower (2)
   m_TagString: Untagged
@@ -12422,45 +12297,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &1166486109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166486094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
---- !u!114 &1166486110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1166486094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5
 --- !u!1 &1171851880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9220773719300048829, guid: 36498cd370e7802408964a72908fed13,
@@ -12548,7 +12384,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2554
+  m_Name: pb_Mesh27682
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -12762,7 +12598,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1914
+  m_Name: pb_Mesh29148
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13001,7 +12837,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2578
+  m_Name: pb_Mesh29176
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13658,7 +13494,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2614
+  m_Name: pb_Mesh29664
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13822,7 +13658,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21346
+  m_Name: pb_Mesh28644
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13986,7 +13822,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1902
+  m_Name: pb_Mesh27780
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14200,7 +14036,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1926
+  m_Name: pb_Mesh29082
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14489,7 +14325,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-2566
+  m_Name: pb_Mesh28302
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14718,8 +14554,6 @@ GameObject:
   - component: {fileID: 1602334480}
   - component: {fileID: 1602334481}
   - component: {fileID: 1602334482}
-  - component: {fileID: 1602334484}
-  - component: {fileID: 1602334485}
   - component: {fileID: 1602334486}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower
@@ -15010,45 +14844,6 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &1602334484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602334469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
---- !u!114 &1602334485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1602334469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5
 --- !u!114 &1602334486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15124,7 +14919,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1240
+  m_Name: pb_Mesh28814
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15438,7 +15233,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1878
+  m_Name: pb_Mesh29876
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -15777,7 +15572,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1950
+  m_Name: pb_Mesh29440
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16166,7 +15961,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1228
+  m_Name: pb_Mesh29368
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16380,7 +16175,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1264
+  m_Name: pb_Mesh29122
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16569,7 +16364,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1276
+  m_Name: pb_Mesh29640
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16758,7 +16553,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1252
+  m_Name: pb_Mesh28342
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -5,13 +5,17 @@ namespace IAUS.ECS2.Component
 {
 
     [GenerateAuthoringComponent]
-    public struct AttackTarget :IBaseStateScorer
+    public struct AttackTargetState :IBaseStateScorer
     {
         public float Timer;
+        public float HealthRatio;
+        public float ManaRatio;
         public float DistanceToTarget;
+        public Entity Target;
+        public bool InRangeForAttack; // To Be set By Buffer check;
+        public float AttackRange;  // To Be set By Buffer check;
         [SerializeField] public bool TimeToAttack => Timer <= 0.0f;
 
-        public ConsiderationScoringData HealthRatio;
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
