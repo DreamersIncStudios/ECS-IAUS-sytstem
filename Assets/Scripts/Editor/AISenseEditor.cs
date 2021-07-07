@@ -9,8 +9,6 @@ namespace IAUS.NPCSO.editor
     public sealed partial class NPCEditor : EditorWindow
     {
         Vision GetVision;
-        Hearing GetHearing;
-        bool ShowHearing;
         bool ShowVision;
         Vision SetupVision() {
             ShowVision = EditorGUILayout.BeginFoldoutHeaderGroup(ShowVision, "Vision Data");
@@ -29,15 +27,5 @@ namespace IAUS.NPCSO.editor
             return GetVision;
         }
 
-        Hearing SetupHearing() {
-            ShowHearing = EditorGUILayout.BeginFoldoutHeaderGroup(ShowHearing, "Hearing Data");
-            if (ShowHearing)
-            {
-                GUILayout.Label("To Be Implemented");
-            }
-            EditorGUILayout.EndFoldoutHeaderGroup();
-
-            return GetHearing;
-        }
     }
 }

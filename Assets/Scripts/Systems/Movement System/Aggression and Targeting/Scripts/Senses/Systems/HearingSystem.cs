@@ -7,6 +7,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
+using Unity.Mathematics;
 
 namespace AISenses.HearingSystem
 {
@@ -63,9 +64,9 @@ namespace AISenses.HearingSystem
             {
                 Hearing hearing = Hearings[i];
                 LocalToWorld position = toWorlds[i];
-                List<SoundData> ambientSounds = new List<SoundData>();
-                List<SoundData> alertSounds = new List<SoundData>();
-                List<SoundData> alarmSounds = new List<SoundData>();
+                List<AmbientSoundData> ambientSounds = new List<AmbientSoundData>();
+                List<DetectedSoundData> alertSounds = new List<DetectedSoundData>();
+                List<DetectedSoundData> alarmSounds = new List<DetectedSoundData>();
                 for (int j = 0; j < SoundEmitters.Length; j++)
                 {
                  
@@ -73,73 +74,96 @@ namespace AISenses.HearingSystem
                     switch (SoundEmitters[j].Sound)
                     {
                         case SoundType.Ambient:
-                            if (dist > 0)
+                            if (dist >= 1)
                             {
-                                ambientSounds.Add(new SoundData()
+                                ambientSounds.Add(new AmbientSoundData()
                                 {
-                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
+                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist) //>= 0? SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist): 0
+                                });
+                            }
+                            else {
+                                ambientSounds.Add(new AmbientSoundData()
+                                {
+                                    soundlevel = SoundEmitters[j].SoundLevel 
                                 });
                             }
                             break;
                         case SoundType.Alarm:
                             if (dist > 0)
                             {
-                                alarmSounds.Add(new SoundData()
+                                alarmSounds.Add(new DetectedSoundData()
                                 {
-                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
-                                });
+                                    SoundLocation = SoundPosition[j].Position,
+                                    dist= dist,
+                                });;
                             }
                             break;
                         case SoundType.Suspicious:
                             if (dist > 0)
                             {
-                                alertSounds.Add(new SoundData()
+                                alertSounds.Add(new DetectedSoundData()
                                 {
-                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist)
+                                    SoundLocation = SoundPosition[j].Position,
+                                    dist=dist,
                                 });
                             }
 
                             break;
                     }
-                    
+
                 }
 
                 float totalAmbientNoise = new float();
-                float totalAlertNoise = new float();
-                float totalAlarmNoise = new float();
+                //float totalAlertNoise = new float();
+                //float totalAlarmNoise = new float();
 
-                foreach (SoundData sound in ambientSounds) {
-                    totalAmbientNoise += sound.SoundPressureRMS;
+                foreach (AmbientSoundData sound in ambientSounds) {
+                    totalAmbientNoise = Mathf.Sqrt( Mathf.Pow(totalAmbientNoise,2) + Mathf.Pow(sound.SoundPressureRMS,2));
                 
                 }
-                foreach (SoundData sound in alertSounds)
+
+               int ambientNoise = hearing.AmbientNoiseLevel = (int)(20 * Mathf.Log10(totalAmbientNoise / 20  ));
+                foreach (DetectedSoundData sound in alertSounds)
                 {
-                    totalAlertNoise += sound.SoundPressureRMS;
+                    if (SoundAboveListenerAmbientNoise(sound.dist, ambientNoise, sound.soundlevel, out float level)) 
+                    {
+                        DetectedSoundData temp = sound; temp.AboveAmbientAmount = level;
+                      alertSounds[  alertSounds.IndexOf(sound)] = temp;
+                    }
+                }
+                foreach (DetectedSoundData sound in alarmSounds)
+                {
+                    if (SoundAboveListenerAmbientNoise(sound.dist, ambientNoise, sound.soundlevel, out float level)) {
+                        DetectedSoundData temp = sound; temp.AboveAmbientAmount = level;
+                       alarmSounds[alertSounds.IndexOf(sound)] = temp;
+                    }
 
                 }
-                foreach (SoundData sound in alarmSounds)
-                {
-                    totalAlarmNoise += sound.SoundPressureRMS;
-
-                }
-                hearing.AmbientNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAmbientNoise,.5f) / 20);
-                hearing.AlertNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlertNoise, .5f) / 20);
-                hearing.AlarmNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlarmNoise, .5f) / 20);
+                //hearing.AlertNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlertNoise, .5f) / 20);
+                //hearing.AlarmNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlarmNoise, .5f) / 20);
 
 
                 Hearings[i] = hearing;
             }
         }
 
-        public struct SoundData {
+        public struct AmbientSoundData {
             public float soundlevel;
             public float SoundPressureRMS
             {
                 get {
-                    float pressure  =Mathf.Pow(Mathf.Pow(10, (soundlevel / 20)) * 20,2);
+                    float pressure  =Mathf.Pow(10, (soundlevel / 20)) * 20;
                     return pressure;
                 }
             }
+        }
+        public struct DetectedSoundData
+        {
+            public int soundlevel;
+            public float dist;
+            public float3 SoundLocation;
+            public float AboveAmbientAmount;
+
         }
         public bool SoundAboveListenerAmbientNoise( float Distance, int AmbientNoiseLevel, int NoiseDB, out float LevelAboveAmbient) {
              float NoiseAtListener = NoiseDB - 20 * Mathf.Log10(Distance);

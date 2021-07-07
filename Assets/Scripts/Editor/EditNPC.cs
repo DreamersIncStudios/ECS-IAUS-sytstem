@@ -29,7 +29,6 @@ namespace IAUS.NPCSO.editor
             GetInfluence = SO.GetInfluence;
             GetMove = SO.AIMove;
             GetVision = SO.GetVision;
-            GetHearing = SO.GetHearing;
             GetTypeOfNPC = SO.GetTypeOfNPC;
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
@@ -88,7 +87,7 @@ namespace IAUS.NPCSO.editor
                 }
             }
 
-            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
                 GetPatrol, GetWait, GetRetreat
                 );
             if (GetTypeOfNPC == TypeOfNPC.Enemy)

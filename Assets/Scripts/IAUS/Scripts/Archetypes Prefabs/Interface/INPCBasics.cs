@@ -21,7 +21,6 @@ namespace IAUS.NPCSO.Interfaces
         Retreat GetRetreat { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
-        Hearing GetHearing { get; }
         Influence GetInfluence { get; }
     }
     public enum TypeOfNPC{  

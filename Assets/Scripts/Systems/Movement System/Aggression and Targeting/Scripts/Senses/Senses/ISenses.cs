@@ -116,18 +116,21 @@ namespace AISenses
             }
         }
         public int AlertRate { get; set; }
-
-        public float AmbientNoiseLevel;
-        public float AlertNoiseLevel;
-        public float AlarmNoiseLevel;
-        public bool CanIHearAnAlarm { get { return AlertNoiseLevel > AmbientNoiseLevel; } }
+        public int AmbientNoiseLevel;
+        //public float AlertNoiseLevel;
+        //public float AlarmNoiseLevel;
+        //public bool CanIHearAnAlarm { get { return AlertNoiseLevel > AmbientNoiseLevel; } }
         [Range(0, 5)]
         public int EnemyAwarnessLevel;  // Character alert level
         public void InitializeSense(BaseCharacter baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
         }
+        public float3 DirectionOfNoise;
         public void UpdateSense(BaseCharacter baseCharacter) { }
 
+    }
+    public enum ResponseToNoise { 
+        None, Flee, Investigate, Attack, Guard,
     }
 }

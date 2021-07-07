@@ -216,7 +216,7 @@ namespace IAUS.NPCSO.editor
             {
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
                     break;
@@ -224,7 +224,7 @@ namespace IAUS.NPCSO.editor
                     break;
                 case TypeOfNPC.Enemy:
                     ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, out EnemyNPCSO enemyNPCSO);
-                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetHearing, GetInfluence, StatesToAdd, GetMove,
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
                     enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks);
@@ -272,7 +272,7 @@ namespace IAUS.NPCSO.editor
                 EngageRadius = 10,
                 Scantimer = 5
             };
-            GetHearing = new AISenses.Hearing();
+           
             GetInfluence = new InfluenceSystem.Component.Influence();
             GetAttacks = new List<AttackTypeInfo>();
         }

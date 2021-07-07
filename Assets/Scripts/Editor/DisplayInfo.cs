@@ -54,7 +54,6 @@ namespace IAUS.NPCSO.editor
             GUILayout.Label("Enemy Detection Settings", EditorStyles.boldLabel);
 
             GetVision = SetupVision();
-            GetHearing = SetupHearing();
             EditorGUILayout.EndVertical();
         }
         void DisplayAIStates() {

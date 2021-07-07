@@ -1409,9 +1409,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &46931453
@@ -2357,9 +2359,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &99648503
@@ -3747,9 +3751,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &238533013
@@ -5694,9 +5700,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &524945580
@@ -10083,8 +10091,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test:
   - SOToSpawn: {fileID: 11400000, guid: 30937b98be86f834ebf92c794a1aed42, type: 2}
-    SpawnPerCall: 5
-    spawnCNT: 20
+    SpawnPerCall: 20
+    spawnCNT: 200
     spawned: 0
 --- !u!4 &842482229
 Transform:
@@ -12042,9 +12050,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &1166486096
@@ -14812,9 +14822,11 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
     EnemyAwarnessLevel: 0
+    DirectionOfNoise:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &1602334482

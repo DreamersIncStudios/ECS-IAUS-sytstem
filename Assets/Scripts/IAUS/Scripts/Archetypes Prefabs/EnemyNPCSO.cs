@@ -59,10 +59,13 @@ namespace IAUS.NPCSO {
                     break;
             }
 
-            if (GetAttackType.Count > 1) {
+            if (GetAttackType.Count >= 1)
+            {
                 AIAuthoring.GetAttackType = GetAttackType;
                 AIAuthoring.attackTargetState = GetAttackTargetState;
             }
+            else
+                AIAuthoring.GetAttackType = new List<AttackTypeInfo>();
 
         }
 

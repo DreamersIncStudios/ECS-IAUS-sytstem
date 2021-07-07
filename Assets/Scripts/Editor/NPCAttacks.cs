@@ -9,7 +9,7 @@ namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {
-        List<AttackTypeInfo> GetAttacks;
+        List<AttackTypeInfo> GetAttacks = new List<AttackTypeInfo>();
 
 
       

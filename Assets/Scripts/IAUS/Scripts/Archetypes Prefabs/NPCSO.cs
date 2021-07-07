@@ -45,10 +45,9 @@ namespace IAUS.NPCSO
 
         [SerializeField]Vision getVision;
         public Vision GetVision => getVision;
-        [SerializeField] Hearing getHearing;
-        public Hearing GetHearing => getHearing;
 
-        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Hearing hearing, Influence influence, List<AIStates> NpcStates, Movement movement
+
+        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Influence influence, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait, Retreat flee
             ) {
             _getName = Name;
@@ -61,7 +60,6 @@ namespace IAUS.NPCSO
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
-            getHearing = hearing;
             getVision = vision;
         }
        public BaseAIAuthoringSO AIAuthoring;
@@ -96,7 +94,9 @@ namespace IAUS.NPCSO
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;
-            Senses.HearingData = GetHearing;
+            Senses.Hearing = true;
+            Senses.HearingData = new Hearing();
+            
 
         }
 

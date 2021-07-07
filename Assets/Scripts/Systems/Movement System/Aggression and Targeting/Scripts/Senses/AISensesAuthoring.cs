@@ -10,7 +10,7 @@ namespace AISenses.Authoring
         public bool Vision;
         public Vision VisionData;
         public bool Hearing;
-        public Hearing HearingData;
+        public Hearing HearingData = new Hearing();
         // hearing component
 
         public bool Touch;

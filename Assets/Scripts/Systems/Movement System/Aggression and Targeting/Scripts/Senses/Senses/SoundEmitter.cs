@@ -14,7 +14,8 @@ namespace AISenses.HearingSystem
     {
         Ambient,
         Alarm,
-        Suspicious
+        Suspicious,
+        AttackOnLocat
 
     }
 }
