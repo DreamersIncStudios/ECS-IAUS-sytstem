@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,14 +47,11 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.9</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.11</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.12f1</UnityVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Systems\Movement System\Scripts\MovementSystem.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Aggression\Systems\CheckSystem.cs" />
@@ -63,7 +60,6 @@
     <Compile Include="Assets\Scripts\Systems\Movement System\GroupTeams\Team.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\GroupTeams\TeamAuthoring.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\PlayerParty.cs" />
-    <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Systems\UpdateSenses.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\AITargetCreate.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\AlertLevel.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Senses\SoundEmitter.cs" />
@@ -76,6 +72,8 @@
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Editor\AISensesAuthoringEditor.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Aggression\CharacterAlignment.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Systems\HearingSystem.cs" />
+    <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Senses\SoundResponses.cs" />
+    <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Senses\JobTempC.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Systems\Movement System\Movement System.asmdef" />

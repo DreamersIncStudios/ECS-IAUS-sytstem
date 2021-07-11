@@ -11,11 +11,13 @@ using Unity.Mathematics;
 
 namespace AISenses.HearingSystem
 {
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public class HearingSystem : SystemBase
     {
         private EntityQuery SoundEmitters;
         private EntityQuery Listeners;
         EntityCommandBufferSystem _entityCommandBufferSystem;
+       
 
         protected override void OnCreate()
         {
@@ -29,21 +31,37 @@ namespace AISenses.HearingSystem
             }
             );
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
+            SoundResponses.CreateSoundResponseDictionary();
+            
         }
+  
+
+        float interval = 1.0f;
+        bool runUpdate => interval <= 0.0f;
+
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
-            systemDeps = new SoundSystem() { 
-            HearingChunk = GetComponentTypeHandle<Hearing>(false),
-            TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
-            SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
-            SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
-            }.ScheduleParallel(Listeners, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            if (runUpdate)
+            {
+                JobHandle systemDeps = Dependency;
+                systemDeps = new SoundSystem()
+                {
+                    HearingChunk = GetComponentTypeHandle<Hearing>(false),
+                    TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                    SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
+                    SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+                    SoundResponseDictionary = SoundResponses.SoundResponseDictionary
+                }.ScheduleParallel(Listeners, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            Dependency = systemDeps;
+                Dependency = systemDeps;
+                interval = 1.0f;
 
+            }
+            else
+            {
+                interval -= 1 / 60.0f;
+            }
         }
     }
 
@@ -51,6 +69,7 @@ namespace AISenses.HearingSystem
     public struct SoundSystem : IJobChunk
     {
         public ComponentTypeHandle<Hearing> HearingChunk;
+        public Dictionary<int2, SoundResponse> SoundResponseDictionary;
         [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<SoundEmitter> SoundEmitters;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<LocalToWorld> SoundPosition;
@@ -147,24 +166,7 @@ namespace AISenses.HearingSystem
             }
         }
 
-        public struct AmbientSoundData {
-            public float soundlevel;
-            public float SoundPressureRMS
-            {
-                get {
-                    float pressure  =Mathf.Pow(10, (soundlevel / 20)) * 20;
-                    return pressure;
-                }
-            }
-        }
-        public struct DetectedSoundData
-        {
-            public int soundlevel;
-            public float dist;
-            public float3 SoundLocation;
-            public float AboveAmbientAmount;
 
-        }
         public bool SoundAboveListenerAmbientNoise( float Distance, int AmbientNoiseLevel, int NoiseDB, out float LevelAboveAmbient) {
              float NoiseAtListener = NoiseDB - 20 * Mathf.Log10(Distance);
             bool output = (5+AmbientNoiseLevel) < NoiseAtListener;
@@ -180,4 +182,5 @@ namespace AISenses.HearingSystem
 
 
     }
+
 }

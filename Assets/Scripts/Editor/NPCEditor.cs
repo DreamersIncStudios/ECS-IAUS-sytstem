@@ -87,10 +87,12 @@ namespace IAUS.NPCSO.editor
                     if (GUILayout.Button("Update"))
                     {
                         SaveChangesToNPCSO();
+
                     }
                     if (GUILayout.Button("Create New SO"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
+
                     }
                     break;
             }
@@ -133,7 +135,7 @@ namespace IAUS.NPCSO.editor
                 if (WaitTime = EditorGUILayout.Foldout(WaitTime, "Time Left"))
                     state.TimeLeft = DisplayConsideration(state.TimeLeft);
 
-                if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Time Left"))
+                if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Health Left"))
                     state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.StartTime = EditorGUILayout.FloatField("Start Time", state.StartTime);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
@@ -237,6 +239,7 @@ namespace IAUS.NPCSO.editor
 
         public void SetStartValues()
         {
+            Name = null;
             GetModel = null;
             GetTypeOfNPC = TypeOfNPC.Neurtal;
             GetTargetType = new TargetType();
@@ -275,6 +278,7 @@ namespace IAUS.NPCSO.editor
            
             GetInfluence = new InfluenceSystem.Component.Influence();
             GetAttacks = new List<AttackTypeInfo>();
+            editorState = EditorState.CreateNew;
         }
 
     }

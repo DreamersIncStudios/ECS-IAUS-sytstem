@@ -15,7 +15,7 @@ using InfluenceSystem.Component;
 
 namespace IAUS.NPCSO
 {
-    public abstract class NPCSO : ScriptableObject, INPCBasics
+    public class NPCSO : ScriptableObject, INPCBasics
     {
 
         [SerializeField] uint spawnID;

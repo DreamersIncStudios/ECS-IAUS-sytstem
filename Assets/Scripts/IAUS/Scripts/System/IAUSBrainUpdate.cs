@@ -7,6 +7,8 @@ using Unity.Transforms;
 using UnityEngine;
 namespace IAUS.ECS2.Systems
 {
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
     public class IAUSBrainUpdate : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -26,9 +28,12 @@ namespace IAUS.ECS2.Systems
 
         }
 
+        float interval = .5f;
+        bool runUpdate => interval <= 0.0f;
+
         protected override void OnUpdate()
         {
-            if (UnityEngine.Time.frameCount % 120 == 5)
+            if (runUpdate)
             {
                 JobHandle systemDeps = Dependency;
                 systemDeps = new UpdateBrains()
@@ -55,7 +60,12 @@ namespace IAUS.ECS2.Systems
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
                 //systemDeps.Complete();
                 Dependency = systemDeps;
+                interval = .5f;
 
+            }
+            else
+            {
+                interval -= 1 / 60.0f;
             }
         }
 

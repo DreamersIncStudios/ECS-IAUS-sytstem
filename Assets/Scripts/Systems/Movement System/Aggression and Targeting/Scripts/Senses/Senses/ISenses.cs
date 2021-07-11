@@ -116,6 +116,9 @@ namespace AISenses
             }
         }
         public int AlertRate { get; set; }
+
+            public float AlertLevel; // using for investigate
+        public float CautionLevle; // used for Retreat/Run away from 
         public int AmbientNoiseLevel;
         //public float AlertNoiseLevel;
         //public float AlarmNoiseLevel;
@@ -124,7 +127,7 @@ namespace AISenses
         public int EnemyAwarnessLevel;  // Character alert level
         public void InitializeSense(BaseCharacter baseCharacter)
         {
-            AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
+          //  AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
         }
         public float3 DirectionOfNoise;
         public void UpdateSense(BaseCharacter baseCharacter) { }
@@ -132,5 +135,26 @@ namespace AISenses
     }
     public enum ResponseToNoise { 
         None, Flee, Investigate, Attack, Guard,
+    }
+
+    public struct AmbientSoundData
+    {
+        public float soundlevel;
+        public float SoundPressureRMS
+        {
+            get
+            {
+                float pressure = Mathf.Pow(10, (soundlevel / 20)) * 20;
+                return pressure;
+            }
+        }
+    }
+    public struct DetectedSoundData
+    {
+        public int soundlevel;
+        public float dist;
+        public float3 SoundLocation;
+        public float AboveAmbientAmount;
+
     }
 }

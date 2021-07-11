@@ -96,7 +96,6 @@ namespace IAUS.NPCSO.editor
                 enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks);
             }
             SetStartValues();
-
         }
 
 

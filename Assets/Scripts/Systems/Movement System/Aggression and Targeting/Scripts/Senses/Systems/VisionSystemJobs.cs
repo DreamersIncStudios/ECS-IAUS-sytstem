@@ -12,6 +12,7 @@ using Unity.Physics.Systems;
 
 namespace AISenses.VisionSystems
 {
+    [UpdateInGroup(typeof( FixedStepSimulationSystemGroup))]
     public class VisionSystem : SystemBase
     {
         private EntityQuery SeerEntityQuery;
@@ -43,9 +44,11 @@ namespace AISenses.VisionSystems
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             m_EndFramePhysicsSystem = World.GetExistingSystem<EndFramePhysicsSystem>();
         }
+        float interval = 1.0f;
+        bool runUpdate => interval <= 0.0f;
         protected override void OnUpdate()
         {
-            if (UnityEngine.Time.frameCount % 240 == 10)
+            if (runUpdate)
             {
                 Dependency = JobHandle.CombineDependencies(Dependency, m_EndFramePhysicsSystem.GetOutputDependency());
                 JobHandle systemDeps = Dependency;
@@ -66,7 +69,7 @@ namespace AISenses.VisionSystems
                 systemDeps = new FindClosestTarget()
                 {
                     DT = Time.DeltaTime,
-                    SeersChunk =GetComponentTypeHandle<Vision>(false),
+                    SeersChunk = GetComponentTypeHandle<Vision>(false),
                     ScanBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
                     AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false)
 
@@ -74,7 +77,10 @@ namespace AISenses.VisionSystems
 
                 entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
                 Dependency = systemDeps;
-
+                interval = 1.0f;
+            }
+            else {
+                interval -= 1 / 60.0f;
             }
         }
 
