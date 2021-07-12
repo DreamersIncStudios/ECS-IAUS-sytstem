@@ -50,7 +50,7 @@ namespace AISenses.HearingSystem
                     TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
                     SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
                     SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                    SoundResponseDictionary = SoundResponses.SoundResponseDictionary
+                //    SoundResponseDictionary = SoundResponses.SoundResponseDictionary
                 }.ScheduleParallel(Listeners, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -69,7 +69,6 @@ namespace AISenses.HearingSystem
     public struct SoundSystem : IJobChunk
     {
         public ComponentTypeHandle<Hearing> HearingChunk;
-        public Dictionary<int2, SoundResponse> SoundResponseDictionary;
         [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<SoundEmitter> SoundEmitters;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<LocalToWorld> SoundPosition;
@@ -78,7 +77,7 @@ namespace AISenses.HearingSystem
         {
             NativeArray<Hearing> Hearings = chunk.GetNativeArray(HearingChunk);
             NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
-
+            Dictionary<int2, SoundResponse> SoundResponseDictionary = SoundResponses.SoundResponseDictionary;   
             for (int i = 0; i < chunk.Count; i++)
             {
                 Hearing hearing = Hearings[i];
@@ -92,7 +91,7 @@ namespace AISenses.HearingSystem
                         float dist = Vector3.Distance(position.Position, SoundPosition[j].Position);
                     switch (SoundEmitters[j].Sound)
                     {
-                        case SoundType.Ambient:
+                        case SoundTypes.Ambient:
                             if (dist >= 1)
                             {
                                 ambientSounds.Add(new AmbientSoundData()
@@ -107,7 +106,7 @@ namespace AISenses.HearingSystem
                                 });
                             }
                             break;
-                        case SoundType.Alarm:
+                        case SoundTypes.Alarm:
                             if (dist > 0)
                             {
                                 alarmSounds.Add(new DetectedSoundData()
@@ -117,7 +116,7 @@ namespace AISenses.HearingSystem
                                 });;
                             }
                             break;
-                        case SoundType.Suspicious:
+                        case SoundTypes.Whistle:
                             if (dist > 0)
                             {
                                 alertSounds.Add(new DetectedSoundData()

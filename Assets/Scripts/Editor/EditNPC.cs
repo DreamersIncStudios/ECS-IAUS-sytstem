@@ -5,7 +5,6 @@ using UnityEngine;
 using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
-using SpawnerSystem.Editors;
 using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;
 namespace IAUS.NPCSO.editor

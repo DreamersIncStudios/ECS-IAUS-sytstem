@@ -24,8 +24,8 @@ namespace IAUS.NPCSO
         {
             ValidateDatebase();
             IsLoaded = true;
-            NPCSO[] resources = Resources.LoadAll<NPCSO>(@"NPC SO AI");
-            EnemyNPCSO[] resources1 = Resources.LoadAll<EnemyNPCSO>(@"NPC SO AI");
+            NPCSO[] resources = Resources.LoadAll<NPCSO>(@"NPC");
+            EnemyNPCSO[] resources1 = Resources.LoadAll<EnemyNPCSO>(@"NPC");
             foreach (NPCSO npc in resources)
             {
                 if (!NPCs.Contains(npc))

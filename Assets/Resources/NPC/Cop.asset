@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457b1b78de1b5c24884afc703d8b6735, type: 3}
+  m_Name: Cop
+  m_EditorClassIdentifier: 
+  spawnID: 0
+  _getName: 
+  _model: {fileID: 0}
+  getInfluence:
+    faction: 0
+    InfluenceValue: 0
+    Range: 0
+    Level: 0
+  GetSelf:
+    Type: 0
+    GetRace: 0
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
+  states: 
+  getPatrol:
+    NumberOfWayPoints: 0
+    DistanceToPoint:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CurWaypoint:
+      Point:
+        Type: 0
+        GetRace: 0
+        NumOfEntityTargetingMe: 0
+        GetInstanceID: 0
+        MaxNumberOfTarget: 0
+        CanBeTargetByPlayer: 0
+      Position:
+        x: 0
+        y: 0
+        z: 0
+      TimeToWaitatWaypoint: 0
+      IsDanerZone: 0
+    UpdatePatrolPoints: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  getWait:
+    TimeLeft:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    Timer: 0
+    StartTime: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  getRetreat:
+    HealthRatio:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    InfluenceInArea:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    DistanceToSafe:
+      Inverse: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    RetreatDirection:
+      x: 0
+      y: 0
+      z: 0
+    distanceToPoint: 0
+    StartingDistance: 0
+    BufferZone: 0
+    CanFlee: 0
+    HideTime: 0
+    EscapePoint:
+      x: 0
+      y: 0
+      z: 0
+    EscapeRange: 0
+    _status: 0
+    _coolDownTime: 0
+    _resetTime: 0
+    _totalScore: 0
+  GetMovement:
+    TargetLocation:
+      x: 0
+      y: 0
+      z: 0
+    MovementSpeed: 0
+    TargetLocationCrowded: 0
+    MaxInfluenceAtPoint: 0
+    Offset:
+      x: 0
+      y: 0
+      z: 0
+    CanMove: 0
+    StoppingDistance: 0
+    Acceleration: 0
+    DistanceRemaining: 0
+  getNPCType: 0
+  getVision:
+    EnemyAwarnessLevel: 0
+    HeadPositionOffset:
+      x: 0
+      y: 0
+      z: 0
+    Scantimer: 0
+    viewRadius: 0
+    ViewAngle: 0
+    EngageRadius: 0
+    AlertModifer: 0
+  AIAuthoring: {fileID: 0}
+  isPartofTeam: 0
+  _getNPCLevel: 0
+  getTeamInfo:
+    CurrentTeamSize: 0
+    MaxTeamSize: 0
+  getAttackTypes: []

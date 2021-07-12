@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b36c533abaf57b440b06330ec66d53ab, type: 3}
-  m_Name: New
+  m_Script: {fileID: 11500000, guid: 457b1b78de1b5c24884afc703d8b6735, type: 3}
+  m_Name: Citizen
   m_EditorClassIdentifier: 
   spawnID: 0
   _getName: 
@@ -156,3 +156,9 @@ MonoBehaviour:
     EngageRadius: 0
     AlertModifer: 0
   AIAuthoring: {fileID: 0}
+  isPartofTeam: 0
+  _getNPCLevel: 0
+  getTeamInfo:
+    CurrentTeamSize: 0
+    MaxTeamSize: 0
+  getAttackTypes: []

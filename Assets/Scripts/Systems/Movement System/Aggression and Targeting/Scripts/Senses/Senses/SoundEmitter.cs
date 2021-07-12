@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using AISenses;
 namespace AISenses.HearingSystem
 {
     [GenerateAuthoringComponent]
     public struct SoundEmitter : IComponentData
     {
         public int SoundLevel;
-        public SoundType Sound;
+        public SoundTypes Sound;
     }
-    public enum SoundType
-    {
-        Ambient,
-        Alarm,
-        Suspicious,
-        AttackOnLocat
+ }
 
-    }
-}

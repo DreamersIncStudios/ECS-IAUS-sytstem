@@ -5,7 +5,7 @@ using UnityEngine;
 using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
-using SpawnerSystem.Editors;
+using Dreamers.Global;
 using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;
 namespace IAUS.NPCSO.editor
@@ -79,7 +79,9 @@ namespace IAUS.NPCSO.editor
 
                     if (GUILayout.Button("Submit"))
                     {
-                        CreateSO("Assets/Resources/NPC SO AI");
+                        CreateSO("Assets/Resources/NPC");
+                        Repaint();
+
                     }
                     break;
                 case EditorState.EditExisting:
@@ -87,11 +89,14 @@ namespace IAUS.NPCSO.editor
                     if (GUILayout.Button("Update"))
                     {
                         SaveChangesToNPCSO();
+                        Repaint();
+
 
                     }
                     if (GUILayout.Button("Create New SO"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
+                        Repaint();
 
                     }
                     break;
@@ -100,6 +105,7 @@ namespace IAUS.NPCSO.editor
             {
                 // add nodal window to verfiy 
                 SetStartValues();
+                Repaint();
             }
             EditorGUILayout.EndHorizontal();
 
@@ -217,7 +223,7 @@ namespace IAUS.NPCSO.editor
             switch (GetTypeOfNPC)
             {
                 case TypeOfNPC.Neurtal:
-                    ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
+                    ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
                     SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
@@ -225,7 +231,7 @@ namespace IAUS.NPCSO.editor
                 case TypeOfNPC.Friendly:
                     break;
                 case TypeOfNPC.Enemy:
-                    ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, out EnemyNPCSO enemyNPCSO);
+                    ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
                     enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );

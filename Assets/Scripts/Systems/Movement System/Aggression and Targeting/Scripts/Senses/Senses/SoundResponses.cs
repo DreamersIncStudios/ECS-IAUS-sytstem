@@ -59,6 +59,6 @@ namespace AISenses {
         none, Citizen, Cop, aldja
     }
     public enum SoundTypes {
-        none, Whistle, RockThrow, FootStep, Fighting, GunShot, Explosion, CarBurnout // Keep adding
+        none, Ambient, Alarm, Whistle, RockThrow, FootStep, Fighting, GunShot, Explosion, CarBurnout // Keep adding
     }
 }

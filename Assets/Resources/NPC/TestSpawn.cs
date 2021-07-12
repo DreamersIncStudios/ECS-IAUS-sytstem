@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IAUS.NPCSO;
+using AISenses.HearingSystem;
+using Unity.Entities;
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;
@@ -10,6 +12,7 @@ public class TestSpawn : MonoBehaviour
     public void Start()
     {
         InvokeRepeating(nameof(Spawn), 0, 5);
+        Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
     }
 
 
@@ -38,5 +41,17 @@ public class TestSpawn : MonoBehaviour
         public int spawnCNT;
         public int spawned;
         public bool SpawnSomething => spawned < spawnCNT;
+    }
+
+    void OnceAllSpawnedCreateExplosion() {
+        GameObject GO = new GameObject();
+       GO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
+
+        GO.AddComponent<SoundAuthoring>().Emitter = new SoundEmitter()
+        {
+            Sound = AISenses.SoundTypes.Explosion,
+            SoundLevel = 100
+        };
+     
     }
 }
