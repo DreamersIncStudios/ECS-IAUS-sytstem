@@ -70,6 +70,7 @@ namespace AISenses.HearingSystem
     {
         public ComponentTypeHandle<Hearing> HearingChunk;
         [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
+        [ReadOnly] public ComponentTypeHandle<JobTempC> JobChunk;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<SoundEmitter> SoundEmitters;
         [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<LocalToWorld> SoundPosition;
 
@@ -77,63 +78,54 @@ namespace AISenses.HearingSystem
         {
             NativeArray<Hearing> Hearings = chunk.GetNativeArray(HearingChunk);
             NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
+            NativeArray<JobTempC> JobsList = chunk.GetNativeArray(JobChunk);
             Dictionary<int2, SoundResponse> SoundResponseDictionary = SoundResponses.SoundResponseDictionary;   
             for (int i = 0; i < chunk.Count; i++)
             {
                 Hearing hearing = Hearings[i];
                 LocalToWorld position = toWorlds[i];
                 List<AmbientSoundData> ambientSounds = new List<AmbientSoundData>();
-                List<DetectedSoundData> alertSounds = new List<DetectedSoundData>();
-                List<DetectedSoundData> alarmSounds = new List<DetectedSoundData>();
+                List<DetectedSoundData> AllOtherSound = new List<DetectedSoundData>();
                 for (int j = 0; j < SoundEmitters.Length; j++)
                 {
                  
                         float dist = Vector3.Distance(position.Position, SoundPosition[j].Position);
-                    switch (SoundEmitters[j].Sound)
+                    if (SoundEmitters[j].Sound == SoundTypes.Ambient)
                     {
-                        case SoundTypes.Ambient:
-                            if (dist >= 1)
-                            {
-                                ambientSounds.Add(new AmbientSoundData()
-                                {
-                                    soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist) //>= 0? SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist): 0
-                                });
-                            }
-                            else {
-                                ambientSounds.Add(new AmbientSoundData()
-                                {
-                                    soundlevel = SoundEmitters[j].SoundLevel 
-                                });
-                            }
-                            break;
-                        case SoundTypes.Alarm:
-                            if (dist > 0)
-                            {
-                                alarmSounds.Add(new DetectedSoundData()
-                                {
-                                    SoundLocation = SoundPosition[j].Position,
-                                    dist= dist,
-                                });;
-                            }
-                            break;
-                        case SoundTypes.Whistle:
-                            if (dist > 0)
-                            {
-                                alertSounds.Add(new DetectedSoundData()
-                                {
-                                    SoundLocation = SoundPosition[j].Position,
-                                    dist=dist,
-                                });
-                            }
 
-                            break;
+                        if (dist >= 1)
+                        {
+                            ambientSounds.Add(new AmbientSoundData()
+                            {
+                                soundlevel = SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist) //>= 0? SoundEmitters[j].SoundLevel - 20 * Mathf.Log10(dist): 0
+                            });
+                        }
+                        else {
+                            ambientSounds.Add(new AmbientSoundData()
+                            {
+                                soundlevel = SoundEmitters[j].SoundLevel
+                            });
+                        }
                     }
+                    else {
+
+                        if (dist > 0)
+                        {
+                            AllOtherSound.Add(new DetectedSoundData()
+                            {
+                                SoundLocation = SoundPosition[j].Position,
+                                dist = dist,
+                                soundlevel = SoundEmitters[j].SoundLevel,
+                                soundEmitter = SoundEmitters[j],
+                            }); ;
+                        }
+                    }
+                    
 
                 }
 
                 float totalAmbientNoise = new float();
-                //float totalAlertNoise = new float();
-                //float totalAlarmNoise = new float();
+
 
                 foreach (AmbientSoundData sound in ambientSounds) {
                     totalAmbientNoise = Mathf.Sqrt( Mathf.Pow(totalAmbientNoise,2) + Mathf.Pow(sound.SoundPressureRMS,2));
@@ -141,25 +133,43 @@ namespace AISenses.HearingSystem
                 }
 
                int ambientNoise = hearing.AmbientNoiseLevel = (int)(20 * Mathf.Log10(totalAmbientNoise / 20  ));
-                foreach (DetectedSoundData sound in alertSounds)
+
+                for (int j = 0; j < AllOtherSound.Count; j++)
+
                 {
-                    if (SoundAboveListenerAmbientNoise(sound.dist, ambientNoise, sound.soundlevel, out float level)) 
+                    if (SoundAboveListenerAmbientNoise(AllOtherSound[j].dist, ambientNoise, AllOtherSound[j].soundlevel, out float level))
                     {
-                        DetectedSoundData temp = sound; temp.AboveAmbientAmount = level;
-                      alertSounds[  alertSounds.IndexOf(sound)] = temp;
+                           DetectedSoundData temp = AllOtherSound[j]; 
+                        temp.AmountAboveAmbient = level;
+                           AllOtherSound[j] = temp;
                     }
+                    else
+                    {
+                        AllOtherSound.RemoveAt(j);
+                    }
+
                 }
-                foreach (DetectedSoundData sound in alarmSounds)
+                // determine what to react too?
+                DetectedSoundData LoudestSound = new DetectedSoundData();
+                if (AllOtherSound.Count > 0)
                 {
-                    if (SoundAboveListenerAmbientNoise(sound.dist, ambientNoise, sound.soundlevel, out float level)) {
-                        DetectedSoundData temp = sound; temp.AboveAmbientAmount = level;
-                       alarmSounds[alertSounds.IndexOf(sound)] = temp;
+                    foreach (var Sound in AllOtherSound)
+                    {
+                        if (LoudestSound.AmountAboveAmbient < Sound.AmountAboveAmbient)
+                            LoudestSound = Sound;
                     }
-
                 }
-                //hearing.AlertNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlertNoise, .5f) / 20);
-                //hearing.AlarmNoiseLevel = 20 * Mathf.Log10(Mathf.Pow(totalAlarmNoise, .5f) / 20);
-
+                // determine alert Levels
+                if (SoundResponseDictionary.TryGetValue
+                    (new int2(
+                        (int)JobsList[i].job, 
+                        (int)LoudestSound.soundEmitter.Sound), 
+                    out SoundResponse response))
+                {
+                    // Change this to the Mod Value  once figured out
+                    hearing.AlertLevel = response.AlertLevel;
+                    hearing.CautionLevel = response.CautionLevel;
+                }
 
                 Hearings[i] = hearing;
             }

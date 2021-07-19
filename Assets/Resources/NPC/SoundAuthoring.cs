@@ -10,7 +10,7 @@ public class SoundAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddComponentData(entity, Emitter);
-        dstManager.SetName(entity, "Explosion");
+      //  dstManager.SetName(entity, "Explosion");
     }
 
 }

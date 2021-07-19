@@ -110,7 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SoundLevel: 38
-  Sound: 0
+  Sound: 1
+  LifeTime: 0
 --- !u!114 &8737479620740456754
 MonoBehaviour:
   m_ObjectHideFlags: 0

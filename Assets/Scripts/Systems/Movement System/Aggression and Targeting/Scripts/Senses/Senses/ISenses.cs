@@ -6,6 +6,7 @@ using Stats;
 using Unity.Mathematics;
 using Unity.Collections;
 using Global.Component;
+
 namespace AISenses
 {    public interface ISenses : IComponentData
     {
@@ -118,7 +119,7 @@ namespace AISenses
         public int AlertRate { get; set; }
 
             public float AlertLevel; // using for investigate
-        public float CautionLevle; // used for Retreat/Run away from 
+        public float CautionLevel; // used for Retreat/Run away from 
         public int AmbientNoiseLevel;
         //public float AlertNoiseLevel;
         //public float AlarmNoiseLevel;
@@ -154,7 +155,8 @@ namespace AISenses
         public int soundlevel;
         public float dist;
         public float3 SoundLocation;
-        public float AboveAmbientAmount;
+        public float AmountAboveAmbient;
+        public HearingSystem.SoundEmitter soundEmitter;
 
     }
 }

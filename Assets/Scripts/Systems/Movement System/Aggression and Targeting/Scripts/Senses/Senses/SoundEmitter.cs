@@ -10,6 +10,12 @@ namespace AISenses.HearingSystem
     {
         public int SoundLevel;
         public SoundTypes Sound;
+        public float LifeTime;
+        public bool DestroyThis => LifeTime <= 0.0f;
+    }
+
+    public enum SoundLife { 
+        PlayOnce, Loop, LoopWhile, LoopAfter
     }
  }
 

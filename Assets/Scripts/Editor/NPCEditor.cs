@@ -227,6 +227,7 @@ namespace IAUS.NPCSO.editor
                     SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  GetInfluence, StatesToAdd, GetMove,
                         GetPatrol, GetWait, GetRetreat
                         );
+                    EditorUtility.SetDirty(SO);
                     break;
                 case TypeOfNPC.Friendly:
                     break;
@@ -236,6 +237,8 @@ namespace IAUS.NPCSO.editor
                         GetPatrol, GetWait, GetRetreat
                         );
                     enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks);
+                    EditorUtility.SetDirty(enemyNPCSO);
+
                     break;
             }
 

@@ -13,40 +13,40 @@ MonoBehaviour:
   m_Name: Citizen
   m_EditorClassIdentifier: 
   spawnID: 0
-  _getName: 
-  _model: {fileID: 0}
+  _getName: Citizen
+  _model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
   getInfluence:
-    faction: 0
-    InfluenceValue: 0
-    Range: 0
-    Level: 0
+    faction: 2
+    InfluenceValue: 6
+    Range: 39
+    Level: 2
   GetSelf:
-    Type: 0
+    Type: 1
     GetRace: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 
+  states: 010000000c000000
   getPatrol:
     NumberOfWayPoints: 0
     DistanceToPoint:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
     HealthRatio:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     distanceToPoint: 0
     StartingDistance: 0
-    BufferZone: 0
+    BufferZone: 0.75
     CurWaypoint:
       Point:
         Type: 0
@@ -63,68 +63,68 @@ MonoBehaviour:
       IsDanerZone: 0
     UpdatePatrolPoints: 0
     _status: 0
-    _coolDownTime: 0
+    _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
   getWait:
     TimeLeft:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     HealthRatio:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     Timer: 0
-    StartTime: 0
+    StartTime: 1
     _status: 0
-    _coolDownTime: 0
+    _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
   getRetreat:
     HealthRatio:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
     InfluenceInArea:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
     DistanceToSafe:
       Inverse: 0
-      responseType: 0
-      M: 0
-      K: 0
-      B: 0
-      C: 0
+      responseType: 2
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
     RetreatDirection:
       x: 0
       y: 0
       z: 0
     distanceToPoint: 0
     StartingDistance: 0
-    BufferZone: 0
+    BufferZone: 0.75
     CanFlee: 0
-    HideTime: 0
+    HideTime: 30
     EscapePoint:
       x: 0
       y: 0
       z: 0
-    EscapeRange: 0
+    EscapeRange: 25
     _status: 0
-    _coolDownTime: 0
+    _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
   GetMovement:
@@ -132,32 +132,32 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    MovementSpeed: 0
+    MovementSpeed: 10
     TargetLocationCrowded: 0
-    MaxInfluenceAtPoint: 0
+    MaxInfluenceAtPoint: 20
     Offset:
       x: 0
       y: 0
       z: 0
     CanMove: 0
-    StoppingDistance: 0
-    Acceleration: 0
+    StoppingDistance: 1
+    Acceleration: 5
     DistanceRemaining: 0
-  getNPCType: 0
+  getNPCType: 2
   getVision:
     EnemyAwarnessLevel: 0
     HeadPositionOffset:
       x: 0
       y: 0
       z: 0
-    Scantimer: 0
-    viewRadius: 0
-    ViewAngle: 0
-    EngageRadius: 0
+    Scantimer: 5
+    viewRadius: 35
+    ViewAngle: 120
+    EngageRadius: 10
     AlertModifer: 0
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
-  _getNPCLevel: 0
+  _getNPCLevel: 2
   getTeamInfo:
     CurrentTeamSize: 0
     MaxTeamSize: 0

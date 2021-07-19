@@ -93,6 +93,7 @@ namespace IAUS.NPCSO.editor
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
                 enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks);
+                EditorUtility.SetDirty(enemy);
             }
             SetStartValues();
         }
