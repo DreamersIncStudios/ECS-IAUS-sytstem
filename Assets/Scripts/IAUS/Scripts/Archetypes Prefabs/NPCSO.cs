@@ -35,8 +35,7 @@ namespace IAUS.NPCSO
         [SerializeField] Patrol getPatrol;
         public Wait GetWait => getWait;
         [SerializeField] Wait getWait;
-        public Retreat GetRetreat => getRetreat;
-        [SerializeField] Retreat getRetreat;
+
         public Movement AIMove => GetMovement;
         [SerializeField] Movement GetMovement;
 
@@ -48,7 +47,7 @@ namespace IAUS.NPCSO
 
 
         public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Influence influence, List<AIStates> NpcStates, Movement movement
-            ,Patrol patrol,Wait wait, Retreat flee
+            ,Patrol patrol,Wait wait
             ) {
             _getName = Name;
             GetSelf = self;
@@ -56,7 +55,7 @@ namespace IAUS.NPCSO
             GetMovement = movement;
             states = NpcStates;
             _model = model;
-            getRetreat = flee;
+           
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
@@ -80,10 +79,6 @@ namespace IAUS.NPCSO
                     case AIStates.Wait:
                         AIAuthoring.AddWait = true;
                         AIAuthoring.waitState = GetWait;
-                        break;
-                    case AIStates.Retreat:
-                        AIAuthoring.AddRetreat = true;
-                        AIAuthoring.retreatState = GetRetreat;
                         break;
                 }        
                    

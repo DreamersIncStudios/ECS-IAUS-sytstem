@@ -18,11 +18,27 @@ namespace IAUS.NPCSO.Interfaces
         GameObject Model { get; }
         Patrol GetPatrol { get; }
         Wait GetWait { get; }
-        Retreat GetRetreat { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
         Influence GetInfluence { get; }
     }
+
+    public interface INPCEnemy {
+        RetreatCitizen GetRetreat { get; } // change to RetreatEnemyNPC after testing
+
+        bool IsPartOfTeam { get; }
+        NPCLevel GetNPCLevel { get; }
+        List<AttackTypeInfo> GetAttackType { get; }
+        AttackTargetState GetAttackTargetState { get; }
+    }
+
+    public interface INPCCitizen {
+        RetreatCitizen GetRetreat { get; }
+}
+    public interface INPCPlayable { 
+        RetreatPlayerPartyNPC GetRetreat { get; }
+    }
+
     public enum TypeOfNPC{  
         Neurtal, Friendly, Enemy
 

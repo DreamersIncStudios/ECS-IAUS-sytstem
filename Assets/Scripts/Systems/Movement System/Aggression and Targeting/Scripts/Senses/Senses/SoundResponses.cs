@@ -22,8 +22,8 @@ namespace AISenses {
             });
             SoundResponseDictionary.Add(new int2((int)Jobs.Cop, (int)SoundTypes.Explosion), new SoundResponse()
             {
-                AlertLevel = 10f,
-                CautionLevel = 100f
+                AlertLevel = 100f,
+                CautionLevel = 10f
             });
         }
 
@@ -32,24 +32,14 @@ namespace AISenses {
     {
         public float AlertLevel; // using for investigate
         public float CautionLevel; // used for Retreat/Run away from 
-        public float ModAlertLevel(float dist, int SecurityLevel)
+        public float ModAlertLevel(float SoundRatio, int SecurityLevel)
         {
-            float mod = new float();
+            float mod = SoundRatio * SecurityLevel;
             return AlertLevel * mod;
         } // using for investigate
-        public float ModCautionLevel(float dist, int SecurityLevel)
+        public float ModCautionLevel(float SoundRatio, int SecurityLevel)
         {
-            float mod = new float();
-            return CautionLevel * mod;
-        } // used for Retreat/Run away from 
-        public float ModAlertLevel(int SoundLevel, int SecurityLevel)
-        {
-            float mod = new float();
-            return AlertLevel * mod;
-        } // using for investigate
-        public float ModCautionLevel(int SoundLevel, int SecurityLevel)
-        {
-            float mod = new float();
+            float mod = SoundRatio * SecurityLevel;
             return CautionLevel * mod;
         } // used for Retreat/Run away from 
 

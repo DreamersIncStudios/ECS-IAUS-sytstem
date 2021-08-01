@@ -14,7 +14,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public bool AddWait;
     public bool AddRetreat;
     public Wait waitState;
-    public Retreat retreatState;
+    public RetreatCitizen retreatState;
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -31,7 +31,9 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
             dstManager.AddComponentData(entity, retreatState);
         if (Self.Type == TargetType.Character)
             dstManager.AddComponentData(entity, movement);
-
+        if (AddRetreat) {
+            dstManager.AddComponentData(entity, retreatState);
+        }
         //if (GetAttackType.Count >= 1)
         //{
         //    DynamicBuffer<AttackTypeInfo> ATI = dstManager.AddBuffer<AttackTypeInfo>(entity);

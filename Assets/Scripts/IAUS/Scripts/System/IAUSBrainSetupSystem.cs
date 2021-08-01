@@ -4,6 +4,8 @@ using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using UnityEngine;
+
+
 namespace IAUS.ECS2.Systems
 {
     public class IAUSBrainSetupSystem : SystemBase
@@ -52,7 +54,7 @@ namespace IAUS.ECS2.Systems
             _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
-                    ComponentType.ReadWrite(typeof(Retreat))}
+                    ComponentType.ReadWrite(typeof(RetreatCitizen))}
             });
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
@@ -119,11 +121,11 @@ namespace IAUS.ECS2.Systems
             //}.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
             //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             
-            systemDeps = new AddFleeState()
+            systemDeps = new AddRetreatState()
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-                FleeChunk = GetComponentTypeHandle<Retreat>(false),
+                FleeChunk = GetComponentTypeHandle<RetreatCitizen>(false),
                 EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_FleeStateEntity, systemDeps);

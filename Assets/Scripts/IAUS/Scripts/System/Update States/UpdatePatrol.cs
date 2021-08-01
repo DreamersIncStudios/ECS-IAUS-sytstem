@@ -23,15 +23,23 @@ namespace IAUS.ECS2.Systems
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(LocalToWorld)) }
             });
-            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+            DistanceCheck.SetChangedVersionFilter(
+                new ComponentType[] { 
+                    ComponentType.ReadWrite(typeof(LocalToWorld)),
+                    ComponentType.ReadWrite(typeof(Patrol))
+                });
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
             });
+                
            CompleteCheck = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(PatrolActionTag)) }
             });
+
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
         }
 
         protected override void OnUpdate()

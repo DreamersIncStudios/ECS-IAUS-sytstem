@@ -29,10 +29,12 @@ namespace AISenses.Authoring
             dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
 
             dstManager.AddBuffer<ScanPositionBuffer>(entity);
+            dstManager.AddComponent<AlertLevel>(entity);
             if (Vision) 
                 dstManager.AddComponentData(entity, VisionData);
             if (Hearing)
                 dstManager.AddComponentData(entity, HearingData);
+
 
         }
 

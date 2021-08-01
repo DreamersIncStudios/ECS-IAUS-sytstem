@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using AISenses;
-namespace AISenses.HearingSystem
+namespace AISenses
 {
     [GenerateAuthoringComponent]
     public struct SoundEmitter : IComponentData

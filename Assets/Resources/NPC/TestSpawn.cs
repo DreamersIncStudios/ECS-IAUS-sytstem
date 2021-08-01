@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using IAUS.NPCSO;
-using AISenses.HearingSystem;
+using AISenses;
 using Unity.Entities;
 public class TestSpawn : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class TestSpawn : MonoBehaviour
     public void Start()
     {
         InvokeRepeating(nameof(Spawn), 0, 5);
-        Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
+        Invoke(nameof(OnceAllSpawnedCreateExplosion), 30);
     }
 
 

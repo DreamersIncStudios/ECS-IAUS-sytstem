@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2020.3.13f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
@@ -72,7 +69,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\Wait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Wait\WaitActionSystem.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\Retreat.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\RetreatSystem.cs" />
@@ -80,8 +77,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\IEnemyNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddFleeState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddRetreatState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\IFriendlyNPC.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
@@ -106,6 +102,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />

@@ -21,7 +21,6 @@ namespace IAUS.NPCSO.editor
             else
                 createRandomCharacter = true;
             GetPatrol = SO.GetPatrol;
-            GetRetreat = SO.GetRetreat;
             GetTargetType = SO.Self.Type;
             Name = SO.GetName;
             GetWait = SO.GetWait;
@@ -35,6 +34,8 @@ namespace IAUS.NPCSO.editor
                 GetTeamInfo = enemy.GetTeamInfo;
                 GetTeam.IsLeader = enemy.IsLeader;
                 GetAttacks = enemy.GetAttackType;
+                GetRetreat = enemy.GetRetreat;
+
             }
         }
 
@@ -87,12 +88,12 @@ namespace IAUS.NPCSO.editor
             }
 
             GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
-                GetPatrol, GetWait, GetRetreat
+                GetPatrol, GetWait
                 );
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
-                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks);
+                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks, GetRetreat);
                 EditorUtility.SetDirty(enemy);
             }
             SetStartValues();

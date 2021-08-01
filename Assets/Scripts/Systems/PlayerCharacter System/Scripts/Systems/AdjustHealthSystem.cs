@@ -21,7 +21,13 @@ namespace Stats
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(CharacterStatComponent)), ComponentType.ReadWrite(typeof(ChangeVitalBuffer)) }
             });
-          
+            _ChangeVitals.SetChangedVersionFilter(
+                new ComponentType[]
+                {
+                    ComponentType.ReadWrite(typeof(ChangeVitalBuffer))
+                }
+                );
+
             _entityCommandBufferSystem = GetCommandBufferSystem();
         }
 

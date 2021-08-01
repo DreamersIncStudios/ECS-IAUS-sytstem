@@ -38,7 +38,7 @@ namespace IAUS.NPCSO.editor
         Patrol GetPatrol;
 
         Wait GetWait;
-        Retreat GetRetreat;
+        RetreatCitizen GetRetreat;
         GameObject GetModel;
         bool createRandomCharacter = false;
         TypeOfNPC GetTypeOfNPC;
@@ -152,8 +152,8 @@ namespace IAUS.NPCSO.editor
             return state;
         }
 
-        bool RetreatDistance, RetreatHealthRatio;
-        Retreat SetupFlee(Retreat state)
+        bool RetreatDistance, RetreatHealthRatio,AlertResponse;
+       RetreatCitizen SetupRetreat(RetreatCitizen state)
         {
             showBtn[(int)AIStates.Retreat] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Retreat], "Flee from Target");
             if (showBtn[(int)AIStates.Retreat])
@@ -162,13 +162,30 @@ namespace IAUS.NPCSO.editor
                     state.DistanceToSafe = DisplayConsideration(state.DistanceToSafe);
                 if (RetreatHealthRatio = EditorGUILayout.Foldout(RetreatHealthRatio, "CharacterHealth"))
                     state.HealthRatio = DisplayConsideration(state.HealthRatio);
+                if (AlertResponse = EditorGUILayout.Foldout(RetreatHealthRatio, "Alert Response"))
+                    state.AlertLevels = DisplayConsideration(state.AlertLevels);
 
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
-                state.HideTime = EditorGUILayout.FloatField("Cool Down Time", state.HideTime);
-                state.EscapeRange = EditorGUILayout.IntField("Cool Down Time", state.EscapeRange);
+                state.HideTime = EditorGUILayout.FloatField("Hide Time", state.HideTime);
+                state.EscapeRange = EditorGUILayout.IntField("Escape Range", state.EscapeRange);
 
 
+
+            }
+
+            if (GUILayout.Button("Reset")) {
+               state = new RetreatCitizen()
+                {
+                    HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                    DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                    AlertLevels = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                    BufferZone = .75f,
+                    _coolDownTime = 5,
+                    EscapeRange = 25,
+                    HideTime = 30
+
+                };
 
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
@@ -214,7 +231,9 @@ namespace IAUS.NPCSO.editor
                         case AIStates.Wait:
                             StatesToAdd.Add(AIStates.Wait);
                             break;
-
+                        case AIStates.Retreat:
+                            StatesToAdd.Add(AIStates.Retreat);
+                            break;
                     }
 
                 }
@@ -225,7 +244,7 @@ namespace IAUS.NPCSO.editor
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
                     SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  GetInfluence, StatesToAdd, GetMove,
-                        GetPatrol, GetWait, GetRetreat
+                        GetPatrol, GetWait
                         );
                     EditorUtility.SetDirty(SO);
                     break;
@@ -234,9 +253,9 @@ namespace IAUS.NPCSO.editor
                 case TypeOfNPC.Enemy:
                     ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
                     enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
-                        GetPatrol, GetWait, GetRetreat
+                        GetPatrol, GetWait
                         );
-                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks);
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks, GetRetreat);
                     EditorUtility.SetDirty(enemyNPCSO);
 
                     break;
@@ -260,10 +279,10 @@ namespace IAUS.NPCSO.editor
                 _coolDownTime = 5
 
             };
-            GetRetreat = new Retreat() {
+            GetRetreat = new RetreatCitizen() {
                 HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
                 DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                AlertLevels = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
                 BufferZone = .75f,
                 _coolDownTime = 5,
                 EscapeRange = 25,

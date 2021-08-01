@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using AISenses.HearingSystem;
+using AISenses;
 
 public class SoundAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {

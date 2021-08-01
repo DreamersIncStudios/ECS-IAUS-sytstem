@@ -39,11 +39,7 @@ namespace IAUS.ECS2.Systems
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget))},
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(MoveToTargetActionTag))}
             });
-            //AttackCooldown = GetEntityQuery(new EntityQueryDesc()
-            //{
-            //    All = new ComponentType[] { ComponentType.ReadWrite(typeof(MeleeAttackTarget)) },
-            //    None = new ComponentType[] { ComponentType.ReadOnly(typeof(AttackTargetActionTag)) }
-            //});
+
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
@@ -70,13 +66,6 @@ namespace IAUS.ECS2.Systems
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToCooldown, systemDeps);
 
-            //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            //systemDeps = new CooldownJob<MeleeAttackTarget>()
-            //{
-            //    AIStateChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
-            //    DT = Time.DeltaTime
-            //}.ScheduleParallel(AttackCooldown, systemDeps);
-
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
         }
@@ -95,7 +84,7 @@ namespace IAUS.ECS2.Systems
                 {
                     AISTATE aistate = AISTATES[i];
                     if (!aistate.InCooldown) {
-                        return;
+                        continue;
                     }
                         
                     aistate.ResetTime -= DT;

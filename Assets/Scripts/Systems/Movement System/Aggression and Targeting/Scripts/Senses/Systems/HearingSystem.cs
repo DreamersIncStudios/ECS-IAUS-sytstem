@@ -9,7 +9,7 @@ using Unity.Transforms;
 using UnityEngine;
 using Unity.Mathematics;
 
-namespace AISenses.HearingSystem
+namespace AISenses
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public class HearingSystem : SystemBase
@@ -23,7 +23,9 @@ namespace AISenses.HearingSystem
         {
             base.OnCreate();
             Listeners = GetEntityQuery(new EntityQueryDesc() { 
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Hearing)), ComponentType.ReadOnly(typeof(LocalToWorld))}
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Hearing)), ComponentType.ReadOnly(typeof(LocalToWorld)),
+                ComponentType.ReadOnly(typeof(JobTempC)), ComponentType.ReadWrite(typeof(AlertLevel))
+                }
             });
             SoundEmitters = GetEntityQuery(new EntityQueryDesc()
             {
@@ -50,7 +52,8 @@ namespace AISenses.HearingSystem
                     TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
                     SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
                     SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                //    SoundResponseDictionary = SoundResponses.SoundResponseDictionary
+                    JobChunk = GetComponentTypeHandle<JobTempC>(true),
+                    AlertChunk = GetComponentTypeHandle<AlertLevel>(false)
                 }.ScheduleParallel(Listeners, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -69,27 +72,32 @@ namespace AISenses.HearingSystem
     public struct SoundSystem : IJobChunk
     {
         public ComponentTypeHandle<Hearing> HearingChunk;
+        public ComponentTypeHandle<AlertLevel> AlertChunk;
+
         [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
         [ReadOnly] public ComponentTypeHandle<JobTempC> JobChunk;
-        [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<SoundEmitter> SoundEmitters;
-        [ReadOnly] [DeallocateOnJobCompletion]public NativeArray<LocalToWorld> SoundPosition;
+        [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<SoundEmitter> SoundEmitters;
+        [ReadOnly] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> SoundPosition;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Hearing> Hearings = chunk.GetNativeArray(HearingChunk);
+            NativeArray<AlertLevel> AlertLevels = chunk.GetNativeArray(AlertChunk);
+
             NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
             NativeArray<JobTempC> JobsList = chunk.GetNativeArray(JobChunk);
-            Dictionary<int2, SoundResponse> SoundResponseDictionary = SoundResponses.SoundResponseDictionary;   
+            Dictionary<int2, SoundResponse> SoundResponseDictionary = SoundResponses.SoundResponseDictionary;
             for (int i = 0; i < chunk.Count; i++)
             {
                 Hearing hearing = Hearings[i];
+                AlertLevel alertLevel = AlertLevels[i];
                 LocalToWorld position = toWorlds[i];
                 List<AmbientSoundData> ambientSounds = new List<AmbientSoundData>();
                 List<DetectedSoundData> AllOtherSound = new List<DetectedSoundData>();
                 for (int j = 0; j < SoundEmitters.Length; j++)
                 {
-                 
-                        float dist = Vector3.Distance(position.Position, SoundPosition[j].Position);
+
+                    float dist = Vector3.Distance(position.Position, SoundPosition[j].Position);
                     if (SoundEmitters[j].Sound == SoundTypes.Ambient)
                     {
 
@@ -120,7 +128,7 @@ namespace AISenses.HearingSystem
                             }); ;
                         }
                     }
-                    
+
 
                 }
 
@@ -128,20 +136,20 @@ namespace AISenses.HearingSystem
 
 
                 foreach (AmbientSoundData sound in ambientSounds) {
-                    totalAmbientNoise = Mathf.Sqrt( Mathf.Pow(totalAmbientNoise,2) + Mathf.Pow(sound.SoundPressureRMS,2));
-                
+                    totalAmbientNoise = Mathf.Sqrt(Mathf.Pow(totalAmbientNoise, 2) + Mathf.Pow(sound.SoundPressureRMS, 2));
+
                 }
 
-               int ambientNoise = hearing.AmbientNoiseLevel = (int)(20 * Mathf.Log10(totalAmbientNoise / 20  ));
+                int ambientNoise = hearing.AmbientNoiseLevel = (int)(20 * Mathf.Log10(totalAmbientNoise / 20));
 
                 for (int j = 0; j < AllOtherSound.Count; j++)
 
                 {
                     if (SoundAboveListenerAmbientNoise(AllOtherSound[j].dist, ambientNoise, AllOtherSound[j].soundlevel, out float level))
                     {
-                           DetectedSoundData temp = AllOtherSound[j]; 
+                        DetectedSoundData temp = AllOtherSound[j];
                         temp.AmountAboveAmbient = level;
-                           AllOtherSound[j] = temp;
+                        AllOtherSound[j] = temp;
                     }
                     else
                     {
@@ -162,19 +170,22 @@ namespace AISenses.HearingSystem
                 // determine alert Levels
                 if (SoundResponseDictionary.TryGetValue
                     (new int2(
-                        (int)JobsList[i].job, 
-                        (int)LoudestSound.soundEmitter.Sound), 
+                        (int)JobsList[i].job,
+                        (int)LoudestSound.soundEmitter.Sound),
                     out SoundResponse response))
                 {
                     // Change this to the Mod Value  once figured out
-                    hearing.AlertLevel = response.AlertLevel;
-                    hearing.CautionLevel = response.CautionLevel;
+                    alertLevel.AudioAlertLevel = (int)response.AlertLevel;
+                    alertLevel.AudioCautionLevel = (int)response.CautionLevel;
                 }
+                hearing.DirectionOfNoise = (LoudestSound.SoundLocation - position.Position) / LoudestSound.dist;
 
                 Hearings[i] = hearing;
+                AlertLevels[i] = alertLevel;
             }
         }
 
+    
 
         public bool SoundAboveListenerAmbientNoise( float Distance, int AmbientNoiseLevel, int NoiseDB, out float LevelAboveAmbient) {
              float NoiseAtListener = NoiseDB - 20 * Mathf.Log10(Distance);

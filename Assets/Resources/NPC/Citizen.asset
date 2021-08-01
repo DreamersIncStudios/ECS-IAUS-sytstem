@@ -27,7 +27,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 010000000c000000
+  states: 010000000c00000007000000
   getPatrol:
     NumberOfWayPoints: 0
     DistanceToPoint:
@@ -87,46 +87,6 @@ MonoBehaviour:
     _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
-  getRetreat:
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    InfluenceInArea:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    DistanceToSafe:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    RetreatDirection:
-      x: 0
-      y: 0
-      z: 0
-    distanceToPoint: 0
-    StartingDistance: 0
-    BufferZone: 0.75
-    CanFlee: 0
-    HideTime: 30
-    EscapePoint:
-      x: 0
-      y: 0
-      z: 0
-    EscapeRange: 25
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
   GetMovement:
     TargetLocation:
       x: 0
@@ -161,4 +121,35 @@ MonoBehaviour:
   getTeamInfo:
     CurrentTeamSize: 0
     MaxTeamSize: 0
+  getRetreat:
+    healthRatio:
+      Inverse: 0
+      responseType: 2
+      M: 50
+      K: -1
+      B: 0.91
+      C: 0.2
+    alertLevels:
+      Inverse: 0
+      responseType: 0
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
+    distanceToSafe:
+      Inverse: 0
+      responseType: 2
+      M: 50
+      K: -0.95
+      B: 0.935
+      C: 0.35
+    NeedToRetreat: 0
+    _status: 0
+    _coolDownTime: 5
+    _resetTime: 0
+    _totalScore: 0
+    StartingDistance: 0
+    BufferZone: 0.75
+    HideTime: 30
+    EscapeRange: 25
   getAttackTypes: []

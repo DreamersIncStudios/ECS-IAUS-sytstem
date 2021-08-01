@@ -70,7 +70,7 @@ namespace IAUS.NPCSO.editor
                     GetAttacks = SetupAttacks();
                     break;
                 case 3:
-                    GetRetreat = SetupFlee(GetRetreat);
+                    GetRetreat = SetupRetreat(GetRetreat);
                     break;
             //    case 0:
             //        break;

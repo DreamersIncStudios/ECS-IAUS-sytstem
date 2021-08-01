@@ -5376,18 +5376,6 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
---- !u!114 &429132309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429132302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d88680e3a1b484e8abb522c4162918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &444767744 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1633978107290467100, guid: 36498cd370e7802408964a72908fed13,
