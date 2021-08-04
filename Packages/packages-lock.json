@@ -148,6 +148,35 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.platforms.desktop": {
+      "version": "0.10.0-preview.10",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.platforms": "0.10.0-preview.10"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.platforms.linux": {
+      "version": "0.10.0-preview.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.platforms": "0.10.0-preview.10",
+        "com.unity.platforms.desktop": "0.10.0-preview.10"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.platforms.windows": {
+      "version": "0.10.0-preview.10",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.platforms": "0.10.0-preview.10",
+        "com.unity.platforms.desktop": "0.10.0-preview.10"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.probuilder": {
       "version": "4.5.2",
       "depth": 0,

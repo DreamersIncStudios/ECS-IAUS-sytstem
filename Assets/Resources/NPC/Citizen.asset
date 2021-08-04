@@ -110,6 +110,10 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    ThreatPosition:
+      x: 0
+      y: 0
+      z: 0
     Scantimer: 5
     viewRadius: 35
     ViewAngle: 120
@@ -131,7 +135,7 @@ MonoBehaviour:
       C: 0.2
     alertLevels:
       Inverse: 0
-      responseType: 0
+      responseType: 2
       M: 50
       K: -0.95
       B: 0.935
@@ -148,7 +152,6 @@ MonoBehaviour:
     _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
-    StartingDistance: 0
     BufferZone: 0.75
     HideTime: 30
     EscapeRange: 25

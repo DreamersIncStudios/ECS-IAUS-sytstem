@@ -55,7 +55,7 @@ namespace IAUS.ECS2.Component
         public float distanceToPoint { get; set; }
         public float BufferZone;
         public bool InBufferZone => BufferZone > distanceToPoint;
-        public float DistanceRatio => CanRetreat ? (float)distanceToPoint / (float)StartingDistance : 0.0f;
+        [SerializeField]public float DistanceRatio => CanRetreat ? Mathf.Clamp01( distanceToPoint / StartingDistance) : 0.0f;
         public float HideTime;
         public float3 EscapePoint { get; set; }
 
@@ -120,7 +120,7 @@ namespace IAUS.ECS2.Component
 
     }
 
-    public struct RetreatTag : IComponentData { readonly bool test;
+    public struct RetreatActionTag : IComponentData { readonly bool test;
     }
 
    

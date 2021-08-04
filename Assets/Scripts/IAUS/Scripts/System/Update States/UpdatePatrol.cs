@@ -60,7 +60,7 @@ namespace IAUS.ECS2.Systems
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CompletionChecker()
             {
-                PatrolChunk = GetComponentTypeHandle<Patrol>(true),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityChunk = GetEntityTypeHandle()
             }.Schedule(CompleteCheck, systemDeps);
@@ -118,7 +118,7 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct CompletionChecker : IJobChunk
         {
-            [ReadOnly]public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
             [ReadOnly] public EntityTypeHandle EntityChunk;
             public EntityCommandBuffer.ParallelWriter Buffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -127,8 +127,14 @@ namespace IAUS.ECS2.Systems
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    if (patrols[i].Complete)
+                    Patrol patrol = patrols[i];
+                    if (patrol.Complete)
+                    {
                         Buffer.RemoveComponent<PatrolActionTag>(chunkIndex, entities[i]);
+                        patrol.Status = ActionStatus.Success;
+
+                        patrols[i] = patrol;
+                    }
                 }
             }
         }

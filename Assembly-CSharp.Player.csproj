@@ -338,6 +338,12 @@
     <Reference Include="Unity.SysrootPackage.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.SysrootPackage.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Build.Windows.Classic">
+      <HintPath>Library\ScriptAssemblies\Unity.Build.Windows.Classic.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Build.Linux.Classic">
+      <HintPath>Library\ScriptAssemblies\Unity.Build.Linux.Classic.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
     </Reference>

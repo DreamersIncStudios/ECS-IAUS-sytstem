@@ -65,12 +65,14 @@ namespace InfluenceSystem.Systems
 
              }
         }
-        protected override void OnDestroy()
+
+        protected override void OnStopRunning()
         {
-            base.OnDestroy();
+            base.OnStopRunning();
             GridEntities.Dispose();
             PermListPosition.Dispose();
         }
+
 
         struct UpdateInfluenceMap : IJobChunk
         {

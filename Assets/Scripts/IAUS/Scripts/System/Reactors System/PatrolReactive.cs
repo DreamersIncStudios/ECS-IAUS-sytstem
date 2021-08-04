@@ -23,7 +23,7 @@ namespace IAUS.ECS2.Systems.Reactive
 
         public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete)
+            if (AIStateCompoment.Complete || AIStateCompoment.Status==ActionStatus.Success)
             {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
@@ -83,8 +83,6 @@ namespace IAUS.ECS2.Systems.Reactive
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                TagChunk = GetComponentTypeHandle<PatrolActionTag>(true),
-                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
@@ -105,9 +103,7 @@ namespace IAUS.ECS2.Systems.Reactive
         {
             public ComponentTypeHandle<Movement> MovementChunk;
             public ComponentTypeHandle<Patrol> PatrolChunk;
-            [ReadOnly] public ComponentTypeHandle<PatrolActionTag> TagChunk;
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
-            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);

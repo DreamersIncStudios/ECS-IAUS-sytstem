@@ -885,6 +885,14 @@
       <Project>{2E7D42B7-73FA-3BC8-5CD3-B5BFA649FBC2}</Project>
       <Name>Unity.SysrootPackage.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Build.Windows.Classic.csproj">
+      <Project>{12D8BCF5-08E9-7D70-667B-588F022ED33B}</Project>
+      <Name>Unity.Build.Windows.Classic</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Build.Linux.Classic.csproj">
+      <Project>{321E7EC2-0B73-8EF0-6F0C-E120DA36E89D}</Project>
+      <Name>Unity.Build.Linux.Classic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

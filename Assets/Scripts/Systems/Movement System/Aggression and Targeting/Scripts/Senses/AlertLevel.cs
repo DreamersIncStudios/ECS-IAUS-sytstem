@@ -11,7 +11,7 @@ namespace AISenses
     {
         // rewrite so that Alert and Caution can't exceed 100
         public int Alert => AudioAlertLevel + VisualAlertLevel;
-        public int Caution => AudioCautionLevel + VisualCautionLevel;
+       [SerializeField] public int Caution => AudioCautionLevel + VisualCautionLevel;
 
         public ReactionType ReactToWhat;
         

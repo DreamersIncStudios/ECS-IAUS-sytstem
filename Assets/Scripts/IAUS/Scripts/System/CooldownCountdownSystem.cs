@@ -14,6 +14,8 @@ namespace IAUS.ECS2.Systems
         private EntityQuery WaitCooldown;
         private EntityQuery MoveToCooldown;
         private EntityQuery AttackCooldown;
+        private EntityQuery RetreatCooldown;
+
 
 
 
@@ -38,6 +40,11 @@ namespace IAUS.ECS2.Systems
             MoveToCooldown = GetEntityQuery(new EntityQueryDesc() {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget))},
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(MoveToTargetActionTag))}
+            });
+            RetreatCooldown = GetEntityQuery(new EntityQueryDesc()
+            {
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatPlayerPartyNPC)) , ComponentType.ReadWrite(typeof(RetreatEnemyNPC)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatActionTag)) }
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -65,6 +72,13 @@ namespace IAUS.ECS2.Systems
                 AIStateChunk = GetComponentTypeHandle<MoveToTarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new CooldownJob<RetreatCitizen>()
+            {
+                AIStateChunk = GetComponentTypeHandle<RetreatCitizen>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(RetreatCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;

@@ -9,9 +9,11 @@ using Stats;
 using Utilities;
 using Unity.Mathematics;
 using AISenses;
+using UnityEngine.AI;
 
 [assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.DistanceToEscapePoint<RetreatCitizen>))]
 [assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.CompletionChecker<RetreatCitizen>))]
+//[assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.WhereToRunTo<RetreatCitizen>))]
 
 namespace IAUS.ECS2.Systems
 {
@@ -39,7 +41,7 @@ namespace IAUS.ECS2.Systems
             });
             CompleteCheck = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(RetreatTag)) }
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(RetreatActionTag)) }
 
             });
         }
@@ -92,6 +94,40 @@ namespace IAUS.ECS2.Systems
                 }
             }
         }
+        //[BurstCompatible]
+        //public struct WhereToRunTo<RETREAT> : IJobChunk
+        //where RETREAT : unmanaged, BaseRetreat
+        //{
+        //    public ComponentTypeHandle<RETREAT> RetreatChunk;
+        //    [ReadOnly]public ComponentTypeHandle<LocalToWorld> TransformChunk;
+        //    [ReadOnly]public ComponentTypeHandle<AlertLevel> AlertChunk;
+
+        //    public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        //    {
+        //        NativeArray<RETREAT> retreats = chunk.GetNativeArray(RetreatChunk);
+        //        NativeArray<AlertLevel> Alerts = chunk.GetNativeArray(AlertChunk);
+        //        NativeArray<LocalToWorld> Transforms = chunk.GetNativeArray(TransformChunk);
+        //        for (int i = 0; i < chunk.Count; i++)
+        //        {
+        //            AlertLevel alertLevel = Alerts[i];
+        //            float3 position = Transforms[i].Position;
+        //            RETREAT retreat = retreats[i];
+                         
+        //            if (alertLevel.NeedForAlarm  && !retreat.HasEscapePoint)
+        //            {
+        //                float3 safePosition = new float3();
+        //                if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
+        //                {
+        //                    retreat.EscapePoint = safePosition;
+        //                    retreat.StartingDistance = Vector3.Distance(position, safePosition);
+        //                }
+                         
+        //            }
+
+        //            retreats[i] = retreat;
+        //        }
+        //    }
+        //}
 
 
 
@@ -138,7 +174,7 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     if (retreats[i].Escaped)
-                        Buffer.RemoveComponent<RetreatTag>(chunkIndex, entities[i]);
+                        Buffer.RemoveComponent<RetreatActionTag>(chunkIndex, entities[i]);
                 }
             }
         }
@@ -150,7 +186,41 @@ namespace IAUS.ECS2.Systems
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref RetreatCitizen retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
+            Entities.ForEach(( ref RetreatCitizen retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel ) => {
+                if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
+                {
+                    float3 safePosition = new float3();
+                    if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
+                    {
+                        retreat.EscapePoint = safePosition;
+                        retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+                    }
+
+                }
+            });;
+
+            Entities.ForEach((ref RetreatCitizen retreat, NavMeshAgent agent) => {
+                if (retreat.HasEscapePoint) {
+                    NavMeshPath trash = new NavMeshPath();
+                    retreat.CanRetreat = agent.CalculatePath(retreat.EscapePoint, trash);
+                }
+            
+            });
+            Entities.ForEach((ref RetreatEnemyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
+                if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
+                {
+                    float3 safePosition = new float3();
+                    if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
+                    {
+                        retreat.EscapePoint = safePosition;
+                        retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+                    }
+
+                }
+
+            });
+            
+            Entities.ForEach((ref  RetreatPlayerPartyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
                 if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
                 {
                     float3 safePosition = new float3();
