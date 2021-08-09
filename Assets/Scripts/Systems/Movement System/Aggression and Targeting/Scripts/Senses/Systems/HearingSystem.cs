@@ -175,10 +175,10 @@ namespace AISenses
                     out SoundResponse response))
                 {
                     // Change this to the Mod Value  once figured out
-                    alertLevel.AudioAlertLevel = (int)response.AlertLevel;
-                    alertLevel.AudioCautionLevel = (int)response.CautionLevel;
+                    alertLevel.AudioAlertLevel = (int)response.ModAlertLevel(LoudestSound.SoundRatio,3);
+                    alertLevel.AudioCautionLevel = (int)response.ModCautionLevel(LoudestSound.SoundRatio,3);
                 }
-                hearing.DirectionOfNoise = (LoudestSound.SoundLocation - position.Position) / LoudestSound.dist;
+                hearing.LocationOfSound = LoudestSound.SoundLocation;
 
                 Hearings[i] = hearing;
                 AlertLevels[i] = alertLevel;

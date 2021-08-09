@@ -149,7 +149,6 @@ namespace IAUS.ECS2.Systems
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    Entity entity = Entities[i];
                     DynamicBuffer<StateBuffer> states = Buffers[i];
                     IAUSBrain brain = Brains[i];
                     StateBuffer tester =  new StateBuffer();
@@ -165,44 +164,44 @@ namespace IAUS.ECS2.Systems
                         switch (brain.CurrentState)
                         {
                             case AIStates.Patrol:
-                                CommandBufferParallel.RemoveComponent<PatrolActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<PatrolActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Wait:
-                                CommandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.ChaseMoveToTarget:
-                                CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.GotoLeader:
-                                CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Attack_Melee:
-                                CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Retreat:
-                                CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
                         }
                         //add new action tag
                         switch (tester.StateName)
                         {
                             case AIStates.Patrol:
-                                CommandBufferParallel.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = false });
+                                CommandBufferParallel.AddComponent(chunkIndex, Entities[i], new PatrolActionTag() { UpdateWayPoint = false });
                                 break;
                             case AIStates.Wait:
-                                CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.ChaseMoveToTarget:
-                                CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.GotoLeader:
-                                CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Attack_Melee:
-                                CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Retreat:
-                                CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, entity);
+                                CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
 
                         }

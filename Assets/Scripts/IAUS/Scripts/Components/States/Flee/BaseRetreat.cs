@@ -20,7 +20,7 @@ namespace IAUS.ECS2.Component
         bool CanRetreat { get; set; }
         bool Escaped { get; }
         float StartingDistance { get; set; }
-
+        int EscapeRange { get; set; }
     }
 
     [System.Serializable]
@@ -35,8 +35,8 @@ namespace IAUS.ECS2.Component
 
         public Entity WhatIamRunningFrom { get; set; }
         public float3 RetreatDirection { get; set; }
-        public bool CanRetreat { get; set; }
-        public bool NeedToRetreat;
+        [SerializeField] public bool CanRetreat { get; set; }
+        [SerializeField] public bool NeedToRetreat;
         public float StartingDistance { get; set;}
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -57,11 +57,12 @@ namespace IAUS.ECS2.Component
         public bool InBufferZone => BufferZone > distanceToPoint;
         [SerializeField]public float DistanceRatio => CanRetreat ? Mathf.Clamp01( distanceToPoint / StartingDistance) : 0.0f;
         public float HideTime;
-        public float3 EscapePoint { get; set; }
+        [SerializeField] public float3 EscapePoint { get; set; }
 
         public bool Escaped => InBufferZone;
-        public int EscapeRange;
-        public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
+        public int EscapeRange { get { return escapeRange; } set { escapeRange = value; } }
+        public int escapeRange;
+        [SerializeField] public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
 
     }
 
@@ -86,6 +87,8 @@ namespace IAUS.ECS2.Component
         public bool Escaped { get; }
         public float distanceToPoint { get; set; }
         public float3 EscapePoint { get; set; }
+        [SerializeField] public int EscapeRange { get; set; }
+
         public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
         public float StartingDistance { get; set; }
 
@@ -113,7 +116,9 @@ namespace IAUS.ECS2.Component
         public bool Escaped { get; }
         public float distanceToPoint { get; set; }
         public float3 EscapePoint { get; set; }
-   public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
+         public int EscapeRange { get { return escapeRange; }set { escapeRange = value; } }
+    public int escapeRange;
+        public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
 
         public float StartingDistance { get; set; }
 

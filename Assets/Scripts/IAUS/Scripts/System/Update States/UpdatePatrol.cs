@@ -6,6 +6,7 @@ using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
 using Stats;
+using AISenses;
 namespace IAUS.ECS2.Systems
 {
     public class UpdatePatrol : SystemBase
@@ -30,7 +31,9 @@ namespace IAUS.ECS2.Systems
                 });
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                }
             });
                 
            CompleteCheck = GetEntityQuery(new EntityQueryDesc()
@@ -54,7 +57,8 @@ namespace IAUS.ECS2.Systems
             
             systemDeps = new ScoreState() 
             {
-                PatrolChunk = GetComponentTypeHandle<Patrol>(),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                AlertChunk = GetComponentTypeHandle<AlertLevel>(true),
                 StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -98,18 +102,22 @@ namespace IAUS.ECS2.Systems
         public struct ScoreState : IJobChunk
         {
             public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public ComponentTypeHandle<AlertLevel> AlertChunk;
             [ReadOnly]public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<AlertLevel> alertLevels = chunk.GetNativeArray(AlertChunk);
+
                 NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    CharacterStatComponent stats = Stats[i];
-                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(stats.HealthRatio);
+                    float healthRatio = Stats[i].HealthRatio;
+                    int Alerted = alertLevels[i].NeedForAlarm ? 0 : 1;
+                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio)*Alerted;
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
                     patrols[i] = patrol;
                 }

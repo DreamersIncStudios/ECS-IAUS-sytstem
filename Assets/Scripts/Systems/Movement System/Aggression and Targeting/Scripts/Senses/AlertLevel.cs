@@ -23,7 +23,7 @@ namespace AISenses
         public bool NeedForAlarm => Alert > NoticeThreshold || Caution > NoticeThreshold;
         public int NoticeThreshold => 50; // based off awareness stats later
 
-        public float3 DirOfThreat;
+        public float3 LocationOfThreat;
 
 
     }
@@ -79,17 +79,18 @@ namespace AISenses
                         if (alert.AudioOrVisual)
                         {
                             alert.ReactToWhat = ReactionType.Audio;
-                            alert.DirOfThreat = Hearings[i].DirectionOfNoise;
+                            alert.LocationOfThreat = Hearings[i].LocationOfSound;
+                         
                         }
                         else
                         {
                             alert.ReactToWhat = ReactionType.Visual;
-                            alert.DirOfThreat = Visions[i].ThreatPosition;
+                            alert.LocationOfThreat = Visions[i].ThreatPosition;
                         }
                     }
                     else
                     {
-                        alert.DirOfThreat = float3.zero;
+                        alert.LocationOfThreat = float3.zero;
                         alert.ReactToWhat = ReactionType.none;
                     }
 

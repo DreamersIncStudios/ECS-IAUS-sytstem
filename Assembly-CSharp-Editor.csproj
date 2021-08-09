@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,6 +52,9 @@
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.13f1</UnityVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\NPCAttacks.cs" />
     <Compile Include="Assets\Scripts\Editor\DisplayInfo.cs" />
@@ -706,6 +709,10 @@
       <Project>{EB5E8990-EBBF-3A41-5A45-9636135DB8D3}</Project>
       <Name>Unity.Properties</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Build.Linux.Classic.csproj">
+      <Project>{321E7EC2-0B73-8EF0-6F0C-E120DA36E89D}</Project>
+      <Name>Unity.Build.Linux.Classic</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Serialization.csproj">
       <Project>{DA8CBA5D-950A-0EE3-5FC1-686B0CAA7D4F}</Project>
       <Name>Unity.Serialization</Name>
@@ -777,6 +784,10 @@
     <ProjectReference Include="Unity.Transforms.csproj">
       <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
       <Name>Unity.Transforms</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Build.Windows.Classic.csproj">
+      <Project>{12D8BCF5-08E9-7D70-667B-588F022ED33B}</Project>
+      <Name>Unity.Build.Windows.Classic</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Collections.csproj">
       <Project>{5026C8AD-AC8C-5C9F-EA66-7D2E7D869FE9}</Project>

@@ -92,7 +92,8 @@ namespace AISenses
         {
           //  AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
         }
-        public float3 DirectionOfNoise;
+        public float3 LocationOfSound;
+
         public void UpdateSense(BaseCharacter baseCharacter) { }
 
     }

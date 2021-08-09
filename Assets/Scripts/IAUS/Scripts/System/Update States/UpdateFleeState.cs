@@ -180,59 +180,74 @@ namespace IAUS.ECS2.Systems
         }
 
     }
+    public struct FindPath : IComponentData { };
 
     [UpdateAfter(typeof (UpdateFleeState))]
     public class UpdateFleeState2 : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach(( ref RetreatCitizen retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel ) => {
+            
+            Entities.WithNone(typeof(RetreatActionTag)).ForEach((Entity entity, ref RetreatCitizen retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel ) => {
                 if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
                 {
                     float3 safePosition = new float3();
-                    if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
+                    if (GlobalFunctions.RandomPointAwayFromThreat(alertLevel.LocationOfThreat, transfom.Position, retreat.EscapeRange, result: out safePosition))
                     {
                         retreat.EscapePoint = safePosition;
                         retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+                      World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer().AddComponent<FindPath>(entity);
                     }
-
                 }
             });;
-
-            Entities.ForEach((ref RetreatCitizen retreat, NavMeshAgent agent) => {
-                if (retreat.HasEscapePoint) {
-                    NavMeshPath trash = new NavMeshPath();
-                    retreat.CanRetreat = agent.CalculatePath(retreat.EscapePoint, trash);
-                }
-            
-            });
-            Entities.ForEach((ref RetreatEnemyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
-                if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
+            EntityQuery test = GetEntityQuery(new EntityQueryDesc() { 
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(FindPath)), ComponentType.ReadWrite(typeof(RetreatCitizen))}
+            }); 
+          
+        
+            Entities.With(test).ForEach((Entity entity,ref RetreatCitizen retreat, NavMeshAgent agent) =>
+            {
+                if (!retreat.Escaped)
                 {
-                    float3 safePosition = new float3();
-                    if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
+
+                    if (retreat.HasEscapePoint && !retreat.CanRetreat)
                     {
-                        retreat.EscapePoint = safePosition;
-                        retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+                        NavMeshPath trash = new NavMeshPath();
+                        retreat.CanRetreat = agent.CalculatePath(retreat.EscapePoint, trash);
                     }
+                    if(retreat.CanRetreat)
+
+                        World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>().CreateCommandBuffer().RemoveComponent<FindPath>(entity);
 
                 }
-
             });
-            
-            Entities.ForEach((ref  RetreatPlayerPartyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
-                if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
-                {
-                    float3 safePosition = new float3();
-                    if (GlobalFunctions.RandomPoint(alertLevel.DirOfThreat * 35f, 10, result: out safePosition))
-                    {
-                        retreat.EscapePoint = safePosition;
-                        retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
-                    }
+            //Entities.ForEach((EntityQueryBuilder.F_DDD<RetreatEnemyNPC, LocalToWorld, AlertLevel>)((ref RetreatEnemyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
+            //    if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
+            //    {
+            //        float3 safePosition = new float3();
+            //        if (GlobalFunctions.RandomPointAwayFromThreat(alertLevel.LocationOfThreat, transfom.Position, retreat.EscapeRange, result: out safePosition))
+            //        {
+            //            retreat.EscapePoint = safePosition;
+            //            retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+            //        }
 
-                }
+            //    }
 
-            });
+            //}));
+
+            //Entities.ForEach((EntityQueryBuilder.F_DDD<RetreatPlayerPartyNPC, LocalToWorld, AlertLevel>)((ref RetreatPlayerPartyNPC retreat, ref LocalToWorld transfom, ref AlertLevel alertLevel) => {
+            //    if (alertLevel.NeedForAlarm && !retreat.HasEscapePoint)
+            //    {
+            //        float3 safePosition = new float3();
+            //        if (GlobalFunctions.RandomPointAwayFromThreat(alertLevel.LocationOfThreat, transfom.Position, retreat.EscapeRange, result: out safePosition))
+            //        {
+            //            retreat.EscapePoint = safePosition;
+            //            retreat.StartingDistance = Vector3.Distance(transfom.Position, safePosition);
+            //        }
+
+            //    }
+
+            //}));
         }
     }
 }

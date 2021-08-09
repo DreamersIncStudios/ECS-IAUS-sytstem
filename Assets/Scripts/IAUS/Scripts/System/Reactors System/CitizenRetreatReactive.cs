@@ -7,6 +7,7 @@ using Unity.Mathematics;
 using IAUS.ECS2.Component;
 using Unity.Entities;
 using Unity.Burst;
+using AISenses;
 using Components.MovementSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.StateComponent))]
@@ -56,6 +57,8 @@ namespace IAUS.ECS2.Systems.Reactive
     public class RetreatMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
+        private EntityQuery _componentAddedQueryWithWait;
+
         private EntityQuery _componentRemovedQuery;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -69,11 +72,18 @@ namespace IAUS.ECS2.Systems.Reactive
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, RetreatCitizenTagReactor>.StateComponent)) }
             });
+            _componentAddedQueryWithWait= GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatActionTag)), ComponentType.ReadWrite(typeof(Wait)),
+                 ComponentType.ReadOnly(typeof(LocalToWorld))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, RetreatCitizenTagReactor>.StateComponent)) }
+            });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)),  ComponentType.ReadWrite(typeof(Movement))
+                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, RetreatCitizenTagReactor>.StateComponent)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatActionTag)) }
 
             });
 
@@ -93,6 +103,13 @@ namespace IAUS.ECS2.Systems.Reactive
 
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new StopWaitingAndRun() { 
+                AlertChunk = GetComponentTypeHandle<AlertLevel>(true),
+                WaitChunk = GetComponentTypeHandle<Wait>(false)
+            }.ScheduleParallel(_componentAddedQueryWithWait, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             systemDeps = new OnCompletionUpdateJob()
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
@@ -152,5 +169,27 @@ namespace IAUS.ECS2.Systems.Reactive
         }
 
     }
+    [BurstCompile]
+    public struct StopWaitingAndRun : IJobChunk
+    {
+        public ComponentTypeHandle<Wait> WaitChunk;
+        [ReadOnly] public ComponentTypeHandle<AlertLevel> AlertChunk;
 
+        public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        {
+            NativeArray<Wait> waits = chunk.GetNativeArray(WaitChunk);
+            NativeArray<AlertLevel> Alerts = chunk.GetNativeArray(AlertChunk);
+            for (int i = 0; i < chunk.Count; i++)
+            {
+                Wait waitingNPC = waits[i];
+                if (Alerts[i].NeedForAlarm)
+                {
+                    waitingNPC.Timer = 0.0f;
+                    waitingNPC.ResetTime = waitingNPC.CoolDownTime * 2;
+
+                }
+                waits[i] = waitingNPC;
+            }
+        }
+    }
 }

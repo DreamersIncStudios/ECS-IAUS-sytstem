@@ -154,5 +154,5 @@ MonoBehaviour:
     _totalScore: 0
     BufferZone: 0.75
     HideTime: 30
-    EscapeRange: 25
+    escapeRange: 50
   getAttackTypes: []

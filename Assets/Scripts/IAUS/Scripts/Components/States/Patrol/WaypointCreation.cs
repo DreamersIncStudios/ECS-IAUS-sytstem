@@ -21,7 +21,7 @@ namespace IAUS.ECS2.Component
                 List<PatrolWaypointBuffer> Points = new List<PatrolWaypointBuffer>();
                 while (Points.Count < 10)
                 {
-                    if (GlobalFunctions.RandomPoint(transform.position, 200, out Vector3 position))
+                    if (GlobalFunctions.RandomPoint(transform.position, 50, out Vector3 position))
                     {
                         Points.Add(new PatrolWaypointBuffer()
                         {
@@ -34,7 +34,7 @@ namespace IAUS.ECS2.Component
                                     GetRace = Race.None
                                 },
                                 
-                                TimeToWaitatWaypoint = UnityEngine.Random.Range(10,20)
+                                TimeToWaitatWaypoint = UnityEngine.Random.Range(5,10)
                             }
                         }
                      );

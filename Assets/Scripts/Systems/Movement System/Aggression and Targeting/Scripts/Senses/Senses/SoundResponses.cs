@@ -32,11 +32,24 @@ namespace AISenses {
     {
         public float AlertLevel; // using for investigate
         public float CautionLevel; // used for Retreat/Run away from 
+        /// <summary>
+        /// Deterines the level of Alert of NPC should have to noise here. NPC run towards Alert Noises
+        /// </summary>
+        /// <param name="SoundRatio"></param>
+        /// <param name="SecurityLevel"></param>
+        /// <returns></returns>
         public float ModAlertLevel(float SoundRatio, int SecurityLevel)
         {
             float mod = SoundRatio * SecurityLevel;
             return AlertLevel * mod;
         } // using for investigate
+
+        /// <summary>
+        /// Deterines the level of caution of NPC should have to noise here. NPCS run away from Caution Noises
+        /// </summary>
+        /// <param name="SoundRatio"></param>
+        /// <param name="SecurityLevel"></param>
+        /// <returns></returns>
         public float ModCautionLevel(float SoundRatio, int SecurityLevel)
         {
             float mod = SoundRatio * SecurityLevel;

@@ -11,7 +11,7 @@ public class TestSpawn : MonoBehaviour
     public void Start()
     {
         InvokeRepeating(nameof(Spawn), 0, 5);
-        Invoke(nameof(OnceAllSpawnedCreateExplosion), 30);
+        Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
     }
 
 
@@ -36,7 +36,7 @@ public class TestSpawn : MonoBehaviour
     [System.Serializable]
    public class NPCSpawn {
         public NPCSO SOToSpawn;
-        [Range(1, 20)]
+        [Range(1, 50)]
         public int SpawnPerCall;
         [Range(1, 2000)]
         public int spawnCNT;
