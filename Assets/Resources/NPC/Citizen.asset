@@ -27,7 +27,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 010000000c00000007000000
+  states: 010000000c000000
   getPatrol:
     NumberOfWayPoints: 0
     DistanceToPoint:

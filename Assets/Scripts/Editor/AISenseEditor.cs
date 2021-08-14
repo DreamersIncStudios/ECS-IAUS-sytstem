@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using AISenses;
+using DreamersInc.InflunceMapSystem;
 
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {
         Vision GetVision;
+
+        public InfluenceComponent GetInfluence { get; private set; }
+
         bool ShowVision;
         Vision SetupVision() {
             ShowVision = EditorGUILayout.BeginFoldoutHeaderGroup(ShowVision, "Vision Data");

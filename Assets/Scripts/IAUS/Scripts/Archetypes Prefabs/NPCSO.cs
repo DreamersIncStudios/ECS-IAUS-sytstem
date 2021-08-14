@@ -11,7 +11,7 @@ using IAUS.ECS2.Component;
 using Stats;
 using AISenses;
 using AISenses.Authoring;
-using InfluenceSystem.Component;
+using DreamersInc.InflunceMapSystem;
 
 namespace IAUS.NPCSO
 {
@@ -25,8 +25,10 @@ namespace IAUS.NPCSO
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-        [SerializeField] Influence getInfluence;
-        public Influence GetInfluence => getInfluence;
+       public  InfluenceComponent GetInflunce=> throw new System.NotImplementedException();
+
+        [SerializeField] InfluenceComponent getInfluence;
+
         public AITarget Self => GetSelf;
         [SerializeField]AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
@@ -46,12 +48,11 @@ namespace IAUS.NPCSO
         public Vision GetVision => getVision;
 
 
-        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, Influence influence, List<AIStates> NpcStates, Movement movement
+        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait
             ) {
             _getName = Name;
             GetSelf = self;
-            getInfluence = influence;
             GetMovement = movement;
             states = NpcStates;
             _model = model;
@@ -63,6 +64,8 @@ namespace IAUS.NPCSO
         }
        public BaseAIAuthoringSO AIAuthoring;
        public GameObject SpawnedGO { get; private set; }
+
+
         public virtual void Spawn( Vector3 pos) {
             SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
             SpawnedGO.AddComponent<NavMeshAgent>();

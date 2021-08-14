@@ -31,7 +31,7 @@ namespace IAUS.NPCSO.editor
             }
             GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
-            GetInfluence = SetupInfluence();
+           // GetInfluence = SetupInfluence();
             if (GetTargetType == TargetType.Character)
                 GetMove = SetupMove(GetMove);
             EditorGUILayout.EndVertical();

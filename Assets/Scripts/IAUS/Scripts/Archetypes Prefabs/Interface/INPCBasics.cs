@@ -6,7 +6,7 @@ using IAUS.ECS2;
 using UnityEngine;
 using Components.MovementSystem;
 using AISenses;
-using InfluenceSystem.Component;
+using DreamersInc.InflunceMapSystem;
 namespace IAUS.NPCSO.Interfaces
 {
     public interface INPCBasics
@@ -20,14 +20,13 @@ namespace IAUS.NPCSO.Interfaces
         Wait GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
-        Influence GetInfluence { get; }
+        InfluenceComponent GetInflunce { get; }
     }
 
     public interface INPCEnemy {
         RetreatCitizen GetRetreat { get; } // change to RetreatEnemyNPC after testing
 
         bool IsPartOfTeam { get; }
-        NPCLevel GetNPCLevel { get; }
         List<AttackTypeInfo> GetAttackType { get; }
         AttackTargetState GetAttackTargetState { get; }
     }

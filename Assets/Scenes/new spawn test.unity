@@ -1511,7 +1511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a21aa327cbc57348b5a3591f9280975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeaderEntity: {fileID: 99648493}
+  LeaderEntity: {fileID: 0}
 --- !u!114 &46931457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2175,11 +2175,7 @@ GameObject:
   - component: {fileID: 99648498}
   - component: {fileID: 99648497}
   - component: {fileID: 99648496}
-  - component: {fileID: 99648495}
   - component: {fileID: 99648494}
-  - component: {fileID: 99648493}
-  - component: {fileID: 99648500}
-  - component: {fileID: 99648501}
   - component: {fileID: 99648503}
   m_Layer: 0
   m_Name: Evil Test Cubie Leader
@@ -2187,24 +2183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &99648493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99648492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 904fe225663b1e04981129c2ee593907, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  influence:
-    faction: 0
-    InfluenceValue: 10
-    Range: 600
-    Level: 1
+  m_IsActive: 1
 --- !u!114 &99648494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2218,28 +2197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
---- !u!195 &99648495
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99648492}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!65 &99648496
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2316,62 +2273,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &99648500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99648492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 014c843e62c6c25419f32326580b30e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Self:
-    Type: 0
-    GetRace: 0
-    NumOfEntityTargetingMe: 0
-    GetInstanceID: 0
-    MaxNumberOfTarget: 0
-    CanBeTargetByPlayer: 0
---- !u!114 &99648501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99648492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5fdad0ee1a83ce438b0ff8bf2db0a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Vision: 1
-  VisionData:
-    EnemyAwarnessLevel: 0
-    HeadPositionOffset:
-      x: 0
-      y: 0
-      z: 0
-    ThreatPosition:
-      x: 0
-      y: 0
-      z: 0
-    Scantimer: 0
-    viewRadius: 200
-    ViewAngle: 112
-    EngageRadius: 10
-    AlertModifer: 0
-  Hearing: 0
-  HearingData:
-    AmbientNoiseLevel: 0
-    LocationOfSound:
-      x: 0
-      y: 0
-      z: 0
-  Touch: 0
-  Editing: 0
 --- !u!114 &99648503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2384,7 +2285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53ef0195ed814324b8e10e831335e7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridDims: {x: 64, y: 64}
+  GridDims: {x: 128, y: 128}
 --- !u!1 &100840201 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6611234281316533042, guid: 36498cd370e7802408964a72908fed13,
@@ -10120,8 +10021,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   test:
   - SOToSpawn: {fileID: 11400000, guid: 99364d0454d830c4d92b71e605eb2d76, type: 2}
-    SpawnPerCall: 10
-    spawnCNT: 10
+    SpawnPerCall: 19
+    spawnCNT: 740
     spawned: 0
 --- !u!4 &842482229
 Transform:
@@ -14780,7 +14681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a21aa327cbc57348b5a3591f9280975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeaderEntity: {fileID: 99648493}
+  LeaderEntity: {fileID: 0}
 --- !u!114 &1602334471
 MonoBehaviour:
   m_ObjectHideFlags: 0

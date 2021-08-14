@@ -24,7 +24,7 @@ namespace IAUS.NPCSO.editor
             GetTargetType = SO.Self.Type;
             Name = SO.GetName;
             GetWait = SO.GetWait;
-            GetInfluence = SO.GetInfluence;
+          //  GetInfluence = SO.GetInfluence;
             GetMove = SO.AIMove;
             GetVision = SO.GetVision;
             GetTypeOfNPC = SO.GetTypeOfNPC;
@@ -32,7 +32,7 @@ namespace IAUS.NPCSO.editor
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
                 GetTeamInfo = enemy.GetTeamInfo;
-                GetTeam.IsLeader = enemy.IsLeader;
+             //   GetTeam.IsLeader = enemy.IsLeader;
                 GetAttacks = enemy.GetAttackType;
                 GetRetreat = enemy.GetRetreat;
 
@@ -87,13 +87,13 @@ namespace IAUS.NPCSO.editor
                 }
             }
 
-            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
+            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC,new AITarget() { Type = GetTargetType }, GetVision, StatesToAdd, GetMove,
                 GetPatrol, GetWait
                 );
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
                 EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
-                enemy.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo,GetAttacks, GetRetreat);
+                enemy.Setup(GetTeam.IsLeader, GetInfluence, GetTeamInfo,GetAttacks, GetRetreat);
                 EditorUtility.SetDirty(enemy);
             }
             SetStartValues();

@@ -8,6 +8,7 @@ using Global.Component;
 using Dreamers.Global;
 using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;
+using DreamersInc.InflunceMapSystem;
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
@@ -243,7 +244,7 @@ namespace IAUS.NPCSO.editor
             {
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
-                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  GetInfluence, StatesToAdd, GetMove,
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
                         GetPatrol, GetWait
                         );
                     EditorUtility.SetDirty(SO);
@@ -252,10 +253,10 @@ namespace IAUS.NPCSO.editor
                     break;
                 case TypeOfNPC.Enemy:
                     ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
-                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, GetInfluence, StatesToAdd, GetMove,
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
                         GetPatrol, GetWait
                         );
-                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence.Level, GetTeamInfo, GetAttacks, GetRetreat);
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence, GetTeamInfo, GetAttacks, GetRetreat);
                     EditorUtility.SetDirty(enemyNPCSO);
 
                     break;
@@ -303,8 +304,8 @@ namespace IAUS.NPCSO.editor
                 EngageRadius = 10,
                 Scantimer = 5
             };
-           
-            GetInfluence = new InfluenceSystem.Component.Influence();
+
+            GetInfluence = new InfluenceComponent();
             GetAttacks = new List<AttackTypeInfo>();
             editorState = EditorState.CreateNew;
         }
