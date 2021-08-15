@@ -4,6 +4,7 @@ using UnityEngine;
 namespace DreamersInc.Utils
 {
 
+    [Serializable]
     public class GridGenericXZ<TGridObject>
     {
 

@@ -6,7 +6,7 @@ using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
 using IAUS.NPCSO.Interfaces;
-using Components.MovementSystem;
+using Unity.Mathematics;
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
@@ -31,7 +31,7 @@ namespace IAUS.NPCSO.editor
             }
             GetTypeOfNPC = (TypeOfNPC)EditorGUILayout.EnumPopup("NPC Type", GetTypeOfNPC);
             GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
-           // GetInfluence = SetupInfluence();
+            GetInfluence = SetupInfluence();
             if (GetTargetType == TargetType.Character)
                 GetMove = SetupMove(GetMove);
             EditorGUILayout.EndVertical();

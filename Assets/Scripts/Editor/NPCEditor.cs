@@ -209,7 +209,7 @@ namespace IAUS.NPCSO.editor
             move.MovementSpeed = EditorGUILayout.FloatField("Movement Speed", move.MovementSpeed);
             move.StoppingDistance = EditorGUILayout.FloatField("Stopping Distance", move.StoppingDistance);
             move.Acceleration = EditorGUILayout.FloatField("Acceleration", move.Acceleration);
-            move.MaxInfluenceAtPoint = EditorGUILayout.IntField("Max Influence???", move.MaxInfluenceAtPoint);
+            move.MaxInfluenceAtPoint = EditorGUILayout.IntField(" Max Influence at location allowed", move.MaxInfluenceAtPoint);
 
 
             return move;
@@ -244,7 +244,7 @@ namespace IAUS.NPCSO.editor
             {
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
-                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
                         GetPatrol, GetWait
                         );
                     EditorUtility.SetDirty(SO);
@@ -253,10 +253,10 @@ namespace IAUS.NPCSO.editor
                     break;
                 case TypeOfNPC.Enemy:
                     ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
-                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
                         GetPatrol, GetWait
                         );
-                    enemyNPCSO.Setup(GetTeam.IsLeader, GetInfluence, GetTeamInfo, GetAttacks, GetRetreat);
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetTeamInfo, GetAttacks, GetRetreat);
                     EditorUtility.SetDirty(enemyNPCSO);
 
                     break;

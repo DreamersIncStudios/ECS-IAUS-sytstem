@@ -20,7 +20,7 @@ namespace IAUS.NPCSO.Interfaces
         Wait GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
-        InfluenceComponent GetInflunce { get; }
+        InfluenceComponent GetInfluence { get; }
     }
 
     public interface INPCEnemy {

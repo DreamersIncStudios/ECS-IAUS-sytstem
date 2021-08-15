@@ -15,6 +15,7 @@ namespace DreamersInc.InflunceMapSystem
         private GridGenericXZ<InflunceGridObject> grid;
         private int2 Enemy;
         private int2 Player;
+        private int2 Generic;
 
         private int x, y;
 
@@ -29,7 +30,14 @@ namespace DreamersInc.InflunceMapSystem
         public void AddValue(int2 addValue, Faction faction) {
             switch (faction)
             {
-
+                case Faction.Generic:
+                    Enemy += addValue;
+                    Enemy.x = Mathf.Clamp(Enemy.x, MIN, MAX);
+                    Enemy.y = Mathf.Clamp(Enemy.y, MIN, MAX);
+                    Player += addValue;
+                    Player.x = Mathf.Clamp(Player.x, MIN, MAX);
+                    Player.y = Mathf.Clamp(Player.y, MIN, MAX);
+                    break;
                 case Faction.Enemy:
                     Enemy += addValue;
                     Enemy.x = Mathf.Clamp(Enemy.x, MIN, MAX);
@@ -109,7 +117,7 @@ namespace DreamersInc.InflunceMapSystem
     }
     public enum Faction
     {
-        None, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
+        Generic, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
     }
 
 }

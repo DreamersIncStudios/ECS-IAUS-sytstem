@@ -17,8 +17,6 @@ namespace IAUS.NPCSO {
     {
         public bool IsPartOfTeam => isPartofTeam;
         [SerializeField] bool isPartofTeam = false;
-        public InfluenceComponent GetInfluence => _getInflunce;
-        [SerializeField] InfluenceComponent _getInflunce;
         public TeamInfo GetTeamInfo => getTeamInfo;
         [SerializeField] TeamInfo getTeamInfo;
         public RetreatCitizen GetRetreat => getRetreat;
@@ -29,10 +27,9 @@ namespace IAUS.NPCSO {
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public  void Setup(bool team, InfluenceComponent influence, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee)
+        public  void Setup(bool team,  TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee)
         {
             isPartofTeam = team;
-            _getInflunce = influence;
             getTeamInfo = teamInfo;
             getAttackTypes = attackTypeInfos;
             getRetreat = flee;

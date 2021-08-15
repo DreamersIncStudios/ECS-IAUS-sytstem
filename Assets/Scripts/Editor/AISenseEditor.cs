@@ -10,8 +10,21 @@ namespace IAUS.NPCSO.editor
     public sealed partial class NPCEditor : EditorWindow
     {
         Vision GetVision;
+        bool ShowInfluence;
+        public InfluenceComponent GetInfluence;
 
-        public InfluenceComponent GetInfluence { get; private set; }
+        InfluenceComponent SetupInfluence() {
+            ShowInfluence = EditorGUILayout.BeginFoldoutHeaderGroup(ShowInfluence, "Influence Data");
+            if (ShowInfluence) 
+            {
+                GetInfluence.value.x = EditorGUILayout.IntField("Protection", GetInfluence.value.x);
+                GetInfluence.value.y = EditorGUILayout.IntField("Protection", GetInfluence.value.y);
+                GetInfluence.faction = (Faction)EditorGUILayout.EnumPopup("Faction Group Member", GetInfluence.faction);
+            }
+
+            return GetInfluence;
+        }
+
 
         bool ShowVision;
         Vision SetupVision() {

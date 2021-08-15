@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4465180535401918592}
   - component: {fileID: 6324007946402009933}
   - component: {fileID: 8737479620740456754}
-  - component: {fileID: 2704794320227342325}
   m_Layer: 0
   m_Name: 'Citizen Cube '
   m_TagString: Untagged
@@ -126,19 +125,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: 1
---- !u!114 &2704794320227342325
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4465180535401918593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7dfc3a700271234580b2ea989e3df38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 2
-  InfluenceValue: 3
-  Range: 10
-  Level: 2

@@ -25,7 +25,7 @@ namespace IAUS.NPCSO
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-       public  InfluenceComponent GetInflunce=> throw new System.NotImplementedException();
+       public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
         [SerializeField] InfluenceComponent getInfluence;
 
@@ -48,7 +48,7 @@ namespace IAUS.NPCSO
         public Vision GetVision => getVision;
 
 
-        public void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
+        public void Setup(string Name,GameObject model, TypeOfNPC typeOf,InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait
             ) {
             _getName = Name;
@@ -56,13 +56,13 @@ namespace IAUS.NPCSO
             GetMovement = movement;
             states = NpcStates;
             _model = model;
-           
+            this.getInfluence = GetInfluence;
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
             getVision = vision;
         }
-       public BaseAIAuthoringSO AIAuthoring;
+      [HideInInspector] public BaseAIAuthoringSO AIAuthoring;
        public GameObject SpawnedGO { get; private set; }
 
 
@@ -88,7 +88,7 @@ namespace IAUS.NPCSO
                 }
             if (AIAuthoring.AddPatrol)
                 SpawnedGO.AddComponent<WaypointCreation>();
-         
+            AIAuthoring.GetInfluence = GetInfluence;
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;

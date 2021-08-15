@@ -56,7 +56,7 @@
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\GridGenericXZ.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\GridGeneric.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\Utilities.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\TestGrid.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceGridMaster.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InflunceGridObject.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceComponent.cs" />
   </ItemGroup>
