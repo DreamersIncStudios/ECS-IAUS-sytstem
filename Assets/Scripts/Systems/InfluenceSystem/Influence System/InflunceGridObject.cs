@@ -13,9 +13,7 @@ namespace DreamersInc.InflunceMapSystem
         private const int MAX = 100;
 
         private GridGenericXZ<InflunceGridObject> grid;
-        private int2 Enemy;
-        private int2 Player;
-        private int2 Generic;
+        private Dictionary<Faction, int2> InfluenceValue;
 
         private int x, y;
 
@@ -24,32 +22,23 @@ namespace DreamersInc.InflunceMapSystem
             this.grid = grid;
             this.x = x;
             this.y = y;
+            InfluenceValue = new Dictionary<Faction, int2>();
         }
 
 
         public void AddValue(int2 addValue, Faction faction) {
-            switch (faction)
+            if (InfluenceValue.TryGetValue(faction, out int2 value))
             {
-                case Faction.Generic:
-                    Enemy += addValue;
-                    Enemy.x = Mathf.Clamp(Enemy.x, MIN, MAX);
-                    Enemy.y = Mathf.Clamp(Enemy.y, MIN, MAX);
-                    Player += addValue;
-                    Player.x = Mathf.Clamp(Player.x, MIN, MAX);
-                    Player.y = Mathf.Clamp(Player.y, MIN, MAX);
-                    break;
-                case Faction.Enemy:
-                    Enemy += addValue;
-                    Enemy.x = Mathf.Clamp(Enemy.x, MIN, MAX);
-                    Enemy.y = Mathf.Clamp(Enemy.y, MIN, MAX);
-                    break;
+                InfluenceValue[faction]+= addValue;
+                if (InfluenceValue[faction].Equals(int2.zero))
+                    InfluenceValue.Remove(faction);
 
-                case Faction.Player:
-                    Player += addValue;
-                    Player.x = Mathf.Clamp(Player.x, MIN, MAX);
-                    Player.y = Mathf.Clamp(Player.y, MIN, MAX);
-                    break;
             }
+            else
+            {
+                InfluenceValue.Add(faction, addValue);
+            }
+
                     grid.TriggerGridObjectChanged(x, y);
             
     }
@@ -93,31 +82,46 @@ namespace DreamersInc.InflunceMapSystem
             }
                 
         }
+        /// <summary>
+        /// Returns influence value of a single faction
+        /// </summary>
+        /// <param name="faction"></param>
+        /// <returns></returns>
         public int2 GetValue(Faction faction) {
             int2 value = new int2();
-            switch(faction){
-                case Faction.Player:
-                    value = Player;
-                    break;
-                case Faction.Enemy:
-                    value = Enemy;
-                    break;
-            }
-
+            InfluenceValue.TryGetValue(faction, out value);
+            
             return value;
         }
+
+        /// <summary>
+        /// Return the combined influence of several factions 
+        /// </summary>
+        /// <param name="factions"></param>
+        /// <returns></returns>
+        public int2 GetValue(List<Faction> factions) { 
+            int2 value = new int2();
+            foreach (var item in factions)
+            {
+                if (InfluenceValue.TryGetValue(item, out int2 addValue)) {
+                    value += addValue;
+                }
+            }
+            return value;
+        }
+
         public float2 GetValueNormalized(Faction faction) {
             return (float2)GetValue(faction)/ MAX;
         }
 
         public override string ToString()
         {
-            return Player.ToString();
+            return InfluenceValue.ToString();
         }
     }
     public enum Faction
     {
-        Generic, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
+        Environmental, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
     }
 
 }

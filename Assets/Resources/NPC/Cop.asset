@@ -16,10 +16,14 @@ MonoBehaviour:
   _getName: Cop
   _model: {fileID: 4465180535401918593, guid: 38770b3af2cfd204d98643e355fecc9a, type: 3}
   getInfluence:
-    faction: 2
-    InfluenceValue: 6
-    Range: 39
-    Level: 2
+    value:
+      x: 5
+      y: 6
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
+    faction: 1
   GetSelf:
     Type: 1
     GetRace: 0
@@ -61,6 +65,8 @@ MonoBehaviour:
         z: 0
       TimeToWaitatWaypoint: 0
       IsDanerZone: 0
+    ThreatTheshold: 0
+    ThreatRatio: 0
     UpdatePatrolPoints: 0
     _status: 0
     _coolDownTime: 5
@@ -110,6 +116,10 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    ThreatPosition:
+      x: 0
+      y: 0
+      z: 0
     Scantimer: 5
     viewRadius: 35
     ViewAngle: 120
@@ -117,7 +127,6 @@ MonoBehaviour:
     AlertModifer: 0
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
-  _getNPCLevel: 2
   getTeamInfo:
     CurrentTeamSize: 0
     MaxTeamSize: 0
@@ -148,8 +157,7 @@ MonoBehaviour:
     _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
-    StartingDistance: 0
     BufferZone: 0.75
     HideTime: 30
-    EscapeRange: 25
+    escapeRange: 0
   getAttackTypes: []

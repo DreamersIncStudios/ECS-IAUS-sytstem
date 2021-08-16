@@ -48,7 +48,6 @@ namespace IAUS.ECS.System
                         Agent.SetDestination(move.TargetLocation);
                         Agent.isStopped = false;
                         move.SetTargetLocation = false;
-
                     }
 
 
@@ -57,10 +56,7 @@ namespace IAUS.ECS.System
                     {
                         if (move.WithinRangeOfTargetLocation)
                         {
-                            // need to improve logic for picking a location to stand at 
-                             //Agent.ResetPath();
                             move.CanMove = false;
-                           // Agent.isStopped = true;
                         }
                     }
                 }

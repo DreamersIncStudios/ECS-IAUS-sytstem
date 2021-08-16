@@ -7,6 +7,7 @@ using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using AISenses;
+using DreamersInc.InflunceMapSystem;
 namespace IAUS.ECS2.Systems
 {
     public class UpdatePatrol : SystemBase
@@ -26,7 +27,7 @@ namespace IAUS.ECS2.Systems
             });
             DistanceCheck.SetChangedVersionFilter(
                 new ComponentType[] { 
-                    ComponentType.ReadWrite(typeof(LocalToWorld)),
+                    ComponentType.ReadOnly(typeof(LocalToWorld)),
                     ComponentType.ReadWrite(typeof(Patrol))
                 });
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
@@ -42,7 +43,6 @@ namespace IAUS.ECS2.Systems
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
         }
 
         protected override void OnUpdate()
@@ -88,11 +88,34 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    LocalToWorld transform = toWorlds[i];
-                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, transform.Position);
+                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, toWorlds[i].Position);
                     if (patrol.InBufferZone)
                         patrol.distanceToPoint = 0.0f;
                     patrols[i] = patrol;
+                }
+
+            }
+        }
+
+        public struct CheckThreatInArea : IJobChunk
+        {
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
+            public ComponentTypeHandle<InfluenceComponent> InfluenceChunk;
+            [ReadOnly] public ComponentTypeHandle<Patrol> PatrolChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
+                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<InfluenceComponent> Influence = chunk.GetNativeArray(InfluenceChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Patrol patrol = patrols[i];
+                    patrol.ThreatRatio = Mathf.Clamp01((float)InfluenceGridMaster.grid.GetGridObject(toWorlds[i].Position)?.GetValue(Influence[i].faction).y
+                        /patrol.ThreatTheshold);
+
+
+                    patrols[i] = patrol;
+
                 }
 
             }
@@ -116,8 +139,8 @@ namespace IAUS.ECS2.Systems
                 {
                     Patrol patrol = patrols[i];
                     float healthRatio = Stats[i].HealthRatio;
-                    int Alerted = alertLevels[i].NeedForAlarm ? 0 : 1;
-                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio)*Alerted;
+                    int Alerted = alertLevels[i].NeedForAlarm ? 0 : 1; // TODO implement alert/ Threat in area system 
+                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
                     patrols[i] = patrol;
                 }

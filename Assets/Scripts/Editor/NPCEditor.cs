@@ -164,7 +164,7 @@ namespace IAUS.NPCSO.editor
                 if (RetreatHealthRatio = EditorGUILayout.Foldout(RetreatHealthRatio, "CharacterHealth"))
                     state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 if (AlertResponse = EditorGUILayout.Foldout(RetreatHealthRatio, "Alert Response"))
-                    state.AlertLevels = DisplayConsideration(state.AlertLevels);
+                    state.InfluenceInArea = DisplayConsideration(state.InfluenceInArea);
 
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
@@ -180,7 +180,7 @@ namespace IAUS.NPCSO.editor
                 {
                     HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
                     DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                    AlertLevels = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                    InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
                     BufferZone = .75f,
                     _coolDownTime = 5,
                     EscapeRange = 25,
@@ -283,7 +283,7 @@ namespace IAUS.NPCSO.editor
             GetRetreat = new RetreatCitizen() {
                 HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
                 DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                AlertLevels = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
                 BufferZone = .75f,
                 _coolDownTime = 5,
                 EscapeRange = 25,

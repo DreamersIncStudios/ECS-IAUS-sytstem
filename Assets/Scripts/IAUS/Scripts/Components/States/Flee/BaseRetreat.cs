@@ -9,10 +9,10 @@ namespace IAUS.ECS2.Component
     {
         //Need to add a check to see if escape is possible
         ConsiderationScoringData HealthRatio { get; set; }
-        ConsiderationScoringData AlertLevels { get; set; }
-        ConsiderationScoringData DistanceToSafe { get; set; }
+        ConsiderationScoringData InfluenceInArea { get; set; }
+        ConsiderationScoringData DistanceToSafe { get; set; } //TODO Remove Possibly??????? If we are reference the influence in area, once NPC move out of the danger area distance mod should not matter
+        float3 LocationOfHighestInflunce { get; set; }
 
-        Entity WhatIamRunningFrom { get; set; }
         float3 RetreatDirection { get; set; }
         public float distanceToPoint { get; set; }
         public float3 EscapePoint { get; set; }
@@ -28,12 +28,12 @@ namespace IAUS.ECS2.Component
         public ConsiderationScoringData HealthRatio { get { return healthRatio; } set { healthRatio = value; } }
         [SerializeField] ConsiderationScoringData healthRatio;
 
-        public ConsiderationScoringData AlertLevels { get { return alertLevels; } set { alertLevels = value; } }
+        public ConsiderationScoringData InfluenceInArea { get { return alertLevels; } set { alertLevels = value; } }
         [SerializeField] ConsiderationScoringData alertLevels;
         public ConsiderationScoringData DistanceToSafe { get { return distanceToSafe; } set { distanceToSafe = value; } }
         [SerializeField] ConsiderationScoringData distanceToSafe;
 
-        public Entity WhatIamRunningFrom { get; set; }
+        public float3 LocationOfHighestInflunce { get; set; }
         public float3 RetreatDirection { get; set; }
         [SerializeField] public bool CanRetreat { get; set; }
         [SerializeField] public bool NeedToRetreat;
@@ -68,9 +68,9 @@ namespace IAUS.ECS2.Component
 
     public struct RetreatEnemyNPC : BaseRetreat {
         public ConsiderationScoringData HealthRatio { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ConsiderationScoringData AlertLevels { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public ConsiderationScoringData InfluenceInArea { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public ConsiderationScoringData DistanceToSafe { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public Entity WhatIamRunningFrom { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public float3 LocationOfHighestInflunce { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public float3 RetreatDirection { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public bool CanRetreat { get; set; }
 
@@ -97,9 +97,9 @@ namespace IAUS.ECS2.Component
 
     public struct RetreatPlayerPartyNPC : BaseRetreat {
         public ConsiderationScoringData HealthRatio { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public ConsiderationScoringData AlertLevels { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public ConsiderationScoringData InfluenceInArea { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public ConsiderationScoringData DistanceToSafe { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public Entity WhatIamRunningFrom { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public float3 LocationOfHighestInflunce { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public float3 RetreatDirection { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         public bool CanRetreat { get; set; }
 

@@ -56,7 +56,7 @@ namespace DreamersInc.InflunceMapSystem
             {
                 TestChunk = GetComponentTypeHandle<InfluenceComponent>(false),
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
-            }.ScheduleParallel(Influencers, systemDeps);
+            }.ScheduleSingle(Influencers, systemDeps);
             Dependency = systemDeps;
         }
         public struct UpdateGridJob : IJobChunk

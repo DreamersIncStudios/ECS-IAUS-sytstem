@@ -9,7 +9,7 @@ namespace DreamersInc.InflunceMapSystem
     
     public class InfluenceGridMaster : MonoBehaviour
     {
-        public static InfluenceGridMaster testGrid;
+        public static InfluenceGridMaster Instance;
         public static GridGenericXZ<InflunceGridObject> grid;
         private int width =200;
         private int height= 300;
@@ -24,8 +24,8 @@ namespace DreamersInc.InflunceMapSystem
         // Start is called before the first frame update
         void Awake()
         {
-            if (!testGrid)
-                testGrid = this;
+            if (!Instance)
+                Instance = this;
             else
                 DestroyImmediate(this.gameObject);
 

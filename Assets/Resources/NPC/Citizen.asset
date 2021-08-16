@@ -16,10 +16,14 @@ MonoBehaviour:
   _getName: Citizen
   _model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
   getInfluence:
+    value:
+      x: 5
+      y: 6
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
     faction: 2
-    InfluenceValue: 6
-    Range: 39
-    Level: 2
   GetSelf:
     Type: 1
     GetRace: 0
@@ -61,6 +65,8 @@ MonoBehaviour:
         z: 0
       TimeToWaitatWaypoint: 0
       IsDanerZone: 0
+    ThreatTheshold: 0
+    ThreatRatio: 0
     UpdatePatrolPoints: 0
     _status: 0
     _coolDownTime: 5
@@ -121,7 +127,6 @@ MonoBehaviour:
     AlertModifer: 0
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
-  _getNPCLevel: 2
   getTeamInfo:
     CurrentTeamSize: 0
     MaxTeamSize: 0
