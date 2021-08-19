@@ -15,6 +15,7 @@ namespace DreamersInc.InflunceMapSystem
         private int height= 300;
         private Vector3 center => Vector3.zero - new Vector3(width/2, 0, height/2);
 
+        public static FilterGroups Filters = new FilterGroups();
       
 
 
@@ -28,7 +29,6 @@ namespace DreamersInc.InflunceMapSystem
                 Instance = this;
             else
                 DestroyImmediate(this.gameObject);
-
         }
         void Start() {
             grid = new GridGenericXZ<InflunceGridObject>(width, height, 1f, center, (GridGenericXZ<InflunceGridObject> g, int x, int z) => new InflunceGridObject(g, x, z));

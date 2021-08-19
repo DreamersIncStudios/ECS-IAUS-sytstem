@@ -11,9 +11,6 @@ using Unity.Mathematics;
 using AISenses;
 using UnityEngine.AI;
 
-[assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.DistanceToEscapePoint<RetreatCitizen>))]
-[assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.CompletionChecker<RetreatCitizen>))]
-//[assembly: RegisterGenericJobType(typeof(IAUS.ECS2.Systems.UpdateFleeState.WhereToRunTo<RetreatCitizen>))]
 
 namespace IAUS.ECS2.Systems
 {
@@ -49,38 +46,57 @@ namespace IAUS.ECS2.Systems
         {
             JobHandle systemDeps = Dependency;
 
-            systemDeps = new DistanceToEscapePoint<RetreatCitizen>()
-            {
+            systemDeps = new GetInfluenceAtPosition<RetreatCitizen>() {
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(DistanceCheck, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             systemDeps = new ScoreStateCitizen()
             {
                 StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
-                AlertChunk = GetComponentTypeHandle<AlertLevel>(false)
             }.ScheduleParallel(RetreatScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            systemDeps = new CompletionChecker<RetreatCitizen>()
-            {
-                EntityChunk = GetEntityTypeHandle(),
-                RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(true),
-                Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
-            }.Schedule(CompleteCheck, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
 
             Dependency = systemDeps;
         }
-        [BurstCompile]
-        public struct DistanceToEscapePoint<RETREAT> : IJobChunk
-           where RETREAT : unmanaged, BaseRetreat
-        {
-            public ComponentTypeHandle<RETREAT> RetreatChunk;
-            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
 
+
+        public struct ScoreStateCitizen : IJobChunk
+        {
+            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<RetreatCitizen> Retreats = chunk.GetNativeArray(RetreatChunk);
+                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    RetreatCitizen retreat = Retreats[i];
+                    CharacterStatComponent stats = Stats[i];
+                    float TotalScore =
+                         retreat.HealthRatio.Output(stats.HealthRatio)
+                        * retreat.ProximityInArea.Output(retreat.GridValueAtPos.x)
+                        * retreat.ThreatInArea.Output(retreat.GridValueAtPos.y)
+                        ;
+                    retreat.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * retreat.mod) * TotalScore);
+                    Retreats[i] = retreat;
+                }
+            }
+        }
+
+        public struct GetInfluenceAtPosition<RETREAT> : IJobChunk
+            where RETREAT : unmanaged, BaseRetreat
+        {
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
+            public ComponentTypeHandle<RETREAT> RetreatChunk; // TODO Add CurPosition to BaseRetreat interface
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<RETREAT> Retreats = chunk.GetNativeArray(RetreatChunk);
@@ -89,76 +105,11 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     RETREAT retreat = Retreats[i];
-                    if (retreat.EscapePoint.Equals(Unity.Mathematics.float3.zero))
-                        return;
-
-                    retreat.distanceToPoint = Vector3.Distance(retreat.EscapePoint, toWorlds[i].Position);
+                    retreat.CurPos = toWorlds[i].Position;
                     Retreats[i] = retreat;
                 }
             }
         }
-        [BurstCompatible]
-        public struct WhereToRunTo<RETREAT> : IJobChunk
-        where RETREAT : unmanaged, BaseRetreat
-        {
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-
-            }
-        }
-
-
-
-
-        [BurstCompile]
-        public struct ScoreStateCitizen : IJobChunk
-        {
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
-            [ReadOnly] public ComponentTypeHandle<AlertLevel> AlertChunk;
-            public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
-
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<RetreatCitizen> Retreats = chunk.GetNativeArray(RetreatChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
-                NativeArray<AlertLevel> alerts = chunk.GetNativeArray(AlertChunk);
-
-
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    RetreatCitizen retreat = Retreats[i];
-                    CharacterStatComponent stats = Stats[i];
-                    AlertLevel alert = alerts[i];
-                    float TotalScore = retreat.DistanceToSafe.Output(retreat.DistanceRatio)
-                        * retreat.HealthRatio.Output(stats.HealthRatio)
-                        * retreat.InfluenceInArea.Output(alert.Caution / 100.0f)
-                        ;
-                    retreat.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * retreat.mod) * TotalScore);
-                    Retreats[i] = retreat;
-                }
-            }
-        }
-
-        [BurstCompile]
-        public struct CompletionChecker<RETREAT> : IJobChunk
-             where RETREAT : unmanaged, BaseRetreat
-        {
-            [ReadOnly] public ComponentTypeHandle<RETREAT> RetreatChunk;
-            [ReadOnly] public EntityTypeHandle EntityChunk;
-            public EntityCommandBuffer.ParallelWriter Buffer;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<RETREAT> retreats = chunk.GetNativeArray(RetreatChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    if (retreats[i].Escaped)
-                        Buffer.RemoveComponent<RetreatActionTag>(chunkIndex, entities[i]);
-                }
-            }
-        }
-
-
     }
         
     

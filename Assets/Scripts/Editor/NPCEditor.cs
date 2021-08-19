@@ -159,17 +159,13 @@ namespace IAUS.NPCSO.editor
             showBtn[(int)AIStates.Retreat] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Retreat], "Flee from Target");
             if (showBtn[(int)AIStates.Retreat])
             {
-                if (RetreatDistance= EditorGUILayout.Foldout(RetreatDistance, "Distance To Consideration"))
-                    state.DistanceToSafe = DisplayConsideration(state.DistanceToSafe);
                 if (RetreatHealthRatio = EditorGUILayout.Foldout(RetreatHealthRatio, "CharacterHealth"))
                     state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 if (AlertResponse = EditorGUILayout.Foldout(RetreatHealthRatio, "Alert Response"))
-                    state.InfluenceInArea = DisplayConsideration(state.InfluenceInArea);
+                    state.ProximityInArea= DisplayConsideration(state.ProximityInArea);
 
-                state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
                 state.HideTime = EditorGUILayout.FloatField("Hide Time", state.HideTime);
-                state.EscapeRange = EditorGUILayout.IntField("Escape Range", state.EscapeRange);
 
 
 
@@ -179,11 +175,8 @@ namespace IAUS.NPCSO.editor
                state = new RetreatCitizen()
                 {
                     HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
-                    DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                    InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                    BufferZone = .75f,
+                    ProximityInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
                     _coolDownTime = 5,
-                    EscapeRange = 25,
                     HideTime = 30
 
                 };
@@ -282,11 +275,8 @@ namespace IAUS.NPCSO.editor
             };
             GetRetreat = new RetreatCitizen() {
                 HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
-                DistanceToSafe = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                InfluenceInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                BufferZone = .75f,
+                ProximityInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
                 _coolDownTime = 5,
-                EscapeRange = 25,
                 HideTime = 30
 
             };

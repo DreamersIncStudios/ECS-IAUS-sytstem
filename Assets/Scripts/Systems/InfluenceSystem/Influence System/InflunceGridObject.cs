@@ -114,6 +114,99 @@ namespace DreamersInc.InflunceMapSystem
             return (float2)GetValue(faction)/ MAX;
         }
 
+        public float2 GetValueNormalized(List<Faction> factions)
+        {
+            return (float2)GetValue(factions) / (MAX*factions.Count);
+        }
+
+
+        public float GetHighestThreatCell(List<Faction> factionFilter, out int i, out int j) {
+            float HighValue = 0.0f;
+            int startX, startY;
+            startX = x - 50;
+            startY = y - 50;
+            i = j= 0;
+            for (int SearchX = 0; SearchX < 100; SearchX++)
+            {
+                for (int SearchY = 0; SearchY < 100; SearchY++)
+                {
+                    float thisCellValue = grid.GetGridObject(startX+SearchX,startY +SearchY).GetValueNormalized(factionFilter).y;
+                    if (thisCellValue > HighValue)
+                    {
+                        HighValue = thisCellValue;
+                        i = startX + SearchX;
+                        j = startY + SearchY;
+                    }
+                }
+            }
+            return HighValue;
+        }
+        public float GetHighestThreatCell(Faction faction, out int i, out int j)
+        {
+            float HighValue = 0.0f;
+            int startX, startY;
+            startX = x - 50;
+            startY = y - 50;
+            i = j = 0;
+            for (int SearchX = 0; SearchX < 100; SearchX++)
+            {
+                for (int SearchY = 0; SearchY < 100; SearchY++)
+                {
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
+                    if (thisCellValue > HighValue)
+                    {
+                        HighValue = thisCellValue;
+                        i = startX + SearchX;
+                        j = startY + SearchY;
+                    }
+                }
+            }
+            return HighValue;
+        }
+        public float GetLowestThreatCell(List<Faction> factionFilter, out int i, out int j)
+        {
+            float LowValue = 1.0f;
+            int startX, startY;
+            startX = x - 50;
+            startY = y - 50;
+            i = j = 0;
+            for (int SearchX = 0; SearchX < 100; SearchX++)
+            {
+                for (int SearchY = 0; SearchY < 100; SearchY++)
+                {
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(factionFilter).y;
+                    if (thisCellValue < LowValue)
+                    {
+                        LowValue = thisCellValue;
+                        i = startX + SearchX;
+                        j = startY + SearchY;
+                    }
+                }
+            }
+            return LowValue;
+        }
+        public float GetLowestThreatCell(Faction faction, out int i, out int j)
+        {
+            float LowValue = 1.0f;
+            int startX, startY;
+            startX = x - 50;
+            startY = y - 50;
+            i = j = 0;
+            for (int SearchX = 0; SearchX < 100; SearchX++)
+            {
+                for (int SearchY = 0; SearchY < 100; SearchY++)
+                {
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
+                    if (thisCellValue < LowValue)
+                    {
+                        LowValue = thisCellValue;
+                        i = startX + SearchX;
+                        j = startY + SearchY;
+                    }
+                }
+            }
+            return LowValue;
+        }
         public override string ToString()
         {
             return InfluenceValue.ToString();

@@ -23,15 +23,6 @@
             "$version": 1,
             "Platform": "win",
             "Configuration": 1
-        },
-        {
-            "$type": "Unity.Build.DotsRuntime.DotsRuntimeBuildProfile, Unity.Build.DotsRuntime",
-            "Target": {
-                "$type": "Unity.Build.Windows.DotsRuntime.DotNetTinyWindowsBuildTarget, Unity.Build.Windows.DotsRuntime"
-            },
-            "Configuration": 1,
-            "UseNewPipeline": false,
-            "PipelineConstructor": null
         }
     ]
 }

@@ -35,7 +35,7 @@ namespace IAUS.NPCSO.Interfaces
         RetreatCitizen GetRetreat { get; }
 }
     public interface INPCPlayable { 
-        RetreatPlayerPartyNPC GetRetreat { get; }
+      //  RetreatPlayerPartyNPC GetRetreat { get; }
     }
 
     public enum TypeOfNPC{  
