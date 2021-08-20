@@ -76,7 +76,7 @@ namespace IAUS.ECS2.Component
         public float3 CurPos { get; set; }
       [SerializeField]  public float2 GridValueAtPos
         { get {
-                return InfluenceGridMaster.grid.GetGridObject(CurPos).GetValueNormalized(InfluenceGridMaster.Filters.Enemies[FactionMember]);
+                return InfluenceGridMaster.grid.GetGridObject(CurPos).GetValue(InfluenceGridMaster.Filters.Enemies[FactionMember]);
                     }  }
 
     }

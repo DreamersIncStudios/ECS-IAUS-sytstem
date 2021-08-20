@@ -10,7 +10,7 @@ namespace DreamersInc.InflunceMapSystem {
 
        public FilterGroups() {
             //TODO Read in Filter Data from JSON files
-            Allies.Add(Faction.Enemy, new List<Faction>() { Faction.Faction4,Faction.Faction2 });
+            Allies.Add(Faction.Enemy, new List<Faction>() { Faction.Faction4,Faction.Faction3 });
             Enemies.Add(Faction.Enemy, new List<Faction>() { Faction.Player, Faction.Faction2 });
 
         }

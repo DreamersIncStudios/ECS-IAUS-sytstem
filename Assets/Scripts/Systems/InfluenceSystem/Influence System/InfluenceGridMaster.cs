@@ -10,7 +10,7 @@ namespace DreamersInc.InflunceMapSystem
     public class InfluenceGridMaster : MonoBehaviour
     {
         public static InfluenceGridMaster Instance;
-        public static GridGenericXZ<InflunceGridObject> grid;
+        public static GridGenericXZ<InfluenceGridObject> grid;
         private int width =200;
         private int height= 300;
         private Vector3 center => Vector3.zero - new Vector3(width/2, 0, height/2);
@@ -20,7 +20,7 @@ namespace DreamersInc.InflunceMapSystem
 
 
 
-        [SerializeField]public List<GridGenericXZ<InflunceGridObject>> Grids;
+        [SerializeField]public List<GridGenericXZ<InfluenceGridObject>> Grids;
 
         // Start is called before the first frame update
         void Awake()
@@ -31,7 +31,7 @@ namespace DreamersInc.InflunceMapSystem
                 DestroyImmediate(this.gameObject);
         }
         void Start() {
-            grid = new GridGenericXZ<InflunceGridObject>(width, height, 1f, center, (GridGenericXZ<InflunceGridObject> g, int x, int z) => new InflunceGridObject(g, x, z));
+            grid = new GridGenericXZ<InfluenceGridObject>(width/10, height/10, 10f, center, (GridGenericXZ<InfluenceGridObject> g, int x, int z) => new InfluenceGridObject(g, x, z));
         }
    
     }

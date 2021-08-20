@@ -7,17 +7,17 @@ using Unity.Mathematics;
 
 namespace DreamersInc.InflunceMapSystem
 {
-    public class InflunceGridObject
+    public class InfluenceGridObject
     {
         private const int MIN = 0;
         private const int MAX = 100;
 
-        private GridGenericXZ<InflunceGridObject> grid;
+        private GridGenericXZ<InfluenceGridObject> grid;
         private Dictionary<Faction, int2> InfluenceValue;
 
         private int x, y;
 
-        public InflunceGridObject(GridGenericXZ<InflunceGridObject> grid, int x, int y)
+        public InfluenceGridObject(GridGenericXZ<InfluenceGridObject> grid, int x, int y)
         {
             this.grid = grid;
             this.x = x;
@@ -30,6 +30,7 @@ namespace DreamersInc.InflunceMapSystem
             if (InfluenceValue.TryGetValue(faction, out int2 value))
             {
                 InfluenceValue[faction]+= addValue;
+       //TODO add Matf Clamp min max ;
                 if (InfluenceValue[faction].Equals(int2.zero))
                     InfluenceValue.Remove(faction);
 
@@ -42,39 +43,41 @@ namespace DreamersInc.InflunceMapSystem
                     grid.TriggerGridObjectChanged(x, y);
             
     }
+
+        //TODO Rewrite without worldPos
         /// <summary>
         /// Add value to grid in a diamond pattern
         /// </summary>
         /// <param name="value"></param>
         /// <param name="Totalrange"></param>
-        public void AddValue( Vector3 worldPos, int2 value, int Totalrange, int fullValueRange, Faction faction) {
-            grid.GetXZ(worldPos, out int originX, out int originZ);
+        public void AddValue( int2 value, int Totalrange, int fullValueRange, Faction faction) {
+          
             int2 lowerValueAmount = new int2() 
             {
                 x = Mathf.RoundToInt((float)value.x / (Totalrange - fullValueRange)),
                 y = Mathf.RoundToInt((float)value.y / (Totalrange - fullValueRange))
             };
-            for (int x = 0; x < Totalrange; x++)
+            for (int i = 0; i < Totalrange; i++)
             {
-                for (int z = 0; z < Totalrange-x; z++)
+                for (int j = 0; j < Totalrange-i; j++)
                 {
-                    int radius = x + y;
+                    int radius = i + j;
                     int2 addValueAmout = value;
                     if (radius > fullValueRange) {
                         addValueAmout -= lowerValueAmount * (radius - fullValueRange);
                     }
-                    grid.GetGridObject(originX +x, originZ+z)?.AddValue(addValueAmout, faction);
-                    if (x != 0)
+                    grid.GetGridObject(x +i, y+j)?.AddValue(addValueAmout, faction);
+                    if (i != 0)
                     {
-                        grid.GetGridObject(originX - x, originZ + z)?.AddValue(addValueAmout, faction);
+                        grid.GetGridObject(x- i, y + j)?.AddValue(addValueAmout, faction);
                     }
-                    if (z != 0)
+                    if (j != 0)
                     {
-                        grid.GetGridObject(originX + x, originZ - z)?.AddValue(addValueAmout, faction);
+                        grid.GetGridObject(x + i, y - j)?.AddValue(addValueAmout, faction);
 
-                        if (x != 0)
+                        if (i != 0)
                         {
-                            grid.GetGridObject(originX - x, originZ - z)?.AddValue(addValueAmout, faction);
+                            grid.GetGridObject(x - i, y - j)?.AddValue(addValueAmout, faction);
                         }
                     }
                 }
@@ -209,7 +212,13 @@ namespace DreamersInc.InflunceMapSystem
         }
         public override string ToString()
         {
-            return InfluenceValue.ToString();
+            string output = int2.zero.ToString();
+
+            if (InfluenceValue.TryGetValue(Faction.Player, out int2 value)) {
+                output = value.ToString();
+            }
+
+            return output;
         }
     }
     public enum Faction
