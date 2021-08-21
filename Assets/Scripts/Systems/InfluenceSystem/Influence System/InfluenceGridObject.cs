@@ -29,22 +29,21 @@ namespace DreamersInc.InflunceMapSystem
         public void AddValue(int2 addValue, Faction faction) {
             if (InfluenceValue.TryGetValue(faction, out int2 value))
             {
-                InfluenceValue[faction]+= addValue;
-       //TODO add Matf Clamp min max ;
+                value.x = Mathf.Clamp(value.x + addValue.x, MIN, MAX);
+                value.y = Mathf.Clamp(value.y + addValue.y, MIN, MAX);
+                InfluenceValue[faction] = value;
+              
                 if (InfluenceValue[faction].Equals(int2.zero))
                     InfluenceValue.Remove(faction);
-
             }
             else
             {
                 InfluenceValue.Add(faction, addValue);
             }
-
                     grid.TriggerGridObjectChanged(x, y);
             
     }
 
-        //TODO Rewrite without worldPos
         /// <summary>
         /// Add value to grid in a diamond pattern
         /// </summary>
@@ -85,45 +84,70 @@ namespace DreamersInc.InflunceMapSystem
             }
                 
         }
-        /// <summary>
-        /// Returns influence value of a single faction
-        /// </summary>
-        /// <param name="faction"></param>
-        /// <returns></returns>
-        public int2 GetValue(Faction faction) {
-            int2 value = new int2();
-            InfluenceValue.TryGetValue(faction, out value);
-            
-            return value;
-        }
 
         /// <summary>
         /// Return the combined influence of several factions 
         /// </summary>
         /// <param name="factions"></param>
         /// <returns></returns>
-        public int2 GetValue(List<Faction> factions) { 
+        public int2 GetValue(Faction faction, bool Filtered) {
             int2 value = new int2();
-            foreach (var item in factions)
+
+            if (Filtered)
             {
-                if (InfluenceValue.TryGetValue(item, out int2 addValue)) {
-                    value += addValue;
+                int2 enemyValue = new int2();
+                int2 proxValue = new int2();
+
+                List<Faction> enemyFilter = InfluenceGridMaster.Filters.Enemies[faction];
+                List<Faction> proxFilter = InfluenceGridMaster.Filters.Allies[faction];
+
+                foreach (var item in enemyFilter)
+                {
+                    if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                    {
+                        enemyValue += addValue;
+                    }
                 }
+
+                foreach (var item in proxFilter)
+                {
+                    if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                    {
+                        proxValue += addValue;
+                    }
+                }
+                value.x = proxValue.x;
+                value.y = enemyValue.y;
             }
+            else
+            {
+                InfluenceValue.TryGetValue(faction, out value);
+            }
+
+
             return value;
         }
 
-        public float2 GetValueNormalized(Faction faction) {
-            return (float2)GetValue(faction)/ MAX;
-        }
-
-        public float2 GetValueNormalized(List<Faction> factions)
+        public float2 GetValueNormalized(Faction faction, bool filtered)
         {
-            return (float2)GetValue(factions) / (MAX*factions.Count);
+            if (filtered)
+            {
+
+                int2 factions = new int2()
+                {
+                    x = InfluenceGridMaster.Filters.Allies[faction].Count,
+                    y = InfluenceGridMaster.Filters.Enemies[faction].Count
+                };
+                return (float2)GetValue(faction, true) / (MAX * factions);
+            }
+            else
+            {
+                return (float2)GetValue(faction, false) / MAX;
+            }
         }
 
 
-        public float GetHighestThreatCell(List<Faction> factionFilter, out int i, out int j) {
+        public float GetHighestThreatCell(Faction faction, bool filtered, out int i, out int j) {
             float HighValue = 0.0f;
             int startX, startY;
             startX = x - 50;
@@ -133,7 +157,7 @@ namespace DreamersInc.InflunceMapSystem
             {
                 for (int SearchY = 0; SearchY < 100; SearchY++)
                 {
-                    float thisCellValue = grid.GetGridObject(startX+SearchX,startY +SearchY).GetValueNormalized(factionFilter).y;
+                    float thisCellValue = grid.GetGridObject(startX+SearchX,startY +SearchY).GetValueNormalized(faction, filtered).y;
                     if (thisCellValue > HighValue)
                     {
                         HighValue = thisCellValue;
@@ -144,29 +168,8 @@ namespace DreamersInc.InflunceMapSystem
             }
             return HighValue;
         }
-        public float GetHighestThreatCell(Faction faction, out int i, out int j)
-        {
-            float HighValue = 0.0f;
-            int startX, startY;
-            startX = x - 50;
-            startY = y - 50;
-            i = j = 0;
-            for (int SearchX = 0; SearchX < 100; SearchX++)
-            {
-                for (int SearchY = 0; SearchY < 100; SearchY++)
-                {
-                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
-                    if (thisCellValue > HighValue)
-                    {
-                        HighValue = thisCellValue;
-                        i = startX + SearchX;
-                        j = startY + SearchY;
-                    }
-                }
-            }
-            return HighValue;
-        }
-        public float GetLowestThreatCell(List<Faction> factionFilter, out int i, out int j)
+      
+        public float GetLowestThreatCell(Faction faction, bool filtered, out int i, out int j)
         {
             float LowValue = 1.0f;
             int startX, startY;
@@ -177,7 +180,7 @@ namespace DreamersInc.InflunceMapSystem
             {
                 for (int SearchY = 0; SearchY < 100; SearchY++)
                 {
-                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(factionFilter).y;
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction, filtered).y;
                     if (thisCellValue < LowValue)
                     {
                         LowValue = thisCellValue;
@@ -188,28 +191,7 @@ namespace DreamersInc.InflunceMapSystem
             }
             return LowValue;
         }
-        public float GetLowestThreatCell(Faction faction, out int i, out int j)
-        {
-            float LowValue = 1.0f;
-            int startX, startY;
-            startX = x - 50;
-            startY = y - 50;
-            i = j = 0;
-            for (int SearchX = 0; SearchX < 100; SearchX++)
-            {
-                for (int SearchY = 0; SearchY < 100; SearchY++)
-                {
-                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
-                    if (thisCellValue < LowValue)
-                    {
-                        LowValue = thisCellValue;
-                        i = startX + SearchX;
-                        j = startY + SearchY;
-                    }
-                }
-            }
-            return LowValue;
-        }
+      
         public override string ToString()
         {
             string output = int2.zero.ToString();

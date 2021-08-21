@@ -31,7 +31,7 @@ namespace DreamersInc.InflunceMapSystem
                 DestroyImmediate(this.gameObject);
         }
         void Start() {
-            grid = new GridGenericXZ<InfluenceGridObject>(width/10, height/10, 10f, center, (GridGenericXZ<InfluenceGridObject> g, int x, int z) => new InfluenceGridObject(g, x, z));
+            grid = new GridGenericXZ<InfluenceGridObject>(width, height, 1f, center, (GridGenericXZ<InfluenceGridObject> g, int x, int z) => new InfluenceGridObject(g, x, z));
         }
    
     }

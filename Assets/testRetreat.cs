@@ -22,7 +22,7 @@ public class testRetreat : MonoBehaviour
     {
         previousPos = transform.position;
         currentInflunceGridObject = InfluenceGridMaster.grid.GetGridObject(transform.position);
-        currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(100, 100),10,4, Faction.Player);
+        currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(100, 100),20,8, Faction.Player);
 
     }
 
@@ -32,8 +32,8 @@ public class testRetreat : MonoBehaviour
 
         if (transform.hasChanged && GridChanged(out InfluenceGridObject point))
         {
-            currentInflunceGridObject.AddValue( new Unity.Mathematics.int2(-100, -100),10,4, Faction.Player);
-           point.AddValue(new Unity.Mathematics.int2(100, 100),10,4, Faction.Player);
+            currentInflunceGridObject.AddValue( new Unity.Mathematics.int2(-100, -100),20,8, Faction.Player);
+           point.AddValue(new Unity.Mathematics.int2(100, 100),20,8, Faction.Player);
 
             previousPos = transform.position;
             currentInflunceGridObject = point;

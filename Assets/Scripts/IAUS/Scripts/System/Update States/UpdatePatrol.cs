@@ -110,7 +110,7 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    patrol.ThreatRatio = Mathf.Clamp01((float)InfluenceGridMaster.grid.GetGridObject(toWorlds[i].Position)?.GetValue(Influence[i].faction).y
+                    patrol.ThreatRatio = Mathf.Clamp01((float)InfluenceGridMaster.grid.GetGridObject(toWorlds[i].Position)?.GetValueNormalized(Influence[i].faction,true).y
                         /patrol.ThreatTheshold);
 
 
