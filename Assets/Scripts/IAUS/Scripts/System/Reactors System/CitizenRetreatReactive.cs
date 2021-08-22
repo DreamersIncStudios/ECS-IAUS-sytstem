@@ -9,6 +9,7 @@ using Unity.Entities;
 using Unity.Burst;
 using UnityEngine.AI;
 using Components.MovementSystem;
+using DreamersInc.InflunceMapSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentAdditionJob))]
@@ -27,18 +28,8 @@ namespace IAUS.ECS2.Systems.Reactive
         public void ComponentRemoved(Entity entity, ref RetreatCitizen AIStateCompoment, in RetreatActionTag oldComponent)
         {
 
-            if (AIStateCompoment.Escaped|| AIStateCompoment.Status == ActionStatus.Success)
-            {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
-                AIStateCompoment.EscapePoint = float3.zero;
-            }
-            else
-            {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
-            }
-
         }
 
         public void ComponentValueChanged(Entity entity, ref RetreatActionTag newComponent, ref RetreatCitizen AIStateCompoment, in RetreatActionTag oldComponent)
@@ -64,7 +55,7 @@ namespace IAUS.ECS2.Systems.Reactive
         private EntityQuery _componentRemovedQuery;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
-        float interval = 4
+        float interval = 0
             ;
         bool runUpdate => interval <= 0.0f;
         protected override void OnCreate()
@@ -107,11 +98,11 @@ namespace IAUS.ECS2.Systems.Reactive
                 {
                     RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(true),
                     MovementChunk = GetComponentTypeHandle<Movement>(false)
-                }.ScheduleParallel(_componentAddedQuery, systemDeps);
+                }.ScheduleParallel(_componentAddedQueryWithWait, systemDeps);
 
 
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-                interval = 3.0f;
+                interval = 4.0f;
             }
             else
             { 
@@ -120,7 +111,13 @@ namespace IAUS.ECS2.Systems.Reactive
             systemDeps = new OnCompletionUpdateJob()
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
-                WaitChunk = GetComponentTypeHandle<Wait>(false)
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                Buffer= GetBufferFromEntity<PatrolWaypointBuffer>(false),
+                CanPatrol = GetComponentDataFromEntity<Patrol>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
+
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -128,7 +125,7 @@ namespace IAUS.ECS2.Systems.Reactive
 
         }
 
-
+        //TODO make generic
         [BurstCompile]
         public struct RetreatMovementUpdate : IJobChunk
         {
@@ -162,20 +159,48 @@ namespace IAUS.ECS2.Systems.Reactive
 
             }
         }
-
+        [BurstCompile]
         public struct OnCompletionUpdateJob : IJobChunk
         {
             public ComponentTypeHandle<Wait> WaitChunk;
             public ComponentTypeHandle<Movement> MovementChunk;
+            public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+
+           [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> CanPatrol;
+            [ReadOnly]public BufferFromEntity<PatrolWaypointBuffer> Buffer;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
                 NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
+                NativeArray<RetreatCitizen> retreats = chunk.GetNativeArray(RetreatChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+                NativeArray<LocalToWorld> ToWorlds = chunk.GetNativeArray(ToWorldChunk);
+
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Wait wait = Waits[i];
                     Movement move = Moves[i];
-                        wait.Timer = 300;
+                    //TODO create a hide state 
+                     //   wait.Timer = retreats[i].HideTime;
+                    if (CanPatrol.HasComponent(entities[i])) {
+                        Patrol patrol = CanPatrol[entities[i]];
+                        //TODO  make threat and Proximity Thresholds a variable of the entity
+                        if (patrol.CurWaypoint.InfluenceAtPosition.y > .7 && patrol.CurWaypoint.InfluenceAtPosition.y < .75f) 
+                        {
+                            //move to the next point
+                            patrol.WaypointIndex++;
+                            if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
+                                patrol.WaypointIndex = 0;
+
+                            patrol.CurWaypoint = Buffer[entities[i]][patrol.WaypointIndex].WayPoint;
+
+                            patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
+
+                            CanPatrol[entities[i]] = patrol;
+                        }
+                    }
                     move.CanMove = false;
 
                     Waits[i] = wait;

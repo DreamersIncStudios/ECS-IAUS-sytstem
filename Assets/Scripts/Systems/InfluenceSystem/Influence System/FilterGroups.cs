@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace DreamersInc.InflunceMapSystem {
-    public  class FilterGroups
+    public sealed class FilterGroups
     {
         public  Dictionary<Faction, List<Faction>> Allies = new Dictionary<Faction, List<Faction>>();
         public  Dictionary<Faction, List<Faction>> Enemies = new Dictionary<Faction, List<Faction>>();

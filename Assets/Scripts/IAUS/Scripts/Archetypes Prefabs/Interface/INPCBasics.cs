@@ -21,6 +21,7 @@ namespace IAUS.NPCSO.Interfaces
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
         InfluenceComponent GetInfluence { get; }
+        Faction getFaction{get;}
     }
 
     public interface INPCEnemy {

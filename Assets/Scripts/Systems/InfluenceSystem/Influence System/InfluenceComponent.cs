@@ -33,7 +33,7 @@ namespace DreamersInc.InflunceMapSystem
         }
     }
 
-    public class UpdateInfluenceGridSystem : SystemBase
+    public sealed class UpdateInfluenceGridSystem : SystemBase
     {
         EntityQuery Influencers;
         protected override void OnCreate()

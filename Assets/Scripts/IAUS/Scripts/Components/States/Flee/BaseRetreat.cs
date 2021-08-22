@@ -16,8 +16,6 @@ namespace IAUS.ECS2.Component
         Faction FactionMember { get; set; }
         float3 LocationOfHighestThreat { get;  }
         float3 LocationOfLowestThreat { get;  }
-        public float3 EscapePoint { get; set; }
-        bool Escaped { get; }
         float3 CurPos { get; set; }
         float2 GridValueAtPos { get; }
 
@@ -61,18 +59,13 @@ namespace IAUS.ECS2.Component
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
 
-
-
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
 
         public float HideTime;
-        [SerializeField] public float3 EscapePoint { get; set; }
 
-        public bool Escaped { get; }
-        [SerializeField] public bool HasEscapePoint => !EscapePoint.Equals(float3.zero);
         public float3 CurPos { get; set; }
       [SerializeField]  public float2 GridValueAtPos
         { get {

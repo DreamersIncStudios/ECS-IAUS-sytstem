@@ -19,10 +19,13 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
     public InfluenceComponent GetInfluence;
+    public Faction faction;
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddComponentData(entity, Self);
         dstManager.AddComponent<IAUSBrain>(entity);
+        dstManager.SetComponentData(entity, new IAUSBrain { faction = this.faction });
+
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);
         dstManager.AddBuffer<StateBuffer>(entity);

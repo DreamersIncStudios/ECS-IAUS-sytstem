@@ -64,7 +64,9 @@ MonoBehaviour:
         y: 0
         z: 0
       TimeToWaitatWaypoint: 0
-      IsDanerZone: 0
+      InfluenceAtPosition:
+        x: 0
+        y: 0
     ThreatTheshold: 0
     ThreatRatio: 0
     UpdatePatrolPoints: 0
@@ -125,6 +127,7 @@ MonoBehaviour:
     ViewAngle: 120
     EngageRadius: 10
     AlertModifer: 0
+  factionMember: 2
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
   getTeamInfo:
@@ -142,18 +145,17 @@ MonoBehaviour:
       Inverse: 0
       responseType: 2
       M: 3
-      K: 0.75
-      B: 0.2
+      K: 0.85
+      B: 0
       C: 0.4
     threatInArea:
       Inverse: 0
       responseType: 2
       M: 50
       K: -1
-      B: 1
+      B: 0.99
       C: 0.55
     faction: 2
-    NeedToRetreat: 0
     _status: 0
     _coolDownTime: 5
     _resetTime: 0

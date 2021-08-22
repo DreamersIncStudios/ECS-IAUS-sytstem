@@ -50,7 +50,7 @@ namespace IAUS.ECS2.Systems.Reactive
         }
     }
 
-    public class WaitSystem : SystemBase
+    public sealed class WaitSystem : SystemBase
     {
         private EntityQuery _componentRemovedQuery;
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -99,18 +99,17 @@ namespace IAUS.ECS2.Systems.Reactive
                 {
                     Patrol patrol = patrols[i];
                     DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
-                    {
-                        patrol.WaypointIndex++;
-                        if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
-                            patrol.WaypointIndex = 0;
-                        patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
 
-                        patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
-                        patrols[i] = patrol;
-                    }
+                    patrol.WaypointIndex++;
+                    if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
+                        patrol.WaypointIndex = 0;
 
+                    patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
 
-                }
+                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
+                    patrols[i] = patrol;
+                }    
+
             }
 
         }

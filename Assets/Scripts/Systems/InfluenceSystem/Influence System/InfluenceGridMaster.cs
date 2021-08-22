@@ -7,7 +7,7 @@ using DreamersInc.Utils;
 namespace DreamersInc.InflunceMapSystem
 {
     
-    public class InfluenceGridMaster : MonoBehaviour
+    public sealed class InfluenceGridMaster : MonoBehaviour
     {
         public static InfluenceGridMaster Instance;
         public static GridGenericXZ<InfluenceGridObject> grid;

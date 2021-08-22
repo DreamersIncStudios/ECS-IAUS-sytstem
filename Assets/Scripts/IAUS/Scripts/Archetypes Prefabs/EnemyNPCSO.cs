@@ -13,7 +13,7 @@ using AISenses.Authoring;
 using AISenses;
 using Dreamers.SquadSystem;
 namespace IAUS.NPCSO {
-    public class EnemyNPCSO : NPCSO, INPCEnemy
+    public sealed class EnemyNPCSO : NPCSO, INPCEnemy
     {
         public bool IsPartOfTeam => isPartofTeam;
         [SerializeField] bool isPartofTeam = false;

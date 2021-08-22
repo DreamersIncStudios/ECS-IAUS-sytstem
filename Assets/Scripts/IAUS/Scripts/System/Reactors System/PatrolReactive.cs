@@ -53,6 +53,7 @@ namespace IAUS.ECS2.Systems.Reactive
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _componentRemovedQuery;
+        private EntityQuery _patrolling;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -65,9 +66,15 @@ namespace IAUS.ECS2.Systems.Reactive
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
+            _patrolling = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(PatrolWaypointBuffer))
+                , ComponentType.ReadOnly(typeof(LocalToWorld)),
+                    ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
+            });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(Movement))
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)),  ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
             });
@@ -86,6 +93,12 @@ namespace IAUS.ECS2.Systems.Reactive
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
+            systemDeps = new CheckSkipPoint() {
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true)
+            }.ScheduleParallel(_patrolling,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new OnCompletionUpdateJob()
             {
@@ -125,7 +138,48 @@ namespace IAUS.ECS2.Systems.Reactive
                 }
             }
         }
+        [BurstCompile]
+        public struct CheckSkipPoint : IJobChunk
+        {
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
 
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
+                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<LocalToWorld> ToWorlds = chunk.GetNativeArray(ToWorldChunk);
+                BufferAccessor<PatrolWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Patrol patrol = patrols[i];
+                    //TODO  make threat and Proximity Thresholds a variable of the entity
+                    if (patrol.CurWaypoint.InfluenceAtPosition.y > .7 && patrol.CurWaypoint.InfluenceAtPosition.y < .75f)
+                    {
+                        //Movement move = movements[i];
+                        //DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
+                        //patrol.WaypointIndex = patrol.WaypointIndex >= patrol.NumberOfWayPoints ?
+                        // patrol.WaypointIndex++ :
+                        //  patrol.WaypointIndex = 0;
+
+                        //patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
+                        //patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
+
+                        //move.TargetLocation = patrol.CurWaypoint.Position;
+                        //move.CanMove = true;
+                        //move.SetTargetLocation = true;
+
+                        //movements[i] = move;
+                        //patrols[i] = patrol;
+                    }
+                }
+
+            }
+        }
 
         public struct OnCompletionUpdateJob : IJobChunk
         {

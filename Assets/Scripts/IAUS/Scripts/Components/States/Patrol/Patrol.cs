@@ -25,7 +25,7 @@ namespace IAUS.ECS2.Component
         public float ThreatRatio;
         public int WaypointIndex { get; set; }
       //  public bool TargetingOrigin => CurWaypoint.point.Position.Equals(new Unity.Mathematics.float3());
-        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;

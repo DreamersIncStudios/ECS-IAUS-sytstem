@@ -13,6 +13,7 @@ using AISenses;
 using AISenses.Authoring;
 using DreamersInc.InflunceMapSystem;
 
+
 namespace IAUS.NPCSO
 {
     public class NPCSO : ScriptableObject, INPCBasics
@@ -46,7 +47,8 @@ namespace IAUS.NPCSO
 
         [SerializeField]Vision getVision;
         public Vision GetVision => getVision;
-
+        public Faction getFaction { get { return factionMember; } }
+        [SerializeField] Faction factionMember;
 
         public void Setup(string Name,GameObject model, TypeOfNPC typeOf,InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait
@@ -72,6 +74,7 @@ namespace IAUS.NPCSO
             SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
              AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
             AIAuthoring.Self = Self;
+            AIAuthoring.faction = getFaction;
             AIAuthoring.movement = AIMove;
             foreach (AIStates state in AIStatesAvailable) {
                 switch (state) {

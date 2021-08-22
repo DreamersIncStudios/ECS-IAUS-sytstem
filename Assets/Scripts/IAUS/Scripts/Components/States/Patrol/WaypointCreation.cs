@@ -34,7 +34,7 @@ namespace IAUS.ECS2.Component
                                     GetRace = Race.None
                                 },
                                 
-                                TimeToWaitatWaypoint = UnityEngine.Random.Range(50,100)
+                                TimeToWaitatWaypoint = UnityEngine.Random.Range(5,10)
                             }
                         }
                      );
