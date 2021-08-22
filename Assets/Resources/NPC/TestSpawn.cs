@@ -11,7 +11,7 @@ public class TestSpawn : MonoBehaviour
     public void Start()
     {
         InvokeRepeating(nameof(Spawn), 0, 5);
-        Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
+      //  Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
     }
 
 

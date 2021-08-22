@@ -6,7 +6,7 @@ using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
 using IAUS.NPCSO.Interfaces;
-using Components.MovementSystem;
+using Unity.Mathematics;
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow

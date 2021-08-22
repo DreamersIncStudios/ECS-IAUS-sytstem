@@ -9,7 +9,7 @@ namespace IAUS.ECS2.Systems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-    public class IAUSBrainUpdate : SystemBase
+    public sealed  class IAUSBrainUpdate : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         public EntityQuery IAUSBrains;
@@ -28,7 +28,7 @@ namespace IAUS.ECS2.Systems
 
         }
 
-        float interval = .5f;
+        float interval = .20f;
         bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
@@ -60,7 +60,7 @@ namespace IAUS.ECS2.Systems
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
                 //systemDeps.Complete();
                 Dependency = systemDeps;
-                interval = .5f;
+                interval = .20f;
 
             }
             else

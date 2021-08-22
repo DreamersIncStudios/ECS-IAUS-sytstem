@@ -7,12 +7,14 @@ using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using AISenses;
+using DreamersInc.InflunceMapSystem;
 namespace IAUS.ECS2.Systems
 {
     public class UpdatePatrol : SystemBase
     {
         private EntityQuery DistanceCheck;
         private EntityQuery PatrolScore;
+        private EntityQuery BufferPatrol;
         private EntityQuery CompleteCheck;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -26,7 +28,7 @@ namespace IAUS.ECS2.Systems
             });
             DistanceCheck.SetChangedVersionFilter(
                 new ComponentType[] { 
-                    ComponentType.ReadWrite(typeof(LocalToWorld)),
+                    ComponentType.ReadOnly(typeof(LocalToWorld)),
                     ComponentType.ReadWrite(typeof(Patrol))
                 });
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
@@ -35,6 +37,9 @@ namespace IAUS.ECS2.Systems
                                     ComponentType.ReadOnly(typeof(AlertLevel))
                 }
             });
+            BufferPatrol = GetEntityQuery(new EntityQueryDesc() {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(PatrolWaypointBuffer))}
+            });
                 
            CompleteCheck = GetEntityQuery(new EntityQueryDesc()
             {
@@ -42,7 +47,6 @@ namespace IAUS.ECS2.Systems
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
         }
 
         protected override void OnUpdate()
@@ -54,11 +58,17 @@ namespace IAUS.ECS2.Systems
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(DistanceCheck, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            
+
+            systemDeps = new CheckThreatAtWaypoint() { 
+                IAUSBrainChunk = GetComponentTypeHandle<IAUSBrain>(true),
+                PatrolBuffer = GetBufferTypeHandle<PatrolWaypointBuffer>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false)
+            }.ScheduleSingle(BufferPatrol, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new ScoreState() 
             {
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                AlertChunk = GetComponentTypeHandle<AlertLevel>(true),
                 StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -88,8 +98,7 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    LocalToWorld transform = toWorlds[i];
-                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, transform.Position);
+                    patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, toWorlds[i].Position);
                     if (patrol.InBufferZone)
                         patrol.distanceToPoint = 0.0f;
                     patrols[i] = patrol;
@@ -102,13 +111,11 @@ namespace IAUS.ECS2.Systems
         public struct ScoreState : IJobChunk
         {
             public ComponentTypeHandle<Patrol> PatrolChunk;
-            [ReadOnly] public ComponentTypeHandle<AlertLevel> AlertChunk;
             [ReadOnly]public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
-                NativeArray<AlertLevel> alertLevels = chunk.GetNativeArray(AlertChunk);
 
                 NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
 
@@ -116,13 +123,46 @@ namespace IAUS.ECS2.Systems
                 {
                     Patrol patrol = patrols[i];
                     float healthRatio = Stats[i].HealthRatio;
-                    int Alerted = alertLevels[i].NeedForAlarm ? 0 : 1;
-                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio)*Alerted;
+                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
                     patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
                     patrols[i] = patrol;
                 }
             }
         }
+        [BurstCompile]
+        public struct CheckThreatAtWaypoint : IJobChunk
+        {
+            public BufferTypeHandle<PatrolWaypointBuffer> PatrolBuffer;
+            [ReadOnly]public ComponentTypeHandle<IAUSBrain> IAUSBrainChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                BufferAccessor<PatrolWaypointBuffer> bufferAccess = chunk.GetBufferAccessor(PatrolBuffer);
+                NativeArray<IAUSBrain> Brains = chunk.GetNativeArray(IAUSBrainChunk);
+                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    DynamicBuffer<PatrolWaypointBuffer> buffer = bufferAccess[i];
+                    Patrol patrol = patrols[i];
+
+                    for (int j = 0; j < buffer.Length; j++)
+                    {
+                        PatrolWaypointBuffer point = buffer[j];
+                        point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(Brains[i].faction, true);
+                        buffer[j] = point;
+                        if (j == patrol.WaypointIndex) {
+                            patrol.CurWaypoint = point.WayPoint;
+                        }
+                    }
+                    
+                    patrols[i] = patrol;
+
+                }
+            }
+        }
+
         [BurstCompile]
         public struct CompletionChecker : IJobChunk
         {

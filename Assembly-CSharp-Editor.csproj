@@ -58,7 +58,6 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Editor\NPCAttacks.cs" />
     <Compile Include="Assets\Scripts\Editor\DisplayInfo.cs" />
-    <Compile Include="Assets\Scripts\Editor\InfluenceEdit.cs" />
     <Compile Include="Assets\Scripts\Editor\TeamSetup.cs" />
     <Compile Include="Assets\Scripts\Editor\EditNPC.cs" />
     <Compile Include="Assets\Scripts\Editor\NPCEditor.cs" />

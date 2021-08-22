@@ -4,6 +4,7 @@ using UnityEngine;
 using IAUS.ECS2.Component;
 using Global.Component;
 using Components.MovementSystem;
+using DreamersInc.InflunceMapSystem;
 
 public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
@@ -17,11 +18,16 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public RetreatCitizen retreatState;
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
+    public InfluenceComponent GetInfluence;
+    public Faction faction;
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddComponentData(entity, Self);
         dstManager.AddComponent<IAUSBrain>(entity);
+        dstManager.SetComponentData(entity, new IAUSBrain { faction = this.faction });
+
         dstManager.AddComponent<SetupBrainTag>(entity);
+        dstManager.AddComponentData(entity, GetInfluence);
         dstManager.AddBuffer<StateBuffer>(entity);
         if (AddPatrol)
             dstManager.AddComponentData(entity, patrolState);

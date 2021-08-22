@@ -56,31 +56,13 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Heap\BaseHeap.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceGridPoint.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\QueryInterval.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Heap\MaxHeap.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\QueryRadius.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\Systems\Testsystem.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\Debug.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Heap\MinHeap.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\QueryClosest.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\KDQueryNode.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\Systems\InfluenceSystem.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Tests\KDTreeQueryResizeTests.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\Component\InfluenceSampler.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\Component\Influence.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\QueryKNearest.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Tests\KDTreeBenchmark.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\TransformConversion.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDTree.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Influnce System\GridPointSpawner.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDQuery\Base.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDBounds.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Tests\KDTreeQueryTests.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\KDTree\KDNode.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Tests\HeapTests.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Scripts\Heap\KSmallest.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceGridMaster.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceComponent.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\FilterGroups.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceGridObject.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\GridGenericXZ.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\GridGeneric.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Generic Grid System\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Systems\InfluenceSystem\InfluenceSystem.asmdef" />

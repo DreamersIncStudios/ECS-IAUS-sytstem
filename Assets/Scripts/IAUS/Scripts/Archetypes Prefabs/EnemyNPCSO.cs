@@ -6,21 +6,17 @@ using UnityEngine.AI;
 using IAUS.NPCSO.Interfaces;
 using Global.Component;
 using IAUS.ECS2;
-using Components.MovementSystem;
+using DreamersInc.InflunceMapSystem;
 using IAUS.ECS2.Component;
 using Stats;
 using AISenses.Authoring;
-using InfluenceSystem.Component;
 using AISenses;
 using Dreamers.SquadSystem;
 namespace IAUS.NPCSO {
-    public class EnemyNPCSO : NPCSO, INPCEnemy
+    public sealed class EnemyNPCSO : NPCSO, INPCEnemy
     {
         public bool IsPartOfTeam => isPartofTeam;
         [SerializeField] bool isPartofTeam = false;
-        public NPCLevel GetNPCLevel => _getNPCLevel;
-        [SerializeField] NPCLevel _getNPCLevel;
-        public bool IsLeader => (int)_getNPCLevel > 2;
         public TeamInfo GetTeamInfo => getTeamInfo;
         [SerializeField] TeamInfo getTeamInfo;
         public RetreatCitizen GetRetreat => getRetreat;
@@ -31,10 +27,9 @@ namespace IAUS.NPCSO {
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public  void Setup(bool team, NPCLevel level, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee)
+        public  void Setup(bool team,  TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee)
         {
             isPartofTeam = team;
-            _getNPCLevel = level;
             getTeamInfo = teamInfo;
             getAttackTypes = attackTypeInfos;
             getRetreat = flee;
@@ -48,7 +43,7 @@ namespace IAUS.NPCSO {
             if (isPartofTeam) {
                 TeamAuthoring teamAuthoring = new TeamAuthoring() {
                     Info = getTeamInfo,
-                    IsLeader = IsLeader,
+
                     
               };
 
@@ -62,14 +57,6 @@ namespace IAUS.NPCSO {
                         AIAuthoring.retreatState = GetRetreat;
                     break;
                 }
-            }
-            switch (GetInfluence.Level)
-            {
-                case NPCLevel.Leader:
-                    Leader lead = SpawnedGO.AddComponent<Leader>();
-                    lead.influence = GetInfluence;
-                    //   SpawnedGO.AddComponent<GridPointSpawner>();
-                    break;
             }
 
             if (GetAttackType.Count >= 1)

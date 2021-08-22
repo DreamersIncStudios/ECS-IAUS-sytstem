@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using Global.Component;
-    
+using DreamersInc.InflunceMapSystem;
 namespace IAUS.ECS2.Component
 {
 
@@ -15,6 +15,8 @@ namespace IAUS.ECS2.Component
     {
         public AITarget Target;
         public AIStates CurrentState;
+        public Faction faction;
+
     }
     public struct SetupBrainTag : IComponentData { }
 

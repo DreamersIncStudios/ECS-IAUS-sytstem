@@ -43,7 +43,7 @@ namespace IAUS.ECS2.Systems
             });
             RetreatCooldown = GetEntityQuery(new EntityQueryDesc()
             {
-                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatPlayerPartyNPC)) , ComponentType.ReadWrite(typeof(RetreatEnemyNPC)) },
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)),/* ComponentType.ReadWrite(typeof(RetreatPlayerPartyNPC)) , ComponentType.ReadWrite(typeof(RetreatEnemyNPC)) */},
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatActionTag)) }
             });
 

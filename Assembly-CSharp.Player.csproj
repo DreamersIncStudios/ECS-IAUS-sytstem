@@ -59,6 +59,7 @@
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
     <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
+    <Compile Include="Assets\testRetreat.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
   </ItemGroup>
   <ItemGroup>

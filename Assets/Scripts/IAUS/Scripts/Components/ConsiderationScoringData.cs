@@ -29,7 +29,7 @@ namespace IAUS.ECS2
                     temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), input - C))) + B;
                     break;
             }
-            return temp;
+            return Mathf.Clamp01(temp);
         }
     }
         public enum ResponseType

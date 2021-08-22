@@ -3,12 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using AISenses;
+using DreamersInc.InflunceMapSystem;
 
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {
         Vision GetVision;
+        bool ShowInfluence;
+        public InfluenceComponent GetInfluence;
+
+        InfluenceComponent SetupInfluence() {
+            ShowInfluence = EditorGUILayout.BeginFoldoutHeaderGroup(ShowInfluence, "Influence Data");
+            if (ShowInfluence) 
+            {
+                GetInfluence.value.x = EditorGUILayout.IntField("Protection", GetInfluence.value.x);
+                GetInfluence.value.y = EditorGUILayout.IntField("Protection", GetInfluence.value.y);
+                GetInfluence.faction = (Faction)EditorGUILayout.EnumPopup("Faction Group Member", GetInfluence.faction);
+            }
+
+            return GetInfluence;
+        }
+
+
         bool ShowVision;
         Vision SetupVision() {
             ShowVision = EditorGUILayout.BeginFoldoutHeaderGroup(ShowVision, "Vision Data");

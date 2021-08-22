@@ -16,10 +16,14 @@ MonoBehaviour:
   _getName: Citizen
   _model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
   getInfluence:
+    value:
+      x: 5
+      y: 6
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
     faction: 2
-    InfluenceValue: 6
-    Range: 39
-    Level: 2
   GetSelf:
     Type: 1
     GetRace: 0
@@ -60,7 +64,11 @@ MonoBehaviour:
         y: 0
         z: 0
       TimeToWaitatWaypoint: 0
-      IsDanerZone: 0
+      InfluenceAtPosition:
+        x: 0
+        y: 0
+    ThreatTheshold: 0
+    ThreatRatio: 0
     UpdatePatrolPoints: 0
     _status: 0
     _coolDownTime: 5
@@ -119,9 +127,9 @@ MonoBehaviour:
     ViewAngle: 120
     EngageRadius: 10
     AlertModifer: 0
+  factionMember: 2
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
-  _getNPCLevel: 2
   getTeamInfo:
     CurrentTeamSize: 0
     MaxTeamSize: 0
@@ -133,26 +141,24 @@ MonoBehaviour:
       K: -1
       B: 0.91
       C: 0.2
-    alertLevels:
+    influenceInArea:
+      Inverse: 0
+      responseType: 2
+      M: 3
+      K: 0.85
+      B: 0
+      C: 0.4
+    threatInArea:
       Inverse: 0
       responseType: 2
       M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    distanceToSafe:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    NeedToRetreat: 0
+      K: -1
+      B: 0.99
+      C: 0.55
+    faction: 2
     _status: 0
     _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
-    BufferZone: 0.75
     HideTime: 30
-    escapeRange: 50
   getAttackTypes: []
