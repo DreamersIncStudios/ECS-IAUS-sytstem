@@ -74,6 +74,8 @@ namespace IAUS.ECS2.Component
 
     }
 
+    //TODO Implement over Retreat States
+
     //public struct RetreatEnemyNPC : BaseRetreat {
     //    public ConsiderationScoringData HealthRatio { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
     //    public ConsiderationScoringData InfluenceInArea { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }

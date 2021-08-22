@@ -3,13 +3,11 @@ using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
 using Unity.Transforms;
-using Unity.Mathematics;
 using IAUS.ECS2.Component;
 using Unity.Entities;
 using Unity.Burst;
 using UnityEngine.AI;
 using Components.MovementSystem;
-using DreamersInc.InflunceMapSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentAdditionJob))]
@@ -47,7 +45,7 @@ namespace IAUS.ECS2.Systems.Reactive
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-    public class RetreatMovement : SystemBase
+    public sealed class RetreatMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _componentAddedQueryWithWait;
@@ -61,20 +59,6 @@ namespace IAUS.ECS2.Systems.Reactive
         protected override void OnCreate()
         {
             base.OnCreate();
-            _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatActionTag)), ComponentType.ReadWrite(typeof(Movement)),
-                 ComponentType.ReadOnly(typeof(LocalToWorld))
-                },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, RetreatCitizenTagReactor>.StateComponent)) }
-            });
-            _componentAddedQueryWithWait= GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadWrite(typeof(RetreatActionTag)), ComponentType.ReadWrite(typeof(Wait)),
-                 ComponentType.ReadOnly(typeof(LocalToWorld))
-                },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, RetreatCitizenTagReactor>.StateComponent)) }
-            });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)),  ComponentType.ReadWrite(typeof(Movement))
@@ -90,24 +74,29 @@ namespace IAUS.ECS2.Systems.Reactive
 
         protected override void OnUpdate()
         {
+        
             JobHandle systemDeps = Dependency;
-
-            if (runUpdate)
+            Entities.ForEach((ref Movement move, ref Wait wait, ref RetreatCitizen retreat, ref Patrol patrol) =>
             {
-                systemDeps = new RetreatMovementUpdate()
+
+                if (retreat.Status == ActionStatus.Running)
                 {
-                    RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(true),
-                    MovementChunk = GetComponentTypeHandle<Movement>(false)
-                }.ScheduleParallel(_componentAddedQueryWithWait, systemDeps);
+                    wait.Timer = 0.0f;
+                    start:
+                    if (NavMesh.SamplePosition(retreat.LocationOfLowestThreat, out NavMeshHit hit, 6.0f, NavMesh.AllAreas))
+                    {
+                        move.TargetLocation = hit.position;
+                        move.CanMove = true;
+                        move.SetTargetLocation = true;
+                        patrol.StartingDistance = patrol.distanceToPoint = 1.0f;
+                    }
+                    else
+                    {
+                        goto start;
+                    }
+                }
+            }).Run();
 
-
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-                interval = 4.0f;
-            }
-            else
-            { 
-                interval -= 1 / 60.0f;
-            }
             systemDeps = new OnCompletionUpdateJob()
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
@@ -124,40 +113,47 @@ namespace IAUS.ECS2.Systems.Reactive
             Dependency = systemDeps;
 
         }
-
-        //TODO make generic
-        [BurstCompile]
-        public struct RetreatMovementUpdate : IJobChunk
+        public struct RetreatAdded : IJobChunk
         {
+            public ComponentTypeHandle<Wait> WaitChunk;
             public ComponentTypeHandle<Movement> MovementChunk;
-            [ReadOnly]public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
-            [ReadOnly] public ComponentTypeHandle<LocalToWorld> toWorldChunk;
+            public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
+                NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
+                NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
                 NativeArray<RetreatCitizen> retreats = chunk.GetNativeArray(RetreatChunk);
-                NativeArray<LocalToWorld> transforms = chunk.GetNativeArray(toWorldChunk);
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    Movement move = movements[i];
+                NativeArray<Patrol> Patrols = chunk.GetNativeArray(PatrolChunk);
+                for (int i = 0; i<chunk.Count; i++)
+			{
+                    Wait wait = Waits[i];
+                    Movement move = Moves[i];
+                    Patrol patrol = Patrols[i];
+                    wait.Timer = 0.0f;
                     start:
                     if (NavMesh.SamplePosition(retreats[i].LocationOfLowestThreat, out NavMeshHit hit, 6.0f, NavMesh.AllAreas))
                     {
+                        Debug.Log("Move to retreat Point");
 
                         move.TargetLocation = hit.position;
                         move.CanMove = true;
                         move.SetTargetLocation = true;
+                        patrol.StartingDistance = patrol.distanceToPoint = 1.0f;
                     }
                     else
                     {
                         goto start;
                     }
-                    movements[i] = move;
 
+                    Waits[i] = wait;
+                    Moves[i] = move;
+                    Patrols[i] = patrol;
                 }
+        }
 
-            }
         }
         [BurstCompile]
         public struct OnCompletionUpdateJob : IJobChunk

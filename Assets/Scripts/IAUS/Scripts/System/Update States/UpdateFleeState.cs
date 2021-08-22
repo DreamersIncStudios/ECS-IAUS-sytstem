@@ -6,15 +6,13 @@ using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
 using Stats;
-using Utilities;
-using Unity.Mathematics;
 using AISenses;
-using UnityEngine.AI;
+using DreamersInc.InflunceMapSystem;
 
 
 namespace IAUS.ECS2.Systems
 {
-    public class UpdateFleeState : SystemBase
+    public sealed class UpdateFleeState : SystemBase
     {
         private EntityQuery DistanceCheck;
         private EntityQuery RetreatScore;
@@ -49,7 +47,7 @@ namespace IAUS.ECS2.Systems
             systemDeps = new GetInfluenceAtPosition<RetreatCitizen>() {
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
-            }.ScheduleParallel(DistanceCheck, systemDeps);
+            }.ScheduleSingle(DistanceCheck, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 

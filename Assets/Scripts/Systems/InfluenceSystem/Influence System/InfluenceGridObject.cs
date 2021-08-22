@@ -173,12 +173,12 @@ namespace DreamersInc.InflunceMapSystem
         {
             float LowValue = 1.0f;
             int startX, startY;
-            startX = x - 50;
-            startY = y - 50;
+            startX = x - 25;
+            startY = y - 25;
             i = j = 0;
-            for (int SearchX = 0; SearchX < 100; SearchX++)
+            for (int SearchX = 0; SearchX < 50; SearchX++)
             {
-                for (int SearchY = 0; SearchY < 100; SearchY++)
+                for (int SearchY = 0; SearchY < 50; SearchY++)
                 {
                     float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction, filtered).y;
                     if (thisCellValue < LowValue)
