@@ -11,6 +11,13 @@ using AISenses;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.StateComponent))]
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.StateComponent))]
+
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentAdditionJob))]
+
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentRemovalJob))]
+
 namespace IAUS.ECS2.Systems.Reactive
 {
     public struct MoveToTargetReactor : IComponentReactorTagsForAIStates<MoveToTargetActionTag, MoveToTarget>
@@ -112,8 +119,8 @@ namespace IAUS.ECS2.Systems.Reactive
 
             systemDeps = new UpdateMoveTarget()
             {
-                MoveToChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
-                SeersChunk = GetArchetypeChunkComponentType<Vision>(true),
+                MoveToChunk = GetComponentTypeHandle<MoveToTarget>(false),
+                SeersChunk = GetComponentTypeHandle<Vision>(true),
                 AItargetFromEntity = GetComponentDataFromEntity<AITarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToTargetUpdate, systemDeps);
@@ -121,8 +128,8 @@ namespace IAUS.ECS2.Systems.Reactive
             entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new UpdateMoveTargetWhenActive()
             {
-               MoveChunk = GetArchetypeChunkComponentType<Movement>(false),
-                MoveToChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+               MoveChunk = GetComponentTypeHandle<Movement>(false),
+                MoveToChunk = GetComponentTypeHandle<MoveToTarget>(false),
    
             }.ScheduleParallel(ActionTagAdded, systemDeps);
 
@@ -133,8 +140,8 @@ namespace IAUS.ECS2.Systems.Reactive
         public struct UpdateMoveTarget : IJobChunk
 
         {
-            public ArchetypeChunkComponentType<MoveToTarget> MoveToChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<Vision> SeersChunk;
+            public ComponentTypeHandle<MoveToTarget> MoveToChunk;
+            [ReadOnly] public ComponentTypeHandle<Vision> SeersChunk;
             [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> AItargetFromEntity;
             public float DT;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -145,8 +152,10 @@ namespace IAUS.ECS2.Systems.Reactive
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-         
 
+                    if (Seers[i].ClosestTarget.target.entity==Entity.Null) {
+                        continue;
+                    }
 
                     MoveToTarget moveTo = moveToTargets[i];
                     if (!moveTo.CheckForTarget) 
@@ -176,8 +185,8 @@ namespace IAUS.ECS2.Systems.Reactive
         [BurstCompile]
         public struct UpdateMoveTargetWhenActive : IJobChunk
         {   
-            public ArchetypeChunkComponentType<Movement> MoveChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<MoveToTarget> MoveToChunk;
+            public ComponentTypeHandle<Movement> MoveChunk;
+            [ReadOnly] public ComponentTypeHandle<MoveToTarget> MoveToChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                      NativeArray<Movement> movements = chunk.GetNativeArray(MoveChunk);

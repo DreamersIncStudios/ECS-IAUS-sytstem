@@ -1,18 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using Unity.Entities;
+//using AISenses;
+//using Unity.Burst;
+//using Unity.Jobs;
+//using IAUS.ECS2.Component;
+//using Unity.Collections;
 
-public class WaitActionSystem : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+//namespace IAUS.ECS2.Systems
+//{
+//    public class WaitActionSystem : SystemBase
+//    {
+//        protected override void OnUpdate()
+//        {
+//            JobHandle systemDeps = Dependency;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+//            Dependency = systemDeps;
+//        }
+
+
+//    }
+//}

@@ -9,6 +9,8 @@ using Unity.Burst;
 using Components.MovementSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS2.Systems.Reactive
 {
@@ -21,7 +23,7 @@ namespace IAUS.ECS2.Systems.Reactive
 
         public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete)
+            if (AIStateCompoment.Complete || AIStateCompoment.Status==ActionStatus.Success)
             {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
@@ -51,6 +53,7 @@ namespace IAUS.ECS2.Systems.Reactive
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _componentRemovedQuery;
+        private EntityQuery _patrolling;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -63,9 +66,15 @@ namespace IAUS.ECS2.Systems.Reactive
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
+            _patrolling = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(PatrolWaypointBuffer))
+                , ComponentType.ReadOnly(typeof(LocalToWorld)),
+                    ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
+            });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(Movement))
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)),  ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
             });
@@ -79,19 +88,23 @@ namespace IAUS.ECS2.Systems.Reactive
             JobHandle systemDeps = Dependency;
             systemDeps = new PatrolMovementUpdateJob()
             {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(false),
-                TagChunk = GetArchetypeChunkComponentType<PatrolActionTag>(true),
-                WaypointChunk = GetArchetypeChunkBufferType<PatrolWaypointBuffer>(true),
-                ToWorldChunk = GetArchetypeChunkComponentType<LocalToWorld>(true)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
+            systemDeps = new CheckSkipPoint() {
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true)
+            }.ScheduleParallel(_patrolling,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new OnCompletionUpdateJob()
             {
-                MovementChunk = GetArchetypeChunkComponentType<Movement>(false),
-                PatrolChunk = GetArchetypeChunkComponentType<Patrol>(true),
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Patrol>(true),
+                WaitChunk = GetComponentTypeHandle<Wait>(false)
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -101,11 +114,9 @@ namespace IAUS.ECS2.Systems.Reactive
         [BurstCompile]
         public struct PatrolMovementUpdateJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
-            public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<PatrolActionTag> TagChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> ToWorldChunk;
-            [ReadOnly] public ArchetypeChunkBufferType<PatrolWaypointBuffer> WaypointChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
@@ -127,13 +138,54 @@ namespace IAUS.ECS2.Systems.Reactive
                 }
             }
         }
+        [BurstCompile]
+        public struct CheckSkipPoint : IJobChunk
+        {
+            public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
 
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Movement> movements = chunk.GetNativeArray(MovementChunk);
+                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<LocalToWorld> ToWorlds = chunk.GetNativeArray(ToWorldChunk);
+                BufferAccessor<PatrolWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Patrol patrol = patrols[i];
+                    //TODO  make threat and Proximity Thresholds a variable of the entity
+                    if (patrol.CurWaypoint.InfluenceAtPosition.y > .7 && patrol.CurWaypoint.InfluenceAtPosition.y < .75f)
+                    {
+                        //Movement move = movements[i];
+                        //DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
+                        //patrol.WaypointIndex = patrol.WaypointIndex >= patrol.NumberOfWayPoints ?
+                        // patrol.WaypointIndex++ :
+                        //  patrol.WaypointIndex = 0;
+
+                        //patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
+                        //patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
+
+                        //move.TargetLocation = patrol.CurWaypoint.Position;
+                        //move.CanMove = true;
+                        //move.SetTargetLocation = true;
+
+                        //movements[i] = move;
+                        //patrols[i] = patrol;
+                    }
+                }
+
+            }
+        }
 
         public struct OnCompletionUpdateJob : IJobChunk
         {
-            public ArchetypeChunkComponentType<Wait> WaitChunk;
-            [ReadOnly]public ArchetypeChunkComponentType<Patrol> PatrolChunk;
-            public ArchetypeChunkComponentType<Movement> MovementChunk;
+            public ComponentTypeHandle<Wait> WaitChunk;
+            [ReadOnly]public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<Movement> MovementChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);

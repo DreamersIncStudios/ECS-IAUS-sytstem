@@ -8,6 +8,9 @@ namespace IAUS.ECS2.Component {
         public ConsiderationScoringData TimeLeft;
         public ConsiderationScoringData HealthRatio;
         public bool Complete => Timer <= 0.0f;
+        /// <summary>
+        /// How much time NPC has left to wait at location.
+        /// </summary>
         public float Timer;
         public float StartTime;
         public float TimePercent => Timer / StartTime;

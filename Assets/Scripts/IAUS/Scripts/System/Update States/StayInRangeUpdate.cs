@@ -34,9 +34,9 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new CheckDistanceToLeader()
             {
-                StayChunk = GetArchetypeChunkComponentType<StayInRange>(false),
-                FollowerChunk = GetArchetypeChunkComponentType<FollowEntityTag>(true),
-                PositionChunk = GetArchetypeChunkComponentType<LocalToWorld>(true),
+                StayChunk = GetComponentTypeHandle<StayInRange>(false),
+                FollowerChunk = GetComponentTypeHandle<FollowEntityTag>(true),
+                PositionChunk = GetComponentTypeHandle<LocalToWorld>(true),
                 EntityPositions = GetComponentDataFromEntity<LocalToWorld>()
             }.ScheduleParallel(Followers, systemDeps);
 
@@ -44,8 +44,8 @@ namespace IAUS.ECS2.Systems
 
             systemDeps = new ScoreStayInRangeState()
             {
-                StayChunk = GetArchetypeChunkComponentType<StayInRange>(false),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true)
+                StayChunk = GetComponentTypeHandle<StayInRange>(false),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
             }.ScheduleParallel(Followers, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -58,9 +58,9 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         struct CheckDistanceToLeader : IJobChunk
         {
-            public ArchetypeChunkComponentType<StayInRange> StayChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<FollowEntityTag> FollowerChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<LocalToWorld> PositionChunk;
+            public ComponentTypeHandle<StayInRange> StayChunk;
+            [ReadOnly] public ComponentTypeHandle<FollowEntityTag> FollowerChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> PositionChunk;
             [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<LocalToWorld> EntityPositions;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -82,8 +82,8 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct ScoreStayInRangeState : IJobChunk
         {
-            public ArchetypeChunkComponentType<StayInRange> StayChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<StayInRange> StayChunk;
+            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<StayInRange> Stays = chunk.GetNativeArray(StayChunk);

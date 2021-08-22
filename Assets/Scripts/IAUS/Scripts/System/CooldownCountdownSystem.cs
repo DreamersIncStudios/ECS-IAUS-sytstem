@@ -14,6 +14,8 @@ namespace IAUS.ECS2.Systems
         private EntityQuery WaitCooldown;
         private EntityQuery MoveToCooldown;
         private EntityQuery AttackCooldown;
+        private EntityQuery RetreatCooldown;
+
 
 
 
@@ -39,11 +41,12 @@ namespace IAUS.ECS2.Systems
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget))},
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(MoveToTargetActionTag))}
             });
-            AttackCooldown = GetEntityQuery(new EntityQueryDesc()
+            RetreatCooldown = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(MeleeAttackTarget)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AttackTargetActionTag)) }
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)),/* ComponentType.ReadWrite(typeof(RetreatPlayerPartyNPC)) , ComponentType.ReadWrite(typeof(RetreatEnemyNPC)) */},
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatActionTag)) }
             });
+
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
@@ -52,30 +55,30 @@ namespace IAUS.ECS2.Systems
             JobHandle systemDeps = Dependency;
             systemDeps = new CooldownJob<Patrol>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<Patrol>(false),
+                AIStateChunk = GetComponentTypeHandle<Patrol>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(PatrolCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<Wait>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<Wait>(false),
+                AIStateChunk = GetComponentTypeHandle<Wait>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(WaitCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<MoveToTarget>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<MoveToTarget>(false),
+                AIStateChunk = GetComponentTypeHandle<MoveToTarget>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(MoveToCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            systemDeps = new CooldownJob<MeleeAttackTarget>()
+            systemDeps = new CooldownJob<RetreatCitizen>()
             {
-                AIStateChunk = GetArchetypeChunkComponentType<MeleeAttackTarget>(false),
+                AIStateChunk = GetComponentTypeHandle<RetreatCitizen>(false),
                 DT = Time.DeltaTime
-            }.ScheduleParallel(AttackCooldown, systemDeps);
+            }.ScheduleParallel(RetreatCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
@@ -86,7 +89,7 @@ namespace IAUS.ECS2.Systems
            where AISTATE : unmanaged, IBaseStateScorer
         {
 
-            public ArchetypeChunkComponentType<AISTATE> AIStateChunk;
+            public ComponentTypeHandle<AISTATE> AIStateChunk;
             public float DT;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -95,7 +98,7 @@ namespace IAUS.ECS2.Systems
                 {
                     AISTATE aistate = AISTATES[i];
                     if (!aistate.InCooldown) {
-                        return;
+                        continue;
                     }
                         
                     aistate.ResetTime -= DT;

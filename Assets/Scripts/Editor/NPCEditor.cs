@@ -5,10 +5,11 @@ using UnityEngine;
 using IAUS.ECS2.Component;
 using IAUS.ECS2;
 using Global.Component;
-using SpawnerSystem.Editors;
-using IAUS.SO.Interfaces;
+using Dreamers.Global;
+using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;
-namespace IAUS.SO.editor
+using DreamersInc.InflunceMapSystem;
+namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {
@@ -21,46 +22,56 @@ namespace IAUS.SO.editor
             window.minSize = new Vector2(600, 800);
             window.Show();
         }
-        private void Awake()
+
+        string[] menuOptions = new string[] { "Basic", "Level/Stats", "Detection", "AI States", };
+        string[] AIStatesTab = new string[] { "Patrol", "Wait", "Attack", "Retreat" };
+        int menuInt = 0;
+        int AiStateInt = 0;
+        public void Awake()
         {
             SetStartValues();
+           
         }
-        bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length] ;
-        EditorState editorState;
+
+        bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length];
+        EditorState editorState = EditorState.CreateNew;
         TargetType GetTargetType;
         Patrol GetPatrol;
-            
+
         Wait GetWait;
-        Retreat GetRetreat;
+        RetreatCitizen GetRetreat;
         GameObject GetModel;
-        bool createRandomCharacter=false;
+        bool createRandomCharacter = false;
+        TypeOfNPC GetTypeOfNPC;
         Vector2 scrollPos;
+        string Name;
         void OnGUI()
         {
+            menuInt = GUILayout.Toolbar(menuInt, menuOptions);
+
             EditorGUILayout.BeginHorizontal();
             DisplayListOfExistingSO();
-
-            EditorGUILayout.BeginVertical("Box");
-            GUILayout.Label("Base Settings", EditorStyles.boldLabel);
-            scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
-            EditorGUILayout.BeginVertical("Button");
-            createRandomCharacter = EditorGUILayout.Foldout(createRandomCharacter, "Create RNG GO To Be Implement Later");
-            if (!createRandomCharacter)
-                GetModel = (GameObject)EditorGUILayout.ObjectField("Select Model", GetModel, typeof(GameObject), false);
-
-            GetTargetType = (TargetType)EditorGUILayout.EnumPopup("AI Type", GetTargetType);
-            switch (GetTargetType)
-            {
-                case TargetType.Character:
-                    GetPatrol = SetupPatrol(GetPatrol);
-                    GetWait = SetupWait(GetWait);
-                    SetupFlee();
+            switch (menuInt) {
+                case 0:
+                    DisplayBasicInfo();
                     break;
+                case 1:
+                    DisplayStatInfo();
+                    break;
+                case 2:
+                    DisplayDetectionInfo();
+                    break;
+                case 3:
+                    DisplayAIStates();
+                    break;
+            
             }
+            //GetTeam = SetupEnemy();
+
+
+
             EditorGUILayout.EndVertical();
 
-            if (GetTargetType == TargetType.Character)
-                GetMove = SetupMove(GetMove);
             // add a switch here
             EditorGUILayout.BeginHorizontal("Box");
             switch (editorState)
@@ -69,46 +80,51 @@ namespace IAUS.SO.editor
 
                     if (GUILayout.Button("Submit"))
                     {
-                        CreateSO("Assets/Resources/NPC SO AI");
+                        CreateSO("Assets/Resources/NPC");
+                        Repaint();
+
                     }
-                        break;
+                    break;
                 case EditorState.EditExisting:
 
                     if (GUILayout.Button("Update"))
                     {
-                        SaveChanges();
+                        SaveChangesToNPCSO();
+                        Repaint();
+
+
                     }
-                    if (GUILayout.Button("Update"))
+                    if (GUILayout.Button("Create New SO"))
                     {
                         CreateSO("Assets/Resources/NPC SO AI");
+                        Repaint();
+
                     }
                     break;
             }
             if (GUILayout.Button("Clear"))
             {
-            // add nodal window to verfiy 
+                // add nodal window to verfiy 
                 SetStartValues();
-                editorState = EditorState.CreateNew;
+                Repaint();
             }
-
-
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.EndScrollView();
-            EditorGUILayout.EndVertical();
-            EditorGUILayout.EndHorizontal();
+
         }
+
+
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
-        Patrol SetupPatrol( Patrol state)
+        Patrol SetupPatrol(Patrol state)
         {
             showBtn[(int)AIStates.Patrol] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Patrol], "Patrol");
 
             if (showBtn[(int)AIStates.Patrol])
             {
-                if(PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
-                   state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
-                if(PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
-                    state.HealthRatio = DisplayConsideration( state.HealthRatio);
+                if (PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
+                    state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
+                if (PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
+                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
             }
@@ -126,7 +142,7 @@ namespace IAUS.SO.editor
                 if (WaitTime = EditorGUILayout.Foldout(WaitTime, "Time Left"))
                     state.TimeLeft = DisplayConsideration(state.TimeLeft);
 
-                if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Time Left"))
+                if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Health Left"))
                     state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.StartTime = EditorGUILayout.FloatField("Start Time", state.StartTime);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
@@ -136,65 +152,118 @@ namespace IAUS.SO.editor
 
             return state;
         }
-        void SetupFlee()
+
+        bool RetreatDistance, RetreatHealthRatio,AlertResponse;
+       RetreatCitizen SetupRetreat(RetreatCitizen state)
         {
             showBtn[(int)AIStates.Retreat] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Retreat], "Flee from Target");
             if (showBtn[(int)AIStates.Retreat])
             {
-                GUILayout.Button("Submit");
+                if (RetreatHealthRatio = EditorGUILayout.Foldout(RetreatHealthRatio, "CharacterHealth"))
+                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
+                if (AlertResponse = EditorGUILayout.Foldout(RetreatHealthRatio, "Alert Response"))
+                    state.ProximityInArea= DisplayConsideration(state.ProximityInArea);
+
+                state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
+                state.HideTime = EditorGUILayout.FloatField("Hide Time", state.HideTime);
+
+
+
+            }
+
+            if (GUILayout.Button("Reset")) {
+               state = new RetreatCitizen()
+                {
+                    HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                    ProximityInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                    _coolDownTime = 5,
+                    HideTime = 30
+
+                };
+
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
+            return state;
         }
 
-       ConsiderationScoringData DisplayConsideration( ConsiderationScoringData data) {
-            data.Inverse = EditorGUILayout.Toggle("Inverse",data.Inverse);
+        ConsiderationScoringData DisplayConsideration(ConsiderationScoringData data)
+        {
+            data.Inverse = EditorGUILayout.Toggle("Inverse", data.Inverse);
             data.responseType = (ResponseType)EditorGUILayout.EnumPopup("Response", data.responseType);
             data.M = EditorGUILayout.FloatField("M", data.M);
             data.K = EditorGUILayout.FloatField("K", data.K);
-            data.B = EditorGUILayout.FloatField("B", data.B );
+            data.B = EditorGUILayout.FloatField("B", data.B);
             data.C = EditorGUILayout.FloatField("C", data.C);
             return data;
         }
         Movement GetMove;
-        Movement SetupMove(Movement move) {
+        Movement SetupMove(Movement move)
+        {
             move.MovementSpeed = EditorGUILayout.FloatField("Movement Speed", move.MovementSpeed);
             move.StoppingDistance = EditorGUILayout.FloatField("Stopping Distance", move.StoppingDistance);
             move.Acceleration = EditorGUILayout.FloatField("Acceleration", move.Acceleration);
-            move.MaxInfluenceAtPoint = EditorGUILayout.IntField("Max Influence???", move.MaxInfluenceAtPoint);
+            move.MaxInfluenceAtPoint = EditorGUILayout.IntField(" Max Influence at location allowed", move.MaxInfluenceAtPoint);
 
 
             return move;
         }
-        
 
-        void CreateSO(string Path) {
 
-            List<AIStates> StatesToAdd= new List<AIStates>();
+        void CreateSO(string Path)
+        {
+
+            List<AIStates> StatesToAdd = new List<AIStates>();
             for (int i = 0; i < showBtn.Length; i++)
             {
-                if (showBtn[i]) {
-                    switch ((AIStates)i) {
+                if (showBtn[i])
+                {
+                    switch ((AIStates)i)
+                    {
                         case AIStates.Patrol:
-                            StatesToAdd.Add( AIStates.Patrol);
+                            StatesToAdd.Add(AIStates.Patrol);
                             break;
                         case AIStates.Wait:
                             StatesToAdd.Add(AIStates.Wait);
                             break;
-
+                        case AIStates.Retreat:
+                            StatesToAdd.Add(AIStates.Retreat);
+                            break;
                     }
-                
+
                 }
             }
+            //Create SO base of NPC Type
+            switch (GetTypeOfNPC)
+            {
+                case TypeOfNPC.Neurtal:
+                    ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                        GetPatrol, GetWait
+                        );
+                    EditorUtility.SetDirty(SO);
+                    break;
+                case TypeOfNPC.Friendly:
+                    break;
+                case TypeOfNPC.Enemy:
+                    ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                        GetPatrol, GetWait
+                        );
+                    enemyNPCSO.Setup(GetTeam.IsLeader, GetTeamInfo, GetAttacks, GetRetreat);
+                    EditorUtility.SetDirty(enemyNPCSO);
 
-            ScriptableObjectUtility.CreateAsset<NPCSO>(Path, out NPCSO SO);
-            SO.Setup(GetModel,new AITarget() { Type = GetTargetType },StatesToAdd, GetMove,
-                GetPatrol,GetWait,GetRetreat
-                );
+                    break;
+            }
+
+
             SetStartValues();
         }
 
-       public void SetStartValues() {
+        public void SetStartValues()
+        {
+            Name = null;
             GetModel = null;
+            GetTypeOfNPC = TypeOfNPC.Neurtal;
             GetTargetType = new TargetType();
             GetPatrol = new Patrol()
             {
@@ -204,15 +273,33 @@ namespace IAUS.SO.editor
                 _coolDownTime = 5
 
             };
-            GetRetreat = new Retreat() { };
-            GetWait = new Wait() { 
-                TimeLeft = new ConsiderationScoringData() { M=50, K=-1, B=.91f,C= .2f, responseType = ResponseType.Logistic, Inverse =false},
-                HealthRatio =  new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
-                StartTime =1,
-                _coolDownTime =5
+            GetRetreat = new RetreatCitizen() {
+                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                ProximityInArea = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                _coolDownTime = 5,
+                HideTime = 30
+
+            };
+            GetWait = new Wait()
+            {
+                TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                StartTime = 1,
+                _coolDownTime = 5
+            };
+            GetVision = new AISenses.Vision()
+            {
+                ViewAngle = 120,
+                viewRadius = 35,
+                EngageRadius = 10,
+                Scantimer = 5
             };
 
+            GetInfluence = new InfluenceComponent();
+            GetAttacks = new List<AttackTypeInfo>();
+            editorState = EditorState.CreateNew;
         }
 
     }
+
 }

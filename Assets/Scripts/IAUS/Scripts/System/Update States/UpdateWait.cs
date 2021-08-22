@@ -38,16 +38,16 @@ namespace IAUS.ECS2.Systems
             systemDeps = new TimerJob()
             {
                 DT = DT,
-                EntityChunk = GetArchetypeChunkEntityType(),
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false),
-                ConcurrentBuffer = entityCommandBufferSystem.CreateCommandBuffer().ToConcurrent()
+                EntityChunk = GetEntityTypeHandle(),
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                ConcurrentBuffer = entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
             }.ScheduleParallel(WaitUpdate, systemDeps);
 
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             systemDeps = new UpdateWaitScore()
             {
-                WaitChunk = GetArchetypeChunkComponentType<Wait>(false),
-                StatsChunk = GetArchetypeChunkComponentType<CharacterStatComponent>(true)
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
                 
             }.ScheduleParallel(WaitScore, systemDeps);
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -59,9 +59,9 @@ namespace IAUS.ECS2.Systems
         public struct TimerJob : IJobChunk
         {
             public float DT;
-            public ArchetypeChunkComponentType<Wait> WaitChunk;
-            [ReadOnly]public ArchetypeChunkEntityType EntityChunk;
-            public EntityCommandBuffer.Concurrent ConcurrentBuffer;
+            public ComponentTypeHandle<Wait> WaitChunk;
+            [ReadOnly]public EntityTypeHandle EntityChunk;
+            public EntityCommandBuffer.ParallelWriter ConcurrentBuffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
@@ -84,8 +84,8 @@ namespace IAUS.ECS2.Systems
         [BurstCompile]
         public struct UpdateWaitScore : IJobChunk
         {
-            public ArchetypeChunkComponentType<Wait> WaitChunk;
-            [ReadOnly] public ArchetypeChunkComponentType<CharacterStatComponent> StatsChunk;
+            public ComponentTypeHandle<Wait> WaitChunk;
+            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
