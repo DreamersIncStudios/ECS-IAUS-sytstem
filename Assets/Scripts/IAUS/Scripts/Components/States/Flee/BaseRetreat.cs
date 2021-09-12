@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using System.Collections.Generic;
 using DreamersInc.InflunceMapSystem;
+using Unity.Burst;
 namespace IAUS.ECS2.Component
 {
 
@@ -35,20 +36,21 @@ namespace IAUS.ECS2.Component
         public Faction FactionMember
         { get { return faction; } set { faction = value; } }
         [SerializeField] Faction faction;
-
+        [BurstDiscard]
         public float3 LocationOfHighestThreat
         {
             get
             {
-                InfluenceGridMaster.grid.GetGridObject(CurPos).GetHighestThreatCell(FactionMember,true, out int x, out int y);
-                return InfluenceGridMaster.grid.GetWorldPosition(x, y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(FactionMember,true, out int x, out int y);
+                return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
-        public float3 LocationOfLowestThreat {
+
+        [BurstDiscard] public float3 LocationOfLowestThreat {
             get   
             {
-                InfluenceGridMaster.grid.GetGridObject(CurPos).GetLowestThreatCell(FactionMember,true, out int x, out int y);
-                return InfluenceGridMaster.grid.GetWorldPosition(x, y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(FactionMember,true, out int x, out int y);
+                return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
 
@@ -67,9 +69,9 @@ namespace IAUS.ECS2.Component
         public float HideTime;
 
         public float3 CurPos { get; set; }
-      [SerializeField]  public float2 GridValueAtPos
+        [BurstDiscard] public float2 GridValueAtPos
         { get {
-                return InfluenceGridMaster.grid.GetGridObject(CurPos).GetValueNormalized(FactionMember, true);
+                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(FactionMember, true);
                     }  }
 
     }
