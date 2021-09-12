@@ -74,9 +74,9 @@ namespace IAUS.ECS2.Systems.Reactive
 
         protected override void OnUpdate()
         {
-        
+
             JobHandle systemDeps = Dependency;
-            Entities.ForEach((ref Movement move, ref Wait wait, ref RetreatCitizen retreat, ref Patrol patrol) =>
+            Entities.WithoutBurst().ForEach((ref Movement move, ref Wait wait, ref RetreatCitizen retreat, ref Patrol patrol) =>
             {
 
                 if (retreat.Status == ActionStatus.Running)
@@ -101,7 +101,7 @@ namespace IAUS.ECS2.Systems.Reactive
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 WaitChunk = GetComponentTypeHandle<Wait>(false),
-                Buffer= GetBufferFromEntity<PatrolWaypointBuffer>(false),
+                Buffer = GetBufferFromEntity<PatrolWaypointBuffer>(false),
                 CanPatrol = GetComponentDataFromEntity<Patrol>(false),
                 EntityChunk = GetEntityTypeHandle(),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
@@ -113,6 +113,7 @@ namespace IAUS.ECS2.Systems.Reactive
             Dependency = systemDeps;
 
         }
+        
         public struct RetreatAdded : IJobChunk
         {
             public ComponentTypeHandle<Wait> WaitChunk;
@@ -120,7 +121,7 @@ namespace IAUS.ECS2.Systems.Reactive
             public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
             public ComponentTypeHandle<Patrol> PatrolChunk;
 
-
+            [BurstDiscard]
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);

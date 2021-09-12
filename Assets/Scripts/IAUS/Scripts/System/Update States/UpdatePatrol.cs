@@ -63,7 +63,7 @@ namespace IAUS.ECS2.Systems
                 IAUSBrainChunk = GetComponentTypeHandle<IAUSBrain>(true),
                 PatrolBuffer = GetBufferTypeHandle<PatrolWaypointBuffer>(false),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false)
-            }.ScheduleSingle(BufferPatrol, systemDeps);
+            }.ScheduleParallel(BufferPatrol, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new ScoreState() 
@@ -129,7 +129,7 @@ namespace IAUS.ECS2.Systems
                 }
             }
         }
-        [BurstCompile]
+      //  [BurstCompile]
         public struct CheckThreatAtWaypoint : IJobChunk
         {
             public BufferTypeHandle<PatrolWaypointBuffer> PatrolBuffer;
@@ -150,7 +150,7 @@ namespace IAUS.ECS2.Systems
                     for (int j = 0; j < buffer.Length; j++)
                     {
                         PatrolWaypointBuffer point = buffer[j];
-                        point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(Brains[i].faction, true);
+                        point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(Brains[i].faction, true);
                         buffer[j] = point;
                         if (j == patrol.WaypointIndex) {
                             patrol.CurWaypoint = point.WayPoint;

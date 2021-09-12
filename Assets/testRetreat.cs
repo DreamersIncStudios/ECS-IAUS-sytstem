@@ -6,10 +6,10 @@ public class testRetreat : MonoBehaviour
 {
     InfluenceGridObject currentInflunceGridObject;
     private Vector3 previousPos;
-    bool NPCOffGrid => null == InfluenceGridMaster.grid.GetGridObject(transform.position) && currentInflunceGridObject != null;
+    bool NPCOffGrid => null == InfluenceGridMaster.Instance.grid.GetGridObject(transform.position) && currentInflunceGridObject != null;
     bool GridChanged(out InfluenceGridObject gridpoint)
     {
-        gridpoint = InfluenceGridMaster.grid.GetGridObject(transform.position);
+        gridpoint = InfluenceGridMaster.Instance.grid.GetGridObject(transform.position);
         if (gridpoint == null)
         {
             return false;
@@ -21,7 +21,7 @@ public class testRetreat : MonoBehaviour
     void Start()
     {
         previousPos = transform.position;
-        currentInflunceGridObject = InfluenceGridMaster.grid.GetGridObject(transform.position);
+        currentInflunceGridObject = InfluenceGridMaster.Instance.grid.GetGridObject(transform.position);
         currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(100, 100),20,8, Faction.Player);
 
     }
