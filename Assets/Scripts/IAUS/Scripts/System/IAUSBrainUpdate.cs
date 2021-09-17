@@ -175,8 +175,9 @@ namespace IAUS.ECS2.Systems
                             case AIStates.GotoLeader:
                                 CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.Attack_Melee:
-                                CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
+                            case AIStates.Attack:
+                                //TODO Implement Add and Remove Tag;
+                               // CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Retreat:
                                 CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
@@ -197,8 +198,8 @@ namespace IAUS.ECS2.Systems
                             case AIStates.GotoLeader:
                                 CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.Attack_Melee:
-                                CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
+                            case AIStates.Attack:
+                             //   CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Retreat:
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);

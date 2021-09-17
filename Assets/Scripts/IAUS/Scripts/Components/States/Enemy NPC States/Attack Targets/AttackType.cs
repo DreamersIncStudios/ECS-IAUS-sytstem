@@ -8,6 +8,7 @@ namespace IAUS.ECS2.Component
     public struct AttackTypeInfo : IBufferElementData
     {
         public AttackStyle style;
+        public ConsiderationScoringData HealthRatio;
         public ConsiderationScoringData RangeToTarget;
         public ConsiderationScoringData ManaAmmoAmount;
         public bool Range;
@@ -18,6 +19,7 @@ namespace IAUS.ECS2.Component
         public float Attacktimer; // This need to be derive from Character stats Possible ?
         public Entity Target;
         public bool InRangeForAttack => DistanceToTarget < AttackRange;
+        public float Score;
     }
 
     public enum AttackStyle { 

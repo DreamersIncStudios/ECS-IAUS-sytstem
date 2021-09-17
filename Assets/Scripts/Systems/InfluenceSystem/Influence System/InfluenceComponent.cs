@@ -31,8 +31,11 @@ namespace DreamersInc.InflunceMapSystem
         {
             return null == InfluenceGridMaster.Instance.grid.GetGridObject(position) && InfluenceGridMaster.Instance.grid.GetGridObject(previousPos) != null;
         }
+
     }
 
+
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public sealed class UpdateInfluenceGridSystem : SystemBase
     {
         EntityQuery Influencers;

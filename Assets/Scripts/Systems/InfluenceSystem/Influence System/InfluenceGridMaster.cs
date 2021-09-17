@@ -17,11 +17,6 @@ namespace DreamersInc.InflunceMapSystem
 
         public static FilterGroups Filters = new FilterGroups();
       
-
-
-
-        //[SerializeField]public List<GridGenericXZ<InfluenceGridObject>> Grids;
-
         // Start is called before the first frame update
         void Awake()
         {

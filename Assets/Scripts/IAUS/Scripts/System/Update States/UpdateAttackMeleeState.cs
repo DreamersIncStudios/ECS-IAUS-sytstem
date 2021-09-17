@@ -63,7 +63,7 @@ namespace IAUS.ECS2.Systems
             }
         }
 
-        struct UpdateAttackBuffer : IJobChunk
+        struct ScoreBufferSubStates : IJobChunk
         {
             public BufferTypeHandle<AttackTypeInfo> AttackBuffer;
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
@@ -77,10 +77,14 @@ namespace IAUS.ECS2.Systems
                 {
                     AttackTargetState State = AttackStates[i];
 
-                    DynamicBuffer<AttackTypeInfo> AttckBuffer = bufferAccessor[i];
-                    for (int j = 0; j < AttckBuffer.Length; j++)
+                    DynamicBuffer<AttackTypeInfo> AttackBuffer = bufferAccessor[i];
+                    for (int j = 0; j < AttackBuffer.Length; j++)
                     {
+                        AttackTypeInfo ScoreAttack = AttackBuffer[i];
 
+                        ScoreAttack.Score = ScoreAttack.HealthRatio.Output(State.HealthRatio)*
+                            ScoreAttack.DistanceToTarget
+                            ;
                     }
                 }
             }

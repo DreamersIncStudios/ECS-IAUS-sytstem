@@ -37,7 +37,7 @@ namespace IAUS.ECS2.Component
         [SerializeField] float _totalScore;
     }
 
-    public struct AttackTargetActionTag : IComponentData { bool test; }
+   // public struct AttackTargetActionTag : IComponentData { bool test; }
 
     public struct MeleeAttackTargetActionTag : IComponentData { bool test; }
     public struct RangedAttackTargetActionTag : IComponentData { bool test; }
