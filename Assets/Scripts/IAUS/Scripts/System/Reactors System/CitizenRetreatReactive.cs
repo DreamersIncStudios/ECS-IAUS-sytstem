@@ -183,7 +183,7 @@ namespace IAUS.ECS2.Systems.Reactive
                      //   wait.Timer = retreats[i].HideTime;
                     if (CanPatrol.HasComponent(entities[i])) {
                         Patrol patrol = CanPatrol[entities[i]];
-                        //TODO  make threat and Proximity Thresholds a variable of the entity
+                        //TODO needs to be rewritten to account for influence by group.
                         if (patrol.CurWaypoint.InfluenceAtPosition.y > .7 && patrol.CurWaypoint.InfluenceAtPosition.y < .75f) 
                         {
                             //move to the next point

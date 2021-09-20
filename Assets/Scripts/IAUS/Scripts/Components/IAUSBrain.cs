@@ -16,7 +16,7 @@ namespace IAUS.ECS2.Component
         public AITarget Target;
         public AIStates CurrentState;
         public Faction faction;
-
+        public Attitude Attitude;
     }
     public struct SetupBrainTag : IComponentData { }
 
@@ -28,4 +28,5 @@ namespace IAUS.ECS2.Component
         public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;
 
     }
+    public enum Attitude { Normal, Brave, Reckless, Berserk, Cautious, Sleep, Confused, Dazed }
 }

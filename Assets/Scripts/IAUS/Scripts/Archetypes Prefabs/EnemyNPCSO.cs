@@ -12,8 +12,10 @@ using Stats;
 using AISenses.Authoring;
 using AISenses;
 using Dreamers.SquadSystem;
+using Components.MovementSystem;
+
 namespace IAUS.NPCSO {
-    public sealed class EnemyNPCSO : NPCSO, INPCEnemy
+    public sealed class EnemyNPCSO : NPCSO, INPCEnemy,IInfluence
     {
         public bool IsPartOfTeam => isPartofTeam;
         [SerializeField] bool isPartofTeam = false;
@@ -21,18 +23,27 @@ namespace IAUS.NPCSO {
         [SerializeField] TeamInfo getTeamInfo;
         public RetreatCitizen GetRetreat => getRetreat;
         [SerializeField] RetreatCitizen getRetreat;
+        public InfluenceComponent GetInfluence { get { return getInfluence; } }
+
+        [SerializeField] InfluenceComponent getInfluence;
+        public Faction getFaction { get { return factionMember; } }
+        [SerializeField] Faction factionMember;
+
         public List<AttackTypeInfo> GetAttackType => getAttackTypes;
         [SerializeField] List<AttackTypeInfo> getAttackTypes;
 
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public  void Setup(bool team,  TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee)
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, Patrol patrol, Wait wait,
+            bool team, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee, InfluenceComponent influence)
         {
+            base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);
             isPartofTeam = team;
             getTeamInfo = teamInfo;
             getAttackTypes = attackTypeInfos;
             getRetreat = flee;
+            this.getInfluence = influence;
         }
 
         public override void Spawn(Vector3 pos)
@@ -40,14 +51,15 @@ namespace IAUS.NPCSO {
             base.Spawn(pos);
             if (Self.Type == TargetType.Character)
                 SpawnedGO.AddComponent<EnemyCharacter>();
+            AIAuthoring.faction = getFaction;
+
             if (isPartofTeam) {
                 TeamAuthoring teamAuthoring = new TeamAuthoring() {
-                    Info = getTeamInfo,
-
-                    
+                    Info = getTeamInfo
               };
 
             }
+            AIAuthoring.GetInfluence = getInfluence;
             foreach (AIStates state in AIStatesAvailable)
             {
                 switch (state)

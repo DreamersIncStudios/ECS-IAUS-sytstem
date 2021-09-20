@@ -24,19 +24,26 @@ namespace IAUS.NPCSO.editor
             GetTargetType = SO.Self.Type;
             Name = SO.GetName;
             GetWait = SO.GetWait;
-            GetInfluence = SO.GetInfluence;
             GetMove = SO.AIMove;
             GetVision = SO.GetVision;
             GetTypeOfNPC = SO.GetTypeOfNPC;
-            if (GetTypeOfNPC == TypeOfNPC.Enemy)
-            {
-                EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
-                GetTeamInfo = enemy.GetTeamInfo;
-             //   GetTeam.IsLeader = enemy.IsLeader;
-                GetAttacks = enemy.GetAttackType;
-                GetRetreat = enemy.GetRetreat;
+            switch (GetTypeOfNPC) {
+                case TypeOfNPC.Enemy:
+                    EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
+                    GetTeamInfo = enemy.GetTeamInfo;
+                    //   GetTeam.IsLeader = enemy.IsLeader;
+                    GetAttacks = enemy.GetAttackType;
+                    GetRetreat = enemy.GetRetreat;
+                    GetInfluence = enemy.GetInfluence;
 
+                    break;
+                case TypeOfNPC.Friendly:
+                    FriendNPCSO friend = (FriendNPCSO)GetNPCSO;
+                    GetInfluence = friend.GetInfluence;
+
+                    break;
             }
+
         }
 
         NPCSO GetNPCSO;
@@ -86,15 +93,29 @@ namespace IAUS.NPCSO.editor
 
                 }
             }
+            switch (GetTypeOfNPC) {
+                case TypeOfNPC.Neurtal:
+                    GetNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, StatesToAdd, GetMove,
+    GetPatrol, GetWait
+    );
+                    EditorUtility.SetDirty(GetNPCSO);
+                    break;
+                case TypeOfNPC.Enemy:
+                    EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
+                    enemy.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision, StatesToAdd, GetMove,
+                        GetPatrol, GetWait,GetTeam.IsLeader, GetTeamInfo, GetAttacks, GetRetreat, GetInfluence);
+                    EditorUtility.SetDirty(enemy);
+                    break;
 
-            GetNPCSO.Setup( Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType },  GetVision, StatesToAdd, GetMove,
-                GetPatrol, GetWait
-                );
+                    //Implement Friendly
+                case TypeOfNPC.Friendly: break;
+
+            }
+
+
             if (GetTypeOfNPC == TypeOfNPC.Enemy)
             {
-                EnemyNPCSO enemy = (EnemyNPCSO)GetNPCSO;
-                enemy.Setup(GetTeam.IsLeader,  GetTeamInfo,GetAttacks, GetRetreat);
-                EditorUtility.SetDirty(enemy);
+
             }
             SetStartValues();
         }

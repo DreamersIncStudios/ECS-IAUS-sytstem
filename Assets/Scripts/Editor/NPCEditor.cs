@@ -237,7 +237,7 @@ namespace IAUS.NPCSO.editor
             {
                 case TypeOfNPC.Neurtal:
                     ScriptableObjectUtility.CreateAsset<NPCSO>(Path, Name, out NPCSO SO);
-                    SO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                    SO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
                         GetPatrol, GetWait
                         );
                     EditorUtility.SetDirty(SO);
@@ -246,10 +246,9 @@ namespace IAUS.NPCSO.editor
                     break;
                 case TypeOfNPC.Enemy:
                     ScriptableObjectUtility.CreateAsset<EnemyNPCSO>(Path, Name, out EnemyNPCSO enemyNPCSO);
-                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, GetInfluence, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
-                        GetPatrol, GetWait
+                    enemyNPCSO.Setup(Name, GetModel, GetTypeOfNPC, new AITarget() { Type = GetTargetType }, GetVision,  StatesToAdd, GetMove,
+                        GetPatrol, GetWait, GetTeam.IsLeader, GetTeamInfo, GetAttacks, GetRetreat,GetInfluence
                         );
-                    enemyNPCSO.Setup(GetTeam.IsLeader, GetTeamInfo, GetAttacks, GetRetreat);
                     EditorUtility.SetDirty(enemyNPCSO);
 
                     break;

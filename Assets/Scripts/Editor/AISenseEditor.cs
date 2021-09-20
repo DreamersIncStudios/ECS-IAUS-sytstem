@@ -17,8 +17,8 @@ namespace IAUS.NPCSO.editor
             ShowInfluence = EditorGUILayout.BeginFoldoutHeaderGroup(ShowInfluence, "Influence Data");
             if (ShowInfluence) 
             {
-                GetInfluence.value.x = EditorGUILayout.IntField("Protection", GetInfluence.value.x);
-                GetInfluence.value.y = EditorGUILayout.IntField("Protection", GetInfluence.value.y);
+                GetInfluence.Threat = EditorGUILayout.IntField("Threat", GetInfluence.Threat);
+                GetInfluence.Protection = EditorGUILayout.IntField("Protection", GetInfluence.Protection);
                 GetInfluence.faction = (Faction)EditorGUILayout.EnumPopup("Faction Group Member", GetInfluence.faction);
             }
 

@@ -97,27 +97,28 @@ namespace DreamersInc.InflunceMapSystem
             {
                 int2 enemyValue = new int2();
                 int2 proxValue = new int2();
-
-                List<Faction> enemyFilter = InfluenceGridMaster.Filters.Enemies[faction];
-                List<Faction> proxFilter = InfluenceGridMaster.Filters.Allies[faction];
-
-                foreach (var item in enemyFilter)
+                if (InfluenceGridMaster.Filters.Enemies.TryGetValue(faction, out List<Faction> enemyFilter))
                 {
-                    if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                    foreach (var item in enemyFilter)
                     {
-                        enemyValue += addValue;
+                        if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                        {
+                            enemyValue += addValue;
+                        }
                     }
                 }
-
-                foreach (var item in proxFilter)
+                if (InfluenceGridMaster.Filters.Allies.TryGetValue(faction, out List<Faction> proxFilter))
                 {
-                    if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                    foreach (var item in proxFilter)
                     {
-                        proxValue += addValue;
+                        if (InfluenceValue.TryGetValue(item, out int2 addValue))
+                        {
+                            proxValue += addValue;
+                        }
                     }
+                    value.x = proxValue.x;
+                    value.y = enemyValue.y;
                 }
-                value.x = proxValue.x;
-                value.y = enemyValue.y;
             }
             else
             {

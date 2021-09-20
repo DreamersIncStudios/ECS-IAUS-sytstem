@@ -11,7 +11,6 @@ using IAUS.ECS2.Component;
 using Stats;
 using AISenses;
 using AISenses.Authoring;
-using DreamersInc.InflunceMapSystem;
 
 
 namespace IAUS.NPCSO
@@ -26,9 +25,7 @@ namespace IAUS.NPCSO
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-       public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
-        [SerializeField] InfluenceComponent getInfluence;
 
         public AITarget Self => GetSelf;
         [SerializeField]AITarget GetSelf;
@@ -47,10 +44,9 @@ namespace IAUS.NPCSO
 
         [SerializeField]Vision getVision;
         public Vision GetVision => getVision;
-        public Faction getFaction { get { return factionMember; } }
-        [SerializeField] Faction factionMember;
 
-        public void Setup(string Name,GameObject model, TypeOfNPC typeOf,InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
+
+        public virtual void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
             ,Patrol patrol,Wait wait
             ) {
             _getName = Name;
@@ -58,7 +54,6 @@ namespace IAUS.NPCSO
             GetMovement = movement;
             states = NpcStates;
             _model = model;
-            this.getInfluence = GetInfluence;
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
@@ -74,7 +69,7 @@ namespace IAUS.NPCSO
             SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
              AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
             AIAuthoring.Self = Self;
-            AIAuthoring.faction = getFaction;
+            //AIAuthoring.faction = getFaction;
             AIAuthoring.movement = AIMove;
             foreach (AIStates state in AIStatesAvailable) {
                 switch (state) {
@@ -91,7 +86,6 @@ namespace IAUS.NPCSO
                 }
             if (AIAuthoring.AddPatrol)
                 SpawnedGO.AddComponent<WaypointCreation>();
-            AIAuthoring.GetInfluence = GetInfluence;
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;

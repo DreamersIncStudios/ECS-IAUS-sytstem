@@ -4,7 +4,6 @@ using UnityEngine;
 namespace IAUS.ECS2.Component
 {
     [System.Serializable]
-
     public struct AttackTypeInfo : IBufferElementData
     {
         public AttackStyle style;

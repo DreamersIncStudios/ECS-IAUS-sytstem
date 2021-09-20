@@ -40,14 +40,15 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         if (AddRetreat) {
             dstManager.AddComponentData(entity, retreatState);
         }
-        //if (GetAttackType.Count >= 1)
-        //{
-        //    DynamicBuffer<AttackTypeInfo> ATI = dstManager.AddBuffer<AttackTypeInfo>(entity);
-        //    dstManager.AddComponentData(entity, attackTargetState);
-        //    foreach (AttackTypeInfo Info in GetAttackType)
-        //    {
-        //        ATI.Add(Info);
-        //    }
-        //}
+        if (GetAttackType.Count > 0)
+        {
+            DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
+            foreach (AttackTypeInfo Info in GetAttackType)
+            {
+                ati.Add(Info);
+            }
+            dstManager.AddComponentData(entity, attackTargetState);
+
+        }
     }
 }

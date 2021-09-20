@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using IAUS.ECS2.Component;
+using IAUS.ECS2;
 using UnityEditor.AnimatedValues;
 
 namespace IAUS.NPCSO.editor
@@ -39,7 +40,32 @@ namespace IAUS.NPCSO.editor
 
             if (GUILayout.Button(("Add Attack")))
             {
-                GetAttacks.Add(new AttackTypeInfo());
+                GetAttacks.Add(new AttackTypeInfo() { 
+                    HealthRatio = new ConsiderationScoringData()
+                    {
+                           M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+           
+                    RangeToTarget = new ConsiderationScoringData()
+                    {
+                        M = 50,
+                        K = -0.95f,
+                        B = .935f,
+                        C = .35f,
+                        responseType = ResponseType.Logistic
+                    },
+                    
+                    ManaAmmoAmount = new ConsiderationScoringData()
+                    {
+                        M = 50,
+                        K = -0.95f,
+                        B = .935f,
+                        C = .35f,
+                        responseType = ResponseType.Logistic
+                    },
+
+                }
+
+                );
             }
             return GetAttacks;
         }

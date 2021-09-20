@@ -101,8 +101,10 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\IInfluence.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttacks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
