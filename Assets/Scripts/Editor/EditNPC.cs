@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using IAUS.ECS2.Component;
-using IAUS.ECS2;
+using IAUS.ECS.Component;
+using IAUS.ECS;
 using Global.Component;
 using IAUS.NPCSO.Interfaces;
 using Components.MovementSystem;

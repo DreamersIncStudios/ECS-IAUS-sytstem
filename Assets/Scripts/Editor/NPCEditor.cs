@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using IAUS.ECS2.Component;
-using IAUS.ECS2;
+using IAUS.ECS.Component;
+using IAUS.ECS;
+using IAUS.ECS.Consideration;
 using Global.Component;
 using Dreamers.Global;
 using IAUS.NPCSO.Interfaces;

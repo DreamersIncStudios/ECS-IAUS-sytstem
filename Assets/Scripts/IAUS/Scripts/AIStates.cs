@@ -1,5 +1,5 @@
 ﻿
-namespace IAUS.ECS2
+namespace IAUS.ECS
 {
     public enum AIStates
     {

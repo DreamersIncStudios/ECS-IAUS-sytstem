@@ -3,18 +3,18 @@ using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
 using Unity.Transforms;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using UnityEngine.AI;
 using Components.MovementSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS2.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS.Systems.Reactive.RetreatCitizenTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RetreatActionTag, RetreatCitizen, IAUS.ECS.Systems.Reactive.RetreatCitizenTagReactor>.ManageComponentRemovalJob))]
 
 
-namespace IAUS.ECS2.Systems.Reactive
+namespace IAUS.ECS.Systems.Reactive
 {
     public struct RetreatCitizenTagReactor : IComponentReactorTagsForAIStates<RetreatActionTag, RetreatCitizen>
     {

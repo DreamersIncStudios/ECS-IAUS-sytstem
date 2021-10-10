@@ -3,16 +3,16 @@ using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
 using Unity.Transforms; 
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using Components.MovementSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS2.Systems.Reactive.PatrolTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS.Systems.Reactive.PatrolTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS.Systems.Reactive.PatrolTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, IAUS.ECS.Systems.Reactive.PatrolTagReactor>.ManageComponentRemovalJob))]
 
-namespace IAUS.ECS2.Systems.Reactive
+namespace IAUS.ECS.Systems.Reactive
 {
     public struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol>
     {

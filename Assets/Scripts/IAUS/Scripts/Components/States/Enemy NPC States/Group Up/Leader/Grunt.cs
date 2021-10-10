@@ -5,7 +5,7 @@ using Unity.Entities;
 using Dreamers.SquadSystem;
 
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
     public class Grunt : MonoBehaviour, IConvertGameObjectToEntity
     {

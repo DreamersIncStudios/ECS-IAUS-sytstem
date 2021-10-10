@@ -1,11 +1,11 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 

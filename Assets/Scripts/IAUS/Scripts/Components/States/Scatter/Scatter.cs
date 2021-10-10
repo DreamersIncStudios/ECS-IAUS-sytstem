@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]
     public struct Scatter : IBaseStateScorer

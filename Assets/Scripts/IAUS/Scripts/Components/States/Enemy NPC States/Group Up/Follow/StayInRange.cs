@@ -1,8 +1,8 @@
-﻿
+﻿using IAUS.ECS.Consideration;
 using UnityEngine;
 using Unity.Entities;
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]
     public struct StayInRange : IBaseStateScorer

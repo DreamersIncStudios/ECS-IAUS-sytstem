@@ -4,12 +4,13 @@ using UnityEngine;
 using Unity.Entities;
 using Global.Component;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.ECS2.Component
+using System;
+namespace IAUS.ECS.Component
 {
 
 
 
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct IAUSBrain : IComponentData
     {

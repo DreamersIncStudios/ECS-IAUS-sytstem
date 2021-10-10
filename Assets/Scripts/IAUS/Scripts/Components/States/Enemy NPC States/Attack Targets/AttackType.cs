@@ -1,9 +1,10 @@
 using Unity.Entities;
 using UnityEngine;
-
-namespace IAUS.ECS2.Component
+using IAUS.ECS.Consideration;
+using System;
+namespace IAUS.ECS.Component
 {
-    [System.Serializable]
+    [Serializable]
     public struct AttackTypeInfo : IBufferElementData
     {
         public AttackStyle style;

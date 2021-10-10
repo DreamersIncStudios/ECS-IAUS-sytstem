@@ -1,13 +1,13 @@
 
 using UnityEngine;
 using Unity.Entities;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Collections;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
 using Unity.Jobs;
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public class FindTargets : SystemBase
     {

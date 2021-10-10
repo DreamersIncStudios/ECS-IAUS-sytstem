@@ -1,12 +1,12 @@
 ﻿using Unity.Entities;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using UnityEngine;
 
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public class IAUSBrainSetupSystem : SystemBase
     {

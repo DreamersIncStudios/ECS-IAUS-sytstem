@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-
-namespace IAUS.ECS2.Component
+using System;
+using IAUS.ECS.Consideration;
+namespace IAUS.ECS.Component
 {
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct Patrol : IBaseStateScorer
     {

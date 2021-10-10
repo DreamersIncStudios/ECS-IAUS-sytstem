@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace IAUS.ECS2.Component {
+namespace IAUS.ECS.Component {
 
     public interface IBaseStateScorer : IComponentData
     {

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Burst;
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public class CooldownCountdownSystem : SystemBase
     {

@@ -1,10 +1,11 @@
 using Unity.Entities;
 using UnityEngine;
 using Unity.Mathematics;
-
-namespace IAUS.ECS2.Component
+using System;
+using IAUS.ECS.Consideration;
+namespace IAUS.ECS.Component
 {
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct InvestigateTargetArea : IBaseStateScorer
     {

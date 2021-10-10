@@ -1,11 +1,11 @@
 ﻿using Unity.Entities;
 using Unity.Burst;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Collections;
 
 
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     [BurstCompile]
 

@@ -1,9 +1,10 @@
 ﻿using Unity.Entities;
 using Unity.Mathematics;
 using Global.Component;
-namespace IAUS.ECS2.Component {
+using System;
+namespace IAUS.ECS.Component {
 
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct PatrolWaypointBuffer : IBufferElementData
     {
@@ -11,7 +12,7 @@ namespace IAUS.ECS2.Component {
 
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct Waypoint {
         public AITarget Point;
         public float3 Position;

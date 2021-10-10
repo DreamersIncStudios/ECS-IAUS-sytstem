@@ -5,9 +5,9 @@ using DreamersInc.InflunceMapSystem;
 using IAUS.NPCSO.Interfaces;
 using Global.Component;
 using AISenses;
-using IAUS.ECS2;
+using IAUS.ECS;
 using Components.MovementSystem;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 
 namespace IAUS.NPCSO
 {

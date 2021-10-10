@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-namespace IAUS.ECS2.Component {
-    [System.Serializable]
+using System;
+using IAUS.ECS.Consideration;
+namespace IAUS.ECS.Component {
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct Wait : IBaseStateScorer
     {

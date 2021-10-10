@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using System;
 
-namespace IAUS.ECS2
-{
+namespace IAUS.ECS.Consideration
+{ 
 
-    [System.Serializable]
+    [Serializable]
     public struct ConsiderationScoringData
     {
         public bool Inverse; // Is Invense Required if m is negatives? Inverse to be removed for response curves

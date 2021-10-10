@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using IAUS.ECS2.Component;
-using IAUS.ECS2;
-using UnityEditor.AnimatedValues;
-
+using IAUS.ECS.Component;
+using IAUS.ECS;
+using IAUS.ECS.Consideration;
 namespace IAUS.NPCSO.editor
 {
     public sealed partial class NPCEditor : EditorWindow
