@@ -12,7 +12,6 @@ namespace IAUS.ECS2.Systems
     public class FindTargets : SystemBase
     {
         private EntityQuery attackers;
-        EntityCommandBuffer ecb;
         protected override void OnCreate()
         {
             base.OnCreate();
