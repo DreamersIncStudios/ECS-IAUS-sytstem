@@ -106,7 +106,9 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationBlob.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\Health.txt" />
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
+    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\Distance.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

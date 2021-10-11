@@ -1,0 +1,2 @@
+NPCLevel,Faction,Level,Inverse,Response Type,M,K,B,C
+Grunt ,Enemy,5,FALSE,Logistic,1,1,1,1
