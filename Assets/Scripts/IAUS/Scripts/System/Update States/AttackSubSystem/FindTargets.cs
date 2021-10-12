@@ -86,7 +86,6 @@ namespace IAUS.ECS.Systems
                                         }
                                     }
                                 }
-                                Debug.Log(meleeTarget.CanSee);
 
                                 break;
                             case AttackStyle.Range:

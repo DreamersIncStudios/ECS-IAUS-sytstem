@@ -5,6 +5,7 @@ using Unity.Entities;
 using Global.Component;
 using DreamersInc.InflunceMapSystem;
 using System;
+using IAUS.ECS.Consideration;
 namespace IAUS.ECS.Component
 {
 
@@ -18,6 +19,7 @@ namespace IAUS.ECS.Component
         public AIStates CurrentState;
         public Faction faction;
         public Attitude Attitude;
+        public Difficulty Difficulty;
     }
     public struct SetupBrainTag : IComponentData { }
 

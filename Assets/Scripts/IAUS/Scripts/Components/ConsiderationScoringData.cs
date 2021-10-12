@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Unity.Collections;
 
 namespace IAUS.ECS.Consideration
 { 

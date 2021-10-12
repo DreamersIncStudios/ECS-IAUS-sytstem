@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
@@ -102,8 +105,8 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationBlob.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\Health.txt" />

@@ -8,7 +8,6 @@ namespace IAUS.ECS.Component
     [GenerateAuthoringComponent]
     public struct Patrol : IBaseStateScorer
     {
-
         public int NumberOfWayPoints;
         public ConsiderationScoringData DistanceToPoint;
         public ConsiderationScoringData HealthRatio;
