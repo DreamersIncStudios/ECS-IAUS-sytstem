@@ -6,6 +6,8 @@ namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]
     public struct MoveToTarget : IBaseStateScorer {
+        public int refIndex { get; set; }
+
 
         // Need to adjust state to position character based on attackStyle
 

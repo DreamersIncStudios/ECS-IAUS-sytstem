@@ -10,7 +10,7 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using AISenses;
 using Components.MovementSystem;
-using IAUS.ECS.Component;
+
 
 namespace IAUS.ECS.Systems
 {

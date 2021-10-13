@@ -122,10 +122,11 @@ namespace IAUS.NPCSO.editor
 
             if (showBtn[(int)AIStates.Patrol])
             {
-                if (PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
-                    state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
-                if (PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
-                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
+                ////Todo Delete
+                //if (PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
+                //    state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
+                //if (PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
+                //    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
             }
@@ -140,11 +141,11 @@ namespace IAUS.NPCSO.editor
             showBtn[(int)AIStates.Wait] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Wait], "Wait at Location");
             if (showBtn[(int)AIStates.Wait])
             {
-                if (WaitTime = EditorGUILayout.Foldout(WaitTime, "Time Left"))
-                    state.TimeLeft = DisplayConsideration(state.TimeLeft);
+                //if (WaitTime = EditorGUILayout.Foldout(WaitTime, "Time Left"))
+                //    state.TimeLeft = DisplayConsideration(state.TimeLeft);
 
-                if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Health Left"))
-                    state.HealthRatio = DisplayConsideration(state.HealthRatio);
+                //if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Health Left"))
+                //    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.StartTime = EditorGUILayout.FloatField("Start Time", state.StartTime);
                 state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
             }
@@ -268,8 +269,8 @@ namespace IAUS.NPCSO.editor
             GetPatrol = new Patrol()
             {
                 BufferZone = .75f,
-                DistanceToPoint = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
+                //DistanceToPoint = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
+                //HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
                 _coolDownTime = 5
 
             };
@@ -282,8 +283,8 @@ namespace IAUS.NPCSO.editor
             };
             GetWait = new Wait()
             {
-                TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
-                HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                //TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
+                //HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
                 StartTime = 1,
                 _coolDownTime = 5
             };

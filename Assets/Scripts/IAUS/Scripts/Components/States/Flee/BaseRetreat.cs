@@ -26,6 +26,8 @@ namespace IAUS.ECS.Component
 
     [Serializable]
     public struct RetreatCitizen : BaseRetreat {
+        public int refIndex { get; set; }
+
         public ConsiderationScoringData HealthRatio { get { return healthRatio; } set { healthRatio = value; } }
         [SerializeField] ConsiderationScoringData healthRatio;
 

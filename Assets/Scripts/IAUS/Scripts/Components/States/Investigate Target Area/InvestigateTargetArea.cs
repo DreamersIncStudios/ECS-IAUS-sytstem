@@ -9,6 +9,8 @@ namespace IAUS.ECS.Component
     [GenerateAuthoringComponent]
     public struct InvestigateTargetArea : IBaseStateScorer
     {
+        public int refIndex { get; set; }
+
         public ConsiderationScoringData HealthRatio;
         public ConsiderationScoringData InfluenceInArea;
         public ConsiderationScoringData DistanceToSafe;

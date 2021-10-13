@@ -7,8 +7,13 @@ namespace IAUS.ECS.Component {
     [GenerateAuthoringComponent]
     public struct Wait : IBaseStateScorer
     {
-        public ConsiderationScoringData TimeLeft;
-        public ConsiderationScoringData HealthRatio;
+        public BlobAssetReference<ConsiderationBlobAsset> health;
+        public BlobAssetReference<ConsiderationBlobAsset> timeLeft;
+
+        public int refIndex => 1;
+
+        public ConsiderationScoringData TimeLeft { get { return timeLeft.Value.Array[refIndex].Data; } }
+        public ConsiderationScoringData HealthRatio { get { return health.Value.Array[refIndex].Data; } }
         public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.

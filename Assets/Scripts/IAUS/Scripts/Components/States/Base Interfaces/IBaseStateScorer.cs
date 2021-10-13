@@ -25,6 +25,8 @@ namespace IAUS.ECS.Component {
         /// </summary>
         float ResetTime { get; set; }
         float mod { get; }
+       // public int refIndex { get; set; }
+
     }
 
     public enum ActionStatus   

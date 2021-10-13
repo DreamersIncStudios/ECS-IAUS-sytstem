@@ -8,21 +8,26 @@ namespace IAUS.ECS.Component
     [GenerateAuthoringComponent]
     public struct Patrol : IBaseStateScorer
     {
+
+        //TODO Change BlobRef to AIState
         public int NumberOfWayPoints;
-        public ConsiderationScoringData DistanceToPoint;
-        public ConsiderationScoringData HealthRatio;
-        public bool Complete => InBufferZone;
+        public BlobAssetReference<ConsiderationBlobAsset> health;
+        public BlobAssetReference<ConsiderationBlobAsset> distance;
+        public int refIndex => 0;
+        public ConsiderationScoringData DistanceToPoint { get { return health.Value.Array[refIndex].Data; } }
+        public ConsiderationScoringData HealthRatio { get { return distance.Value.Array[refIndex].Data; } }
+        public bool  Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }}
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public float distanceToPoint, StartingDistance, BufferZone ;
-        public bool InBufferZone => BufferZone > distanceToPoint;
+
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
         public Waypoint CurWaypoint;
-        public int ThreatTheshold;
-        public float ThreatRatio;
+        //public int ThreatTheshold;
+        //public float ThreatRatio;
         public int WaypointIndex { get; set; }
       //  public bool TargetingOrigin => CurWaypoint.point.Position.Equals(new Unity.Mathematics.float3());
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }

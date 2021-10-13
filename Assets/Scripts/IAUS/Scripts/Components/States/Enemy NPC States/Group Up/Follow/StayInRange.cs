@@ -7,6 +7,8 @@ namespace IAUS.ECS.Component
     [GenerateAuthoringComponent]
     public struct StayInRange : IBaseStateScorer
     {
+        public int refIndex { get; set; }
+
         public float MaxRangeToLeader; // will change to an influence score later 
         public float DistanceToLeader;
         public float influenceScoreAtPosition;
