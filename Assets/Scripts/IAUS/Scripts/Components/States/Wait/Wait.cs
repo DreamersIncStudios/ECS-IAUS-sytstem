@@ -10,10 +10,12 @@ namespace IAUS.ECS.Component {
         public BlobAssetReference<ConsiderationBlobAsset> health;
         public BlobAssetReference<ConsiderationBlobAsset> timeLeft;
 
-        public int refIndex => 1;
+        public int HrefIndex;
+        public int TrefIndex;
 
-        public ConsiderationScoringData TimeLeft { get { return timeLeft.Value.Array[refIndex].Data; } }
-        public ConsiderationScoringData HealthRatio { get { return health.Value.Array[refIndex].Data; } }
+
+        public ConsiderationScoringData TimeLeft { get { return timeLeft.Value.Array[TrefIndex].Data; } }
+        public ConsiderationScoringData HealthRatio { get { return health.Value.Array[HrefIndex].Data; } }
         public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.
@@ -37,6 +39,13 @@ namespace IAUS.ECS.Component {
     public struct WaitActionTag : IComponentData
     {
         public bool tester;
+    }
+
+    //TODO Move to better file location 
+    public enum Difficulty { Easy, Normal, Hard }
+    public enum NPCLevel
+    {
+        Grunt, Specialist
     }
 
 

@@ -20,15 +20,14 @@ namespace IAUS.ECS.Consideration
             {
                 if (Array[i].Indentity.Equals(identify))
                 {
-                    index= i;
+                    index = i;
                     return index;
-                   
+
                 }
             }
 
             return index;
         }
-
     }
 
     public struct Identify
@@ -39,21 +38,16 @@ namespace IAUS.ECS.Consideration
         public Difficulty Difficulty;
     }
 
-    public enum NPCLevel
-    {
-        Grunt, Specialist
-    }
-    public enum Difficulty { Easy, Normal, Hard }
-
     public struct ConsiderAsset
     {
         public Identify Indentity;
         public ConsiderationScoringData Data;
     }
+
     [UpdateBefore(typeof(IAUS.ECS.Systems.IAUSBrainSetupSystem))]
     public class SetupConsiderationBlobAssetSystem : ComponentSystem
     {
-   
+
         protected override void OnUpdate()
         {
             Entities.ForEach((ref Patrol p, ref IAUSBrain brain, ref SetupBrainTag Tag) =>
@@ -61,7 +55,22 @@ namespace IAUS.ECS.Consideration
                 Debug.Log("");
                 p.health = CreateReference("Considerations/Health", Allocator.Persistent);
                 p.distance = CreateReference("Considerations/Distance", Allocator.Persistent);
-                // p.refIndex = 0;
+                p.HrefIndex = p.health.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = AIStates.Patrol,
+                    Faction = Faction.Enemy,//brain.faction
+                    NPCLevel = NPCLevel.Grunt
+
+                });
+                p.DrefIndex = p.distance.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = AIStates.Patrol,
+                    Faction = Faction.Enemy,//brain.faction
+                    NPCLevel = NPCLevel.Grunt
+
+                });
             });
 
             Entities.ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag Tag) =>

@@ -13,9 +13,11 @@ namespace IAUS.ECS.Component
         public int NumberOfWayPoints;
         public BlobAssetReference<ConsiderationBlobAsset> health;
         public BlobAssetReference<ConsiderationBlobAsset> distance;
-        public int refIndex => 0;
-        public ConsiderationScoringData DistanceToPoint { get { return health.Value.Array[refIndex].Data; } }
-        public ConsiderationScoringData HealthRatio { get { return distance.Value.Array[refIndex].Data; } }
+        public int HrefIndex;
+        public int DrefIndex;
+
+        public ConsiderationScoringData DistanceToPoint { get { return health.Value.Array[DrefIndex].Data; } }
+        public ConsiderationScoringData HealthRatio { get { return distance.Value.Array[HrefIndex].Data; } }
         public bool  Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
