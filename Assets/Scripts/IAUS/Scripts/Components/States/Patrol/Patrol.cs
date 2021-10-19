@@ -2,6 +2,7 @@
 using Unity.Entities;
 using System;
 using IAUS.ECS.Consideration;
+using IAUS.ECS.StateBlobSystem;
 namespace IAUS.ECS.Component
 {
     [Serializable]
@@ -11,13 +12,12 @@ namespace IAUS.ECS.Component
 
         //TODO Change BlobRef to AIState
         public int NumberOfWayPoints;
-        public BlobAssetReference<ConsiderationBlobAsset> health;
-        public BlobAssetReference<ConsiderationBlobAsset> distance;
-        public int HrefIndex;
-        public int DrefIndex;
+        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public int Index;
+       
 
-        public ConsiderationScoringData DistanceToPoint { get { return health.Value.Array[DrefIndex].Data; } }
-        public ConsiderationScoringData HealthRatio { get { return distance.Value.Array[HrefIndex].Data; } }
+        public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
         public bool  Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }

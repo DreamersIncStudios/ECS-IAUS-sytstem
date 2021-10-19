@@ -96,7 +96,7 @@ namespace IAUS.ECS.Systems
                 {
                     Wait wait = Waits[i];
                     CharacterStatComponent stats = Stats[i];
-                    if (wait.health.IsCreated)
+                    if (wait.stateRef.IsCreated)
                     {
                         float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);
                         wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.mod) * TotalScore);

@@ -2,20 +2,19 @@
 using Unity.Entities;
 using System;
 using IAUS.ECS.Consideration;
+using IAUS.ECS.StateBlobSystem;
+
 namespace IAUS.ECS.Component {
     [Serializable]
     [GenerateAuthoringComponent]
     public struct Wait : IBaseStateScorer
     {
-        public BlobAssetReference<ConsiderationBlobAsset> health;
-        public BlobAssetReference<ConsiderationBlobAsset> timeLeft;
-
-        public int HrefIndex;
-        public int TrefIndex;
+        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public int Index;
 
 
-        public ConsiderationScoringData TimeLeft { get { return timeLeft.Value.Array[TrefIndex].Data; } }
-        public ConsiderationScoringData HealthRatio { get { return health.Value.Array[HrefIndex].Data; } }
+        public ConsiderationScoringData TimeLeft { get { return  stateRef.Value.Array[Index].Timer; } }
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
         public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.

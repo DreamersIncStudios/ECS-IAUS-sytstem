@@ -124,7 +124,7 @@ namespace IAUS.ECS.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    if (patrol.health.IsCreated)
+                    if (patrol.stateRef.IsCreated)
                     {
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
