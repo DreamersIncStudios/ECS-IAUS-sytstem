@@ -1,1 +1,0 @@
-Grunt ,Enemy,Normal,FALSE,Logistic ,50,-1,0.91,0.2,FALSE,Logistic ,50 , -0.95,0.935,0.35, .5

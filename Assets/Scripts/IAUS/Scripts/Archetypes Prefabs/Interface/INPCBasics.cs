@@ -16,8 +16,8 @@ namespace IAUS.NPCSO.Interfaces
         Movement AIMove { get; }
         List<AIStates> AIStatesAvailable { get; }
         GameObject Model { get; }
-        Patrol GetPatrol { get; }
-        Wait GetWait { get; }
+        PatrolBuilderData GetPatrol { get; }
+        WaitBuilderData GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
     }

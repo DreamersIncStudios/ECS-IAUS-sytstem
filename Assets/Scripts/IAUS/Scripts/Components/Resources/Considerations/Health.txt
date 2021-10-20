@@ -1,2 +1,0 @@
-Grunt ,Enemy,Patrol,Normal,FALSE,Logistic ,50 , -0.95,0.935,0.35
-Grunt ,Enemy,Wait,Normal,FALSE,Logistic ,50 ,-1,0.91,0.2

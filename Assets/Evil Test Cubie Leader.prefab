@@ -17,8 +17,6 @@ GameObject:
   - component: {fileID: 4467796354377600046}
   - component: {fileID: 4467796354377600055}
   - component: {fileID: 4467796354377600054}
-  - component: {fileID: 4467796354377600052}
-  - component: {fileID: 4467796354377600053}
   m_Layer: 0
   m_Name: Evil Test Cubie Leader
   m_TagString: Untagged
@@ -163,7 +161,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Self:
     Type: 0
+    GetRace: 0
     NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!114 &4467796354377600054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +185,10 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    ThreatPosition:
+      x: 0
+      y: 0
+      z: 0
     Scantimer: 0
     viewRadius: 50
     ViewAngle: 112
@@ -191,35 +197,9 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
-    EnemyAwarnessLevel: 0
+    LocationOfSound:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
---- !u!114 &4467796354377600052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4467796354377600047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53ef0195ed814324b8e10e831335e7a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4467796354377600053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4467796354377600047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74475a335a5196841a556bd20f4e3dc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 2
-  Range: 38

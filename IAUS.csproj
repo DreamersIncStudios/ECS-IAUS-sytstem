@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolWaypointBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTargetState.cs" />
@@ -102,17 +103,11 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationBlob.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\Health.txt" />
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
-    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\WaitTime.txt" />
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
-    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\States\PatrolState.txt" />
-    <None Include="Assets\Scripts\IAUS\Scripts\Components\Resources\Considerations\Distance.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

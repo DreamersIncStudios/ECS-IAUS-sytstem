@@ -31,10 +31,10 @@ namespace IAUS.NPCSO
         [SerializeField]AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
         [SerializeField] List<AIStates> states;
-        public Patrol GetPatrol => getPatrol;
-        [SerializeField] Patrol getPatrol;
-        public Wait GetWait => getWait;
-        [SerializeField] Wait getWait;
+        public PatrolBuilderData GetPatrol => getPatrol;
+        [SerializeField] PatrolBuilderData getPatrol;
+        public WaitBuilderData GetWait => getWait;
+        [SerializeField] WaitBuilderData getWait;
 
         public Movement AIMove => GetMovement;
         [SerializeField] Movement GetMovement;
@@ -45,9 +45,8 @@ namespace IAUS.NPCSO
         [SerializeField]Vision getVision;
         public Vision GetVision => getVision;
 
-
         public virtual void Setup(string Name,GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
-            ,Patrol patrol,Wait wait
+            , PatrolBuilderData patrol, WaitBuilderData wait
             ) {
             _getName = Name;
             GetSelf = self;
@@ -75,11 +74,11 @@ namespace IAUS.NPCSO
                 switch (state) {
                     case AIStates.Patrol:
                         AIAuthoring.AddPatrol = true;
-                        AIAuthoring.patrolState = GetPatrol;
+                        AIAuthoring.buildPatrol = GetPatrol;
                         break;
                     case AIStates.Wait:
                         AIAuthoring.AddWait = true;
-                        AIAuthoring.waitState = GetWait;
+                        AIAuthoring.waitBuilder = GetWait;
                         break;
                 }        
                    

@@ -39,7 +39,11 @@ namespace IAUS.ECS.Component
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
     }
-
+    [Serializable]
+    public struct PatrolBuilderData {
+        public float BufferZone;
+        public float CoolDownTime;
+    }
     public struct PatrolActionTag : IComponentData {
         public bool UpdateWayPoint;
     

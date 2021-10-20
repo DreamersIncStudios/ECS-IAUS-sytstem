@@ -37,9 +37,9 @@ namespace IAUS.NPCSO.editor
         bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length];
         EditorState editorState = EditorState.CreateNew;
         TargetType GetTargetType;
-        Patrol GetPatrol;
+        PatrolBuilderData GetPatrol;
 
-        Wait GetWait;
+        WaitBuilderData GetWait;
         RetreatCitizen GetRetreat;
         GameObject GetModel;
         bool createRandomCharacter = false;
@@ -116,19 +116,14 @@ namespace IAUS.NPCSO.editor
 
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
-        Patrol SetupPatrol(Patrol state)
+        PatrolBuilderData SetupPatrol(PatrolBuilderData state)
         {
             showBtn[(int)AIStates.Patrol] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Patrol], "Patrol");
 
             if (showBtn[(int)AIStates.Patrol])
             {
-                ////Todo Delete
-                //if (PatrolDistance = EditorGUILayout.Foldout(PatrolDistance, "Distance To Consideration"))
-                //    state.DistanceToPoint = DisplayConsideration(state.DistanceToPoint);
-                //if (PatrolHealthRatio = EditorGUILayout.Foldout(PatrolHealthRatio, "CharacterHealth"))
-                //    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.BufferZone = EditorGUILayout.FloatField("Buffer Zone", state.BufferZone);
-                state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
+                state.CoolDownTime = EditorGUILayout.FloatField("Cool Down Time", state.CoolDownTime);
             }
 
             EditorGUILayout.EndFoldoutHeaderGroup();
@@ -136,18 +131,13 @@ namespace IAUS.NPCSO.editor
         }
         bool WaitTime = false;
         bool WaitHealth = false;
-        Wait SetupWait(Wait state)
+        WaitBuilderData SetupWait(WaitBuilderData state)
         {
             showBtn[(int)AIStates.Wait] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Wait], "Wait at Location");
             if (showBtn[(int)AIStates.Wait])
             {
-                //if (WaitTime = EditorGUILayout.Foldout(WaitTime, "Time Left"))
-                //    state.TimeLeft = DisplayConsideration(state.TimeLeft);
-
-                //if (WaitHealth = EditorGUILayout.Foldout(WaitHealth, "Health Left"))
-                //    state.HealthRatio = DisplayConsideration(state.HealthRatio);
                 state.StartTime = EditorGUILayout.FloatField("Start Time", state.StartTime);
-                state._coolDownTime = EditorGUILayout.FloatField("Cool Down Time", state._coolDownTime);
+                state.CoolDownTime = EditorGUILayout.FloatField("Cool Down Time", state.CoolDownTime);
             }
 
             EditorGUILayout.EndFoldoutHeaderGroup();
@@ -266,12 +256,10 @@ namespace IAUS.NPCSO.editor
             GetModel = null;
             GetTypeOfNPC = TypeOfNPC.Neurtal;
             GetTargetType = new TargetType();
-            GetPatrol = new Patrol()
+            GetPatrol = new  PatrolBuilderData()
             {
                 BufferZone = .75f,
-                //DistanceToPoint = new ConsiderationScoringData() { M = 50, K = -0.95f, B = .935f, C = .35f, responseType = ResponseType.Logistic },
-                //HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic },
-                _coolDownTime = 5
+                CoolDownTime = 5
 
             };
             GetRetreat = new RetreatCitizen() {
@@ -281,12 +269,10 @@ namespace IAUS.NPCSO.editor
                 HideTime = 30
 
             };
-            GetWait = new Wait()
+            GetWait = new WaitBuilderData()
             {
-                //TimeLeft = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
-                //HealthRatio = new ConsiderationScoringData() { M = 50, K = -1, B = .91f, C = .2f, responseType = ResponseType.Logistic, Inverse = false },
                 StartTime = 1,
-                _coolDownTime = 5
+                CoolDownTime = 5
             };
             GetVision = new AISenses.Vision()
             {

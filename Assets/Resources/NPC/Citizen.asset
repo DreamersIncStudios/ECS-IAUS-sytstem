@@ -24,68 +24,11 @@ MonoBehaviour:
     CanBeTargetByPlayer: 0
   states: 010000000a000000
   getPatrol:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    distanceToPoint: 0
-    StartingDistance: 0
     BufferZone: 0.75
-    CurWaypoint:
-      Point:
-        Type: 0
-        GetRace: 0
-        NumOfEntityTargetingMe: 0
-        GetInstanceID: 0
-        MaxNumberOfTarget: 0
-        CanBeTargetByPlayer: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-      InfluenceAtPosition:
-        x: 0
-        y: 0
-    ThreatTheshold: 0
-    ThreatRatio: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 5
   getWait:
-    TimeLeft:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    Timer: 0
     StartTime: 1
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 5
   GetMovement:
     TargetLocation:
       x: 0

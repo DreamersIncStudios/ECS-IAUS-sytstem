@@ -18,7 +18,7 @@ namespace IAUS.NPCSO
         [SerializeField] InfluenceComponent getInfluence;
         public Faction getFaction { get { return factionMember; } }
         [SerializeField] Faction factionMember;
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, Patrol patrol, Wait wait)
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PatrolBuilderData patrol, WaitBuilderData wait)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);
             this.getInfluence = GetInfluence;
