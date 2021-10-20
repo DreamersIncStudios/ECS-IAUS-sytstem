@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace IAUS.ECS2.Component {
+namespace IAUS.ECS.Component {
 
     public interface IBaseStateScorer : IComponentData
     {
@@ -25,6 +25,8 @@ namespace IAUS.ECS2.Component {
         /// </summary>
         float ResetTime { get; set; }
         float mod { get; }
+       // public int refIndex { get; set; }
+
     }
 
     public enum ActionStatus   

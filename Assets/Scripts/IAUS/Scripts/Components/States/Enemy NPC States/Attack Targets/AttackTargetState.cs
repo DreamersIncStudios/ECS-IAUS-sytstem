@@ -1,12 +1,14 @@
 using UnityEngine;
 using Unity.Entities;
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
 
     [GenerateAuthoringComponent]
     public struct AttackTargetState :IBaseStateScorer
     {
+        public int refIndex { get; set; }
+
         public float Timer;
         public float HealthRatio;
         public float ManaRatio;

@@ -1,12 +1,12 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using UnityEngine;
 using Stats;
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public class UpdateWait : SystemBase
     {
@@ -96,9 +96,11 @@ namespace IAUS.ECS2.Systems
                 {
                     Wait wait = Waits[i];
                     CharacterStatComponent stats = Stats[i];
-                    float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);
-                    wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.mod) * TotalScore);
-
+                    if (wait.stateRef.IsCreated)
+                    {
+                        float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);
+                        wait.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.mod) * TotalScore);
+                    }
                     Waits[i] = wait;
                 }
             }

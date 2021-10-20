@@ -11,6 +11,8 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 
 namespace AISenses.VisionSystems
+    //TODO Refactor 
+
 {
     [UpdateInGroup(typeof( FixedStepSimulationSystemGroup))]
     public class VisionSystem : SystemBase

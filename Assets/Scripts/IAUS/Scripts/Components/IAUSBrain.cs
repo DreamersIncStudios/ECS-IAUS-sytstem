@@ -4,12 +4,14 @@ using UnityEngine;
 using Unity.Entities;
 using Global.Component;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.ECS2.Component
+using System;
+using IAUS.ECS.Consideration;
+namespace IAUS.ECS.Component
 {
 
 
 
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct IAUSBrain : IComponentData
     {
@@ -17,6 +19,7 @@ namespace IAUS.ECS2.Component
         public AIStates CurrentState;
         public Faction faction;
         public Attitude Attitude;
+        public Difficulty Difficulty;
     }
     public struct SetupBrainTag : IComponentData { }
 

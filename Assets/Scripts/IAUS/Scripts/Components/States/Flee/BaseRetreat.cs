@@ -5,7 +5,9 @@ using Unity.Transforms;
 using System.Collections.Generic;
 using DreamersInc.InflunceMapSystem;
 using Unity.Burst;
-namespace IAUS.ECS2.Component
+using IAUS.ECS.Consideration;
+using System;
+namespace IAUS.ECS.Component
 {
 
     public interface BaseRetreat : IBaseStateScorer
@@ -22,8 +24,10 @@ namespace IAUS.ECS2.Component
 
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct RetreatCitizen : BaseRetreat {
+        public int refIndex { get; set; }
+
         public ConsiderationScoringData HealthRatio { get { return healthRatio; } set { healthRatio = value; } }
         [SerializeField] ConsiderationScoringData healthRatio;
 

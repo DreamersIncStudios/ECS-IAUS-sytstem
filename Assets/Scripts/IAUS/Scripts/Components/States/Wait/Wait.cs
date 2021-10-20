@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-namespace IAUS.ECS2.Component {
-    [System.Serializable]
+using System;
+using IAUS.ECS.Consideration;
+using IAUS.ECS.StateBlobSystem;
+
+namespace IAUS.ECS.Component {
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct Wait : IBaseStateScorer
     {
-        public ConsiderationScoringData TimeLeft;
-        public ConsiderationScoringData HealthRatio;
+        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public int Index;
+
+
+        public ConsiderationScoringData TimeLeft { get { return  stateRef.Value.Array[Index].Timer; } }
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
         public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.
@@ -26,10 +34,22 @@ namespace IAUS.ECS2.Component {
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
     }
+    [Serializable]
+    public struct WaitBuilderData {
+        public float StartTime;
+        public float CoolDownTime;
+    }
 
     public struct WaitActionTag : IComponentData
     {
         public bool tester;
+    }
+
+    //TODO Move to better file location 
+    public enum Difficulty { Easy, Normal, Hard }
+    public enum NPCLevel
+    {
+        Grunt, Specialist
     }
 
 

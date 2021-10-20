@@ -1,14 +1,16 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.ECS2.Systems
+
+
+namespace IAUS.ECS.Systems
 {
     public class UpdatePatrol : SystemBase
     {
@@ -99,7 +101,7 @@ namespace IAUS.ECS2.Systems
                 {
                     Patrol patrol = patrols[i];
                     patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, toWorlds[i].Position);
-                    if (patrol.InBufferZone)
+                    if (patrol.Complete)
                         patrol.distanceToPoint = 0.0f;
                     patrols[i] = patrol;
                 }
@@ -122,9 +124,12 @@ namespace IAUS.ECS2.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Patrol patrol = patrols[i];
-                    float healthRatio = Stats[i].HealthRatio;
-                    float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
-                    patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
+                    if (patrol.stateRef.IsCreated)
+                    {
+                        float healthRatio = Stats[i].HealthRatio;
+                        float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
+                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
+                    }
                     patrols[i] = patrol;
                 }
             }

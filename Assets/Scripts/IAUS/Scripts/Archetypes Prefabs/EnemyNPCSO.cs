@@ -5,9 +5,9 @@ using Unity.Entities;
 using UnityEngine.AI;
 using IAUS.NPCSO.Interfaces;
 using Global.Component;
-using IAUS.ECS2;
+using IAUS.ECS;
 using DreamersInc.InflunceMapSystem;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Stats;
 using AISenses.Authoring;
 using AISenses;
@@ -35,7 +35,7 @@ namespace IAUS.NPCSO {
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, Patrol patrol, Wait wait,
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PatrolBuilderData patrol, WaitBuilderData wait,
             bool team, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee, InfluenceComponent influence)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);

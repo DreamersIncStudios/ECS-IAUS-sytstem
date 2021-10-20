@@ -3,16 +3,16 @@ using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
 using Unity.Transforms;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using Components.MovementSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS2.Systems.Reactive.WaitTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentRemovalJob))]
 
-namespace IAUS.ECS2.Systems.Reactive
+namespace IAUS.ECS.Systems.Reactive
 {
     public struct WaitTagReactor : IComponentReactorTagsForAIStates<WaitActionTag, Wait>
     {

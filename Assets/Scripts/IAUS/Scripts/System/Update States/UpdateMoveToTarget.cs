@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
@@ -10,7 +10,9 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using AISenses;
 using Components.MovementSystem;
-namespace IAUS.ECS2.Systems
+
+
+namespace IAUS.ECS.Systems
 {
 
     public class UpdateMoveToTarget : SystemBase

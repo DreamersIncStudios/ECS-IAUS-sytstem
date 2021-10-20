@@ -3,7 +3,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 
 
 

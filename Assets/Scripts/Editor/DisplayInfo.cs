@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using IAUS.ECS2.Component;
-using IAUS.ECS2;
 using Global.Component;
 using IAUS.NPCSO.Interfaces;
 using Unity.Mathematics;

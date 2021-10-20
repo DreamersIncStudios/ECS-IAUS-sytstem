@@ -1,28 +1,35 @@
 ﻿using UnityEngine;
 using Unity.Entities;
-
-namespace IAUS.ECS2.Component
+using System;
+using IAUS.ECS.Consideration;
+using IAUS.ECS.StateBlobSystem;
+namespace IAUS.ECS.Component
 {
-    [System.Serializable]
+    [Serializable]
     [GenerateAuthoringComponent]
     public struct Patrol : IBaseStateScorer
     {
 
+        //TODO Change BlobRef to AIState
         public int NumberOfWayPoints;
-        public ConsiderationScoringData DistanceToPoint;
-        public ConsiderationScoringData HealthRatio;
-        public bool Complete => InBufferZone;
+        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public int Index;
+       
+
+        public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
+        public bool  Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }}
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public float distanceToPoint, StartingDistance, BufferZone ;
-        public bool InBufferZone => BufferZone > distanceToPoint;
+
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
         public Waypoint CurWaypoint;
-        public int ThreatTheshold;
-        public float ThreatRatio;
+        //public int ThreatTheshold;
+        //public float ThreatRatio;
         public int WaypointIndex { get; set; }
       //  public bool TargetingOrigin => CurWaypoint.point.Position.Equals(new Unity.Mathematics.float3());
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
@@ -32,7 +39,11 @@ namespace IAUS.ECS2.Component
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
     }
-
+    [Serializable]
+    public struct PatrolBuilderData {
+        public float BufferZone;
+        public float CoolDownTime;
+    }
     public struct PatrolActionTag : IComponentData {
         public bool UpdateWayPoint;
     

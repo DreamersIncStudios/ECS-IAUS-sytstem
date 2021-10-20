@@ -1,5 +1,5 @@
-﻿using IAUS.ECS2.Consideration;
-namespace IAUS.ECS2
+﻿using IAUS.ECS.Consideration;
+namespace IAUS.ECS
 {
 
     public struct DistanceToConsideration :IBaseConsiderations

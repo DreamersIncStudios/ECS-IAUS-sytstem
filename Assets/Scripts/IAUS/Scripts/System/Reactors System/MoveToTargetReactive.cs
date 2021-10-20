@@ -2,23 +2,23 @@
 using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using Global.Component;
 using Components.MovementSystem;
 using AISenses;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.StateComponent))]
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS.Systems.Reactive.MoveToTargetReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS.Systems.Reactive.VisionReactor>.StateComponent))]
 
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS.Systems.Reactive.MoveToTargetReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS.Systems.Reactive.VisionReactor>.ManageComponentAdditionJob))]
 
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS2.Systems.Reactive.MoveToTargetReactor>.ManageComponentRemovalJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS2.Systems.Reactive.VisionReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MoveToTargetActionTag, MoveToTarget, IAUS.ECS.Systems.Reactive.MoveToTargetReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<Vision, MoveToTarget, IAUS.ECS.Systems.Reactive.VisionReactor>.ManageComponentRemovalJob))]
 
-namespace IAUS.ECS2.Systems.Reactive
+namespace IAUS.ECS.Systems.Reactive
 {
     public struct MoveToTargetReactor : IComponentReactorTagsForAIStates<MoveToTargetActionTag, MoveToTarget>
     {
