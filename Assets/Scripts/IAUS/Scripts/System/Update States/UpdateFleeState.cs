@@ -93,7 +93,7 @@ namespace IAUS.ECS.Systems
             where RETREAT : unmanaged, BaseRetreat
         {
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
-            public ComponentTypeHandle<RETREAT> RetreatChunk; // TODO Add CurPosition to BaseRetreat interface
+            public ComponentTypeHandle<RETREAT> RetreatChunk; 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<RETREAT> Retreats = chunk.GetNativeArray(RetreatChunk);
@@ -104,6 +104,7 @@ namespace IAUS.ECS.Systems
                     RETREAT retreat = Retreats[i];
                     retreat.CurPos = toWorlds[i].Position;
                     Retreats[i] = retreat;
+                    
                 }
             }
         }

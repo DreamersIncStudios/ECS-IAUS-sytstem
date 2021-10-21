@@ -10,7 +10,6 @@ namespace IAUS.ECS.Component
     public struct Patrol : IBaseStateScorer
     {
 
-        //TODO Change BlobRef to AIState
         public int NumberOfWayPoints;
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
@@ -31,7 +30,6 @@ namespace IAUS.ECS.Component
         //public int ThreatTheshold;
         //public float ThreatRatio;
         public int WaypointIndex { get; set; }
-      //  public bool TargetingOrigin => CurWaypoint.point.Position.Equals(new Unity.Mathematics.float3());
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;

@@ -73,6 +73,7 @@ namespace AISenses
         public static implicit operator Target(ScanPositionBuffer e) { return e; }
         public static implicit operator ScanPositionBuffer(Target e) { return new ScanPositionBuffer { target = e }; }
     }
+    
     public struct Target {
         public Entity entity;
         public AITarget TargetInfo;
@@ -81,8 +82,7 @@ namespace AISenses
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
-     //   public float angleTo;
-    }
+        }
 
     [System.Serializable]
     public struct Hearing : ISenses

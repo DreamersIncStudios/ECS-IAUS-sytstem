@@ -24,6 +24,9 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData Health;
         public ConsiderationScoringData Distance;
         public ConsiderationScoringData Timer;
+        public ConsiderationScoringData ManaAmmo;
+
+
 
     }
     public struct AIStateBlobAsset {
@@ -75,6 +78,22 @@ namespace IAUS.ECS.StateBlobSystem
                     NPCLevel = NPCLevel.Grunt
                 });
             });
+            Entities.ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState a ) => {
+                for (int i = 0; i < attacks.Length; i++)
+                {
+                    AttackTypeInfo attack = attacks[i];
+
+                    attack.stateRef = CreateReference();
+                    attack.Index = attack.stateRef.Value.GetConsiderationIndex(new Identify()
+                    {
+                        Difficulty = Difficulty.Normal,
+                        aIStates = AIStates.AttackMelee, // Todo add switch
+                        Faction = Faction.Enemy,//brain.faction
+                        NPCLevel = NPCLevel.Grunt
+                    });
+                    attacks[i] = attack;
+                }
+            });
         }
 
         BlobAssetReference<AIStateBlobAsset> CreateReference() {
@@ -119,6 +138,7 @@ namespace IAUS.ECS.StateBlobSystem
                     Health = LineRead(4, lines[i]),
                     Distance = LineRead(11, lines[i]),
                     Timer = LineRead(18, lines[i]),
+                    ManaAmmo = LineRead(25,lines[i])
                 };
               
             }

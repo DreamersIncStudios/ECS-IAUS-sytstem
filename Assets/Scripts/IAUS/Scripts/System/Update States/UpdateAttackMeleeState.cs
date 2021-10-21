@@ -33,6 +33,9 @@ namespace IAUS.ECS.Systems
         {
 
         }
+
+
+
         [BurstCompile]
         struct UpdateAttackState : IJobChunk
         {

@@ -63,15 +63,16 @@ namespace IAUS.ECS.Systems
 
                     for (int j = 0; j < AttackBuffer.Length; j++)
                     {
-                        float threatMod =1.0f;
+                        float threatMod = 1.0f;
                         float protectionMod = 1.0f;
-                        switch (brains[i].Attitude) {
+                        switch (brains[i].Attitude)
+                        {
                             case Attitude.Normal:
-                                protectionMod= threatMod = 1.10f;
+                                protectionMod = threatMod = 1.10f;
                                 break;
                         }
-
-                        switch (AttackBuffer[j].style)
+                        AttackTypeInfo attack = AttackBuffer[j];
+                        switch (attack.style)
                         {
                             case AttackStyle.Melee:
                             case AttackStyle.MagicMelee:
@@ -79,14 +80,15 @@ namespace IAUS.ECS.Systems
                                 {
                                     if (targetsInQueue[x].target.CanSee && targetsInQueue[x].target.DistanceTo < AttackBuffer[j].AttackRange)
                                     {
-                                        if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(influences[i].faction,true).x
-                                            <threatMod*influences[i].Threat) 
+                                        if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(influences[i].faction, true).x
+                                            < threatMod * influences[i].Threat)
                                         {
                                             meleeTarget = targetsInQueue[x].target;
                                         }
                                     }
                                 }
-
+                               attack.AttackTarget = meleeTarget;
+                                AttackBuffer[j] = attack;
                                 break;
                             case AttackStyle.Range:
                             case AttackStyle.MagicRange:
@@ -96,16 +98,13 @@ namespace IAUS.ECS.Systems
                                         &&
                                         targetsInQueue[x].target.DistanceTo > 10)
                                     {
-                                      //  targetsInRange.Add(targetsInQueue[x].target);
+                                        //  targetsInRange.Add(targetsInQueue[x].target);
                                     }
                                 }
                                 break;
                         }
-                    
+
                     }
-
-
-
                 }
             }
         }
