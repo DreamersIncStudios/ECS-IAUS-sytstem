@@ -9,6 +9,8 @@ using Unity.Jobs;
 
 namespace IAUS.ECS.Systems
 {
+    //TODO Need to add a Can Target Filter 
+
     public class FindTargets : SystemBase
     {
         private EntityQuery attackers;

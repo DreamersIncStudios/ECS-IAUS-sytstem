@@ -84,10 +84,18 @@ namespace IAUS.ECS.StateBlobSystem
                     AttackTypeInfo attack = attacks[i];
 
                     attack.stateRef = CreateReference();
+
                     attack.Index = attack.stateRef.Value.GetConsiderationIndex(new Identify()
                     {
                         Difficulty = Difficulty.Normal,
-                        aIStates = AIStates.AttackMelee, // Todo add switch
+                        aIStates = attack.style switch
+                        {
+                            AttackStyle.Melee => AIStates.AttackMelee,
+                            AttackStyle.MagicMelee => AIStates.AttackMelee, //TODO Make Magic Attack AI State,
+                            AttackStyle.Range => AIStates.AttackRange,
+                            AttackStyle.MagicRange => AIStates.AttackRange,//TODO Make Magic Attack Range AI State,
+                            _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
+                        },
                         Faction = Faction.Enemy,//brain.faction
                         NPCLevel = NPCLevel.Grunt
                     });
@@ -147,28 +155,26 @@ namespace IAUS.ECS.StateBlobSystem
 
         static ConsiderationScoringData LineRead(int StartPoint, string Line)
         {
-            ConsiderationScoringData output = new ConsiderationScoringData();
+            ConsiderationScoringData output = new ConsiderationScoringData() {
+                responseType = ResponseType.none
+            };
+
+            var parts = Line.Split(',');
+
+            if (bool.Parse(parts[StartPoint]))
             {
-                var parts = Line.Split(',');
 
-                if (bool.Parse(parts[StartPoint]))
+                output = new ConsiderationScoringData()
                 {
-
-                    output = new ConsiderationScoringData()
-                    {
-                        Inverse = bool.TryParse(parts[StartPoint + 1], out var b) ? b : false,
-                        responseType = (ResponseType)Enum.Parse(typeof(ResponseType), parts[StartPoint + 2]),
-                        M = float.TryParse(parts[StartPoint + 3], out var M) ? M : 0,
-                        K = float.TryParse(parts[StartPoint + 4], out var K) ? K : 0,
-                        B = float.TryParse(parts[StartPoint + 5], out var B) ? B : 0,
-                        C = float.TryParse(parts[StartPoint + 6], out var C) ? C : 0
-                    };
-                }
-
-
-                return output;
+                    Inverse = bool.TryParse(parts[StartPoint + 1], out var b) ? b : false,
+                    responseType = (ResponseType)Enum.Parse(typeof(ResponseType), parts[StartPoint + 2]),
+                    M = float.TryParse(parts[StartPoint + 3], out var M) ? M : 0,
+                    K = float.TryParse(parts[StartPoint + 4], out var K) ? K : 0,
+                    B = float.TryParse(parts[StartPoint + 5], out var B) ? B : 0,
+                    C = float.TryParse(parts[StartPoint + 6], out var C) ? C : 0
+                };
             }
-
+            return output;
         }
 
     }

@@ -7,7 +7,7 @@ namespace IAUS.ECS.Component {
         /// <summary>
         /// AI State score
         /// </summary>
-        float TotalScore { get; set; }
+        float TotalScore { get; }
         /// <summary>
         /// Current Operational statues of given AI State
         /// </summary>

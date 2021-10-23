@@ -102,15 +102,7 @@ namespace IAUS.ECS.Systems
                     AttackTargetState attack = Attack[i];
 
                     move.DistanceToLeader = Vector3.Distance(Positions[i].Position, EntityPositions[Followers[i].Leader].Position);
-                    if (move.HasTarget)
-                    {
-                        attack.DistanceToTarget = Vector3.Distance(Positions[i].Position, EntityPositions[move.Target.target.entity].Position);
-                        attack.Target = move.Target.target.entity;
-                    }
-                    else
-                        attack.DistanceToTarget = 0.0f;
-
-                    move.InRange = attack.InRangeForAttack;
+                    move.InRange = attack.HighScoreAttack.InRangeForAttack;
                     Moves[i] = move;
                     Attack[i] = attack;
                 }
@@ -137,7 +129,7 @@ namespace IAUS.ECS.Systems
                     if (move.HasTarget)
                     {
 
-                        float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio) * (attack.AttackRange = true ? .15f : 1.0f);
+                        float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio) * (attack.HighScoreAttack.InRangeForAttack  ? .15f : 1.0f);
                         move.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * move.mod) * TotalScore);
                     }
                     else

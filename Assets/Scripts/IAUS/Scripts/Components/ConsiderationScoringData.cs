@@ -36,6 +36,7 @@ namespace IAUS.ECS.Consideration
     }
         public enum ResponseType
         {
+            none,
             LinearQuad,
             Log,
             Logistic
