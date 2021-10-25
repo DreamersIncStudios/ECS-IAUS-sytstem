@@ -25,7 +25,7 @@ namespace IAUS.ECS.Component
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public float distanceToPoint, StartingDistance, BufferZone ;
 
-        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance;
+        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ?  Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance ): 0;
         public Waypoint CurWaypoint;
         //public int ThreatTheshold;
         //public float ThreatRatio;

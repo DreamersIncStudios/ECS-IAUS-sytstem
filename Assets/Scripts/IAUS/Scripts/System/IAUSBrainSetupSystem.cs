@@ -3,8 +3,7 @@ using IAUS.ECS.Component;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
-using UnityEngine;
-
+using Unity.Transforms;
 
 namespace IAUS.ECS.Systems
 {
@@ -26,7 +25,7 @@ namespace IAUS.ECS.Systems
             _partolStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                        ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)) }
+                        ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)),ComponentType.ReadOnly(typeof(LocalToWorld)) }
 
             });
             _waitStateEntity = GetEntityQuery(new EntityQueryDesc()
@@ -73,7 +72,8 @@ namespace IAUS.ECS.Systems
                 EntityChunk = GetEntityTypeHandle(),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true)
+                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }
             .ScheduleParallel(_partolStateEntity, systemDeps);
 

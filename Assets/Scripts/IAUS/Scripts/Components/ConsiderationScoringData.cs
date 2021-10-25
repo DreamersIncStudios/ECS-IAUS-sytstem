@@ -18,6 +18,11 @@ namespace IAUS.ECS.Consideration
 
         public float Output(float input)
         {
+            if (input > 1.0f || input < 0.0f)
+            {
+                throw new ArgumentOutOfRangeException(nameof(input), $"Input outside of bounds of expection input value: {input}");
+            }
+
             float temp = new float();
             switch (responseType)
             {

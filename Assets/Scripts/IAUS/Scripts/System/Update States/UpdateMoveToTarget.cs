@@ -80,7 +80,8 @@ namespace IAUS.ECS.Systems
             Dependency = systemDeps;
         }
 
-        [BurstCompile]
+       // [BurstCompile]
+       //TODO Check to see if fixed 
         struct CheckDistanceToLeader : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -109,7 +110,7 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        [BurstCompile]
+       // [BurstCompile]
         public struct ScoreMoveState : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -142,6 +143,7 @@ namespace IAUS.ECS.Systems
         }
 
        // [BurstCompile]
+       //Check To see if fixed
         public struct CheckIfTargetIsStillInSightandUpdate : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -189,7 +191,7 @@ namespace IAUS.ECS.Systems
                     {
                         float dist = Vector3.Distance(seerPosition.Position, update.target.LastKnownPosition);
 
-                        update.target.DistanceTo = raycastHit.Fraction * dist;
+                        update.target.DistanceTo = Mathf.Clamp( raycastHit.Fraction * dist, 0 , Mathf.Infinity);
                         update.target.LastKnownPosition = raycastHit.Position;
                         update.target.CanSee = true;
                         update.target.LookAttempt = 0;

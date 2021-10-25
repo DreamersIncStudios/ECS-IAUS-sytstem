@@ -7,9 +7,12 @@ using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using IAUS.ECS.Consideration;
+using System;
+
 namespace IAUS.ECS.Systems
 {
-
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
     public class UpdateAttackStateSystem : SystemBase
     {
         private EntityQuery Melee;
@@ -27,21 +30,32 @@ namespace IAUS.ECS.Systems
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
-
+        float interval = .20f;
+        bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
-            systemDeps = new ScoreBufferSubStates() { 
-                AttackBuffer = GetBufferTypeHandle<AttackTypeInfo>(false),
-                CharacterStatChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
-                AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false)                
-            }.ScheduleParallel(Melee, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            Dependency = systemDeps;
+            if (runUpdate)
+            {
+                JobHandle systemDeps = Dependency;
+                systemDeps = new ScoreBufferSubStates()
+                {
+                    AttackBuffer = GetBufferTypeHandle<AttackTypeInfo>(false),
+                    CharacterStatChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
+                    AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false)
+                }.ScheduleParallel(Melee, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                Dependency = systemDeps;
+                interval = .20f;
+            }
+            else { 
+                interval -= 1 / 60.0f;
+
+            }
         }
 
-        [BurstCompile]
+        //[BurstCompile]
+        //TODO Check https://forum.unity.com/threads/burst-error-adding-component-frozenrenderscenetag.810753/
         struct ScoreBufferSubStates : IJobChunk
         {
             public BufferTypeHandle<AttackTypeInfo> AttackBuffer;
@@ -65,17 +79,18 @@ namespace IAUS.ECS.Systems
                         AttackTypeInfo ScoreAttack = AttackBuffer[j];
                         if (ScoreAttack.stateRef.IsCreated)
                         {
-                            float TotalScore = (ScoreAttack.HealthRatio.Equals(default(ConsiderationScoringData)) ?
+                            float TotalScore = (!ScoreAttack.HealthRatio.Equals(default(ConsiderationScoringData)) ?
                                  ScoreAttack.HealthRatio.Output(Stats[i].HealthRatio) : 1) *
 
-                                 (ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
-                                 ScoreAttack.RangeToTarget.Output(ScoreAttack.DistanceToTarget) : 1) *
+                                 (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
+                                 ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget/(float)ScoreAttack.AttackRange)) : 2) *
 
-                                   (ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
+                                   (!ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
                                  ScoreAttack.ManaAmmoAmount.Output(1) : 1) //Todo Get mama/ammo amount
                                  ;
 
                             ScoreAttack.Score = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * ScoreAttack.mod) * TotalScore);
+
                             if (ScoreAttack.Score > state.HighScoreAttack.Score)
                                 state.HighScoreAttack = ScoreAttack;
                         }
