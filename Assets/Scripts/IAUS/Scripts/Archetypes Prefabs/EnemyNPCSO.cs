@@ -26,7 +26,7 @@ namespace IAUS.NPCSO {
         public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
         [SerializeField] InfluenceComponent getInfluence;
-        public Faction getFaction { get { return factionMember; } }
+        public Faction GetFaction { get { return factionMember; } }
         [SerializeField] Faction factionMember;
 
         public List<AttackTypeInfo> GetAttackType => getAttackTypes;
@@ -50,8 +50,12 @@ namespace IAUS.NPCSO {
         {
             base.Spawn(pos);
             if (Self.Type == TargetType.Character)
-                SpawnedGO.AddComponent<EnemyCharacter>();
-            AIAuthoring.faction = getFaction;
+            {
+                EnemyCharacter enemyStats = SpawnedGO.AddComponent<EnemyCharacter>();
+                enemyStats.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+                enemyStats.Name = GetName;
+            }
+            AIAuthoring.faction = GetFaction;
 
             if (isPartofTeam) {
                 TeamAuthoring teamAuthoring = new TeamAuthoring() {

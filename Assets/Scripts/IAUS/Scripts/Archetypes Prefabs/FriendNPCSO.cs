@@ -16,7 +16,7 @@ namespace IAUS.NPCSO
         public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
         [SerializeField] InfluenceComponent getInfluence;
-        public Faction getFaction { get { return factionMember; } }
+        public Faction GetFaction { get { return factionMember; } }
         [SerializeField] Faction factionMember;
         public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PatrolBuilderData patrol, WaitBuilderData wait)
         {
@@ -26,7 +26,7 @@ namespace IAUS.NPCSO
         public override void Spawn(Vector3 pos)
         {
             base.Spawn(pos);
-            AIAuthoring.faction = getFaction;
+            AIAuthoring.faction = GetFaction;
         }
 
     }

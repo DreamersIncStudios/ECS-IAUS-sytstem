@@ -104,9 +104,11 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPCSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
+    <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\ListOfNames.txt" />
     <None Include="Assets\Scripts\IAUS\IAUS Def.asmdef" />
   </ItemGroup>
   <ItemGroup>

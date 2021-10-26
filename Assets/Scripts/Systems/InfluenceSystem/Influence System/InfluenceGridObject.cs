@@ -206,7 +206,7 @@ namespace DreamersInc.InflunceMapSystem
     }
     public enum Faction
     {
-        Environmental, Player, Enemy, Faction2, Faction3, Faction4,//etc etc 
+        Environmental, Player, Enemy, Faction2, Faction3, Faction4, NonCombative//etc etc 
     }
 
 }
