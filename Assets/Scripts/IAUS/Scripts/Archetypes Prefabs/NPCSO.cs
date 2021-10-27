@@ -21,7 +21,7 @@ namespace IAUS.NPCSO
         [SerializeField] uint spawnID;
         public uint SpawnID { get { return spawnID; } }
         [SerializeField] string _getName;
-        public string GetName => string.IsNullOrEmpty(_getName)? GetNameFile() : _getName;
+        public string GetName => string.IsNullOrEmpty(_getName)? NPCUtility.GetNameFile() : _getName;
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
@@ -96,15 +96,20 @@ namespace IAUS.NPCSO
             Senses.HearingData = new Hearing();
 
         }
-        string GetNameFile()
+ 
+
+
+
+    }
+
+
+    public class NPCUtility {
+       public static string GetNameFile()
         {
             TextAsset nameFile = Resources.Load("ListOfNames") as TextAsset;
             var lines = nameFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             int index = UnityEngine.Random.Range(0, lines.Length - 1);
             return lines[index];
         }
-
-
-
     }
 }
