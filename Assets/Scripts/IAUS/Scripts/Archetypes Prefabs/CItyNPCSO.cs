@@ -5,7 +5,7 @@ using UnityEngine;
 namespace IAUS.NPCSO {
 
     [CreateAssetMenu(fileName = "City NPC Data",menuName ="ScriptableObject/City Data" , order = 1)]
-    public  class CItyNPCSO : ScriptableObject
+    public  class CityNPCSO : ScriptableObject
     {
         public List<CitizenNPC> Citizens { get { return citizens; } }
         [SerializeField] List<CitizenNPC> citizens;

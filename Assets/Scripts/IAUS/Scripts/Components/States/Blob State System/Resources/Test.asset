@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b29513ce36fea8a43a62803636621b35, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  citizens:
+  - Count: 50
+    Model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
+    Self:
+      Type: 1
+      GetRace: 3
+      NumOfEntityTargetingMe: 0
+      GetInstanceID: 0
+      MaxNumberOfTarget: 0
+      CanBeTargetByPlayer: 0
+    AIStatesAvailable: 010000000b000000
+    GetPatrol:
+      BufferZone: 0.75
+      CoolDownTime: 5
+    GetWait:
+      StartTime: 1
+      CoolDownTime: 5
+    AIMove:
+      TargetLocation:
+        x: 0
+        y: 0
+        z: 0
+      MovementSpeed: 10
+      TargetLocationCrowded: 0
+      MaxInfluenceAtPoint: 20
+      Offset:
+        x: 0
+        y: 0
+        z: 0
+      CanMove: 0
+      StoppingDistance: 1
+      Acceleration: 3
+      DistanceRemaining: 0
+    GetVision:
+      EnemyAwarnessLevel: 0
+      HeadPositionOffset:
+        x: 0
+        y: 0
+        z: 0
+      ThreatPosition:
+        x: 0
+        y: 0
+        z: 0
+      Scantimer: 0
+      viewRadius: 30
+      ViewAngle: 120
+      EngageRadius: 5
+      AlertModifer: 0
+    GetInfluence:
+      Threat: 0
+      Protection: 2
+      previousPos:
+        x: 0
+        y: 0
+        z: 0
+      faction: 6

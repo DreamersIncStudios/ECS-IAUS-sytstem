@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -105,7 +106,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CItyNPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CityNPCSO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
