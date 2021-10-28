@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
 
     public class Follow : MonoBehaviour, IConvertGameObjectToEntity

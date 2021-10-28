@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace IAUS.ECS2.Consideration
+namespace IAUS.ECS.Consideration
 {
     public interface IBaseConsiderations : IComponentData
     {

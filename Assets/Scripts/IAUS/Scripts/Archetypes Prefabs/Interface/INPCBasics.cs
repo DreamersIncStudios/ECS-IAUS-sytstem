@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Global.Component;
-using IAUS.ECS2.Component;
-using IAUS.ECS2;
+using IAUS.ECS.Component;
+using IAUS.ECS;
 using UnityEngine;
 using Components.MovementSystem;
 using AISenses;
@@ -16,12 +16,10 @@ namespace IAUS.NPCSO.Interfaces
         Movement AIMove { get; }
         List<AIStates> AIStatesAvailable { get; }
         GameObject Model { get; }
-        Patrol GetPatrol { get; }
-        Wait GetWait { get; }
+        PatrolBuilderData GetPatrol { get; }
+        WaitBuilderData GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
-        InfluenceComponent GetInfluence { get; }
-        Faction getFaction{get;}
     }
 
     public interface INPCEnemy {

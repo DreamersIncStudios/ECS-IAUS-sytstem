@@ -1,12 +1,11 @@
 ﻿using Unity.Entities;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
-using UnityEngine;
+using Unity.Transforms;
 
-
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public class IAUSBrainSetupSystem : SystemBase
     {
@@ -26,7 +25,7 @@ namespace IAUS.ECS2.Systems
             _partolStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                        ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)) }
+                        ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)),ComponentType.ReadOnly(typeof(LocalToWorld)) }
 
             });
             _waitStateEntity = GetEntityQuery(new EntityQueryDesc()
@@ -46,11 +45,11 @@ namespace IAUS.ECS2.Systems
                     ComponentType.ReadWrite(typeof(StayInRange))}
             } );
 
-            //_AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
-            //{
-            //    All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
-            //        ComponentType.ReadWrite(typeof(MeleeAttackTarget))}
-            //});
+            _AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(AttackTargetState)) , ComponentType.ReadWrite(typeof(AttackTypeInfo))}
+            });
             _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
@@ -73,7 +72,8 @@ namespace IAUS.ECS2.Systems
                 EntityChunk = GetEntityTypeHandle(),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true)
+                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }
             .ScheduleParallel(_partolStateEntity, systemDeps);
 
@@ -111,16 +111,16 @@ namespace IAUS.ECS2.Systems
             }.ScheduleParallel(_MoveToTargetStateEntity ,systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            //systemDeps = new AddAttackTargetState()
-            //{
-            //    entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-            //    StateBufferChunk =GetBufferTypeHandle<StateBuffer>(false),
-            //    AttackTargetChunk = GetComponentTypeHandle<MeleeAttackTarget>(false),
-            //    EntityChunk = GetEntityTypeHandle(),
-            //    HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
-            //}.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
-            //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            
+            systemDeps = new AddAttacks()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                 AttackChunk = GetComponentTypeHandle<AttackTargetState>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
+            }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             systemDeps = new AddRetreatState()
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),

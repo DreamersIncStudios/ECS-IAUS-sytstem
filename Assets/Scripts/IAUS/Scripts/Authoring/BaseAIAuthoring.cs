@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 using UnityEngine;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Global.Component;
 using Components.MovementSystem;
 

@@ -5,14 +5,13 @@ using Unity.Entities;
 using UnityEngine.AI;
 using IAUS.NPCSO.Interfaces;
 using Global.Component;
-using IAUS.ECS2;
+using IAUS.ECS;
 using Components.MovementSystem;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Stats;
 using AISenses;
 using AISenses.Authoring;
-using DreamersInc.InflunceMapSystem;
-
+using System;
 
 namespace IAUS.NPCSO
 {
@@ -22,22 +21,20 @@ namespace IAUS.NPCSO
         [SerializeField] uint spawnID;
         public uint SpawnID { get { return spawnID; } }
         [SerializeField] string _getName;
-        public string GetName => _getName;
+        public string GetName => string.IsNullOrEmpty(_getName)? NPCUtility.GetNameFile() : _getName;
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
-       public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
-        [SerializeField] InfluenceComponent getInfluence;
 
         public AITarget Self => GetSelf;
-        [SerializeField]AITarget GetSelf;
+        [SerializeField] AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
         [SerializeField] List<AIStates> states;
-        public Patrol GetPatrol => getPatrol;
-        [SerializeField] Patrol getPatrol;
-        public Wait GetWait => getWait;
-        [SerializeField] Wait getWait;
+        public PatrolBuilderData GetPatrol => getPatrol;
+        [SerializeField] PatrolBuilderData getPatrol;
+        public WaitBuilderData GetWait => getWait;
+        [SerializeField] WaitBuilderData getWait;
 
         public Movement AIMove => GetMovement;
         [SerializeField] Movement GetMovement;
@@ -45,62 +42,74 @@ namespace IAUS.NPCSO
         [SerializeField] TypeOfNPC getNPCType;
         public TypeOfNPC GetTypeOfNPC => getNPCType;
 
-        [SerializeField]Vision getVision;
+        [SerializeField] Vision getVision;
         public Vision GetVision => getVision;
-        public Faction getFaction { get { return factionMember; } }
-        [SerializeField] Faction factionMember;
 
-        public void Setup(string Name,GameObject model, TypeOfNPC typeOf,InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
-            ,Patrol patrol,Wait wait
-            ) {
+        public virtual void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
+            , PatrolBuilderData patrol, WaitBuilderData wait
+            )
+        {
             _getName = Name;
             GetSelf = self;
             GetMovement = movement;
             states = NpcStates;
             _model = model;
-            this.getInfluence = GetInfluence;
             getPatrol = patrol;
             getWait = wait;
             getNPCType = typeOf;
             getVision = vision;
         }
-      [HideInInspector] public BaseAIAuthoringSO AIAuthoring;
-       public GameObject SpawnedGO { get; private set; }
+        [HideInInspector] public BaseAIAuthoringSO AIAuthoring;
+        public GameObject SpawnedGO { get; private set; }
 
 
-        public virtual void Spawn( Vector3 pos) {
+        public virtual void Spawn(Vector3 pos)
+        {
             SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
             SpawnedGO.AddComponent<NavMeshAgent>();
             SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
-             AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
+            AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
             AIAuthoring.Self = Self;
-            AIAuthoring.faction = getFaction;
+            //AIAuthoring.faction = getFaction;
             AIAuthoring.movement = AIMove;
-            foreach (AIStates state in AIStatesAvailable) {
-                switch (state) {
+            foreach (AIStates state in AIStatesAvailable)
+            {
+                switch (state)
+                {
                     case AIStates.Patrol:
                         AIAuthoring.AddPatrol = true;
-                        AIAuthoring.patrolState = GetPatrol;
+                        AIAuthoring.buildPatrol = GetPatrol;
+                        SpawnedGO.AddComponent<WaypointCreation>();
                         break;
                     case AIStates.Wait:
                         AIAuthoring.AddWait = true;
-                        AIAuthoring.waitState = GetWait;
+                        AIAuthoring.waitBuilder = GetWait;
                         break;
-                }        
-                   
                 }
-            if (AIAuthoring.AddPatrol)
-                SpawnedGO.AddComponent<WaypointCreation>();
-            AIAuthoring.GetInfluence = GetInfluence;
+
+            }
+               
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;
             Senses.Hearing = true;
             Senses.HearingData = new Hearing();
-            
 
         }
+ 
 
 
+
+    }
+
+
+    public class NPCUtility {
+       public static string GetNameFile()
+        {
+            TextAsset nameFile = Resources.Load("ListOfNames") as TextAsset;
+            var lines = nameFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            int index = UnityEngine.Random.Range(0, lines.Length - 1);
+            return lines[index];
+        }
     }
 }

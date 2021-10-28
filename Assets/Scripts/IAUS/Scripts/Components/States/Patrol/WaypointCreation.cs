@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Utilities;
 using Global.Component;
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
     public class WaypointCreation : MonoBehaviour, IConvertGameObjectToEntity
     {

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System;
+using Unity.Collections;
 
-namespace IAUS.ECS2
-{
+namespace IAUS.ECS.Consideration
+{ 
 
-    [System.Serializable]
+    [Serializable]
     public struct ConsiderationScoringData
     {
         public bool Inverse; // Is Invense Required if m is negatives? Inverse to be removed for response curves
@@ -16,6 +18,11 @@ namespace IAUS.ECS2
 
         public float Output(float input)
         {
+            if (input > 1.0f || input < 0.0f)
+            {
+                throw new ArgumentOutOfRangeException(nameof(input), $"Input outside of bounds of expection input value: {input}");
+            }
+
             float temp = new float();
             switch (responseType)
             {
@@ -34,6 +41,7 @@ namespace IAUS.ECS2
     }
         public enum ResponseType
         {
+            none,
             LinearQuad,
             Log,
             Logistic

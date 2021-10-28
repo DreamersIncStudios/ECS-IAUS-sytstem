@@ -12,6 +12,8 @@ namespace DreamersInc.InflunceMapSystem {
             //TODO Read in Filter Data from JSON files
             Allies.Add(Faction.Enemy, new List<Faction>() { Faction.Faction4,Faction.Faction3 });
             Enemies.Add(Faction.Enemy, new List<Faction>() { Faction.Player });
+            Allies.Add(Faction.NonCombative, new List<Faction> { Faction.Player });
+            Enemies.Add(Faction.NonCombative, new List<Faction> { Faction.Enemy });
 
         }
 

@@ -7,11 +7,12 @@ using Unity.Entities;
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;
-
+    public CityNPCSO CityNPCsToSpawn;
     public void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0, 5);
-      //  Invoke(nameof(OnceAllSpawnedCreateExplosion), 60);
+
+        //   InvokeRepeating(nameof(Spawn), 0, 5);
+        CityNPCsToSpawn.SpawnWorld(this.transform.position);
     }
 
 

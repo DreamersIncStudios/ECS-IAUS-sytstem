@@ -2,11 +2,13 @@
 using UnityEngine;
 
 
-namespace IAUS.ECS2.Component
+namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]
     public struct Scatter : IBaseStateScorer
     {
+        public int refIndex { get; set; }
+
         public bool Complete; // check to see if the character is in range of the danger
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

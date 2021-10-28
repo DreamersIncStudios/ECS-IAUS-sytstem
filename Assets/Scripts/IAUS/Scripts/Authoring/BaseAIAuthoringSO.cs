@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Global.Component;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
@@ -10,11 +10,11 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
     public Movement movement;
-    public Patrol patrolState;
+    public PatrolBuilderData buildPatrol;
     public bool AddPatrol;
     public bool AddWait;
     public bool AddRetreat;
-    public Wait waitState;
+    public WaitBuilderData waitBuilder;
     public RetreatCitizen retreatState;
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
@@ -30,9 +30,25 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity, GetInfluence);
         dstManager.AddBuffer<StateBuffer>(entity);
         if (AddPatrol)
-            dstManager.AddComponentData(entity, patrolState);
+        {
+            Patrol patrol = new Patrol()
+            {
+                BufferZone = buildPatrol.BufferZone,
+                _coolDownTime = buildPatrol.CoolDownTime
+            };
+            dstManager.AddComponentData(entity, patrol);
+        }
         if (AddWait)
+        {
+            Wait  waitState = new Wait()
+            {
+                StartTime = waitBuilder.StartTime,
+                _coolDownTime = waitBuilder.CoolDownTime
+            };
+
             dstManager.AddComponentData(entity, waitState);
+
+        }
         if (AddRetreat)
             dstManager.AddComponentData(entity, retreatState);
         if (Self.Type == TargetType.Character)
@@ -40,14 +56,15 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         if (AddRetreat) {
             dstManager.AddComponentData(entity, retreatState);
         }
-        //if (GetAttackType.Count >= 1)
+        //if (GetAttackType.Count > 0)
         //{
-        //    DynamicBuffer<AttackTypeInfo> ATI = dstManager.AddBuffer<AttackTypeInfo>(entity);
-        //    dstManager.AddComponentData(entity, attackTargetState);
+        //    DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
         //    foreach (AttackTypeInfo Info in GetAttackType)
         //    {
-        //        ATI.Add(Info);
+        //        ati.Add(Info);
         //    }
+        //    dstManager.AddComponentData(entity, attackTargetState);
+
         //}
     }
 }

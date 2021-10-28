@@ -12,7 +12,7 @@ namespace Stats
         /// </summary>
         private void Start()
         {
-            SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+          //TODO Remove  SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
         }
 
     }

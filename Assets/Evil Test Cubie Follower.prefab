@@ -21,9 +21,6 @@ GameObject:
   - component: {fileID: 5423921335538982025}
   - component: {fileID: 5423921335538982024}
   - component: {fileID: 5423921335538982027}
-  - component: {fileID: 5423921335538982026}
-  - component: {fileID: 5423921335538982029}
-  - component: {fileID: 5423921335538982028}
   m_Layer: 0
   m_Name: Evil Test Cubie Follower
   m_TagString: Untagged
@@ -156,7 +153,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Self:
     Type: 0
+    GetRace: 0
     NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
 --- !u!114 &5423921335538982047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +270,10 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
+    ThreatPosition:
+      x: 0
+      y: 0
+      z: 0
     Scantimer: 0
     viewRadius: 50
     ViewAngle: 112
@@ -277,9 +282,10 @@ MonoBehaviour:
   Hearing: 0
   HearingData:
     AmbientNoiseLevel: 0
-    AlertNoiseLevel: 0
-    AlarmNoiseLevel: 0
-    EnemyAwarnessLevel: 0
+    LocationOfSound:
+      x: 0
+      y: 0
+      z: 0
   Touch: 0
   Editing: 0
 --- !u!114 &5423921335538982027
@@ -309,57 +315,3 @@ MonoBehaviour:
   StoppingDistance: 0.2
   Acceleration: 5
   DistanceRemaining: 0
---- !u!114 &5423921335538982026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5423921335538982044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c5fcb4c92ec0a145a54ee017cbec124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faction: 0
-  InfluenceValue: 1
-  Range: 4
---- !u!114 &5423921335538982029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5423921335538982044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726dfdfc94915e749ad0e15289792a97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DistanceToTarget: 0
-  AttackRange: 10
-  Attacktimer: 30
-  Target: {fileID: 0}
---- !u!114 &5423921335538982028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5423921335538982044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb843541f8eb4c748aa6a117332c6406, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Timer: 20
-  DistanceToTarget: 0
-  HealthRatio:
-    Inverse: 0
-    responseType: 1
-    M: 50
-    K: -1
-    B: 0.91
-    C: 0.35
-  _status: 0
-  _coolDownTime: 5

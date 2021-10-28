@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using AISenses;
-namespace IAUS.ECS2.Component
+using IAUS.ECS.Consideration;
+namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]
     public struct MoveToTarget : IBaseStateScorer {
+        public int refIndex { get; set; }
+
 
         // Need to adjust state to position character based on attackStyle
 

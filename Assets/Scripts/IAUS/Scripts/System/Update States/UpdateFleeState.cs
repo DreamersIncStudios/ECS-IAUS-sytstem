@@ -1,16 +1,15 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using AISenses;
-using DreamersInc.InflunceMapSystem;
 
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
     public sealed class UpdateFleeState : SystemBase
     {
@@ -94,7 +93,7 @@ namespace IAUS.ECS2.Systems
             where RETREAT : unmanaged, BaseRetreat
         {
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
-            public ComponentTypeHandle<RETREAT> RetreatChunk; // TODO Add CurPosition to BaseRetreat interface
+            public ComponentTypeHandle<RETREAT> RetreatChunk; 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<RETREAT> Retreats = chunk.GetNativeArray(RetreatChunk);
@@ -105,6 +104,7 @@ namespace IAUS.ECS2.Systems
                     RETREAT retreat = Retreats[i];
                     retreat.CurPos = toWorlds[i].Position;
                     Retreats[i] = retreat;
+                    
                 }
             }
         }

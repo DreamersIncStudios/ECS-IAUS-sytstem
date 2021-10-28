@@ -1,7 +1,7 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
@@ -10,7 +10,9 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using AISenses;
 using Components.MovementSystem;
-namespace IAUS.ECS2.Systems
+
+
+namespace IAUS.ECS.Systems
 {
 
     public class UpdateMoveToTarget : SystemBase
@@ -78,7 +80,8 @@ namespace IAUS.ECS2.Systems
             Dependency = systemDeps;
         }
 
-        [BurstCompile]
+       // [BurstCompile]
+       //TODO Check to see if fixed 
         struct CheckDistanceToLeader : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -100,22 +103,14 @@ namespace IAUS.ECS2.Systems
                     AttackTargetState attack = Attack[i];
 
                     move.DistanceToLeader = Vector3.Distance(Positions[i].Position, EntityPositions[Followers[i].Leader].Position);
-                    if (move.HasTarget)
-                    {
-                        attack.DistanceToTarget = Vector3.Distance(Positions[i].Position, EntityPositions[move.Target.target.entity].Position);
-                        attack.Target = move.Target.target.entity;
-                    }
-                    else
-                        attack.DistanceToTarget = 0.0f;
-
-                    move.InRange = attack.InRangeForAttack;
+                    move.InRange = attack.HighScoreAttack.InRangeForAttack;
                     Moves[i] = move;
                     Attack[i] = attack;
                 }
             }
         }
 
-        [BurstCompile]
+       // [BurstCompile]
         public struct ScoreMoveState : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -135,7 +130,7 @@ namespace IAUS.ECS2.Systems
                     if (move.HasTarget)
                     {
 
-                        float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio) * (attack.AttackRange = true ? .15f : 1.0f);
+                        float TotalScore = move.DistanceToLead.Output(move.DistanceRatio) * move.HealthRatio.Output(stats.HealthRatio) * (attack.HighScoreAttack.InRangeForAttack  ? .15f : 1.0f);
                         move.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * move.mod) * TotalScore);
                     }
                     else
@@ -148,6 +143,7 @@ namespace IAUS.ECS2.Systems
         }
 
        // [BurstCompile]
+       //Check To see if fixed
         public struct CheckIfTargetIsStillInSightandUpdate : IJobChunk
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
@@ -195,7 +191,7 @@ namespace IAUS.ECS2.Systems
                     {
                         float dist = Vector3.Distance(seerPosition.Position, update.target.LastKnownPosition);
 
-                        update.target.DistanceTo = raycastHit.Fraction * dist;
+                        update.target.DistanceTo = Mathf.Clamp( raycastHit.Fraction * dist, 0 , Mathf.Infinity);
                         update.target.LastKnownPosition = raycastHit.Position;
                         update.target.CanSee = true;
                         update.target.LookAttempt = 0;

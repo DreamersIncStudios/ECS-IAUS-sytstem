@@ -1,13 +1,13 @@
 ﻿using Unity.Entities;
 
-namespace IAUS.ECS2.Component {
+namespace IAUS.ECS.Component {
 
     public interface IBaseStateScorer : IComponentData
     {
         /// <summary>
         /// AI State score
         /// </summary>
-        float TotalScore { get; set; }
+        float TotalScore { get; }
         /// <summary>
         /// Current Operational statues of given AI State
         /// </summary>
@@ -25,6 +25,8 @@ namespace IAUS.ECS2.Component {
         /// </summary>
         float ResetTime { get; set; }
         float mod { get; }
+       // public int refIndex { get; set; }
+
     }
 
     public enum ActionStatus   

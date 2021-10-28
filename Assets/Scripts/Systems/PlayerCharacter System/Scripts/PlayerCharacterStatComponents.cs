@@ -70,7 +70,7 @@ namespace Stats
         public int MaxHealth;
         [Range(0, 999)]
         public int MaxMana;
-        public float HealthRatio { get { return CurHealth /(float) MaxHealth; } }
+        public float HealthRatio { get { return Mathf.Clamp01(CurHealth /(float) MaxHealth); } }
         public float ManaRatio { get { return CurMana / (float)MaxMana; } }
 
 

@@ -15,15 +15,6 @@ MonoBehaviour:
   spawnID: 0
   _getName: Citizen
   _model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
-  getInfluence:
-    value:
-      x: 5
-      y: 6
-    previousPos:
-      x: 0
-      y: 0
-      z: 0
-    faction: 2
   GetSelf:
     Type: 1
     GetRace: 0
@@ -31,70 +22,13 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 010000000c00000007000000
+  states: 010000000b000000
   getPatrol:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    distanceToPoint: 0
-    StartingDistance: 0
     BufferZone: 0.75
-    CurWaypoint:
-      Point:
-        Type: 0
-        GetRace: 0
-        NumOfEntityTargetingMe: 0
-        GetInstanceID: 0
-        MaxNumberOfTarget: 0
-        CanBeTargetByPlayer: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-      InfluenceAtPosition:
-        x: 0
-        y: 0
-    ThreatTheshold: 0
-    ThreatRatio: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 5
   getWait:
-    TimeLeft:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    Timer: 0
     StartTime: 1
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 5
   GetMovement:
     TargetLocation:
       x: 0
@@ -127,7 +61,6 @@ MonoBehaviour:
     ViewAngle: 120
     EngageRadius: 10
     AlertModifer: 0
-  factionMember: 2
   AIAuthoring: {fileID: 0}
   isPartofTeam: 0
   getTeamInfo:
@@ -161,4 +94,18 @@ MonoBehaviour:
     _resetTime: 0
     _totalScore: 0
     HideTime: 30
-  getAttackTypes: []
+  getInfluence:
+    Threat: 2
+    Protection: 2
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
+    faction: 2
+  factionMember: 2
+  getAttackTypes:
+  - style: 0
+    Index: 0
+    AttackRange: 30
+    Attacktimer: 30
+    Score: 0

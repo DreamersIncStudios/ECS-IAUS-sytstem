@@ -1,15 +1,18 @@
 ﻿using Unity.Entities;
 using Unity.Collections;
 using Unity.Jobs;
-using IAUS.ECS2.Component;
+using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
 using Stats;
+using IAUS.ECS.Consideration;
+using System;
 
-namespace IAUS.ECS2.Systems
+namespace IAUS.ECS.Systems
 {
-
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
     public class UpdateAttackStateSystem : SystemBase
     {
         private EntityQuery Melee;
@@ -27,61 +30,74 @@ namespace IAUS.ECS2.Systems
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
-
+        float interval = .20f;
+        bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
         {
-
-        }
-        [BurstCompile]
-        struct UpdateAttackState : IJobChunk
-        {
-           public  ComponentTypeHandle<CharacterStatComponent> CharacterStatChunk;
-            public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
-            public EntityTypeHandle EntityChunk;
-            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<LocalToWorld> LocalTransform;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            if (runUpdate)
             {
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(CharacterStatChunk);
-                NativeArray<AttackTargetState> AttackStates = chunk.GetNativeArray(AttackStateChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-                for (int i = 0; i < chunk.Count; i++)
+                JobHandle systemDeps = Dependency;
+                systemDeps = new ScoreBufferSubStates()
                 {
-                    AttackTargetState State = AttackStates[i];
-                    State.HealthRatio = Stats[i].HealthRatio;
-                    State.ManaRatio = Stats[i].ManaRatio;
-                    if (State.Target == Entity.Null)
-                    {
-                        State.DistanceToTarget = 10000000000000;
-                    }
-                    else {
-                        State.DistanceToTarget = Vector3.Distance(LocalTransform[entities[i]].Position, LocalTransform[State.Target].Position); 
-                    }
-                   
-                    AttackStates[i] = State;
-                }
+                    AttackBuffer = GetBufferTypeHandle<AttackTypeInfo>(false),
+                    CharacterStatChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
+                    AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false)
+                }.ScheduleParallel(Melee, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                Dependency = systemDeps;
+                interval = .20f;
+            }
+            else { 
+                interval -= 1 / 60.0f;
+
             }
         }
 
-        struct UpdateAttackBuffer : IJobChunk
+        //[BurstCompile]
+        //TODO Check https://forum.unity.com/threads/burst-error-adding-component-frozenrenderscenetag.810753/
+        struct ScoreBufferSubStates : IJobChunk
         {
             public BufferTypeHandle<AttackTypeInfo> AttackBuffer;
+           [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> CharacterStatChunk;
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
-
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 BufferAccessor<AttackTypeInfo> bufferAccessor = chunk.GetBufferAccessor(AttackBuffer);
-                NativeArray<AttackTargetState> AttackStates = chunk.GetNativeArray(AttackStateChunk);
+                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(CharacterStatChunk);
+                NativeArray<AttackTargetState> Attacks = chunk.GetNativeArray(AttackStateChunk);
+
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    AttackTargetState State = AttackStates[i];
-
-                    DynamicBuffer<AttackTypeInfo> AttckBuffer = bufferAccessor[i];
-                    for (int j = 0; j < AttckBuffer.Length; j++)
+                    AttackTargetState state = Attacks[i];
+                    state.HighScoreAttack = new AttackTypeInfo();
+                    //Todo Balanace Response curve for start point 
+                    DynamicBuffer<AttackTypeInfo> AttackBuffer = bufferAccessor[i];
+                    for (int j = 0; j < AttackBuffer.Length; j++)
                     {
+                        AttackTypeInfo ScoreAttack = AttackBuffer[j];
+                        if (ScoreAttack.stateRef.IsCreated)
+                        {
+                            float TotalScore = (!ScoreAttack.HealthRatio.Equals(default(ConsiderationScoringData)) ?
+                                 ScoreAttack.HealthRatio.Output(Stats[i].HealthRatio) : 1) *
 
+                                 (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
+                                 ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget/(float)ScoreAttack.AttackRange)) : 2) *
+
+                                   (!ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
+                                 ScoreAttack.ManaAmmoAmount.Output(1) : 1) //Todo Get mama/ammo amount
+                                 ;
+
+                            ScoreAttack.Score = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * ScoreAttack.mod) * TotalScore);
+
+                            if (ScoreAttack.Score > state.HighScoreAttack.Score)
+                                state.HighScoreAttack = ScoreAttack;
+                        }
+                        AttackBuffer[j] = ScoreAttack;
                     }
+                    Attacks[i] = state;
+
                 }
             }
         }

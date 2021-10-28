@@ -14,7 +14,9 @@ namespace DreamersInc.InflunceMapSystem
     [GenerateAuthoringComponent]
     public struct InfluenceComponent : IComponentData
     {
-        public int2 value;
+        public int Threat;
+        public int Protection;
+        public int2 GetInfluenceValue { get { return new int2(Threat, Protection); }  }
         public float3 previousPos;
         public Faction faction;
         public bool GridChanged(float3 position, out InfluenceGridObject gridpoint)
@@ -31,8 +33,11 @@ namespace DreamersInc.InflunceMapSystem
         {
             return null == InfluenceGridMaster.Instance.grid.GetGridObject(position) && InfluenceGridMaster.Instance.grid.GetGridObject(previousPos) != null;
         }
+
     }
 
+
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public sealed class UpdateInfluenceGridSystem : SystemBase
     {
         EntityQuery Influencers;
@@ -74,14 +79,14 @@ namespace DreamersInc.InflunceMapSystem
                     InfluenceComponent influence = testInfluences[i];
                     if (influence.GridChanged(toWorlds[i].Position, out InfluenceGridObject gridpoint) && !influence.NPCOffGrid(toWorlds[i].Position))
                     {
-                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue( -influence.value, 10, 25, influence.faction);
-                        gridpoint.AddValue( influence.value, 10, 25, influence.faction);
+                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue( -influence.GetInfluenceValue, 10, 25, influence.faction);
+                        gridpoint.AddValue( influence.GetInfluenceValue, 10, 25, influence.faction);
                         influence.previousPos = toWorlds[i].Position;
 
                     }
                     else if (influence.NPCOffGrid(toWorlds[i].Position))
                     {
-                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue( -influence.value, 10, 25, influence.faction);
+                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue( -influence.GetInfluenceValue, 10, 25, influence.faction);
                         influence.previousPos = toWorlds[i].Position;
 
                     }
