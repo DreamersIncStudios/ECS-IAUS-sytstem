@@ -84,6 +84,10 @@ namespace IAUS.NPCSO {
                 AIAuthoring.GetAttackType = new List<AttackTypeInfo>();
 
         }
+        public void Spawn(Vector3 pos, int SquadID) {
+            Spawn(pos);
+            SpawnedGO.AddComponent<SquadSetup>().SquadID = SquadID;
+        }
 
     }
 }

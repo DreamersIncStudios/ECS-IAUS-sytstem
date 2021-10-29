@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -61,6 +60,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttacks.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CityNPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateAttackMeleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\StayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\WaypointCreation.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
@@ -105,8 +106,8 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CityNPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadMembership.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
