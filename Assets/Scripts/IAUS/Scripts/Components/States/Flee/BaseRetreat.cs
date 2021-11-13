@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using System.Collections.Generic;
 using DreamersInc.InflunceMapSystem;
+using DreamersInc.FactionSystem;
 using Unity.Burst;
 using IAUS.ECS.Consideration;
 using System;
@@ -16,7 +17,7 @@ namespace IAUS.ECS.Component
         ConsiderationScoringData HealthRatio { get; set; }
         ConsiderationScoringData ProximityInArea { get; set; }
         ConsiderationScoringData ThreatInArea { get; set; }
-        Faction FactionMember { get; set; }
+        int FactionMemberID { get; set; }
         float3 LocationOfHighestThreat { get;  }
         float3 LocationOfLowestThreat { get;  }
         float3 CurPos { get; set; }
@@ -37,15 +38,15 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData ThreatInArea { get { return threatInArea; } set { threatInArea = value; } }
         [SerializeField] ConsiderationScoringData threatInArea;
 
-        public Faction FactionMember
+        public int FactionMemberID
         { get { return faction; } set { faction = value; } }
-        [SerializeField] Faction faction;
+        [SerializeField] int faction;
         [BurstDiscard]
         public float3 LocationOfHighestThreat
         {
             get
             {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(FactionMember,true, out int x, out int y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(FactionManager.Database.GetFaction(FactionMemberID),true, out int x, out int y);
                 return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
@@ -53,7 +54,7 @@ namespace IAUS.ECS.Component
         [BurstDiscard] public float3 LocationOfLowestThreat {
             get   
             {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(FactionMember,true, out int x, out int y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(FactionManager.Database.GetFaction(FactionMemberID), true, out int x, out int y);
                 return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
@@ -75,7 +76,7 @@ namespace IAUS.ECS.Component
         public float3 CurPos { get; set; }
         [BurstDiscard] public float2 GridValueAtPos
         { get {
-                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(FactionMember, true);
+                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(FactionManager.Database.GetFaction(FactionMemberID));
                     }  }
 
     }

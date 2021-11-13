@@ -64,7 +64,7 @@ namespace IAUS.NPCSO
                 NPCChararacter npcStat = spawnedGO.AddComponent<NPCChararacter>();
                 npcStat.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                 npcStat.Name = NPCUtility.GetNameFile();
-                aiAuthoring.faction = Faction.NonCombative;
+                aiAuthoring.factionID = 3; //  TODO Set up later;
                 aiAuthoring.GetInfluence = GetInfluence;
             }
         }

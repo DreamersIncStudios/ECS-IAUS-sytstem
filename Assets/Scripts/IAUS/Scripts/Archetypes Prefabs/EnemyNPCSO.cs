@@ -13,6 +13,7 @@ using AISenses.Authoring;
 using AISenses;
 using Dreamers.SquadSystem;
 using Components.MovementSystem;
+using DreamersInc.FactionSystem;
 
 namespace IAUS.NPCSO {
     public sealed class EnemyNPCSO : NPCSO, INPCEnemy,IInfluence
@@ -26,8 +27,8 @@ namespace IAUS.NPCSO {
         public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
         [SerializeField] InfluenceComponent getInfluence;
-        public Faction GetFaction { get { return factionMember; } }
-        [SerializeField] Faction factionMember;
+        public int GetFactionID { get { return factionMemberID; } } // change to ID
+        [SerializeField] int factionMemberID;
 
         public List<AttackTypeInfo> GetAttackType => getAttackTypes;
         [SerializeField] List<AttackTypeInfo> getAttackTypes;
@@ -55,7 +56,7 @@ namespace IAUS.NPCSO {
                 enemyStats.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                 enemyStats.Name = GetName;
             }
-            AIAuthoring.faction = GetFaction;
+            AIAuthoring.factionID = GetFactionID;
 
             if (isPartofTeam) {
                 TeamAuthoring teamAuthoring = new TeamAuthoring() {

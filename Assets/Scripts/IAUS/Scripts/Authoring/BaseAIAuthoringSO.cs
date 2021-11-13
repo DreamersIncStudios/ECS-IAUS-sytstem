@@ -5,7 +5,7 @@ using IAUS.ECS.Component;
 using Global.Component;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
-
+using DreamersInc.FactionSystem;
 public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
@@ -19,12 +19,12 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
     public InfluenceComponent GetInfluence;
-    public Faction faction;
+    public int factionID; // ID Change
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         dstManager.AddComponentData(entity, Self);
         dstManager.AddComponent<IAUSBrain>(entity);
-        dstManager.SetComponentData(entity, new IAUSBrain { faction = this.faction });
+        dstManager.SetComponentData(entity, new IAUSBrain { factionID = this.factionID });
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);

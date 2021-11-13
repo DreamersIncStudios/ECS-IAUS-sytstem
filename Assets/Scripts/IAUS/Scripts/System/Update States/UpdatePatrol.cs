@@ -8,6 +8,7 @@ using UnityEngine;
 using Stats;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
+using DreamersInc.FactionSystem;
 
 
 namespace IAUS.ECS.Systems
@@ -155,7 +156,7 @@ namespace IAUS.ECS.Systems
                     for (int j = 0; j < buffer.Length; j++)
                     {
                         PatrolWaypointBuffer point = buffer[j];
-                        point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(Brains[i].faction, true);
+                        point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(FactionManager.Database.GetFaction( Brains[i].factionID));
                         buffer[j] = point;
                         if (j == patrol.WaypointIndex) {
                             patrol.CurWaypoint = point.WayPoint;

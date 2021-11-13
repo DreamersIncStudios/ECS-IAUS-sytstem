@@ -5,6 +5,7 @@ using IAUS.ECS.Component;
 using Unity.Collections;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
+using DreamersInc.FactionSystem;
 using Unity.Jobs;
 
 namespace IAUS.ECS.Systems
@@ -82,8 +83,8 @@ namespace IAUS.ECS.Systems
                                 {
                                     if (targetsInQueue[x].target.CanSee && targetsInQueue[x].target.DistanceTo < AttackBuffer[j].AttackRange)
                                     {
-                                        if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(influences[i].faction, true).x
-                                            < threatMod * influences[i].Threat)
+                                        if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(FactionManager.Database.GetFaction( influences[i].factionID)).x
+                                            < threatMod * influences[i].value.y)
                                         {
                                             meleeTarget = targetsInQueue[x].target;
                                         }

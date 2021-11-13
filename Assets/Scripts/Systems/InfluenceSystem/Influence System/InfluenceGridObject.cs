@@ -4,6 +4,7 @@ using UnityEngine;
 using DreamersInc.Utils;
 using System;
 using Unity.Mathematics;
+using DreamersInc.FactionSystem;
 
 namespace DreamersInc.InflunceMapSystem
 {
@@ -13,70 +14,65 @@ namespace DreamersInc.InflunceMapSystem
         private const int MAX = 100;
 
         private GridGenericXZ<InfluenceGridObject> grid;
-        private Dictionary<Faction, int2> InfluenceValue;
+        private Dictionary<Faction, int2> gridValue;
 
         private int x, y;
 
         public InfluenceGridObject(GridGenericXZ<InfluenceGridObject> grid, int x, int y)
         {
+            gridValue = new Dictionary<Faction, int2>();
             this.grid = grid;
             this.x = x;
             this.y = y;
-            InfluenceValue = new Dictionary<Faction, int2>();
         }
 
 
         public void AddValue(int2 addValue, Faction faction) {
-            if (InfluenceValue.TryGetValue(faction, out int2 value))
+
+            if (gridValue.ContainsKey(faction))
             {
-                value.x = Mathf.Clamp(value.x + addValue.x, MIN, MAX);
-                value.y = Mathf.Clamp(value.y + addValue.y, MIN, MAX);
-                InfluenceValue[faction] = value;
-              
-                if (InfluenceValue[faction].Equals(int2.zero))
-                    InfluenceValue.Remove(faction);
+                gridValue[faction] += addValue;
             }
             else
             {
-                InfluenceValue.Add(faction, addValue);
+                gridValue.Add(faction, addValue);
             }
-                    grid.TriggerGridObjectChanged(x, y);
+            grid.TriggerGridObjectChanged(x, y);
             
     }
-
         /// <summary>
         /// Add value to grid in a diamond pattern
         /// </summary>
         /// <param name="value"></param>
         /// <param name="Totalrange"></param>
-        public void AddValue( int2 value, int Totalrange, int fullValueRange, Faction faction) {
-          
+        public void AddValue( Vector3 worldPos, int2 value, int Totalrange, int fullValueRange, Faction faction) {
+            grid.GetXZ(worldPos, out int originX, out int originZ);
             int2 lowerValueAmount = new int2() 
             {
                 x = Mathf.RoundToInt((float)value.x / (Totalrange - fullValueRange)),
                 y = Mathf.RoundToInt((float)value.y / (Totalrange - fullValueRange))
             };
-            for (int i = 0; i < Totalrange; i++)
+            for (int x = 0; x < Totalrange; x++)
             {
-                for (int j = 0; j < Totalrange-i; j++)
+                for (int z = 0; z < Totalrange-x; z++)
                 {
-                    int radius = i + j;
+                    int radius = x + y;
                     int2 addValueAmout = value;
                     if (radius > fullValueRange) {
                         addValueAmout -= lowerValueAmount * (radius - fullValueRange);
                     }
-                    grid.GetGridObject(x +i, y+j)?.AddValue(addValueAmout, faction);
-                    if (i != 0)
+                    grid.GetGridObject(originX +x, originZ+z)?.AddValue(addValueAmout, faction);
+                    if (x != 0)
                     {
-                        grid.GetGridObject(x- i, y + j)?.AddValue(addValueAmout, faction);
+                        grid.GetGridObject(originX - x, originZ + z)?.AddValue(addValueAmout, faction);
                     }
-                    if (j != 0)
+                    if (z != 0)
                     {
-                        grid.GetGridObject(x + i, y - j)?.AddValue(addValueAmout, faction);
+                        grid.GetGridObject(originX + x, originZ - z)?.AddValue(addValueAmout, faction);
 
-                        if (i != 0)
+                        if (x != 0)
                         {
-                            grid.GetGridObject(x - i, y - j)?.AddValue(addValueAmout, faction);
+                            grid.GetGridObject(originX - x, originZ - z)?.AddValue(addValueAmout, faction);
                         }
                     }
                 }
@@ -84,81 +80,49 @@ namespace DreamersInc.InflunceMapSystem
             }
                 
         }
+        public int2 GetValue(Faction faction) {
+            List<Faction> Foes = new List<Faction>();
+            List<Faction> Friends = new List<Faction>();
+            List<Faction> Neutral = new List<Faction>();
 
-        /// <summary>
-        /// Return the combined influence of several factions 
-        /// </summary>
-        /// <param name="factions"></param>
-        /// <returns></returns>
-        public int2 GetValue(Faction faction, bool Filtered) {
-            int2 value = new int2();
-
-            if (Filtered)
+            foreach (var item in FactionManager.Database.GetFaction(faction.id).relationships)
             {
-                int2 enemyValue = new int2();
-                int2 proxValue = new int2();
-                if (InfluenceGridMaster.Filters.Enemies.TryGetValue(faction, out List<Faction> enemyFilter))
-                {
-                    foreach (var item in enemyFilter)
-                    {
-                        if (InfluenceValue.TryGetValue(item, out int2 addValue))
-                        {
-                            enemyValue += addValue;
-                        }
-                    }
-                }
-                if (InfluenceGridMaster.Filters.Allies.TryGetValue(faction, out List<Faction> proxFilter))
-                {
-                    foreach (var item in proxFilter)
-                    {
-                        if (InfluenceValue.TryGetValue(item, out int2 addValue))
-                        {
-                            proxValue += addValue;
-                        }
-                    }
-                    value.x = proxValue.x;
-                    value.y = enemyValue.y;
-                }
-            }
-            else
-            {
-                InfluenceValue.TryGetValue(faction, out value);
+                if (item.CheckThreshold(0).x)
+                    Friends.Add(FactionManager.Database.GetFaction(item.factionID));
+                else if (item.CheckThreshold(0).y)
+                    Foes.Add(FactionManager.Database.GetFaction(item.factionID));
+                else
+                    Neutral.Add(FactionManager.Database.GetFaction(item.factionID));
             }
 
+            int2[] value = new int2[2];
+            for (int i = 0; i < Friends.Count; i++)
+            {
+                value[0] += gridValue[Friends[i]];
+            }
+            for (int i = 0; i < Foes.Count; i++)
+            {
+                value[1] += gridValue[Foes[i]];
+            }
 
-            return value;
+            return new int2(value[0].x,value[1].y);
+        }
+        public float2 GetValueNormalized(Faction faction) {
+            return (float2)GetValue(faction)/ MAX;
         }
 
-        public float2 GetValueNormalized(Faction faction, bool filtered)
+        public float GetHighestThreatCell(Faction faction, bool filtered, out int i, out int j)
         {
-            if (filtered)
-            {
-
-                int2 factions = new int2()
-                {
-                    x = InfluenceGridMaster.Filters.Allies[faction].Count,
-                    y = InfluenceGridMaster.Filters.Enemies[faction].Count
-                };
-                return (float2)GetValue(faction, true) / (MAX * factions);
-            }
-            else
-            {
-                return (float2)GetValue(faction, false) / MAX;
-            }
-        }
-
-
-        public float GetHighestThreatCell(Faction faction, bool filtered, out int i, out int j) {
             float HighValue = 0.0f;
             int startX, startY;
             startX = x - 50;
             startY = y - 50;
-            i = j= 0;
+            i = j = 0;
             for (int SearchX = 0; SearchX < 100; SearchX++)
             {
                 for (int SearchY = 0; SearchY < 100; SearchY++)
                 {
-                    float thisCellValue = grid.GetGridObject(startX+SearchX,startY +SearchY).GetValueNormalized(faction, filtered).y;
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
                     if (thisCellValue > HighValue)
                     {
                         HighValue = thisCellValue;
@@ -169,7 +133,7 @@ namespace DreamersInc.InflunceMapSystem
             }
             return HighValue;
         }
-      
+
         public float GetLowestThreatCell(Faction faction, bool filtered, out int i, out int j)
         {
             float LowValue = 1.0f;
@@ -181,7 +145,7 @@ namespace DreamersInc.InflunceMapSystem
             {
                 for (int SearchY = 0; SearchY < 50; SearchY++)
                 {
-                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction, filtered).y;
+                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
                     if (thisCellValue < LowValue)
                     {
                         LowValue = thisCellValue;
@@ -192,21 +156,13 @@ namespace DreamersInc.InflunceMapSystem
             }
             return LowValue;
         }
-      
+
+
         public override string ToString()
         {
-            string output = int2.zero.ToString();
-
-            if (InfluenceValue.TryGetValue(Faction.Player, out int2 value)) {
-                output = value.ToString();
-            }
-
-            return output;
+            return gridValue.ToString();
         }
     }
-    public enum Faction
-    {
-        Environmental, Player, Enemy, Faction2, Faction3, Faction4, NonCombative//etc etc 
-    }
+
 
 }

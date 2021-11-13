@@ -17,7 +17,7 @@ namespace IAUS.ECS.Component
     {
         public AITarget Target;
         public AIStates CurrentState;
-        public Faction faction;
+        public int factionID; // ID CHanging?
         public Attitude Attitude;
         public Difficulty Difficulty;
     }

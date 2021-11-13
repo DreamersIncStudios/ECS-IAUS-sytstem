@@ -7,13 +7,14 @@ using DreamersInc.InflunceMapSystem;
 using System;
 using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
-
+using DreamersInc.FactionSystem;
 namespace IAUS.ECS.StateBlobSystem
 {
     public struct Identity
     {
         public NPCLevel NPCLevel;
-        public Faction Faction;
+        public Faction Faction; //ID Change?
+
         public AIStates aIStates;
         public Difficulty Difficulty;
     }
@@ -49,7 +50,7 @@ namespace IAUS.ECS.StateBlobSystem
     public struct Identify
     {
         public NPCLevel NPCLevel;
-        public Faction Faction;
+        public int FactionID;
         public AIStates aIStates;
         public Difficulty Difficulty;
     }
@@ -64,7 +65,8 @@ namespace IAUS.ECS.StateBlobSystem
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identify() {
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Patrol,
-                    Faction = Faction.Enemy,//brain.faction
+                    FactionID = 0,//brain.faction 
+                    //TODO change ^^
                     NPCLevel = NPCLevel.Grunt
                 });
             });
@@ -74,7 +76,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Wait,
-                    Faction = Faction.Enemy,//brain.faction
+                    FactionID = 0,//brain.faction
                     NPCLevel = NPCLevel.Grunt
                 });
             });
@@ -96,7 +98,7 @@ namespace IAUS.ECS.StateBlobSystem
                             AttackStyle.MagicRange => AIStates.AttackRange,//TODO Make Magic Attack Range AI State,
                             _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
                         },
-                        Faction = Faction.Enemy,//brain.faction
+                        FactionID = 0,//brain.faction
                         NPCLevel = NPCLevel.Grunt
                     });
                     attacks[i] = attack;
@@ -140,7 +142,7 @@ namespace IAUS.ECS.StateBlobSystem
                     {
                         Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                         NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                        Faction = (Faction)Enum.Parse(typeof(Faction), parts[2]),
+                        FactionID = (int)Enum.Parse(typeof(Faction), parts[2]),
                         aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                     },
                     Health = LineRead(4, lines[i]),
