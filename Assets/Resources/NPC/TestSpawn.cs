@@ -7,7 +7,7 @@ using Unity.Entities;
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;
-    public CityNPCSO CityNPCsToSpawn;
+    public WorldNPCSpwan CityNPCsToSpawn;
     public void Start()
     {
 

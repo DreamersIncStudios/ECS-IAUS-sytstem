@@ -80,6 +80,48 @@ namespace DreamersInc.InflunceMapSystem
             }
                 
         }
+        /// <summary>
+        /// Add value to grid in a diamond pattern
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="Totalrange"></param>
+        public void AddValue(int2 value, int Totalrange, int fullValueRange, Faction faction)
+        {
+
+            int2 lowerValueAmount = new int2()
+            {
+                x = Mathf.RoundToInt((float)value.x / (Totalrange - fullValueRange)),
+                y = Mathf.RoundToInt((float)value.y / (Totalrange - fullValueRange))
+            };
+            for (int i = 0; i < Totalrange; i++)
+            {
+                for (int j = 0; j < Totalrange - i; j++)
+                {
+                    int radius = i + j;
+                    int2 addValueAmout = value;
+                    if (radius > fullValueRange)
+                    {
+                        addValueAmout -= lowerValueAmount * (radius - fullValueRange);
+                    }
+                    grid.GetGridObject(x + i, y + j)?.AddValue(addValueAmout, faction);
+                    if (i != 0)
+                    {
+                        grid.GetGridObject(x - i, y + j)?.AddValue(addValueAmout, faction);
+                    }
+                    if (j != 0)
+                    {
+                        grid.GetGridObject(x + i, y - j)?.AddValue(addValueAmout, faction);
+
+                        if (i != 0)
+                        {
+                            grid.GetGridObject(x - i, y - j)?.AddValue(addValueAmout, faction);
+                        }
+                    }
+                }
+
+            }
+
+        }
         public int2 GetValue(Faction faction) {
             List<Faction> Foes = new List<Faction>();
             List<Faction> Friends = new List<Faction>();

@@ -142,7 +142,7 @@ namespace IAUS.ECS.StateBlobSystem
                     {
                         Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                         NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                        FactionID = (int)Enum.Parse(typeof(Faction), parts[2]),
+                        FactionID = 0,
                         aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                     },
                     Health = LineRead(4, lines[i]),

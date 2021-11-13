@@ -84,7 +84,7 @@ namespace IAUS.ECS.Systems
                                     if (targetsInQueue[x].target.CanSee && targetsInQueue[x].target.DistanceTo < AttackBuffer[j].AttackRange)
                                     {
                                         if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(FactionManager.Database.GetFaction( influences[i].factionID)).x
-                                            < threatMod * influences[i].value.y)
+                                            < threatMod * influences[i].GetInfluenceValue.x)
                                         {
                                             meleeTarget = targetsInQueue[x].target;
                                         }

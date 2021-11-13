@@ -17,8 +17,8 @@ namespace IAUS.NPCSO.editor
             ShowInfluence = EditorGUILayout.BeginFoldoutHeaderGroup(ShowInfluence, "Influence Data");
             if (ShowInfluence) 
             {
-                GetInfluence.value.y = EditorGUILayout.IntField("Threat", GetInfluence.value.y);
-                GetInfluence.value.x = EditorGUILayout.IntField("Protection", GetInfluence.value.x);
+                GetInfluence.Threat = EditorGUILayout.IntField("Threat", GetInfluence.Threat);
+                GetInfluence.Protection = EditorGUILayout.IntField("Protection", GetInfluence.Protection);
                 GetInfluence.factionID = EditorGUILayout.IntField("Faction Group Member", GetInfluence.factionID);// TODO Change to a custom dropdown based off Database later
             }
 
