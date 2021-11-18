@@ -15,84 +15,20 @@ MonoBehaviour:
   spawnID: 0
   _getName: Cop
   _model: {fileID: 4465180535401918593, guid: 38770b3af2cfd204d98643e355fecc9a, type: 3}
-  getInfluence:
-    value:
-      x: 5
-      y: 6
-    previousPos:
-      x: 0
-      y: 0
-      z: 0
-    faction: 1
   GetSelf:
     Type: 1
-    GetRace: 0
+    GetRace: 2
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 
+  states: 010000000b00000004000000
   getPatrol:
-    NumberOfWayPoints: 0
-    DistanceToPoint:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    distanceToPoint: 0
-    StartingDistance: 0
     BufferZone: 0.75
-    CurWaypoint:
-      Point:
-        Type: 0
-        GetRace: 0
-        NumOfEntityTargetingMe: 0
-        GetInstanceID: 0
-        MaxNumberOfTarget: 0
-        CanBeTargetByPlayer: 0
-      Position:
-        x: 0
-        y: 0
-        z: 0
-      TimeToWaitatWaypoint: 0
-      IsDanerZone: 0
-    ThreatTheshold: 0
-    ThreatRatio: 0
-    UpdatePatrolPoints: 0
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 0
   getWait:
-    TimeLeft:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    HealthRatio:
-      Inverse: 0
-      responseType: 2
-      M: 50
-      K: -1
-      B: 0.91
-      C: 0.2
-    Timer: 0
     StartTime: 1
-    _status: 0
-    _coolDownTime: 5
-    _resetTime: 0
-    _totalScore: 0
+    CoolDownTime: 0
   GetMovement:
     TargetLocation:
       x: 0
@@ -138,26 +74,38 @@ MonoBehaviour:
       K: -1
       B: 0.91
       C: 0.2
-    alertLevels:
+    influenceInArea:
       Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    distanceToSafe:
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    threatInArea:
       Inverse: 0
-      responseType: 2
-      M: 50
-      K: -0.95
-      B: 0.935
-      C: 0.35
-    NeedToRetreat: 0
+      responseType: 0
+      M: 0
+      K: 0
+      B: 0
+      C: 0
+    faction: 0
     _status: 0
     _coolDownTime: 5
     _resetTime: 0
     _totalScore: 0
-    BufferZone: 0.75
     HideTime: 30
-    escapeRange: 0
-  getAttackTypes: []
+  getInfluence:
+    Threat: 0
+    Protection: 0
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
+    factionID: 0
+  factionMemberID: 0
+  getAttackTypes:
+  - style: 0
+    Index: 0
+    AttackRange: 45
+    Attacktimer: 20
+    Score: 0

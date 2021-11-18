@@ -31,84 +31,56 @@ namespace IAUS.ECS.Systems
         {
             JobHandle systemDeps = Dependency;
 
-            systemDeps = new FindTargetJob() {
-                AttackBuffer = GetBufferTypeHandle<AttackTypeInfo>(false),
-                Targets = GetBufferTypeHandle<ScanPositionBuffer>(true),
-                IausChunk = GetComponentTypeHandle<IAUSBrain>(true),
-                InfluenceChunk = GetComponentTypeHandle<InfluenceComponent>(true)
+            systemDeps = new FindAttackableTarget() {
+               AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
+               TargetBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(true)
+
             }.ScheduleParallel(attackers, systemDeps);
 
             Dependency = systemDeps;
         }
-
-        struct FindTargetJob : IJobChunk
+        /// <summary>
+        /// Find the Optimial attacking Target foreach attack style in entity buffer
+        /// </summary>
+        struct FindAttackableTarget : IJobChunk
         {
-            public BufferTypeHandle<AttackTypeInfo> AttackBuffer;
-            [ReadOnly] public BufferTypeHandle<ScanPositionBuffer> Targets;
+            public BufferTypeHandle<AttackTypeInfo> AttackBufferChunk;
+            public BufferTypeHandle<ScanPositionBuffer> TargetBufferChunk;
 
-           [ReadOnly] public ComponentTypeHandle<InfluenceComponent> InfluenceChunk;
-            [ReadOnly] public ComponentTypeHandle<IAUSBrain> IausChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                BufferAccessor<AttackTypeInfo> bufferAccessor = chunk.GetBufferAccessor(AttackBuffer);
-                BufferAccessor<ScanPositionBuffer> targetBufferAccessor = chunk.GetBufferAccessor(Targets);
-                NativeArray<InfluenceComponent> influences = chunk.GetNativeArray(InfluenceChunk);
-                NativeArray<IAUSBrain> brains = chunk.GetNativeArray(IausChunk);
+                BufferAccessor<AttackTypeInfo> AttackBuffers = chunk.GetBufferAccessor(AttackBufferChunk);
+                BufferAccessor<ScanPositionBuffer> TargetBuffers = chunk.GetBufferAccessor(TargetBufferChunk);
+
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    if (targetBufferAccessor[i].IsEmpty)
-                        return;
+                    DynamicBuffer<AttackTypeInfo> attackTypeInfos = AttackBuffers[i];
+                    DynamicBuffer<ScanPositionBuffer> scanPositionBuffers = TargetBuffers[i];
 
-                    DynamicBuffer<AttackTypeInfo> AttackBuffer = bufferAccessor[i];
-                    DynamicBuffer<ScanPositionBuffer> targetsInQueue = targetBufferAccessor[i];
-                    Target meleeTarget = new Target();
-                    Target rangeTarget = new Target();
 
-                    for (int j = 0; j < AttackBuffer.Length; j++)
+                    for (int j = 0; j < attackTypeInfos.Length; j++)
                     {
-                        float threatMod = 1.0f;
-                        float protectionMod = 1.0f;
-                        switch (brains[i].Attitude)
+                        if (TargetBuffers[i].IsEmpty)
+                            return;
+                        ScanPositionBuffer closestTarget = TargetBuffers[i][0];
+                        foreach (var item in TargetBuffers[i] )
                         {
-                            case Attitude.Normal:
-                                protectionMod = threatMod = 1.10f;
-                                break;
-                        }
-                        AttackTypeInfo attack = AttackBuffer[j];
-                        switch (attack.style)
-                        {
-                            case AttackStyle.Melee:
-                            case AttackStyle.MagicMelee:
-                                for (int x = 0; x < targetsInQueue.Length; x++)
-                                {
-                                    if (targetsInQueue[x].target.CanSee && targetsInQueue[x].target.DistanceTo < AttackBuffer[j].AttackRange)
-                                    {
-                                        if (InfluenceGridMaster.Instance.grid.GetGridObject(targetsInQueue[x].target.LastKnownPosition)?.GetValue(FactionManager.Database.GetFaction( influences[i].factionID)).x
-                                            < threatMod * influences[i].GetInfluenceValue.x)
-                                        {
-                                            meleeTarget = targetsInQueue[x].target;
-                                        }
-                                    }
-                                }
-                               attack.AttackTarget = meleeTarget;
-                                AttackBuffer[j] = attack;
-                                break;
-                            case AttackStyle.Range:
-                            case AttackStyle.MagicRange:
-                                for (int x = 0; x < targetBufferAccessor.Length; x++)
-                                {
-                                    if (targetsInQueue[x].target.DistanceTo < AttackBuffer[j].AttackRange
-                                        &&
-                                        targetsInQueue[x].target.DistanceTo > 10)
-                                    {
-                                        //  targetsInRange.Add(targetsInQueue[x].target);
-                                    }
-                                }
-                                break;
-                        }
+                            if (attackTypeInfos[j].InRangeForAttack(item.target.DistanceTo))
+                            {
+                                //Todo add influence check 
+                                if (closestTarget.target.DistanceTo > item.target.DistanceTo)
+                                    closestTarget = item;
+                            }
 
+                        }
+                        AttackTypeInfo attack = attackTypeInfos[j];
+
+                       attack.AttackTarget = closestTarget.target;
+                        attackTypeInfos[j] = attack;
                     }
+
                 }
+            
             }
         }
     }

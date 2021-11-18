@@ -43,28 +43,28 @@ namespace AISenses
 
         protected override void OnUpdate()
         {
-            if (runUpdate)
-            {
-                JobHandle systemDeps = Dependency;
-                systemDeps = new SoundSystem()
-                {
-                    HearingChunk = GetComponentTypeHandle<Hearing>(false),
-                    TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
-                    SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
-                    SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
-                    JobChunk = GetComponentTypeHandle<JobTempC>(true),
-                    AlertChunk = GetComponentTypeHandle<AlertLevel>(false)
-                }.ScheduleParallel(Listeners, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            //if (runUpdate)
+            //{
+            //    JobHandle systemDeps = Dependency;
+            //    systemDeps = new SoundSystem()
+            //    {
+            //        HearingChunk = GetComponentTypeHandle<Hearing>(false),
+            //        TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
+            //        SoundEmitters = SoundEmitters.ToComponentDataArray<SoundEmitter>(Allocator.TempJob),
+            //        SoundPosition = SoundEmitters.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+            //        JobChunk = GetComponentTypeHandle<JobTempC>(true),
+            //        AlertChunk = GetComponentTypeHandle<AlertLevel>(false)
+            //    }.ScheduleParallel(Listeners, systemDeps);
+            //    _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-                Dependency = systemDeps;
-                interval = 1.0f;
+            //    Dependency = systemDeps;
+            //    interval = 1.0f;
 
-            }
-            else
-            {
-                interval -= 1 / 60.0f;
-            }
+            //}
+            //else
+            //{
+            //    interval -= 1 / 60.0f;
+            //}
         }
     }
 

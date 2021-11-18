@@ -22,7 +22,6 @@ namespace DreamersInc.FactionSystem
                 Destroy(this.gameObject);
             }
               Database = database;
-            Debug.Log(Database.GetFaction(3).name);
             Database.IsPlaying = true;
         }
         public void OnDestroy()

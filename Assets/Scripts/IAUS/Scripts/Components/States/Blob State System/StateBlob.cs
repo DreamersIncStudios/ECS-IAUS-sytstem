@@ -65,7 +65,7 @@ namespace IAUS.ECS.StateBlobSystem
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identify() {
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Patrol,
-                    FactionID = 0,//brain.faction 
+                    FactionID = brain.factionID,
                     //TODO change ^^
                     NPCLevel = NPCLevel.Grunt
                 });
@@ -76,7 +76,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Wait,
-                    FactionID = 0,//brain.faction
+                    FactionID = brain.factionID,
                     NPCLevel = NPCLevel.Grunt
                 });
             });
@@ -98,7 +98,7 @@ namespace IAUS.ECS.StateBlobSystem
                             AttackStyle.MagicRange => AIStates.AttackRange,//TODO Make Magic Attack Range AI State,
                             _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
                         },
-                        FactionID = 0,//brain.faction
+                        FactionID = brain.factionID,
                         NPCLevel = NPCLevel.Grunt
                     });
                     attacks[i] = attack;
@@ -142,7 +142,7 @@ namespace IAUS.ECS.StateBlobSystem
                     {
                         Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                         NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                        FactionID = 0,
+                        FactionID =int.TryParse(parts[2], out int result) ? result:0,
                         aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                     },
                     Health = LineRead(4, lines[i]),

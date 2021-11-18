@@ -7,17 +7,14 @@ using Unity.Entities;
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;
-    public WorldNPCSpwan CityNPCsToSpawn;
+    public WorldNPCSpwan NPCToSpawn;
     public void Start()
     {
-
-        //   InvokeRepeating(nameof(Spawn), 0, 5);
-        CityNPCsToSpawn.SpawnWorld(this.transform.position);
-    }
-
-
-    public void Test() {
-        Debug.Log("Button Pressed");
+           InvokeRepeating(nameof(Spawn), 0, 5);
+        foreach (var item in test)
+        {
+            item.SOToSpawn.Spawn(this.transform.position);
+        }
     }
     void Spawn()
     {
@@ -30,10 +27,13 @@ public class TestSpawn : MonoBehaviour
                     test[i].SOToSpawn.Spawn(this.transform.position);
                     test[i].spawned++;
                 }
-            }   
+            }
         }
 
     }
+
+
+
     [System.Serializable]
    public class NPCSpawn {
         public NPCSO SOToSpawn;

@@ -17,7 +17,7 @@ namespace IAUS.NPCSO
     [System.Serializable]
     //TODO Write Custom Property Drawers
     public class CitizenNPC {
-        [Range(1, 100)]
+        [Range(1, 500)]
         public int Count;
         public GameObject Model;
         public AITarget Self;
@@ -27,6 +27,7 @@ namespace IAUS.NPCSO
         public Movement AIMove;
         public Vision GetVision;
         public InfluenceComponent GetInfluence;
+
         public void Spawn(Vector3 pos)
         {
             for (int i = 0; i <= Count; i++)

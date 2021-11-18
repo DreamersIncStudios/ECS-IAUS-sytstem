@@ -1,10 +1,10 @@
+#if UNITY_EDITOR
 
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using System.Collections.Generic;
 using System.IO;
-
 namespace DreamersInc.FactionSystem
 {
     public partial class FactionDatabaseEditor : Editor
@@ -210,3 +210,4 @@ namespace DreamersInc.FactionSystem
 
     }
 }
+#endif

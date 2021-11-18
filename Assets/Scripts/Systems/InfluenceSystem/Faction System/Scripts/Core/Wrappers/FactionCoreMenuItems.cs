@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+#if UNITY_EDITOR
 
 namespace DreamersInc.FactionSystem.Wrappers
 {
@@ -27,3 +28,4 @@ namespace DreamersInc.FactionSystem.Wrappers
         }
     }
 }
+#endif

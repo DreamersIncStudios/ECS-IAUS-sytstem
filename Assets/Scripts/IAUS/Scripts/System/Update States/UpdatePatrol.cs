@@ -61,14 +61,14 @@ namespace IAUS.ECS.Systems
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(DistanceCheck, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            //TODO Debug performance here 
+            //systemDeps = new CheckThreatAtWaypoint() { 
+            //    IAUSBrainChunk = GetComponentTypeHandle<IAUSBrain>(true),
+            //    PatrolBuffer = GetBufferTypeHandle<PatrolWaypointBuffer>(false),
+            //    PatrolChunk = GetComponentTypeHandle<Patrol>(false)
+            //}.ScheduleParallel(BufferPatrol, systemDeps);
 
-            systemDeps = new CheckThreatAtWaypoint() { 
-                IAUSBrainChunk = GetComponentTypeHandle<IAUSBrain>(true),
-                PatrolBuffer = GetBufferTypeHandle<PatrolWaypointBuffer>(false),
-                PatrolChunk = GetComponentTypeHandle<Patrol>(false)
-            }.ScheduleParallel(BufferPatrol, systemDeps);
-
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new ScoreState() 
             {
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),

@@ -25,6 +25,8 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity, Self);
         dstManager.AddComponent<IAUSBrain>(entity);
         dstManager.SetComponentData(entity, new IAUSBrain { factionID = this.factionID });
+        dstManager.SetComponentData(entity, new IAUSBrain { Difficulty =  Difficulty.Normal});
+
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);
@@ -56,15 +58,15 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         if (AddRetreat) {
             dstManager.AddComponentData(entity, retreatState);
         }
-        //if (GetAttackType.Count > 0)
-        //{
-        //    DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
-        //    foreach (AttackTypeInfo Info in GetAttackType)
-        //    {
-        //        ati.Add(Info);
-        //    }
-        //    dstManager.AddComponentData(entity, attackTargetState);
+        if (GetAttackType.Count > 0)
+        {
+            DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
+            foreach (AttackTypeInfo Info in GetAttackType)
+            {
+                ati.Add(Info);
+            }
+            dstManager.AddComponentData(entity, attackTargetState);
 
-        //}
+        }
     }
 }

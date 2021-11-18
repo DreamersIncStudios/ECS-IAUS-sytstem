@@ -1,10 +1,10 @@
+#if UNITY_EDITOR
 
 using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using System.Collections.Generic;
 using System.IO;
-
 namespace DreamersInc.FactionSystem
 {
     [CustomEditor(typeof(FactionDatabase),true)]
@@ -288,3 +288,4 @@ namespace DreamersInc.FactionSystem
 
     }
 }
+#endif

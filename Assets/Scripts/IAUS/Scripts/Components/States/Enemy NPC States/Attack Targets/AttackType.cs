@@ -25,7 +25,22 @@ namespace IAUS.ECS.Component
         public float Attacktimer; //TODO This need to be derive from Character stats Possibly
         public float mod { get { return 1.0f - (1.0f / 3.0f); } } //Todo This need to be set by StateBlob System
         [BurstDiscard]
-        public bool InRangeForAttack => DistanceToTarget < AttackRange;
+        public bool InRangeForAttack(float distToTarget) {
+            bool output = new bool();
+            switch (style) {
+                case AttackStyle.Melee:
+                case AttackStyle.MagicMelee:
+                    output = AttackRange >= distToTarget;
+                    break;
+                case AttackStyle.Range:
+                case AttackStyle.MagicRange:
+                    output = AttackRange >= distToTarget && (AttackRange-7) <= distToTarget; // Make 7 a variable later 
+                    break;
+
+            }
+
+            return output;
+        }
         public float Score;
     }
 
