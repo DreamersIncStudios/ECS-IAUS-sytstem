@@ -11,10 +11,8 @@ public class TestSpawn : MonoBehaviour
     public void Start()
     {
            InvokeRepeating(nameof(Spawn), 0, 5);
-        foreach (var item in test)
-        {
-            item.SOToSpawn.Spawn(this.transform.position);
-        }
+  
+        NPCToSpawn.SpawnWorld(this.transform.position);
     }
     void Spawn()
     {

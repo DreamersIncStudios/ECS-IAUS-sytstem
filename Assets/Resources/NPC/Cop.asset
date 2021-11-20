@@ -106,6 +106,6 @@ MonoBehaviour:
   getAttackTypes:
   - style: 0
     Index: 0
-    AttackRange: 45
+    AttackRange: 30
     Attacktimer: 20
     Score: 0

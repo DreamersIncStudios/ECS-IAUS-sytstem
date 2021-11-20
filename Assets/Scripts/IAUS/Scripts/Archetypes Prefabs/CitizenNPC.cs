@@ -38,7 +38,7 @@ namespace IAUS.NPCSO
                 BaseAIAuthoringSO aiAuthoring = spawnedGO.AddComponent<BaseAIAuthoringSO>();
                 //AIAuthoring.faction = getFaction;
                 aiAuthoring.Self = Self;
-
+                aiAuthoring.GetAttackType = new List<AttackTypeInfo>();
                 aiAuthoring.movement = AIMove;
                 foreach (AIStates state in AIStatesAvailable)
                 {

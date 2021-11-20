@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,17 +53,23 @@
     <UnityVersion>2020.3.18f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadSetup.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\FriendNPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttacks.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateAttackMeleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadMembership.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\MoveToTargetReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackType.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
@@ -71,6 +77,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\SquadSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
@@ -87,10 +94,12 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateWait.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Leader.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\IInfluence.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\StayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\WaypointCreation.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
@@ -100,15 +109,9 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\SquadSO.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\WorldNPCSpwan.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadMembership.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\IInfluence.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\FindTargets.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttacks.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\SquadSetup.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\AttackReactive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

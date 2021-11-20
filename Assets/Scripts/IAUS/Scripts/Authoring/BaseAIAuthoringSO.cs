@@ -6,6 +6,7 @@ using Global.Component;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
 using DreamersInc.FactionSystem;
+using AISenses.VisionSystems;
 public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
@@ -27,6 +28,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.SetComponentData(entity, new IAUSBrain { factionID = this.factionID });
         dstManager.SetComponentData(entity, new IAUSBrain { Difficulty =  Difficulty.Normal});
 
+        dstManager.AddBuffer<RaycastBuffer>(entity);
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);
@@ -58,7 +60,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         if (AddRetreat) {
             dstManager.AddComponentData(entity, retreatState);
         }
-        if (GetAttackType.Count > 0)
+        if (GetAttackType.Count != 0)
         {
             DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
             foreach (AttackTypeInfo Info in GetAttackType)

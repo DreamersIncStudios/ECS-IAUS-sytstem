@@ -9,7 +9,7 @@ using Unity.Mathematics;
 using Unity.Collections;
 using Unity.Jobs;
 
-namespace IAUS.ECS.System
+namespace IAUS.ECS.Systems
 {
    //[UpdateAfter(typeof(IAUS_UpdateState))]
     public class MovementSystem : SystemBase

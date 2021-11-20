@@ -44,7 +44,8 @@ namespace IAUS.ECS.Systems
                     Waits = GetComponentDataFromEntity<Wait>(true),
                     StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
                     GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
-                    RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true)
+                    RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
+                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true)
                     
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -80,6 +81,7 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<StayInRange> StayInRangeOfTarget;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RetreatCitizen> RetreatCitizenScore;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<AttackTargetState> AttackStateScore;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
@@ -124,7 +126,11 @@ namespace IAUS.ECS.Systems
                                 }
                                 // add the other states later. 
                                     break;
-
+                            case AIStates.Attack:
+                                temp.StateName = AIStates.Attack;
+                                temp.TotalScore = AttackStateScore[entity].TotalScore;
+                                temp.Status = AttackStateScore[entity].Status;
+                                break;
                         }
                         states[j] = temp;
 
@@ -175,14 +181,11 @@ namespace IAUS.ECS.Systems
                             case AIStates.GotoLeader:
                                 CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.AttackMelee:
+                            case AIStates.Attack:
                                 //TODO Implement Add and Remove Tag;
-                               // CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
+                                CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.AttackRange:
-                                //TODO Implement Add and Remove Tag;
-                                // CommandBufferParallel.RemoveComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
-                                break;
+
                             case AIStates.Retreat:
                                 CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
@@ -202,11 +205,11 @@ namespace IAUS.ECS.Systems
                             case AIStates.GotoLeader:
                                 CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.AttackMelee:
-                            //   CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
-                            case AIStates.AttackRange:
-                                //   CommandBufferParallel.AddComponent<AttackTargetActionTag>(chunkIndex, Entities[i]);
-                                break;
+                            case AIStates.Attack:
+                                  CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                                    //TODO reactor on add sets attack style.
+
+                            break;
                             case AIStates.Retreat:
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
