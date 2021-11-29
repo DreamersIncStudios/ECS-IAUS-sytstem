@@ -18,20 +18,28 @@ namespace Stats
         {
             JobHandle systemDeps = Dependency;
             EntityCommandBuffer buffer = _entityCommandBufferSystem.CreateCommandBuffer();
-            systemDeps = Entities.ForEach((Entity entity, ref CharacterStatComponent PC, ref LevelUpComponent StatUpdate) =>
+            systemDeps = Entities.ForEach((Entity entity, ref PlayerStatComponent PC, ref LevelUpComponent StatUpdate) =>
             {
                 PC.MaxHealth = StatUpdate.MaxHealth;
                 PC.CurHealth = StatUpdate.CurHealth;
                 PC.MaxMana = StatUpdate.MaxMana;
                 PC.CurMana = StatUpdate.CurMana;
 
-                PC.MeleeAttack = StatUpdate.MeleeAttack;
-                PC.MeleeDef = StatUpdate.MeleeDef;
-                PC.MagicDef = StatUpdate.MagicDef;
+                buffer.RemoveComponent<LevelUpComponent>(entity);
+            }).Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = Entities.ForEach((Entity entity, ref EnemyStats PC, ref LevelUpComponent StatUpdate) =>
+            {
+                PC.MaxHealth = StatUpdate.MaxHealth;
+                PC.CurHealth = StatUpdate.CurHealth;
+                PC.MaxMana = StatUpdate.MaxMana;
+                PC.CurMana = StatUpdate.CurMana;
 
                 buffer.RemoveComponent<LevelUpComponent>(entity);
             }).Schedule(systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             Dependency = systemDeps;
         }
     }

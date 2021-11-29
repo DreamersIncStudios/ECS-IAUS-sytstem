@@ -14,7 +14,7 @@ namespace IAUS.ECS.Systems
         EntityQuery _waitStateEntity;
         EntityQuery _GetInRangeStateEntity;
         EntityQuery _MoveToTargetStateEntity;
-        EntityQuery _AttackMeleeStateEntity;
+        EntityQuery _AttackStateEntity;
         EntityQuery _FleeStateEntity;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -45,7 +45,7 @@ namespace IAUS.ECS.Systems
                     ComponentType.ReadWrite(typeof(StayInRange))}
             } );
 
-            _AttackMeleeStateEntity = GetEntityQuery(new EntityQueryDesc()
+            _AttackStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(AttackTargetState)) , ComponentType.ReadWrite(typeof(AttackTypeInfo))}
@@ -118,7 +118,7 @@ namespace IAUS.ECS.Systems
                  AttackChunk = GetComponentTypeHandle<AttackTargetState>(false),
                 EntityChunk = GetEntityTypeHandle(),
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
-            }.ScheduleParallel(_AttackMeleeStateEntity, systemDeps);
+            }.ScheduleParallel(_AttackStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             systemDeps = new AddRetreatState()

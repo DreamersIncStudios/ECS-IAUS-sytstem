@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 54
+  - Count: 200
     Model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
     Self:
       Type: 1
@@ -22,7 +22,7 @@ MonoBehaviour:
       GetInstanceID: 0
       MaxNumberOfTarget: 0
       CanBeTargetByPlayer: 0
-    AIStatesAvailable: 010000000b000000
+    AIStatesAvailable: 010000000a000000
     GetPatrol:
       BufferZone: 0.75
       CoolDownTime: 5

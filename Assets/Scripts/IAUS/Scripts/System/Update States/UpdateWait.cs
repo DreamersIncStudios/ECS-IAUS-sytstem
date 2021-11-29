@@ -25,7 +25,7 @@ namespace IAUS.ECS.Systems
             WaitScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)), 
-                    ComponentType.ReadOnly(typeof(CharacterStatComponent)) }
+                    ComponentType.ReadOnly(typeof(EnemyStats)) }
             });
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
@@ -47,7 +47,7 @@ namespace IAUS.ECS.Systems
             systemDeps = new UpdateWaitScore()
             {
                 WaitChunk = GetComponentTypeHandle<Wait>(false),
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
                 
             }.ScheduleParallel(WaitScore, systemDeps);
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -81,21 +81,22 @@ namespace IAUS.ECS.Systems
                 }
             }
         }
+        //TODO Abstract Stats at later date 
         [BurstCompile]
         public struct UpdateWaitScore : IJobChunk
         {
             public ComponentTypeHandle<Wait> WaitChunk;
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Wait wait = Waits[i];
-                    CharacterStatComponent stats = Stats[i];
+                    EnemyStats stats = Stats[i];
                     if (wait.stateRef.IsCreated)
                     {
                         float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);

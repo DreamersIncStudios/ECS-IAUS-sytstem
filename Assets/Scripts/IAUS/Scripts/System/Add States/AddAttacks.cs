@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.Burst;
 using IAUS.ECS.Component;
 using Unity.Collections;
+using UnityEngine;
 
 namespace IAUS.ECS.Systems
 {
@@ -19,7 +20,6 @@ namespace IAUS.ECS.Systems
             NativeArray<AttackTargetState> Attacks = chunk.GetNativeArray(AttackChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(StateBufferChunk);
 
-
             for (int i = 0; i < chunk.Count; i++)
             {
                 Entity entity = entities[i];
@@ -28,7 +28,7 @@ namespace IAUS.ECS.Systems
                 bool add = true;
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
-                    if (stateBuffer[index].StateName == AIStates.Patrol)
+                    if (stateBuffer[index].StateName == AIStates.Attack)
                     {
                         add = false;
                         continue;
@@ -39,7 +39,7 @@ namespace IAUS.ECS.Systems
                 {
                     stateBuffer.Add(new StateBuffer()
                     {
-                        StateName = AIStates.Patrol,
+                        StateName = AIStates.Attack,
                         Status = ActionStatus.Idle
                     });
 

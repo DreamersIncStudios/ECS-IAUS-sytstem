@@ -22,7 +22,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
-  states: 010000000b00000004000000
+  states: 010000000a00000004000000
   getPatrol:
     BufferZone: 0.75
     CoolDownTime: 0

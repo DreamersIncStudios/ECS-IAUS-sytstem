@@ -28,7 +28,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.SetComponentData(entity, new IAUSBrain { factionID = this.factionID });
         dstManager.SetComponentData(entity, new IAUSBrain { Difficulty =  Difficulty.Normal});
 
-        dstManager.AddBuffer<RaycastBuffer>(entity);
+      
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);

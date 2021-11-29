@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4465180535401918592}
   - component: {fileID: 6324007946402009933}
   - component: {fileID: 8737479620740456754}
+  - component: {fileID: -7266893448816589162}
   m_Layer: 0
   m_Name: Citizen Cube
   m_TagString: Untagged
@@ -125,3 +126,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: 1
+--- !u!114 &-7266893448816589162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4465180535401918593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53cb34c871957e14588a41f55b2f5929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharClass:
+    title: 0
+    Level: 0
+    Strength: 0
+    Vitality: 0
+    Awareness: 0
+    Speed: 0
+    Skill: 0
+    Resistance: 0
+    Concentration: 0
+    WillPower: 0
+    Charisma: 0
+    Luck: 0
+    difficultyMod: 0
+    LevelMod: 0

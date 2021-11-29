@@ -28,7 +28,7 @@ namespace IAUS.ECS.Systems
             Movers = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(MoveToTarget)), ComponentType.ReadOnly(typeof(FollowEntityTag)), ComponentType.ReadOnly(typeof(LocalToWorld)),
-                    ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement))
+                    ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement))
 
                 }
             });
@@ -53,7 +53,7 @@ namespace IAUS.ECS.Systems
             systemDeps = new ScoreMoveState()
             {
                 MoveChunk = GetComponentTypeHandle<MoveToTarget>(false),
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true),
                 AttackChunk = GetComponentTypeHandle<AttackTargetState>(true)
 
             }.ScheduleParallel(Movers, systemDeps);
@@ -115,17 +115,17 @@ namespace IAUS.ECS.Systems
         {
             public ComponentTypeHandle<MoveToTarget> MoveChunk;
             [ReadOnly] public ComponentTypeHandle<AttackTargetState> AttackChunk;
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<MoveToTarget> Moves = chunk.GetNativeArray(MoveChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
                 NativeArray<AttackTargetState> Attack = chunk.GetNativeArray(AttackChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     MoveToTarget move = Moves[i];
-                    CharacterStatComponent stats = Stats[i];
+                    EnemyStats stats = Stats[i];
                     AttackTargetState attack = Attack[i];
                     if (move.HasTarget)
                     {

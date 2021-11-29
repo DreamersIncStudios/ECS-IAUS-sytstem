@@ -76,13 +76,12 @@ namespace IAUS.NPCSO {
                 }
             }
 
-            if (GetAttackType.Count >= 1)
+            if (GetAttackType.Count >0)
             {
                 AIAuthoring.GetAttackType = GetAttackType;
                 AIAuthoring.attackTargetState = GetAttackTargetState;
             }
-            else
-                AIAuthoring.GetAttackType = new List<AttackTypeInfo>();
+
 
         }
         public void Spawn(Vector3 pos, int SquadID) {

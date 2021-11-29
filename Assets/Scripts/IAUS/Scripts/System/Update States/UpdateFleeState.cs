@@ -31,7 +31,7 @@ namespace IAUS.ECS.Systems
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             RetreatScore = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
             });
             CompleteCheck = GetEntityQuery(new EntityQueryDesc()
             {
@@ -52,7 +52,7 @@ namespace IAUS.ECS.Systems
 
             systemDeps = new ScoreStateCitizen()
             {
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true),
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
             }.ScheduleParallel(RetreatScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -62,22 +62,22 @@ namespace IAUS.ECS.Systems
             Dependency = systemDeps;
         }
 
-
+        //TODO Abstract at later Date
         public struct ScoreStateCitizen : IJobChunk
         {
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
             public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<RetreatCitizen> Retreats = chunk.GetNativeArray(RetreatChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
 
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     RetreatCitizen retreat = Retreats[i];
-                    CharacterStatComponent stats = Stats[i];
+                    EnemyStats stats = Stats[i];
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
                         * retreat.ProximityInArea.Output(retreat.GridValueAtPos.x)

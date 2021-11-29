@@ -36,7 +36,7 @@ namespace IAUS.ECS.Systems
                 });
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(CharacterStatComponent)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
                                     ComponentType.ReadOnly(typeof(AlertLevel))
                 }
             });
@@ -72,7 +72,7 @@ namespace IAUS.ECS.Systems
             systemDeps = new ScoreState() 
             {
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CompletionChecker()
@@ -114,13 +114,13 @@ namespace IAUS.ECS.Systems
         public struct ScoreState : IJobChunk
         {
             public ComponentTypeHandle<Patrol> PatrolChunk;
-            [ReadOnly]public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            [ReadOnly]public ComponentTypeHandle<EnemyStats> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
 
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {

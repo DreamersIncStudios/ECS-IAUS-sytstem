@@ -24,39 +24,40 @@ namespace Dreamers.InventorySystem {
         public override void Use(InventoryBase inventoryBase, int IndexOf, BaseCharacter player)
         {
             Use(inventoryBase, IndexOf);
-            switch (RecoverWhat)
-            {
-                case RecoverType.Health:
+            //TODO Rewrite Item System For new Stat Update
+            //switch (RecoverWhat)
+            //{
+            //    case RecoverType.Health:
          
-                    player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
+            //        player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
 
-                    break;
-                case RecoverType.Mana:
-                    player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
-                    break;
-                case RecoverType.HealthMana:
-                    player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
-                    player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
-                    break;
-                case RecoverType.Status:
-                    //add logic later
-                    break;
-                case RecoverType.StatusPlusHealth:
-                    //add status logic
-                    player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
-                    break;
-                case RecoverType.StatusPlusMana:
-                    //add status logic
-                    player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
+            //        break;
+            //    case RecoverType.Mana:
+            //        player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
+            //        break;
+            //    case RecoverType.HealthMana:
+            //        player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
+            //        player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
+            //        break;
+            //    case RecoverType.Status:
+            //        //add logic later
+            //        break;
+            //    case RecoverType.StatusPlusHealth:
+            //        //add status logic
+            //        player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
+            //        break;
+            //    case RecoverType.StatusPlusMana:
+            //        //add status logic
+            //        player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
 
-                    break;
-                case RecoverType.All:
-                    //add status logic
-                    player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
-                    player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
+            //        break;
+            //    case RecoverType.All:
+            //        //add status logic
+            //        player.IncreaseMana((int)RecoverAmount, Iterations, Frequency);
+            //        player.IncreaseHealth((int)RecoverAmount, Iterations, Frequency);
 
-                    break;
-            }
+            //        break;
+            //}
         }
           
 

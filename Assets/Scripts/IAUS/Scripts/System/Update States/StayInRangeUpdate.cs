@@ -22,7 +22,7 @@ namespace IAUS.ECS.Systems
             Followers = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(StayInRange)), ComponentType.ReadOnly(typeof(FollowEntityTag)), ComponentType.ReadOnly(typeof(LocalToWorld)),
-                    ComponentType.ReadOnly(typeof(CharacterStatComponent))
+                    ComponentType.ReadOnly(typeof(EnemyStats))
 
                 }
             });
@@ -45,7 +45,7 @@ namespace IAUS.ECS.Systems
             systemDeps = new ScoreStayInRangeState()
             {
                 StayChunk = GetComponentTypeHandle<StayInRange>(false),
-                StatsChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
             }.ScheduleParallel(Followers, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -79,20 +79,22 @@ namespace IAUS.ECS.Systems
                 }
             }
         }
+
+        //TODO Abstract at later Date
         [BurstCompile]
         public struct ScoreStayInRangeState : IJobChunk
         {
             public ComponentTypeHandle<StayInRange> StayChunk;
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> StatsChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<StayInRange> Stays = chunk.GetNativeArray(StayChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     StayInRange stay = Stays[i];
-                    CharacterStatComponent stats = Stats[i];
+                    EnemyStats stats = Stats[i];
                     float TotalScore = stay.DistanceToLead.Output(stay.DistanceRatio) * stay.HealthRatio.Output(stats.HealthRatio);
                     stay.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * stay.mod) * TotalScore);
 

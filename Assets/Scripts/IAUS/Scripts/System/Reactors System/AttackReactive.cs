@@ -58,21 +58,58 @@ namespace IAUS.ECS.Systems.Reactive
     {
         EntityQuery AttackAdded;
         EntityQuery AttackRemoved;
+        EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
         {
             base.OnCreate();
+
+            AttackAdded = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
+                , ComponentType.ReadOnly(typeof(LocalToWorld))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent)) }
+            });
+            AttackRemoved = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
+                , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
+                },
+                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackActionTag)) }
+            });
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
         }
 
         protected override void OnUpdate()
         {
+            JobHandle systemDeps = Dependency;
+
+            systemDeps = new MoveToAttackRange() { 
+                MovementChunk = GetComponentTypeHandle<Movement>(false)
+                    
+            }.ScheduleParallel(AttackAdded, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            Dependency = systemDeps;
         }
 
         public struct MoveToAttackRange : IJobChunk
         {
+            public ComponentTypeHandle<Movement> MovementChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                throw new System.NotImplementedException();
+                NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Movement move = Moves[i];
+                    move.CanMove = false;
+                    Debug.Log("Stop Attack Time");
+                    Moves[i] = move;
+                }
+
             }
         }
 

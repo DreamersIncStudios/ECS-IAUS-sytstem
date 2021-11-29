@@ -16,7 +16,7 @@ namespace IAUS.ECS.Systems
     //TODO Need to add a Can Target Filter 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateBefore(typeof(IAUSBrainUpdate))]
-    public class FindTargets : SystemBase
+    public class UpdateAttackBufferScoresSystem : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         private EntityQuery attackers;
@@ -31,7 +31,7 @@ namespace IAUS.ECS.Systems
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTypeInfo)),
                     ComponentType.ReadOnly(typeof(ScanPositionBuffer)),
                     ComponentType.ReadOnly(typeof(InfluenceComponent)),
-                    ComponentType.ReadOnly(typeof(CharacterStatComponent)),
+                    ComponentType.ReadOnly(typeof(EnemyStats)),
                     ComponentType.ReadOnly(typeof(IAUSBrain))}
             }
                 );
@@ -58,7 +58,7 @@ namespace IAUS.ECS.Systems
                 {
                     AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
                     AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false),
-                    CharacterStatChunk = GetComponentTypeHandle<CharacterStatComponent>(true)
+                    CharacterStatChunk = GetComponentTypeHandle<EnemyStats>(true)
                 }.ScheduleParallel(attackers, systemDeps);
                 _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
@@ -129,12 +129,12 @@ namespace IAUS.ECS.Systems
         struct ScoreBufferSubStates : IJobChunk
         {
             public BufferTypeHandle<AttackTypeInfo> AttackBufferChunk;
-            [ReadOnly] public ComponentTypeHandle<CharacterStatComponent> CharacterStatChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> CharacterStatChunk;
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 BufferAccessor<AttackTypeInfo> bufferAccessor = chunk.GetBufferAccessor(AttackBufferChunk);
-                NativeArray<CharacterStatComponent> Stats = chunk.GetNativeArray(CharacterStatChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(CharacterStatChunk);
                 NativeArray<AttackTargetState> Attacks = chunk.GetNativeArray(AttackStateChunk);
 
 
@@ -152,8 +152,11 @@ namespace IAUS.ECS.Systems
                             float TotalScore = (!ScoreAttack.HealthRatio.Equals(default(ConsiderationScoringData)) ?
                                  ScoreAttack.HealthRatio.Output(Stats[i].HealthRatio) : 1) *
 
-                                 (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
-                                 ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget / (float)ScoreAttack.AttackRange)) : 2) *
+                                  (ScoreAttack.AttackTarget.entity != Entity.Null ?
+                                        (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
+                                            ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget / (float)ScoreAttack.AttackRange)) 
+                                            : 1)
+                                        :0) *
 
                                    (!ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
                                  ScoreAttack.ManaAmmoAmount.Output(1) : 1) //Todo Get mama/ammo amount
