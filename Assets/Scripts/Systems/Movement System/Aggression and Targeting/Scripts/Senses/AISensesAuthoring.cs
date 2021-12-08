@@ -5,12 +5,13 @@ using Unity.Entities;
 
 namespace AISenses.Authoring
 {
+    // TODO Remove Hearing system
     public class AISensesAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         public bool Vision;
         public Vision VisionData;
-        public bool Hearing;
-        public Hearing HearingData = new Hearing();
+        //public bool Hearing;
+        //public Hearing HearingData = new Hearing();
         // hearing component
 
         public bool Touch;
@@ -32,8 +33,8 @@ namespace AISenses.Authoring
             dstManager.AddComponent<AlertLevel>(entity);
             if (Vision) 
                 dstManager.AddComponentData(entity, VisionData);
-            if (Hearing)
-                dstManager.AddComponentData(entity, HearingData);
+            //if (Hearing)
+            //    dstManager.AddComponentData(entity, HearingData);
 
 
         }

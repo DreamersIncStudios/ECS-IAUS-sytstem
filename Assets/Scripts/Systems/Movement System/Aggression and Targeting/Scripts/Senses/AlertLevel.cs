@@ -32,7 +32,7 @@ namespace AISenses
         none, Audio, Visual, Impact
     }
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    [UpdateAfter(typeof(HearingSystem))]
+   // [UpdateAfter(typeof(HearingSystem))]
     public class UpdateAlert : SystemBase
     {
         private EntityQuery AlertQuery;
@@ -40,7 +40,7 @@ namespace AISenses
         {
             AlertQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AlertLevel)), ComponentType.ReadOnly(typeof(Vision)), ComponentType.ReadOnly(typeof(Hearing)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AlertLevel)), ComponentType.ReadOnly(typeof(Vision)), /*ComponentType.ReadOnly(typeof(Hearing))*/ }
             });
         }
 
@@ -49,25 +49,25 @@ namespace AISenses
             JobHandle systemDeps = Dependency;
             systemDeps = new RaiseTheAlarmFor() {
                 AlertChunk = GetComponentTypeHandle<AlertLevel>(false),
-                hearingChunk = GetComponentTypeHandle<Hearing>(true),
+           //     hearingChunk = GetComponentTypeHandle<Hearing>(true),
                 VisionChunk = GetComponentTypeHandle<Vision>(true)
             }.ScheduleParallel(AlertQuery, systemDeps);
 
             Dependency = systemDeps;
         }
-
+        // TODO Rewrite For Change to  Preception 
         [BurstCompile]
         public struct RaiseTheAlarmFor : IJobChunk
         {
             public ComponentTypeHandle<AlertLevel> AlertChunk;
-            [ReadOnly] public ComponentTypeHandle<Hearing> hearingChunk;
+          //  [ReadOnly] public ComponentTypeHandle<Hearing> hearingChunk;
             [ReadOnly] public ComponentTypeHandle<Vision> VisionChunk;
 
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<AlertLevel> Alerts = chunk.GetNativeArray(AlertChunk);
-                NativeArray<Hearing> Hearings = chunk.GetNativeArray(hearingChunk);
+            //    NativeArray<Hearing> Hearings = chunk.GetNativeArray(hearingChunk);
                 NativeArray<Vision> Visions = chunk.GetNativeArray(VisionChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
@@ -79,7 +79,7 @@ namespace AISenses
                         if (alert.AudioOrVisual)
                         {
                             alert.ReactToWhat = ReactionType.Audio;
-                            alert.LocationOfThreat = Hearings[i].LocationOfSound;
+                     //       alert.LocationOfThreat = Hearings[i].LocationOfSound;
                          
                         }
                         else

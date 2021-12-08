@@ -14,14 +14,16 @@ namespace IAUS.ECS.Component
         /// <summary>
         /// Need to rewrite to get gameobject in world with this AITarget tag at runtime. Consider making a component system or job;
         /// </summary>
+        public uint NumberOfWayPoints = 5;
+
         List<PatrolWaypointBuffer> GetPoints
         {
             get
             {
                 List<PatrolWaypointBuffer> Points = new List<PatrolWaypointBuffer>();
-                while (Points.Count < 10)
+                while (Points.Count < NumberOfWayPoints)
                 {
-                    if (GlobalFunctions.RandomPoint(transform.position, 200, out Vector3 position))
+                    if (GlobalFunctions.RandomPoint(transform.position, 400, out Vector3 position))
                     {
                         Points.Add(new PatrolWaypointBuffer()
                         {

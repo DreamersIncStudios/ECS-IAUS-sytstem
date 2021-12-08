@@ -37,6 +37,7 @@ namespace DreamersInc.InflunceMapSystem
     }
 
 
+
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public sealed class UpdateInfluenceGridSystem : SystemBase
     {

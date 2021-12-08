@@ -60,8 +60,8 @@ namespace IAUS.NPCSO
                 AISensesAuthoring Senses = spawnedGO.AddComponent<AISensesAuthoring>();
                 Senses.Vision = true;
                 Senses.VisionData = GetVision;
-                Senses.Hearing = true;
-                Senses.HearingData = new Hearing();
+                //Senses.Hearing = true;
+                //Senses.HearingData = new Hearing();
                 NPCChararacter npcStat = spawnedGO.AddComponent<NPCChararacter>();
                 npcStat.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                 npcStat.Name = NPCUtility.GetNameFile();

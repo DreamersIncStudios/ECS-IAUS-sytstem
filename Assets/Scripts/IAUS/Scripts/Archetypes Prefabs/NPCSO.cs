@@ -92,8 +92,8 @@ namespace IAUS.NPCSO
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;
-            Senses.Hearing = true;
-            Senses.HearingData = new Hearing();
+            //Senses.Hearing = true;
+            //Senses.HearingData = new Hearing();
 
         }
  

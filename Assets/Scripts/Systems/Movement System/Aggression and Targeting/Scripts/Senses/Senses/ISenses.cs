@@ -83,45 +83,52 @@ namespace AISenses
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
+        public Perceptibility perceptibility;
+
         }
 
-    [System.Serializable]
-    public struct Hearing : ISenses
-    {
-        public int AmbientNoiseLevel;
-        public void InitializeSense(BaseCharacter baseCharacter)
-        {
-          //  AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
-        }
-        public float3 LocationOfSound;
 
-        public void UpdateSense(BaseCharacter baseCharacter) { }
 
-    }
-    public enum ResponseToNoise { 
-        None, Flee, Investigate, Attack, Guard,
-    }
+    // TODO Remove Hearing system
 
-    public struct AmbientSoundData
-    {
-        public float soundlevel;
-        public float SoundPressureRMS
-        {
-            get
-            {
-                float pressure = Mathf.Pow(10, (soundlevel / 20)) * 20;
-                return pressure;
-            }
-        }
-    }
-    public struct DetectedSoundData
-    {
-        public int soundlevel;
-        public float dist;
-        public float3 SoundLocation;
-        public float AmountAboveAmbient;
-        public SoundEmitter soundEmitter;
-        public float SoundRatio => AmountAboveAmbient / soundlevel;
 
-    }
+    //[System.Serializable]
+    //public struct Hearing : ISenses
+    //{
+    //    public int AmbientNoiseLevel;
+    //    public void InitializeSense(BaseCharacter baseCharacter)
+    //    {
+    //      //  AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
+    //    }
+    //    public float3 LocationOfSound;
+
+    //    public void UpdateSense(BaseCharacter baseCharacter) { }
+
+    //}
+    //public enum ResponseToNoise { 
+    //    None, Flee, Investigate, Attack, Guard,
+    //}
+
+    //public struct AmbientSoundData
+    //{
+    //    public float soundlevel;
+    //    public float SoundPressureRMS
+    //    {
+    //        get
+    //        {
+    //            float pressure = Mathf.Pow(10, (soundlevel / 20)) * 20;
+    //            return pressure;
+    //        }
+    //    }
+    //}
+    //public struct DetectedSoundData
+    //{
+    //    public int soundlevel;
+    //    public float dist;
+    //    public float3 SoundLocation;
+    //    public float AmountAboveAmbient;
+    //    public SoundEmitter soundEmitter;
+    //    public float SoundRatio => AmountAboveAmbient / soundlevel;
+
+    //}
 }
