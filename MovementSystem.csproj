@@ -74,7 +74,6 @@
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Aggression\IFactionBase.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Editor\AISensesAuthoringEditor.cs" />
     <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Aggression\CharacterAlignment.cs" />
-    <Compile Include="Assets\Scripts\Systems\Movement System\Aggression and Targeting\Scripts\Senses\Systems\HearingSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Systems\Movement System\Movement System.asmdef" />

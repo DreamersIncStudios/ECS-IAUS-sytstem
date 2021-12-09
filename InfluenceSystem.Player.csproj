@@ -75,8 +75,8 @@
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Common\Misc\Script\Pool.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Faction System\Scripts\Core\FactionMember\FactionMember.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Faction System\Scripts\Core\Editor\GenusTribeEditor.cs" />
-    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\Presence.cs" />
     <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\Perceptibility.cs" />
+    <Compile Include="Assets\Scripts\Systems\InfluenceSystem\Influence System\InfluenceAuthoring.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\Systems\InfluenceSystem\InfluenceSystem.asmdef" />

@@ -32,6 +32,9 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);
+        var Perception = new Perceptibility() { movement = MovementStates.Stadning_Still, noiseState = NoiseState.Normal, visibilityStates = VisibilityStates.Visible };
+        dstManager.AddComponentData(entity, Perception);
+
         dstManager.AddBuffer<StateBuffer>(entity);
         if (AddPatrol)
         {

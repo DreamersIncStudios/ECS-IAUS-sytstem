@@ -8,7 +8,7 @@ namespace DreamersInc.InflunceMapSystem
 {
     public struct Perceptibility : IComponentData
     {
-        public float Score => (visibiltyScore + MovementScore + noiseScore) / 3.0f;
+       [SerializeField] public float Score => (visibiltyScore + MovementScore + noiseScore) / 3.0f;
         public VisibilityStates visibilityStates;
         public MovementStates movement;
         public NoiseState noiseState;

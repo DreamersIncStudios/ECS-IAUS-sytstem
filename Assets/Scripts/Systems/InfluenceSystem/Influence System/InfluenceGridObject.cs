@@ -80,6 +80,8 @@ namespace DreamersInc.InflunceMapSystem
             }
                 
         }
+        //TODO add Zero out grid tiles 
+
         /// <summary>
         /// Add value to grid in a diamond pattern
         /// </summary>
