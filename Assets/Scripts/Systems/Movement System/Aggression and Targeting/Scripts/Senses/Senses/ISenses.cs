@@ -83,7 +83,7 @@ namespace AISenses
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
-
+        public float PerceptilabilityScore;
         }
 
 }

@@ -9,7 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-/Pixel Crushers/
+/PixelCrushers/
+/[Ll]ove[Hh]ate/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -70,6 +71,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Assets/Scripts/Systems/InfluenceSystem/Faction System/Pixel Crushers/Common/*
+Assets/Scripts/Systems/InfluenceSystem/Faction System/*
 
 Library/
 .vs/

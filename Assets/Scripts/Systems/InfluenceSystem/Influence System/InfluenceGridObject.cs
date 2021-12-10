@@ -4,7 +4,7 @@ using UnityEngine;
 using DreamersInc.Utils;
 using System;
 using Unity.Mathematics;
-using DreamersInc.FactionSystem;
+using PixelCrushers.LoveHate;
 
 namespace DreamersInc.InflunceMapSystem
 {
@@ -124,19 +124,20 @@ namespace DreamersInc.InflunceMapSystem
             }
 
         }
+
         public int2 GetValue(Faction faction) {
             List<Faction> Foes = new List<Faction>();
             List<Faction> Friends = new List<Faction>();
             List<Faction> Neutral = new List<Faction>();
 
-            foreach (var item in FactionManager.Database.GetFaction(faction.id).relationships)
+            foreach (var item in LoveHate.factionDatabase. GetFaction(faction.id).relationships)
             {
-                if (item.CheckThreshold(0).x)
-                    Friends.Add(FactionManager.Database.GetFaction(item.factionID));
-                else if (item.CheckThreshold(0).y)
-                    Foes.Add(FactionManager.Database.GetFaction(item.factionID));
+                if (item.GetTrait(0)>50)
+                    Friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                else if (item.GetTrait(0) < 50)
+                    Foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else
-                    Neutral.Add(FactionManager.Database.GetFaction(item.factionID));
+                    Neutral.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
             }
 
             int2[] value = new int2[2];
@@ -200,7 +201,6 @@ namespace DreamersInc.InflunceMapSystem
             }
             return LowValue;
         }
-
 
         public override string ToString()
         {

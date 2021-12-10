@@ -5,7 +5,6 @@ using IAUS.ECS.Component;
 using Global.Component;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
-using DreamersInc.FactionSystem;
 using AISenses.VisionSystems;
 public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {

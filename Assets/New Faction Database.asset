@@ -20,7 +20,17 @@ MonoBehaviour:
     FriendlyThreshold: 0
     traits: []
     genusTribes: 02000000
-    relationships: []
+    relationships:
+    - threshold: []
+      factionID: 3
+      inheritable: 1
+      traits:
+      - 33.9
+    - threshold: []
+      factionID: 3
+      inheritable: 1
+      traits:
+      - 78.6
   - id: 1
     name: Executables
     description: Standard Program
@@ -48,8 +58,13 @@ MonoBehaviour:
     EnemyThreshold: 0
     FriendlyThreshold: 0
     traits: []
-    genusTribes: 
-    relationships: []
+    genusTribes: 04000000
+    relationships:
+    - threshold: []
+      factionID: 0
+      inheritable: 1
+      traits:
+      - 100
   - id: 4
     name: Worms
     description: 'Type of Virus '

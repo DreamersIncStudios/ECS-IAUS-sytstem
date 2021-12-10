@@ -7,13 +7,12 @@ using DreamersInc.InflunceMapSystem;
 using System;
 using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
-using DreamersInc.FactionSystem;
 namespace IAUS.ECS.StateBlobSystem
 {
     public struct Identity
     {
         public NPCLevel NPCLevel;
-        public Faction Faction; //ID Change?
+        public int FactionID; //ID Change?
 
         public AIStates aIStates;
         public Difficulty Difficulty;

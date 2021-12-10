@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Collections;
-using DreamersInc.FactionSystem;
+using PixelCrushers.LoveHate;
 
 namespace DreamersInc.InflunceMapSystem
 {
@@ -90,14 +90,14 @@ namespace DreamersInc.InflunceMapSystem
                     if (influence.GridChanged(toWorlds[i].Position, out InfluenceGridObject gridpoint) && !influence.NPCOffGrid(toWorlds[i].Position))
                     {
                        
-                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue(-influence.GetInfluenceValueMod(perceptibility.Score) , 10, 25, FactionManager.Database.GetFaction ( influence.factionID));
-                        gridpoint.AddValue(influence.GetInfluenceValueMod(perceptibility.Score), 10, 25, FactionManager.Database.GetFaction(influence.factionID));
+                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue(-influence.GetInfluenceValueMod(perceptibility.Score) ,10,25, LoveHate.factionDatabase.GetFaction( influence.factionID));
+                        gridpoint.AddValue(influence.GetInfluenceValueMod(perceptibility.Score), 10, 25, LoveHate.factionDatabase.GetFaction(influence.factionID));
                         influence.previousPos = toWorlds[i].Position;
 
                     }
                     else if (influence.NPCOffGrid(toWorlds[i].Position))
                     {
-                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue(-influence.GetInfluenceValueMod(perceptibility.Score), 10, 25, FactionManager.Database.GetFaction(influence.factionID));
+                        InfluenceGridMaster.Instance.grid.GetGridObject(influence.previousPos)?.AddValue(-influence.GetInfluenceValueMod(perceptibility.Score), 10, 25, LoveHate.factionDatabase.GetFaction(influence.factionID));
                         influence.previousPos = toWorlds[i].Position;
 
                     }

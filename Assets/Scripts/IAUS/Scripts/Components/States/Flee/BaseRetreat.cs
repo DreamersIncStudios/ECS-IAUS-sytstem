@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using System.Collections.Generic;
 using DreamersInc.InflunceMapSystem;
-using DreamersInc.FactionSystem;
+using PixelCrushers.LoveHate;
 using Unity.Burst;
 using IAUS.ECS.Consideration;
 using System;
@@ -46,7 +46,7 @@ namespace IAUS.ECS.Component
         {
             get
             {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(FactionManager.Database.GetFaction(FactionMemberID),true, out int x, out int y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(LoveHate.factionDatabase. GetFaction(FactionMemberID),true, out int x, out int y);
                 return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
@@ -54,7 +54,7 @@ namespace IAUS.ECS.Component
         [BurstDiscard] public float3 LocationOfLowestThreat {
             get   
             {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(FactionManager.Database.GetFaction(FactionMemberID), true, out int x, out int y);
+                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(LoveHate.factionDatabase.GetFaction(FactionMemberID), true, out int x, out int y);
                 return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
             }
         }
@@ -76,7 +76,7 @@ namespace IAUS.ECS.Component
         public float3 CurPos { get; set; }
         [BurstDiscard] public float2 GridValueAtPos
         { get {
-                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(FactionManager.Database.GetFaction(FactionMemberID));
+                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(LoveHate.factionDatabase.GetFaction(FactionMemberID));
                     }  }
 
     }

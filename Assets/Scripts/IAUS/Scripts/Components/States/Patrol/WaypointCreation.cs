@@ -33,7 +33,7 @@ namespace IAUS.ECS.Component
                                 Point = new AITarget() 
                                 {
                                     Type = TargetType.Location,
-                                    GetRace = Race.None
+                                    FactionID=-1
                                 },
                                 
                                 TimeToWaitatWaypoint = UnityEngine.Random.Range(5,10)

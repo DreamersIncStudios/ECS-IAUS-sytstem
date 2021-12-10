@@ -13,7 +13,6 @@ using AISenses.Authoring;
 using AISenses;
 using Dreamers.SquadSystem;
 using Components.MovementSystem;
-using DreamersInc.FactionSystem;
 
 namespace IAUS.NPCSO {
     public sealed class EnemyNPCSO : NPCSO, INPCEnemy,IInfluence

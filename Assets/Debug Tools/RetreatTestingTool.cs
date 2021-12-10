@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DreamersInc.InflunceMapSystem;
-using DreamersInc.FactionSystem;
+using PixelCrushers.LoveHate;
+
 namespace DreamersInc.Utils.DebugTools
 {
     public class RetreatTestingTool : MonoBehaviour
@@ -25,7 +26,7 @@ namespace DreamersInc.Utils.DebugTools
         {
             previousPos = transform.position;
             currentInflunceGridObject = InfluenceGridMaster.Instance.grid.GetGridObject(transform.position);
-            currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(100, 100),  FactionManager.Database.GetFaction(0));
+            currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(100, 100),  LoveHate.factionDatabase.GetFaction(0));
 
         }
 
@@ -35,8 +36,8 @@ namespace DreamersInc.Utils.DebugTools
 
             if (transform.hasChanged && GridChanged(out InfluenceGridObject point))
             {
-                currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(-100, -100),  FactionManager.Database.GetFaction(0));
-                point.AddValue(new Unity.Mathematics.int2(100, 100), FactionManager.Database.GetFaction(0));
+                currentInflunceGridObject.AddValue(new Unity.Mathematics.int2(-100, -100), LoveHate.factionDatabase.GetFaction(0));
+                point.AddValue(new Unity.Mathematics.int2(100, 100), LoveHate.factionDatabase.GetFaction(0));
 
                 previousPos = transform.position;
                 currentInflunceGridObject = point;

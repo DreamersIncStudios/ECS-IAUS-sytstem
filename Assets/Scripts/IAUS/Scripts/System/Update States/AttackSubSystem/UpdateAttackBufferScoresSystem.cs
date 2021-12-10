@@ -5,7 +5,6 @@ using IAUS.ECS.Component;
 using Unity.Collections;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
-using DreamersInc.FactionSystem;
 using Unity.Jobs;
 using Unity.Burst;
 using Stats;
