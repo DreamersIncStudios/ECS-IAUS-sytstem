@@ -96,7 +96,7 @@ namespace PixelCrushers.LoveHate
                     var faction = factions[f];
                     if ((faction != null) && (faction.id == factionID))
                     {
-                        if (Application.isPlaying) m_factionIDLookup.Add(factionID, faction);
+                        if (IsPlaying) m_factionIDLookup.Add(factionID, faction);
                         return faction;
                     }
                 }

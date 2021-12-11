@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using DreamersInc.InflunceMapSystem;
+using PixelCrushers.LoveHate;
 namespace Global.Component
 {
     [System.Serializable]
@@ -14,14 +15,30 @@ namespace Global.Component
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
         public bool CanBeTargetByPlayer;
+
+        //TODO change to output a relationship level;
         public bool IsFriend(int factionID) {
             bool test = new bool();
-       
-            
+            if (factionID == FactionID)
+                test = true;
+            else {
+                test = LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
+                    }
             return test; }
-
+        public  float detectionScore;
 
     }
+    public class UpdateAITarget : SystemBase
+    {
+        protected override void OnUpdate()
+        {
+            Entities.WithBurst().ForEach((ref AITarget target, in Perceptibility perceptibility) => {
+                target.detectionScore = perceptibility.Score;
+            }).ScheduleParallel();
+        }
+    }
+
+
     [System.Serializable]
     public enum TargetType
     {

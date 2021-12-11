@@ -73,6 +73,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /Assets/Scripts/Systems/InfluenceSystem/Faction System/Pixel Crushers/Common/*
 Assets/Scripts/Systems/InfluenceSystem/Faction System/*
+Assets/Scripts/Systems/Influence Editor/*
 
 Library/
 .vs/

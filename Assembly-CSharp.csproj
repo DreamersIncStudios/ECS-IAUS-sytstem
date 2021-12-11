@@ -55,10 +55,10 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Scripts\ThreatMatrix.cs" />
+    <Compile Include="Assets\CharacterSetup.cs" />
     <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
     <Compile Include="Assets\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
-    <Compile Include="Assets\CharacterSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

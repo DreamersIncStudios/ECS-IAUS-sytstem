@@ -17,11 +17,12 @@ MonoBehaviour:
   _model: {fileID: 4465180535401918593, guid: 38770b3af2cfd204d98643e355fecc9a, type: 3}
   GetSelf:
     Type: 1
-    GetRace: 2
+    FactionID: 1
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
-    CanBeTargetByPlayer: 0
+    CanBeTargetByPlayer: 1
+    detectionScore: 0
   states: 010000000a00000004000000
   getPatrol:
     BufferZone: 0.75
@@ -95,14 +96,13 @@ MonoBehaviour:
     _totalScore: 0
     HideTime: 30
   getInfluence:
-    Threat: 0
-    Protection: 0
+    Threat: 4
+    Protection: 3
     previousPos:
       x: 0
       y: 0
       z: 0
-    factionID: 0
-  factionMemberID: 0
+    factionID: 1
   getAttackTypes:
   - style: 0
     Index: 0

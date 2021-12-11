@@ -66,7 +66,7 @@ namespace DreamersInc.InflunceMapSystem
         {
             EntityCommandBuffer.ParallelWriter entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter();
 
-            Entities.ForEach((Entity entity, int entityInQueryIndex, ref Perceptibility perception, ref ChangePerceptiopnStates change) => {
+            Entities.WithBurst().ForEach((Entity entity, int entityInQueryIndex, ref Perceptibility perception, ref ChangePerceptiopnStates change) => {
                 perception.visibilityStates = change.visibilityStates;
                 perception.movement = change.movement;
                 perception.noiseState = change.noiseState;

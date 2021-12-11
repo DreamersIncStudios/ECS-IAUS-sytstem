@@ -1590,6 +1590,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &36598966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,6 +1809,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &46931458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2108,6 +2110,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &71266372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,6 +2155,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &73628764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,6 +2200,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &81966007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2240,6 +2245,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &85095642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2814,6 +2820,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &100840209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3711,6 +3718,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &128846564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3755,6 +3763,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &138792184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3799,6 +3808,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &146392138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3843,6 +3853,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &167994641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3887,6 +3898,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &172967743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3931,6 +3943,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &194729575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4139,6 +4152,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &204190339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4183,6 +4197,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &209024268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4227,6 +4242,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &216346752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4271,6 +4287,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &226321913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4315,6 +4332,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &233962989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4506,6 +4524,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &238533018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4669,6 +4688,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &239553655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4713,6 +4733,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &245841882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4757,6 +4778,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &247807557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4801,6 +4823,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &279164876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4845,6 +4868,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &299589814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4889,6 +4913,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &318209136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4933,6 +4958,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &322167445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5086,6 +5112,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &337622343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5130,6 +5157,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &346479067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5174,6 +5202,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &347697511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5218,6 +5247,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &348813980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6115,6 +6145,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &357516126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6159,6 +6190,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &360942595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6203,6 +6235,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &362872384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6247,6 +6280,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &387370272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6291,6 +6325,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &429132310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6335,6 +6370,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &444767752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6379,6 +6415,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &469939443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6423,6 +6460,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &470331242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6467,6 +6505,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &484534280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6511,6 +6550,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &485210680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6555,6 +6595,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &488524471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6599,6 +6640,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &488616143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6643,6 +6685,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &490407160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6687,6 +6730,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &493254651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6731,6 +6775,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &512401749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6883,6 +6928,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &521650538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7074,6 +7120,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &524945585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8811,6 +8858,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &540019253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8855,6 +8903,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &540745623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8899,6 +8948,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &559636586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8943,6 +8993,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &563125883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8987,6 +9038,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &564788344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9031,6 +9083,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &575643385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9075,6 +9128,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &578653826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9119,6 +9173,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &585656314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9163,6 +9218,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &593166233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9207,6 +9263,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &601319561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9351,6 +9408,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &620881410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9559,6 +9617,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &641035237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9603,6 +9662,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &644831656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9647,6 +9707,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &654322970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9691,6 +9752,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &655919923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9735,6 +9797,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &663289183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9943,6 +10006,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &671902956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10840,6 +10904,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &676151483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10884,6 +10949,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &688011834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10928,6 +10994,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &691313627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10972,6 +11039,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &746091183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11180,6 +11248,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &757990652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11224,6 +11293,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &762255002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12121,6 +12191,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &775399666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12165,6 +12236,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &817673281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12209,6 +12281,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &833955155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12253,6 +12326,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &842312874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12297,6 +12371,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &848662482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12614,6 +12689,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &901132280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13048,6 +13124,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &941366767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13092,6 +13169,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &942291480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13136,6 +13214,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &961082257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13508,6 +13587,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1005750771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13716,6 +13796,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1027266059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13760,6 +13841,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1062994062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14623,6 +14705,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1085388074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14831,6 +14914,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1112298661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14875,6 +14959,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1116846335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14919,6 +15004,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1120619602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15127,6 +15213,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1144158377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15171,6 +15258,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1160228080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15362,6 +15450,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1166486101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15525,6 +15614,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1171851888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15569,6 +15659,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1177241404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15619,6 +15710,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1186981642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15827,6 +15919,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1208970283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15871,6 +15964,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1212844811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16079,6 +16173,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1230952865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16123,6 +16218,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1231764774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16167,6 +16263,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1245428685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16375,6 +16472,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1271005557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16419,6 +16517,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1276991351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16463,6 +16562,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1283604092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16616,6 +16716,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1291411502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16660,6 +16761,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1317860068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16704,6 +16806,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1325233238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16857,6 +16960,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1377057089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16901,6 +17005,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1378246429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16945,6 +17050,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1378880993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16989,6 +17095,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1396719881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17033,6 +17140,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1412615879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17405,6 +17513,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1456919569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17449,6 +17558,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1463075382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17657,6 +17767,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1479698641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17701,6 +17812,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1504677524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17745,6 +17857,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1513824975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17789,6 +17902,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1514816540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17833,6 +17947,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1522388609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18205,6 +18320,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1561470860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18249,6 +18365,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1566166185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18458,6 +18575,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1602334479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18598,6 +18716,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!1 &1634069034 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5325919101082603017, guid: 36498cd370e7802408964a72908fed13,
@@ -18623,6 +18742,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1634069042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18667,6 +18787,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1648105910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18875,6 +18996,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1657837841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18919,6 +19041,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1672970464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18963,6 +19086,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1714459979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19007,6 +19131,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1737137783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19051,6 +19176,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1742475835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19259,6 +19385,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1752657754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19467,6 +19594,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1758187927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19511,6 +19639,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1784135947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19555,6 +19684,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1789227960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19599,6 +19729,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1801168050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19643,6 +19774,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1813953038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19687,6 +19819,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1817828804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19731,6 +19864,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1819545546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19939,6 +20073,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1824029648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19983,6 +20118,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1827018999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20027,6 +20163,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1845217359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20235,6 +20372,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1859149020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20279,6 +20417,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1871922844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20323,6 +20462,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1883917403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20367,6 +20507,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1888372198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20411,6 +20552,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1900498070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20485,6 +20627,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1932853685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20693,6 +20836,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1954153537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20737,6 +20881,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1965363816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20945,6 +21090,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &1992115211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21153,6 +21299,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &2020767566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21197,6 +21344,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &2050436749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21302,6 +21450,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &2123074946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21346,6 +21495,7 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 0
 --- !u!114 &2136171179
 MonoBehaviour:
   m_ObjectHideFlags: 0

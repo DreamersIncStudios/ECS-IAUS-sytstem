@@ -26,8 +26,8 @@ namespace IAUS.NPCSO {
         public InfluenceComponent GetInfluence { get { return getInfluence; } }
 
         [SerializeField] InfluenceComponent getInfluence;
-        public int GetFactionID { get { return factionMemberID; } } // change to ID
-        [SerializeField] int factionMemberID;
+        public int GetFactionID { get { return getInfluence.factionID; } }
+    
 
         public List<AttackTypeInfo> GetAttackType => getAttackTypes;
         [SerializeField] List<AttackTypeInfo> getAttackTypes;
@@ -63,6 +63,7 @@ namespace IAUS.NPCSO {
               };
 
             }
+            AIAuthoring.factionID = GetFactionID;
             AIAuthoring.GetInfluence = getInfluence;
             foreach (AIStates state in AIStatesAvailable)
             {

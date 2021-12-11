@@ -32,6 +32,12 @@ namespace IAUS.NPCSO
         {
             for (int i = 0; i <= Count; i++)
             {
+                Self = new AITarget()
+                {
+                    FactionID = GetInfluence.factionID,
+                    Type = TargetType.Character,
+                    CanBeTargetByPlayer = false
+                };
                 GameObject spawnedGO = Object.Instantiate(Model, pos, Quaternion.identity);
                 spawnedGO.AddComponent<NavMeshAgent>();
                 spawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;

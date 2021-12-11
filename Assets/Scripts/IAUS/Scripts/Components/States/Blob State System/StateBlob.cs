@@ -12,8 +12,7 @@ namespace IAUS.ECS.StateBlobSystem
     public struct Identity
     {
         public NPCLevel NPCLevel;
-        public int FactionID; //ID Change?
-
+        public int FactionID; 
         public AIStates aIStates;
         public Difficulty Difficulty;
     }

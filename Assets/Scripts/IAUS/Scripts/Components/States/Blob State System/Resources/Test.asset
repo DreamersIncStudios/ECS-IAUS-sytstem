@@ -17,7 +17,7 @@ MonoBehaviour:
     Model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
     Self:
       Type: 1
-      GetRace: 3
+      FactionID: 0
       NumOfEntityTargetingMe: 0
       GetInstanceID: 0
       MaxNumberOfTarget: 0
@@ -67,4 +67,4 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      factionID: 0
+      factionID: 2
