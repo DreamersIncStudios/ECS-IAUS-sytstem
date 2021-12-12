@@ -101,7 +101,7 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 WaitChunk = GetComponentTypeHandle<Wait>(false),
-                Buffer = GetBufferFromEntity<PatrolWaypointBuffer>(false),
+                Buffer = GetBufferFromEntity<TravelWaypointBuffer>(false),
                 CanPatrol = GetComponentDataFromEntity<Patrol>(false),
                 EntityChunk = GetEntityTypeHandle(),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
@@ -165,7 +165,7 @@ namespace IAUS.ECS.Systems.Reactive
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
 
            [NativeDisableParallelForRestriction] public ComponentDataFromEntity<Patrol> CanPatrol;
-            [ReadOnly]public BufferFromEntity<PatrolWaypointBuffer> Buffer;
+            [ReadOnly]public BufferFromEntity<TravelWaypointBuffer> Buffer;
             [ReadOnly] public EntityTypeHandle EntityChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {

@@ -59,7 +59,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\FriendNPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddAttacks.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddPatrolState.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddMoveToTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
@@ -81,12 +81,12 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Add States\AddRetreatState.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\Patrol.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Movement States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\PatrolWaypointBuffer.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Movement States\TravelWaypointBuffer.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTargetState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\Follow.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateWait.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\CitizenNPC.cs" />
-    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Patrol\WaypointCreation.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\BaseConsiderations.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\Archetypes Prefabs\Interface\INPCBasics.cs" />
@@ -109,6 +109,8 @@
     <Compile Include="Assets\Scripts\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Scripts\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\Components\States\Movement States\Traverse\Traverse.cs" />
+    <Compile Include="Assets\Scripts\IAUS\Scripts\System\Reactors System\TraverseReactive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

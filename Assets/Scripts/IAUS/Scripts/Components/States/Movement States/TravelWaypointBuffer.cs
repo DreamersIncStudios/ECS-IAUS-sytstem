@@ -6,7 +6,7 @@ namespace IAUS.ECS.Component {
 
     [Serializable]
     [GenerateAuthoringComponent]
-    public struct PatrolWaypointBuffer : IBufferElementData
+    public struct TravelWaypointBuffer : IBufferElementData
     {
         public Waypoint WayPoint;
 

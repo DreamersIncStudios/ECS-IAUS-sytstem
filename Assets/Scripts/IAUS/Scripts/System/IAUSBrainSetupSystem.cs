@@ -10,7 +10,9 @@ namespace IAUS.ECS.Systems
     public class IAUSBrainSetupSystem : SystemBase
     {
         EntityQuery Starter;
-        EntityQuery _partolStateEntity;
+        EntityQuery _PatrolStateEntity;
+        EntityQuery _traverseStateEntity;
+
         EntityQuery _waitStateEntity;
         EntityQuery _GetInRangeStateEntity;
         EntityQuery _MoveToTargetStateEntity;
@@ -22,11 +24,16 @@ namespace IAUS.ECS.Systems
         {
             base.OnCreate();
 
-            _partolStateEntity = GetEntityQuery(new EntityQueryDesc()
+            _PatrolStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                        ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Patrol)),ComponentType.ReadOnly(typeof(LocalToWorld)) }
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
+                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Patrol)) ,ComponentType.ReadOnly(typeof(LocalToWorld)) },
+            });
 
+            _traverseStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
+                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Traverse)) ,ComponentType.ReadOnly(typeof(LocalToWorld)) },
             });
             _waitStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
@@ -66,16 +73,29 @@ namespace IAUS.ECS.Systems
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-            systemDeps = new AddPatrolState() {
+            systemDeps = new AddMovementState<Patrol>() {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
                 EntityChunk = GetEntityTypeHandle(),
-                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                 MovementChunk = GetComponentTypeHandle<Patrol>(false),
                 Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
-                PatrolBufferChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }
-            .ScheduleParallel(_partolStateEntity, systemDeps);
+            .ScheduleParallel(_PatrolStateEntity, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new AddMovementState<Traverse>()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                MovementChunk = GetComponentTypeHandle<Traverse>(false),
+                Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
+                PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
+            }
+          .ScheduleParallel(_traverseStateEntity, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 

@@ -31,12 +31,12 @@ namespace IAUS.ECS.Systems.Reactive
             if ( AIStateCompoment.Status == ActionStatus.Success)
             {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+                AIStateCompoment.ResetTime = 5.0f; // TODO assign in editor 
             }
             else
             {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+                AIStateCompoment.ResetTime = 7.5f ;
 
             }
         }

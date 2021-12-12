@@ -16,16 +16,16 @@ namespace IAUS.ECS.Component
         /// </summary>
         public uint NumberOfWayPoints = 5;
 
-        List<PatrolWaypointBuffer> GetPoints
+        List<TravelWaypointBuffer> GetPoints
         {
             get
             {
-                List<PatrolWaypointBuffer> Points = new List<PatrolWaypointBuffer>();
+                List<TravelWaypointBuffer> Points = new List<TravelWaypointBuffer>();
                 while (Points.Count < NumberOfWayPoints)
                 {
                     if (GlobalFunctions.RandomPoint(transform.position, 400, out Vector3 position))
                     {
-                        Points.Add(new PatrolWaypointBuffer()
+                        Points.Add(new TravelWaypointBuffer()
                         {
                             WayPoint = new Waypoint()
                             {
@@ -50,9 +50,9 @@ namespace IAUS.ECS.Component
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
 
-            DynamicBuffer<PatrolWaypointBuffer> buffer = dstManager.AddBuffer<PatrolWaypointBuffer>(entity);
+            DynamicBuffer<TravelWaypointBuffer> buffer = dstManager.AddBuffer<TravelWaypointBuffer>(entity);
 
-          List<PatrolWaypointBuffer>  Waypoints = GetPoints;
+          List<TravelWaypointBuffer>  Waypoints = GetPoints;
             foreach (var item in Waypoints)
             {
                 buffer.Add(item);

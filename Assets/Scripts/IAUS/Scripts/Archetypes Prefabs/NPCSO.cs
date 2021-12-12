@@ -31,8 +31,8 @@ namespace IAUS.NPCSO
         [SerializeField] AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
         [SerializeField] List<AIStates> states;
-        public PatrolBuilderData GetPatrol => getPatrol;
-        [SerializeField] PatrolBuilderData getPatrol;
+        public PMovementBuilderData GetPatrol => getPatrol;
+        [SerializeField] PMovementBuilderData getPatrol;
         public WaitBuilderData GetWait => getWait;
         [SerializeField] WaitBuilderData getWait;
 
@@ -46,7 +46,7 @@ namespace IAUS.NPCSO
         public Vision GetVision => getVision;
 
         public virtual void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
-            , PatrolBuilderData patrol, WaitBuilderData wait
+            , PMovementBuilderData patrol, WaitBuilderData wait
             )
         {
             _getName = Name;
@@ -78,7 +78,7 @@ namespace IAUS.NPCSO
                 {
                     case AIStates.Patrol:
                         AIAuthoring.AddPatrol = true;
-                        AIAuthoring.buildPatrol = GetPatrol;
+                        AIAuthoring.buildMovement = GetPatrol;
                         SpawnedGO.AddComponent<WaypointCreation>();
                         break;
                     case AIStates.Wait:

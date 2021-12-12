@@ -61,20 +61,31 @@ namespace IAUS.ECS.Systems.Reactive
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(LocalToWorld))
-                , ComponentType.ReadOnly(typeof(PatrolWaypointBuffer)), ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WaitActionTag, Wait, WaitTagReactor>.StateComponent)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
+                All = new ComponentType[] {  ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(LocalToWorld))
+                , ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WaitActionTag, Wait, WaitTagReactor>.StateComponent)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) },
+                Any = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(Traverse))}
             });
 
         }
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-            systemDeps = new PatrolMovementUpdateJob()
+            systemDeps = new MovementStateUpdateJob<Patrol>()
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                WaypointChunk = GetBufferTypeHandle<PatrolWaypointBuffer>(true),
+                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
+                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
+            }.ScheduleParallel(_componentRemovedQuery, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            
+            systemDeps = new MovementStateUpdateJob<Traverse>()
+            {
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                PatrolChunk = GetComponentTypeHandle<Traverse>(false),
+                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentRemovedQuery, systemDeps);
 
@@ -84,30 +95,33 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
         [BurstCompile]
-        public struct PatrolMovementUpdateJob : IJobChunk
+        public struct MovementStateUpdateJob<T> : IJobChunk
+            where T: unmanaged, MovementState
         {
             public ComponentTypeHandle<Movement> MovementChunk;
-            public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<T> PatrolChunk;
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
-            [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> WaypointChunk;
+            [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> WaypointChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<T> moveStates = chunk.GetNativeArray(PatrolChunk);
                 NativeArray<LocalToWorld> ToWorlds = chunk.GetNativeArray(ToWorldChunk);
-                BufferAccessor<PatrolWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
+                BufferAccessor<TravelWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
+                if (moveStates.Length == 0)
+                    return;
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    Patrol patrol = patrols[i];
-                    DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
+                    T moveState = moveStates[i];
+                    DynamicBuffer<TravelWaypointBuffer> waypointBuffer = WaypointBuffers[i];
 
-                    patrol.WaypointIndex++;
-                    if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
-                        patrol.WaypointIndex = 0;
+                    moveState.WaypointIndex++;
+                    if (moveState.WaypointIndex >= moveState.NumberOfWayPoints)
+                        moveState.WaypointIndex = 0;
 
-                    patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
+                    moveState.CurWaypoint = waypointBuffer[moveState.WaypointIndex].WayPoint;
 
-                    patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
-                    patrols[i] = patrol;
+                    moveState.StartingDistance = Vector3.Distance(ToWorlds[i].Position, moveState.CurWaypoint.Position);
+                    moveStates[i] = moveState;
                 }    
 
             }

@@ -11,6 +11,8 @@ namespace IAUS.ECS.Systems
     public class CooldownCountdownSystem : SystemBase
     {
         private EntityQuery PatrolCooldown;
+        private EntityQuery TraverseCooldown;
+
         private EntityQuery WaitCooldown;
         private EntityQuery MoveToCooldown;
         private EntityQuery AttackCooldown;
@@ -29,6 +31,13 @@ namespace IAUS.ECS.Systems
             {All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol))},
              None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
             
+            });
+            TraverseCooldown = GetEntityQuery(new EntityQueryDesc()
+
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(TraverseActionTag)) }
+
             });
             WaitCooldown = GetEntityQuery(new EntityQueryDesc()
 
@@ -58,6 +67,12 @@ namespace IAUS.ECS.Systems
                 AIStateChunk = GetComponentTypeHandle<Patrol>(false),
                 DT = Time.DeltaTime
             }.ScheduleParallel(PatrolCooldown, systemDeps);
+
+            systemDeps = new CooldownJob<Traverse>()
+            {
+                AIStateChunk = GetComponentTypeHandle<Traverse>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(TraverseCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new CooldownJob<Wait>()

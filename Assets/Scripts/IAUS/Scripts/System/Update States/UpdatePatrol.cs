@@ -14,38 +14,72 @@ namespace IAUS.ECS.Systems
 {
     public class UpdatePatrol : SystemBase
     {
-        private EntityQuery DistanceCheck;
+        private EntityQuery DistanceCheckPatrol;
+        private EntityQuery DistanceCheckTraverse;
+
         private EntityQuery PatrolScore;
+        private EntityQuery TraverseScore;
+
         private EntityQuery BufferPatrol;
-        private EntityQuery CompleteCheck;
+        private EntityQuery CompleteCheckPatrol;
+        private EntityQuery CompleteCheckTraverse;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            DistanceCheck = GetEntityQuery(new EntityQueryDesc()
+            DistanceCheckPatrol = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(LocalToWorld)) }
             });
-            DistanceCheck.SetChangedVersionFilter(
+            DistanceCheckPatrol.SetChangedVersionFilter(
                 new ComponentType[] { 
                     ComponentType.ReadOnly(typeof(LocalToWorld)),
                     ComponentType.ReadWrite(typeof(Patrol))
                 });
+
+            DistanceCheckTraverse = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)), ComponentType.ReadOnly(typeof(LocalToWorld)) }
+            });
+            DistanceCheckTraverse.SetChangedVersionFilter(
+                new ComponentType[] {
+                    ComponentType.ReadOnly(typeof(LocalToWorld)),
+                    ComponentType.ReadWrite(typeof(Traverse))
+                });
+
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
                                     ComponentType.ReadOnly(typeof(AlertLevel))
                 }
             });
+
+            //Todo Remove EnemyStats reference
+            PatrolScore = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                }
+            });
+            TraverseScore = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                }
+            });
             BufferPatrol = GetEntityQuery(new EntityQueryDesc() {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(PatrolWaypointBuffer))}
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer))}
             });
                 
-           CompleteCheck = GetEntityQuery(new EntityQueryDesc()
+           CompleteCheckPatrol = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(PatrolActionTag)) }
+            });
+            CompleteCheckTraverse = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Traverse)), ComponentType.ReadOnly(typeof(TraverseActionTag)) }
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -54,12 +88,20 @@ namespace IAUS.ECS.Systems
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-            systemDeps = new GetDistanceToNextPoint()
+            systemDeps = new GetDistanceToNextPoint<Patrol>()
             {
-                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                MoveChunk = GetComponentTypeHandle<Patrol>(false),
                 TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
-            }.ScheduleParallel(DistanceCheck, systemDeps);
+            }.ScheduleParallel(DistanceCheckPatrol, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new GetDistanceToNextPoint<Traverse>()
+            {
+                MoveChunk = GetComponentTypeHandle<Traverse>(false),
+                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
+            }.ScheduleParallel(DistanceCheckTraverse, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             //TODO Debug performance here 
             //systemDeps = new CheckThreatAtWaypoint() { 
             //    IAUSBrainChunk = GetComponentTypeHandle<IAUSBrain>(true),
@@ -68,18 +110,36 @@ namespace IAUS.ECS.Systems
             //}.ScheduleParallel(BufferPatrol, systemDeps);
 
             //_entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            systemDeps = new ScoreState() 
+            systemDeps = new ScoreStatePatrol() 
             {
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            systemDeps = new CompletionChecker()
+            
+            systemDeps = new ScoreStateTraverse()
             {
-                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                TraverseChunk = GetComponentTypeHandle<Traverse>(false),
+                StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
+            }.ScheduleParallel(TraverseScore, systemDeps);
+            
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+
+            systemDeps = new CompletionChecker<Patrol, PatrolActionTag>()
+            {
+                MoveChunk = GetComponentTypeHandle<Patrol>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityChunk = GetEntityTypeHandle()
-            }.Schedule(CompleteCheck, systemDeps);
+            }.Schedule(CompleteCheckPatrol, systemDeps);
+
+
+            systemDeps = new CompletionChecker<Traverse, TraverseActionTag>()
+            {
+                MoveChunk = GetComponentTypeHandle<Traverse>(false),
+                Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityChunk = GetEntityTypeHandle()
+            }.Schedule(CompleteCheckTraverse, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -88,29 +148,30 @@ namespace IAUS.ECS.Systems
         }
 
         [BurstCompile]
-        public struct GetDistanceToNextPoint : IJobChunk
+        public struct GetDistanceToNextPoint<T> : IJobChunk
+            where T : unmanaged, MovementState
         {
-            public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<T> MoveChunk;
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<T> MovesStyles = chunk.GetNativeArray(MoveChunk);
                 NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    Patrol patrol = patrols[i];
+                    T patrol = MovesStyles[i];
                     patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, toWorlds[i].Position);
                     if (patrol.Complete)
                         patrol.distanceToPoint = 0.0f;
-                    patrols[i] = patrol;
+                    MovesStyles[i] = patrol;
                 }
 
             }
         }
 
         [BurstCompile]
-        public struct ScoreState : IJobChunk
+        public struct ScoreStatePatrol: IJobChunk
         {
             public ComponentTypeHandle<Patrol> PatrolChunk;
             [ReadOnly]public ComponentTypeHandle<EnemyStats> StatsChunk;
@@ -134,27 +195,56 @@ namespace IAUS.ECS.Systems
                 }
             }
         }
-      //  [BurstCompile]
-        public struct CheckThreatAtWaypoint : IJobChunk
+
+        [BurstCompile]
+        public struct ScoreStateTraverse : IJobChunk
         {
-            public BufferTypeHandle<PatrolWaypointBuffer> PatrolBuffer;
+            public ComponentTypeHandle<Traverse> TraverseChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Traverse> traverses = chunk.GetNativeArray(TraverseChunk);
+
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Traverse traverse = traverses[i];
+                    if (traverse.stateRef.IsCreated)
+                    {
+                        float healthRatio = Stats[i].HealthRatio;
+                        float TotalScore = traverse.DistanceToPoint.Output(traverse.DistanceRatio) * traverse.HealthRatio.Output(healthRatio);
+                        traverse.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * traverse.mod) * TotalScore);
+                    }
+                    traverses[i] = traverse;
+                }
+            }
+        }
+
+        //  [BurstCompile]
+        public struct CheckThreatAtWaypoint<T> : IJobChunk
+            where T : unmanaged, MovementState
+
+        {
+            public BufferTypeHandle<TravelWaypointBuffer> PatrolBuffer;
             [ReadOnly]public ComponentTypeHandle<IAUSBrain> IAUSBrainChunk;
             public ComponentTypeHandle<Patrol> PatrolChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                BufferAccessor<PatrolWaypointBuffer> bufferAccess = chunk.GetBufferAccessor(PatrolBuffer);
+                BufferAccessor<TravelWaypointBuffer> bufferAccess = chunk.GetBufferAccessor(PatrolBuffer);
                 NativeArray<IAUSBrain> Brains = chunk.GetNativeArray(IAUSBrainChunk);
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    DynamicBuffer<PatrolWaypointBuffer> buffer = bufferAccess[i];
+                    DynamicBuffer<TravelWaypointBuffer> buffer = bufferAccess[i];
                     Patrol patrol = patrols[i];
 
                     for (int j = 0; j < buffer.Length; j++)
                     {
-                        PatrolWaypointBuffer point = buffer[j];
+                        TravelWaypointBuffer point = buffer[j];
                         point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(LoveHate.factionDatabase.GetFaction( Brains[i].factionID));
                         buffer[j] = point;
                         if (j == patrol.WaypointIndex) {
@@ -169,24 +259,27 @@ namespace IAUS.ECS.Systems
         }
 
         [BurstCompile]
-        public struct CompletionChecker : IJobChunk
+        public struct CompletionChecker<T,A> : IJobChunk
+            where T : unmanaged, MovementState
+            where A : unmanaged, IComponentData
+
         {
-            public ComponentTypeHandle<Patrol> PatrolChunk;
+            public ComponentTypeHandle<T> MoveChunk;
             [ReadOnly] public EntityTypeHandle EntityChunk;
             public EntityCommandBuffer.ParallelWriter Buffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
+                NativeArray<T> Moves = chunk.GetNativeArray(MoveChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    Patrol patrol = patrols[i];
-                    if (patrol.Complete)
+                    T move = Moves[i];
+                    if (move.Complete)
                     {
-                        Buffer.RemoveComponent<PatrolActionTag>(chunkIndex, entities[i]);
-                        patrol.Status = ActionStatus.Success;
+                        Buffer.RemoveComponent<A>(chunkIndex, entities[i]);
+                        move.Status = ActionStatus.Success;
 
-                        patrols[i] = patrol;
+                        Moves[i] = move;
                     }
                 }
             }

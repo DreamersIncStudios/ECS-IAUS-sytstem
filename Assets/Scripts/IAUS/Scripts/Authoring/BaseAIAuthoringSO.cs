@@ -10,8 +10,9 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
     public Movement movement;
-    public PatrolBuilderData buildPatrol;
+    public PMovementBuilderData buildMovement;
     public bool AddPatrol;
+    public bool AddTraverse;
     public bool AddWait;
     public bool AddRetreat;
     public WaitBuilderData waitBuilder;
@@ -42,10 +43,19 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         {
             Patrol patrol = new Patrol()
             {
-                BufferZone = buildPatrol.BufferZone,
-                _coolDownTime = buildPatrol.CoolDownTime
+                BufferZone = buildMovement.BufferZone,
+                _coolDownTime = buildMovement.CoolDownTime
             };
             dstManager.AddComponentData(entity, patrol);
+        }
+        if (AddTraverse)
+        {
+            Traverse traverse = new Traverse()
+            {
+                BufferZone = buildMovement.BufferZone,
+                _coolDownTime = buildMovement.CoolDownTime
+            };
+            dstManager.AddComponentData(entity, traverse);
         }
         if (AddWait)
         {

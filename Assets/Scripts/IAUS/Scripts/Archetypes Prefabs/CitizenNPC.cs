@@ -22,7 +22,7 @@ namespace IAUS.NPCSO
         public GameObject Model;
         public AITarget Self;
         public List<AIStates> AIStatesAvailable;
-        public PatrolBuilderData GetPatrol;
+        public PMovementBuilderData GetMovement;
         public WaitBuilderData GetWait;
         public Movement AIMove;
         public Vision GetVision;
@@ -50,9 +50,9 @@ namespace IAUS.NPCSO
                 {
                     switch (state)
                     {
-                        case AIStates.Patrol:
-                            aiAuthoring.AddPatrol = true;
-                            aiAuthoring.buildPatrol = GetPatrol;
+                        case AIStates.Traverse:
+                            aiAuthoring.AddTraverse = true;
+                            aiAuthoring.buildMovement = GetMovement;
                             spawnedGO.AddComponent<WaypointCreation>();
                             break;
                         case AIStates.Wait:

@@ -64,10 +64,21 @@ namespace IAUS.ECS.StateBlobSystem
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Patrol,
                     FactionID = brain.factionID,
-                    //TODO change ^^
+                    //TODO fill out all Levels
                     NPCLevel = NPCLevel.Grunt
                 });
             });
+            Entities.ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                p.stateRef = CreateReference();
+                p.Index = p.stateRef.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = AIStates.Traverse,
+                    FactionID = brain.factionID,
+                    NPCLevel = NPCLevel.Grunt
+                });
+            });
+
             Entities.ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 w.stateRef = CreateReference();
                 w.Index = w.stateRef.Value.GetConsiderationIndex(new Identify()

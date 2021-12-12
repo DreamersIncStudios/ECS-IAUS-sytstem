@@ -28,7 +28,7 @@ namespace IAUS.ECS.Systems
 
         }
 
-        float interval = .20f;
+        float interval = 0.0f;
         bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
@@ -41,6 +41,7 @@ namespace IAUS.ECS.Systems
                     EntityChunk = GetEntityTypeHandle(),
                     StateChunks = GetBufferTypeHandle<StateBuffer>(false),
                     Patrols = GetComponentDataFromEntity<Patrol>(true),
+                    Traverses = GetComponentDataFromEntity<Traverse>(true),
                     Waits = GetComponentDataFromEntity<Wait>(true),
                     StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
                     GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
@@ -61,7 +62,7 @@ namespace IAUS.ECS.Systems
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
                 //systemDeps.Complete();
                 Dependency = systemDeps;
-                interval = .20f;
+                interval = 1.0f;
 
             }
             else
@@ -77,6 +78,7 @@ namespace IAUS.ECS.Systems
             public BufferTypeHandle<StateBuffer> StateChunks;
 
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Patrol> Patrols;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Traverse> Traverses;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<Wait> Waits;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<StayInRange> StayInRangeOfTarget;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
@@ -101,6 +103,11 @@ namespace IAUS.ECS.Systems
                                 temp.StateName = AIStates.Patrol;
                                 temp.TotalScore = Patrols[entity].TotalScore;
                                 temp.Status = Patrols[entity].Status;
+                                break;
+                            case AIStates.Traverse:
+                                temp.StateName = AIStates.Traverse;
+                                temp.TotalScore = Traverses[entity].TotalScore;
+                                temp.Status = Traverses[entity].Status;
                                 break;
                             case AIStates.Wait:
                                 temp.StateName = AIStates.Wait;
@@ -172,6 +179,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.Patrol:
                                 CommandBufferParallel.RemoveComponent<PatrolActionTag>(chunkIndex, Entities[i]);
                                 break;
+                            case AIStates.Traverse:
+                                CommandBufferParallel.RemoveComponent<TraverseActionTag>(chunkIndex, Entities[i]);
+                                break;
                             case AIStates.Wait:
                                 CommandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, Entities[i]);
                                 break;
@@ -184,6 +194,7 @@ namespace IAUS.ECS.Systems
                             case AIStates.Attack:
                                 //TODO Implement Add and Remove Tag;
                                 CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
+
                                 break;
 
                             case AIStates.Retreat:
@@ -196,6 +207,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.Patrol:
                                 CommandBufferParallel.AddComponent(chunkIndex, Entities[i], new PatrolActionTag() { UpdateWayPoint = false });
                                 break;
+                            case AIStates.Traverse:
+                                CommandBufferParallel.AddComponent(chunkIndex, Entities[i], new TraverseActionTag() { UpdateWayPoint = false });
+                                break;
                             case AIStates.Wait:
                                 CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, Entities[i]);
                                 break;
@@ -207,6 +221,7 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.Attack:
                                   CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                                Debug.Log("tagged");
                                     //TODO reactor on add sets attack style.
 
                             break;

@@ -6,33 +6,34 @@ using Unity.Transforms;
 using UnityEngine;
 namespace IAUS.ECS.Systems {
     [BurstCompile]
-    public struct AddPatrolState : IJobChunk
+    public struct AddMovementState<T> : IJobChunk
+        where T : unmanaged, MovementState
     {
         public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
 
         [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<DistanceToConsideration> Distance;
 
         [ReadOnly] public EntityTypeHandle EntityChunk;
-        public ComponentTypeHandle<Patrol> PatrolChunk;
+        public ComponentTypeHandle<T> MovementChunk;
         [ReadOnly]public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
 
         public BufferTypeHandle<StateBuffer> StateBufferChunk;
-        [ReadOnly] public BufferTypeHandle<PatrolWaypointBuffer> PatrolBufferChunk;
+        [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> PatrolBufferChunk;
 
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-            NativeArray<Patrol> Patrols = chunk.GetNativeArray(PatrolChunk);
+            NativeArray<T> MovementStyle = chunk.GetNativeArray(MovementChunk);
             NativeArray<LocalToWorld> toWorld = chunk.GetNativeArray(ToWorldChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(StateBufferChunk);
-            BufferAccessor<PatrolWaypointBuffer> PatrolBufferAccessor = chunk.GetBufferAccessor(PatrolBufferChunk);
+            BufferAccessor<TravelWaypointBuffer> PatrolBufferAccessor = chunk.GetBufferAccessor(PatrolBufferChunk);
 
             for (int i = 0; i < chunk.Count; i++)
             {
                 Entity entity = entities[i];
-                Patrol c1 = Patrols[i];
+                T c1 = MovementStyle[i];
                 DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
-                DynamicBuffer<PatrolWaypointBuffer> buffer = PatrolBufferAccessor[i];
+                DynamicBuffer<TravelWaypointBuffer> buffer = PatrolBufferAccessor[i];
 
                 bool add = true;
                 for (int index = 0; index < stateBuffer.Length; index++)
@@ -51,7 +52,7 @@ namespace IAUS.ECS.Systems {
                 {
                     stateBuffer.Add(new StateBuffer()
                     {
-                        StateName = AIStates.Patrol,
+                        StateName = c1.name,
                         Status = ActionStatus.Idle
                     });
 
@@ -61,7 +62,7 @@ namespace IAUS.ECS.Systems {
                     }
 
                 }
-                Patrols[i] = c1;
+                MovementStyle[i] = c1;
             }
         }
     }
