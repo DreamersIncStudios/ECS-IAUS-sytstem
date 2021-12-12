@@ -60,7 +60,7 @@ namespace IAUS.ECS.Systems
             PatrolScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(EnemyStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
-                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                                    ComponentType.ReadOnly(typeof(AttackTargetState))
                 }
             });
             TraverseScore = GetEntityQuery(new EntityQueryDesc()
@@ -113,6 +113,7 @@ namespace IAUS.ECS.Systems
             systemDeps = new ScoreStatePatrol() 
             {
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+                AttackChunk = GetComponentTypeHandle<AttackTargetState>(true),
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
             }.ScheduleParallel(PatrolScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -170,16 +171,17 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        [BurstCompile]
+      //  [BurstCompile]
         public struct ScoreStatePatrol: IJobChunk
         {
             public ComponentTypeHandle<Patrol> PatrolChunk;
+            [ReadOnly]public ComponentTypeHandle<AttackTargetState> AttackChunk;
             [ReadOnly]public ComponentTypeHandle<EnemyStats> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
-
+                NativeArray<AttackTargetState> attacks = chunk.GetNativeArray(AttackChunk);
                 NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
@@ -187,8 +189,9 @@ namespace IAUS.ECS.Systems
                     Patrol patrol = patrols[i];
                     if (patrol.stateRef.IsCreated)
                     {
+                        float attackRatio = attacks[i].HighScoreAttack.AttackDistanceRatio == -1.0f ? 1.0f : attacks[i].HighScoreAttack.AttackDistanceRatio;
                         float healthRatio = Stats[i].HealthRatio;
-                        float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio);
+                        float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio)* patrol.TargetInRange.Output(attackRatio);
                         patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
                     }
                     patrols[i] = patrol;

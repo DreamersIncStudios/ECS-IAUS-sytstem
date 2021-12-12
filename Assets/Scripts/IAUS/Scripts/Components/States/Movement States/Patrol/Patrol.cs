@@ -16,7 +16,7 @@ namespace IAUS.ECS.Component
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
-        public ConsiderationScoringData TargetInRange;
+      [SerializeField]  public ConsiderationScoringData TargetInRange { get { return stateRef.Value.Array[Index].TargetInRange; } }
         public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -34,7 +34,7 @@ namespace IAUS.ECS.Component
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ?  Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance ): 0;
      
 
-        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;

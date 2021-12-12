@@ -24,6 +24,7 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData Distance;
         public ConsiderationScoringData Timer;
         public ConsiderationScoringData ManaAmmo;
+        public ConsiderationScoringData TargetInRange;
 
 
 
@@ -157,7 +158,8 @@ namespace IAUS.ECS.StateBlobSystem
                     Health = LineRead(4, lines[i]),
                     Distance = LineRead(11, lines[i]),
                     Timer = LineRead(18, lines[i]),
-                    ManaAmmo = LineRead(25,lines[i])
+                    ManaAmmo = LineRead(25,lines[i]),
+                    TargetInRange = LineRead(32,lines[i])
                 };
               
             }

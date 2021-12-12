@@ -201,7 +201,6 @@ namespace IAUS.ECS.Systems.Reactive
                     wait.Timer = wait.StartTime = traverse.CurWaypoint.TimeToWaitatWaypoint;
                     move.CanMove = false;
 
-                    Debug.Log("complete");
                     Waits[i] = wait;
                     Moves[i] = move;
                 }
