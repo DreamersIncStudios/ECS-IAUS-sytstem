@@ -62,7 +62,7 @@ namespace IAUS.ECS.Systems
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
                 //systemDeps.Complete();
                 Dependency = systemDeps;
-                interval = 1.0f;
+                interval = .50f;
 
             }
             else
@@ -221,7 +221,6 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.Attack:
                                   CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                                Debug.Log("tagged");
                                     //TODO reactor on add sets attack style.
 
                             break;

@@ -20,9 +20,9 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData ManaAmmoAmount { get { return stateRef.Value.Array[Index].ManaAmmo; } }
         public Target AttackTarget;
         [BurstDiscard]
-        public float DistanceToTarget => !AttackTarget.Equals(default(Target)) ? AttackTarget.DistanceTo : -1.0f;
+        public float DistanceToTarget => AttackTarget.entity != Entity.Null? AttackTarget.DistanceTo : -1.0f;
         public uint AttackRange;
-        public float AttackDistanceRatio => DistanceToTarget != -1.0f ? Mathf.Clamp01( DistanceToTarget / (float)AttackRange) : -1.0f;
+        public float AttackDistanceRatio => AttackTarget.entity != Entity.Null ? Mathf.Clamp01( DistanceToTarget / (float)AttackRange) : -1.0f;
         public float Attacktimer; //TODO This need to be derive from Character stats Possibly
         public float mod { get { return 1.0f - (1.0f / 3.0f); } } //Todo This need to be set by StateBlob System
         [BurstDiscard]

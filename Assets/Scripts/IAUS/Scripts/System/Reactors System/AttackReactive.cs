@@ -54,6 +54,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
     }
+    [UpdateAfter(typeof(PatrolMovement))]
     public class AttackSystem : SystemBase
     {
         EntityQuery AttackAdded;
@@ -87,7 +88,8 @@ namespace IAUS.ECS.Systems.Reactive
             JobHandle systemDeps = Dependency;
 
             systemDeps = new MoveToAttackRange() { 
-                MovementChunk = GetComponentTypeHandle<Movement>(false)
+                MovementChunk = GetComponentTypeHandle<Movement>(false),
+                AttackChunk = GetComponentTypeHandle<AttackTargetState>(true)
                     
             }.ScheduleParallel(AttackAdded, systemDeps);
 
@@ -99,14 +101,29 @@ namespace IAUS.ECS.Systems.Reactive
         public struct MoveToAttackRange : IJobChunk
         {
             public ComponentTypeHandle<Movement> MovementChunk;
+            [ReadOnly]public ComponentTypeHandle<AttackTargetState> AttackChunk;
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
+                NativeArray<AttackTargetState> states = chunk.GetNativeArray(AttackChunk);
+
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Movement move = Moves[i];
-                    move.CanMove = false;
-                    Debug.Log("Stop Attack Time");
+                    AttackTargetState state = states[i];
+                    switch (state.HighScoreAttack.style) {
+                        case AttackStyle.Melee:
+                        case AttackStyle.MagicMelee:
+                            move.TargetLocation = state.HighScoreAttack.AttackTarget.LastKnownPosition;
+                        break;
+
+                        case AttackStyle.Range:
+                        case AttackStyle.MagicRange:
+                            break;
+
+                    }
+                    move.SetTargetLocation = move.CanMove= true;
                     Moves[i] = move;
                 }
 

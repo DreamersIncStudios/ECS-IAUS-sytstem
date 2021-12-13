@@ -25,6 +25,7 @@ namespace IAUS.ECS.Systems
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalToWorld))}
 
             });
+            Mover.SetChangedVersionFilter(new ComponentType[] { ComponentType.ReadWrite(typeof(Movement)) });
 
         }
         protected override void OnUpdate()

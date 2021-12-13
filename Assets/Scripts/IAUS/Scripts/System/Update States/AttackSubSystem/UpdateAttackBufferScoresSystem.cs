@@ -18,22 +18,35 @@ namespace IAUS.ECS.Systems
     public class UpdateAttackBufferScoresSystem : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
-        private EntityQuery attackers;
+        private EntityQuery LookingForAttack;
+        private EntityQuery UpdateAttackStateScore;
+
         float interval = .20f;
         bool runUpdate => interval <= 0.0f;
 
         protected override void OnCreate()
         {
             base.OnCreate();
-            attackers = GetEntityQuery(new EntityQueryDesc()
+            LookingForAttack = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTypeInfo)),
                     ComponentType.ReadOnly(typeof(ScanPositionBuffer)),
                     ComponentType.ReadOnly(typeof(InfluenceComponent)),
                     ComponentType.ReadOnly(typeof(EnemyStats)),
                     ComponentType.ReadOnly(typeof(IAUSBrain))}
-            }
-                );
+                ,
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AttackActionTag)) }
+            });
+
+            UpdateAttackStateScore = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTypeInfo)),
+                    ComponentType.ReadOnly(typeof(ScanPositionBuffer)),
+                    ComponentType.ReadOnly(typeof(InfluenceComponent)),
+                    ComponentType.ReadOnly(typeof(EnemyStats)),
+                    ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadOnly(typeof(AttackActionTag))}
+            });
+
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
@@ -49,7 +62,7 @@ namespace IAUS.ECS.Systems
                     AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
                     TargetBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(true)
 
-                }.ScheduleParallel(attackers, systemDeps);
+                }.ScheduleParallel(LookingForAttack, systemDeps);
 
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -58,17 +71,24 @@ namespace IAUS.ECS.Systems
                     AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
                     AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false),
                     CharacterStatChunk = GetComponentTypeHandle<EnemyStats>(true)
-                }.ScheduleParallel(attackers, systemDeps);
-                _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+                }.ScheduleParallel(LookingForAttack, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
 
                 systemDeps = new GetHighAttack()
                 {
                     AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false),
                     AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
 
-                }.ScheduleParallel(attackers, systemDeps);
+                }.ScheduleParallel(LookingForAttack, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                systemDeps = new UpdateScoreHigh()
+                {
+                    AttackStateChunk = GetComponentTypeHandle<AttackTargetState>(false),
+                    CharacterStatChunk = GetComponentTypeHandle<EnemyStats>(true)
+                }.ScheduleParallel(UpdateAttackStateScore, systemDeps);
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-                _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
                 Dependency = systemDeps;
                 interval = .20f;
@@ -104,7 +124,7 @@ namespace IAUS.ECS.Systems
                         if (TargetBuffers[i].IsEmpty)
                             return;
                         ScanPositionBuffer closestTarget = TargetBuffers[i][0];
-                        foreach (var item in TargetBuffers[i] )
+                        foreach (var item in TargetBuffers[i])
                         {
                             if (attackTypeInfos[j].InRangeForAttack(item.target.DistanceTo))
                             {
@@ -116,17 +136,18 @@ namespace IAUS.ECS.Systems
                         }
                         AttackTypeInfo attack = attackTypeInfos[j];
 
-                       attack.AttackTarget = closestTarget.target;
+                        attack.AttackTarget = closestTarget.target;
                         attackTypeInfos[j] = attack;
                     }
 
                 }
-            
+
             }
         }
-        
+
         struct ScoreBufferSubStates : IJobChunk
         {
+
             public BufferTypeHandle<AttackTypeInfo> AttackBufferChunk;
             [ReadOnly] public ComponentTypeHandle<EnemyStats> CharacterStatChunk;
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
@@ -140,7 +161,6 @@ namespace IAUS.ECS.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     AttackTargetState state = Attacks[i];
-                    state.HighScoreAttack = new AttackTypeInfo();
                     //Todo Balanace Response curve for start point 
                     DynamicBuffer<AttackTypeInfo> AttackBuffer = bufferAccessor[i];
                     for (int j = 0; j < AttackBuffer.Length; j++)
@@ -153,18 +173,23 @@ namespace IAUS.ECS.Systems
 
                                   (ScoreAttack.AttackTarget.entity != Entity.Null ?
                                         (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
-                                            ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget / (float)ScoreAttack.AttackRange)) 
+                                            ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget / (float)ScoreAttack.AttackRange))
                                             : 1)
-                                        :0) *
+                                        : 0) *
 
                                    (!ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
                                  ScoreAttack.ManaAmmoAmount.Output(1) : 1) //Todo Get mama/ammo amount
                                  ;
 
                             ScoreAttack.Score = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * ScoreAttack.mod) * TotalScore);
-
-                            if (ScoreAttack.Score > state.HighScoreAttack.Score)
+                            if (ScoreAttack.AttackTarget.entity == Entity.Null)
+                            {
+                                state.HighScoreAttack = new AttackTypeInfo();
+                            }
+                            else if (state.HighScoreAttack.style == ScoreAttack.style || ScoreAttack.Score > state.HighScoreAttack.Score)
+                            {
                                 state.HighScoreAttack = ScoreAttack;
+                            }
                         }
                         AttackBuffer[j] = ScoreAttack;
                     }
@@ -201,10 +226,48 @@ namespace IAUS.ECS.Systems
                 }
             }
         }
+
+       // [BurstCompile]
+        public struct UpdateScoreHigh : IJobChunk
+        {
+            public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
+            [ReadOnly] public ComponentTypeHandle<EnemyStats> CharacterStatChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<AttackTargetState> Attacks = chunk.GetNativeArray(AttackStateChunk);
+                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(CharacterStatChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    AttackTargetState state = Attacks[i];
+                    AttackTypeInfo ScoreAttack = state.HighScoreAttack;
+                    if (ScoreAttack.stateRef.IsCreated)
+                    {
+                        float TotalScore = (!ScoreAttack.HealthRatio.Equals(default(ConsiderationScoringData)) ?
+                             ScoreAttack.HealthRatio.Output(Stats[i].HealthRatio) : 1) *
+
+                              (ScoreAttack.AttackTarget.entity != Entity.Null ?
+                                    (!ScoreAttack.RangeToTarget.Equals(default(ConsiderationScoringData)) ?
+                                        ScoreAttack.RangeToTarget.Output(Mathf.Clamp01(ScoreAttack.DistanceToTarget / (float)ScoreAttack.AttackRange))
+                                        : 1)
+                                    : 0) *
+
+                               (!ScoreAttack.ManaAmmoAmount.Equals(default(ConsiderationScoringData)) ?
+                             ScoreAttack.ManaAmmoAmount.Output(1) : 1) //Todo Get mama/ammo amount
+                             ;
+
+                        ScoreAttack.Score = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * ScoreAttack.mod) * TotalScore);
+
+                    }
+                    state.HighScoreAttack = ScoreAttack;
+                    Attacks[i] = state;
+
+                }
+            }
+        }
+
     }
 
-
-
-
-
 }
+
