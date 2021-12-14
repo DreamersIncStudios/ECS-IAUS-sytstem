@@ -26,7 +26,8 @@ namespace IAUS.ECS.Component
         public float MagicMeleeScore;
         public float MagicRangedScore;
         public AttackTypeInfo HighScoreAttack;
-
+        public bool InAttackRange => HighScoreAttack.AttackDistanceRatio < .25f && HighScoreAttack.AttackDistanceRatio > 0;
+       // public float TimerLeftUntilAttack;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
@@ -39,6 +40,9 @@ namespace IAUS.ECS.Component
         public AttackStyle StyleOfAttack;
     }
 
-
+    public struct MeleeAttackTag : IComponentData { }
+    public struct MeleeMagicAttackTag : IComponentData { }
+    public struct RangeAttackTag : IComponentData { }
+    public struct RangeMagicAttackTag : IComponentData { }
 
 }
