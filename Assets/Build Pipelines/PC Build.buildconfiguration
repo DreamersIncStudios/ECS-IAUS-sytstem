@@ -1,0 +1,30 @@
+{
+    "Dependencies": [
+        "GlobalObjectId_V1-1-6ab01ae3442d59147b335977a29a4537-93214019566545601-0"
+    ],
+    "Components": [
+        {
+            "$type": "Unity.Build.Common.GeneralSettings, Unity.Build",
+            "ProductName": "MoonShot Demo",
+            "CompanyName": "Dreamers Inc Studio",
+            "Version": "0.4.1.1"
+        },
+        {
+            "$type": "Unity.Build.Common.SceneList, Unity.Build",
+            "$version": 1,
+            "BuildCurrentScene": false,
+            "SceneInfos": [
+                {
+                    "Scene": "GlobalObjectId_V1-1-d8379a17b833ee246a126c77fed4585d-102900000-0",
+                    "AutoLoad": true
+                }
+            ]
+        },
+        {
+            "$type": "Unity.Build.Classic.ClassicBuildProfile, Unity.Build.Classic",
+            "$version": 1,
+            "Platform": "win",
+            "Configuration": 1
+        }
+    ]
+}
