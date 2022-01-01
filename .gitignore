@@ -71,7 +71,7 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-/Assets/Scripts/Systems/InfluenceSystem/Faction System/Pixel Crushers/Common/*
+/Assets/Systems/InfluenceSystem/Faction System/Pixel Crushers/Common/*
 Assets/Systems/InfluenceSystem/Faction System/*
 Assets/Systems/Influence Editor/*
 Assets/Plugins/*

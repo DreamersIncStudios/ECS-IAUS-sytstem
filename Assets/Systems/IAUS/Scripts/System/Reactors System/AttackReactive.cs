@@ -8,8 +8,9 @@ using Unity.Transforms;
 using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
+using DreamersInc.ComboSystem.NPC;
+using DreamersInc.ComboSystem;
 using Components.MovementSystem;
-using DreamersInc.DamageSystem.Interfaces;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag,AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
@@ -55,7 +56,7 @@ namespace IAUS.ECS.Systems.Reactive
 
     }
     [UpdateAfter(typeof(PatrolMovement))]
-    public class AttackSystem : SystemBase
+    public class AttackSystem : ComponentSystem
     {
         EntityQuery AttackAdded;
         EntityQuery AttackRemoved;
@@ -88,172 +89,73 @@ namespace IAUS.ECS.Systems.Reactive
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
                 , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
               , ComponentType.ReadWrite(typeof(AttackActionTag)) },
-                None = new ComponentType[] {ComponentType.ReadOnly(typeof(MeleeAttackTag)), ComponentType.ReadOnly(typeof(RangeAttackTag)), ComponentType.ReadOnly(typeof(RangeMagicAttackTag)), ComponentType.ReadOnly(typeof(MeleeMagicAttackTag))}
             });
             ActiveAttack = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
                 , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
               , ComponentType.ReadWrite(typeof(AttackActionTag)) },
-                Any = new ComponentType[] { ComponentType.ReadOnly(typeof(MeleeAttackTag)), ComponentType.ReadOnly(typeof(RangeAttackTag)), ComponentType.ReadOnly(typeof(RangeMagicAttackTag)), ComponentType.ReadOnly(typeof(MeleeMagicAttackTag)) }
             });
 
-            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
         }
 
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
+            BufferFromEntity<NPCAttackBuffer> bufferFromEntity = GetBufferFromEntity<NPCAttackBuffer>();
 
-            systemDeps = new MoveToAttackRange() { 
-                MovementChunk = GetComponentTypeHandle<Movement>(false),
-                AttackChunk = GetComponentTypeHandle<AttackTargetState>(true)
-                    
-            }.ScheduleParallel(AttackAdded, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            Entities.WithNone(ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))).
+                ForEach((Entity entity, ref AttackActionTag tag, NPCComboComponent combo, Command handler) => {
+                DynamicBuffer<NPCAttackBuffer> buffer = bufferFromEntity[entity];
+                    int index = 0; //combo.combo.GetAnimationComboIndex(handler.StateInfo);
+                restart:
 
-            systemDeps = new AttackTimer() {
-                AttackChunk = GetComponentTypeHandle<AttackTargetState>(false),
-                DT = Time.DeltaTime,
-                ECB= _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EntityChunk = GetEntityTypeHandle()
-            }.ScheduleParallel(AttackTime, systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                float indexPicked = Random.Range(0, combo.combo.GetMaxProbAtCurrentState(index));
 
-
-            Dependency = systemDeps;
-        }
-        [BurstCompile]
-        public struct MoveToAttackRange : IJobChunk
-        {
-            public ComponentTypeHandle<Movement> MovementChunk;
-            [ReadOnly]public ComponentTypeHandle<AttackTargetState> AttackChunk;
-
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
-                NativeArray<AttackTargetState> states = chunk.GetNativeArray(AttackChunk);
-
-                for (int i = 0; i < chunk.Count; i++)
+                foreach (var item in combo.combo.ComboList[index].Triggers)
                 {
-                    Movement move = Moves[i];
-                    AttackTargetState state = states[i];
-                    switch (state.HighScoreAttack.style) {
-                        case AttackStyle.Melee:
-                        case AttackStyle.MagicMelee:
-                            move.TargetLocation = state.HighScoreAttack.AttackTarget.LastKnownPosition;
-                        break;
+                    if (item.Picked(indexPicked))
+                    {
 
-                        case AttackStyle.Range:
-                        case AttackStyle.MagicRange:
-                            break;
-
-                    }
-                    move.SetTargetLocation = move.CanMove= true;
-                    Moves[i] = move;
-                }
-
-            }
-        }
-
-
-        public struct AttackTimer : IJobChunk
-        {
-             public ComponentTypeHandle<AttackTargetState> AttackChunk;
-            [ReadOnly] public EntityTypeHandle EntityChunk;
-            public float DT;
-            public EntityCommandBuffer.ParallelWriter ECB;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<AttackTargetState> states = chunk.GetNativeArray(AttackChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    AttackTargetState state = states[i];
-
-                    if (state.InAttackRange) {
-                        state.Timer -= DT;
-                    }
-                    if (state.Timer <= 0.0f) { 
-                        //add attack tag
-                        switch(state.HighScoreAttack.style){
-                            case AttackStyle.Melee:
-                                ECB.AddComponent<MeleeAttackTag>( chunkIndex, entities[i]);
-                                break;
-                            case AttackStyle.MagicMelee:
-                                ECB.AddComponent<MeleeMagicAttackTag>( chunkIndex, entities[i]);
-                                break;
-
-                            case AttackStyle.Range:
-                                ECB.AddComponent<RangeAttackTag>( chunkIndex, entities[i]);
-                                break;
-                            case AttackStyle.MagicRange:
-                                ECB.AddComponent<RangeMagicAttackTag>( chunkIndex, entities[i]);
-                                break;
+                        buffer.Add(new NPCAttackBuffer()
+                        {
+                            Trigger = item
+                        });
+                        if (item.AttackAgain(Random.Range(2, 100)))
+                        {
+                            index = combo.combo.GetAnimationComboIndex(item.TriggeredAnimName);
+                            goto restart;
                         }
                     }
-                    states[i] = state;
                 }
-            }
-        }
-        [BurstCompile]
-        public struct AttackTarget: IJobChunk
-        {
-            [ReadOnly] public EntityTypeHandle EntityChunk;
-            public EntityCommandBuffer.ParallelWriter ECB;
-            public ComponentTypeHandle<AttackTargetState> AttackChunk;
+            });
 
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<AttackTargetState> states = chunk.GetNativeArray(AttackChunk);
-                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-
-                for (int i = 0; i < chunk.Count; i++)
+            Entities.ForEach((DynamicBuffer<NPCAttackBuffer> A, Command handler) => {
+                if (!A.IsEmpty)
                 {
-                    AttackTargetState state = states[i];
-                    AdjustHealth health = new AdjustHealth()
-                    {
-                        Value = 10
-                    };
-
-                    switch (state.HighScoreAttack.style)
-                    {
-
-                        //Todo trigger animation in full game
-
-                        case AttackStyle.Melee:
-                       
-                            ECB.AddComponent(chunkIndex, state.HighScoreAttack.AttackTarget.entity, health);
-                            ECB.RemoveComponent<MeleeAttackTag>(chunkIndex, entities[i]);
-                            state.Timer = 10.0f;
+                    switch (A[0].Trigger.Type) {
+                        case AttackType.LightAttack:
+                        case AttackType.HeavyAttack:
+                            //Move to attack range then trigger animation;
                             break;
-                        case AttackStyle.MagicMelee:
-                            ECB.AddComponent(chunkIndex, state.HighScoreAttack.AttackTarget.entity, health);
+                        case AttackType.Projectile:
+                            //Rotate Target and then trigger attack 
 
-                            ECB.RemoveComponent<MeleeMagicAttackTag>(chunkIndex, entities[i]);
-                            state.Timer = 10.0f;
                             break;
 
-                        case AttackStyle.Range:
-                            ECB.AddComponent(chunkIndex, state.HighScoreAttack.AttackTarget.entity, health);
-                            ECB.RemoveComponent<RangeAttackTag>(chunkIndex, entities[i]);
-                            state.Timer = 10.0f;
-                            break;
-                        case AttackStyle.MagicRange:
-                            ECB.AddComponent(chunkIndex, state.HighScoreAttack.AttackTarget.entity, health);
-                            ECB.RemoveComponent<RangeMagicAttackTag>(chunkIndex, entities[i]);
-                            state.Timer = 10.0f;
-                            break;
                     }
-
+                    if (A[0].Trigger.trigger)
+                    {
+                        handler.InputQueue.Enqueue(A[0].Trigger);
+                        A.RemoveAt(0);
+                    }
+                    else
+                    {
+                        A[0].Trigger.AdjustTime(Time.DeltaTime);
+                    }
                 }
-
-
-            }
+            });
         }
-
-
     }
 
 
