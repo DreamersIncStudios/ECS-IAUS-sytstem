@@ -105,29 +105,38 @@ namespace IAUS.ECS.Systems.Reactive
             BufferFromEntity<NPCAttackBuffer> bufferFromEntity = GetBufferFromEntity<NPCAttackBuffer>();
 
             Entities.WithNone(ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))).
-                ForEach((Entity entity, ref AttackActionTag tag, NPCComboComponent combo, Command handler) => {
+                ForEach((Entity entity, ref AttackActionTag tag, NPCComboComponent comboList, Command handler) => {
                 DynamicBuffer<NPCAttackBuffer> buffer = bufferFromEntity[entity];
-                    int index = 0; //combo.combo.GetAnimationComboIndex(handler.StateInfo);
-                restart:
+                    //    int index =comboList.combo.GetAnimationComboIndex(handler.StateInfo);
+                    //restart:
 
-                float indexPicked = Random.Range(0, combo.combo.GetMaxProbAtCurrentState(index));
+                    //float indexPicked = Random.Range(0, comboList.combo.GetMaxProbAtCurrentState(index));
 
-                foreach (var item in combo.combo.ComboList[index].Triggers)
-                {
-                    if (item.Picked(indexPicked))
+                    //foreach (var item in comboList.combo.ComboList[index].Triggers)
+                    //{
+                    //    if (item.Picked(indexPicked))
+                    //    {
+
+                    //        buffer.Add(new NPCAttackBuffer()
+                    //        {
+                    //            Trigger = item
+                    //        });
+                    //        if (item.AttackAgain(Random.Range(2, 100)))
+                    //        {
+                    //            index = comboList.combo.GetAnimationComboIndex(item.TriggeredAnimName);
+                    //            goto restart;
+                    //        }
+                    //    }
+                    //}
+
+                    //Todo use for IAUS Testing only
+                    buffer.Add(new NPCAttackBuffer()
                     {
-
-                        buffer.Add(new NPCAttackBuffer()
+                        Trigger = new AnimationTrigger()
                         {
-                            Trigger = item
-                        });
-                        if (item.AttackAgain(Random.Range(2, 100)))
-                        {
-                            index = combo.combo.GetAnimationComboIndex(item.TriggeredAnimName);
-                            goto restart;
+                            Type = AttackType.LightAttack
                         }
-                    }
-                }
+                    }); ;
             });
 
             Entities.ForEach((DynamicBuffer<NPCAttackBuffer> A, Command handler) => {

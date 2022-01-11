@@ -141,15 +141,18 @@ namespace AISenses.VisionSystems
                         ScanPositionBuffer item = buffer[j];
                         if (world.CastRay(item.test, out Unity.Physics.RaycastHit raycastHit))
                         {
-                            Target setTarget = new Target();
-                            setTarget.entity = physicsWorld.Bodies[raycastHit.RigidBodyIndex].Entity;
-                            setTarget.TargetInfo = TargetInfo[setTarget.entity];
+                            if (TargetInfo.HasComponent(raycastHit.Entity))
+                            {
+                                Target setTarget = new Target();
+                                setTarget.entity = physicsWorld.Bodies[raycastHit.RigidBodyIndex].Entity;
+                                setTarget.TargetInfo = TargetInfo[setTarget.entity];
 
-                            setTarget.DistanceTo = raycastHit.Fraction * item.dist;
-                            setTarget.LastKnownPosition = raycastHit.Position;
-                            setTarget.CanSee = true;
-                            item.target = setTarget;
-                            buffer[j] = item;
+                                setTarget.DistanceTo = raycastHit.Fraction * item.dist;
+                                setTarget.LastKnownPosition = raycastHit.Position;
+                                setTarget.CanSee = true;
+                                item.target = setTarget;
+                                buffer[j] = item;
+                            }
                         }
                         else
                         {
