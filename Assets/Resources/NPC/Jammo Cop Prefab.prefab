@@ -5361,6 +5361,8 @@ GameObject:
   - component: {fileID: 5371077714523163498}
   - component: {fileID: 2595170117297841680}
   - component: {fileID: 3560129606041813423}
+  - component: {fileID: -6529856122887377567}
+  - component: {fileID: 702297599349933902}
   m_Layer: 0
   m_Name: Jammo Cop Prefab
   m_TagString: Untagged
@@ -5440,6 +5442,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: 2
+--- !u!114 &-6529856122887377567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994461831506262393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1c2d7770321484d899ecc457979c21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Values: []
+--- !u!114 &702297599349933902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8994461831506262393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e7c510cb245754f97e0c41b86a5f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponIsEquipped: 0
+  currentStateExitTime: 0
+  BareHands: 0
 --- !u!1 &9001298889959296284
 GameObject:
   m_ObjectHideFlags: 0

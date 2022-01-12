@@ -221,7 +221,6 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.Attack:
                                   CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                                    //TODO reactor on add sets attack style.
 
                             break;
                             case AIStates.Retreat:

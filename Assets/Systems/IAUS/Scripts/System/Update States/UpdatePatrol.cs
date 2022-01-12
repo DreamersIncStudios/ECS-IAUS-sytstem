@@ -131,7 +131,8 @@ namespace IAUS.ECS.Systems
             {
                 MoveChunk = GetComponentTypeHandle<Patrol>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EntityChunk = GetEntityTypeHandle()
+                EntityChunk = GetEntityTypeHandle(),
+                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
             }.Schedule(CompleteCheckPatrol, systemDeps);
 
 
@@ -139,7 +140,9 @@ namespace IAUS.ECS.Systems
             {
                 MoveChunk = GetComponentTypeHandle<Traverse>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                EntityChunk = GetEntityTypeHandle()
+                EntityChunk = GetEntityTypeHandle(),
+                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
+
             }.Schedule(CompleteCheckTraverse, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -189,10 +192,10 @@ namespace IAUS.ECS.Systems
                     Patrol patrol = patrols[i];
                     if (patrol.stateRef.IsCreated)
                     {
-                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null  ? 1.0f : attacks[i].HighScoreAttack.AttackDistanceRatio;
+                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f : 0.0f;//attacks[i].HighScoreAttack.AttackDistanceRatio;
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio) * patrol.TargetInRange.Output(attackRatio);
-                        patrol.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore);
+                        patrol.TotalScore = patrol.Status != ActionStatus.CoolDown? Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore): 0.0f;
                     }
                     patrols[i] = patrol;
                 }
@@ -268,20 +271,33 @@ namespace IAUS.ECS.Systems
 
         {
             public ComponentTypeHandle<T> MoveChunk;
+            [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> WaypointChunk;
             [ReadOnly] public EntityTypeHandle EntityChunk;
             public EntityCommandBuffer.ParallelWriter Buffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<T> Moves = chunk.GetNativeArray(MoveChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
+                BufferAccessor<TravelWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
+
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     T move = Moves[i];
                     if (move.Complete)
                     {
                         Buffer.RemoveComponent<A>(chunkIndex, entities[i]);
-                        move.Status = ActionStatus.Success;
+                        DynamicBuffer<TravelWaypointBuffer> waypointBuffer = WaypointBuffers[i];
 
+                        move.Status = ActionStatus.CoolDown;
+                        move.ResetTime = waypointBuffer[move.WaypointIndex].WayPoint.TimeToWaitatWaypoint;
+                        //Todo Add info on next travel point here
+
+                        move.WaypointIndex++;
+                        if (move.WaypointIndex >= move.NumberOfWayPoints)
+                            move.WaypointIndex = 0;
+
+                        move.CurWaypoint = waypointBuffer[move.WaypointIndex].WayPoint;
+                        
                         Moves[i] = move;
                     }
                 }

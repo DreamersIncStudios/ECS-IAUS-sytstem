@@ -25,8 +25,7 @@ namespace IAUS.ECS.Systems.Reactive
         {
             if (AIStateCompoment.Complete || AIStateCompoment.Status==ActionStatus.Success)
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+
             }
             else
             {
@@ -48,7 +47,7 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
     }
-
+    [UpdateBefore(typeof(PatrolTagReactor.PatrolReactiveSystem))]
     public class PatrolMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
@@ -129,9 +128,8 @@ namespace IAUS.ECS.Systems.Reactive
 
                     patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
 
-                    move.TargetLocation = patrol.CurWaypoint.Position;
-                    move.CanMove = true;
-                    move.SetTargetLocation = true;
+                    move.SetLocation( patrol.CurWaypoint.Position);
+                  
 
                     movements[i] = move;
                     patrols[i] = patrol;
@@ -196,6 +194,10 @@ namespace IAUS.ECS.Systems.Reactive
                     Wait wait = Waits[i];
                     Patrol patrol = patrols[i];
                     Movement move = Moves[i];
+                    if (patrol.Complete) {
+                        Debug.Log("works");
+                    }
+
                     wait.Timer=wait.StartTime = patrol.CurWaypoint.TimeToWaitatWaypoint;
                     move.CanMove = false;
 

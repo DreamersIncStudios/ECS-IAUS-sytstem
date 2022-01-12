@@ -1,6 +1,8 @@
 using UnityEngine;
 using Unity.Entities;
 using Unity.Burst;
+using Unity.Mathematics;
+
 namespace IAUS.ECS.Component
 {
 
@@ -37,7 +39,10 @@ namespace IAUS.ECS.Component
 
     public struct AttackActionTag : IComponentData
     {
-        public AttackStyle StyleOfAttack;
+        public AttackStyle StyleOfAttack { get; set; }
+        public float3 AttackLocation;
+        public bool moveSet { get; set; }
+        public bool CanAttack;
     }
 
 

@@ -24,7 +24,10 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackTargetState AIStateCompoment)
         {
             AIStateCompoment.Status = ActionStatus.Running;
-            newComponent.StyleOfAttack = AIStateCompoment.HighScoreAttack.style; 
+            newComponent.StyleOfAttack = AIStateCompoment.HighScoreAttack.style;
+            newComponent.AttackLocation = AIStateCompoment.HighScoreAttack.AttackTarget.LastKnownPosition;
+            newComponent.moveSet= newComponent.CanAttack = false;
+           
         }
 
         public void ComponentRemoved(Entity entity, ref AttackTargetState AIStateCompoment, in AttackActionTag oldComponent)
@@ -102,10 +105,10 @@ namespace IAUS.ECS.Systems.Reactive
 
         protected override void OnUpdate()
         {
-            BufferFromEntity<NPCAttackBuffer> bufferFromEntity = GetBufferFromEntity<NPCAttackBuffer>();
+            BufferFromEntity<NPCAttackBuffer> bufferFromEntity = GetBufferFromEntity<NPCAttackBuffer>(false);
 
             Entities.WithNone(ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))).
-                ForEach((Entity entity, ref AttackActionTag tag, NPCComboComponent comboList, Command handler) => {
+                ForEach((Entity entity, ref AttackActionTag tag, /*NPCComboComponent comboList,*/ Command handler) => {
                 DynamicBuffer<NPCAttackBuffer> buffer = bufferFromEntity[entity];
                     //    int index =comboList.combo.GetAnimationComboIndex(handler.StateInfo);
                     //restart:
@@ -130,22 +133,38 @@ namespace IAUS.ECS.Systems.Reactive
                     //}
 
                     //Todo use for IAUS Testing only
+
                     buffer.Add(new NPCAttackBuffer()
                     {
                         Trigger = new AnimationTrigger()
                         {
                             Type = AttackType.LightAttack
                         }
-                    }); ;
-            });
+                    });
 
-            Entities.ForEach((DynamicBuffer<NPCAttackBuffer> A, Command handler) => {
+                });
+
+            Entities.
+                ForEach((Entity entity, ref Movement move, ref AttackActionTag tag) => {
+                DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
                 if (!A.IsEmpty)
                 {
                     switch (A[0].Trigger.Type) {
                         case AttackType.LightAttack:
                         case AttackType.HeavyAttack:
                             //Move to attack range then trigger animation;
+                                if (!tag.moveSet)
+                                {
+                                    Debug.Log("Move into attack range");
+
+                                    move.SetLocation(tag.AttackLocation);
+                                    tag.moveSet = true;
+                                }
+                                if (tag.moveSet && move.Completed) {
+                                    Debug.Log("At Attack spot");
+                                    tag.CanAttack = true;
+                                }
+                            
                             break;
                         case AttackType.Projectile:
                             //Rotate Target and then trigger attack 
@@ -153,17 +172,53 @@ namespace IAUS.ECS.Systems.Reactive
                             break;
 
                     }
-                    if (A[0].Trigger.trigger)
-                    {
-                        handler.InputQueue.Enqueue(A[0].Trigger);
-                        A.RemoveAt(0);
-                    }
-                    else
-                    {
-                        A[0].Trigger.AdjustTime(Time.DeltaTime);
-                    }
+
+
+
+                    //if (A[0].Trigger.trigger)
+                    //{
+                    //    handler.InputQueue = new Queue<AnimationTrigger>();
+                    //    handler.InputQueue.Enqueue(A[0].Trigger);
+                    //    A.RemoveAt(0);
+                    //}
+                    //else
+                    //{
+                    //    A[0].Trigger.AdjustTime(Time.DeltaTime);
+                    //}
                 }
             });
+
+
+            Entities.
+               ForEach((Entity entity, ref AttackActionTag tag, Command inputc) => {
+                   if (inputc.InputQueue == null)
+                       inputc.InputQueue = new Queue<AnimationTrigger>();
+               DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
+                   if (!A.IsEmpty)
+                   {
+                       switch (A[0].Trigger.Type)
+                       {
+                           case AttackType.LightAttack:
+                           case AttackType.HeavyAttack:
+                               if (tag.CanAttack)
+                               {
+                                   inputc.InputQueue.Enqueue(A[0].Trigger);
+                                   Debug.Log("deal damage");
+                                   A.RemoveAt(0);
+                               }
+                               break;
+                           case AttackType.Projectile:
+                               //Rotate Target and then trigger attack 
+
+                               break;
+                       }
+                   }
+                   else {
+                       Debug.Log("Goto Wait");
+                       
+                       EntityManager.RemoveComponent<AttackActionTag>(entity);
+                   }
+               });
         }
     }
 
