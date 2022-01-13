@@ -41,8 +41,9 @@ namespace IAUS.ECS.Component
     {
         public AttackStyle StyleOfAttack { get; set; }
         public float3 AttackLocation;
+        public Entity attackThis;
         public bool moveSet { get; set; }
-        public bool CanAttack;
+        public bool CanAttack { get; set; }
     }
 
 

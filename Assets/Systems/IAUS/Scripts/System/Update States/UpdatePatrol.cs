@@ -132,7 +132,9 @@ namespace IAUS.ECS.Systems
                 MoveChunk = GetComponentTypeHandle<Patrol>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityChunk = GetEntityTypeHandle(),
-                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
+                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
+                WaitChunk = GetComponentTypeHandle<Wait>(false)
+
             }.Schedule(CompleteCheckPatrol, systemDeps);
 
 
@@ -141,6 +143,7 @@ namespace IAUS.ECS.Systems
                 MoveChunk = GetComponentTypeHandle<Traverse>(false),
                 Buffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityChunk = GetEntityTypeHandle(),
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
                 WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
 
             }.Schedule(CompleteCheckTraverse, systemDeps);
@@ -271,26 +274,31 @@ namespace IAUS.ECS.Systems
 
         {
             public ComponentTypeHandle<T> MoveChunk;
+            public ComponentTypeHandle<Wait> WaitChunk;
             [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> WaypointChunk;
             [ReadOnly] public EntityTypeHandle EntityChunk;
             public EntityCommandBuffer.ParallelWriter Buffer;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<T> Moves = chunk.GetNativeArray(MoveChunk);
+                NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 BufferAccessor<TravelWaypointBuffer> WaypointBuffers = chunk.GetBufferAccessor(WaypointChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     T move = Moves[i];
+                    Wait wait = Waits[i];
+
                     if (move.Complete)
                     {
                         Buffer.RemoveComponent<A>(chunkIndex, entities[i]);
                         DynamicBuffer<TravelWaypointBuffer> waypointBuffer = WaypointBuffers[i];
 
                         move.Status = ActionStatus.CoolDown;
-                        move.ResetTime = waypointBuffer[move.WaypointIndex].WayPoint.TimeToWaitatWaypoint;
+                        move.ResetTime = move.CurWaypoint.TimeToWaitatWaypoint;
                         //Todo Add info on next travel point here
+                        wait.Timer = wait.StartTime = move.CurWaypoint.TimeToWaitatWaypoint;
 
                         move.WaypointIndex++;
                         if (move.WaypointIndex >= move.NumberOfWayPoints)
@@ -299,6 +307,8 @@ namespace IAUS.ECS.Systems
                         move.CurWaypoint = waypointBuffer[move.WaypointIndex].WayPoint;
                         
                         Moves[i] = move;
+                        Waits[i] = wait;
+
                     }
                 }
             }

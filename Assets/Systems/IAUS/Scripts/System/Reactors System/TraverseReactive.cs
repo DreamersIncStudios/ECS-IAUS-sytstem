@@ -131,9 +131,7 @@ namespace IAUS.ECS.Systems.Reactive
 
                     traverse.StartingDistance = Vector3.Distance(ToWorlds[i].Position, traverse.CurWaypoint.Position);
 
-                    move.TargetLocation = traverse.CurWaypoint.Position;
-                    move.CanMove = true;
-                    move.SetTargetLocation = true;
+                    move.SetLocation( traverse.CurWaypoint.Position);
 
                     movements[i] = move;
                     Traverses[i] = traverse;

@@ -18,19 +18,19 @@ namespace IAUS.ECS.Systems.Reactive
     {
         public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment)
         {
-          AIStateCompoment.Status = ActionStatus.Running;
+            AIStateCompoment.Status = ActionStatus.Running;
         }
 
         public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete || AIStateCompoment.Status==ActionStatus.Success)
+            if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
             {
 
             }
             else
             {
                 AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime*2;
+                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
 
             }
         }
@@ -75,7 +75,7 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer)),  ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag))}
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag)) }
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -92,19 +92,13 @@ namespace IAUS.ECS.Systems.Reactive
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
-            systemDeps = new CheckSkipPoint() {
+            systemDeps = new CheckSkipPoint()
+            {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
                 WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
-            }.ScheduleParallel(_patrolling,systemDeps);
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            systemDeps = new OnCompletionUpdateJob()
-            {
-                MovementChunk = GetComponentTypeHandle<Movement>(false),
-                PatrolChunk = GetComponentTypeHandle<Patrol>(true),
-                WaitChunk = GetComponentTypeHandle<Wait>(false)
-            }.ScheduleParallel(_componentRemovedQuery, systemDeps);
+            }.ScheduleParallel(_patrolling, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;
@@ -128,8 +122,8 @@ namespace IAUS.ECS.Systems.Reactive
 
                     patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
 
-                    move.SetLocation( patrol.CurWaypoint.Position);
-                  
+                    move.SetLocation(patrol.CurWaypoint.Position);
+
 
                     movements[i] = move;
                     patrols[i] = patrol;
@@ -179,34 +173,6 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
 
-        public struct OnCompletionUpdateJob : IJobChunk
-        {
-            public ComponentTypeHandle<Wait> WaitChunk;
-            [ReadOnly]public ComponentTypeHandle<Patrol> PatrolChunk;
-            public ComponentTypeHandle<Movement> MovementChunk;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
-                NativeArray<Patrol> patrols = chunk.GetNativeArray(PatrolChunk);
-                NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    Wait wait = Waits[i];
-                    Patrol patrol = patrols[i];
-                    Movement move = Moves[i];
-                    if (patrol.Complete) {
-                        Debug.Log("works");
-                    }
 
-                    wait.Timer=wait.StartTime = patrol.CurWaypoint.TimeToWaitatWaypoint;
-                    move.CanMove = false;
-
-                    Waits[i] = wait;
-                    Moves[i] = move;
-                }
-
-            }
-        }
     }
-
 }

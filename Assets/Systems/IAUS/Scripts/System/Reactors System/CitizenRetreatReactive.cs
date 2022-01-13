@@ -85,9 +85,8 @@ namespace IAUS.ECS.Systems.Reactive
                     start:
                     if (NavMesh.SamplePosition(retreat.LocationOfLowestThreat, out NavMeshHit hit, 6.0f, NavMesh.AllAreas))
                     {
-                        move.TargetLocation = hit.position;
-                        move.CanMove = true;
-                        move.SetTargetLocation = true;
+                        move.SetLocation ( hit.position);
+                        Debug.LogError("Bug is Here");
                         patrol.StartingDistance = patrol.distanceToPoint = 1.0f;
                     }
                     else
@@ -139,9 +138,7 @@ namespace IAUS.ECS.Systems.Reactive
                     {
                         Debug.Log("Move to retreat Point");
 
-                        move.TargetLocation = hit.position;
-                        move.CanMove = true;
-                        move.SetTargetLocation = true;
+                        move.SetLocation(hit.position);
                         patrol.StartingDistance = patrol.distanceToPoint = 1.0f;
                     }
                     else

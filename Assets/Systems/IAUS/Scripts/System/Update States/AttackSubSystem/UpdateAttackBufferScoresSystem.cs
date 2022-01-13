@@ -118,29 +118,61 @@ namespace IAUS.ECS.Systems
                     DynamicBuffer<AttackTypeInfo> attackTypeInfos = AttackBuffers[i];
                     DynamicBuffer<ScanPositionBuffer> scanPositionBuffers = TargetBuffers[i];
 
+                    if (TargetBuffers[i].IsEmpty)
+                        continue;
 
                     for (int j = 0; j < attackTypeInfos.Length; j++)
                     {
-                        if (TargetBuffers[i].IsEmpty)
-                            return;
-                        ScanPositionBuffer closestTarget = TargetBuffers[i][0];
-                        foreach (var item in TargetBuffers[i])
+                        if (attackTypeInfos[j].AttackTarget.entity != Entity.Null)
                         {
-                            if (attackTypeInfos[j].InRangeForAttack(item.target.DistanceTo))
+                            
+                            if (!checkTarget(i, j, TargetBuffers, attackTypeInfos))
                             {
-                                //Todo add influence check 
-                                if (closestTarget.target.DistanceTo > item.target.DistanceTo)
-                                    closestTarget = item;
+                                Debug.LogError("Target not  in buffers ");
+                                updateTarget(i, j, TargetBuffers, attackTypeInfos);
                             }
-
                         }
-                        AttackTypeInfo attack = attackTypeInfos[j];
-
-                        attack.AttackTarget = closestTarget.target;
-                        attackTypeInfos[j] = attack;
+                        else
+                        {
+                            updateTarget(i, j, TargetBuffers, attackTypeInfos);
+                        }
                     }
 
                 }
+
+            }
+
+            bool checkTarget(int i, int j, BufferAccessor<ScanPositionBuffer> TargetBuffers, DynamicBuffer<AttackTypeInfo> attackTypeInfos)
+            {
+                foreach (var item in TargetBuffers[i])
+                {
+                    if (item.target.entity == attackTypeInfos[j].AttackTarget.entity && item.target.CanSee)
+                    {
+                        AttackTypeInfo attack = attackTypeInfos[j];
+                        attack.AttackTarget = item.target;
+                        attackTypeInfos[j] = attack;
+                        return true;
+                    }
+                }
+                    return false;
+            }
+
+                void updateTarget(int i, int j, BufferAccessor<ScanPositionBuffer> TargetBuffers, DynamicBuffer<AttackTypeInfo> attackTypeInfos) {
+                ScanPositionBuffer closestTarget = TargetBuffers[i][0];
+                foreach (var item in TargetBuffers[i])
+                {
+                    if (attackTypeInfos[j].InRangeForAttack(item.target.DistanceTo))
+                    {
+                        //Todo add influence check 
+                        if (closestTarget.target.DistanceTo > item.target.DistanceTo)
+                            closestTarget = item;
+                    }
+
+                }
+                AttackTypeInfo attack = attackTypeInfos[j];
+
+                attack.AttackTarget = closestTarget.target;
+                attackTypeInfos[j] = attack;
 
             }
         }

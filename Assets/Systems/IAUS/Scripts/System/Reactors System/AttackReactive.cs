@@ -11,6 +11,7 @@ using Unity.Burst;
 using DreamersInc.ComboSystem.NPC;
 using DreamersInc.ComboSystem;
 using Components.MovementSystem;
+using Stats;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag,AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
@@ -27,6 +28,7 @@ namespace IAUS.ECS.Systems.Reactive
             newComponent.StyleOfAttack = AIStateCompoment.HighScoreAttack.style;
             newComponent.AttackLocation = AIStateCompoment.HighScoreAttack.AttackTarget.LastKnownPosition;
             newComponent.moveSet= newComponent.CanAttack = false;
+            newComponent.attackThis = AIStateCompoment.HighScoreAttack.AttackTarget.entity;
            
         }
 
@@ -58,7 +60,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
     }
-    [UpdateAfter(typeof(PatrolMovement))]
+    [UpdateAfter(typeof(AttackTagReactor.AttackReactiveSystem))]
     public class AttackSystem : ComponentSystem
     {
         EntityQuery AttackAdded;
@@ -163,6 +165,7 @@ namespace IAUS.ECS.Systems.Reactive
                                 if (tag.moveSet && move.Completed) {
                                     Debug.Log("At Attack spot");
                                     tag.CanAttack = true;
+                                    move.CanMove = false;
                                 }
                             
                             break;
@@ -188,7 +191,8 @@ namespace IAUS.ECS.Systems.Reactive
                 }
             });
 
-
+            ComponentDataFromEntity<Wait> WaitState = GetComponentDataFromEntity<Wait>(false);
+            ComponentDataFromEntity<EnemyStats> enemy = GetComponentDataFromEntity<EnemyStats>(false);
             Entities.
                ForEach((Entity entity, ref AttackActionTag tag, Command inputc) => {
                    if (inputc.InputQueue == null)
@@ -204,6 +208,15 @@ namespace IAUS.ECS.Systems.Reactive
                                {
                                    inputc.InputQueue.Enqueue(A[0].Trigger);
                                    Debug.Log("deal damage");
+                                   if (WaitState.HasComponent(entity))
+                                   {
+                                       EnemyStats stat = enemy[tag.attackThis];
+                                       stat.AdjustHealth(-50);
+                                       enemy[tag.attackThis] = stat;
+                                      Wait temp = WaitState[entity];
+                                       temp.Timer = temp.StartTime = 10;
+                                       WaitState[entity] = temp;
+                                   }
                                    A.RemoveAt(0);
                                }
                                break;

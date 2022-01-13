@@ -207,10 +207,7 @@ namespace IAUS.ECS.Systems
                     move.Target = update;
                     if (update.target.CanSee && !update.target.LastKnownPosition.Equals(mover.TargetLocation))
                     {
-                        mover.TargetLocation = update.target.LastKnownPosition;
-                        mover.CanMove = true;
-                        mover.SetTargetLocation = true;
-
+                        mover.SetLocation( update.target.LastKnownPosition);
                     }
 
                     Moves[i] = move;
