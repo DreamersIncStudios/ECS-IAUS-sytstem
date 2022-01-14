@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 1
+  m_CurrentQuality: 2
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -83,13 +83,13 @@ QualitySettings:
     pixelLightCount: 1
     shadows: 2
     shadowResolution: 1
-    shadowProjection: 0
-    shadowCascades: 1
+    shadowProjection: 1
+    shadowCascades: 2
     shadowDistance: 20
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
-    shadowmaskMode: 0
+    shadowmaskMode: 1
     skinWeights: 2
     textureQuality: 0
     anisotropicTextures: 1
@@ -228,9 +228,9 @@ QualitySettings:
     Nintendo Switch: 5
     PS4: 5
     Stadia: 5
-    Standalone: 1
+    Standalone: 2
     WebGL: 3
-    Windows Store Apps: 1
+    Windows Store Apps: 2
     XboxOne: 5
     iPhone: 2
     tvOS: 2

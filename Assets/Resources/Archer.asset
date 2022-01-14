@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd75c6222b939f049ae737ed98949909, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: 
+  _comboList:
+  - CurrentStateName: 1
+    NormalizedInputTime:
+      x: 0
+      y: Infinity
+    AnimationEndTime: 0
+    Triggers:
+    - name: 11
+      triggerAnimName: 23
+      Type: 1
+      Unlocked: 1
+      TransitionDuration: 0
+      StartOffset: 0
+      Chance: 0
+      ChanceForNextAttack: 0
+      LevelUnlocked: 0
+      delay: 0
+    - name: 1
+      triggerAnimName: 9
+      Type: 1
+      Unlocked: 1
+      TransitionDuration: 0
+      StartOffset: 0
+      Chance: 0
+      ChanceForNextAttack: 0
+      LevelUnlocked: 0
+      delay: 0
+  ShowMovesPanel: 0

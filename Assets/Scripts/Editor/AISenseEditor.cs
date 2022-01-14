@@ -19,7 +19,7 @@ namespace IAUS.NPCSO.editor
             {
                 GetInfluence.Threat = EditorGUILayout.IntField("Threat", GetInfluence.Threat);
                 GetInfluence.Protection = EditorGUILayout.IntField("Protection", GetInfluence.Protection);
-                GetInfluence.faction = (Faction)EditorGUILayout.EnumPopup("Faction Group Member", GetInfluence.faction);
+                GetInfluence.factionID = EditorGUILayout.IntField("Faction Group Member", GetInfluence.factionID);// TODO Change to a custom dropdown based off Database later
             }
 
             return GetInfluence;

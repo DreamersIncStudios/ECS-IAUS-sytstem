@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 354770633}
   - component: {fileID: 354770632}
   - component: {fileID: 354770631}
-  - component: {fileID: 4710636687265719959}
-  m_Layer: 0
+  - component: {fileID: 354770630}
+  m_Layer: 9
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,8 +839,8 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!65 &4710636687265719959
-BoxCollider:
+--- !u!64 &354770630
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -849,9 +849,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 50, y: 0.25, z: 50}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &672299110
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,8 +865,8 @@ GameObject:
   - component: {fileID: 672299115}
   - component: {fileID: 672299114}
   - component: {fileID: 672299113}
-  - component: {fileID: 8446584815388301579}
-  m_Layer: 0
+  - component: {fileID: 672299112}
+  m_Layer: 9
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1691,8 +1692,8 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
---- !u!65 &8446584815388301579
-BoxCollider:
+--- !u!64 &672299112
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1701,9 +1702,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 50, y: 0.25, z: 50}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &904373454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1717,7 +1719,7 @@ GameObject:
   - component: {fileID: 904373458}
   - component: {fileID: 904373457}
   - component: {fileID: 6740611748656323031}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2569,7 +2571,7 @@ GameObject:
   - component: {fileID: 1222367016}
   - component: {fileID: 1222367015}
   - component: {fileID: 3658695793140225377}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3422,6 +3424,8 @@ GameObject:
   - component: {fileID: 1613619168}
   - component: {fileID: 3748572404653441855}
   - component: {fileID: 299589808}
+  - component: {fileID: 3415567822586281701}
+  - component: {fileID: 3887746534231503194}
   m_Layer: 12
   m_Name: Barrier
   m_TagString: Untagged
@@ -3532,11 +3536,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &3415567822586281701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613619167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3887746534231503194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613619167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &261328969894293098
 GameObject:
   m_ObjectHideFlags: 0
@@ -3551,6 +3593,8 @@ GameObject:
   - component: {fileID: 6585118423990225159}
   - component: {fileID: 5260089040057815548}
   - component: {fileID: 226321907}
+  - component: {fileID: 1317860068}
+  - component: {fileID: 7984762602753065413}
   m_Layer: 12
   m_Name: Barrier (9)
   m_TagString: Untagged
@@ -3661,11 +3705,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1317860068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261328969894293098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7984762602753065413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261328969894293098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &592283092276853839
 GameObject:
   m_ObjectHideFlags: 0
@@ -3680,6 +3762,8 @@ GameObject:
   - component: {fileID: 7163329435234305136}
   - component: {fileID: 461113234909943380}
   - component: {fileID: 1566166179}
+  - component: {fileID: 2123074946}
+  - component: {fileID: 208789466530263046}
   m_Layer: 12
   m_Name: Barrier (26)
   m_TagString: Untagged
@@ -3790,11 +3874,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &2123074946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592283092276853839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &208789466530263046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592283092276853839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &728349329995505033
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,6 +3931,8 @@ GameObject:
   - component: {fileID: 1782512934977702161}
   - component: {fileID: 3629149232465243120}
   - component: {fileID: 167994635}
+  - component: {fileID: 71266372}
+  - component: {fileID: 1409023082658268486}
   m_Layer: 12
   m_Name: Barrier (46)
   m_TagString: Untagged
@@ -3919,11 +4043,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &71266372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728349329995505033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1409023082658268486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728349329995505033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &844796316682870004
 GameObject:
   m_ObjectHideFlags: 0
@@ -3938,6 +4100,8 @@ GameObject:
   - component: {fileID: 2295654121287696174}
   - component: {fileID: 2658900160294029175}
   - component: {fileID: 1160228074}
+  - component: {fileID: 387370272}
+  - component: {fileID: 1783516033525069147}
   m_Layer: 12
   m_Name: Barrier (5)
   m_TagString: Untagged
@@ -4048,11 +4212,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &387370272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844796316682870004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1783516033525069147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844796316682870004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &879877580415469497
 GameObject:
   m_ObjectHideFlags: 0
@@ -4067,6 +4269,8 @@ GameObject:
   - component: {fileID: 6545604665097621220}
   - component: {fileID: 704752639878491712}
   - component: {fileID: 1522388603}
+  - component: {fileID: 1789227960}
+  - component: {fileID: 3016743460540429435}
   m_Layer: 12
   m_Name: Barrier (41)
   m_TagString: Untagged
@@ -4177,11 +4381,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1789227960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879877580415469497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3016743460540429435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879877580415469497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1139525051485684774
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,6 +4438,8 @@ GameObject:
   - component: {fileID: 4555146659483914394}
   - component: {fileID: 680926278261740825}
   - component: {fileID: 233962983}
+  - component: {fileID: 1231764774}
+  - component: {fileID: 5889235287096552619}
   m_Layer: 12
   m_Name: Barrier (30)
   m_TagString: Untagged
@@ -4306,11 +4550,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1231764774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139525051485684774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &5889235287096552619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139525051485684774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1174690220634650208
 GameObject:
   m_ObjectHideFlags: 0
@@ -4325,6 +4607,8 @@ GameObject:
   - component: {fileID: 8648720849511368406}
   - component: {fileID: 6851982366649972804}
   - component: {fileID: 676151477}
+  - component: {fileID: 146392138}
+  - component: {fileID: 2853699814948683860}
   m_Layer: 12
   m_Name: Barrier (2)
   m_TagString: Untagged
@@ -4435,11 +4719,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &146392138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174690220634650208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2853699814948683860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174690220634650208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1246888389198070824
 GameObject:
   m_ObjectHideFlags: 0
@@ -4454,6 +4776,8 @@ GameObject:
   - component: {fileID: 312481913631891689}
   - component: {fileID: 7923948112100346697}
   - component: {fileID: 512401743}
+  - component: {fileID: 1672970464}
+  - component: {fileID: 3191724044727654934}
   m_Layer: 12
   m_Name: Barrier (12)
   m_TagString: Untagged
@@ -4564,11 +4888,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1672970464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246888389198070824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3191724044727654934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246888389198070824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1300715850714025148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4583,6 +4945,8 @@ GameObject:
   - component: {fileID: 4306941130662822797}
   - component: {fileID: 6750078585418804750}
   - component: {fileID: 470331236}
+  - component: {fileID: 1714459979}
+  - component: {fileID: 4326853620233365167}
   m_Layer: 12
   m_Name: Barrier (8)
   m_TagString: Untagged
@@ -4693,11 +5057,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1714459979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300715850714025148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &4326853620233365167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300715850714025148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1382946642312923279
 GameObject:
   m_ObjectHideFlags: 0
@@ -4712,6 +5114,8 @@ GameObject:
   - component: {fileID: 3502289760825150199}
   - component: {fileID: 8291430743678165441}
   - component: {fileID: 671902950}
+  - component: {fileID: 691313627}
+  - component: {fileID: 7217162662132366087}
   m_Layer: 12
   m_Name: Barrier (10)
   m_TagString: Untagged
@@ -4822,11 +5226,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &691313627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382946642312923279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7217162662132366087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382946642312923279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1633978107290467100
 GameObject:
   m_ObjectHideFlags: 0
@@ -4841,6 +5283,8 @@ GameObject:
   - component: {fileID: 4415464601843953671}
   - component: {fileID: 3701446683425882112}
   - component: {fileID: 444767746}
+  - component: {fileID: 493254651}
+  - component: {fileID: 8672917949654952104}
   m_Layer: 12
   m_Name: Barrier (40)
   m_TagString: Untagged
@@ -4951,11 +5395,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &493254651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633978107290467100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &8672917949654952104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633978107290467100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &1872968763142055751
 GameObject:
   m_ObjectHideFlags: 0
@@ -4970,6 +5452,8 @@ GameObject:
   - component: {fileID: 7535553654653437288}
   - component: {fileID: 6314203010584838916}
   - component: {fileID: 601319555}
+  - component: {fileID: 347697511}
+  - component: {fileID: 3481651431663719629}
   m_Layer: 12
   m_Name: Barrier (39)
   m_TagString: Untagged
@@ -5080,11 +5564,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &347697511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872968763142055751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3481651431663719629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872968763142055751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &2024638853168212656
 GameObject:
   m_ObjectHideFlags: 0
@@ -5099,6 +5621,8 @@ GameObject:
   - component: {fileID: 890284465701385281}
   - component: {fileID: 8072191120051615527}
   - component: {fileID: 521650532}
+  - component: {fileID: 429132310}
+  - component: {fileID: 3507178038895040206}
   m_Layer: 12
   m_Name: Barrier (21)
   m_TagString: Untagged
@@ -5209,11 +5733,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &429132310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024638853168212656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3507178038895040206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024638853168212656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &2181058435741323911
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,6 +5790,8 @@ GameObject:
   - component: {fileID: 5900970259856350043}
   - component: {fileID: 8040795829795288181}
   - component: {fileID: 1648105904}
+  - component: {fileID: 1965363816}
+  - component: {fileID: 7152420894300630995}
   m_Layer: 12
   m_Name: Barrier (18)
   m_TagString: Untagged
@@ -5338,11 +5902,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1965363816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2181058435741323911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7152420894300630995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2181058435741323911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &2709901991378019210
 GameObject:
   m_ObjectHideFlags: 0
@@ -5357,6 +5959,8 @@ GameObject:
   - component: {fileID: 9005010798308992601}
   - component: {fileID: 3495440542606577398}
   - component: {fileID: 540745617}
+  - component: {fileID: 1463075382}
+  - component: {fileID: 2748893135272575371}
   m_Layer: 12
   m_Name: Barrier (33)
   m_TagString: Untagged
@@ -5467,11 +6071,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1463075382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709901991378019210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2748893135272575371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709901991378019210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &2734034038670610310
 GameObject:
   m_ObjectHideFlags: 0
@@ -5486,6 +6128,8 @@ GameObject:
   - component: {fileID: 2189497253292560628}
   - component: {fileID: 6642009648354142320}
   - component: {fileID: 318209130}
+  - component: {fileID: 655919923}
+  - component: {fileID: 2624883253665127564}
   m_Layer: 12
   m_Name: Barrier (44)
   m_TagString: Untagged
@@ -5596,11 +6240,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &655919923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2734034038670610310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2624883253665127564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2734034038670610310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &2771869295858263478
 GameObject:
   m_ObjectHideFlags: 0
@@ -5615,6 +6297,8 @@ GameObject:
   - component: {fileID: 918181634953609149}
   - component: {fileID: 7804927288510406133}
   - component: {fileID: 1819545540}
+  - component: {fileID: 1116846335}
+  - component: {fileID: 6465690783909280046}
   m_Layer: 12
   m_Name: Barrier (34)
   m_TagString: Untagged
@@ -5725,11 +6409,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1116846335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2771869295858263478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &6465690783909280046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2771869295858263478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &3347739827500720765
 GameObject:
   m_ObjectHideFlags: 0
@@ -5743,7 +6465,7 @@ GameObject:
   - component: {fileID: 1953371291435360215}
   - component: {fileID: 5587128879302132489}
   - component: {fileID: 8112502899683941451}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6596,6 +7318,8 @@ GameObject:
   - component: {fileID: 8675969287586410830}
   - component: {fileID: 8740723100849695256}
   - component: {fileID: 1883917397}
+  - component: {fileID: 593166233}
+  - component: {fileID: 3993899573678375017}
   m_Layer: 12
   m_Name: Barrier (3)
   m_TagString: Untagged
@@ -6706,11 +7430,901 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &593166233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424450486337023170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3993899573678375017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424450486337023170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
+--- !u!1 &3429504310996970491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 130882504157030276}
+  - component: {fileID: 4611693142938687346}
+  - component: {fileID: 5424107778685610082}
+  - component: {fileID: 1949714156206104101}
+  - component: {fileID: 4710636687265719959}
+  m_Layer: 9
+  m_Name: Cube (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &130882504157030276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429504310996970491}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -75, y: 0.4, z: 25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8275261833681559964}
+  m_RootOrder: 58
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4611693142938687346
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429504310996970491}
+  m_Mesh: {fileID: 0}
+--- !u!23 &5424107778685610082
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429504310996970491}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 0.25
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 2
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1949714156206104101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429504310996970491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MeshFormatVersion: 1
+  m_Faces:
+  - m_Indexes: 000000000100000002000000030000000000000002000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 040000000500000006000000070000000400000006000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 0b00000008000000090000000a0000000b00000009000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 0e0000000f0000000c0000000d0000000e0000000c000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 100000001100000012000000130000001000000012000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 140000001500000016000000170000001400000016000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 1b00000018000000190000001a0000001b00000019000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 1e0000001f0000001c0000001d0000001e0000001c000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 230000002100000022000000230000002000000021000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 270000002500000026000000270000002400000025000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 2a00000028000000290000002a0000002b00000028000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 2d0000002f0000002c0000002d0000002e0000002f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 330000003100000032000000330000003000000031000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 370000003500000036000000370000003400000035000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 3a00000038000000390000003a0000003b00000038000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 3d0000003f0000003c0000003d0000003e0000003f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 420000004300000040000000410000004200000040000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 460000004700000044000000450000004600000044000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 490000004a0000004b00000048000000490000004b000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 4c0000004d0000004e0000004f0000004c0000004e000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 530000005100000052000000530000005000000051000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 570000005500000056000000570000005400000055000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 5a00000058000000590000005a0000005b00000058000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 5d0000005f0000005c0000005d0000005e0000005f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  m_SharedVertices:
+  - m_Vertices: 00000000350000005d000000
+  - m_Vertices: 01000000040000005a0000005c000000
+  - m_Vertices: 02000000070000000b0000000f000000
+  - m_Vertices: 030000000e0000003600000038000000
+  - m_Vertices: 050000001000000059000000
+  - m_Vertices: 0600000008000000130000001e000000
+  - m_Vertices: 090000001d00000045000000
+  - m_Vertices: 0a0000000c0000004100000044000000
+  - m_Vertices: 0d0000003900000040000000
+  - m_Vertices: 11000000140000005600000058000000
+  - m_Vertices: 12000000170000001b0000001f000000
+  - m_Vertices: 150000002000000055000000
+  - m_Vertices: 1600000018000000230000002e000000
+  - m_Vertices: 190000002d00000049000000
+  - m_Vertices: 1a0000001c0000004600000048000000
+  - m_Vertices: 21000000240000005100000054000000
+  - m_Vertices: 22000000270000002b0000002f000000
+  - m_Vertices: 250000003000000050000000
+  - m_Vertices: 2600000028000000330000003e000000
+  - m_Vertices: 290000003d0000004d000000
+  - m_Vertices: 2a0000002c0000004a0000004c000000
+  - m_Vertices: 3100000034000000530000005e000000
+  - m_Vertices: 32000000370000003b0000003f000000
+  - m_Vertices: 3a0000003c000000430000004e000000
+  - m_Vertices: 42000000470000004b0000004f000000
+  - m_Vertices: 52000000570000005b0000005f000000
+  m_SharedTextures: []
+  m_Positions:
+  - {x: -25, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0, z: -25}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: -25, y: -0.125, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0, z: 25}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: -25, y: -0.125, z: 25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 0}
+  m_Textures0:
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: -0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: -0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 25}
+  - {x: 0, y: 25}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: 0, y: 25}
+  - {x: 25, y: 25}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 25, y: -25}
+  - {x: 0, y: -25}
+  - {x: 0, y: 0}
+  - {x: 0, y: -25}
+  - {x: -25, y: -25}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -25}
+  - {x: -0, y: -25}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: -0, y: -25}
+  - {x: -25, y: -25}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 25}
+  - {x: 0, y: 25}
+  - {x: 0, y: 0}
+  - {x: 0, y: 25}
+  - {x: 25, y: 25}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  m_Textures2: []
+  m_Textures3: []
+  m_Tangents:
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  m_Colors: []
+  m_UnwrapParameters:
+    m_HardAngle: 88
+    m_PackMargin: 20
+    m_AngleError: 8
+    m_AreaError: 15
+  m_PreserveMeshAssetOnDestroy: 0
+  assetGuid: 
+  m_Mesh: {fileID: 0}
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+--- !u!65 &4710636687265719959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3429504310996970491}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 0.25, z: 50}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3665221847355059170
 GameObject:
   m_ObjectHideFlags: 0
@@ -6725,6 +8339,8 @@ GameObject:
   - component: {fileID: 5978709652580385121}
   - component: {fileID: 3918144287629498587}
   - component: {fileID: 762254996}
+  - component: {fileID: 559636586}
+  - component: {fileID: 1146294498060629861}
   m_Layer: 12
   m_Name: Barrier (17)
   m_TagString: Untagged
@@ -6835,11 +8451,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &559636586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665221847355059170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1146294498060629861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665221847355059170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &4040519758694975239
 GameObject:
   m_ObjectHideFlags: 0
@@ -6854,6 +8508,8 @@ GameObject:
   - component: {fileID: 8886251277238925742}
   - component: {fileID: 8253203837996275644}
   - component: {fileID: 620881404}
+  - component: {fileID: 209024268}
+  - component: {fileID: 3137319618448593119}
   m_Layer: 12
   m_Name: Barrier (14)
   m_TagString: Untagged
@@ -6964,11 +8620,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &209024268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040519758694975239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3137319618448593119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040519758694975239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &4065139497807720507
 GameObject:
   m_ObjectHideFlags: 0
@@ -6983,6 +8677,8 @@ GameObject:
   - component: {fileID: 2442651901793300179}
   - component: {fileID: 4457971737635807214}
   - component: {fileID: 1120619596}
+  - component: {fileID: 2136171179}
+  - component: {fileID: 1303285542488199777}
   m_Layer: 12
   m_Name: Barrier (23)
   m_TagString: Untagged
@@ -7093,11 +8789,901 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &2136171179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4065139497807720507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1303285542488199777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4065139497807720507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
+--- !u!1 &4103023042467317728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 241331946169329457}
+  - component: {fileID: 7080525508463845632}
+  - component: {fileID: 4869616191059190924}
+  - component: {fileID: 7352244165293120189}
+  - component: {fileID: 8446584815388301579}
+  m_Layer: 9
+  m_Name: Cube (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &241331946169329457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103023042467317728}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -75, y: 0.4, z: -25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8275261833681559964}
+  m_RootOrder: 57
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7080525508463845632
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103023042467317728}
+  m_Mesh: {fileID: 0}
+--- !u!23 &4869616191059190924
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103023042467317728}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 0.25
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 2
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 15201, guid: 0000000000000000f000000000000000, type: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7352244165293120189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103023042467317728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MeshFormatVersion: 1
+  m_Faces:
+  - m_Indexes: 000000000100000002000000030000000000000002000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 040000000500000006000000070000000400000006000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 0b00000008000000090000000a0000000b00000009000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 0e0000000f0000000c0000000d0000000e0000000c000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 1
+  - m_Indexes: 100000001100000012000000130000001000000012000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 140000001500000016000000170000001400000016000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 1b00000018000000190000001a0000001b00000019000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 1e0000001f0000001c0000001d0000001e0000001c000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 2
+  - m_Indexes: 230000002100000022000000230000002000000021000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 270000002500000026000000270000002400000025000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 2a00000028000000290000002a0000002b00000028000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 2d0000002f0000002c0000002d0000002e0000002f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 3
+  - m_Indexes: 330000003100000032000000330000003000000031000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 370000003500000036000000370000003400000035000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 3a00000038000000390000003a0000003b00000038000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 3d0000003f0000003c0000003d0000003e0000003f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 4
+  - m_Indexes: 420000004300000040000000410000004200000040000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 460000004700000044000000450000004600000044000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 490000004a0000004b00000048000000490000004b000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 4c0000004d0000004e0000004f0000004c0000004e000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 5
+  - m_Indexes: 530000005100000052000000530000005000000051000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 570000005500000056000000570000005400000055000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 5a00000058000000590000005a0000005b00000058000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  - m_Indexes: 5d0000005f0000005c0000005d0000005e0000005f000000
+    m_SmoothingGroup: 0
+    m_Uv:
+      m_UseWorldSpace: 0
+      m_FlipU: 0
+      m_FlipV: 0
+      m_SwapUV: 0
+      m_Fill: 1
+      m_Scale: {x: 1, y: 1}
+      m_Offset: {x: 0, y: 0}
+      m_Rotation: 0
+      m_Anchor: 9
+    m_Material: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+    m_SubmeshIndex: 0
+    m_ManualUV: 0
+    elementGroup: 0
+    m_TextureGroup: 6
+  m_SharedVertices:
+  - m_Vertices: 00000000350000005d000000
+  - m_Vertices: 01000000040000005a0000005c000000
+  - m_Vertices: 02000000070000000b0000000f000000
+  - m_Vertices: 030000000e0000003600000038000000
+  - m_Vertices: 050000001000000059000000
+  - m_Vertices: 0600000008000000130000001e000000
+  - m_Vertices: 090000001d00000045000000
+  - m_Vertices: 0a0000000c0000004100000044000000
+  - m_Vertices: 0d0000003900000040000000
+  - m_Vertices: 11000000140000005600000058000000
+  - m_Vertices: 12000000170000001b0000001f000000
+  - m_Vertices: 150000002000000055000000
+  - m_Vertices: 1600000018000000230000002e000000
+  - m_Vertices: 190000002d00000049000000
+  - m_Vertices: 1a0000001c0000004600000048000000
+  - m_Vertices: 21000000240000005100000054000000
+  - m_Vertices: 22000000270000002b0000002f000000
+  - m_Vertices: 250000003000000050000000
+  - m_Vertices: 2600000028000000330000003e000000
+  - m_Vertices: 290000003d0000004d000000
+  - m_Vertices: 2a0000002c0000004a0000004c000000
+  - m_Vertices: 3100000034000000530000005e000000
+  - m_Vertices: 32000000370000003b0000003f000000
+  - m_Vertices: 3a0000003c000000430000004e000000
+  - m_Vertices: 42000000470000004b0000004f000000
+  - m_Vertices: 52000000570000005b0000005f000000
+  m_SharedTextures: []
+  m_Positions:
+  - {x: -25, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: 0, y: 0, z: 25}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0, z: -25}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 25, y: 0, z: 25}
+  - {x: 25, y: 0, z: 0}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 25, y: 0, z: -25}
+  - {x: 0, y: 0, z: -25}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: -25, y: -0.125, z: 25}
+  - {x: -25, y: 0, z: 25}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0, z: 25}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: -25, y: 0, z: -25}
+  - {x: -25, y: 0, z: 0}
+  - {x: -25, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 25}
+  - {x: 25, y: 0.125, z: 25}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: 0}
+  - {x: 25, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: -25}
+  - {x: -25, y: 0.125, z: -25}
+  - {x: -25, y: 0.125, z: 0}
+  - {x: 0, y: 0.125, z: 0}
+  - {x: -25, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: -25}
+  - {x: 25, y: -0.125, z: -25}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: 0}
+  - {x: 25, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: 0, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 25}
+  - {x: -25, y: -0.125, z: 25}
+  - {x: -25, y: -0.125, z: 0}
+  - {x: 0, y: -0.125, z: 0}
+  m_Textures0:
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: 0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -0.125}
+  - {x: -0, y: -0.125}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: -0, y: -0.125}
+  - {x: -25, y: -0.125}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 0.125}
+  - {x: 0, y: 0.125}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0.125}
+  - {x: 25, y: 0.125}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 25}
+  - {x: 0, y: 25}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: 0, y: 25}
+  - {x: 25, y: 25}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: 25, y: -25}
+  - {x: 0, y: -25}
+  - {x: 0, y: 0}
+  - {x: 0, y: -25}
+  - {x: -25, y: -25}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: 25, y: -25}
+  - {x: -0, y: -25}
+  - {x: 0, y: 0}
+  - {x: 25, y: 0}
+  - {x: -0, y: -25}
+  - {x: -25, y: -25}
+  - {x: -25, y: 0}
+  - {x: 0, y: 0}
+  - {x: -25, y: 0}
+  - {x: -25, y: 25}
+  - {x: 0, y: 25}
+  - {x: 0, y: 0}
+  - {x: 0, y: 25}
+  - {x: 25, y: 25}
+  - {x: 25, y: 0}
+  - {x: 0, y: 0}
+  m_Textures2: []
+  m_Textures3: []
+  m_Tangents:
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 0, y: 0, z: 1, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 0, y: 0, z: -1, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: 1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  - {x: -1, y: 0, z: 0, w: -1}
+  m_Colors: []
+  m_UnwrapParameters:
+    m_HardAngle: 88
+    m_PackMargin: 20
+    m_AngleError: 8
+    m_AreaError: 15
+  m_PreserveMeshAssetOnDestroy: 0
+  assetGuid: 
+  m_Mesh: {fileID: 0}
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+--- !u!65 &8446584815388301579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4103023042467317728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 0.25, z: 50}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4393281449578153665
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,6 +9698,8 @@ GameObject:
   - component: {fileID: 2150413568399580750}
   - component: {fileID: 7904271476861199118}
   - component: {fileID: 1479698635}
+  - component: {fileID: 1742475835}
+  - component: {fileID: 1465203076571676894}
   m_Layer: 12
   m_Name: Barrier (25)
   m_TagString: Untagged
@@ -7222,11 +9810,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1742475835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393281449578153665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1465203076571676894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393281449578153665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &4516067631593806061
 GameObject:
   m_ObjectHideFlags: 0
@@ -7240,7 +9866,7 @@ GameObject:
   - component: {fileID: 5316922349055408007}
   - component: {fileID: 8472643726863985988}
   - component: {fileID: 1766246075444085589}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8093,6 +10719,8 @@ GameObject:
   - component: {fileID: 8466451246145677345}
   - component: {fileID: 216612154841284914}
   - component: {fileID: 585656308}
+  - component: {fileID: 1513824975}
+  - component: {fileID: 7555671074652451768}
   m_Layer: 12
   m_Name: Barrier (11)
   m_TagString: Untagged
@@ -8203,11 +10831,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1513824975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658231255895266265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7555671074652451768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658231255895266265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &4914266472186163222
 GameObject:
   m_ObjectHideFlags: 0
@@ -8222,6 +10888,8 @@ GameObject:
   - component: {fileID: 7983445723039403607}
   - component: {fileID: 2417372920379772073}
   - component: {fileID: 1871922838}
+  - component: {fileID: 663289183}
+  - component: {fileID: 2916525754780648368}
   m_Layer: 12
   m_Name: Barrier (24)
   m_TagString: Untagged
@@ -8332,11 +11000,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &663289183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4914266472186163222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2916525754780648368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4914266472186163222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &5214671382447201544
 GameObject:
   m_ObjectHideFlags: 0
@@ -8351,6 +11057,8 @@ GameObject:
   - component: {fileID: 4269457183393093242}
   - component: {fileID: 4288682625025969819}
   - component: {fileID: 1085388068}
+  - component: {fileID: 81966007}
+  - component: {fileID: 3139147432240670369}
   m_Layer: 12
   m_Name: Barrier (38)
   m_TagString: Untagged
@@ -8461,11 +11169,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &81966007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214671382447201544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3139147432240670369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5214671382447201544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &5325919101082603017
 GameObject:
   m_ObjectHideFlags: 0
@@ -8480,6 +11226,8 @@ GameObject:
   - component: {fileID: 2050593803985241070}
   - component: {fileID: 3848619973469537789}
   - component: {fileID: 204190333}
+  - component: {fileID: 641035237}
+  - component: {fileID: 8421741379275963620}
   m_Layer: 12
   m_Name: Barrier (35)
   m_TagString: Untagged
@@ -8590,11 +11338,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &641035237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325919101082603017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &8421741379275963620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325919101082603017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &5649571286745632614
 GameObject:
   m_ObjectHideFlags: 0
@@ -8609,6 +11395,8 @@ GameObject:
   - component: {fileID: 1977948411461908396}
   - component: {fileID: 8211456979307038626}
   - component: {fileID: 362872378}
+  - component: {fileID: 1378246429}
+  - component: {fileID: 675929642361491636}
   m_Layer: 12
   m_Name: Barrier (1)
   m_TagString: Untagged
@@ -8719,11 +11507,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1378246429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649571286745632614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &675929642361491636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5649571286745632614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &5995275238239990332
 GameObject:
   m_ObjectHideFlags: 0
@@ -8738,6 +11564,8 @@ GameObject:
   - component: {fileID: 6408499054369767976}
   - component: {fileID: 4268373962078740314}
   - component: {fileID: 36598960}
+  - component: {fileID: 1737137783}
+  - component: {fileID: 210573939476561847}
   m_Layer: 12
   m_Name: Barrier (13)
   m_TagString: Untagged
@@ -8848,11 +11676,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1737137783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995275238239990332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &210573939476561847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995275238239990332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &6100093683353299843
 GameObject:
   m_ObjectHideFlags: 0
@@ -8867,6 +11733,8 @@ GameObject:
   - component: {fileID: 1876015480196234942}
   - component: {fileID: 2418090283265014218}
   - component: {fileID: 138792178}
+  - component: {fileID: 485210680}
+  - component: {fileID: 1093013643463582473}
   m_Layer: 12
   m_Name: Barrier (29)
   m_TagString: Untagged
@@ -8977,11 +11845,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &485210680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100093683353299843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1093013643463582473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6100093683353299843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &6292489325605274481
 GameObject:
   m_ObjectHideFlags: 0
@@ -8996,6 +11902,8 @@ GameObject:
   - component: {fileID: 3405430775346587095}
   - component: {fileID: 2257066039774601214}
   - component: {fileID: 1283604086}
+  - component: {fileID: 337622343}
+  - component: {fileID: 5424605982801765689}
   m_Layer: 12
   m_Name: Barrier (7)
   m_TagString: Untagged
@@ -9106,11 +12014,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &337622343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292489325605274481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &5424605982801765689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6292489325605274481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &6536245292674636464
 GameObject:
   m_ObjectHideFlags: 0
@@ -9124,7 +12070,7 @@ GameObject:
   - component: {fileID: 2034043159824622749}
   - component: {fileID: 6087750058440525896}
   - component: {fileID: 3336083553294428054}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9977,6 +12923,8 @@ GameObject:
   - component: {fileID: 3096113654611915308}
   - component: {fileID: 2577641215229516386}
   - component: {fileID: 100840203}
+  - component: {fileID: 644831656}
+  - component: {fileID: 3212032340675070310}
   m_Layer: 12
   m_Name: Barrier (6)
   m_TagString: Untagged
@@ -10087,11 +13035,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &644831656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611234281316533042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &3212032340675070310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6611234281316533042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &6749204099322604743
 GameObject:
   m_ObjectHideFlags: 0
@@ -10106,6 +13092,8 @@ GameObject:
   - component: {fileID: 1144012703131058407}
   - component: {fileID: 5843473231587250136}
   - component: {fileID: 1271005551}
+  - component: {fileID: 484534280}
+  - component: {fileID: 664656389671512567}
   m_Layer: 12
   m_Name: Barrier (36)
   m_TagString: Untagged
@@ -10216,11 +13204,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &484534280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749204099322604743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &664656389671512567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749204099322604743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &6844758371604503650
 GameObject:
   m_ObjectHideFlags: 0
@@ -10235,6 +13261,8 @@ GameObject:
   - component: {fileID: 6410615216543298500}
   - component: {fileID: 3744940436915453609}
   - component: {fileID: 1900498064}
+  - component: {fileID: 1291411502}
+  - component: {fileID: 5780473121927018888}
   m_Layer: 12
   m_Name: Barrier (31)
   m_TagString: Untagged
@@ -10345,11 +13373,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1291411502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6844758371604503650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &5780473121927018888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6844758371604503650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7206804784439662083
 GameObject:
   m_ObjectHideFlags: 0
@@ -10364,6 +13430,8 @@ GameObject:
   - component: {fileID: 203774250246323018}
   - component: {fileID: 3091238901719576933}
   - component: {fileID: 2020767560}
+  - component: {fileID: 1752657754}
+  - component: {fileID: 7845681435824799626}
   m_Layer: 12
   m_Name: Barrier (20)
   m_TagString: Untagged
@@ -10474,11 +13542,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1752657754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206804784439662083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7845681435824799626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7206804784439662083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7224969718515478284
 GameObject:
   m_ObjectHideFlags: 0
@@ -10493,6 +13599,8 @@ GameObject:
   - component: {fileID: 7525586413566403441}
   - component: {fileID: 8899785347665514790}
   - component: {fileID: 1845217353}
+  - component: {fileID: 490407160}
+  - component: {fileID: 5502533779502392288}
   m_Layer: 12
   m_Name: Barrier (19)
   m_TagString: Untagged
@@ -10603,11 +13711,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &490407160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7224969718515478284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &5502533779502392288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7224969718515478284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7310143851861524476
 GameObject:
   m_ObjectHideFlags: 0
@@ -10622,6 +13768,8 @@ GameObject:
   - component: {fileID: 7191436529763034023}
   - component: {fileID: 4654432511986661962}
   - component: {fileID: 1514816534}
+  - component: {fileID: 85095642}
+  - component: {fileID: 7226422461529416783}
   m_Layer: 12
   m_Name: Barrier (16)
   m_TagString: Untagged
@@ -10732,11 +13880,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &85095642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310143851861524476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7226422461529416783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7310143851861524476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7500081605982260091
 GameObject:
   m_ObjectHideFlags: 0
@@ -10750,7 +13936,7 @@ GameObject:
   - component: {fileID: 3858021180905322151}
   - component: {fileID: 7648473435764766545}
   - component: {fileID: 670223130802033994}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11603,6 +14789,8 @@ GameObject:
   - component: {fileID: 803336351789029993}
   - component: {fileID: 268377503287118256}
   - component: {fileID: 1859149014}
+  - component: {fileID: 1992115211}
+  - component: {fileID: 2141503484600644026}
   m_Layer: 12
   m_Name: Barrier (32)
   m_TagString: Untagged
@@ -11713,11 +14901,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1992115211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749310858513980613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2141503484600644026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749310858513980613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7751976188975223313
 GameObject:
   m_ObjectHideFlags: 0
@@ -11732,6 +14958,8 @@ GameObject:
   - component: {fileID: 1980760772670828105}
   - component: {fileID: 861210651358263676}
   - component: {fileID: 1245428679}
+  - component: {fileID: 901132280}
+  - component: {fileID: 1821443816931421468}
   m_Layer: 12
   m_Name: Barrier (4)
   m_TagString: Untagged
@@ -11842,11 +15070,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &901132280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751976188975223313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &1821443816931421468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751976188975223313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &7847831875672766164
 GameObject:
   m_ObjectHideFlags: 0
@@ -11861,6 +15127,8 @@ GameObject:
   - component: {fileID: 7448925926586968989}
   - component: {fileID: 2776186401029304504}
   - component: {fileID: 1005750765}
+  - component: {fileID: 216346752}
+  - component: {fileID: 9128571742734279175}
   m_Layer: 12
   m_Name: Barrier (15)
   m_TagString: Untagged
@@ -11971,11 +15239,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &216346752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847831875672766164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &9128571742734279175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847831875672766164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8150756270533966970
 GameObject:
   m_ObjectHideFlags: 0
@@ -11990,6 +15296,8 @@ GameObject:
   - component: {fileID: 3087809605839272394}
   - component: {fileID: 3925199880238775637}
   - component: {fileID: 1758187921}
+  - component: {fileID: 348813980}
+  - component: {fileID: 4345292960812937842}
   m_Layer: 12
   m_Name: Barrier (43)
   m_TagString: Untagged
@@ -12100,11 +15408,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &348813980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8150756270533966970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &4345292960812937842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8150756270533966970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8260877784241431168
 GameObject:
   m_ObjectHideFlags: 0
@@ -12119,6 +15465,8 @@ GameObject:
   - component: {fileID: 8042540138045255921}
   - component: {fileID: 3117909368320474686}
   - component: {fileID: 961082251}
+  - component: {fileID: 1954153537}
+  - component: {fileID: 6816444667321618674}
   m_Layer: 12
   m_Name: Barrier (27)
   m_TagString: Untagged
@@ -12229,11 +15577,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1954153537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260877784241431168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &6816444667321618674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260877784241431168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8275261833681559939
 GameObject:
   m_ObjectHideFlags: 0
@@ -12243,7 +15629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8275261833681559964}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12318,6 +15704,8 @@ Transform:
   - {fileID: 3882745957553196508}
   - {fileID: 3804721411398740839}
   - {fileID: 1606183863773551551}
+  - {fileID: 241331946169329457}
+  - {fileID: 130882504157030276}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12335,6 +15723,8 @@ GameObject:
   - component: {fileID: 8928212973247397371}
   - component: {fileID: 3085699868287811516}
   - component: {fileID: 775399660}
+  - component: {fileID: 1212844811}
+  - component: {fileID: 6037208435838961161}
   m_Layer: 12
   m_Name: Barrier (22)
   m_TagString: Untagged
@@ -12445,11 +15835,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1212844811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585197353464805965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &6037208435838961161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8585197353464805965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8670027927618982199
 GameObject:
   m_ObjectHideFlags: 0
@@ -12463,7 +15891,7 @@ GameObject:
   - component: {fileID: 281241141850638018}
   - component: {fileID: 3211319019010816227}
   - component: {fileID: 3803695077175848147}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13316,6 +16744,8 @@ GameObject:
   - component: {fileID: 7084293227917476018}
   - component: {fileID: 4080406090026056705}
   - component: {fileID: 848662476}
+  - component: {fileID: 245841882}
+  - component: {fileID: 9124808301637806620}
   m_Layer: 12
   m_Name: Barrier (28)
   m_TagString: Untagged
@@ -13426,11 +16856,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &245841882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8882290837131499116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &9124808301637806620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8882290837131499116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8920970570765049433
 GameObject:
   m_ObjectHideFlags: 0
@@ -13445,6 +16913,8 @@ GameObject:
   - component: {fileID: 65804865610906992}
   - component: {fileID: 3459853133580714009}
   - component: {fileID: 346479061}
+  - component: {fileID: 1784135947}
+  - component: {fileID: 2859447553437739971}
   m_Layer: 12
   m_Name: Barrier (45)
   m_TagString: Untagged
@@ -13555,11 +17025,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1784135947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8920970570765049433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &2859447553437739971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8920970570765049433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &8967379284921973355
 GameObject:
   m_ObjectHideFlags: 0
@@ -13574,6 +17082,8 @@ GameObject:
   - component: {fileID: 4886238245058250460}
   - component: {fileID: 4948953373560294278}
   - component: {fileID: 578653820}
+  - component: {fileID: 194729575}
+  - component: {fileID: 8128321157419048807}
   m_Layer: 12
   m_Name: Barrier (37)
   m_TagString: Untagged
@@ -13684,11 +17194,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &194729575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967379284921973355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &8128321157419048807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967379284921973355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &9208784715373294007
 GameObject:
   m_ObjectHideFlags: 0
@@ -13703,6 +17251,8 @@ GameObject:
   - component: {fileID: 6281379101246959108}
   - component: {fileID: 7402406856524994291}
   - component: {fileID: 688011828}
+  - component: {fileID: 1657837841}
+  - component: {fileID: 4368174345564286975}
   m_Layer: 12
   m_Name: Barrier (42)
   m_TagString: Untagged
@@ -13813,11 +17363,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1657837841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9208784715373294007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &4368174345564286975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9208784715373294007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0
 --- !u!1 &9220773719300048829
 GameObject:
   m_ObjectHideFlags: 0
@@ -13831,7 +17419,9 @@ GameObject:
   - component: {fileID: 5534411966477952601}
   - component: {fileID: 5450013367051763033}
   - component: {fileID: 1243356624831435292}
-  - component: {fileID: 746091177}
+  - component: {fileID: 1171851888}
+  - component: {fileID: 7877127481516272409}
+  - component: {fileID: 1382671717433329423}
   m_Layer: 12
   m_Name: Barrier (47)
   m_TagString: Untagged
@@ -13928,7 +17518,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
---- !u!114 &746091177
+--- !u!114 &1171851888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220773719300048829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Threat: 2
+  Protection: 3
+  previousPos:
+    x: 0
+    y: 0
+    z: 0
+  factionID: 0
+--- !u!114 &7877127481516272409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13942,8 +17551,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aITarget:
     Type: 2
-    GetRace: 2
+    FactionID: 0
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    detectionScore: 1
+--- !u!114 &1382671717433329423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9220773719300048829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InvincibleMode: 0
+  CurHealth: 166
+  maxHealth: 180
+  CurMana: 180
+  maxMana: 180
+  EXPgained: 0

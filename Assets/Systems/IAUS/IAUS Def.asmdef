@@ -1,0 +1,29 @@
+{
+    "name": "IAUS",
+    "rootNamespace": "",
+    "references": [
+        "GUID:734d92eba21c94caba915361bd5ac177",
+        "GUID:8819f35a0fc84499b990e90a4ca1911f",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:a5baed0c9693541a5bd947d336ec7659",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:44dcb2bf5b9be4b5aa76674c8edcd1d5",
+        "GUID:27fbc99f6a1cdf944a05c31320c04f5e",
+        "GUID:6dcc8ad9d24e4ea438f75a1d7a68c4d7",
+        "GUID:63afb046c8423dd448ae7aba042ea63d",
+        "GUID:2bafac87e7f4b9b418d9448d219b01ab",
+        "GUID:c13d17869e758d145980d67c70333241",
+        "GUID:a25635b1d60b4ba43b4ec36c326754df",
+        "GUID:18e2c9548f8045248a5db2f3c18f54a7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
