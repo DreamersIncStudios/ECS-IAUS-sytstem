@@ -157,13 +157,10 @@ namespace IAUS.ECS.Systems.Reactive
                             //Move to attack range then trigger animation;
                                 if (!tag.moveSet)
                                 {
-                                    Debug.Log("Move into attack range");
-
                                     move.SetLocation(tag.AttackLocation);
                                     tag.moveSet = true;
                                 }
                                 if (tag.moveSet && move.Completed) {
-                                    Debug.Log("At Attack spot");
                                     tag.CanAttack = true;
                                     move.CanMove = false;
                                 }
@@ -190,7 +187,7 @@ namespace IAUS.ECS.Systems.Reactive
                     //}
                 }
             });
-
+            //TODO correct in full game 
             ComponentDataFromEntity<Wait> WaitState = GetComponentDataFromEntity<Wait>(false);
             ComponentDataFromEntity<EnemyStats> enemy = GetComponentDataFromEntity<EnemyStats>(false);
             Entities.
@@ -207,17 +204,24 @@ namespace IAUS.ECS.Systems.Reactive
                                if (tag.CanAttack)
                                {
                                    inputc.InputQueue.Enqueue(A[0].Trigger);
-                                   Debug.Log("deal damage");
                                    if (WaitState.HasComponent(entity))
                                    {
                                        EnemyStats stat = enemy[tag.attackThis];
-                                       stat.AdjustHealth(-50);
+                                       stat.AdjustHealth(-250);
                                        enemy[tag.attackThis] = stat;
-                                      Wait temp = WaitState[entity];
-                                       temp.Timer = temp.StartTime = 10;
-                                       WaitState[entity] = temp;
+                                       if (stat.CurHealth <= 0.0f)
+                                       {
+                                           EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
+                                           EntityManager.RemoveComponent<AttackActionTag>(entity);
+                                       }
+                                       else
+                                       {
+                                           Wait temp = WaitState[entity];
+                                           temp.Timer = temp.StartTime = 10;
+                                           A.RemoveAt(0);
+                                           WaitState[entity] = temp;
+                                       }
                                    }
-                                   A.RemoveAt(0);
                                }
                                break;
                            case AttackType.Projectile:
@@ -232,6 +236,12 @@ namespace IAUS.ECS.Systems.Reactive
                        EntityManager.RemoveComponent<AttackActionTag>(entity);
                    }
                });
+
+            Entities.WithNone(ComponentType.ReadWrite(typeof(AttackActionTag))).ForEach(( DynamicBuffer<NPCAttackBuffer> A,
+                ref AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent tag) => {
+                A.Clear();
+            });
+        
         }
     }
 

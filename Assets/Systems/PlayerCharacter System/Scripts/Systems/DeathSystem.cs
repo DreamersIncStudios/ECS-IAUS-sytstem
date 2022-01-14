@@ -12,7 +12,7 @@ namespace Stats
         {
             Entities.ForEach((Entity entity, Transform anim, ref EntityHasDiedTag tag) => {
                 Debug.Log("Play Death Animation");
-                Object.Destroy(anim.gameObject, 4);
+                Object.Destroy(anim.gameObject, .5f);
                 EntityManager.DestroyEntity(entity);
             });
         }

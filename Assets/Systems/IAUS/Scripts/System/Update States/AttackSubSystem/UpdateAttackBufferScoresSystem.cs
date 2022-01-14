@@ -128,7 +128,6 @@ namespace IAUS.ECS.Systems
                             
                             if (!checkTarget(i, j, TargetBuffers, attackTypeInfos))
                             {
-                                Debug.LogError("Target not  in buffers ");
                                 updateTarget(i, j, TargetBuffers, attackTypeInfos);
                             }
                         }
