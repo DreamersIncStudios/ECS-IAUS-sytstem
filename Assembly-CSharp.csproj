@@ -63,6 +63,8 @@
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
+    <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
+    <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
