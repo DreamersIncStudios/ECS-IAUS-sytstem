@@ -63,8 +63,14 @@
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
-    <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
+    <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TowerStats.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TowerManager.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
+    <Compile Include="Assets\GameMaster.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

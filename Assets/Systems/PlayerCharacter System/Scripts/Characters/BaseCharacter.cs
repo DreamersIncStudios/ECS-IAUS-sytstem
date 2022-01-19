@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using Unity.Entities;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace Stats
         private Stat[] _stats;
         private Abilities[] _ability;
         private Elemental[] _ElementalMods;
-
+        public bool InPlay;
         public bool InvincibleMode;
         public bool Alive
         {
@@ -305,7 +306,24 @@ namespace Stats
             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana });
         }
 
-
+        public List<Attributes> GetAttributes()
+        {
+            List<Attributes> temp = new List<Attributes>();
+            foreach (Attributes att in _primaryAttribute)
+            {
+                temp.Add(att);
+            }
+            return temp;
+        }
+        public List<Vital> GetVitals()
+        {
+            List<Vital> temp = new List<Vital>();
+            foreach (Vital att in _vital)
+            {
+                temp.Add(att);
+            }
+            return temp;
+        }
 
 
         public void OnDeath(float deathDelay)
