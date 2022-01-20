@@ -14,8 +14,8 @@ namespace IAUS.ECS.Component
         public int Index;
         public AIStates name { get { return AIStates.Patrol; } }
 
-        public ConsiderationScoringData DistanceToPoint  => stateRef.Value.Array[Index].Health; 
-        public ConsiderationScoringData HealthRatio =>  stateRef.Value.Array[Index].Distance; 
+        public ConsiderationScoringData DistanceToPoint  => stateRef.Value.Array[Index].Distance; 
+        public ConsiderationScoringData HealthRatio =>  stateRef.Value.Array[Index].Health; 
          public ConsiderationScoringData TargetInRange =>   stateRef.Value.Array[Index].TargetInRange; 
         public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -43,6 +43,8 @@ namespace IAUS.ECS.Component
     }
 
     public interface MovementState: IBaseStateScorer {
+        public ConsiderationScoringData DistanceToPoint { get; }
+        public ConsiderationScoringData HealthRatio { get; }
         public int NumberOfWayPoints { get; set; }
         public AIStates name { get; }
         public int WaypointIndex { get; set; }

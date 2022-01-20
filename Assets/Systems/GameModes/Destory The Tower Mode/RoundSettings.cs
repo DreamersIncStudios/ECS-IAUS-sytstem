@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameModes.DestoryTheTower
+namespace GameModes.DestroyTheTower
 {
     [System.Serializable]
     public class RoundSettings

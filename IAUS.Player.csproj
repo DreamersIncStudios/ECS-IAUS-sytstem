@@ -116,9 +116,9 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\GatherResources.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\Repair.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\SpawnDefenders.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\GatherResourcesState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\RepairState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers\SpawnDefendersState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

@@ -1,7 +1,7 @@
 using System.Timers;
 using TMPro;
 using UnityEngine;
-namespace GameModes.DestoryTheTower.TimerSystems
+namespace GameModes.DestroyTheTower.TimerSystems
 {
     [System.Serializable]
     public class TimerCountDown {

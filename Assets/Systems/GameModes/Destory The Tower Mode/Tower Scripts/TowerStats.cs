@@ -6,7 +6,7 @@ using Stats;
 using System.Threading.Tasks;
 using System;
 
-namespace GameModes.DestoryTheTower.TowerSystem
+namespace GameModes.DestroyTheTower.TowerSystem
 {
     public class TowerStats : EnemyCharacter
     {

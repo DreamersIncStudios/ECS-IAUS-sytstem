@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Stats;
 using DreamersIncStudios.MoonShot;
-using GameModes.DestoryTheTower.TowerSystem;
+using GameModes.DestroyTheTower.TowerSystem;
 using System.Timers;
-using GameModes.DestoryTheTower.TimerSystems;
+using GameModes.DestroyTheTower.TimerSystems;
 using TMPro;
 using UnityEngine.Events;
-namespace GameModes.DestoryTheTower
+namespace GameModes.DestroyTheTower
 {
     public class ModeManager : MonoBehaviour
     {

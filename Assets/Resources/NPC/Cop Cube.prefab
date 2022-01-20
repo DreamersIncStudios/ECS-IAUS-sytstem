@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4465180535401918592}
   - component: {fileID: 6324007946402009933}
   - component: {fileID: 3655597036312204662}
+  - component: {fileID: 8087434762378835487}
   m_Layer: 0
   m_Name: Cop Cube
   m_TagString: Untagged
@@ -125,3 +126,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   job: 2
+--- !u!114 &8087434762378835487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4465180535401918593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e7c510cb245754f97e0c41b86a5f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WeaponIsEquipped: 0
+  currentStateExitTime: 0
+  BareHands: 0

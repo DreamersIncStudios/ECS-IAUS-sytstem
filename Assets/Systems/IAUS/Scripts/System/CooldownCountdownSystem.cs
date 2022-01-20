@@ -17,6 +17,11 @@ namespace IAUS.ECS.Systems
         private EntityQuery MoveToCooldown;
         private EntityQuery AttackCooldown;
         private EntityQuery RetreatCooldown;
+        private EntityQuery RepairCooldown;
+        private EntityQuery SpawnCooldown;
+        private EntityQuery GatherCooldown;
+
+
 
 
 
@@ -52,10 +57,24 @@ namespace IAUS.ECS.Systems
             });
             RetreatCooldown = GetEntityQuery(new EntityQueryDesc()
             {
-                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen))/*, ComponentType.ReadWrite(typeof(RetreatPlayerPartyNPC)) , ComponentType.ReadWrite(typeof(RetreatEnemyNPC)) */},
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen))},
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(RetreatActionTag)) }
             });
-
+            RepairCooldown = GetEntityQuery(new EntityQueryDesc()
+            {
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(RepairState))},
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(HealSelfTag)) }
+            });
+            SpawnCooldown = GetEntityQuery(new EntityQueryDesc()
+            {
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(SpawnDefendersState))},
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(SpawnTag)) }
+            });
+            GatherCooldown = GetEntityQuery(new EntityQueryDesc()
+            {
+                Any = new ComponentType[] { ComponentType.ReadWrite(typeof(GatherResourcesState)) },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(GatherResourcesTag)) }
+            });
             AttackCooldown = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)) },
@@ -110,6 +129,31 @@ namespace IAUS.ECS.Systems
             }.ScheduleParallel(AttackCooldown, systemDeps);
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new CooldownJob<GatherResourcesState>()
+            {
+                AIStateChunk = GetComponentTypeHandle<GatherResourcesState>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(GatherCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new CooldownJob<RepairState>()
+            {
+                AIStateChunk = GetComponentTypeHandle<RepairState>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(RepairCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new CooldownJob<SpawnDefendersState>()
+            {
+                AIStateChunk = GetComponentTypeHandle<SpawnDefendersState>(false),
+                DT = Time.DeltaTime
+            }.ScheduleParallel(SpawnCooldown, systemDeps);
+
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
             Dependency = systemDeps;
         }
 

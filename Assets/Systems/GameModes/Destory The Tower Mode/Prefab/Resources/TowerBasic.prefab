@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6957459386675565193}
   - component: {fileID: 4384501007606772539}
   - component: {fileID: 4422059273957246723}
+  - component: {fileID: 1474365134}
   m_Layer: 0
   m_Name: TowerBasic
   m_TagString: Untagged
@@ -130,3 +131,23 @@ MonoBehaviour:
   maxMana: 168
   EXPgained: 0
   Defenders: []
+--- !u!114 &1474365134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8249079120485917930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e6df872ba684b46832076413de612c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Self:
+    Type: 0
+    FactionID: 0
+    NumOfEntityTargetingMe: 0
+    GetInstanceID: 0
+    MaxNumberOfTarget: 0
+    CanBeTargetByPlayer: 0
+    detectionScore: 0

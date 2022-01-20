@@ -55,22 +55,24 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\Spawner.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerStats.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
     <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\CharacterSetup.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
+    <Compile Include="Assets\GameMaster.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TowerStats.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TowerManager.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
-    <Compile Include="Assets\GameMaster.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerData.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerIAUSSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

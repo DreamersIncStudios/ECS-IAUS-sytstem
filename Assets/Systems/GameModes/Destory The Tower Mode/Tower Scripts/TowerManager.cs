@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace GameModes.DestoryTheTower.TowerSystem
+namespace GameModes.DestroyTheTower.TowerSystem
 {
     [System.Serializable]
     public class TowerManager
