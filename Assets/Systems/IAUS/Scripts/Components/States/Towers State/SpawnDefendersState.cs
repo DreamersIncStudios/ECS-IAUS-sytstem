@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using IAUS.ECS.StateBlobSystem;
+using System;
 using IAUS.ECS.Consideration;
-
+using IAUS.ECS.StateBlobSystem;
 namespace IAUS.ECS.Component
 {
-    public struct RepairState : IBaseStateScorer
+    [Serializable]
+    [GenerateAuthoringComponent]
+    public struct SpawnDefendersState : IBaseStateScorer
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
-        
         public ConsiderationScoringData TowerEnergy;
-        
-        public AIStates name { get { return AIStates.Heal_Magic; } }
+        public float SpawnTimer;
+
+        public AIStates name { get { return AIStates.CallBackUp; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 
@@ -28,12 +28,12 @@ namespace IAUS.ECS.Component
 
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
 
-        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
-        [HideInInspector] public bool UpdatePatrolPoints;
+        public float mod { get { return 1.0f - (1.0f / 4.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
     }
-    public struct HealSelfTag : IComponentData { }
+
+    public struct SpawnTag : IComponentData { }
 }

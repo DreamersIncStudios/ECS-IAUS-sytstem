@@ -808,7 +808,7 @@ PrefabInstance:
     - target: {fileID: 373270550540466538, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 373270550540466538, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
@@ -2479,7 +2479,7 @@ PrefabInstance:
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
@@ -3585,7 +3585,7 @@ PrefabInstance:
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
@@ -4693,7 +4693,7 @@ PrefabInstance:
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8275261833681559964, guid: 36498cd370e7802408964a72908fed13,
         type: 3}
@@ -7098,6 +7098,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerBasic
       objectReference: {fileID: 0}
+    - target: {fileID: 8249079120485917930, guid: bd629f91c5d891b4ba9c7fe712683e5b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8836757059750774267, guid: bd629f91c5d891b4ba9c7fe712683e5b,
         type: 3}
       propertyPath: m_RootOrder
@@ -7155,32 +7160,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd629f91c5d891b4ba9c7fe712683e5b, type: 3}
---- !u!1 &1474365133 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8249079120485917930, guid: bd629f91c5d891b4ba9c7fe712683e5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 1474365132}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1474365134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1474365133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55e6df872ba684b46832076413de612c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Self:
-    Type: 0
-    FactionID: 0
-    NumOfEntityTargetingMe: 0
-    GetInstanceID: 0
-    MaxNumberOfTarget: 0
-    CanBeTargetByPlayer: 0
-    detectionScore: 0
 --- !u!43 &1532144558
 Mesh:
   m_ObjectHideFlags: 0
@@ -8927,7 +8906,7 @@ PrefabInstance:
     - target: {fileID: 3835120662397352494, guid: 43f98ead2f10b8642a8343eb603e9074,
         type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3835120662397352494, guid: 43f98ead2f10b8642a8343eb603e9074,
         type: 3}

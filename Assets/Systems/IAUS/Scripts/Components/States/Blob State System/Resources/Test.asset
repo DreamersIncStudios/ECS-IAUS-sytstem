@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 318
+  - Count: 3
     Model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
     Self:
       Type: 1

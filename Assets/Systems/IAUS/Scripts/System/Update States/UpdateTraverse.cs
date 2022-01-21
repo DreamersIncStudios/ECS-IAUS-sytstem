@@ -102,6 +102,9 @@ namespace IAUS.ECS.Systems
                     Traverse traverse = traverses[i];
                     if (traverse.stateRef.IsCreated)
                     {
+
+                        //float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f : attacks[i].HighScoreAttack.AttackDistanceRatio;
+
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = traverse.DistanceToPoint.Output(traverse.DistanceRatio) * traverse.HealthRatio.Output(healthRatio);
                         traverse.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * traverse.mod) * TotalScore);

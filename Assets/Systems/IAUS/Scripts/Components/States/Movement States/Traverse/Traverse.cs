@@ -18,7 +18,8 @@ namespace IAUS.ECS.Component
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
-        public ConsiderationScoringData ThreatInRange;
+        public ConsiderationScoringData ThreatInRange; //Todo add threat consideration
+
         public bool Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }

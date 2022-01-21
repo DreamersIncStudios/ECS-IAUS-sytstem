@@ -7,14 +7,16 @@ using IAUS.ECS.Consideration;
 
 namespace IAUS.ECS.Component
 {
-    public struct GatherResourcesState : IBaseStateScorer
+    public struct RepairState : IBaseStateScorer
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
-
-        public AIStates name { get { return AIStates.GatherResources; } }
+        
+        public ConsiderationScoringData TowerEnergy;
+        
+        public AIStates name { get { return AIStates.Heal_Magic; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 
@@ -26,14 +28,11 @@ namespace IAUS.ECS.Component
 
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
 
-        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
-        [HideInInspector] public bool UpdatePatrolPoints;
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
-
     }
-
-    public struct GatherResourcesTag : IComponentData { }
+    public struct HealSelfTag : IComponentData { }
 }

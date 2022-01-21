@@ -132,7 +132,8 @@ namespace IAUS.ECS.Systems
                     Patrol patrol = patrols[i];
                     if (patrol.stateRef.IsCreated)
                     {
-                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f : 0.0f;//attacks[i].HighScoreAttack.AttackDistanceRatio;
+                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f :attacks[i].HighScoreAttack.AttackDistanceRatio;
+
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio) * patrol.TargetInRange.Output(attackRatio);
                         patrol.TotalScore = patrol.Status != ActionStatus.CoolDown ? Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore) : 0.0f;

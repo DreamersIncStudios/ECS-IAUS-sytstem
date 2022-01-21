@@ -90,6 +90,17 @@ namespace IAUS.ECS.StateBlobSystem
                     NPCLevel = NPCLevel.Grunt
                 });
             });
+            Entities.ForEach((ref GatherResourcesState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                G.stateRef = CreateReference();
+                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = AIStates.GatherResources,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }); ;
+            });
+
             Entities.ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState a ) => {
                 for (int i = 0; i < attacks.Length; i++)
                 {
@@ -109,11 +120,12 @@ namespace IAUS.ECS.StateBlobSystem
                             _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
                         },
                         FactionID = brain.factionID,
-                        NPCLevel = NPCLevel.Grunt
+                        NPCLevel = brain.NPCLevel
                     });
                     attacks[i] = attack;
                 }
             });
+
         }
 
         BlobAssetReference<AIStateBlobAsset> CreateReference() {

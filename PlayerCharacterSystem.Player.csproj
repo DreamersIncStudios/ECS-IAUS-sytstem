@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.14</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.25f1</UnityVersion>
@@ -64,6 +64,7 @@
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Vital.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Abilities.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Attribute.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\TowerStats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatusBuffer.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatus.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\PlayerCharacter.cs" />
@@ -648,25 +649,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Entities.csproj">
-      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
-      <Name>Unity.Entities</Name>
+    <ProjectReference Include="Unity.Entities.Player.csproj">
+      <Project>{1B50DD12-708F-1C25-2D75-F2510CC43DFC}</Project>
+      <Name>Unity.Entities.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
-      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
-      <Name>Unity.Entities.Hybrid</Name>
+    <ProjectReference Include="Unity.Entities.Hybrid.Player.csproj">
+      <Project>{21C54F01-B0FA-0D45-EF40-99CD36976896}</Project>
+      <Name>Unity.Entities.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.csproj">
-      <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
-      <Name>Unity.Transforms</Name>
+    <ProjectReference Include="Unity.Transforms.Player.csproj">
+      <Project>{DC51D185-5929-2A79-AB1E-55DE3B79B56A}</Project>
+      <Name>Unity.Transforms.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
-      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
-      <Name>Unity.Transforms.Hybrid</Name>
+    <ProjectReference Include="Unity.Transforms.Hybrid.Player.csproj">
+      <Project>{8269E73C-F6A2-BD7C-F30C-ADC01E0E21A5}</Project>
+      <Name>Unity.Transforms.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{65F1EF4D-DF79-1744-7A22-F0EA5D7FEE1D}</Project>
-      <Name>UnityEngine.UI</Name>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{F4C8C874-C83E-CCC0-30D5-E31416C5707F}</Project>
+      <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
