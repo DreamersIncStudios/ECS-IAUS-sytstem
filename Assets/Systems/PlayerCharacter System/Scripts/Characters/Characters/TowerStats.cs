@@ -37,7 +37,7 @@ namespace GameModes.DestroyTheTower.TowerSystem
 
         public async void UpdateLevel(int level)
         {
-            float ModValue = level* 1.1f;
+            float ModValue = level * 1.1f;
 
             GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
             GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
@@ -57,21 +57,27 @@ namespace GameModes.DestroyTheTower.TowerSystem
 
         }
 
-        public void SpawnDefenders(int Level) { 
-        
+        public void SpawnDefenders(int Level) {
+
         }
 
 
     }
+    [Serializable]
     public struct TowerData : IComponentData
     {
         public int level;
-        public float RepairRate;
+        [Tooltip("Rate in per second intervals")]
+        public float RepairRate; // TODO  Blob Asset 
+        [Tooltip("Rate in per second intervals")]
         public float EnergyRecoverRate;
-        public float GatherResourcesRate;
+        [Tooltip("Rate in per second intervals")]
+        [SerializeField] private float GatherResourcesRate;
+        public float GatherResourcesRateFixed => GatherResourcesRate / 60;
 
-        public float ResourcesGathered;
-        public float EnergyLevel;
+        [SerializeField] public float ResourcesGathered { get; set; }
+        [SerializeField] public float EnergyLevel { get; set; }
+
 
     }
 }

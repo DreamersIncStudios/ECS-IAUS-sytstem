@@ -46,7 +46,8 @@ namespace IAUS.ECS.Systems
                     StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
                     GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
                     RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
-                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true)
+                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
+                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true)
                     
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -84,6 +85,8 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RetreatCitizen> RetreatCitizenScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<AttackTargetState> AttackStateScore;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
@@ -137,6 +140,14 @@ namespace IAUS.ECS.Systems
                                 temp.StateName = AIStates.Attack;
                                 temp.TotalScore = AttackStateScore[entity].TotalScore;
                                 temp.Status = AttackStateScore[entity].Status;
+                                break;
+                            case AIStates.GatherResources:
+                                temp.StateName = AIStates.GatherResources;
+                                if (GatherStateScore.HasComponent(entity))
+                                {
+                                    temp.TotalScore = GatherStateScore[entity].TotalScore;
+                                    temp.Status = GatherStateScore[entity].Status;
+                                }
                                 break;
                         }
                         states[j] = temp;
@@ -200,6 +211,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.Retreat:
                                 CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
+                            case AIStates.GatherResources:
+                                CommandBufferParallel.RemoveComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
+                                break;
                         }
                         //add new action tag
                         switch (tester.StateName)
@@ -220,12 +234,16 @@ namespace IAUS.ECS.Systems
                                 CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.Attack:
-                                  CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                                CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
 
-                            break;
+                                break;
                             case AIStates.Retreat:
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
+                            case AIStates.GatherResources:
+                                CommandBufferParallel.AddComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
+                                break;
+
 
                         }
                         brain.CurrentState = tester.StateName;

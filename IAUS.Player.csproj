@@ -86,6 +86,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\SquadSO.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
@@ -122,7 +123,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\GatherResourcesReactive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

@@ -12,8 +12,8 @@ namespace IAUS.ECS.Component
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
-        [SerializeField]public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        [SerializeField]public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
+        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
 
         public AIStates name { get { return AIStates.GatherResources; } }
 
@@ -23,6 +23,7 @@ namespace IAUS.ECS.Component
 
         public float CoolDownTime { get { return _coolDownTime; } }
 
+        public bool Complete; //Todo true when level time runs out 
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
 
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
@@ -35,7 +36,7 @@ namespace IAUS.ECS.Component
 
     }
 
-    public struct GatherResourcesTag : IComponentData { }
+    public struct GatherResourcesTag : IComponentData { bool tag; }
 
     public struct AddGatherResourcesState : IJobChunk
     {
