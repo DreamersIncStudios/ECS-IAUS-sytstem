@@ -43,45 +43,46 @@ namespace IAUS.ECS.Systems.Reactive
         }
         public class GatherResourceReactiveSystem : AIReactiveSystemBase<GatherResourcesTag, GatherResourcesState, GatherResourcesTagReactor>
         {
-       
+
 
             protected override GatherResourcesTagReactor CreateComponentReactor()
             {
                 return new GatherResourcesTagReactor();
             }
         }
+    }
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    public class GatherResourcesSystem : SystemBase
+    {
+        private EntityQuery Gathering;
+        private EntityCommandBufferSystem _entityCommandBufferSystem;
 
-        [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-        public class GatherResourcesSystem : SystemBase
+        protected override void OnCreate()
         {
-            private EntityQuery Gathering;
-            private EntityCommandBufferSystem _entityCommandBufferSystem;
-
-            protected override void OnCreate()
+            base.OnCreate();
+            Gathering = GetEntityQuery(new EntityQueryDesc()
             {
-                base.OnCreate();
-                Gathering = GetEntityQuery(new EntityQueryDesc()
-                {
-                    All = new ComponentType[] { ComponentType.ReadOnly(typeof(GatherResourcesState)), ComponentType.ReadWrite(typeof(TowerData)),
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(GatherResourcesState)), ComponentType.ReadWrite(typeof(TowerData)),
                      ComponentType.ReadWrite(typeof(GatherResourcesTag))}
 
-                });
-                _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            }
-
-            protected override void OnUpdate()
-            {
-                JobHandle systemDeps = Dependency;
-                systemDeps = new GatherResourcesJob() {
-                DataChunk = GetComponentTypeHandle<TowerData>(false)
-                }
-                .ScheduleParallel(Gathering, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-                Dependency = systemDeps;
-            }
+            });
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
+        protected override void OnUpdate()
+        {
+            JobHandle systemDeps = Dependency;
+            systemDeps = new GatherResourcesJob()
+            {
+                DataChunk = GetComponentTypeHandle<TowerData>(false)
+            }
+            .ScheduleParallel(Gathering, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            Dependency = systemDeps;
+        }
+
+        [BurstCompile]
         struct GatherResourcesJob : IJobChunk
         {
             public ComponentTypeHandle<TowerData> DataChunk;
@@ -100,6 +101,5 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
     }
-
-
 }
+

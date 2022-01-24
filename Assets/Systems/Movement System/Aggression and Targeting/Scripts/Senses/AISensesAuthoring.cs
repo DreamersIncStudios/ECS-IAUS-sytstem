@@ -32,7 +32,8 @@ namespace AISenses.Authoring
             if (Vision) 
                 dstManager.AddComponentData(entity, VisionData);
         }
-
+        //Todo Make so vison system can only track one area at time for large  view area
+        //Todo Add Sweeping scan mode. 
 
         public enum SenseToEdit { 
             vison, hear, Touch

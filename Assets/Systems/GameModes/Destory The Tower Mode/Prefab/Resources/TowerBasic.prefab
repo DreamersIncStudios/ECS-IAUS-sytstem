@@ -144,10 +144,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Self:
-    Type: 0
-    FactionID: 0
+    Type: 2
+    FactionID: 1
     NumOfEntityTargetingMe: 0
     GetInstanceID: 0
     MaxNumberOfTarget: 0
-    CanBeTargetByPlayer: 0
+    CanBeTargetByPlayer: 1
     detectionScore: 0
+  Data:
+    level: 1
+    RepairRate: 10
+    EnergyRecoverRate: 10
+    GatherResourcesRate: 30
+  GetAttackType:
+  - style: 1
+    AttackRange: 50
+    fallOffRange: 0
+    Attacktimer: 0

@@ -125,7 +125,7 @@ namespace IAUS.ECS.Systems
                     {
                         if (attackTypeInfos[j].AttackTarget.entity != Entity.Null)
                         {
-                            
+
                             if (!checkTarget(i, j, TargetBuffers, attackTypeInfos))
                             {
                                 updateTarget(i, j, TargetBuffers, attackTypeInfos);
@@ -153,10 +153,11 @@ namespace IAUS.ECS.Systems
                         return true;
                     }
                 }
-                    return false;
+                return false;
             }
 
-                void updateTarget(int i, int j, BufferAccessor<ScanPositionBuffer> TargetBuffers, DynamicBuffer<AttackTypeInfo> attackTypeInfos) {
+            void updateTarget(int i, int j, BufferAccessor<ScanPositionBuffer> TargetBuffers, DynamicBuffer<AttackTypeInfo> attackTypeInfos)
+            {
                 ScanPositionBuffer closestTarget = TargetBuffers[i][0];
                 foreach (var item in TargetBuffers[i])
                 {

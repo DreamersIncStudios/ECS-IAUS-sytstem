@@ -68,7 +68,8 @@ namespace GameModes.DestroyTheTower.TowerSystem
     {
         public int level;
         [Tooltip("Rate in per second intervals")]
-        public float RepairRate; // TODO  Blob Asset 
+       [SerializeField] private float RepairRate; // TODO  Blob Asset 
+        public float RepairRateFixed => RepairRate / 60;
         [Tooltip("Rate in per second intervals")]
         public float EnergyRecoverRate;
         [Tooltip("Rate in per second intervals")]

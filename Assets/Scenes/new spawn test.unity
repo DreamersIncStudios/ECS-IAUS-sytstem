@@ -875,6 +875,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC Spawn system
       objectReference: {fileID: 0}
+    - target: {fileID: 373270550540466540, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34cf8cc5be8f76047a5ac3d94160fc1c, type: 3}
 --- !u!43 &203133970
@@ -1961,10 +1966,11 @@ GameObject:
   - component: {fileID: 516879683}
   - component: {fileID: 516879682}
   - component: {fileID: 516879681}
+  - component: {fileID: 516879685}
   - component: {fileID: 516879680}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1978,7 +1984,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 516879679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46c6c7c775638cb4ea286dd0e75d6274, type: 3}
+  m_Script: {fileID: 11500000, guid: d5b1771da3596ee409d26761dcc099e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &516879681
@@ -2057,6 +2063,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &516879685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516879679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9daea96451574874eb14b47691b2c344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    Threat: 100
+    Protection: 10
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
+    factionID: 0
 --- !u!1 &524945578
 GameObject:
   m_ObjectHideFlags: 0
@@ -7093,15 +7119,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8844021888177762150, guid: bd629f91c5d891b4ba9c7fe712683e5b,
+        type: 3}
+      propertyPath: Vision
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8844021888177762150, guid: bd629f91c5d891b4ba9c7fe712683e5b,
+        type: 3}
+      propertyPath: VisionData.ViewAngle
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: -8844021888177762150, guid: bd629f91c5d891b4ba9c7fe712683e5b,
+        type: 3}
+      propertyPath: VisionData.viewRadius
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: -8844021888177762150, guid: bd629f91c5d891b4ba9c7fe712683e5b,
+        type: 3}
+      propertyPath: VisionData.EngageRadius
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474365134, guid: bd629f91c5d891b4ba9c7fe712683e5b, type: 3}
+      propertyPath: GetAttackType.Array.data[0].AttackRange
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474365134, guid: bd629f91c5d891b4ba9c7fe712683e5b, type: 3}
+      propertyPath: GetAttackType.Array.data[0].Attacktimer
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1474365134, guid: bd629f91c5d891b4ba9c7fe712683e5b, type: 3}
+      propertyPath: GetAttackType.Array.data[0].fallOffRange
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8249079120485917930, guid: bd629f91c5d891b4ba9c7fe712683e5b,
         type: 3}
       propertyPath: m_Name
       value: TowerBasic
-      objectReference: {fileID: 0}
-    - target: {fileID: 8249079120485917930, guid: bd629f91c5d891b4ba9c7fe712683e5b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8836757059750774267, guid: bd629f91c5d891b4ba9c7fe712683e5b,
         type: 3}
