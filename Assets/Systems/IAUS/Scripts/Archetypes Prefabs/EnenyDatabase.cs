@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IAUS.NPCSO
 {
-    public static  class NPCSODatabase 
+    public static  class EnenyDatabase 
     {
         static public List<NPCSO> NPCs;
         static public bool IsLoaded { get; private set; } = false;
@@ -24,14 +24,9 @@ namespace IAUS.NPCSO
         {
             ValidateDatebase();
             IsLoaded = true;
-            NPCSO[] resources = Resources.LoadAll<NPCSO>(@"NPC");
-            EnemyNPCSO[] resources1 = Resources.LoadAll<EnemyNPCSO>(@"NPC");
-            foreach (NPCSO npc in resources)
-            {
-                if (!NPCs.Contains(npc))
-                    NPCs.Add(npc);
-            }
-            foreach (EnemyNPCSO enemynpc in resources1)
+            EnemyNPCSO[] resources = Resources.LoadAll<EnemyNPCSO>(@"NPC");
+  
+            foreach (EnemyNPCSO enemynpc in resources)
             {
                 if (!NPCs.Contains(enemynpc))
                     NPCs.Add(enemynpc);

@@ -2,12 +2,15 @@ using Unity.Collections;
 using UnityEngine;
 using Utilities.ReactiveSystem;
 using Unity.Jobs;
-using Unity.Transforms;
 using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using GameModes.DestroyTheTower.TowerSystem;
 using Stats;
+
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<HealSelfTag, RepairState, IAUS.ECS.Systems.Reactive.RepairTowerTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<HealSelfTag, RepairState, IAUS.ECS.Systems.Reactive.RepairTowerTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<HealSelfTag, RepairState, IAUS.ECS.Systems.Reactive.RepairTowerTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
@@ -82,7 +85,7 @@ namespace IAUS.ECS.Systems.Reactive
         [BurstCompile]
         struct RepairTowerJob : IJobChunk
         {
-            [ReadOnly]public ComponentTypeHandle<TowerData> DataChunk;
+            public ComponentTypeHandle<TowerData> DataChunk;
             public ComponentTypeHandle<EnemyStats> StatsChunk;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -93,8 +96,12 @@ namespace IAUS.ECS.Systems.Reactive
 
                     TowerData data = TowerDatas[i];
                     EnemyStats stat = Stats[i];
-                    stat.AdjustHealth(Mathf.RoundToInt( data.RepairRateFixed));
-
+                    if (data.EnergyLevel > 0)
+                    {
+                        stat.AdjustHealth(Mathf.RoundToInt(data.RepairRateFixed));
+                        data.AdjustEnergy(-data.RepairRateFixed * 2);
+                    }
+                    TowerDatas[i] = data;
                     Stats[i] = stat;
                 }
 

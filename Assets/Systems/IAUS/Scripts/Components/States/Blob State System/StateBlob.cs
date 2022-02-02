@@ -12,7 +12,7 @@ namespace IAUS.ECS.StateBlobSystem
     public struct Identity
     {
         public NPCLevel NPCLevel;
-        public int FactionID; 
+        public int FactionID;
         public AIStates aIStates;
         public Difficulty Difficulty;
     }
@@ -29,7 +29,8 @@ namespace IAUS.ECS.StateBlobSystem
 
 
     }
-    public struct AIStateBlobAsset {
+    public struct AIStateBlobAsset
+    {
         public BlobArray<StateAsset> Array;
 
         public int GetConsiderationIndex(Identify identify)
@@ -61,7 +62,8 @@ namespace IAUS.ECS.StateBlobSystem
         {
             Entities.ForEach((ref Patrol p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 p.stateRef = CreateReference();
-                p.Index = p.stateRef.Value.GetConsiderationIndex(new Identify() {
+                p.Index = p.stateRef.Value.GetConsiderationIndex(new Identify()
+                {
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Patrol,
                     FactionID = brain.factionID,
@@ -95,17 +97,38 @@ namespace IAUS.ECS.StateBlobSystem
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identify()
                 {
                     Difficulty = Difficulty.Normal,
-                    aIStates = AIStates.GatherResources,
+                    aIStates = G.name,
                     FactionID = brain.factionID,
                     NPCLevel = brain.NPCLevel
                 }); ;
             });
 
-            Entities.ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState a ) => {
+            Entities.ForEach((ref RepairState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                G.stateRef = CreateReference();
+                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }); ;
+            });
+
+            Entities.ForEach((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                G.stateRef = CreateReference();
+                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identify()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }); ;
+            });
+
+            Entities.ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState a) => {
                 for (int i = 0; i < attacks.Length; i++)
                 {
                     AttackTypeInfo attack = attacks[i];
-
                     attack.stateRef = CreateReference();
 
                     attack.Index = attack.stateRef.Value.GetConsiderationIndex(new Identify()
@@ -119,16 +142,20 @@ namespace IAUS.ECS.StateBlobSystem
                             AttackStyle.MagicRange => AIStates.AttackRange,//TODO Make Magic Attack Range AI State,
                             _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
                         },
-                        FactionID = brain.factionID,
-                        NPCLevel = brain.NPCLevel
+                        FactionID = 1,
+                        NPCLevel = NPCLevel.Tower
                     });
+
                     attacks[i] = attack;
                 }
+                a.HighScoreAttack = attacks[0];
+
             });
 
         }
 
-        BlobAssetReference<AIStateBlobAsset> CreateReference() {
+        BlobAssetReference<AIStateBlobAsset> CreateReference()
+        {
             using var blobBuilder = new BlobBuilder(Allocator.Temp);
             ref var stateBlobAsset = ref blobBuilder.ConstructRoot<AIStateBlobAsset>();
             var assign = Reader.FileRead();
@@ -141,7 +168,7 @@ namespace IAUS.ECS.StateBlobSystem
             }
 
 
-            BlobAssetReference <AIStateBlobAsset> reference = blobBuilder.CreateBlobAssetReference<AIStateBlobAsset>(Allocator.Persistent);
+            BlobAssetReference<AIStateBlobAsset> reference = blobBuilder.CreateBlobAssetReference<AIStateBlobAsset>(Allocator.Persistent);
 
             return reference;
         }
@@ -164,24 +191,25 @@ namespace IAUS.ECS.StateBlobSystem
                     {
                         Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                         NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                        FactionID =int.TryParse(parts[2], out int result) ? result:0,
+                        FactionID = int.TryParse(parts[2], out int result) ? result : 0,
                         aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                     },
                     Health = LineRead(4, lines[i]),
                     Distance = LineRead(11, lines[i]),
                     Timer = LineRead(18, lines[i]),
-                    ManaAmmo = LineRead(25,lines[i]),
-                    TargetInRange = LineRead(32,lines[i])
+                    ManaAmmo = LineRead(25, lines[i]),
+                    TargetInRange = LineRead(32, lines[i])
                 };
-              
+
             }
             return array;
         }
 
         static ConsiderationScoringData LineRead(int StartPoint, string Line)
         {
-            ConsiderationScoringData output = new ConsiderationScoringData() {
-              //  responseType = ResponseType.none
+            ConsiderationScoringData output = new ConsiderationScoringData()
+            {
+                //  responseType = ResponseType.none
             };
 
             var parts = Line.Split(',');

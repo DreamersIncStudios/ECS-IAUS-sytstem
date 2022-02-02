@@ -78,7 +78,16 @@ namespace GameModes.DestroyTheTower.TowerSystem
 
         [SerializeField] public float ResourcesGathered { get; set; }
         [SerializeField] public float EnergyLevel { get; set; }
+        public int MaxEnergy;
+        public float EnergyRatio => EnergyLevel / (float)MaxEnergy;
 
-
+        public void AdjustEnergy(float adj) {
+            EnergyLevel += adj;
+            if (EnergyLevel < 0)
+            {
+                EnergyLevel = 0;
+            }
+            if (EnergyLevel > MaxEnergy) { EnergyLevel = MaxEnergy; }
+        }
     }
 }

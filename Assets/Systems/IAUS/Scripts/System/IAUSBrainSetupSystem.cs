@@ -19,6 +19,7 @@ namespace IAUS.ECS.Systems
         EntityQuery _AttackStateEntity;
         EntityQuery _FleeStateEntity;
         EntityQuery _gatherStateEntity;
+        EntityQuery _CallForHelp;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -68,6 +69,11 @@ namespace IAUS.ECS.Systems
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(GatherResourcesState))}
+            });
+            _gatherStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(SpawnDefendersState))}
             });
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
@@ -165,6 +171,15 @@ namespace IAUS.ECS.Systems
                 EntityChunk = GetEntityTypeHandle(),
                 GatherChunk = GetComponentTypeHandle<GatherResourcesState>(false)
             }.ScheduleParallel(_gatherStateEntity, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new AddSpawnDefendersState()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                SpankChunk = GetComponentTypeHandle<SpawnDefendersState>(false)
+            }.ScheduleParallel(_CallForHelp, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             // This is to be the last job of this system
 

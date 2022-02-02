@@ -47,7 +47,8 @@ namespace IAUS.ECS.Systems
                     GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
                     RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
                     AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
-                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true)
+                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true),
+                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true)
                     
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -86,7 +87,7 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RetreatCitizen> RetreatCitizenScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<AttackTargetState> AttackStateScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
-
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RepairState> RepairStateScore;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
@@ -149,6 +150,14 @@ namespace IAUS.ECS.Systems
                                     temp.Status = GatherStateScore[entity].Status;
                                 }
                                 break;
+                            case AIStates.Heal_Magic:
+                                temp.StateName = AIStates.Heal_Magic;
+                                if (RepairStateScore.HasComponent(entity)) {
+                                    temp.TotalScore = RepairStateScore[entity].TotalScore;
+                                    temp.Status = RepairStateScore[entity].Status;
+                                }
+
+                                break;
                         }
                         states[j] = temp;
 
@@ -205,7 +214,6 @@ namespace IAUS.ECS.Systems
                             case AIStates.Attack:
                                 //TODO Implement Add and Remove Tag;
                                 CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
-
                                 break;
 
                             case AIStates.Retreat:
@@ -213,6 +221,9 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.GatherResources:
                                 CommandBufferParallel.RemoveComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.Heal_Magic:
+                                CommandBufferParallel.RemoveComponent<HealSelfTag>(chunkIndex, Entities[i]);
                                 break;
                         }
                         //add new action tag
@@ -235,7 +246,6 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.Attack:
                                 CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
-
                                 break;
                             case AIStates.Retreat:
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
@@ -243,8 +253,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.GatherResources:
                                 CommandBufferParallel.AddComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
                                 break;
-
-
+                            case AIStates.Heal_Magic:
+                                CommandBufferParallel.AddComponent<HealSelfTag>(chunkIndex, Entities[i]);
+                                break;
                         }
                         brain.CurrentState = tester.StateName;
                     }

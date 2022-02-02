@@ -16,8 +16,8 @@ namespace IAUS.ECS.Component
         public int Index { get; set; }
 
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
-      [SerializeField]  public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].Distance; } }
-      [SerializeField]  public ConsiderationScoringData ManaAmmoAmount { get { return stateRef.Value.Array[Index].ManaAmmo; } }
+      public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].Distance; } }
+       public ConsiderationScoringData ManaAmmoAmount { get { return stateRef.Value.Array[Index].ManaAmmo; } }
         public Target AttackTarget;
         [BurstDiscard]
         public float DistanceToTarget => AttackTarget.entity != Entity.Null ? AttackTarget.DistanceTo : -1.0f;

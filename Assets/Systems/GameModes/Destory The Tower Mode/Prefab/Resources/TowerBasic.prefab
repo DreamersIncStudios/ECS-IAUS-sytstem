@@ -125,8 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InPlay: 0
   InvincibleMode: 0
-  CurHealth: 198
-  maxHealth: 177
+  CurHealth: 30
+  maxHealth: 200
   CurMana: 168
   maxMana: 168
   EXPgained: 0
@@ -156,8 +156,17 @@ MonoBehaviour:
     RepairRate: 10
     EnergyRecoverRate: 10
     GatherResourcesRate: 30
+    MaxEnergy: 100
+  Influence:
+    Threat: 0
+    Protection: 0
+    previousPos:
+      x: 0
+      y: 0
+      z: 0
+    factionID: 0
   GetAttackType:
   - style: 1
-    AttackRange: 50
-    fallOffRange: 0
-    Attacktimer: 0
+    AttackRange: 30
+    fallOffRange: 10
+    Attacktimer: 30

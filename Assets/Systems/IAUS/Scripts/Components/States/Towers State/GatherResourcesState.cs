@@ -11,8 +11,8 @@ namespace IAUS.ECS.Component
     public struct GatherResourcesState : IBaseStateScorer
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
+        public int Index { get; set; }
+       public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
 
         public AIStates name { get { return AIStates.GatherResources; } }
@@ -37,7 +37,7 @@ namespace IAUS.ECS.Component
     }
 
     public struct GatherResourcesTag : IComponentData { bool tag; }
-
+    [Unity.Burst.BurstCompile]
     public struct AddGatherResourcesState : IJobChunk
     {
         public EntityCommandBuffer.ParallelWriter entityCommandBuffer;

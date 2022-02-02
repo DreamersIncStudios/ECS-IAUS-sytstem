@@ -30,6 +30,7 @@ namespace IAUS.ECS.Systems
             LookingForAttack = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTypeInfo)),
+                    ComponentType.ReadWrite(typeof(AttackTargetState)),
                     ComponentType.ReadOnly(typeof(ScanPositionBuffer)),
                     ComponentType.ReadOnly(typeof(InfluenceComponent)),
                     ComponentType.ReadOnly(typeof(EnemyStats)),
@@ -254,12 +255,12 @@ namespace IAUS.ECS.Systems
                             state.HighScoreAttack = AttackBuffer[j];
                         }
                     }
-
+                    Attacks[i] = state;
                 }
             }
         }
 
-       // [BurstCompile]
+        // [BurstCompile]
         public struct UpdateScoreHigh : IJobChunk
         {
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;

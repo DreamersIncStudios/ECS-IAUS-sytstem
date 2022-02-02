@@ -62,7 +62,6 @@ namespace IAUS.NPCSO
         [HideInInspector] public BaseAIAuthoringSO AIAuthoring;
         public GameObject SpawnedGO { get; private set; }
 
-
         public virtual void Spawn(Vector3 pos)
         {
             SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
@@ -88,7 +87,7 @@ namespace IAUS.NPCSO
                 }
 
             }
-               
+
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;
@@ -96,7 +95,22 @@ namespace IAUS.NPCSO
             //Senses.HearingData = new Hearing();
 
         }
- 
+        /// <summary>
+        /// Spawn EnemyNPC as a Defender
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="Defender"></param>
+        public void Spawn(Vector3 pos, bool Defender) {
+            if (!Defender)
+            {
+                Spawn(pos);
+            }
+            else { 
+                
+            
+            }
+        
+        }
 
 
 

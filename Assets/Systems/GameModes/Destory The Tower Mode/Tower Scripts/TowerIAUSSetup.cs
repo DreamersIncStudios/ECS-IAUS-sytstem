@@ -32,8 +32,8 @@ namespace GameModes.DestroyTheTower.TowerSystem
             Data.EnergyLevel = 100;
             dstManager.AddComponentData(entity, Data);
             dstManager.AddBuffer<StateBuffer>(entity);
-            //dstManager.AddComponent<RepairState>(entity);
-            //dstManager.AddComponent<SpawnDefendersState>(entity);
+            dstManager.AddComponent<RepairState>(entity);
+            dstManager.AddComponent<SpawnDefendersState>(entity);
             if (GetAttackType.Count != 0)
             {
                 DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);
@@ -47,17 +47,6 @@ namespace GameModes.DestroyTheTower.TowerSystem
 
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }
