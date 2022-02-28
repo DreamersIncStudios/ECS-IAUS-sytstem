@@ -50,8 +50,8 @@ namespace IAUS.NPCSO.editor
         void DisplayListOfExistingSO() {
             EditorGUILayout.BeginVertical("Box");
             //if (!NPCSODatabase.IsLoaded)
-                NPCSODatabase.LoadDatabaseForce();
-            foreach (INPCBasics SO in NPCSODatabase.NPCs)
+                EnenyDatabase.LoadDatabaseForce();
+            foreach (INPCBasics SO in EnenyDatabase.NPCs)
             {
                 EditorGUILayout.BeginHorizontal();
                 //add names

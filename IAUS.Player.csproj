@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.14</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.25f1</UnityVersion>
@@ -57,8 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadSetup.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTraverse.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddWaitState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\FriendNPCSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddAttacks.cs" />
@@ -68,8 +71,8 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\GatherResourcesReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
-    <Compile Include="Assets\Systems\IAUS\AttackSetup.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadMembership.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TraverseReactive.cs" />
@@ -78,17 +81,20 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackType.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Wait\Wait.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\GatherResourcesState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\SquadSO.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\EnenyDatabase.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddRetreatState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\SpawnDefendersState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
@@ -110,18 +116,22 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\Interface\INPCBasics.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\CooldownCountdownSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\MeleeAttackTag.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\RepairTowerReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\NPCAttackBuffer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\SpawnDefenderReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCData.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\ListOfNames.txt" />
     <None Include="Assets\Systems\IAUS\IAUS Def.asmdef" />
+    <None Include="Assets\Systems\IAUS\Scripts\NPC INFO\Resources\NPCTextDatabase.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -693,61 +703,61 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Entities.csproj">
-      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
-      <Name>Unity.Entities</Name>
+    <ProjectReference Include="Unity.Entities.Player.csproj">
+      <Project>{1B50DD12-708F-1C25-2D75-F2510CC43DFC}</Project>
+      <Name>Unity.Entities.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
-      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
-      <Name>Unity.Entities.Hybrid</Name>
+    <ProjectReference Include="Unity.Entities.Hybrid.Player.csproj">
+      <Project>{21C54F01-B0FA-0D45-EF40-99CD36976896}</Project>
+      <Name>Unity.Entities.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
-      <Name>Unity.Mathematics</Name>
+    <ProjectReference Include="Unity.Mathematics.Player.csproj">
+      <Project>{E1C28A49-66FD-3565-659E-18B9F2941ECD}</Project>
+      <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
-      <Name>Unity.Burst</Name>
+    <ProjectReference Include="Unity.Burst.Player.csproj">
+      <Project>{863F8CF6-4B96-4A41-88EA-D30C81BE99E9}</Project>
+      <Name>Unity.Burst.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.csproj">
-      <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
-      <Name>Unity.Transforms</Name>
+    <ProjectReference Include="Unity.Transforms.Player.csproj">
+      <Project>{DC51D185-5929-2A79-AB1E-55DE3B79B56A}</Project>
+      <Name>Unity.Transforms.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Collections.csproj">
-      <Project>{5026C8AD-AC8C-5C9F-EA66-7D2E7D869FE9}</Project>
-      <Name>Unity.Collections</Name>
+    <ProjectReference Include="Unity.Collections.Player.csproj">
+      <Project>{30F76500-8833-C109-69B2-CC8F94FBEBA0}</Project>
+      <Name>Unity.Collections.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
-      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
-      <Name>Unity.Transforms.Hybrid</Name>
+    <ProjectReference Include="Unity.Transforms.Hybrid.Player.csproj">
+      <Project>{8269E73C-F6A2-BD7C-F30C-ADC01E0E21A5}</Project>
+      <Name>Unity.Transforms.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="PlayerCharacterSystem.csproj">
-      <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
-      <Name>PlayerCharacterSystem</Name>
+    <ProjectReference Include="PlayerCharacterSystem.Player.csproj">
+      <Project>{1DD80F96-A2F6-8839-14A0-D21A158CD01C}</Project>
+      <Name>PlayerCharacterSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="MovementSystem.csproj">
-      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
-      <Name>MovementSystem</Name>
+    <ProjectReference Include="MovementSystem.Player.csproj">
+      <Project>{E0895362-E914-8FAB-5AE7-B4396EB3B8C4}</Project>
+      <Name>MovementSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Physics.csproj">
-      <Project>{0A84E2CD-C171-3283-D717-03BEA1853284}</Project>
-      <Name>Unity.Physics</Name>
+    <ProjectReference Include="Unity.Physics.Player.csproj">
+      <Project>{6B626A0F-9FFB-2F36-E15F-4FE05C0AC6FE}</Project>
+      <Name>Unity.Physics.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{65F1EF4D-DF79-1744-7A22-F0EA5D7FEE1D}</Project>
-      <Name>UnityEngine.UI</Name>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{F4C8C874-C83E-CCC0-30D5-E31416C5707F}</Project>
+      <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Global.csproj">
-      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
-      <Name>Global</Name>
+    <ProjectReference Include="Global.Player.csproj">
+      <Project>{26A6717A-2C4D-CC59-CF45-4B2C1E9C5A5E}</Project>
+      <Name>Global.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="InfluenceSystem.csproj">
-      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
-      <Name>InfluenceSystem</Name>
+    <ProjectReference Include="InfluenceSystem.Player.csproj">
+      <Project>{453D11B2-78EC-D125-718A-C67A6DAE1358}</Project>
+      <Name>InfluenceSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="CharacterControl.csproj">
-      <Project>{7813B096-1481-4E30-674F-60B5E2CF1F94}</Project>
-      <Name>CharacterControl</Name>
+    <ProjectReference Include="CharacterControl.Player.csproj">
+      <Project>{9C6065D5-E509-419B-B48D-480E1B886C28}</Project>
+      <Name>CharacterControl.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

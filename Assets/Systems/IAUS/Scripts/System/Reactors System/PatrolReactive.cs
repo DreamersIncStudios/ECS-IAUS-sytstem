@@ -51,7 +51,6 @@ namespace IAUS.ECS.Systems.Reactive
     public class PatrolMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
-        private EntityQuery _componentRemovedQuery;
         private EntityQuery _patrolling;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -70,12 +69,6 @@ namespace IAUS.ECS.Systems.Reactive
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
                 , ComponentType.ReadOnly(typeof(LocalToWorld)),
                     ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
-            });
-            _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer)),  ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)),ComponentType.ReadOnly(typeof(LocalToWorld)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag)) }
             });
 
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();

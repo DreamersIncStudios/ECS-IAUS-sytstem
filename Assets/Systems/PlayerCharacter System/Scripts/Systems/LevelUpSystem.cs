@@ -39,7 +39,16 @@ namespace Stats
                 buffer.RemoveComponent<LevelUpComponent>(entity);
             }).Schedule(systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = Entities.ForEach((Entity entity, ref NPCStats PC, ref LevelUpComponent StatUpdate) =>
+            {
+                PC.MaxHealth = StatUpdate.MaxHealth;
+                PC.CurHealth = StatUpdate.CurHealth;
+                PC.MaxMana = StatUpdate.MaxMana;
+                PC.CurMana = StatUpdate.CurMana;
 
+                buffer.RemoveComponent<LevelUpComponent>(entity);
+            }).Schedule(systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
         }
     }

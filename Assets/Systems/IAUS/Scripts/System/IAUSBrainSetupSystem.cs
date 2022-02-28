@@ -18,6 +18,9 @@ namespace IAUS.ECS.Systems
         EntityQuery _MoveToTargetStateEntity;
         EntityQuery _AttackStateEntity;
         EntityQuery _FleeStateEntity;
+        EntityQuery _gatherStateEntity;
+        EntityQuery _CallForHelp;
+
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -61,6 +64,16 @@ namespace IAUS.ECS.Systems
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(RetreatCitizen))}
+            });
+            _gatherStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(GatherResourcesState))}
+            });
+            _gatherStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(SpawnDefendersState))}
             });
             Starter = GetEntityQuery(new EntityQueryDesc()
             {
@@ -150,7 +163,24 @@ namespace IAUS.ECS.Systems
                 HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
             }.ScheduleParallel(_FleeStateEntity, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            
+            systemDeps = new AddGatherResourcesState()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                GatherChunk = GetComponentTypeHandle<GatherResourcesState>(false)
+            }.ScheduleParallel(_gatherStateEntity, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
+            systemDeps = new AddSpawnDefendersState()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                SpankChunk = GetComponentTypeHandle<SpawnDefendersState>(false)
+            }.ScheduleParallel(_CallForHelp, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             // This is to be the last job of this system
 
             systemDeps = new RemoveSetupTag()

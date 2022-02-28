@@ -148,44 +148,49 @@ namespace IAUS.ECS.Systems.Reactive
 
             Entities.
                 ForEach((Entity entity, ref Movement move, ref AttackActionTag tag) => {
-                DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
-                if (!A.IsEmpty)
-                {
-                    switch (A[0].Trigger.Type) {
-                        case AttackType.LightAttack:
-                        case AttackType.HeavyAttack:
-                            //Move to attack range then trigger animation;
-                                if (!tag.moveSet)
-                                {
-                                    move.SetLocation(tag.AttackLocation);
-                                    tag.moveSet = true;
-                                }
-                                if (tag.moveSet && move.Completed) {
-                                    tag.CanAttack = true;
-                                    move.CanMove = false;
-                                }
-                            
-                            break;
-                        case AttackType.Projectile:
-                            //Rotate Target and then trigger attack 
+                    if (bufferFromEntity.HasComponent(entity))
+                    {
+                        DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
+                        if (!A.IsEmpty)
+                        {
+                            switch (A[0].Trigger.Type)
+                            {
+                                case AttackType.LightAttack:
+                                case AttackType.HeavyAttack:
+                                    //Move to attack range then trigger animation;
+                                    if (!tag.moveSet)
+                                    {
+                                        move.SetLocation(tag.AttackLocation);
+                                        tag.moveSet = true;
+                                    }
+                                    if (tag.moveSet && move.Completed)
+                                    {
+                                        tag.CanAttack = true;
+                                        move.CanMove = false;
+                                    }
 
-                            break;
+                                    break;
+                                case AttackType.Projectile:
+                                    //Rotate Target and then trigger attack 
 
+                                    break;
+
+                            }
+
+
+
+                            //if (A[0].Trigger.trigger)
+                            //{
+                            //    handler.InputQueue = new Queue<AnimationTrigger>();
+                            //    handler.InputQueue.Enqueue(A[0].Trigger);
+                            //    A.RemoveAt(0);
+                            //}
+                            //else
+                            //{
+                            //    A[0].Trigger.AdjustTime(Time.DeltaTime);
+                            //}
+                        }
                     }
-
-
-
-                    //if (A[0].Trigger.trigger)
-                    //{
-                    //    handler.InputQueue = new Queue<AnimationTrigger>();
-                    //    handler.InputQueue.Enqueue(A[0].Trigger);
-                    //    A.RemoveAt(0);
-                    //}
-                    //else
-                    //{
-                    //    A[0].Trigger.AdjustTime(Time.DeltaTime);
-                    //}
-                }
             });
             //TODO correct in full game 
             ComponentDataFromEntity<Wait> WaitState = GetComponentDataFromEntity<Wait>(false);

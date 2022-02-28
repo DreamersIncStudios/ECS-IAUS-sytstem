@@ -18,8 +18,6 @@ namespace AISenses
     [System.Serializable]
     public struct Vision : ISenses
     {
-        public ScanPositionBuffer ClosestTarget;
-
         public int DetectionRate { get {
                 int returnValue = new int();
                 switch (EnemyAwarnessLevel) {
@@ -51,8 +49,6 @@ namespace AISenses
         public float3 HeadPositionOffset;
         public float3 ThreatPosition;
 
-        public float Scantimer;
-        public bool LookForTargets => Scantimer <= 0.0f;
         public float viewRadius;
         [Range(0, 360)]
         public int ViewAngle;

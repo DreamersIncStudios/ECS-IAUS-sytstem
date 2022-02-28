@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,24 +47,33 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.14</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.25f1</UnityVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\Spawner.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
     <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerIAUSSetup.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\CharacterSetup.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
+    <Compile Include="Assets\GameMaster.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
-    <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
+    <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -726,133 +735,133 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Transforms.Hybrid.csproj">
-      <Project>{77E2BEC5-335B-D901-1BC9-574B1380C295}</Project>
-      <Name>Unity.Transforms.Hybrid</Name>
+    <ProjectReference Include="Unity.Transforms.Hybrid.Player.csproj">
+      <Project>{8269E73C-F6A2-BD7C-F30C-ADC01E0E21A5}</Project>
+      <Name>Unity.Transforms.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="MovementSystem.csproj">
-      <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>
-      <Name>MovementSystem</Name>
+    <ProjectReference Include="MovementSystem.Player.csproj">
+      <Project>{E0895362-E914-8FAB-5AE7-B4396EB3B8C4}</Project>
+      <Name>MovementSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Properties.csproj">
-      <Project>{EB5E8990-EBBF-3A41-5A45-9636135DB8D3}</Project>
-      <Name>Unity.Properties</Name>
+    <ProjectReference Include="Unity.Properties.Player.csproj">
+      <Project>{320D926C-4435-084D-AC0A-6DDA32A71BD3}</Project>
+      <Name>Unity.Properties.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Serialization.csproj">
-      <Project>{DA8CBA5D-950A-0EE3-5FC1-686B0CAA7D4F}</Project>
-      <Name>Unity.Serialization</Name>
+    <ProjectReference Include="Unity.Serialization.Player.csproj">
+      <Project>{E2536153-9B0A-9C48-D105-7CFC8C349F9A}</Project>
+      <Name>Unity.Serialization.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="InfluenceSystem.csproj">
-      <Project>{42F78D1F-DE42-52AA-5EE1-8900EF969417}</Project>
-      <Name>InfluenceSystem</Name>
+    <ProjectReference Include="InfluenceSystem.Player.csproj">
+      <Project>{453D11B2-78EC-D125-718A-C67A6DAE1358}</Project>
+      <Name>InfluenceSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.ProBuilder.csproj">
-      <Project>{A3F8994D-790F-DB87-E578-F6AFDDBB8A7C}</Project>
-      <Name>Unity.ProBuilder</Name>
+    <ProjectReference Include="Unity.ProBuilder.Player.csproj">
+      <Project>{AFE2A2E5-8BB3-E306-3B0A-9FA9E5D0A773}</Project>
+      <Name>Unity.ProBuilder.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="CharacterControl.csproj">
-      <Project>{7813B096-1481-4E30-674F-60B5E2CF1F94}</Project>
-      <Name>CharacterControl</Name>
+    <ProjectReference Include="CharacterControl.Player.csproj">
+      <Project>{9C6065D5-E509-419B-B48D-480E1B886C28}</Project>
+      <Name>CharacterControl.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.csproj">
-      <Project>{65F1EF4D-DF79-1744-7A22-F0EA5D7FEE1D}</Project>
-      <Name>UnityEngine.UI</Name>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{F4C8C874-C83E-CCC0-30D5-E31416C5707F}</Project>
+      <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Cinemachine.csproj">
-      <Project>{4065FB89-E685-8925-62DD-51EC49498937}</Project>
-      <Name>Cinemachine</Name>
+    <ProjectReference Include="Cinemachine.Player.csproj">
+      <Project>{7324C4DE-C759-EC00-0317-99D2833A3807}</Project>
+      <Name>Cinemachine.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Scenes.csproj">
-      <Project>{70C81167-B8C8-F772-FC91-AF1CEA2736AB}</Project>
-      <Name>Unity.Scenes</Name>
+    <ProjectReference Include="Unity.Scenes.Player.csproj">
+      <Project>{E5AC5CCE-82A7-F947-4BBE-FAA3C4A6F27D}</Project>
+      <Name>Unity.Scenes.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Extensions.csproj">
-      <Project>{9E3D2DA7-5F46-F46F-6558-11D906F67E8A}</Project>
-      <Name>Unity.Mathematics.Extensions</Name>
+    <ProjectReference Include="Unity.Mathematics.Extensions.Player.csproj">
+      <Project>{0BEE6CEC-0F83-68B8-BB05-072E516041EA}</Project>
+      <Name>Unity.Mathematics.Extensions.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Global.csproj">
-      <Project>{E1D53312-329D-469C-6E6A-42DA16BEEA88}</Project>
-      <Name>Global</Name>
+    <ProjectReference Include="Global.Player.csproj">
+      <Project>{26A6717A-2C4D-CC59-CF45-4B2C1E9C5A5E}</Project>
+      <Name>Global.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.csproj">
-      <Project>{F325B956-4D34-3DB8-3646-B8B87CBA0790}</Project>
-      <Name>Unity.Transforms</Name>
+    <ProjectReference Include="Unity.Transforms.Player.csproj">
+      <Project>{DC51D185-5929-2A79-AB1E-55DE3B79B56A}</Project>
+      <Name>Unity.Transforms.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Collections.csproj">
-      <Project>{5026C8AD-AC8C-5C9F-EA66-7D2E7D869FE9}</Project>
-      <Name>Unity.Collections</Name>
+    <ProjectReference Include="Unity.Collections.Player.csproj">
+      <Project>{30F76500-8833-C109-69B2-CC8F94FBEBA0}</Project>
+      <Name>Unity.Collections.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.ProGrids.csproj">
-      <Project>{FCF567C4-F219-43FB-B8EF-3329C1B2AB93}</Project>
-      <Name>Unity.ProGrids</Name>
+    <ProjectReference Include="Unity.ProGrids.Player.csproj">
+      <Project>{A9BE0C0E-49CB-C703-0964-14699D04D50D}</Project>
+      <Name>Unity.ProGrids.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Physics.csproj">
-      <Project>{0A84E2CD-C171-3283-D717-03BEA1853284}</Project>
-      <Name>Unity.Physics</Name>
+    <ProjectReference Include="Unity.Physics.Player.csproj">
+      <Project>{6B626A0F-9FFB-2F36-E15F-4FE05C0AC6FE}</Project>
+      <Name>Unity.Physics.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="DOTween.Modules.csproj">
-      <Project>{BCC83EC8-9F7F-4364-3FC1-B902E23410E6}</Project>
-      <Name>DOTween.Modules</Name>
+    <ProjectReference Include="DOTween.Modules.Player.csproj">
+      <Project>{5B92BF93-991C-94C3-4BD9-90EFF2D58AAE}</Project>
+      <Name>DOTween.Modules.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Extensions.Hybrid.csproj">
-      <Project>{0D3F2EC3-068A-7570-A334-3D647A98BF84}</Project>
-      <Name>Unity.Mathematics.Extensions.Hybrid</Name>
+    <ProjectReference Include="Unity.Mathematics.Extensions.Hybrid.Player.csproj">
+      <Project>{671EDF8D-3E30-9F14-7368-F0D2689ECD4F}</Project>
+      <Name>Unity.Mathematics.Extensions.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="IAUS.csproj">
-      <Project>{7F93AA01-E2A7-0CC8-5C5E-EF05A425E584}</Project>
-      <Name>IAUS</Name>
+    <ProjectReference Include="IAUS.Player.csproj">
+      <Project>{F4D9C57E-4A15-4FFA-411E-FF003399AA04}</Project>
+      <Name>IAUS.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Timeline.csproj">
-      <Project>{C699C3C6-8A75-4833-0F7A-FDC45519A1F6}</Project>
-      <Name>Unity.Timeline</Name>
+    <ProjectReference Include="Unity.Timeline.Player.csproj">
+      <Project>{A7723CC2-AC78-3CD8-7AF1-405A3EEA798F}</Project>
+      <Name>Unity.Timeline.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.TextMeshPro.csproj">
-      <Project>{FA88BBE6-AEC5-ED63-EA54-80E4F8BA4533}</Project>
-      <Name>Unity.TextMeshPro</Name>
+    <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
+      <Project>{DCA09BF1-9E06-C2F4-040D-E4555A2EBF36}</Project>
+      <Name>Unity.TextMeshPro.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Hybrid.csproj">
-      <Project>{11E19E6D-6AF3-9F73-31C1-83906CE1BBE0}</Project>
-      <Name>Unity.Physics.Hybrid</Name>
+    <ProjectReference Include="Unity.Physics.Hybrid.Player.csproj">
+      <Project>{A532A9EA-A900-401F-4F9E-0DEC31C45A7B}</Project>
+      <Name>Unity.Physics.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="PlayerCharacterSystem.csproj">
-      <Project>{34444DF1-2E3E-FEF2-CFBB-3A9FAC041F45}</Project>
-      <Name>PlayerCharacterSystem</Name>
+    <ProjectReference Include="PlayerCharacterSystem.Player.csproj">
+      <Project>{1DD80F96-A2F6-8839-14A0-D21A158CD01C}</Project>
+      <Name>PlayerCharacterSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Entities.csproj">
-      <Project>{44A5110D-09EA-EB04-8347-073D865B9216}</Project>
-      <Name>Unity.Entities</Name>
+    <ProjectReference Include="Unity.Entities.Player.csproj">
+      <Project>{1B50DD12-708F-1C25-2D75-F2510CC43DFC}</Project>
+      <Name>Unity.Entities.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Entities.Hybrid.csproj">
-      <Project>{14A1B648-6F7A-FA9F-2638-1CAE5ED4159F}</Project>
-      <Name>Unity.Entities.Hybrid</Name>
+    <ProjectReference Include="Unity.Entities.Hybrid.Player.csproj">
+      <Project>{21C54F01-B0FA-0D45-EF40-99CD36976896}</Project>
+      <Name>Unity.Entities.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.csproj">
-      <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
-      <Name>Unity.Mathematics</Name>
+    <ProjectReference Include="Unity.Mathematics.Player.csproj">
+      <Project>{E1C28A49-66FD-3565-659E-18B9F2941ECD}</Project>
+      <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Burst.csproj">
-      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
-      <Name>Unity.Burst</Name>
+    <ProjectReference Include="Unity.Burst.Player.csproj">
+      <Project>{863F8CF6-4B96-4A41-88EA-D30C81BE99E9}</Project>
+      <Name>Unity.Burst.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Jobs.csproj">
-      <Project>{E0C0C3BA-E662-7069-14F4-F8C6713EFD3A}</Project>
-      <Name>Unity.Jobs</Name>
+    <ProjectReference Include="Unity.Jobs.Player.csproj">
+      <Project>{DEDDA17B-02B7-CABC-863E-06049A176B85}</Project>
+      <Name>Unity.Jobs.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Deformations.csproj">
-      <Project>{9244C19B-1839-4E11-EC2E-567B21900241}</Project>
-      <Name>Unity.Deformations</Name>
+    <ProjectReference Include="Unity.Deformations.Player.csproj">
+      <Project>{3AA91A2A-C636-C8A4-9651-5FE10AAB7680}</Project>
+      <Name>Unity.Deformations.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Properties.UI.csproj">
-      <Project>{7FE0FD8B-CFCF-79D3-6FAA-24422E98E776}</Project>
-      <Name>Unity.Properties.UI</Name>
+    <ProjectReference Include="Unity.Properties.UI.Player.csproj">
+      <Project>{F7BA5608-536B-6166-400D-C646C1C5DFD3}</Project>
+      <Name>Unity.Properties.UI.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.ScriptableBuildPipeline.csproj">
-      <Project>{C3A63B2C-5AF9-D4C6-C4A6-27F51859025D}</Project>
-      <Name>Unity.ScriptableBuildPipeline</Name>
+    <ProjectReference Include="Unity.ScriptableBuildPipeline.Player.csproj">
+      <Project>{8CEC0841-DC91-7B5F-7ABF-9511736E689B}</Project>
+      <Name>Unity.ScriptableBuildPipeline.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="StandardAssets.csproj">
-      <Project>{712D62E3-733C-5D36-2CBE-D35816FB7BBA}</Project>
-      <Name>StandardAssets</Name>
+    <ProjectReference Include="StandardAssets.Player.csproj">
+      <Project>{8019F2C4-09F4-B13C-0162-EB03A731553C}</Project>
+      <Name>StandardAssets.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

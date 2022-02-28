@@ -35,7 +35,6 @@ namespace IAUS.NPCSO.editor
                 GetVision.viewRadius = EditorGUILayout.Slider("View Radius ",GetVision.viewRadius,5, 75);
             GetVision.ViewAngle = EditorGUILayout.IntSlider("View Angle", GetVision.ViewAngle, 30, 180);
                 GetVision.EngageRadius = EditorGUILayout.Slider("Engage Radius", GetVision.EngageRadius, .5f, 25);
-                GetVision.Scantimer = EditorGUILayout.Slider("Look Rate", GetVision.Scantimer, 1, 10);
             }
 
 

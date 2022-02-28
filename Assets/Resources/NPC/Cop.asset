@@ -31,10 +31,6 @@ MonoBehaviour:
     StartTime: 1
     CoolDownTime: 0
   GetMovement:
-    TargetLocation:
-      x: 0
-      y: 0
-      z: 0
     MovementSpeed: 10
     TargetLocationCrowded: 0
     MaxInfluenceAtPoint: 20
@@ -42,7 +38,6 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    CanMove: 0
     StoppingDistance: 1
     Acceleration: 5
     DistanceRemaining: 0

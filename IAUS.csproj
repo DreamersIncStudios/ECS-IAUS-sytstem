@@ -47,7 +47,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.12</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.14</UnityProjectGeneratorVersion>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2020.3.25f1</UnityVersion>
@@ -57,8 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadSetup.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTraverse.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddWaitState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Investigate Target Area\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\FriendNPCSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddAttacks.cs" />
@@ -68,8 +71,8 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\GatherResourcesReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
-    <Compile Include="Assets\Systems\IAUS\AttackSetup.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadMembership.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TraverseReactive.cs" />
@@ -78,17 +81,20 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackType.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Wait\Wait.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\GatherResourcesState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\SquadSO.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\NPCSODatabase.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\EnenyDatabase.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddRetreatState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\SpawnDefendersState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Scatter\Scatter.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
@@ -110,18 +116,22 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\Interface\INPCBasics.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\PatrolReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\CooldownCountdownSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\MeleeAttackTag.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\RepairTowerReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\NPCSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\NPCAttackBuffer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\SpawnDefenderReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCData.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\ListOfNames.txt" />
     <None Include="Assets\Systems\IAUS\IAUS Def.asmdef" />
+    <None Include="Assets\Systems\IAUS\Scripts\NPC INFO\Resources\NPCTextDatabase.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -365,13 +375,13 @@
       <HintPath>Library\PackageCache\com.unity.collections@0.15.0-preview.21\Unity.Collections.LowLevel.ILSupport\Unity.Collections.LowLevel.ILSupport.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.7\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.9\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.7\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.9\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.9\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenEditor">
       <HintPath>Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
@@ -389,7 +399,7 @@
       <HintPath>Library\PackageCache\com.unity.burst@1.5.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.9\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Burst.Cecil.Rocks">
       <HintPath>Library\PackageCache\com.unity.burst@1.5.6\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>

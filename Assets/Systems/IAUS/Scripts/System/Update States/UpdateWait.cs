@@ -11,7 +11,9 @@ namespace IAUS.ECS.Systems
     public class UpdateWait : SystemBase
     {
         private EntityQuery WaitUpdate;
-        private EntityQuery WaitScore;
+        private EntityQuery WaitScoreP;
+        private EntityQuery WaitScoreT;
+
 
         EntityCommandBufferSystem entityCommandBufferSystem;
 
@@ -22,10 +24,15 @@ namespace IAUS.ECS.Systems
             { 
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(WaitActionTag))}
             });
-            WaitScore = GetEntityQuery(new EntityQueryDesc()
+            WaitScoreP = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)), 
                     ComponentType.ReadOnly(typeof(EnemyStats)) }
+            });
+            WaitScoreT = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                    ComponentType.ReadOnly(typeof(NPCStats)) }
             });
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
@@ -44,12 +51,19 @@ namespace IAUS.ECS.Systems
             }.ScheduleParallel(WaitUpdate, systemDeps);
 
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            systemDeps = new UpdateWaitScore()
+            systemDeps = new UpdateWaitScore<EnemyStats>()
             {
                 WaitChunk = GetComponentTypeHandle<Wait>(false),
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true)
                 
-            }.ScheduleParallel(WaitScore, systemDeps);
+            }.ScheduleParallel(WaitScoreP, systemDeps);
+            systemDeps = new UpdateWaitScore<NPCStats>()
+            {
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                StatsChunk = GetComponentTypeHandle<NPCStats>(true)
+
+            }.ScheduleParallel(WaitScoreT, systemDeps);
+
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             systemDeps.Complete();
             Dependency = systemDeps;
@@ -83,20 +97,21 @@ namespace IAUS.ECS.Systems
         }
         //TODO Abstract Stats at later date 
         [BurstCompile]
-        public struct UpdateWaitScore : IJobChunk
+        public struct UpdateWaitScore<STATS> : IJobChunk
+            where STATS : unmanaged , StatsComponent
         {
             public ComponentTypeHandle<Wait> WaitChunk;
-            [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
+            [ReadOnly] public ComponentTypeHandle<STATS> StatsChunk;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Wait> Waits = chunk.GetNativeArray(WaitChunk);
-                NativeArray<EnemyStats> Stats = chunk.GetNativeArray(StatsChunk);
+                NativeArray<STATS> Stats = chunk.GetNativeArray(StatsChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Wait wait = Waits[i];
-                    EnemyStats stats = Stats[i];
+                   STATS stats = Stats[i];
                     if (wait.stateRef.IsCreated)
                     {
                         float TotalScore = wait.TimeLeft.Output(wait.TimePercent) * wait.HealthRatio.Output(stats.HealthRatio);

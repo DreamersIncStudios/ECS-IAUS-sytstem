@@ -25,22 +25,13 @@ namespace Stats
             GetVital((int)VitalName.Mana).BaseValue = 25;
 
             base.Convert(entity, dstManager, conversionSystem);
-            var data = new EnemyStats() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana };
+            var data = new EnemyStats() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana,
+                selfEntityRef = entity
+            };
             dstManager.AddComponentData(entity, data);
             Level = 5;
 
-            GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
-            GetVital((int)VitalName.Health).BaseValue = 50;
-            GetVital((int)VitalName.Mana).BaseValue = 25;
+   
             StatUpdate();
 
         }

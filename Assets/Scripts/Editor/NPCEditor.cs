@@ -279,7 +279,6 @@ namespace IAUS.NPCSO.editor
                 ViewAngle = 120,
                 viewRadius = 35,
                 EngageRadius = 10,
-                Scantimer = 5
             };
 
             GetInfluence = new InfluenceComponent();

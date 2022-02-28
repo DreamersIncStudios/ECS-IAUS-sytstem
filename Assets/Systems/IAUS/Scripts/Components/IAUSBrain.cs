@@ -20,6 +20,7 @@ namespace IAUS.ECS.Component
         public int factionID; // ID CHanging?
         public Status Attitude;
         public Difficulty Difficulty;
+        public NPCLevel NPCLevel;
     }
     public struct SetupBrainTag : IComponentData { }
 
