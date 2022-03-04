@@ -5,6 +5,8 @@ using System;
 using Unity.Entities;
 using System.Threading.Tasks;
 using DreamersInc.DamageSystem.Interfaces;
+using Random = UnityEngine.Random;
+
 namespace Stats
 {
     [Serializable]
@@ -352,8 +354,24 @@ namespace Stats
         }
 
 
+        public virtual void TakeDamage(int Amount, TypeOfDamage typeOf, Element element)
+        {
+            //Todo Figure out element resistances, conditional mods, and possible affinity 
+            float defense = typeOf switch
+            {
+                TypeOfDamage.MagicAoE => MagicDef,
+                _ => MeleeDef,
+            };
 
-        public abstract void TakeDamage(int Amount, TypeOfDamage typeOf, Element element);
+            int damageToProcess = -Mathf.FloorToInt(Amount * defense * Random.Range(.92f, 1.08f));
+            // Debug.Log(damageToProcess + " HP of damage to target "+ Name);
+            AdjustHealth health = new AdjustHealth() { Value = damageToProcess };
+            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, health);
+
+
+        }
+
+        public abstract void ReactToDamage(Vector3 DirOfAttack);
 
     }
 

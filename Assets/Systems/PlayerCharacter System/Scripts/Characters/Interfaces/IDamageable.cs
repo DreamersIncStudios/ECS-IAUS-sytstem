@@ -12,6 +12,7 @@ namespace DreamersInc.DamageSystem.Interfaces
         bool Dead { get; }
         Entity SelfEntityRef { get; }
         void TakeDamage(int Amount, TypeOfDamage typeOf, Element element);
+        void ReactToDamage(Vector3 DirOfAttack);
     }
 
 
