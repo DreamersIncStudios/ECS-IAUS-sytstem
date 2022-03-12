@@ -48,7 +48,9 @@ namespace IAUS.ECS.Systems
                     RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
                     AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
                     GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true),
-                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true)
+                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
+                    SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
+                    
                     
                 }.Schedule(IAUSBrains, systemDeps);
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
@@ -88,6 +90,8 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<AttackTargetState> AttackStateScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RepairState> RepairStateScore;
+            [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<SpawnDefendersState> SpawnStateScore;
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
@@ -158,6 +162,15 @@ namespace IAUS.ECS.Systems
                                 }
 
                                 break;
+                            case AIStates.CallBackUp:
+                                temp.StateName = AIStates.CallBackUp;
+                                if (SpawnStateScore.HasComponent(entity))
+                                {
+                                    temp.TotalScore = SpawnStateScore[entity].TotalScore;
+                                    temp.Status = SpawnStateScore[entity].Status;
+                                }
+
+                                break;
                         }
                         states[j] = temp;
 
@@ -225,6 +238,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.Heal_Magic:
                                 CommandBufferParallel.RemoveComponent<HealSelfTag>(chunkIndex, Entities[i]);
                                 break;
+                            case AIStates.CallBackUp:
+                                CommandBufferParallel.RemoveComponent<SpawnTag>(chunkIndex, Entities[i]);
+                                break;
                         }
                         //add new action tag
                         switch (tester.StateName)
@@ -255,6 +271,9 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.Heal_Magic:
                                 CommandBufferParallel.AddComponent<HealSelfTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.CallBackUp:
+                                CommandBufferParallel.AddComponent<SpawnTag>(chunkIndex, Entities[i]);
                                 break;
                         }
                         brain.CurrentState = tester.StateName;

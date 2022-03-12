@@ -102,7 +102,7 @@ namespace IAUS.ECS.Systems.Reactive
                     SpawnDefendersState state = SpawnStates[i];
                     if (data.EnergyLevel > 50)
                     {
-                        EnenyDatabase.GetEnemy(0).Spawn(Vector3.zero);
+                        EnenyDatabase.GetEnemy(0).Spawn(Vector3.zero); 
                         state.DefendersActive++;
                         data.AdjustEnergy(50);
                     }

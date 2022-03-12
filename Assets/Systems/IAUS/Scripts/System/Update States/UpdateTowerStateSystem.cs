@@ -141,7 +141,7 @@ namespace IAUS.ECS.Systems
                 if (state.stateRef.IsCreated)
                 {
                     float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f : attacks[i].HighScoreAttack.AttackDistanceRatio;
-                    float totalScore = state.HealthRatio.Output(Stats[i].HealthRatio) * state.TargetInRange.Output(attackRatio) * state.EnergyMana.Output(Energy[i].EnergyRatio);
+                    float totalScore = state.DefenederRatio*state.HealthRatio.Output(Stats[i].HealthRatio) * state.TargetInRange.Output(attackRatio) * state.EnergyMana.Output(Energy[i].EnergyRatio);
                     state.TotalScore = state.Status != ActionStatus.CoolDown ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * state.mod) * totalScore) : 0.0f;
                 }
                 Spawns[i] = state;
