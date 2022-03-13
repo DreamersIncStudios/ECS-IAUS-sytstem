@@ -33,7 +33,9 @@ namespace GameModes.DestroyTheTower.TowerSystem
             dstManager.AddComponentData(entity, Data);
             dstManager.AddBuffer<StateBuffer>(entity);
             dstManager.AddComponent<RepairState>(entity);
-            dstManager.AddComponent<SpawnDefendersState>(entity);
+            var spawn = new SpawnDefendersState();
+            spawn.MaxNumberOfDefender = 3 * Data.level;
+            dstManager.AddComponentData(entity,spawn);
             if (GetAttackType.Count != 0)
             {
                 DynamicBuffer<AttackTypeInfo> ati = dstManager.AddBuffer<AttackTypeInfo>(entity);

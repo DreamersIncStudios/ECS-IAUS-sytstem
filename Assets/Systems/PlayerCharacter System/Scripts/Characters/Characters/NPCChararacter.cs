@@ -37,9 +37,25 @@ namespace Stats
 
         }
 
-        public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element)
+        Rigidbody rb;
+        Animator anim;
+        private void Start()
+        {
+            rb = GetComponent<Rigidbody>();
+            anim = GetComponent<Animator>();
+        }
+
+        public override void ReactToDamage(Vector3 DirOfAttack)
         {
             throw new System.NotImplementedException();
+        }
+
+        public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element)
+        {
+            base.TakeDamage(Amount, typeOf, element);
+            //Todo Add system so that NPC can not hit 0 HP ?????
+
+
         }
     }
 }

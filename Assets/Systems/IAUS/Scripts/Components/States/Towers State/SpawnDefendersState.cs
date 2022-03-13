@@ -19,6 +19,8 @@ namespace IAUS.ECS.Component
 
         public float SpawnTimer;
         public int DefendersActive;
+        public int MaxNumberOfDefender;
+        public float DefenederRatio => 1.0f - DefendersActive / (float)MaxNumberOfDefender;
         public AIStates name { get { return AIStates.CallBackUp; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -45,12 +47,12 @@ namespace IAUS.ECS.Component
     {
         public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
         [ReadOnly] public EntityTypeHandle EntityChunk;
-        public ComponentTypeHandle<SpawnDefendersState> SpankChunk;
+        public ComponentTypeHandle<SpawnDefendersState> SpawnChunk;
         public BufferTypeHandle<StateBuffer> StateBufferChunk;
         public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
         {
             NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
-            NativeArray<SpawnDefendersState> Spawns = chunk.GetNativeArray(SpankChunk);
+            NativeArray<SpawnDefendersState> Spawns = chunk.GetNativeArray(SpawnChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(StateBufferChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
