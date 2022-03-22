@@ -7,10 +7,10 @@ using IAUS.ECS;
 using IAUS.ECS.Consideration;
 using Global.Component;
 using Dreamers.Global;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {

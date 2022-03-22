@@ -20,7 +20,7 @@ namespace Utilities.ReactiveSystem
     }
 
 
-    public abstract class AIReactiveSystemBase<COMPONENT, AICOMPONENT, COMPONENT_REACTOR> : SystemBase
+    public abstract partial class AIReactiveSystemBase<COMPONENT, AICOMPONENT, COMPONENT_REACTOR> : SystemBase
         where COMPONENT : unmanaged, IComponentData
         where AICOMPONENT : unmanaged, IComponentData
         where COMPONENT_REACTOR : struct, IComponentReactorTagsForAIStates<COMPONENT, AICOMPONENT>
@@ -133,6 +133,8 @@ namespace Utilities.ReactiveSystem
             [ReadOnly] public EntityTypeHandle EntityChunk;
             [ReadOnly] public COMPONENT_REACTOR Reactor;
 
+            
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<StateComponent> stateComponents = chunk.GetNativeArray(StateComponentChunk);
@@ -189,7 +191,7 @@ namespace Utilities.ReactiveSystem
         //            stateComponents[i] = stateComponent;
         //        }
         //    }
-        //}
+        //}    
         protected override void OnUpdate()
         {
 

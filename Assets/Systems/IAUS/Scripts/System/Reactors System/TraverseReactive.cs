@@ -49,7 +49,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
 
-    public class TraverseMovement : SystemBase
+    public partial class TraverseMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _componentRemovedQuery;

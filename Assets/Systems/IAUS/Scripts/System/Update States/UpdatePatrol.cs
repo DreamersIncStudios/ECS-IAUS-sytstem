@@ -12,7 +12,7 @@ using PixelCrushers.LoveHate;
 
 namespace IAUS.ECS.Systems
 {
-    public class UpdatePatrol : SystemBase
+    public partial class UpdatePatrol : SystemBase
     {
         private EntityQuery DistanceCheckPatrol;
 

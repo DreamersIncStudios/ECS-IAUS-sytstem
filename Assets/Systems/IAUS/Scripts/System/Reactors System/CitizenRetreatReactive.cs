@@ -45,7 +45,7 @@ namespace IAUS.ECS.Systems.Reactive
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-    public sealed class RetreatMovement : SystemBase
+    public sealed partial class RetreatMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _componentAddedQueryWithWait;

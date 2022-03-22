@@ -13,7 +13,7 @@ using PixelCrushers.LoveHate;
 namespace IAUS.ECS.Systems
 {
 
-    public class UpdateTraverse : SystemBase
+    public partial class UpdateTraverse : SystemBase
     {
 
         private EntityQuery TraverseScore;

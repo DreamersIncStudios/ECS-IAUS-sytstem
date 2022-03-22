@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DreamersInc.InflunceMapSystem;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Global.Component;
 using AISenses;
 using IAUS.ECS;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 
-namespace IAUS.NPCSO
+namespace IAUS.NPCScriptableObj
 {
     public class FriendNPCSO : NPCSO, IInfluence
     {

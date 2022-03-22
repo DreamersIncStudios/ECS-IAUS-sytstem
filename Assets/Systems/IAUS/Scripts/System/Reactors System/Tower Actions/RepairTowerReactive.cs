@@ -51,7 +51,7 @@ namespace IAUS.ECS.Systems.Reactive
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public class RepairSystem : SystemBase
+    public partial class RepairSystem : SystemBase
     {
         private EntityQuery Repairing;
         private EntityCommandBufferSystem _entityCommandBufferSystem;

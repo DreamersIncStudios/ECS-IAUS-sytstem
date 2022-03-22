@@ -9,7 +9,7 @@ namespace IAUS.ECS.Systems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-    public sealed  class IAUSBrainUpdate : SystemBase
+    public sealed partial class IAUSBrainUpdate : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         public EntityQuery IAUSBrains;

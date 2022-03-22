@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using UnityEngine.AI;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Global.Component;
 using IAUS.ECS;
 using Components.MovementSystem;
@@ -12,8 +12,9 @@ using Stats;
 using AISenses;
 using AISenses.Authoring;
 using System;
+using System.Threading.Tasks;
 
-namespace IAUS.NPCSO
+namespace IAUS.NPCScriptableObj
 {
     public class NPCSO : ScriptableObject, INPCBasics
     {
@@ -21,7 +22,7 @@ namespace IAUS.NPCSO
         [SerializeField] uint spawnID;
         public uint SpawnID { get { return spawnID; } }
         [SerializeField] string _getName;
-        public string GetName => string.IsNullOrEmpty(_getName)? NPCUtility.GetNameFile() : _getName;
+        public string GetName => string.IsNullOrEmpty(_getName) ? NPCUtility.GetNameFile() : _getName;
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
@@ -62,10 +63,13 @@ namespace IAUS.NPCSO
         [HideInInspector] public BaseAIAuthoringSO AIAuthoring;
         public GameObject SpawnedGO { get; private set; }
 
-        public virtual void Spawn(Vector3 pos)
+        public virtual async void Spawn(Vector3 pos)
         {
             SpawnedGO = Instantiate(Model, pos, Quaternion.identity);
-            SpawnedGO.AddComponent<NavMeshAgent>();
+            if (!SpawnedGO.GetComponent<NavMeshAgent>())
+            {
+                SpawnedGO.AddComponent<NavMeshAgent>();
+            }
             SpawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
             AIAuthoring = SpawnedGO.AddComponent<BaseAIAuthoringSO>();
             AIAuthoring.Self = Self;
@@ -78,7 +82,9 @@ namespace IAUS.NPCSO
                     case AIStates.Patrol:
                         AIAuthoring.AddPatrol = true;
                         AIAuthoring.buildMovement = GetPatrol;
-                        SpawnedGO.AddComponent<WaypointCreation>();
+                        var adder = SpawnedGO.AddComponent<WaypointCreation>();
+                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        adder.CreateWaypoints(GetPatrol.Range, GetPatrol.NumberOfStops, false);
                         break;
                     case AIStates.Wait:
                         AIAuthoring.AddWait = true;
@@ -91,6 +97,7 @@ namespace IAUS.NPCSO
             AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
             Senses.Vision = true;
             Senses.VisionData = GetVision;
+            AIAuthoring.SetupSystem();
             //Senses.Hearing = true;
             //Senses.HearingData = new Hearing();
 
@@ -100,16 +107,18 @@ namespace IAUS.NPCSO
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="Defender"></param>
-        public void Spawn(Vector3 pos, bool Defender) {
+        public void Spawn(Vector3 pos, bool Defender)
+        {
             if (!Defender)
             {
                 Spawn(pos);
             }
-            else { 
-                
-            
+            else
+            {
+
+
             }
-        
+
         }
 
 
@@ -117,8 +126,9 @@ namespace IAUS.NPCSO
     }
 
 
-    public class NPCUtility {
-       public static string GetNameFile()
+    public class NPCUtility
+    {
+        public static string GetNameFile()
         {
             TextAsset nameFile = Resources.Load("ListOfNames") as TextAsset;
             var lines = nameFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);

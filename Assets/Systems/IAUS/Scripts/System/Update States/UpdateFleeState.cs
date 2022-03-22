@@ -11,7 +11,7 @@ using AISenses;
 
 namespace IAUS.ECS.Systems
 {
-    public sealed class UpdateFleeState : SystemBase
+    public sealed partial class UpdateFleeState : SystemBase
     {
         private EntityQuery DistanceCheck;
         private EntityQuery RetreatScore;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IAUS.NPCSO
+namespace IAUS.NPCScriptableObj
 {
-    public static  class EnenyDatabase 
+    public static  class EnemyDatabase 
     {
         static public List<NPCSO> NPCs;
         static public bool IsLoaded { get; private set; } = false;

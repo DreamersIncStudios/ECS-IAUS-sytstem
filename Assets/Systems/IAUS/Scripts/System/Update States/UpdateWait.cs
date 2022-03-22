@@ -8,7 +8,7 @@ using Stats;
 
 namespace IAUS.ECS.Systems
 {
-    public class UpdateWait : SystemBase
+    public partial class UpdateWait : SystemBase
     {
         private EntityQuery WaitUpdate;
         private EntityQuery WaitScoreP;

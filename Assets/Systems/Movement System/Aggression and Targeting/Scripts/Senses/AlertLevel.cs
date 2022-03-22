@@ -32,7 +32,7 @@ namespace AISenses
         none, Audio, Visual, Impact
     }
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public class UpdateAlert : SystemBase
+    public partial class UpdateAlert : SystemBase
     {
         private EntityQuery AlertQuery;
         protected override void OnCreate()

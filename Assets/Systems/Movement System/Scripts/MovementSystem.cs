@@ -11,7 +11,7 @@ using Unity.Jobs;
 namespace IAUS.ECS.Systems
 {
    //[UpdateAfter(typeof(IAUS_UpdateState))]
-    public class MovementSystem : SystemBase
+    public partial class MovementSystem : SystemBase
     {
         private EntityQuery Mover;
 

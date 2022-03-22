@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using UnityEngine.AI;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Global.Component;
 using IAUS.ECS;
 using DreamersInc.InflunceMapSystem;
@@ -14,7 +14,7 @@ using AISenses;
 using Dreamers.SquadSystem;
 using Components.MovementSystem;
 
-namespace IAUS.NPCSO {
+namespace IAUS.NPCScriptableObj {
     public sealed class EnemyNPCSO : NPCSO, INPCEnemy,IInfluence
     {
         public bool IsPartOfTeam => isPartofTeam;

@@ -9,7 +9,7 @@ using Stats;
 namespace IAUS.ECS.Systems
 {
 
-    public class StayInRangeUpdate : SystemBase
+    public partial class StayInRangeUpdate : SystemBase
     {
         private EntityQuery Followers;
         EntityCommandBufferSystem _entityCommandBufferSystem;

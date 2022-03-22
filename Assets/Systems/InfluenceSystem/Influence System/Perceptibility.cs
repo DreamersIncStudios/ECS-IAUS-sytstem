@@ -52,7 +52,7 @@ namespace DreamersInc.InflunceMapSystem
         public NoiseState noiseState;
     }
 
-    public class ChangePerceptionSystem : SystemBase
+    public partial class ChangePerceptionSystem : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
 

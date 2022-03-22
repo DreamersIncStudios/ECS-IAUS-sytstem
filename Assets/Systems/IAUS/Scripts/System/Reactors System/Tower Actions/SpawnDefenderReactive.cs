@@ -7,7 +7,7 @@ using Unity.Entities;
 using Unity.Burst;
 using GameModes.DestroyTheTower.TowerSystem;
 using Stats;
-using IAUS.NPCSO;
+using IAUS.NPCScriptableObj;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<SpawnTag, SpawnDefendersState, IAUS.ECS.Systems.Reactive.SpawnDefenderReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<SpawnTag, SpawnDefendersState, IAUS.ECS.Systems.Reactive.SpawnDefenderReactor>.ManageComponentAdditionJob))]
@@ -54,7 +54,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
     }
-    public class TowerSpawnDefenderSystem : SystemBase
+    public partial class TowerSpawnDefenderSystem : SystemBase
     {
         private EntityQuery SpawnDefender;
         private EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -102,7 +102,7 @@ namespace IAUS.ECS.Systems.Reactive
                     SpawnDefendersState state = SpawnStates[i];
                     if (data.EnergyLevel > 50)
                     {
-                        EnenyDatabase.GetEnemy(0).Spawn(Vector3.zero); 
+                        EnemyDatabase.GetEnemy(0).Spawn(Vector3.zero); 
                         state.DefendersActive++;
                         data.AdjustEnergy(50);
                     }

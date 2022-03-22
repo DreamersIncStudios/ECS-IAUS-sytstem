@@ -52,7 +52,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public class GatherResourcesSystem : SystemBase
+    public partial class GatherResourcesSystem : SystemBase
     {
         private EntityQuery Gathering;
         private EntityCommandBufferSystem _entityCommandBufferSystem;

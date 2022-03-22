@@ -27,6 +27,8 @@ MonoBehaviour:
   getPatrol:
     BufferZone: 0.75
     CoolDownTime: 0
+    Range: 75
+    NumberOfStops: 5
   getWait:
     StartTime: 1
     CoolDownTime: 0
@@ -52,7 +54,6 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    Scantimer: 5
     viewRadius: 35
     ViewAngle: 120
     EngageRadius: 10
@@ -100,7 +101,6 @@ MonoBehaviour:
     factionID: 1
   getAttackTypes:
   - style: 0
-    Index: 0
     AttackRange: 30
+    fallOffRange: 0
     Attacktimer: 20
-    Score: 0

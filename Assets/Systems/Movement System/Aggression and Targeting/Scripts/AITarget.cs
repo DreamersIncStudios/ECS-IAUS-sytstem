@@ -28,7 +28,7 @@ namespace Global.Component
         public  float detectionScore;
 
     }
-    public class UpdateAITarget : SystemBase
+    public partial class UpdateAITarget : SystemBase
     {
         protected override void OnUpdate()
         {

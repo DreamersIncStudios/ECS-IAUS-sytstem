@@ -48,7 +48,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
     [UpdateBefore(typeof(PatrolTagReactor.PatrolReactiveSystem))]
-    public class PatrolMovement : SystemBase
+    public partial class PatrolMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _patrolling;

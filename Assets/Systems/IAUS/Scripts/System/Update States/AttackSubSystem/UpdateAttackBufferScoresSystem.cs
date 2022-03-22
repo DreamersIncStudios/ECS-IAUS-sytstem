@@ -15,7 +15,7 @@ namespace IAUS.ECS.Systems
     //TODO Need to add a Can Target Filter 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateBefore(typeof(IAUSBrainUpdate))]
-    public class UpdateAttackBufferScoresSystem : SystemBase
+    public partial class UpdateAttackBufferScoresSystem : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         private EntityQuery LookingForAttack;

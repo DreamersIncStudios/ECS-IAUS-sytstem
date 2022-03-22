@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace IAUS.ECS.Component
 {
-    [GenerateAuthoringComponent]
+   [GenerateAuthoringComponent]
     public struct StayInRange : IBaseStateScorer
     {
         public int refIndex { get; set; }

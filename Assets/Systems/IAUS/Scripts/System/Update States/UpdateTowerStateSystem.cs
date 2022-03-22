@@ -11,7 +11,7 @@ using GameModes.DestroyTheTower.TowerSystem;
 
 namespace IAUS.ECS.Systems
 {
-    public class UpdateTowerStateSystem : SystemBase
+    public partial class UpdateTowerStateSystem : SystemBase
     {
 
         EntityCommandBufferSystem _entityCommandBufferSystem;

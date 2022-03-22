@@ -9,7 +9,7 @@ using UnityEngine;
 using Global.Component;
 namespace AISenses.VisionSystems
 {
-    public class VisionSystemJobs : SystemBase
+    public partial class VisionSystemJobs : SystemBase
     {
         private EntityQuery SeerEntityQuery;
 
@@ -17,6 +17,11 @@ namespace AISenses.VisionSystems
         EntityCommandBufferSystem entityCommandBufferSystem;
         EndFramePhysicsSystem m_EndFramePhysicsSystem;
 
+        protected override void OnStartRunning()
+        {
+            base.OnStartRunning();
+           // RegisterPhysicsRuntimeSystemReadOnly()
+        }
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -31,7 +36,6 @@ namespace AISenses.VisionSystems
 
             });
             entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            m_EndFramePhysicsSystem = World.GetExistingSystem<EndFramePhysicsSystem>();
 
         }
         float interval = 1.0f;
@@ -41,7 +45,6 @@ namespace AISenses.VisionSystems
             if (runUpdate)
             {
                 CollisionWorld collisionWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld.CollisionWorld;
-                Dependency = JobHandle.CombineDependencies(Dependency, m_EndFramePhysicsSystem.GetOutputDependency());
                 JobHandle systemDeps = Dependency;
                 systemDeps = new AddRaycastBuffer()
                 {
@@ -63,7 +66,7 @@ namespace AISenses.VisionSystems
                 }.ScheduleParallel(SeerEntityQuery, systemDeps);
 
                 entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-                World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().AddInputDependency(systemDeps);
+              //  World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().AddInputDependency(systemDeps);
                 Dependency = systemDeps;
                 interval = 1.0f;
             }

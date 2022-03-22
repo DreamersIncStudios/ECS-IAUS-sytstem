@@ -5,7 +5,7 @@ using Unity.Entities;
 using Unity.Jobs;
 namespace Stats
 {
-    public class LevelUpSystem : SystemBase
+    public partial class LevelUpSystem : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         protected override void OnCreate()

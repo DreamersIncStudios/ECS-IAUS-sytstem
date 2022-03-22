@@ -3,6 +3,7 @@ using Unity.Entities;
 using System;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
+using Unity.Mathematics;
 namespace IAUS.ECS.Component
 {
     [Serializable]
@@ -16,7 +17,7 @@ namespace IAUS.ECS.Component
 
         public ConsiderationScoringData DistanceToPoint  => stateRef.Value.Array[Index].Distance; 
         public ConsiderationScoringData HealthRatio =>  stateRef.Value.Array[Index].Health; 
-         public ConsiderationScoringData TargetInRange =>   stateRef.Value.Array[Index].TargetInRange; 
+         public ConsiderationScoringData TargetInRange =>   stateRef.Value.Array[Index].TargetInRange;
         public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -52,7 +53,6 @@ namespace IAUS.ECS.Component
         public float distanceToPoint { get; set; }
         public float StartingDistance { get; set; }
         public float BufferZone { get; set; }
-        public ActionStatus Status { get; set; }
         public bool Complete { get; }
 
     }
@@ -61,6 +61,8 @@ namespace IAUS.ECS.Component
     public struct PMovementBuilderData {
         public float BufferZone;
         public float CoolDownTime;
+        public uint Range;
+        public uint NumberOfStops;
     }
     public struct PatrolActionTag : IComponentData {
         public bool UpdateWayPoint;

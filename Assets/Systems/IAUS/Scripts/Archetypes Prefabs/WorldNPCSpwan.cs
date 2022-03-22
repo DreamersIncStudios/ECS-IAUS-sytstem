@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IAUS.NPCSO {
+namespace IAUS.NPCScriptableObj {
 
     [CreateAssetMenu(fileName = "City NPC Data",menuName ="ScriptableObject/City Data" , order = 1)]
     public  class WorldNPCSpwan : ScriptableObject

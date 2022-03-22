@@ -26,7 +26,7 @@ namespace DreamersInc.DamageSystem.Interfaces
         public int Value;   
     }
 
-    public class AdjustVitalsSystem : SystemBase
+    public partial class AdjustVitalsSystem : SystemBase
     {
         private EntityQuery enemyQuery;
         private EntityQuery playerQuery;

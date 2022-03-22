@@ -5,7 +5,7 @@ using UnityEditor;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
 
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {

@@ -28,8 +28,8 @@ namespace ECS.Utilities
 
     [ExecuteAlways]
     [UpdateInGroup(typeof(Unity.Transforms.TransformSystemGroup))]
-    [UpdateBefore(typeof(Unity.Transforms.EndFrameTRSToLocalToWorldSystem))]
-    public class CopyTransformFromInjectedGameObjectECS2 : SystemBase
+    [UpdateBefore(typeof(TRSToLocalToWorldSystem))]
+    public partial class CopyTransformFromInjectedGameObjectECS2 : SystemBase
     {
         EntityQuery TransformsToUpdate;
         EntityQuery m_TransformGroup;

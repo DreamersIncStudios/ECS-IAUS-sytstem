@@ -7,7 +7,7 @@ using UnityEngine;
 using Components.MovementSystem;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.NPCSO.Interfaces
+namespace IAUS.NPCScriptableObj.Interfaces
 {
     public interface INPCBasics
     {

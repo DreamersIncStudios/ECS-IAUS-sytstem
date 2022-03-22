@@ -12,7 +12,7 @@ using DreamersInc.InflunceMapSystem;
 using UnityEngine.AI;
 using Unity.Entities;
 
-namespace IAUS.NPCSO
+namespace IAUS.NPCScriptableObj
 {
     [System.Serializable]
     //TODO Write Custom Property Drawers

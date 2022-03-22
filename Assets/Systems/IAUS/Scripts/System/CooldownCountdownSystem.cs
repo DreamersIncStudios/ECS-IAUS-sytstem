@@ -8,7 +8,7 @@ using Unity.Jobs;
 using Unity.Burst;
 namespace IAUS.ECS.Systems
 {
-    public class CooldownCountdownSystem : SystemBase
+    public partial class CooldownCountdownSystem : SystemBase
     {
         private EntityQuery PatrolCooldown;
         private EntityQuery TraverseCooldown;

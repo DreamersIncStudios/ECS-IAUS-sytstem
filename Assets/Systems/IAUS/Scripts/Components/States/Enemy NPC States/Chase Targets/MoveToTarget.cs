@@ -39,7 +39,7 @@ namespace IAUS.ECS.Component
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;
         [SerializeField] float _totalScore;
-        
+
     }
     public struct MoveToTargetActionTag : IComponentData { bool Test; }
 

@@ -20,18 +20,28 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
     public AttackTargetState attackTargetState = new AttackTargetState();
     public List<AttackTypeInfo> GetAttackType;
     public InfluenceComponent GetInfluence;
-    public int factionID; 
+    public int factionID;
+    Entity entity;
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
+        this.entity = entity;
+    }
+
+    public void SetupSystem()
+    {
+
+        EntityManager dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         dstManager.AddComponentData(entity, Self);
         dstManager.AddComponent<IAUSBrain>(entity);
-        dstManager.SetComponentData(entity, new IAUSBrain { 
+        dstManager.SetComponentData(entity, new IAUSBrain
+        {
             factionID = GetInfluence.factionID,
-            Target =Self,
+            Target = Self,
+            NPCLevel = NPCLevel.Grunt, //  need to be added from EnemySO 
             Difficulty = Difficulty.Normal,
         });
 
-      
+
 
         dstManager.AddComponent<SetupBrainTag>(entity);
         dstManager.AddComponentData(entity, GetInfluence);
@@ -59,7 +69,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         }
         if (AddWait)
         {
-            Wait  waitState = new Wait()
+            Wait waitState = new Wait()
             {
                 StartTime = waitBuilder.StartTime,
                 _coolDownTime = waitBuilder.CoolDownTime
@@ -72,7 +82,8 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
             dstManager.AddComponentData(entity, retreatState);
         if (Self.Type == TargetType.Character)
             dstManager.AddComponentData(entity, movement);
-        if (AddRetreat) {
+        if (AddRetreat)
+        {
             dstManager.AddComponentData(entity, retreatState);
         }
         if (GetAttackType.Count != 0)
@@ -86,4 +97,5 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 
         }
     }
+
 }

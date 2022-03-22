@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-
 /*Generic Player Character Class
  * Will be using BurgZergArcade Derived Player Character System  that is already in main project file
  */

@@ -7,7 +7,7 @@ using Unity.Transforms;
 
 namespace IAUS.ECS.Systems
 {
-    public class IAUSBrainSetupSystem : SystemBase
+    public partial class IAUSBrainSetupSystem : SystemBase
     {
         EntityQuery Starter;
         EntityQuery _PatrolStateEntity;
