@@ -52,7 +52,8 @@ namespace IAUS.NPCScriptableObj {
             if (Self.Type == TargetType.Character)
             {
                 EnemyCharacter enemyStats = SpawnedGO.AddComponent<EnemyCharacter>();
-                enemyStats.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+                //Todo replace with actual inputed and mod stats 
+                enemyStats.SetAttributeBaseValue((int)GetLevel, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                 enemyStats.Name = GetName;
             }
             AIAuthoring.factionID = GetFactionID;

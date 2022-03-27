@@ -68,7 +68,7 @@ namespace IAUS.ECS.StateBlobSystem
                     aIStates = AIStates.Patrol,
                     FactionID = brain.factionID,
                     //TODO fill out all Levels
-                    NPCLevel = NPCLevel.Grunt
+                    NPCLevel = brain.NPCLevel
                 });
             });
             Entities.ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
@@ -78,7 +78,7 @@ namespace IAUS.ECS.StateBlobSystem
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Traverse,
                     FactionID = brain.factionID,
-                    NPCLevel = NPCLevel.Grunt
+                    NPCLevel = brain.NPCLevel
                 });
             });
 
@@ -89,7 +89,7 @@ namespace IAUS.ECS.StateBlobSystem
                     Difficulty = Difficulty.Normal,
                     aIStates = AIStates.Wait,
                     FactionID = brain.factionID,
-                    NPCLevel = NPCLevel.Grunt
+                    NPCLevel = brain.NPCLevel
                 });
             });
             Entities.ForEach((ref GatherResourcesState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
@@ -143,7 +143,7 @@ namespace IAUS.ECS.StateBlobSystem
                             _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
                         },
                         FactionID = 1,
-                        NPCLevel = NPCLevel.Tower
+                        NPCLevel = brain.NPCLevel
                     });
 
                     attacks[i] = attack;

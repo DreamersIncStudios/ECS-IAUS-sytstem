@@ -20,6 +20,8 @@ namespace IAUS.NPCScriptableObj.Interfaces
         WaitBuilderData GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
+        uint GetLevel { get; }
+
     }
 
     public interface INPCEnemy {

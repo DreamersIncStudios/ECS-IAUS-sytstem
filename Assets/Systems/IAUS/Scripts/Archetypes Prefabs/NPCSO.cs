@@ -23,6 +23,8 @@ namespace IAUS.NPCScriptableObj
         public uint SpawnID { get { return spawnID; } }
         [SerializeField] string _getName;
         public string GetName => string.IsNullOrEmpty(_getName) ? NPCUtility.GetNameFile() : _getName;
+        public uint GetLevel { get { return level; } }
+        [SerializeField] uint level;
 
         [SerializeField] GameObject _model;
         public GameObject Model { get { return _model; } }
@@ -75,6 +77,10 @@ namespace IAUS.NPCScriptableObj
             AIAuthoring.Self = Self;
             //AIAuthoring.faction = getFaction;
             AIAuthoring.movement = AIMove;
+            AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
+            Senses.Vision = true;
+            Senses.VisionData = GetVision;
+
             foreach (AIStates state in AIStatesAvailable)
             {
                 switch (state)
@@ -94,9 +100,7 @@ namespace IAUS.NPCScriptableObj
 
             }
 
-            AISensesAuthoring Senses = SpawnedGO.AddComponent<AISensesAuthoring>();
-            Senses.Vision = true;
-            Senses.VisionData = GetVision;
+
             AIAuthoring.SetupSystem();
             //Senses.Hearing = true;
             //Senses.HearingData = new Hearing();
