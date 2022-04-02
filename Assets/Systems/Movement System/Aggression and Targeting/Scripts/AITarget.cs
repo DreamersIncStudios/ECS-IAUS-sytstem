@@ -2,6 +2,8 @@
 using UnityEngine;
 using DreamersInc.InflunceMapSystem;
 using PixelCrushers.LoveHate;
+using Unity.Mathematics;
+
 namespace Global.Component
 {
     [System.Serializable]
@@ -15,7 +17,7 @@ namespace Global.Component
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
         public bool CanBeTargetByPlayer;
-
+        public float3 CenterOffset;
         //TODO change to output a relationship level;
         public bool IsFriend(int factionID) {
             bool test = new bool();

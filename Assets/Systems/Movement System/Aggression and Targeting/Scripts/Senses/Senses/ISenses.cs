@@ -62,15 +62,25 @@ namespace AISenses
 
     }
 
-    public struct ScanPositionBuffer : IBufferElementData {
+    public struct ScanPositionBuffer : IBufferElementData
+    {
         public Target target;
-       [HideInInspector] public Unity.Physics.RaycastInput test;
+        [HideInInspector] public Unity.Physics.RaycastInput rayToCast;
         [HideInInspector] public float dist;
+        [HideInInspector] public CastRay castRay;
 
         public static implicit operator Target(ScanPositionBuffer e) { return e; }
         public static implicit operator ScanPositionBuffer(Target e) { return new ScanPositionBuffer { target = e }; }
     }
-    
+    public struct CastRay
+    {
+        public float3 Start;
+        public float3 Dir;
+        public float dist;
+        public LayerMask Targets;
+
+    }
+
     public struct Target {
         public Entity entity;
         public AITarget TargetInfo;

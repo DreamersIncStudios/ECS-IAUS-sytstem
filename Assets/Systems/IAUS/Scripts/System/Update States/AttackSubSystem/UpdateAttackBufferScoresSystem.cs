@@ -117,7 +117,6 @@ namespace IAUS.ECS.Systems
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     DynamicBuffer<AttackTypeInfo> attackTypeInfos = AttackBuffers[i];
-                    DynamicBuffer<ScanPositionBuffer> scanPositionBuffers = TargetBuffers[i];
 
                     if (TargetBuffers[i].IsEmpty)
                         continue;
