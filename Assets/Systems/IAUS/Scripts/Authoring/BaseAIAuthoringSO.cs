@@ -6,6 +6,8 @@ using Global.Component;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
 using AISenses.VisionSystems;
+using DreamersInc.ComboSystem;
+
 public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
@@ -40,7 +42,6 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
             NPCLevel = NPCLevel.Grunt, //  need to be added from EnemySO 
             Difficulty = Difficulty.Normal,
         });
-
 
 
         dstManager.AddComponent<SetupBrainTag>(entity);
@@ -94,6 +95,9 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
                 ati.Add(Info);
             }
             dstManager.AddComponentData(entity, attackTargetState);
+            dstManager.AddBuffer<NPCAttackBuffer>(entity);
+            dstManager.AddComponentData(entity, new Command() { InputQueue = new Queue<AnimationTrigger>() });
+
 
         }
     }

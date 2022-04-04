@@ -131,7 +131,7 @@ namespace AISenses.VisionSystems
                             buffer.RemoveAt(i);
                     }
                 }).Run();
-
+                // Consider readd  if we can do full ECS 
                 //systemDeps = new CastBufferRays()
                 //{
                 //    world = collisionWorld,
@@ -219,57 +219,58 @@ namespace AISenses.VisionSystems
                 }
             }
         }
+        // Consider readd  if we can do full ECS 
 
-        [BurstCompile]
-        struct CastBufferRays : IJobChunk
-        {
-            public BufferTypeHandle<ScanPositionBuffer> BufferChunk;
-            [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> TargetInfo;
-            [ReadOnly] public CollisionWorld world;
-            [ReadOnly] public PhysicsWorld physicsWorld;
+        //[BurstCompile]
+        //struct CastBufferRays : IJobChunk
+        //{
+        //    public BufferTypeHandle<ScanPositionBuffer> BufferChunk;
+        //    [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> TargetInfo;
+        //    [ReadOnly] public CollisionWorld world;
+        //    [ReadOnly] public PhysicsWorld physicsWorld;
 
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                BufferAccessor<ScanPositionBuffer> rays = chunk.GetBufferAccessor(BufferChunk);
+        //    public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+        //    {
+        //        BufferAccessor<ScanPositionBuffer> rays = chunk.GetBufferAccessor(BufferChunk);
 
-                for (int i = 0; i < chunk.Count; i++)
-                {
+        //        for (int i = 0; i < chunk.Count; i++)
+        //        {
 
-                    DynamicBuffer<ScanPositionBuffer> buffer = rays[i];
-                    for (int j = 0; j < buffer.Length; j++)
-                    {
-                        ScanPositionBuffer item = buffer[j];
-                        Debug.DrawLine(item.rayToCast.Start, item.rayToCast.End, Color.red, 1); 
-                        if (world.CastRay(item.rayToCast, out Unity.Physics.RaycastHit raycastHit))
-                        {
-                            Target setTarget = new Target();
-                            setTarget.entity = raycastHit.Entity;
-                            if (TargetInfo.HasComponent(raycastHit.Entity))
-                            {
-                
-                                setTarget.TargetInfo = TargetInfo[raycastHit.Entity];
+        //            DynamicBuffer<ScanPositionBuffer> buffer = rays[i];
+        //            for (int j = 0; j < buffer.Length; j++)
+        //            {
+        //                ScanPositionBuffer item = buffer[j];
+        //                Debug.DrawLine(item.rayToCast.Start, item.rayToCast.End, Color.red, 1); 
+        //                if (world.CastRay(item.rayToCast, out Unity.Physics.RaycastHit raycastHit))
+        //                {
+        //                    Target setTarget = new Target();
+        //                    setTarget.entity = raycastHit.Entity;
+        //                    if (TargetInfo.HasComponent(raycastHit.Entity))
+        //                    {
 
-                                setTarget.DistanceTo = raycastHit.Fraction * item.dist;
-                                setTarget.LastKnownPosition = raycastHit.Position;
-                                setTarget.CanSee = true;
-                                item.target = setTarget;
-                                buffer[j] = item;
-                            }
-                       
+        //                        setTarget.TargetInfo = TargetInfo[raycastHit.Entity];
 
-                        }
-                        else
-                        {
-                            buffer.RemoveAt(j);
-                        }
-              
+        //                        setTarget.DistanceTo = raycastHit.Fraction * item.dist;
+        //                        setTarget.LastKnownPosition = raycastHit.Position;
+        //                        setTarget.CanSee = true;
+        //                        item.target = setTarget;
+        //                        buffer[j] = item;
+        //                    }
 
-                    }
 
-                }
-            }
+        //                }
+        //                else
+        //                {
+        //                    buffer.RemoveAt(j);
+        //                }
 
-        }
+
+        //            }
+
+        //        }
+        //    }
+
+        //}
 
     }
 }

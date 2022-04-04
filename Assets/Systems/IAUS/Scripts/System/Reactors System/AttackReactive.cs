@@ -176,25 +176,14 @@ namespace IAUS.ECS.Systems.Reactive
                                     break;
 
                             }
-
-
-
-                            //if (A[0].Trigger.trigger)
-                            //{
-                            //    handler.InputQueue = new Queue<AnimationTrigger>();
-                            //    handler.InputQueue.Enqueue(A[0].Trigger);
-                            //    A.RemoveAt(0);
-                            //}
-                            //else
-                            //{
-                            //    A[0].Trigger.AdjustTime(Time.DeltaTime);
-                            //}
                         }
                     }
             });
             //TODO correct in full game 
             ComponentDataFromEntity<Wait> WaitState = GetComponentDataFromEntity<Wait>(false);
             ComponentDataFromEntity<EnemyStats> enemy = GetComponentDataFromEntity<EnemyStats>(false);
+            ComponentDataFromEntity<PlayerStatComponent> player = GetComponentDataFromEntity<PlayerStatComponent>(false);
+
             Entities.
                ForEach((Entity entity, ref AttackActionTag tag, Command inputc) => {
                    if (inputc.InputQueue == null)
@@ -211,13 +200,30 @@ namespace IAUS.ECS.Systems.Reactive
                                    inputc.InputQueue.Enqueue(A[0].Trigger);
                                    if (WaitState.HasComponent(entity))
                                    {
-                                       EnemyStats stat = enemy[tag.attackThis];
-                                       stat.AdjustHealth(-250);
-                                       enemy[tag.attackThis] = stat;
-                                       if (stat.CurHealth <= 0.0f)
+
+                                       if (enemy.HasComponent(tag.attackThis))
                                        {
-                                           EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
-                                           EntityManager.RemoveComponent<AttackActionTag>(entity);
+                                           var stat = enemy[tag.attackThis];
+
+                                           stat.AdjustHealth(-250);
+                                           enemy[tag.attackThis] = stat;
+                                           if (stat.CurHealth <= 0.0f)
+                                           {
+                                               EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
+                                               EntityManager.RemoveComponent<AttackActionTag>(entity);
+                                           }
+                                       }
+                                       if (player.HasComponent(tag.attackThis))
+                                       {
+                                           var stat = player[tag.attackThis];
+
+                                           stat.AdjustHealth(-250);
+                                           player[tag.attackThis] = stat;
+                                           if (stat.CurHealth <= 0.0f)
+                                           {
+                                               EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
+                                               EntityManager.RemoveComponent<AttackActionTag>(entity);
+                                           }
                                        }
                                        else
                                        {
