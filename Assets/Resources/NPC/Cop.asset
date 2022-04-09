@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnID: 0
   _getName: Cop
+  level: 0
   _model: {fileID: 8994461831506262393, guid: ca1d9011f20061d46abfe6d0f4766449, type: 3}
   GetSelf:
     Type: 1
@@ -22,6 +23,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 1
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 0
   states: 010000000a00000004000000
   getPatrol:
@@ -103,4 +108,4 @@ MonoBehaviour:
   - style: 0
     AttackRange: 30
     fallOffRange: 0
-    Attacktimer: 20
+    Attacktimer: 5
