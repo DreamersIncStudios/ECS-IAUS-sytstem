@@ -126,6 +126,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateTextFileReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
@@ -135,7 +136,9 @@
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\DistanceToTarget.txt" />
     <None Include="Assets\Systems\IAUS\IAUS Def.asmdef" />
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Creature List.txt" />
+    <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\Time.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\NPC INFO\Resources\NPCTextDatabase.txt" />
+    <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\ManaAmmo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
