@@ -14,7 +14,7 @@ namespace IAUS.ECS.Component
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData EnergyMana => stateRef.Value.Array[Index].ManaAmmo;
 
         public float SpawnTimer;

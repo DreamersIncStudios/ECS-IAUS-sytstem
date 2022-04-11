@@ -13,12 +13,13 @@ namespace IAUS.ECS.StateBlobSystem
     {
         public Identity ID;
         public ConsiderationScoringData Health;
-        public ConsiderationScoringData Distance;
+        public ConsiderationScoringData DistanceToPlaceOfInterest;
         public ConsiderationScoringData Timer;
         public ConsiderationScoringData ManaAmmo;
-        public ConsiderationScoringData TargetInRange;
+        public ConsiderationScoringData DistanceToTarget;
+        public ConsiderationScoringData influence;
 
-       
+
 
     }
     public struct AIStateBlobAsset
@@ -62,7 +63,7 @@ namespace IAUS.ECS.StateBlobSystem
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
-                    aIStates = AIStates.Patrol,
+                    aIStates = p.name,
                     FactionID = brain.factionID,
                     //TODO fill out all Levels
                     NPCLevel = brain.NPCLevel
@@ -73,7 +74,7 @@ namespace IAUS.ECS.StateBlobSystem
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
-                    aIStates = AIStates.Traverse,
+                    aIStates = p.name,
                     FactionID = brain.factionID,
                     NPCLevel = brain.NPCLevel
                 });
@@ -84,7 +85,7 @@ namespace IAUS.ECS.StateBlobSystem
                 w.Index = w.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
-                    aIStates = AIStates.Wait,
+                    aIStates = w.name,
                     FactionID = brain.factionID,
                     NPCLevel = brain.NPCLevel
                 });

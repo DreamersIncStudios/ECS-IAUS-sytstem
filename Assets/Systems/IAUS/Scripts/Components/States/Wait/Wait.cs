@@ -12,9 +12,14 @@ namespace IAUS.ECS.Component {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
 
-
+        public AIStates name { get { return AIStates.Wait; } }
         public ConsiderationScoringData TimeLeft { get { return  stateRef.Value.Array[Index].Timer; } }
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
+        /// <summary>
+        /// Utility score for Attackable target in Ranges
+        /// </summary>
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+
         public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.
@@ -28,7 +33,7 @@ namespace IAUS.ECS.Component {
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
 
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public float mod { get { return 1.0f - (1.0f / 2.0f); } }
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] float _resetTime;

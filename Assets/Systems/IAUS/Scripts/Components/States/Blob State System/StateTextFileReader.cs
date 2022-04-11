@@ -30,10 +30,10 @@ namespace IAUS.ECS.StateBlobSystem
                         aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                     },
                     Health = LineRead(4, lines[i]),
-                    Distance = LineRead(11, lines[i]),
+                    DistanceToPlaceOfInterest = LineRead(11, lines[i]),
                     Timer = LineRead(18, lines[i]),
                     ManaAmmo = LineRead(25, lines[i]),
-                    TargetInRange = LineRead(32, lines[i])
+                    DistanceToTarget = LineRead(32, lines[i])
                 };
 
             }
@@ -69,6 +69,7 @@ namespace IAUS.ECS.StateBlobSystem
             SetupConsideration(array, "Consideration files/Distance to place of Interest", Considerations.DistanceToPOI);
             SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
             SetupConsideration(array, "Consideration files/Time", Considerations.Time);
+            SetupConsideration(array, "Consideration files/Influence", Considerations.Influence);
 
 #if UNITY_EDITOR
             Debug.Log(array.Count);
@@ -79,6 +80,10 @@ namespace IAUS.ECS.StateBlobSystem
         public static void SetupConsideration(List<StateAsset> array , string textFilePath, Considerations consideration)
         {
             TextAsset textFile = Resources.Load(textFilePath) as TextAsset;
+            if (textFile == null) {
+                throw new ArgumentOutOfRangeException(nameof(textFilePath), $"File not include in project/build " +
+                    $"{textFilePath}");
+            }
             var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < lines.Length; i++)
             {
@@ -103,10 +108,10 @@ namespace IAUS.ECS.StateBlobSystem
                             temp.Health = LineRead(4, lines[i]);
                             break;
                         case Considerations.DistanceToTarget:
-                            temp.TargetInRange = LineRead(4, lines[i]);
+                            temp.DistanceToTarget = LineRead(4, lines[i]);
                             break;
                         case Considerations.DistanceToPOI:
-                            temp.Distance = LineRead(4, lines[i]);
+                            temp.DistanceToPlaceOfInterest = LineRead(4, lines[i]);
                             break;
                         case Considerations.Time:
                             temp.Timer = LineRead(4, lines[i]);
@@ -164,5 +169,5 @@ namespace IAUS.ECS.StateBlobSystem
         
     }
 
-    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo}
+    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, Influence }
 }

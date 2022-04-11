@@ -67,11 +67,15 @@ namespace IAUS.ECS.Systems
                     move.ResetTime = move.CurWaypoint.TimeToWaitatWaypoint;
                     //Todo Add info on next travel point here
                     wait.Timer = wait.StartTime = move.CurWaypoint.TimeToWaitatWaypoint;
-
-                    move.WaypointIndex++;
-                    if (move.WaypointIndex >= move.NumberOfWayPoints)
-                        move.WaypointIndex = 0;
-
+                    if (move.TravelInOrder)
+                    {
+                        move.WaypointIndex++;
+                        if (move.WaypointIndex >= move.NumberOfWayPoints)
+                            move.WaypointIndex = 0;
+                    }
+                    else { 
+                        move.WaypointIndex= (move.WaypointIndex+1) % move.NumberOfWayPoints;
+                    }
                     move.CurWaypoint = waypointBuffer[move.WaypointIndex].WayPoint;
 
                     Moves[i] = move;

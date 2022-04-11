@@ -59,6 +59,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadSetup.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTraverse.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\WaitReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateTextFileReader.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\RepairState.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateTextFileReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />
@@ -138,6 +138,7 @@
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Creature List.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\Time.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\NPC INFO\Resources\NPCTextDatabase.txt" />
+    <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\Influence.txt" />
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\Consideration files\ManaAmmo.txt" />
   </ItemGroup>
   <ItemGroup>

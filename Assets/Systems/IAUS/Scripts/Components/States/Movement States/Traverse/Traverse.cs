@@ -17,8 +17,8 @@ namespace IAUS.ECS.Component
 
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
-        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
-        public ConsiderationScoringData ThreatInRange; //Todo add threat consideration
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
+        public ConsiderationScoringData ThreatInRange => stateRef.Value.Array[Index].DistanceToTarget;
 
         public bool Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -30,6 +30,8 @@ namespace IAUS.ECS.Component
         public float StartingDistance { get; set; }
         [SerializeField] public float BufferZone { get; set; }
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        public bool TravelInOrder { get; set; }
+
         public Waypoint CurWaypoint { get; set; }
 
         public int WaypointIndex { get; set; }
