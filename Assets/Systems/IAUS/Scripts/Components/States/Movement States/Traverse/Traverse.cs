@@ -41,8 +41,8 @@ namespace IAUS.ECS.Component
         [HideInInspector] public bool UpdateTravelPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
 
 

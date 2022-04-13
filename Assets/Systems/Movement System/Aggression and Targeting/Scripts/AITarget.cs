@@ -3,6 +3,7 @@ using UnityEngine;
 using DreamersInc.InflunceMapSystem;
 using PixelCrushers.LoveHate;
 using Unity.Mathematics;
+using AISenses.VisionSystems;
 
 namespace Global.Component
 {
@@ -25,18 +26,21 @@ namespace Global.Component
                 test = true;
             else {
                 test = LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
-                    }
+            }
             return test; }
-        public  float detectionScore;
+        public float detectionScore;
 
     }
-    public partial class UpdateAITarget : SystemBase
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateBefore(typeof (VisionSystemJobs))]
+    public partial class UpdateAITarget : ComponentSystem
     {
         protected override void OnUpdate()
         {
-            Entities.WithBurst().ForEach((ref AITarget target, in Perceptibility perceptibility) => {
+            Entities.ForEach((ref AITarget target, ref Perceptibility perceptibility) =>
+            {
                 target.detectionScore = perceptibility.Score;
-            }).ScheduleParallel();
+            });
         }
     }
 

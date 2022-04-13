@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Transforms;
@@ -15,14 +15,12 @@ using PixelCrushers.LoveHate;
 namespace AISenses.VisionSystems
 {
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public class VisionSystemJobs : SystemBase
+    public partial class VisionSystemJobs : SystemBase
     {
         private EntityQuery SeerEntityQuery;
 
         private EntityQuery TargetEntityQuery;
-        BuildPhysicsWorld m_BuildPhysicsWorld;
-        EndFramePhysicsSystem m_EndFramePhysicsSystem;
-        EndFixedStepSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+        EntityCommandBufferSystem entityCommandBufferSystem;
 
         protected override void OnCreate()
         {
@@ -37,9 +35,7 @@ namespace AISenses.VisionSystems
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadWrite(typeof(AITarget)) }
 
             });
-            m_BuildPhysicsWorld = World.GetExistingSystem<BuildPhysicsWorld>();
-            m_EndFramePhysicsSystem = World.GetExistingSystem<EndFramePhysicsSystem>();
-            m_EntityCommandBufferSystem = World.GetExistingSystem<EndFixedStepSimulationEntityCommandBufferSystem>();
+            entityCommandBufferSystem = World.GetExistingSystem<EndFixedStepSimulationEntityCommandBufferSystem>();
 
 
 
@@ -50,12 +46,8 @@ namespace AISenses.VisionSystems
         {
             if (runUpdate)
             {
-                m_BuildPhysicsWorld = World.GetExistingSystem<BuildPhysicsWorld>();
-                CollisionWorld collisionWorld = m_BuildPhysicsWorld.PhysicsWorld.CollisionWorld;
-                EntityCommandBuffer commandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer();
-                Dependency = JobHandle.CombineDependencies(Dependency, m_EndFramePhysicsSystem.GetOutputDependency());
+
                 JobHandle systemDeps = Dependency;
-                World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().AddInputDependencyToComplete( systemDeps);
 
                 systemDeps = new AddRaycastBuffer()
                 {
@@ -68,7 +60,7 @@ namespace AISenses.VisionSystems
                     AITargets = TargetEntityQuery.ToComponentDataArray<AITarget>(Allocator.TempJob)
 
                 }.ScheduleParallel(SeerEntityQuery, systemDeps);
-                m_EntityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
                 systemDeps.Complete();
                 ComponentDataFromEntity<AITarget> targert = GetComponentDataFromEntity<AITarget>(true);
@@ -190,17 +182,6 @@ namespace AISenses.VisionSystems
 
                                     bufferAccessor[i].Add(new ScanPositionBuffer()
                                     {
-                                        rayToCast = new RaycastInput()
-                                        {
-                                            Start = tranforms[i].Position + new float3(0, 1, 0),
-                                            End = test,
-                                            Filter = new CollisionFilter
-                                            {
-                                                BelongsTo = ~0u,
-                                                CollidesWith = ((1 << 10) | (1 << 11) | (1 << 12)),
-                                                GroupIndex = 0
-                                            }
-                                        },
                                         dist = dist,
                                         castRay = new CastRay() {
                                             Start = tranforms[i].Position + new float3(0, 1, 0),

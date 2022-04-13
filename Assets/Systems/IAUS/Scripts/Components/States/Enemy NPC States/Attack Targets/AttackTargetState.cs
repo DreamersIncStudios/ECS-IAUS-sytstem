@@ -32,8 +32,8 @@ namespace IAUS.ECS.Component
        // public float TimerLeftUntilAttack;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore => HighScoreAttack.Score ;
+        [SerializeField] public float _resetTime;
+        [SerializeField] public float _totalScore => HighScoreAttack.Score ;
     }
 
 
