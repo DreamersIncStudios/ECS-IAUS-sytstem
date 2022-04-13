@@ -37,8 +37,8 @@ namespace IAUS.ECS.Component
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
 
     }
     public struct MoveToTargetActionTag : IComponentData { bool Test; }

@@ -65,7 +65,6 @@ namespace AISenses
     public struct ScanPositionBuffer : IBufferElementData
     {
         public Target target;
-        [HideInInspector] public Unity.Physics.RaycastInput rayToCast;
         [HideInInspector] public float dist;
         [HideInInspector] public CastRay castRay;
 

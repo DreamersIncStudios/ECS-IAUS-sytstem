@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component
 
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] public float _resetTime;
-        [SerializeField] public float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
 }
