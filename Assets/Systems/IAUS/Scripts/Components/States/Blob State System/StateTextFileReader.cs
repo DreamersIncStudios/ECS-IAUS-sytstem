@@ -71,10 +71,6 @@ namespace IAUS.ECS.StateBlobSystem
             SetupConsideration(array, "Consideration files/Time", Considerations.Time);
             SetupConsideration(array, "Consideration files/Influence", Considerations.Influence);
 
-#if UNITY_EDITOR
-            Debug.Log(array.Count);
-#endif
-
             return array.ToArray();
         }
         public static void SetupConsideration(List<StateAsset> array , string textFilePath, Considerations consideration)

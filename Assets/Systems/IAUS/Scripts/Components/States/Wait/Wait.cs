@@ -20,13 +20,13 @@ namespace IAUS.ECS.Component {
         /// </summary>
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
 
-        public bool Complete => Timer <= 0.0f;
+       [SerializeField] public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.
         /// </summary>
-        public float Timer;
+        public float Timer { get; set; }
         public float StartTime;
-        public float TimePercent => Timer / StartTime;
+        public float TimePercent => Mathf.Clamp01( Timer / StartTime);
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }  }

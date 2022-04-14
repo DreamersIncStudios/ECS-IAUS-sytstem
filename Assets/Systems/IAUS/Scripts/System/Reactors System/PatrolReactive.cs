@@ -85,13 +85,13 @@ namespace IAUS.ECS.Systems.Reactive
                 ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
-            systemDeps = new CheckSkipPoint()
-            {
-                MovementChunk = GetComponentTypeHandle<Movement>(false),
-                PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
-                WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
-            }.ScheduleParallel(_patrolling, systemDeps);
+            //systemDeps = new CheckSkipPoint()
+            //{
+            //    MovementChunk = GetComponentTypeHandle<Movement>(false),
+            //    PatrolChunk = GetComponentTypeHandle<Patrol>(false),
+            //    ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
+            //    WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
+            //}.ScheduleParallel(_patrolling, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;

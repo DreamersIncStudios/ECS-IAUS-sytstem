@@ -15,10 +15,9 @@ namespace IAUS.ECS.Systems
     public partial class UpdatePatrol : SystemBase
     {
         private EntityQuery DistanceCheckPatrol;
-
         private EntityQuery PatrolScore;
 
-        private EntityQuery BufferPatrol;
+       // private EntityQuery BufferPatrol;
         private EntityQuery CompleteCheckPatrol;
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -30,6 +29,7 @@ namespace IAUS.ECS.Systems
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadOnly(typeof(LocalToWorld)) }
             });
+
             DistanceCheckPatrol.SetChangedVersionFilter(
                 new ComponentType[] {
                     ComponentType.ReadOnly(typeof(LocalToWorld)),
@@ -53,16 +53,16 @@ namespace IAUS.ECS.Systems
                 }
             });
 
-            BufferPatrol = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)) }
-            });
+            //BufferPatrol = GetEntityQuery(new EntityQueryDesc()
+            //{
+            //    All = new ComponentType[] { ComponentType.ReadOnly(typeof(IAUSBrain)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)) }
+            //});
 
             CompleteCheckPatrol = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(PatrolActionTag)) }
             });
-          
+
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
 
@@ -132,7 +132,7 @@ namespace IAUS.ECS.Systems
                     Patrol patrol = patrols[i];
                     if (patrol.stateRef.IsCreated)
                     {
-                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f :attacks[i].HighScoreAttack.AttackDistanceRatio;
+                        float attackRatio = attacks[i].HighScoreAttack.AttackTarget.entity == Entity.Null ? 1.0f : attacks[i].HighScoreAttack.AttackDistanceRatio;
 
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio) * patrol.TargetInRange.Output(attackRatio);

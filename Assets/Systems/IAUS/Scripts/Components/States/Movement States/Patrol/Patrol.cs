@@ -28,7 +28,7 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].influence;
 
 
-        public bool Complete { get { return BufferZone > distanceToPoint; } }
+       [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }}
