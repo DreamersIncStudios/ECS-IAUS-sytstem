@@ -4,17 +4,20 @@ using UnityEngine;
 using IAUS.NPCScriptableObj;
 using AISenses;
 using Unity.Entities;
+using System.Threading.Tasks;
+using System;
+
 public class TestSpawn : MonoBehaviour
 {
     public List<NPCSpawn> test;
     public WorldNPCSpwan NPCToSpawn;
     public void Start()
     {
-           InvokeRepeating(nameof(Spawn), 0, 5);
+           InvokeRepeating(nameof(Spawn), 0, 15);
   
         NPCToSpawn.SpawnWorld(this.transform.position);
     }
-    void Spawn()
+    async void Spawn()
     {
         for (int i = 0; i < test.Count; i++)
         {
@@ -22,7 +25,10 @@ public class TestSpawn : MonoBehaviour
             {
                 for (int j = 0; j < test[i].SpawnPerCall; j++)
                 {
-                    test[i].SOToSpawn.Spawn(this.transform.position);
+                    Utilities.GlobalFunctions.RandomPoint(transform.position, 5.0f, out Vector3 Spos);
+                    test[i].SOToSpawn.Spawn(Spos);
+                    await Task.Delay(TimeSpan.FromSeconds(1f));
+
                     test[i].spawned++;
                 }
             }
@@ -34,7 +40,7 @@ public class TestSpawn : MonoBehaviour
 
     [System.Serializable]
    public class NPCSpawn {
-        public NPCSO SOToSpawn;
+        public EnemyNPCSO SOToSpawn;
         [Range(1, 50)]
         public int SpawnPerCall;
         [Range(1, 2000)]

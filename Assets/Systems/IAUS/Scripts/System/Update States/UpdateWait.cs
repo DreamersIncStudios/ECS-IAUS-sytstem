@@ -25,12 +25,13 @@ namespace IAUS.ECS.Systems
             base.OnCreate();
             WaitUpdate = GetEntityQuery(new EntityQueryDesc()
             { 
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(WaitActionTag))}
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(WaitActionTag)), 
+                    ComponentType.ReadOnly(typeof(IAUSBrain)) }
             });
             WaitScoreP = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadOnly(typeof(IAUSBrain)), 
-                    ComponentType.ReadOnly(typeof(EnemyStats)),ComponentType.ReadOnly(typeof(Patrol)) }
+                    ComponentType.ReadOnly(typeof(EnemyStats)),ComponentType.ReadOnly(typeof(Patrol)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer)) }
             });
             WaitScoreT = GetEntityQuery(new EntityQueryDesc()
             {

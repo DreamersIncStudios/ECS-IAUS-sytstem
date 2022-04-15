@@ -95,7 +95,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -835,10 +839,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!64 &354770630
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -948,7 +949,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -1688,10 +1693,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!64 &672299112
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1801,7 +1803,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -2541,10 +2547,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &6740611748656323031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2653,7 +2656,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -3393,10 +3400,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &3658695793140225377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3541,6 +3545,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &3415567822586281701
 MonoBehaviour:
@@ -3573,6 +3581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -3710,6 +3719,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1317860068
 MonoBehaviour:
@@ -3742,6 +3755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -3879,6 +3893,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &2123074946
 MonoBehaviour:
@@ -3911,6 +3929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4048,6 +4067,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &71266372
 MonoBehaviour:
@@ -4080,6 +4103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4217,6 +4241,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &387370272
 MonoBehaviour:
@@ -4249,6 +4277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4386,6 +4415,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1789227960
 MonoBehaviour:
@@ -4418,6 +4451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4555,6 +4589,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1231764774
 MonoBehaviour:
@@ -4587,6 +4625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4724,6 +4763,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &146392138
 MonoBehaviour:
@@ -4756,6 +4799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4893,6 +4937,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1672970464
 MonoBehaviour:
@@ -4925,6 +4973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5062,6 +5111,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1714459979
 MonoBehaviour:
@@ -5094,6 +5147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5231,6 +5285,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &691313627
 MonoBehaviour:
@@ -5263,6 +5321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5400,6 +5459,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &493254651
 MonoBehaviour:
@@ -5432,6 +5495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5569,6 +5633,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &347697511
 MonoBehaviour:
@@ -5601,6 +5669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5738,6 +5807,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &429132310
 MonoBehaviour:
@@ -5770,6 +5843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5907,6 +5981,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1965363816
 MonoBehaviour:
@@ -5939,6 +6017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6076,6 +6155,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1463075382
 MonoBehaviour:
@@ -6108,6 +6191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6245,6 +6329,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &655919923
 MonoBehaviour:
@@ -6277,6 +6365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6414,6 +6503,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1116846335
 MonoBehaviour:
@@ -6446,6 +6539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6547,7 +6641,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -7287,10 +7385,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &8112502899683941451
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7435,6 +7530,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &593166233
 MonoBehaviour:
@@ -7467,6 +7566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -7568,7 +7668,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -8308,10 +8412,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &4710636687265719959
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8456,6 +8557,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &559636586
 MonoBehaviour:
@@ -8488,6 +8593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8625,6 +8731,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &209024268
 MonoBehaviour:
@@ -8657,6 +8767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8794,6 +8905,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &2136171179
 MonoBehaviour:
@@ -8826,6 +8941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8927,7 +9043,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -9667,10 +9787,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &8446584815388301579
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9815,6 +9932,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1742475835
 MonoBehaviour:
@@ -9847,6 +9968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -9948,7 +10070,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -10688,10 +10814,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &1766246075444085589
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10836,6 +10959,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1513824975
 MonoBehaviour:
@@ -10868,6 +10995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11005,6 +11133,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &663289183
 MonoBehaviour:
@@ -11037,6 +11169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11174,6 +11307,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &81966007
 MonoBehaviour:
@@ -11206,6 +11343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11343,6 +11481,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &641035237
 MonoBehaviour:
@@ -11375,6 +11517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11512,6 +11655,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1378246429
 MonoBehaviour:
@@ -11544,6 +11691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11681,6 +11829,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1737137783
 MonoBehaviour:
@@ -11713,6 +11865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11850,6 +12003,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &485210680
 MonoBehaviour:
@@ -11882,6 +12039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -12019,6 +12177,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &337622343
 MonoBehaviour:
@@ -12051,6 +12213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -12152,7 +12315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -12892,10 +13059,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &3336083553294428054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13040,6 +13204,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &644831656
 MonoBehaviour:
@@ -13072,6 +13240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13209,6 +13378,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &484534280
 MonoBehaviour:
@@ -13241,6 +13414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13378,6 +13552,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1291411502
 MonoBehaviour:
@@ -13410,6 +13588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13547,6 +13726,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1752657754
 MonoBehaviour:
@@ -13579,6 +13762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13716,6 +13900,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &490407160
 MonoBehaviour:
@@ -13748,6 +13936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13885,6 +14074,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &85095642
 MonoBehaviour:
@@ -13917,6 +14110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -14018,7 +14212,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -14758,10 +14956,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &670223130802033994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14906,6 +15101,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1992115211
 MonoBehaviour:
@@ -14938,6 +15137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15075,6 +15275,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &901132280
 MonoBehaviour:
@@ -15107,6 +15311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15244,6 +15449,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &216346752
 MonoBehaviour:
@@ -15276,6 +15485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15413,6 +15623,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &348813980
 MonoBehaviour:
@@ -15445,6 +15659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15582,6 +15797,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1954153537
 MonoBehaviour:
@@ -15614,6 +15833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15840,6 +16060,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1212844811
 MonoBehaviour:
@@ -15872,6 +16096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15973,7 +16198,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_IsSelectable: 1
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -16713,10 +16942,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_IsSelectable: 1
-  m_SelectedFaces: 
-  m_SelectedEdges: []
-  m_SelectedVertices: 
+  m_VersionIndex: 0
 --- !u!65 &3803695077175848147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16861,6 +17087,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &245841882
 MonoBehaviour:
@@ -16893,6 +17123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17030,6 +17261,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1784135947
 MonoBehaviour:
@@ -17062,6 +17297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17199,6 +17435,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &194729575
 MonoBehaviour:
@@ -17231,6 +17471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17368,6 +17609,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1657837841
 MonoBehaviour:
@@ -17400,6 +17645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17556,6 +17802,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1382671717433329423
 MonoBehaviour:
@@ -17569,6 +17819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180

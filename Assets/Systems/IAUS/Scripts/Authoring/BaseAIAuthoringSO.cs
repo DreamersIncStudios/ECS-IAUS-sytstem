@@ -31,10 +31,12 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetupSystem()
     {
-
+        
         EntityManager dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         dstManager.AddComponentData(entity, Self);
+
         dstManager.AddComponent<IAUSBrain>(entity);
+        
         dstManager.SetComponentData(entity, new IAUSBrain
         {
             factionID = GetInfluence.factionID,

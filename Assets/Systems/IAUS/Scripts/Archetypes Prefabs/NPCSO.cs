@@ -89,7 +89,7 @@ namespace IAUS.NPCScriptableObj
                         AIAuthoring.AddPatrol = true;
                         AIAuthoring.buildMovement = GetPatrol;
                         var adder = SpawnedGO.AddComponent<WaypointCreation>();
-                        await Task.Delay(TimeSpan.FromSeconds(2));
+                        await Task.Delay(TimeSpan.FromSeconds(1));
                         adder.CreateWaypoints(GetPatrol.Range, GetPatrol.NumberOfStops, false);
                         break;
                     case AIStates.Wait:
