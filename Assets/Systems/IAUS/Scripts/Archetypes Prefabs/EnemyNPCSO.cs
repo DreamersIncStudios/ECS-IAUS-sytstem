@@ -35,7 +35,7 @@ namespace IAUS.NPCScriptableObj {
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PMovementBuilderData patrol, WaitBuilderData wait,
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, MovementBuilderData patrol, WaitBuilderData wait,
             bool team, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee, InfluenceComponent influence)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);

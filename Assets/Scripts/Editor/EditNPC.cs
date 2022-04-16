@@ -20,7 +20,7 @@ namespace IAUS.NPCScriptableObj.editor
             }
             else
                 createRandomCharacter = true;
-            GetPatrol = SO.GetPatrol;
+            GetPatrol = SO.GetPatrolTraverse;
             GetTargetType = SO.Self.Type;
             Name = SO.GetName;
             GetWait = SO.GetWait;

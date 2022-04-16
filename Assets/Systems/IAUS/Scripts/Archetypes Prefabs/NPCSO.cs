@@ -34,8 +34,8 @@ namespace IAUS.NPCScriptableObj
         [SerializeField] AITarget GetSelf;
         public List<AIStates> AIStatesAvailable => states;
         [SerializeField] List<AIStates> states;
-        public PMovementBuilderData GetPatrol => getPatrol;
-        [SerializeField] PMovementBuilderData getPatrol;
+        public MovementBuilderData GetPatrolTraverse => getPatrol;
+        [SerializeField] MovementBuilderData getPatrol;
         public WaitBuilderData GetWait => getWait;
         [SerializeField] WaitBuilderData getWait;
 
@@ -49,7 +49,7 @@ namespace IAUS.NPCScriptableObj
         public Vision GetVision => getVision;
 
         public virtual void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement
-            , PMovementBuilderData patrol, WaitBuilderData wait
+            , MovementBuilderData patrol, WaitBuilderData wait
             )
         {
             _getName = Name;
@@ -87,14 +87,19 @@ namespace IAUS.NPCScriptableObj
                 {
                     case AIStates.Patrol:
                         AIAuthoring.AddPatrol = true;
-                        AIAuthoring.buildMovement = GetPatrol;
+                        AIAuthoring.buildMovement = GetPatrolTraverse;
                         var adder = SpawnedGO.AddComponent<WaypointCreation>();
                         await Task.Delay(TimeSpan.FromSeconds(1));
-                        adder.CreateWaypoints(GetPatrol.Range, GetPatrol.NumberOfStops, false);
+                        adder.CreateWaypoints(GetPatrolTraverse.Range, GetPatrolTraverse.NumberOfStops, false);
                         break;
                     case AIStates.Wait:
                         AIAuthoring.AddWait = true;
                         AIAuthoring.waitBuilder = GetWait;
+                        break;
+                    case AIStates.Traverse:
+                        var adder2 = SpawnedGO.AddComponent<WaypointCreation>();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        adder2.CreateWaypoints(GetPatrolTraverse.Range, GetPatrolTraverse.NumberOfStops, false);
                         break;
                 }
 

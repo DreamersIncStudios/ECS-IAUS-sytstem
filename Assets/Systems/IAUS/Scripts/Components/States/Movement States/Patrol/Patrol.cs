@@ -71,7 +71,7 @@ namespace IAUS.ECS.Component
     }
 
     [Serializable]
-    public struct PMovementBuilderData {
+    public struct MovementBuilderData {
         public float BufferZone;
         public float CoolDownTime;
         public uint Range;

@@ -18,7 +18,7 @@ namespace IAUS.NPCScriptableObj
         [SerializeField] InfluenceComponent getInfluence;
         public int GetFactionID { get { return factionMemberID; } }
         [SerializeField] int factionMemberID;
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PMovementBuilderData patrol, WaitBuilderData wait)
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, MovementBuilderData patrol, WaitBuilderData wait)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);
             this.getInfluence = GetInfluence;

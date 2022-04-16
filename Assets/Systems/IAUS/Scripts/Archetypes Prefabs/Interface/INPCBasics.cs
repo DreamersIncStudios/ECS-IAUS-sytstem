@@ -16,7 +16,7 @@ namespace IAUS.NPCScriptableObj.Interfaces
         Movement AIMove { get; }
         List<AIStates> AIStatesAvailable { get; }
         GameObject Model { get; }
-        PMovementBuilderData GetPatrol { get; }
+        MovementBuilderData GetPatrolTraverse { get; }
         WaitBuilderData GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }

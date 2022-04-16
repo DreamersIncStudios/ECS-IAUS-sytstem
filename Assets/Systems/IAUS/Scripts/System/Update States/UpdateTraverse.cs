@@ -28,7 +28,7 @@ namespace IAUS.ECS.Systems
             TraverseScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)), ComponentType.ReadOnly(typeof(NPCStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
-                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                             
                 }
             });
 

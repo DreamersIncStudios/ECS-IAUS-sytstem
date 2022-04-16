@@ -7,18 +7,9 @@ namespace Stats
 {
     public class NPCChararacter : BaseCharacter
     {
-
         public override void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
-            base.Convert(entity, dstManager, conversionSystem);
-
             float ModValue = 1.1f;
-
-
-            var data = new NPCStats() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana,
-                selfEntityRef = entity
-            };
-            dstManager.AddComponentData(entity, data);
             GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
             GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
             GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(20 * ModValue);
@@ -31,7 +22,19 @@ namespace Stats
             GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
             GetVital((int)VitalName.Health).BaseValue = 50;
             GetVital((int)VitalName.Mana).BaseValue = 25;
+
+            base.Convert(entity, dstManager, conversionSystem);
+            var data = new NPCStats()
+            {
+                MaxHealth = MaxHealth,
+                MaxMana = MaxMana,
+                CurHealth = CurHealth,
+                CurMana = CurMana,
+                selfEntityRef = entity
+            };
+            dstManager.AddComponentData(entity, data);
             Level = 5;
+
 
             StatUpdate();
 

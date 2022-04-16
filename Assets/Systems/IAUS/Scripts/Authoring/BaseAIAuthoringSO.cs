@@ -12,7 +12,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
 {
     public AITarget Self;
     public Movement movement;
-    public PMovementBuilderData buildMovement;
+    public MovementBuilderData buildMovement;
     public bool AddPatrol;
     public bool AddTraverse;
     public bool AddWait;
@@ -34,9 +34,7 @@ public class BaseAIAuthoringSO : MonoBehaviour, IConvertGameObjectToEntity
         
         EntityManager dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         dstManager.AddComponentData(entity, Self);
-
         dstManager.AddComponent<IAUSBrain>(entity);
-        
         dstManager.SetComponentData(entity, new IAUSBrain
         {
             factionID = GetInfluence.factionID,

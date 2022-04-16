@@ -13,7 +13,7 @@ public class TestSpawn : MonoBehaviour
     public WorldNPCSpwan NPCToSpawn;
     public void Start()
     {
-           InvokeRepeating(nameof(Spawn), 0, 15);
+         InvokeRepeating(nameof(Spawn), 0, 15);
   
         NPCToSpawn.SpawnWorld(this.transform.position);
     }
@@ -40,7 +40,7 @@ public class TestSpawn : MonoBehaviour
 
     [System.Serializable]
    public class NPCSpawn {
-        public EnemyNPCSO SOToSpawn;
+        public NPCSO SOToSpawn;
         [Range(1, 50)]
         public int SpawnPerCall;
         [Range(1, 2000)]

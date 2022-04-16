@@ -76,10 +76,7 @@ namespace IAUS.ECS.Systems
                     else { 
                         move.WaypointIndex= (move.WaypointIndex+1) % move.NumberOfWayPoints;
                     }
-                    //if (wait.Complete)
-                    //{
-                    //    move.CurWaypoint = waypointBuffer[move.WaypointIndex].WayPoint;
-                    //}
+
                     Moves[i] = move;
                     Waits[i] = wait;
 

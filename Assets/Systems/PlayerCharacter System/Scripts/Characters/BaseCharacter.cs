@@ -56,7 +56,7 @@ namespace Stats
 
         public bool Dead { get; private set; }
 
-        public Entity SelfEntityRef { get; private set; }
+        public Entity SelfEntityRef { get;  set; }
 
 
 
@@ -289,7 +289,7 @@ namespace Stats
             GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = Lck;
             GetVital((int)VitalName.Health).BuffValue = BaseHealth;
             GetVital((int)VitalName.Mana).BuffValue = BaseMana;
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(2));
             StatUpdate();
         }
 

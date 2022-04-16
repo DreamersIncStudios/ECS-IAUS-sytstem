@@ -26,13 +26,13 @@ namespace IAUS.ECS.Component
         public float CoolDownTime { get { return _coolDownTime; } }
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public float distanceToPoint { get; set; }
-        public float StartingDistance { get; set; }
+        [SerializeField] public float distanceToPoint { get; set; }
+        [SerializeField] public float StartingDistance { get; set; }
         [SerializeField] public float BufferZone { get; set; }
-        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        [SerializeField] public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
         public bool TravelInOrder { get; set; }
 
-        public Waypoint CurWaypoint { get; set; }
+        [SerializeField] public Waypoint CurWaypoint { get; set; }
 
         public int WaypointIndex { get; set; }
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }

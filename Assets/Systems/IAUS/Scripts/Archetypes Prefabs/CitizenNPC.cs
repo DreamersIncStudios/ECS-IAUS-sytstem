@@ -11,37 +11,50 @@ using IAUS.ECS.Component;
 using DreamersInc.InflunceMapSystem;
 using UnityEngine.AI;
 using Unity.Entities;
+using System.Threading.Tasks;
+using System;
 
 namespace IAUS.NPCScriptableObj
 {
     [System.Serializable]
     //TODO Write Custom Property Drawers
-    public class CitizenNPC {
+    public class CitizenNPC
+    {
         [Range(1, 500)]
         public int Count;
         public GameObject Model;
         public AITarget Self;
         public List<AIStates> AIStatesAvailable;
-        public PMovementBuilderData GetMovement;
+        public MovementBuilderData GetMovement;
         public WaitBuilderData GetWait;
         public Movement AIMove;
         public Vision GetVision;
         public InfluenceComponent GetInfluence;
 
-        public void Spawn(Vector3 pos)
+        public async void Spawn(Vector3 pos)
         {
             for (int i = 0; i <= Count; i++)
             {
+                Utilities.GlobalFunctions.RandomPoint(pos, 5.0f, out Vector3 Spos);
+                GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
+
                 Self = new AITarget()
                 {
                     FactionID = GetInfluence.factionID,
                     Type = TargetType.Character,
                     CanBeTargetByPlayer = false
                 };
-                GameObject spawnedGO = Object.Instantiate(Model, pos, Quaternion.identity);
-                spawnedGO.AddComponent<NavMeshAgent>();
+
+
+                if (!spawnedGO.GetComponent<NavMeshAgent>())
+                    spawnedGO.AddComponent<NavMeshAgent>();
+
                 spawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
+                
                 BaseAIAuthoringSO aiAuthoring = spawnedGO.AddComponent<BaseAIAuthoringSO>();
+                NPCChararacter npcStat = spawnedGO.AddComponent<NPCChararacter>();
+                npcStat.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+
                 //AIAuthoring.faction = getFaction;
                 aiAuthoring.Self = Self;
                 aiAuthoring.GetAttackType = new List<AttackTypeInfo>();
@@ -53,7 +66,10 @@ namespace IAUS.NPCScriptableObj
                         case AIStates.Traverse:
                             aiAuthoring.AddTraverse = true;
                             aiAuthoring.buildMovement = GetMovement;
-                            spawnedGO.AddComponent<WaypointCreation>();
+                            var adder = spawnedGO.AddComponent<WaypointCreation>();
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+                            adder.CreateWaypoints(GetMovement.Range, GetMovement.NumberOfStops, false);
+
                             break;
                         case AIStates.Wait:
                             aiAuthoring.AddWait = true;
@@ -68,13 +84,17 @@ namespace IAUS.NPCScriptableObj
                 Senses.VisionData = GetVision;
                 //Senses.Hearing = true;
                 //Senses.HearingData = new Hearing();
-                NPCChararacter npcStat = spawnedGO.AddComponent<NPCChararacter>();
-                npcStat.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+               
                 npcStat.Name = NPCUtility.GetNameFile();
                 aiAuthoring.factionID = 3; //  TODO Set up later;
                 aiAuthoring.GetInfluence = GetInfluence;
+                aiAuthoring.SetupSystem();
+
+                await Task.Delay(TimeSpan.FromSeconds(5f));
+         
+
             }
         }
     }
-    
+
 }
