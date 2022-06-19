@@ -43,7 +43,7 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
 
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
 
     public sealed partial class RetreatMovement : SystemBase
     {
@@ -53,9 +53,7 @@ namespace IAUS.ECS.Systems.Reactive
         private EntityQuery _componentRemovedQuery;
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
-        float interval = 0
-            ;
-        bool runUpdate => interval <= 0.0f;
+    
         protected override void OnCreate()
         {
             base.OnCreate();

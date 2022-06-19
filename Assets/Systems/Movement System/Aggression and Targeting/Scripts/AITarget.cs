@@ -31,7 +31,7 @@ namespace Global.Component
         public float detectionScore;
 
     }
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
     [UpdateBefore(typeof (VisionSystemJobs))]
     public partial class UpdateAITarget : ComponentSystem
     {

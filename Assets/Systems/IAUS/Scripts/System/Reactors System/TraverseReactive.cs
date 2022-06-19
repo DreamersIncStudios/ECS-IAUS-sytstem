@@ -7,6 +7,7 @@ using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using Components.MovementSystem;
+using UnityEngine.AI;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<TraverseActionTag, Traverse, IAUS.ECS.Systems.Reactive.TraverseTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<TraverseActionTag, Traverse, IAUS.ECS.Systems.Reactive.TraverseTagReactor>.ManageComponentAdditionJob))]
@@ -48,7 +49,30 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
     }
+    public partial class SetSpeedTraverse : ComponentSystem
+    {
 
+        private EntityQuery _componentAddedQuery;
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)), ComponentType.ReadWrite(typeof(TraverseActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
+                , ComponentType.ReadOnly(typeof(LocalToWorld))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TraverseActionTag, Traverse, TraverseTagReactor>.StateComponent)) }
+            });
+        }
+        protected override void OnUpdate()
+        {
+            Entities.With(_componentAddedQuery).ForEach((NavMeshAgent Agent) => {
+                Agent.speed = 0.5f;
+            
+            });
+        }
+    }
     public partial class TraverseMovement : SystemBase
     {
         private EntityQuery _componentAddedQuery;

@@ -7,8 +7,20 @@ using Unity.Transforms;
 using UnityEngine;
 namespace IAUS.ECS.Systems
 {
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
+
+    public class IAUSUpdateGroup : ComponentSystemGroup
+    {
+        public IAUSUpdateGroup()
+        {
+            RateManager = new RateUtils.VariableRateManager(750, true);
+
+        }
+
+    }
+
+
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
     public sealed partial class IAUSBrainUpdate : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -28,72 +40,64 @@ namespace IAUS.ECS.Systems
 
         }
 
-        float interval = 0.0f;
-        bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
         {
-            if (runUpdate)
+
+            JobHandle systemDeps = Dependency;
+            systemDeps = new UpdateAIStateSchores()
             {
-                JobHandle systemDeps = Dependency;
-                systemDeps = new UpdateAIStateSchores()
-                {
-                    EntityChunk = GetEntityTypeHandle(),
-                    StateChunks = GetBufferTypeHandle<StateBuffer>(false),
-                    Patrols = GetComponentDataFromEntity<Patrol>(true),
-                    Traverses = GetComponentDataFromEntity<Traverse>(true),
-                    Waits = GetComponentDataFromEntity<Wait>(true),
-                    StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
-                    GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
-                    RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
-                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
-                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true),
-                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
-                    SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
-                    
-                    
-                }.Schedule(IAUSBrains, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-                systemDeps = new FindHighestScore()
-                {
-                    CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                    EntityChunk = GetEntityTypeHandle(),
-                    StateChunks = GetBufferTypeHandle<StateBuffer>(true),
-                    BrainsChunk = GetComponentTypeHandle<IAUSBrain>(false)
-
-                }.Schedule(IAUSBrains, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-                systemDeps = new CheckTagSystem()
-                {
-                    EntityChunk = GetEntityTypeHandle(),
-                    BrainChunk = GetComponentTypeHandle<IAUSBrain>(false),
-                    Patrols = GetComponentDataFromEntity<Patrol>(true),
-                    Traverses = GetComponentDataFromEntity<Traverse>(true),
-                    Waits = GetComponentDataFromEntity<Wait>(true),
-                    StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
-                    GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
-                    RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
-                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
-                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
-                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
-                    SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
+                EntityChunk = GetEntityTypeHandle(),
+                StateChunks = GetBufferTypeHandle<StateBuffer>(false),
+                Patrols = GetComponentDataFromEntity<Patrol>(true),
+                Traverses = GetComponentDataFromEntity<Traverse>(true),
+                Waits = GetComponentDataFromEntity<Wait>(true),
+                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
+                RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
+                AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
+                GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
+                RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
 
 
-                }.Schedule(IAUSBrains, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-
-                //systemDeps.Complete();
-                Dependency = systemDeps;
-                interval = 1.0f;
-
-            }
-            else
+            systemDeps = new FindHighestScore()
             {
-                interval -= 1 / 60.0f;
-            }
+                CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityChunk = GetEntityTypeHandle(),
+                StateChunks = GetBufferTypeHandle<StateBuffer>(true),
+                BrainsChunk = GetComponentTypeHandle<IAUSBrain>(false)
+
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new CheckTagSystem()
+            {
+                EntityChunk = GetEntityTypeHandle(),
+                BrainChunk = GetComponentTypeHandle<IAUSBrain>(false),
+                Patrols = GetComponentDataFromEntity<Patrol>(true),
+                Traverses = GetComponentDataFromEntity<Traverse>(true),
+                Waits = GetComponentDataFromEntity<Wait>(true),
+                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
+                RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
+                AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
+                GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
+                RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
+
+
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+
+            //systemDeps.Complete();
+            Dependency = systemDeps;
+
+
         }
 
         [BurstCompile]

@@ -15,7 +15,7 @@ public class TestSpawn : MonoBehaviour
     {
          InvokeRepeating(nameof(Spawn), 0, 15);
   
-        NPCToSpawn.SpawnWorld(this.transform.position);
+       // NPCToSpawn.SpawnWorld(this.transform.position);
     }
     async void Spawn()
     {

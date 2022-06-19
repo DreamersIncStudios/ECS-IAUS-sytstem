@@ -9,11 +9,12 @@ using Unity.Jobs;
 using Unity.Burst;
 using Stats;
 using IAUS.ECS.Consideration;
+using Unity.Transforms;
 
 namespace IAUS.ECS.Systems
 {
     //TODO Need to add a Can Target Filter 
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
     [UpdateBefore(typeof(IAUSBrainUpdate))]
     public partial class UpdateAttackBufferScoresSystem : SystemBase
     {
@@ -21,8 +22,7 @@ namespace IAUS.ECS.Systems
         private EntityQuery LookingForAttack;
         private EntityQuery UpdateAttackStateScore;
 
-        float interval = .20f;
-        bool runUpdate => interval <= 0.0f;
+
 
         protected override void OnCreate()
         {
@@ -54,9 +54,18 @@ namespace IAUS.ECS.Systems
         protected override void OnUpdate()
         {
 
-            if (runUpdate)
-            {
+      
                 JobHandle systemDeps = Dependency;
+
+
+                systemDeps = new UpdateTargetEntity()
+                {
+                    AttackBufferChunk = GetBufferTypeHandle<AttackTypeInfo>(false),
+                    TargetBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(true)
+
+                }.ScheduleParallel(LookingForAttack, systemDeps);
+
+                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
                 systemDeps = new FindAttackableTarget()
                 {
@@ -64,6 +73,8 @@ namespace IAUS.ECS.Systems
                     TargetBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(true)
 
                 }.ScheduleParallel(LookingForAttack, systemDeps);
+
+
 
                 _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -92,18 +103,14 @@ namespace IAUS.ECS.Systems
 
 
                 Dependency = systemDeps;
-                interval = .20f;
-            }
-
-            else
-            {
-                interval -= 1 / 60.0f;
-            }
+        
         }
 
         /// <summary>
         /// Find the Optimial attacking Target foreach attack style in entity buffer
         /// </summary>
+        [BurstCompile]
+
         struct FindAttackableTarget : IJobChunk
         {
             public BufferTypeHandle<AttackTypeInfo> AttackBufferChunk;
@@ -176,7 +183,7 @@ namespace IAUS.ECS.Systems
 
             }
         }
-
+       // [BurstCompile]
         struct ScoreBufferSubStates : IJobChunk
         {
 
@@ -230,6 +237,36 @@ namespace IAUS.ECS.Systems
                 }
             }
         }
+        [BurstCompile]
+        struct UpdateTargetEntity : IJobChunk
+        {
+            public BufferTypeHandle<AttackTypeInfo> AttackBufferChunk;
+            public BufferTypeHandle<ScanPositionBuffer> TargetBufferChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                BufferAccessor<AttackTypeInfo> AttackBuffers = chunk.GetBufferAccessor(AttackBufferChunk);
+                BufferAccessor<ScanPositionBuffer> TargetBuffers = chunk.GetBufferAccessor(TargetBufferChunk);
+
+                for (int i = 0; i < chunk.Count; i++) { 
+                    DynamicBuffer<AttackTypeInfo> attackTypeInfos = AttackBuffers[i];
+                    DynamicBuffer<ScanPositionBuffer> scanPositionBuffers = TargetBuffers[i];
+                    for (int j = 0; j < attackTypeInfos.Length; j++)
+                    {
+                        if (attackTypeInfos[j].AttackTarget.entity == Entity.Null)
+                            continue;
+
+                        AttackTypeInfo attack = attackTypeInfos[j];
+                        foreach (ScanPositionBuffer scanPositionBuffer in scanPositionBuffers) {
+                            if(scanPositionBuffer.target.entity== attack.AttackTarget.entity)
+                            {
+                                attack.AttackTarget = scanPositionBuffer.target;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         [BurstCompile]
         public struct GetHighAttack : IJobChunk
@@ -259,7 +296,7 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        // [BurstCompile]
+        //[BurstCompile]
         public struct UpdateScoreHigh : IJobChunk
         {
             public ComponentTypeHandle<AttackTargetState> AttackStateChunk;
