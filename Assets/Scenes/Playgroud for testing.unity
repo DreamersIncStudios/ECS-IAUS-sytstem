@@ -359,7 +359,8 @@ PrefabInstance:
         type: 3}
       propertyPath: NPCToSpawn
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: e08547790d2c15142be8958787177868,
+        type: 2}
     - target: {fileID: 373270550540466539, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
       propertyPath: test.Array.data[0].spawnCNT

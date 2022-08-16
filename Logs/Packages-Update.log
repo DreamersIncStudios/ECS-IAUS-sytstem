@@ -222,3 +222,23 @@ The following packages were updated:
   com.unity.collab-proxy from version 1.15.15 to 1.15.17
   com.unity.ide.rider from version 3.0.13 to 3.0.14
   com.unity.scriptablebuildpipeline from version 1.19.6 to 1.20.1
+
+=== Sat Jul  2 19:23:07 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collab-proxy from version 1.15.17 to 1.15.18
+
+=== Sat Jul 30 14:26:26 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.burst from version 1.6.5 to 1.6.6
+  com.unity.collab-proxy from version 1.15.18 to 1.17.1
+  com.unity.collections from version 1.2.3 to 1.2.4
+  com.unity.ide.rider from version 3.0.14 to 3.0.15
+  com.unity.ide.visualstudio from version 2.0.15 to 2.0.16

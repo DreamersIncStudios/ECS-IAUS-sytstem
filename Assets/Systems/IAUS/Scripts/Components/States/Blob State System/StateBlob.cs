@@ -16,6 +16,7 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData DistanceToPlaceOfInterest;
         public ConsiderationScoringData Timer;
         public ConsiderationScoringData ManaAmmo;
+        public ConsiderationScoringData ManaAmmo2;
         public ConsiderationScoringData DistanceToTarget;
         public ConsiderationScoringData influence;
 

@@ -68,6 +68,7 @@ namespace IAUS.ECS.StateBlobSystem
             SetupConsideration(array, "Consideration files/DistanceToTarget", Considerations.DistanceToTarget);
             SetupConsideration(array, "Consideration files/Distance to place of Interest", Considerations.DistanceToPOI);
             SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
+            SetupConsideration(array, "Consideration files/ManaAmmo2", Considerations.ManaAmmo2);
             SetupConsideration(array, "Consideration files/Time", Considerations.Time);
             SetupConsideration(array, "Consideration files/Influence", Considerations.Influence);
 
@@ -165,5 +166,5 @@ namespace IAUS.ECS.StateBlobSystem
         
     }
 
-    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, Influence }
+    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, Influence, ManaAmmo2, }
 }

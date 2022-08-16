@@ -16,6 +16,8 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData EnergyMana => stateRef.Value.Array[Index].ManaAmmo;
+        public ConsiderationScoringData NumberOfDefenders => stateRef.Value.Array[Index].ManaAmmo2;
+
 
         public float SpawnTimer;
         public int DefendersActive;

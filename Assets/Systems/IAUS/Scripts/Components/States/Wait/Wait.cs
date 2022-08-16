@@ -54,7 +54,8 @@ namespace IAUS.ECS.Component {
     public enum Difficulty { Easy, Normal, Hard }
     public enum NPCLevel
     {
-        Grunt, Specialist,Tower
+        Grunt, Specialist,Tower, NPC
+
     }
 
 
