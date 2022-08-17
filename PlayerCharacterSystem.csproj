@@ -64,13 +64,12 @@
   <ItemGroup>
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\PlayerCharacterStatComponents.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\NPCChararacter.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\CharaterGenerator.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\CharaterGenerator.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\EnemyCharacter.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Stats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Vital.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Abilities.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Attribute.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\TowerStats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatusBuffer.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatus.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\PlayerCharacter.cs" />
@@ -79,8 +78,13 @@
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\LevelUpSystem.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\DeathSystem.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\ModifiedStat.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\BaseCharacter.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Elemental.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\UI Scripts\StatsUI.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Components\ReactToContact.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\AlteredStatus.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\TowerStats.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\AttributesSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\PlayerCharacter System\PlayerCharacter System.asmdef" />
@@ -773,6 +777,10 @@
     <ProjectReference Include="Unity.Burst.csproj">
       <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
       <Name>Unity.Burst</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{1405852F-5842-6065-FE37-0E6A145CAC68}</Project>
+      <Name>Unity.Mathematics</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

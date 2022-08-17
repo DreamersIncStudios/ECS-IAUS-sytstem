@@ -5,19 +5,22 @@ using Unity.Entities;
 using Stats;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.Events;
 
 namespace GameModes.DestroyTheTower.TowerSystem
 {
     public class TowerStats : EnemyCharacter
     {
         public List<GameObject> Defenders;
+        public UnityEvent Death;
         public override void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             float ModValue = 1.1f;
 
-            base.Convert(entity, dstManager, conversionSystem);
-            var data = new EnemyStats() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana };
-            dstManager.AddComponentData(entity, data);
+            //base.Convert(entity, dstManager, conversionSystem);
+            //var data = new EnemyStats() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana,
+            //selfEntityRef = entity };
+            //dstManager.AddComponentData(entity, data);
 
             GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
             GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
@@ -31,8 +34,7 @@ namespace GameModes.DestroyTheTower.TowerSystem
             GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
             GetVital((int)VitalName.Health).BaseValue = 50;
             GetVital((int)VitalName.Mana).BaseValue = 25;
-            StatUpdate();
-
+         //   StatUpdate();
         }
 
         public async void UpdateLevel(int level)
@@ -57,8 +59,44 @@ namespace GameModes.DestroyTheTower.TowerSystem
 
         }
 
+        public async void  setupTower(uint level, Entity setEntity)
+        {
+            float ModValue = (float)level * 1.5f;
+            SelfEntityRef = setEntity;
+   
+            GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(20 * ModValue);
+            GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
+            GetVital((int)VitalName.Health).StartValue = 500;
+            GetVital((int)VitalName.Mana).StartValue = 250;
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(setEntity, new EnemyStats { selfEntityRef = setEntity });
+            StatUpdate();
+
+        }
+
         public void SpawnDefenders(int Level) {
 
+        }
+        bool quitting = false;
+        
+        private void OnApplicationQuit()
+        {
+            quitting = true;
+        }
+
+   
+        private void OnDestroy()
+        {
+            if(!quitting && Death !=null)
+                     Death.Invoke();
         }
 
 
@@ -81,7 +119,8 @@ namespace GameModes.DestroyTheTower.TowerSystem
         public int MaxEnergy;
         public float EnergyRatio => EnergyLevel / (float)MaxEnergy;
 
-        public void AdjustEnergy(float adj) {
+        public void AdjustEnergy(float adj)
+        {
             EnergyLevel += adj;
             if (EnergyLevel < 0)
             {

@@ -162,8 +162,25 @@ namespace IAUS.NPCScriptableObj
                 buffer.Add(item);
             }
 
+            manager.SetComponentData(npcDataEntity, new AITarget
+            {
+                FactionID = Self.FactionID,
+                CanBeTargetByPlayer = true,
+                Type = TargetType.Location
+            });
+            manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
-
+            GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
+            manager.SetComponentData(npcDataEntity, new CompanionGO
+            {
+                GOCompanion = spawnedGO
+            });
+            if (spawnedGO.GetComponent<NavMeshAgent>() == null)
+            {
+                NavMeshAgent agent = spawnedGO.AddComponent<NavMeshAgent>();
+            }
+            NPCChararacter stats = spawnedGO.AddComponent<NPCChararacter>();
+            stats.SetupNPCData(npcDataEntity, 10);
         }
         static List<TravelWaypointBuffer> GetPoints(uint range, uint NumOfPoints, Vector3 pos, bool Safe = true)
         {

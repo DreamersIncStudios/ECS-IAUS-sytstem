@@ -11,6 +11,7 @@
     {
         Libra,
         Dispel,
-        Detection
+        Detection,
+        Recovery
     }
 }

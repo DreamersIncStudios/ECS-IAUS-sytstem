@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Collections;
 using Stats;
+using Stats.UI;
 using Unity.Entities;
 namespace DreamersInc.DamageSystem.Interfaces
 {
@@ -12,11 +13,11 @@ namespace DreamersInc.DamageSystem.Interfaces
         bool Dead { get; }
         Entity SelfEntityRef { get; }
         void TakeDamage(int Amount, TypeOfDamage typeOf, Element element);
-        void ReactToDamage(Vector3 DirOfAttack);
+        void ReactToHit(float impact, Vector3 Test, Vector3 forward , TypeOfDamage typeOf = TypeOfDamage.Melee , Element element = Element.None);
     }
 
 
-    public enum TypeOfDamage {Melee, MagicAoE, Projectile}
+    public enum TypeOfDamage {Melee, MagicAoE, Projectile, Recovery, Magic}
     public enum Element { None, Fire, Water, Earth, Wind, Ice, Holy, Dark}
     public struct AdjustHealth : IComponentData {
         public int Value;
@@ -55,6 +56,7 @@ namespace DreamersInc.DamageSystem.Interfaces
                 HealthChunk = GetComponentTypeHandle<EnemyStats>(false),
                 ModChunk = GetComponentTypeHandle<AdjustHealth>(true),
                 EntityChunk = GetEntityTypeHandle(),
+                player = false,
                 ECBP = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
             }.ScheduleParallel(enemyQuery, systemDeps);
             systemDeps.Complete();
@@ -64,9 +66,11 @@ namespace DreamersInc.DamageSystem.Interfaces
                 HealthChunk = GetComponentTypeHandle<PlayerStatComponent>(false),
                 ModChunk = GetComponentTypeHandle<AdjustHealth>(true),
                 EntityChunk = GetEntityTypeHandle(),
+                player = true,
                 ECBP = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter()
             }.ScheduleParallel(playerQuery, systemDeps);
             systemDeps.Complete();
+
             Dependency = systemDeps;
         }
 
@@ -77,7 +81,7 @@ namespace DreamersInc.DamageSystem.Interfaces
            [ReadOnly] public ComponentTypeHandle<AdjustHealth> ModChunk;
             public EntityCommandBuffer.ParallelWriter ECBP;
             [ReadOnly] public EntityTypeHandle EntityChunk;
-
+            public bool player;
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<STAT> Healths = chunk.GetNativeArray(HealthChunk);
@@ -90,7 +94,11 @@ namespace DreamersInc.DamageSystem.Interfaces
                     if (Health.CurHealth <= 0) {
                         ECBP.AddComponent<EntityHasDiedTag>(chunkIndex, entity[i]);
                     }
-                    
+                    if (player)
+                    {
+                        Object.FindObjectOfType<StatsUI>().UpdateHealthBar(Health.CurHealth);
+                    }
+
                     ECBP.RemoveComponent<AdjustHealth>(chunkIndex, entity[i]);
                     Healths[i] = Health;
 
@@ -104,6 +112,8 @@ namespace DreamersInc.DamageSystem.Interfaces
             public ComponentTypeHandle<AdjustMana> ModChunk;
             public EntityCommandBuffer.ParallelWriter ECBP;
             [ReadOnly] public EntityTypeHandle EntityChunk;
+            public ComponentDataFromEntity<PlayerStatComponent> player;
+
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
                 NativeArray<STAT> Manas = chunk.GetNativeArray(ManaChunk);
@@ -113,6 +123,10 @@ namespace DreamersInc.DamageSystem.Interfaces
                 {
                     STAT mana = Manas[i];
                     mana.AdjustHealth(mods[i].Value);
+                    if (player.HasComponent(entity[i]))
+                    {
+                        Object.FindObjectOfType<StatsUI>().UpdateManaBar(mana.CurMana);
+                    }
                     Manas[i] = mana;
                     ECBP.RemoveComponent<AdjustMana>(chunkIndex, entity[i]);
                 }

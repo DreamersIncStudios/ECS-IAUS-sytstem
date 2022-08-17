@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using Unity.Burst;
 namespace Stats
 {
     public class CharaterGenerator : MonoBehaviour
