@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\PlayerCharacterStatComponents.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\UI Scripts\StatsUI.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\NPCChararacter.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\CharaterGenerator.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\EnemyCharacter.cs" />
@@ -71,20 +72,19 @@
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Abilities.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Attribute.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatusBuffer.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\TowerStats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\EffectStatus.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\PlayerCharacter.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Interfaces\IDamageable.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\AlteredStatus.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseStat.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\LevelUpSystem.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Components\ReactToContact.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Systems\DeathSystem.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\ModifiedStat.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\BaseCharacter.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Elemental.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\UI Scripts\StatsUI.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Components\ReactToContact.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\AlteredStatus.cs" />
-    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Characters\TowerStats.cs" />
     <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\BaseCharacter Script\AttributesSetup.cs" />
+    <Compile Include="Assets\Systems\PlayerCharacter System\Scripts\Characters\Elemental.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\PlayerCharacter System\PlayerCharacter System.asmdef" />

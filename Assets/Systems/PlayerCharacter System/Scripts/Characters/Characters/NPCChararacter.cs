@@ -60,7 +60,7 @@ namespace Stats
             GetVital((int)VitalName.Health).StartValue = 500;
             GetVital((int)VitalName.Mana).StartValue = 250;
             await Task.Delay(TimeSpan.FromSeconds(2));
-            World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(entity, new EnemyStats { selfEntityRef = entity });
+            World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(entity, new NPCStats { selfEntityRef = entity });
             StatUpdate();
         }
 

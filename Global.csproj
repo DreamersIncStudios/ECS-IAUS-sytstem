@@ -82,6 +82,7 @@
     <Compile Include="Assets\Systems\Global\Generic Grid System\Utilities.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\GlobalFunctions.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\ControllerScheme.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\CompanionGO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\Global\Global.asmdef" />

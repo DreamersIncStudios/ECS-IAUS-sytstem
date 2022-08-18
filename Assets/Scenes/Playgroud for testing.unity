@@ -363,13 +363,18 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 373270550540466539, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
+      propertyPath: test.Array.data[0].spawned
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 373270550540466539, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
+        type: 3}
       propertyPath: test.Array.data[0].spawnCNT
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 373270550540466539, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
       propertyPath: test.Array.data[0].SpawnPerCall
-      value: 14
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 373270550540466540, guid: 34cf8cc5be8f76047a5ac3d94160fc1c,
         type: 3}
@@ -4869,75 +4874,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1001 &1239542543
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 52.211853
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5249939
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -67.24237
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5371077714523163498, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8994461831506262393, guid: ca1d9011f20061d46abfe6d0f4766449,
-        type: 3}
-      propertyPath: m_Name
-      value: Jammo Cop Prefab
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ca1d9011f20061d46abfe6d0f4766449, type: 3}
 --- !u!43 &1265559016
 Mesh:
   m_ObjectHideFlags: 0
@@ -5281,7 +5217,7 @@ PrefabInstance:
     - target: {fileID: 4216250422930408649, guid: 8c058b6a8c206cc4f93974f56d35d67d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4216250422930408649, guid: 8c058b6a8c206cc4f93974f56d35d67d,
         type: 3}
@@ -6571,7 +6507,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-3678
+  m_Name: pb_Mesh-3682
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -16,6 +16,7 @@ using System;
 using Unity.Transforms;
 using Utilities;
 using Unity.Mathematics;
+using Object = UnityEngine.Object;
 
 namespace IAUS.NPCScriptableObj
 {
@@ -44,9 +45,11 @@ namespace IAUS.NPCScriptableObj
 
                 Self = new AITarget()
                 {
+                   
                     FactionID = GetInfluence.factionID,
                     Type = TargetType.Character,
                     CanBeTargetByPlayer = false
+
                 };
 
 
@@ -100,7 +103,7 @@ namespace IAUS.NPCScriptableObj
             }
         }
 
-        public void DataEntity(Vector3 Pos,string entityName = "") {
+        public void SpawnDataEntity(Vector3 Pos,string entityName = "") {
             Utilities.GlobalFunctions.RandomPoint(Pos, 5.0f, out Vector3 Spos);
 
             EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -108,7 +111,7 @@ namespace IAUS.NPCScriptableObj
                typeof(Translation),
                typeof(Rotation),
                typeof(LocalToWorld),
-               typeof(EnemyStats),
+               typeof(NPCStats),
                typeof(IAUSBrain),
                typeof(AITarget),
                typeof(InfluenceComponent),
@@ -166,7 +169,7 @@ namespace IAUS.NPCScriptableObj
             {
                 FactionID = Self.FactionID,
                 CanBeTargetByPlayer = true,
-                Type = TargetType.Location
+                Type = TargetType.Character,
             });
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
@@ -175,10 +178,22 @@ namespace IAUS.NPCScriptableObj
             {
                 GOCompanion = spawnedGO
             });
+
+
             if (spawnedGO.GetComponent<NavMeshAgent>() == null)
             {
                 NavMeshAgent agent = spawnedGO.AddComponent<NavMeshAgent>();
             }
+
+            manager.SetComponentData(npcDataEntity, new Movement
+            {
+                CanMove = true,
+                //Todo pull info from data 
+                MovementSpeed = 10,
+                StoppingDistance = 1.0f,
+                Acceleration = 5
+            });
+
             NPCChararacter stats = spawnedGO.AddComponent<NPCChararacter>();
             stats.SetupNPCData(npcDataEntity, 10);
         }
@@ -212,8 +227,25 @@ namespace IAUS.NPCScriptableObj
         }
 
     }
-    public class CompanionGO : IComponentData
+    public partial class SyncCompanionGOPosition : ComponentSystem
     {
-        public GameObject GOCompanion;
+        protected override void OnUpdate()
+        {
+            Entities.ForEach((Entity entity, ref LocalToWorld local, CompanionGO GO) => {
+                EntityManager.SetComponentData(entity, new Translation { Value = GO.GOCompanion.transform.position });
+
+            });
+            Entities.ForEach((Entity entity, ref Rotation rot, CompanionGO GO) => {
+                EntityManager.SetComponentData(entity, new Rotation { Value = GO.GOCompanion.transform.rotation });
+
+            });
+            Entities.ForEach((Entity entity, ref EntityHasDiedTag tag, CompanionGO go) => {
+                Debug.Log("Play Death Animation");
+                Object.Destroy(go.GOCompanion, .5f);
+                EntityManager.DestroyEntity(entity);
+            });
+
+
+        }
     }
 }

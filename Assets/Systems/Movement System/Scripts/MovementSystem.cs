@@ -69,6 +69,40 @@ namespace IAUS.ECS.Systems
             }).Run();
 
 
+
+            Entities.WithoutBurst().ForEach((CompanionGO CGO, ref Movement move) =>
+            {
+
+                NavMeshAgent Agent = CGO.GOCompanion.GetComponent<NavMeshAgent>();
+                if (move.CanMove)
+                {
+                    //rewrite with a set position bool;
+                    if (move.SetTargetLocation)
+                    {
+                        Agent.SetDestination(move.TargetLocation);
+                        Agent.isStopped = false;
+                        move.SetTargetLocation = false;
+                    }
+
+
+
+                    if (Agent.hasPath)
+                    {
+                        if (move.WithinRangeOfTargetLocation)
+                        {
+                            move.CanMove = false;
+                        }
+                    }
+                }
+                else
+                {
+                    Agent.isStopped = true;
+
+                }
+
+
+            }).Run();
+
         }
 
         public struct UpdateDistanceRemaining : IJobChunk
