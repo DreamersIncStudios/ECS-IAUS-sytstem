@@ -6,4 +6,7 @@ Normal,Tower,1,Patrol;Wait;AttackMelee;AttackRange;Heal_Self_Item;Retreat;GotoLe
 Normal,Tower,0,Patrol;Wait;AttackMelee;AttackRange;Heal_Self_Item;Retreat;GotoLeader;ChaseMoveToTarget;InvestigateArea;FindCover;Attack;CallBackUp;Traverse;Heal_Magic;GatherResources
 Normal,Tower,2,Patrol;Wait;AttackMelee;AttackRange;Heal_Self_Item;Retreat;GotoLeader;ChaseMoveToTarget;InvestigateArea;FindCover;Attack;CallBackUp;Traverse;Heal_Magic;GatherResources
 Normal,Tower,3,Patrol;Wait;AttackMelee;AttackRange;Heal_Self_Item;Retreat;GotoLeader;ChaseMoveToTarget;InvestigateArea;FindCover;Attack;CallBackUp;Traverse;Heal_Magic;GatherResources
-
+Normal,NPC,0,Traverse;Wait;Retreat;FindCover
+Normal,NPC,1,Traverse;Wait;Retreat;FindCover
+Normal,NPC,2,Traverse;Wait;Retreat;FindCover
+Normal,NPC,3,Traverse;Wait;Retreat;FindCover

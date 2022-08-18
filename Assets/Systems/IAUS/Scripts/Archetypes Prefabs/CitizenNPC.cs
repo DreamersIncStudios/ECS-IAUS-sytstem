@@ -171,7 +171,6 @@ namespace IAUS.NPCScriptableObj
                 CanBeTargetByPlayer = true,
                 Type = TargetType.Character,
             });
-            manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
             GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
             manager.SetComponentData(npcDataEntity, new CompanionGO
@@ -196,6 +195,10 @@ namespace IAUS.NPCScriptableObj
 
             NPCChararacter stats = spawnedGO.AddComponent<NPCChararacter>();
             stats.SetupNPCData(npcDataEntity, 10);
+
+
+            manager.AddComponent<SetupBrainTag>(npcDataEntity);
+
         }
         static List<TravelWaypointBuffer> GetPoints(uint range, uint NumOfPoints, Vector3 pos, bool Safe = true)
         {

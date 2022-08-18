@@ -67,10 +67,15 @@ namespace IAUS.ECS.Systems.Reactive
         }
         protected override void OnUpdate()
         {
-            Entities.With(_componentAddedQuery).ForEach((NavMeshAgent Agent) => {
-                Agent.speed = 0.5f;
+            Entities.With(_componentAddedQuery).ForEach((CompanionGO CGO) => {
+                CGO.GOCompanion.GetComponent<NavMeshAgent>().speed = 0.5f;
             
             });
+            //TODO Uncomment When double entities bug fixed.
+            //Entities.With(_componentAddedQuery).ForEach((NavMeshAgent Agent) => {
+            //    Agent.speed = 0.5f;
+
+            //});
         }
     }
     public partial class TraverseMovement : SystemBase

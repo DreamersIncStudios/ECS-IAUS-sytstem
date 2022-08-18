@@ -95,7 +95,7 @@ namespace IAUS.ECS.StateBlobSystem
                 int index = GetIndexOfIndentity(tempID, array);
 
                 if (index == -1)
-                    Debug.Log(tempID.ToString());
+                    Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.aIStates} add to Creature List Text file");
                 else
                 {
                     var temp = array[index];
