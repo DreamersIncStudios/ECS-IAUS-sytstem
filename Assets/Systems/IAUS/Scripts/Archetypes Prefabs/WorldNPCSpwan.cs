@@ -12,7 +12,10 @@ namespace IAUS.NPCScriptableObj {
 
         public void SpawnWorld(Vector3 pos) {
             foreach (CitizenNPC citizen in Citizens)
-                citizen.SpawnDataEntity(pos);
+                for (int i = 0; i < citizen.Count; i++)
+                {
+                    citizen.SpawnDataEntity(pos);
+                }
         }
     }
 }

@@ -68,7 +68,7 @@ namespace IAUS.ECS.Systems.Reactive
         protected override void OnUpdate()
         {
             Entities.With(_componentAddedQuery).ForEach((CompanionGO CGO) => {
-                CGO.GOCompanion.GetComponent<NavMeshAgent>().speed = 0.5f;
+                CGO.GOCompanion.GetComponent<NavMeshAgent>().speed = 2.5f;
             
             });
             //TODO Uncomment When double entities bug fixed.

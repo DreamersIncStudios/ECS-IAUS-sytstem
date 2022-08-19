@@ -12,6 +12,8 @@ using PixelCrushers.LoveHate;
 
 namespace IAUS.ECS.Systems
 {
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
     public partial class UpdatePatrol : SystemBase
     {
         private EntityQuery DistanceCheckPatrol;

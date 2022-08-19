@@ -8,6 +8,8 @@ using Stats;
 
 namespace IAUS.ECS.Systems
 {
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
     [UpdateAfter(typeof(UpdatePatrol))]
     [UpdateAfter(typeof(UpdateTraverse))]
 

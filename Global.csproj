@@ -63,26 +63,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\Global\Scripts\Spawnable.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\SystemGroup\IAUSCore.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\CleanUpHybridEntity.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\PopUpMouseControl.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\ScriptableObjectUtility.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\UI Scripts\TabGroup.cs" />
     <Compile Include="Assets\Systems\Global\TimeManager.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\FreqPhasing.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\SMT\SMTOptions.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\Player_Control.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\UI Scripts\UIManager.cs" />
-    <Compile Include="Assets\Systems\Global\Generic Grid System\GridGenericXZ.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\UI Scripts\TabButton.cs" />
     <Compile Include="Assets\Systems\Global\Generic Grid System\GridGeneric.cs" />
     <Compile Include="Assets\Systems\Global\GameMasterTest.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\Terrain Physics\DOTSTerrainCollider.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\ControlMaster.cs" />
-    <Compile Include="Assets\Systems\Global\Generic Grid System\Utilities.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\GlobalFunctions.cs" />
-    <Compile Include="Assets\Systems\Global\Scripts\ControllerScheme.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\SystemGroup\IAUSCore.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\CleanUpHybridEntity.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\PopUpMouseControl.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\ScriptableObjectUtility.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\UI Scripts\UIManager.cs" />
+    <Compile Include="Assets\Systems\Global\Generic Grid System\GridGenericXZ.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\UI Scripts\TabButton.cs" />
+    <Compile Include="Assets\Systems\Global\Generic Grid System\Utilities.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\CompanionGO.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\ControllerScheme.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\Global\Global.asmdef" />

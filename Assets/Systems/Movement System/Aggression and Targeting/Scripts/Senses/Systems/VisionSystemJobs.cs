@@ -19,8 +19,7 @@ namespace AISenses.VisionSystems
     {
         public VisionTargetingUpdateGroup()
         {
-            RateManager = new RateUtils.VariableRateManager(750, true);
-
+            RateManager = new RateUtils.VariableRateManager(1000, true);
         }
 
     }
@@ -106,7 +105,7 @@ namespace AISenses.VisionSystems
                     Vision vision = Visions[i];
                     for (int j = 0; j < TargetArray.Length; j++)
                     {
-                        float dist = Vector3.Distance(transform.Position, TargetPosition[i].Position);
+                        float dist = Vector3.Distance(transform.Position, TargetPosition[j].Position);
                         if (dist < vision.viewRadius)
                         {
                             Vector3 dirToTarget = ((Vector3)TargetPosition[j].Position - (Vector3)(transform.Position + new float3(0, 1, 0))).normalized;
@@ -115,7 +114,7 @@ namespace AISenses.VisionSystems
                                 RaycastInput raycastInput = new RaycastInput()
                                 {
                                     Start = transform.Position + new float3(0, 1, 0),
-                                    End = TargetPosition[j].Position,
+                                    End = TargetPosition[j].Position + TargetArray[j].CenterOffset,
                                     Filter = new CollisionFilter()
                                     {
                                         BelongsTo = (1 << 10),
@@ -123,22 +122,24 @@ namespace AISenses.VisionSystems
                                         GroupIndex = 0
                                     }
                                 };
-
                                 if (world.CastRay(raycastInput, out Unity.Physics.RaycastHit raycastHit))
                                 {
-                                    buffer.Add(new ScanPositionBuffer()
+                                    if (raycastHit.Entity.Equals(TargetEntity[j]))
                                     {
-                                        target = new Target()
+                                        buffer.Add(new ScanPositionBuffer()
                                         {
-                                            CanSee = true,
-                                            DistanceTo = dist,
-                                            LastKnownPosition = TargetPosition[j].Position,
-                                            TargetInfo = TargetArray[j],
-                                            entity = TargetEntity[j]
-                                        },
-                                        dist = dist
+                                            target = new Target()
+                                            {
+                                                CanSee = true,
+                                                DistanceTo = dist,
+                                                LastKnownPosition = TargetPosition[j].Position,
+                                                TargetInfo = TargetArray[j],
+                                                entity = TargetEntity[j]
+                                            },
+                                            dist = dist
 
-                                    });
+                                        });
+                                    }
                                 }
                             }
                         }

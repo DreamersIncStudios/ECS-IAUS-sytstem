@@ -62,24 +62,24 @@
     <Analyzer Include="E:\Main Game Folder\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@0.51.1-preview.21\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.AuthoringComponent.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\Spawner.cs" />
-    <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
-    <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerIAUSSetup.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\CharacterSetup.cs" />
-    <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
-    <Compile Include="Assets\GameMaster.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
+    <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
+    <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
+    <Compile Include="Assets\Resources\NPC\TestSpawn.cs" />
+    <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
+    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
+    <Compile Include="Assets\GameMaster.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -687,6 +687,10 @@
       <Project>{453D11B2-78EC-D125-718A-C67A6DAE1358}</Project>
       <Name>InfluenceSystem.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.Player.csproj">
+      <Project>{786D637A-8ABD-D57D-E6A2-6228CBAA72B1}</Project>
+      <Name>Unity.RenderPipelines.Core.ShaderLibrary.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Extensions.Player.csproj">
       <Project>{0BEE6CEC-0F83-68B8-BB05-072E516041EA}</Project>
       <Name>Unity.Mathematics.Extensions.Player</Name>
@@ -723,6 +727,10 @@
       <Project>{1DD80F96-A2F6-8839-14A0-D21A158CD01C}</Project>
       <Name>PlayerCharacterSystem.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Player.csproj">
+      <Project>{FE01AA13-6A6C-B4B8-94B3-90091CFD9349}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Entities.Player.csproj">
       <Project>{1B50DD12-708F-1C25-2D75-F2510CC43DFC}</Project>
       <Name>Unity.Entities.Player</Name>
@@ -742,6 +750,10 @@
     <ProjectReference Include="Unity.Services.Core.Environments.Player.csproj">
       <Project>{6694BC20-60B4-213D-3042-71A16B0EA3A2}</Project>
       <Name>Unity.Services.Core.Environments.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
+      <Project>{DD5B2C91-61E1-2A00-C2DF-276CB34E8A90}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Properties.UI.Player.csproj">
       <Project>{F7BA5608-536B-6166-400D-C646C1C5DFD3}</Project>
@@ -767,6 +779,10 @@
       <Project>{E0895362-E914-8FAB-5AE7-B4396EB3B8C4}</Project>
       <Name>MovementSystem.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.Player.csproj">
+      <Project>{6250C090-F354-E478-7B04-5A5BC985D7C0}</Project>
+      <Name>Unity.RenderPipelines.Universal.Shaders.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.ProBuilder.Player.csproj">
       <Project>{AFE2A2E5-8BB3-E306-3B0A-9FA9E5D0A773}</Project>
       <Name>Unity.ProBuilder.Player</Name>
@@ -787,6 +803,10 @@
       <Project>{E5AC5CCE-82A7-F947-4BBE-FAA3C4A6F27D}</Project>
       <Name>Unity.Scenes.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
+      <Project>{B26A1B87-DECF-B01C-81EF-E8FD9761538F}</Project>
+      <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Global.Player.csproj">
       <Project>{26A6717A-2C4D-CC59-CF45-4B2C1E9C5A5E}</Project>
       <Name>Global.Player</Name>
@@ -798,6 +818,10 @@
     <ProjectReference Include="Unity.Mathematics.Extensions.Hybrid.Player.csproj">
       <Project>{671EDF8D-3E30-9F14-7368-F0D2689ECD4F}</Project>
       <Name>Unity.Mathematics.Extensions.Hybrid.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Runtime.Player.csproj">
+      <Project>{BC732FA2-96E3-E257-DB79-F712729F6AE7}</Project>
+      <Name>Unity.RenderPipelines.Universal.Runtime.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Profiling.Core.Player.csproj">
       <Project>{E3D41A52-8061-484C-0952-BBD32261F96E}</Project>

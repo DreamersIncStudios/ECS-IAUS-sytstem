@@ -11,6 +11,8 @@ using GameModes.DestroyTheTower.TowerSystem;
 
 namespace IAUS.ECS.Systems
 {
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
     public partial class UpdateTowerStateSystem : SystemBase
     {
 
