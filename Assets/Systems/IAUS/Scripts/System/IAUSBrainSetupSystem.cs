@@ -4,10 +4,11 @@ using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace IAUS.ECS.Systems
 {
-    public class IAUSBrainSetupSystem : SystemBase
+    public partial class IAUSBrainSetupSystem : SystemBase
     {
         EntityQuery Starter;
         EntityQuery _PatrolStateEntity;
@@ -207,6 +208,8 @@ namespace IAUS.ECS.Systems
                  NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
+                     Debug.Log("test");
+
                     entityCommandBuffer.RemoveComponent<SetupBrainTag>(chunkIndex, Entities[i]);
                 }
             }

@@ -4,7 +4,7 @@ using Unity.Entities;
 
 namespace IAUS.ECS.Component
 {
-    [GenerateAuthoringComponent]
+   [GenerateAuthoringComponent]
     public struct StayInRange : IBaseStateScorer
     {
         public int refIndex { get; set; }
@@ -25,8 +25,8 @@ namespace IAUS.ECS.Component
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
 
     public struct StayInRangeActionTag : IComponentData {

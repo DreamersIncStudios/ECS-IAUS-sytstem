@@ -23,7 +23,7 @@ namespace Dreamers.SquadSystem
 
     }
 
-    public class TeamUpSystem : SystemBase
+    public partial class TeamUpSystem : SystemBase
     {
         EntityQuery Leaders;
         EntityQuery Grunts;

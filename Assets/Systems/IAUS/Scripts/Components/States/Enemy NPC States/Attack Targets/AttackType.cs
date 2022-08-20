@@ -16,10 +16,10 @@ namespace IAUS.ECS.Component
         public int Index { get; set; }
 
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
-      public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].Distance; } }
+      public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
        public ConsiderationScoringData ManaAmmoAmount { get { return stateRef.Value.Array[Index].ManaAmmo; } }
         public Target AttackTarget;
-        [BurstDiscard]
+       // [BurstDiscard]
         public float DistanceToTarget => AttackTarget.entity != Entity.Null ? AttackTarget.DistanceTo : -1.0f;
         public uint AttackRange;
         public uint FalloffRange => (style == AttackStyle.Melee || style == AttackStyle.MagicMelee)? 0: fallOffRange;
@@ -27,7 +27,7 @@ namespace IAUS.ECS.Component
         [SerializeField]public float AttackDistanceRatio => AttackTarget.entity != Entity.Null ? Mathf.Clamp01( DistanceToTarget / (float)AttackRange) :0.0f;
         public float Attacktimer; //TODO This need to be derive from Character stats Possibly
         public float mod { get { return 1.0f - (1.0f / 3.0f); } } 
-        [BurstDiscard]
+       // [BurstDiscard]
         public bool InRangeForAttack(float distToTarget) {
             bool output = new bool();
             switch (style) {

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnID: 0
   _getName: Cop
+  level: 0
   _model: {fileID: 8994461831506262393, guid: ca1d9011f20061d46abfe6d0f4766449, type: 3}
   GetSelf:
     Type: 1
@@ -22,11 +23,17 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 1
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 0
   states: 010000000a00000004000000
   getPatrol:
     BufferZone: 0.75
     CoolDownTime: 0
+    Range: 75
+    NumberOfStops: 5
   getWait:
     StartTime: 1
     CoolDownTime: 0
@@ -52,7 +59,6 @@ MonoBehaviour:
       x: 0
       y: 0
       z: 0
-    Scantimer: 5
     viewRadius: 35
     ViewAngle: 120
     EngageRadius: 10
@@ -100,7 +106,6 @@ MonoBehaviour:
     factionID: 1
   getAttackTypes:
   - style: 0
-    Index: 0
     AttackRange: 30
-    Attacktimer: 20
-    Score: 0
+    fallOffRange: 0
+    Attacktimer: 5

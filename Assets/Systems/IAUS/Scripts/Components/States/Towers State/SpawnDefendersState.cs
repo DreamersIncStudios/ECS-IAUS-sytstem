@@ -14,8 +14,10 @@ namespace IAUS.ECS.Component
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData EnergyMana => stateRef.Value.Array[Index].ManaAmmo;
+        public ConsiderationScoringData NumberOfDefenders => stateRef.Value.Array[Index].ManaAmmo2;
+
 
         public float SpawnTimer;
         public int DefendersActive;
@@ -36,8 +38,8 @@ namespace IAUS.ECS.Component
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
 
     public struct SpawnTag : IComponentData { public int SpawnID; }

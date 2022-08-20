@@ -7,9 +7,21 @@ using Unity.Transforms;
 using UnityEngine;
 namespace IAUS.ECS.Systems
 {
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-    public sealed  class IAUSBrainUpdate : SystemBase
+
+    public class IAUSUpdateGroup : ComponentSystemGroup
+    {
+        public IAUSUpdateGroup()
+        {
+            RateManager = new RateUtils.VariableRateManager(2500, true);
+
+        }
+
+    }
+
+
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    public sealed partial class IAUSBrainUpdate : SystemBase
     {
         EntityCommandBufferSystem _entityCommandBufferSystem;
         public EntityQuery IAUSBrains;
@@ -28,51 +40,64 @@ namespace IAUS.ECS.Systems
 
         }
 
-        float interval = 0.0f;
-        bool runUpdate => interval <= 0.0f;
 
         protected override void OnUpdate()
         {
-            if (runUpdate)
+
+            JobHandle systemDeps = Dependency;
+            systemDeps = new UpdateAIStateSchores()
             {
-                JobHandle systemDeps = Dependency;
-                systemDeps = new UpdateAIStateSchores()
-                {
-                    EntityChunk = GetEntityTypeHandle(),
-                    StateChunks = GetBufferTypeHandle<StateBuffer>(false),
-                    Patrols = GetComponentDataFromEntity<Patrol>(true),
-                    Traverses = GetComponentDataFromEntity<Traverse>(true),
-                    Waits = GetComponentDataFromEntity<Wait>(true),
-                    StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
-                    GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
-                    RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
-                    AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
-                    GatherStateScore = GetComponentDataFromEntity<GatherResourcesState> (true),
-                    RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
-                    SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
-                    
-                    
-                }.Schedule(IAUSBrains, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+                EntityChunk = GetEntityTypeHandle(),
+                StateChunks = GetBufferTypeHandle<StateBuffer>(false),
+                Patrols = GetComponentDataFromEntity<Patrol>(true),
+                Traverses = GetComponentDataFromEntity<Traverse>(true),
+                Waits = GetComponentDataFromEntity<Wait>(true),
+                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
+                RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
+                AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
+                GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
+                RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
 
-                systemDeps = new FindHighestScore()
-                {
-                    CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-                    EntityChunk = GetEntityTypeHandle(),
-                    StateChunks = GetBufferTypeHandle<StateBuffer>(true),
-                    BrainsChunk = GetComponentTypeHandle<IAUSBrain>(false)
 
-                }.Schedule(IAUSBrains, systemDeps);
-                _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-                //systemDeps.Complete();
-                Dependency = systemDeps;
-                interval = .50f;
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            }
-            else
+            systemDeps = new FindHighestScore()
             {
-                interval -= 1 / 60.0f;
-            }
+                CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityChunk = GetEntityTypeHandle(),
+                StateChunks = GetBufferTypeHandle<StateBuffer>(true),
+                BrainsChunk = GetComponentTypeHandle<IAUSBrain>(false)
+
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            systemDeps = new CheckTagSystem()
+            {
+                EntityChunk = GetEntityTypeHandle(),
+                BrainChunk = GetComponentTypeHandle<IAUSBrain>(false),
+                Patrols = GetComponentDataFromEntity<Patrol>(true),
+                Traverses = GetComponentDataFromEntity<Traverse>(true),
+                Waits = GetComponentDataFromEntity<Wait>(true),
+                StayInRangeOfTarget = GetComponentDataFromEntity<StayInRange>(true),
+                GotoTarget = GetComponentDataFromEntity<MoveToTarget>(true),
+                RetreatCitizenScore = GetComponentDataFromEntity<RetreatCitizen>(true),
+                AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
+                GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
+                RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
+
+
+            }.Schedule(IAUSBrains, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+
+            //systemDeps.Complete();
+            Dependency = systemDeps;
+
+
         }
 
         [BurstCompile]
@@ -180,7 +205,86 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        public struct FindHighestScore : IJobChunk
+        [BurstCompile]
+        public struct CheckTagSystem : IJobChunk
+        {
+            [ReadOnly] public EntityTypeHandle EntityChunk;
+            public ComponentTypeHandle<IAUSBrain> BrainChunk;
+
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<Patrol> Patrols;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<Traverse> Traverses;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<Wait> Waits;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<StayInRange> StayInRangeOfTarget;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<MoveToTarget> GotoTarget;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<RetreatCitizen> RetreatCitizenScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<AttackTargetState> AttackStateScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<RepairState> RepairStateScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<SpawnDefendersState> SpawnStateScore;
+            public EntityCommandBuffer.ParallelWriter CommandBufferParallel;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
+               NativeArray<IAUSBrain> Brains = chunk.GetNativeArray(BrainChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Entity entity = Entities[i];
+                   IAUSBrain brain = Brains[i];
+
+                    switch(brain.CurrentState)
+                    {
+                        
+                           case AIStates.Patrol:
+                            if(!Patrols.HasComponent(entity))
+                                CommandBufferParallel.AddComponent(chunkIndex, Entities[i], new PatrolActionTag() { UpdateWayPoint = false });
+                                break;
+                            case AIStates.Traverse:
+                            if (!Traverses.HasComponent(entity))
+                                CommandBufferParallel.AddComponent(chunkIndex, Entities[i], new TraverseActionTag() { UpdateWayPoint = false });
+                                break;
+                            case AIStates.Wait:
+                            if (!Waits.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.ChaseMoveToTarget:
+                            if (!GotoTarget.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.GotoLeader:
+                            if (!StayInRangeOfTarget.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.Attack:
+                            if (!AttackStateScore.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.Retreat:
+                            if (!RetreatCitizenScore.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.GatherResources:
+                            if (!GatherStateScore.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.Heal_Magic:
+                            if (!RepairStateScore.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<HealSelfTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.CallBackUp:
+                            if (!SpawnStateScore .HasComponent(entity))
+                                CommandBufferParallel.AddComponent<SpawnTag>(chunkIndex, Entities[i]);
+                                break;
+
+                       
+                    }
+                }
+            }
+        }
+
+
+            public struct FindHighestScore : IJobChunk
         {
             [ReadOnly] public EntityTypeHandle EntityChunk;
             [ReadOnly] public BufferTypeHandle<StateBuffer> StateChunks;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Global.Component;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Unity.Mathematics;
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {

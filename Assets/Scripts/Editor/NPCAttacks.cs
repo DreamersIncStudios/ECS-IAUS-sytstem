@@ -5,7 +5,7 @@ using UnityEngine;
 using IAUS.ECS.Component;
 using IAUS.ECS;
 using IAUS.ECS.Consideration;
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {

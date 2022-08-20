@@ -5,9 +5,9 @@ using UnityEngine;
 using IAUS.ECS.Component;
 using IAUS.ECS;
 using Global.Component;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Components.MovementSystem;
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow {
 
@@ -20,7 +20,7 @@ namespace IAUS.NPCSO.editor
             }
             else
                 createRandomCharacter = true;
-            GetPatrol = SO.GetPatrol;
+            GetPatrol = SO.GetPatrolTraverse;
             GetTargetType = SO.Self.Type;
             Name = SO.GetName;
             GetWait = SO.GetWait;
@@ -50,8 +50,8 @@ namespace IAUS.NPCSO.editor
         void DisplayListOfExistingSO() {
             EditorGUILayout.BeginVertical("Box");
             //if (!NPCSODatabase.IsLoaded)
-                EnenyDatabase.LoadDatabaseForce();
-            foreach (INPCBasics SO in EnenyDatabase.NPCs)
+                EnemyDatabase.LoadDatabaseForce();
+            foreach (INPCBasics SO in EnemyDatabase.NPCs)
             {
                 EditorGUILayout.BeginHorizontal();
                 //add names

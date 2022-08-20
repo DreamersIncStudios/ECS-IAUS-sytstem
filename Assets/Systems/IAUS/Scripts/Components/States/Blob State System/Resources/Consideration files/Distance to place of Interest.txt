@@ -1,0 +1,16 @@
+Normal,Grunt,3,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,0,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,1,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,2,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,2,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.9500,0.0500,0.6000
+Normal,Grunt,2,AttackRange,TRUE,FALSE,Logistic,20.0000,-.9500,0.935,0.4500
+Normal,Grunt,3,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Grunt,3,AttackRange,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Grunt,0,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.9500,0.0500,0.6000
+Normal,Grunt,0,AttackRange,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Grunt,1,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.9500,0.0500,0.6000,
+Normal,Grunt,1,AttackRange,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,NPC,3,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,NPC,0,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,NPC,1,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,NPC,2,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500

@@ -11,7 +11,7 @@ using Unity.Jobs;
 namespace IAUS.ECS.Systems
 {
    //[UpdateAfter(typeof(IAUS_UpdateState))]
-    public class MovementSystem : SystemBase
+    public partial class MovementSystem : SystemBase
     {
         private EntityQuery Mover;
 
@@ -68,6 +68,40 @@ namespace IAUS.ECS.Systems
 
             }).Run();
 
+
+
+            Entities.WithoutBurst().ForEach((CompanionGO CGO, ref Movement move) =>
+            {
+
+                NavMeshAgent Agent = CGO.GOCompanion.GetComponent<NavMeshAgent>();
+                if (move.CanMove)
+                {
+                    //rewrite with a set position bool;
+                    if (move.SetTargetLocation)
+                    {
+                        Agent.SetDestination(move.TargetLocation);
+                        Agent.isStopped = false;
+                        move.SetTargetLocation = false;
+                    }
+
+
+
+                    if (Agent.hasPath)
+                    {
+                        if (move.WithinRangeOfTargetLocation)
+                        {
+                            move.CanMove = false;
+                        }
+                    }
+                }
+                else
+                {
+                    Agent.isStopped = true;
+
+                }
+
+
+            }).Run();
 
         }
 

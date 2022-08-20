@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using IAUS.NPCSO;
+using IAUS.NPCScriptableObj;
 namespace IAUS.ECS.Component
 {
     [GenerateAuthoringComponent]

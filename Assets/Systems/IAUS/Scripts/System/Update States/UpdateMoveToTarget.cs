@@ -14,8 +14,9 @@ using Components.MovementSystem;
 
 namespace IAUS.ECS.Systems
 {
-
-    public class UpdateMoveToTarget : SystemBase
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
+    public partial class UpdateMoveToTarget : SystemBase
     {
         private EntityQuery Movers;
         EntityCommandBufferSystem _entityCommandBufferSystem;

@@ -2,6 +2,7 @@
 using System.Collections;
 using Unity.Entities;
 using DreamersInc.DamageSystem.Interfaces;
+
 namespace Stats
 {
     [System.Serializable]
@@ -14,50 +15,42 @@ namespace Stats
             var data = new PlayerStatComponent() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana,
                 selfEntityRef = entity
             };
+            conversionSystem.DeclareAssetDependency(gameObject,this);
             dstManager.AddComponentData(entity, data);
+
             StatUpdate();
         }
-        Rigidbody rb;
-        Animator anim;
-        private void Start()
-        {
-            rb = GetComponent<Rigidbody>();
-            anim = GetComponent<Animator>();
-        }
 
-
-        public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element)
+        public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element = 0)
         {
-            base.TakeDamage(Amount, typeOf, element);
-        }
-        public override void ReactToDamage(Vector3 DirOfAttack)
-        {
-            //Todo pass in force and add resistance to change 
-            if (Mathf.Abs(DirOfAttack.z) > Mathf.Abs(DirOfAttack.x))
+            //Todo Figure out element resistances, conditional mods, and possible affinity 
+            float defense = typeOf switch
             {
-                rb.AddForce(900 * DirOfAttack.normalized.z * this.transform.forward, ForceMode.Impulse);
-                if (DirOfAttack.normalized.z > 0)
-                {
-                    anim.Play("Small Hit Front");
-                }
-                else
-                {
-                    anim.Play("Small Hit Back");
-                }
+                TypeOfDamage.MagicAoE => MagicDef,
+                TypeOfDamage.Recovery => 1.0f,
+                        
+                _ => MeleeDef,
+            };
+            int damageToProcess = new int();
+            if (typeOf != TypeOfDamage.Recovery)
+            {
+                damageToProcess = -Mathf.FloorToInt(Amount * defense * Random.Range(.92f, 1.08f));
             }
             else
             {
-                rb.AddForce(900 * DirOfAttack.x * this.transform.right, ForceMode.Impulse);
-                if (DirOfAttack.normalized.x > 0)
-                {
-                    anim.Play("Small Hit Right");
-                }
-                else
-                {
-                    anim.Play("Small Hit Left");
-                }
+                damageToProcess = Mathf.FloorToInt(Amount * defense );
             }
+            AdjustHealth health = new AdjustHealth() { Value = damageToProcess };
+            
+         World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, health);
+
         }
+
+        public override void ReactToHit(float impact, Vector3 Test, Vector3 Forward, TypeOfDamage typeOf = TypeOfDamage.Melee, Element element = Element.None)
+        {
+
+        }
+
     }
 
 }

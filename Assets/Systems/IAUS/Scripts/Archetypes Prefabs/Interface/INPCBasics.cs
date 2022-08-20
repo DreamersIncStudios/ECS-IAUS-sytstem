@@ -7,7 +7,7 @@ using UnityEngine;
 using Components.MovementSystem;
 using AISenses;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.NPCSO.Interfaces
+namespace IAUS.NPCScriptableObj.Interfaces
 {
     public interface INPCBasics
     {
@@ -16,10 +16,12 @@ namespace IAUS.NPCSO.Interfaces
         Movement AIMove { get; }
         List<AIStates> AIStatesAvailable { get; }
         GameObject Model { get; }
-        PMovementBuilderData GetPatrol { get; }
+        MovementBuilderData GetPatrolTraverse { get; }
         WaitBuilderData GetWait { get; }
         TypeOfNPC GetTypeOfNPC { get; }
         Vision GetVision { get; }
+        uint GetLevel { get; }
+
     }
 
     public interface INPCEnemy {

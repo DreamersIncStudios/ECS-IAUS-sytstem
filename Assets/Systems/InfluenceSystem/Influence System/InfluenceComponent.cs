@@ -42,7 +42,7 @@ namespace DreamersInc.InflunceMapSystem
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    public sealed class UpdateInfluenceGridSystem : SystemBase
+    public sealed partial class UpdateInfluenceGridSystem : SystemBase
     {
         EntityQuery Influencers;
         protected override void OnCreate()

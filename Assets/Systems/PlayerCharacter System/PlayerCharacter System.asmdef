@@ -1,10 +1,13 @@
 {
     "name": "PlayerCharacterSystem",
+    "rootNamespace": "",
     "references": [
         "GUID:734d92eba21c94caba915361bd5ac177",
         "GUID:8819f35a0fc84499b990e90a4ca1911f",
         "GUID:a5baed0c9693541a5bd947d336ec7659",
-        "GUID:44dcb2bf5b9be4b5aa76674c8edcd1d5"
+        "GUID:44dcb2bf5b9be4b5aa76674c8edcd1d5",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

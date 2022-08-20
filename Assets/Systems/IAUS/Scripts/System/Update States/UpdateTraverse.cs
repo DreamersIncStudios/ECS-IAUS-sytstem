@@ -13,7 +13,9 @@ using PixelCrushers.LoveHate;
 namespace IAUS.ECS.Systems
 {
 
-    public class UpdateTraverse : SystemBase
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
+    public partial class UpdateTraverse : SystemBase
     {
 
         private EntityQuery TraverseScore;
@@ -28,7 +30,7 @@ namespace IAUS.ECS.Systems
             TraverseScore = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Traverse)), ComponentType.ReadOnly(typeof(NPCStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
-                                    ComponentType.ReadOnly(typeof(AlertLevel))
+                             
                 }
             });
 

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DreamersInc.InflunceMapSystem;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Global.Component;
 using AISenses;
 using IAUS.ECS;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 
-namespace IAUS.NPCSO
+namespace IAUS.NPCScriptableObj
 {
     public class FriendNPCSO : NPCSO, IInfluence
     {
@@ -18,7 +18,7 @@ namespace IAUS.NPCSO
         [SerializeField] InfluenceComponent getInfluence;
         public int GetFactionID { get { return factionMemberID; } }
         [SerializeField] int factionMemberID;
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PMovementBuilderData patrol, WaitBuilderData wait)
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, InfluenceComponent GetInfluence, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, MovementBuilderData patrol, WaitBuilderData wait)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);
             this.getInfluence = GetInfluence;

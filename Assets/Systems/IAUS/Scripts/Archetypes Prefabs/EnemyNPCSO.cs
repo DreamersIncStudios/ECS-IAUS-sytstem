@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using UnityEngine.AI;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Global.Component;
 using IAUS.ECS;
 using DreamersInc.InflunceMapSystem;
@@ -14,7 +14,7 @@ using AISenses;
 using Dreamers.SquadSystem;
 using Components.MovementSystem;
 
-namespace IAUS.NPCSO {
+namespace IAUS.NPCScriptableObj {
     public sealed class EnemyNPCSO : NPCSO, INPCEnemy,IInfluence
     {
         public bool IsPartOfTeam => isPartofTeam;
@@ -35,7 +35,7 @@ namespace IAUS.NPCSO {
         public AttackTargetState GetAttackTargetState => GetAttackTarget;
         [SerializeField] AttackTargetState GetAttackTarget;
 
-        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, PMovementBuilderData patrol, WaitBuilderData wait,
+        public void Setup(string Name, GameObject model, TypeOfNPC typeOf, AITarget self, Vision vision, List<AIStates> NpcStates, Movement movement, MovementBuilderData patrol, WaitBuilderData wait,
             bool team, TeamInfo teamInfo, List<AttackTypeInfo> attackTypeInfos, RetreatCitizen flee, InfluenceComponent influence)
         {
             base.Setup(Name, model, typeOf, self, vision, NpcStates, movement, patrol, wait);
@@ -52,7 +52,8 @@ namespace IAUS.NPCSO {
             if (Self.Type == TargetType.Character)
             {
                 EnemyCharacter enemyStats = SpawnedGO.AddComponent<EnemyCharacter>();
-                enemyStats.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+                //Todo replace with actual inputed and mod stats 
+                enemyStats.SetAttributeBaseValue((int)GetLevel, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                 enemyStats.Name = GetName;
             }
             AIAuthoring.factionID = GetFactionID;

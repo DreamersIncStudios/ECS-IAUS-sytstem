@@ -6,7 +6,7 @@ using Unity.Entities;
 
 namespace CharacterAlignmentSystem
 {
-    [RequireComponent(typeof(ConvertToEntity))]
+    //[RequireComponent(typeof(ConvertToEntity))]
     public class FactionAuthoring : MonoBehaviour,IConvertGameObjectToEntity
     {
       

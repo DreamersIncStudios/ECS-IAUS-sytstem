@@ -30,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 6
@@ -53,6 +54,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -95,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -835,6 +837,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -883,6 +886,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 5
@@ -906,6 +910,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -948,7 +953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -1688,6 +1693,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1736,6 +1742,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 7
@@ -1759,6 +1766,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -1801,7 +1809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -2541,6 +2549,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2588,6 +2597,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 8
@@ -2611,6 +2621,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -2653,7 +2664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -3393,6 +3404,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3443,6 +3455,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 37.18, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 9
@@ -3466,6 +3479,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -3541,6 +3555,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &3415567822586281701
 MonoBehaviour:
@@ -3573,6 +3591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -3612,6 +3631,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 32.879997, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 18
@@ -3635,6 +3655,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -3710,6 +3731,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1317860068
 MonoBehaviour:
@@ -3742,6 +3767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -3781,6 +3807,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -64.899994, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 35
@@ -3804,6 +3831,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -3879,6 +3907,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &2123074946
 MonoBehaviour:
@@ -3911,6 +3943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -3950,6 +3983,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -61.399994, y: 0.921, z: 17.400002}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 55
@@ -3973,6 +4007,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -4048,6 +4083,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &71266372
 MonoBehaviour:
@@ -4080,6 +4119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4119,6 +4159,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -29.899998, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 14
@@ -4142,6 +4183,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -4217,6 +4259,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &387370272
 MonoBehaviour:
@@ -4249,6 +4295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4288,6 +4335,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 63.899994, y: 0.921, z: 11.800003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 50
@@ -4311,6 +4359,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -4386,6 +4435,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1789227960
 MonoBehaviour:
@@ -4418,6 +4471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4457,6 +4511,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 45.299995, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 39
@@ -4480,6 +4535,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -4555,6 +4611,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1231764774
 MonoBehaviour:
@@ -4587,6 +4647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4626,6 +4687,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 11.6, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 11
@@ -4649,6 +4711,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -4724,6 +4787,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &146392138
 MonoBehaviour:
@@ -4756,175 +4823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InvincibleMode: 0
-  CurHealth: 166
-  maxHealth: 180
-  CurMana: 180
-  maxMana: 180
-  EXPgained: 0
---- !u!1 &1246888389198070824
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6057142747946201715}
-  - component: {fileID: 5344537399939138971}
-  - component: {fileID: 8273503432976432778}
-  - component: {fileID: 312481913631891689}
-  - component: {fileID: 7923948112100346697}
-  - component: {fileID: 512401743}
-  - component: {fileID: 1672970464}
-  - component: {fileID: 3191724044727654934}
-  m_Layer: 12
-  m_Name: Barrier (12)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &6057142747946201715
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -11.300003, y: 0.921, z: -20.300003}
-  m_LocalScale: {x: 0.5, y: 0.75, z: 3}
-  m_Children: []
-  m_Father: {fileID: 8275261833681559964}
-  m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: 0, y: -45, z: 0}
---- !u!33 &5344537399939138971
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8273503432976432778
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &312481913631891689
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7923948112100346697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConversionMode: 1
---- !u!114 &512401743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4acb3adfa9a0ed4abce93c0537146c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aITarget:
-    Type: 2
-    FactionID: 0
-    NumOfEntityTargetingMe: 0
-    GetInstanceID: 0
-    MaxNumberOfTarget: 0
-    CanBeTargetByPlayer: 0
-    detectionScore: 1
---- !u!114 &1672970464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92930c48778c46947ac8919601d6d1ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Threat: 2
-  Protection: 3
-  previousPos:
-    x: 0
-    y: 0
-    z: 0
-  factionID: 0
---- !u!114 &3191724044727654934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246888389198070824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -4964,6 +4863,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -69.399994, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 17
@@ -4987,6 +4887,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5062,6 +4963,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1714459979
 MonoBehaviour:
@@ -5094,6 +4999,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5133,6 +5039,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 19.499996, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 19
@@ -5156,6 +5063,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5231,6 +5139,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &691313627
 MonoBehaviour:
@@ -5263,6 +5175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5302,6 +5215,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 76.1, y: 0.921, z: 11.800003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 49
@@ -5325,6 +5239,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5400,6 +5315,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &493254651
 MonoBehaviour:
@@ -5432,6 +5351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5471,6 +5391,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 89.479996, y: 0.921, z: 11.800003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 48
@@ -5494,6 +5415,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5569,6 +5491,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &347697511
 MonoBehaviour:
@@ -5601,6 +5527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5640,6 +5567,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2.5, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 30
@@ -5663,6 +5591,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5738,6 +5667,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &429132310
 MonoBehaviour:
@@ -5770,6 +5703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5809,6 +5743,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 41.68, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 27
@@ -5832,6 +5767,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -5907,6 +5843,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1965363816
 MonoBehaviour:
@@ -5939,6 +5879,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -5978,6 +5919,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.2, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 42
@@ -6001,6 +5943,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -6076,6 +6019,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1463075382
 MonoBehaviour:
@@ -6108,6 +6055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6147,6 +6095,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -73.6, y: 0.921, z: 43.5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 53
@@ -6170,6 +6119,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -6245,6 +6195,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &655919923
 MonoBehaviour:
@@ -6277,6 +6231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6316,6 +6271,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.4, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 43
@@ -6339,6 +6295,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -6414,6 +6371,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1116846335
 MonoBehaviour:
@@ -6446,6 +6407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -6482,6 +6444,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 2
@@ -6505,6 +6468,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -6547,7 +6511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -7287,6 +7251,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -7337,6 +7302,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -7, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 12
@@ -7360,6 +7326,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -7435,6 +7402,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &593166233
 MonoBehaviour:
@@ -7467,6 +7438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -7503,6 +7475,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 58
@@ -7526,6 +7499,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -7568,7 +7542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -8308,6 +8282,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -8358,6 +8333,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -73.7, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 26
@@ -8381,6 +8357,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -8456,6 +8433,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &559636586
 MonoBehaviour:
@@ -8488,6 +8469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8527,6 +8509,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -34.2, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 23
@@ -8550,6 +8533,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -8625,6 +8609,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &209024268
 MonoBehaviour:
@@ -8657,6 +8645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8696,6 +8685,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -25.399998, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 32
@@ -8719,6 +8709,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -8794,6 +8785,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &2136171179
 MonoBehaviour:
@@ -8826,6 +8821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -8862,6 +8858,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -75, y: 0.4, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 57
@@ -8885,6 +8882,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -8927,7 +8925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -9667,6 +9665,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9717,6 +9716,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -56.199997, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 34
@@ -9740,6 +9740,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -9815,6 +9816,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1742475835
 MonoBehaviour:
@@ -9847,6 +9852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -9883,6 +9889,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25, y: 0.4, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 0
@@ -9906,6 +9913,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -9948,7 +9956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -10688,6 +10696,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -10738,6 +10747,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 7.2999973, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 20
@@ -10761,6 +10771,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -10836,6 +10847,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1513824975
 MonoBehaviour:
@@ -10868,6 +10883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -10907,6 +10923,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -37.6, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 33
@@ -10930,6 +10947,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11005,6 +11023,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &663289183
 MonoBehaviour:
@@ -11037,6 +11059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11076,6 +11099,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 63.899994, y: 0.921, z: 37.899994}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 47
@@ -11099,6 +11123,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11174,6 +11199,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &81966007
 MonoBehaviour:
@@ -11206,6 +11235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11245,6 +11275,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -17.099997, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 44
@@ -11268,6 +11299,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11343,6 +11375,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &641035237
 MonoBehaviour:
@@ -11375,6 +11411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11414,6 +11451,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 23.8, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 10
@@ -11437,6 +11475,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11512,6 +11551,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1378246429
 MonoBehaviour:
@@ -11544,6 +11587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11583,6 +11627,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -20.000004, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 22
@@ -11606,6 +11651,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11681,6 +11727,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1737137783
 MonoBehaviour:
@@ -11713,6 +11763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11752,6 +11803,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 63.899994, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 38
@@ -11775,6 +11827,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -11850,6 +11903,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &485210680
 MonoBehaviour:
@@ -11882,6 +11939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -11921,6 +11979,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -60.699997, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 16
@@ -11944,6 +12003,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -12019,6 +12079,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &337622343
 MonoBehaviour:
@@ -12051,6 +12115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -12087,6 +12152,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -25, y: 0.4, z: -25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 1
@@ -12110,6 +12176,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -12152,7 +12219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -12892,6 +12959,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -12942,6 +13010,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -42.1, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 15
@@ -12965,6 +13034,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13040,6 +13110,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &644831656
 MonoBehaviour:
@@ -13072,6 +13146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13111,6 +13186,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 89.479996, y: 0.921, z: 37.899994}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 45
@@ -13134,6 +13210,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13209,6 +13286,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &484534280
 MonoBehaviour:
@@ -13241,6 +13322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13280,6 +13362,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 36.599995, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 40
@@ -13303,6 +13386,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13378,6 +13462,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1291411502
 MonoBehaviour:
@@ -13410,6 +13498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13449,6 +13538,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 16.1, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 29
@@ -13472,6 +13562,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13547,6 +13638,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1752657754
 MonoBehaviour:
@@ -13579,6 +13674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13618,6 +13714,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 28.3, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 28
@@ -13641,6 +13738,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13716,6 +13814,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &490407160
 MonoBehaviour:
@@ -13748,6 +13850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13787,6 +13890,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -65, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 25
@@ -13810,6 +13914,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -13885,6 +13990,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &85095642
 MonoBehaviour:
@@ -13917,6 +14026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -13953,6 +14063,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -25, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 3
@@ -13976,6 +14087,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -14018,7 +14130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -14758,6 +14870,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -14808,6 +14921,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.4, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 41
@@ -14831,6 +14945,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -14906,6 +15021,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1992115211
 MonoBehaviour:
@@ -14938,6 +15057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -14977,6 +15097,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -15.7, y: 0.921, z: -40.2}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 13
@@ -15000,6 +15121,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15075,6 +15197,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &901132280
 MonoBehaviour:
@@ -15107,6 +15233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15146,6 +15273,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -46.4, y: 0.921, z: -20.300003}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 24
@@ -15169,6 +15297,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15244,6 +15373,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &216346752
 MonoBehaviour:
@@ -15276,6 +15409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15315,6 +15449,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -61.399994, y: 0.921, z: 43.5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 52
@@ -15338,6 +15473,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15413,6 +15549,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &348813980
 MonoBehaviour:
@@ -15445,6 +15585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15484,6 +15625,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 89.479996, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 36
@@ -15507,6 +15649,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15582,6 +15725,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1954153537
 MonoBehaviour:
@@ -15614,6 +15761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15646,6 +15794,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4303353607639193461}
   - {fileID: 3888317451592524233}
@@ -15742,6 +15891,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -11.200001, y: 0.921, z: 5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 31
@@ -15765,6 +15915,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15840,6 +15991,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1212844811
 MonoBehaviour:
@@ -15872,6 +16027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -15908,6 +16064,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 75, y: 0.4, z: 25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 4
@@ -15931,6 +16088,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -15973,7 +16131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MeshFormatVersion: 1
+  m_MeshFormatVersion: 2
   m_Faces:
   - m_Indexes: 000000000100000002000000030000000000000002000000
     m_SmoothingGroup: 0
@@ -16713,6 +16871,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
+  m_VersionIndex: 0
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -16763,6 +16922,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 76.1, y: 0.921, z: 26.599998}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 37
@@ -16786,6 +16946,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -16861,6 +17022,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &245841882
 MonoBehaviour:
@@ -16893,6 +17058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -16932,6 +17098,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -48.019997, y: 0.921, z: 17.400002}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 54
@@ -16955,6 +17122,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -17030,6 +17198,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1784135947
 MonoBehaviour:
@@ -17062,6 +17234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17101,6 +17274,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 76.1, y: 0.921, z: 37.899994}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 46
@@ -17124,6 +17298,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -17199,6 +17374,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &194729575
 MonoBehaviour:
@@ -17231,6 +17410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17270,6 +17450,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -48.019997, y: 0.921, z: 43.5}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 51
@@ -17293,6 +17474,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -17368,6 +17550,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1657837841
 MonoBehaviour:
@@ -17400,6 +17586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
@@ -17439,6 +17626,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -73.6, y: 0.921, z: 17.400002}
   m_LocalScale: {x: 0.5, y: 0.75, z: 3}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8275261833681559964}
   m_RootOrder: 56
@@ -17462,6 +17650,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -17556,6 +17745,10 @@ MonoBehaviour:
     GetInstanceID: 0
     MaxNumberOfTarget: 0
     CanBeTargetByPlayer: 0
+    CenterOffset:
+      x: 0
+      y: 0
+      z: 0
     detectionScore: 1
 --- !u!114 &1382671717433329423
 MonoBehaviour:
@@ -17569,9 +17762,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdd3f23370e86434cbdd3d6f72a91f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InPlay: 0
   InvincibleMode: 0
   CurHealth: 166
   maxHealth: 180
   CurMana: 180
   maxMana: 180
   EXPgained: 0
+--- !u!1001 &4246885484476893985
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8275261833681559964}
+    m_Modifications:
+    - target: {fileID: 3144112576241585929, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_Name
+      value: Barrier (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -11.300003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.921
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.300003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.92387956
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.38268343
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 076bec573833fc54e92ab21f143bc7ef, type: 3}
+--- !u!1 &1246888389198070824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3144112576241585929, guid: 076bec573833fc54e92ab21f143bc7ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 4246885484476893985}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &521428907653895723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246888389198070824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 1
+--- !u!4 &6057142747946201715 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7989593427822557522, guid: 076bec573833fc54e92ab21f143bc7ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 4246885484476893985}
+  m_PrefabAsset: {fileID: 0}

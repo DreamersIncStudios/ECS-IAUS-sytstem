@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IAUS.NPCSO {
+namespace IAUS.NPCScriptableObj {
 
     [CreateAssetMenu(fileName = "City NPC Data",menuName ="ScriptableObject/City Data" , order = 1)]
     public  class WorldNPCSpwan : ScriptableObject
@@ -12,7 +12,10 @@ namespace IAUS.NPCSO {
 
         public void SpawnWorld(Vector3 pos) {
             foreach (CitizenNPC citizen in Citizens)
-                citizen.Spawn(pos);
+                for (int i = 0; i < citizen.Count; i++)
+                {
+                    citizen.SpawnDataEntity(pos);
+                }
         }
     }
 }

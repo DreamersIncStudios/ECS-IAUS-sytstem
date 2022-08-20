@@ -17,8 +17,8 @@ namespace IAUS.ECS.Component
 
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
-        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Distance; } }
-        public ConsiderationScoringData ThreatInRange; //Todo add threat consideration
+        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
+        public ConsiderationScoringData ThreatInRange => stateRef.Value.Array[Index].DistanceToTarget;
 
         public bool Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -26,11 +26,13 @@ namespace IAUS.ECS.Component
         public float CoolDownTime { get { return _coolDownTime; } }
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public float distanceToPoint { get; set; }
-        public float StartingDistance { get; set; }
+        [SerializeField] public float distanceToPoint { get; set; }
+        [SerializeField] public float StartingDistance { get; set; }
         [SerializeField] public float BufferZone { get; set; }
-        public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
-        public Waypoint CurWaypoint { get; set; }
+        [SerializeField] public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        public bool TravelInOrder { get; set; }
+
+        [SerializeField] public Waypoint CurWaypoint { get; set; }
 
         public int WaypointIndex { get; set; }
         public float mod { get { return 1.0f - (1.0f / 2.0f); } }
@@ -39,8 +41,8 @@ namespace IAUS.ECS.Component
         [HideInInspector] public bool UpdateTravelPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
 
 

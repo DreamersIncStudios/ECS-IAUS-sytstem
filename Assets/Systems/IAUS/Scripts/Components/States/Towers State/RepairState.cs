@@ -12,7 +12,7 @@ namespace IAUS.ECS.Component
         public BlobAssetReference<AIStateBlobAsset> stateRef { get; set; }
         public int Index { get; set; }
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].TargetInRange;
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
 
       [SerializeField]  public ConsiderationScoringData EnergyMana => stateRef.Value.Array[Index].ManaAmmo;
         
@@ -31,8 +31,8 @@ namespace IAUS.ECS.Component
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
-        [SerializeField] float _resetTime;
-        [SerializeField] float _totalScore;
+        [SerializeField] public float _resetTime { get; set; }
+        [SerializeField] public float _totalScore { get; set; }
     }
     public struct HealSelfTag : IComponentData { }
 }

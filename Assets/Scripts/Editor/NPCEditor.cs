@@ -7,10 +7,10 @@ using IAUS.ECS;
 using IAUS.ECS.Consideration;
 using Global.Component;
 using Dreamers.Global;
-using IAUS.NPCSO.Interfaces;
+using IAUS.NPCScriptableObj.Interfaces;
 using Components.MovementSystem;
 using DreamersInc.InflunceMapSystem;
-namespace IAUS.NPCSO.editor
+namespace IAUS.NPCScriptableObj.editor
 {
     public sealed partial class NPCEditor : EditorWindow
     {
@@ -37,7 +37,7 @@ namespace IAUS.NPCSO.editor
         bool[] showBtn = new bool[System.Enum.GetNames(typeof(AIStates)).Length];
         EditorState editorState = EditorState.CreateNew;
         TargetType GetTargetType;
-        PMovementBuilderData GetPatrol;
+        MovementBuilderData GetPatrol;
 
         WaitBuilderData GetWait;
         RetreatCitizen GetRetreat;
@@ -116,7 +116,7 @@ namespace IAUS.NPCSO.editor
 
         bool PatrolDistance = false;
         bool PatrolHealthRatio = false;
-        PMovementBuilderData SetupPatrol(PMovementBuilderData state)
+        MovementBuilderData SetupPatrol(MovementBuilderData state)
         {
             showBtn[(int)AIStates.Patrol] = EditorGUILayout.BeginFoldoutHeaderGroup(showBtn[(int)AIStates.Patrol], "Patrol");
 
@@ -256,7 +256,7 @@ namespace IAUS.NPCSO.editor
             GetModel = null;
             GetTypeOfNPC = TypeOfNPC.Neurtal;
             GetTargetType = new TargetType();
-            GetPatrol = new  PMovementBuilderData()
+            GetPatrol = new  MovementBuilderData()
             {
                 BufferZone = .75f,
                 CoolDownTime = 5

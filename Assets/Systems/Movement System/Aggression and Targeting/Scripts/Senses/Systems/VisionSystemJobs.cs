@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Transforms;
@@ -7,15 +7,30 @@ using Unity.Jobs;
 using Unity.Physics.Systems;
 using UnityEngine;
 using Global.Component;
+using Unity.Mathematics;
+using Stats;
+using DreamersInc.InflunceMapSystem;
+using PixelCrushers.LoveHate;
+using RaycastHiy = Unity.Physics.RaycastHit;
 namespace AISenses.VisionSystems
 {
-    public class VisionSystemJobs : SystemBase
+
+    public class VisionTargetingUpdateGroup : ComponentSystemGroup
+    {
+        public VisionTargetingUpdateGroup()
+        {
+            RateManager = new RateUtils.VariableRateManager(1000, true);
+        }
+
+    }
+
+    [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
+    public partial class VisionSystemJobs : SystemBase
     {
         private EntityQuery SeerEntityQuery;
 
         private EntityQuery TargetEntityQuery;
         EntityCommandBufferSystem entityCommandBufferSystem;
-        EndFramePhysicsSystem m_EndFramePhysicsSystem;
 
         protected override void OnCreate()
         {
@@ -30,141 +45,108 @@ namespace AISenses.VisionSystems
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadWrite(typeof(AITarget)) }
 
             });
-            entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-            m_EndFramePhysicsSystem = World.GetExistingSystem<EndFramePhysicsSystem>();
+            entityCommandBufferSystem = World.GetExistingSystem<EndFixedStepSimulationEntityCommandBufferSystem>();
+
+
 
         }
-        float interval = 1.0f;
-        bool runUpdate => interval <= 0.0f;
+
+        protected override void OnStartRunning()
+        {
+            base.OnStartRunning();
+            this.RegisterPhysicsRuntimeSystemReadWrite();
+        }
+
         protected override void OnUpdate()
         {
-            if (runUpdate)
+            JobHandle systemDeps = Dependency;
+            CollisionWorld collisionWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld.CollisionWorld;
+
+            systemDeps = new VisionRayCastJob()
             {
-                CollisionWorld collisionWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld.CollisionWorld;
-                Dependency = JobHandle.CombineDependencies(Dependency, m_EndFramePhysicsSystem.GetOutputDependency());
-                JobHandle systemDeps = Dependency;
-                systemDeps = new AddRaycastBuffer()
-                {
-                    BufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
-                    transformChunk = GetComponentTypeHandle<LocalToWorld>(true),
-                    VisionChunk = GetComponentTypeHandle<Vision>(true),
-                    PossibleTargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob)
+                ScanBufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
+                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true),
+                VisionChunk = GetComponentTypeHandle<Vision>(true),
+                physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld,
+                world = collisionWorld,
+                TargetArray = TargetEntityQuery.ToComponentDataArray<AITarget>(Allocator.TempJob),
+                TargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
+                TargetEntity = TargetEntityQuery.ToEntityArray(Allocator.TempJob),
+            }.ScheduleSingle(SeerEntityQuery, systemDeps);
+            entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps.Complete();
+            Dependency = systemDeps;
 
-                }.ScheduleParallel(SeerEntityQuery, systemDeps);
-                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
-                systemDeps = new CastBufferRays()
-                {
-                    world = collisionWorld,
-                    BufferChunk = GetBufferTypeHandle<ScanPositionBuffer>(false),
-                    TargetInfo = GetComponentDataFromEntity<AITarget>(false),
-                    physicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().PhysicsWorld
-
-                }.ScheduleParallel(SeerEntityQuery, systemDeps);
-
-                entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-                World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>().AddInputDependency(systemDeps);
-                Dependency = systemDeps;
-                interval = 1.0f;
-            }
-            else
-            {
-                interval -= 1 / 60.0f;
-            }
         }
 
         [BurstCompile]
-        struct AddRaycastBuffer : IJobChunk
+        struct VisionRayCastJob : IJobChunk
         {
-            [ReadOnly] public ComponentTypeHandle<LocalToWorld> transformChunk;
+            public BufferTypeHandle<ScanPositionBuffer> ScanBufferChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
             [ReadOnly] public ComponentTypeHandle<Vision> VisionChunk;
-            [NativeDisableParallelForRestriction] [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> PossibleTargetPosition;
-            public BufferTypeHandle<ScanPositionBuffer> BufferChunk;
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<Vision> vision = chunk.GetNativeArray(VisionChunk);
-                NativeArray<LocalToWorld> tranforms = chunk.GetNativeArray(transformChunk);
-                BufferAccessor<ScanPositionBuffer> bufferAccessor = chunk.GetBufferAccessor(BufferChunk);
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    bufferAccessor[i].Clear();
-                    for (int j = 0; j < PossibleTargetPosition.Length; j++)
-                    {
-                        float dist = Vector3.Distance(tranforms[i].Position, PossibleTargetPosition[j].Position);
-                        if (dist <= vision[i].viewRadius)
-                        {
-                            Vector3 dirToTarget = ((Vector3)PossibleTargetPosition[j].Position - (Vector3)tranforms[i].Position).normalized;
-                            if (Vector3.Angle(tranforms[i].Forward, dirToTarget) < vision[i].ViewAngle / 2.0f)
-                            {
-                                bufferAccessor[i].Add(new ScanPositionBuffer()
-                                {
-                                    test = new RaycastInput()
-                                    {
-                                        Start = tranforms[i].Position,
-                                        End = PossibleTargetPosition[j].Position,
-                                        Filter = new CollisionFilter
-                                        {
-                                            BelongsTo = ~0u,
-                                            CollidesWith = ((1 << 10) | (1 << 11) | (1 << 12)),
-                                            GroupIndex = 0
-                                        }
-                                    },
-                                    dist = dist
-                                }); ;
+            [DeallocateOnJobCompletion] public NativeArray<AITarget> TargetArray;
+            [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> TargetPosition;
+            [DeallocateOnJobCompletion] public NativeArray<Entity> TargetEntity;
 
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-
-        [BurstCompile]
-        struct CastBufferRays : IJobChunk
-        {
-            public BufferTypeHandle<ScanPositionBuffer> BufferChunk;
-            [ReadOnly] [NativeDisableParallelForRestriction] public ComponentDataFromEntity<AITarget> TargetInfo;
             [ReadOnly] public CollisionWorld world;
             [ReadOnly] public PhysicsWorld physicsWorld;
-
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                BufferAccessor<ScanPositionBuffer> rays = chunk.GetBufferAccessor(BufferChunk);
-
+                NativeArray<LocalToWorld> Transforms = chunk.GetNativeArray(TransformChunk);
+                NativeArray<Vision> Visions = chunk.GetNativeArray(VisionChunk);
+                BufferAccessor<ScanPositionBuffer> bufferAccessor = chunk.GetBufferAccessor(ScanBufferChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
+                    DynamicBuffer<ScanPositionBuffer> buffer = bufferAccessor[i];
+                    buffer.Clear();
 
-                    DynamicBuffer<ScanPositionBuffer> buffer = rays[i];
-                    for (int j = 0; j < buffer.Length; j++)
+                    LocalToWorld transform = Transforms[i];
+                    Vision vision = Visions[i];
+                    for (int j = 0; j < TargetArray.Length; j++)
                     {
-                        ScanPositionBuffer item = buffer[j];
-                        if (world.CastRay(item.test, out Unity.Physics.RaycastHit raycastHit))
+                        float dist = Vector3.Distance(transform.Position, TargetPosition[j].Position);
+                        if (dist < vision.viewRadius)
                         {
-                            if (TargetInfo.HasComponent(raycastHit.Entity))
+                            Vector3 dirToTarget = ((Vector3)TargetPosition[j].Position - (Vector3)(transform.Position + new float3(0, 1, 0))).normalized;
+                            if (Vector3.Angle(transform.Forward, dirToTarget) < vision.ViewAngle / 2.0f)
                             {
-                                Target setTarget = new Target();
-                                setTarget.entity = physicsWorld.Bodies[raycastHit.RigidBodyIndex].Entity;
-                                setTarget.TargetInfo = TargetInfo[setTarget.entity];
+                                RaycastInput raycastInput = new RaycastInput()
+                                {
+                                    Start = transform.Position + new float3(0, 1, 0),
+                                    End = TargetPosition[j].Position + TargetArray[j].CenterOffset,
+                                    Filter = new CollisionFilter()
+                                    {
+                                        BelongsTo = (1 << 10),
+                                        CollidesWith = ((1 << 10) | (1 << 11) | (1 << 12)),
+                                        GroupIndex = 0
+                                    }
+                                };
+                                if (world.CastRay(raycastInput, out Unity.Physics.RaycastHit raycastHit))
+                                {
+                                    if (raycastHit.Entity.Equals(TargetEntity[j]))
+                                    {
+                                        buffer.Add(new ScanPositionBuffer()
+                                        {
+                                            target = new Target()
+                                            {
+                                                CanSee = true,
+                                                DistanceTo = dist,
+                                                LastKnownPosition = TargetPosition[j].Position,
+                                                TargetInfo = TargetArray[j],
+                                                entity = TargetEntity[j]
+                                            },
+                                            dist = dist
 
-                                setTarget.DistanceTo = raycastHit.Fraction * item.dist;
-                                setTarget.LastKnownPosition = raycastHit.Position;
-                                setTarget.CanSee = true;
-                                item.target = setTarget;
-                                buffer[j] = item;
+                                        });
+                                    }
+                                }
                             }
                         }
-                        else
-                        {
-                            buffer.RemoveAt(j);
-                        }
-                        //if(item.target.entity== Entity.Null)
-                        //    buffer.RemoveAt(j);
 
                     }
                 }
             }
-
         }
 
     }

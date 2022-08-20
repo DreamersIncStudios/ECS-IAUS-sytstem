@@ -8,8 +8,9 @@ using UnityEngine;
 using Stats;
 namespace IAUS.ECS.Systems
 {
-
-    public class StayInRangeUpdate : SystemBase
+    [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateBefore(typeof(IAUSBrainUpdate))]
+    public partial class StayInRangeUpdate : SystemBase
     {
         private EntityQuery Followers;
         EntityCommandBufferSystem _entityCommandBufferSystem;

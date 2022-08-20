@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 3
-    Model: {fileID: 4465180535401918593, guid: 115bd440abe14544683a3df792475a65, type: 3}
+  - Count: 200
+    Model: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
     Self:
       Type: 1
       FactionID: 2
@@ -22,11 +22,17 @@ MonoBehaviour:
       GetInstanceID: 0
       MaxNumberOfTarget: 0
       CanBeTargetByPlayer: 0
+      CenterOffset:
+        x: 0
+        y: 0
+        z: 0
       detectionScore: 0
     AIStatesAvailable: 130000000a000000
     GetMovement:
       BufferZone: 0.75
       CoolDownTime: 5
+      Range: 60
+      NumberOfStops: 10
     GetWait:
       StartTime: 1
       CoolDownTime: 5
@@ -51,7 +57,6 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
-      Scantimer: 0
       viewRadius: 30
       ViewAngle: 120
       EngageRadius: 5
