@@ -13,7 +13,7 @@ public class TestSpawn : MonoBehaviour
     public WorldNPCSpwan NPCToSpawn;
     public void Start()
     {
-         InvokeRepeating(nameof(Spawn), 0, 15);
+         //InvokeRepeating(nameof(Spawn), 0, 15);
   
         NPCToSpawn.SpawnWorld(this.transform.position);
     }
