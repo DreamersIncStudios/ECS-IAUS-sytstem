@@ -15,12 +15,12 @@ namespace IAUS.ECS.Component
     {
         //Need to add a check to see if escape is possible
         ConsiderationScoringData HealthRatio { get; }
-        ConsiderationScoringData ProximityInArea { get;  }
+        ConsiderationScoringData ProximityInArea { get; }
         ConsiderationScoringData ThreatInArea { get; }
         int FactionMemberID { get; set; }
-        float3 LocationOfHighestThreat { get;  }
-        float3 LocationOfLowestThreat { get;  }
-        float3 CurPos { get; set; }
+        float3 LocationOfHighestThreat { get; }
+        float3 LocationOfLowestThreat { get; }
+        [SerializeField] public float3 CurPos { get; set; }
         float2 GridValueAtPos { get; }
 
     }

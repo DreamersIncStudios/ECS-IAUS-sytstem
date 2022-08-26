@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 200
+  - Count: 2
     Model: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
     Self:
       Type: 1
@@ -27,7 +27,7 @@ MonoBehaviour:
         y: 0
         z: 0
       detectionScore: 0
-    AIStatesAvailable: 130000000a000000
+    AIStatesAvailable: 130000000a00000005000000
     GetMovement:
       BufferZone: 0.75
       CoolDownTime: 5

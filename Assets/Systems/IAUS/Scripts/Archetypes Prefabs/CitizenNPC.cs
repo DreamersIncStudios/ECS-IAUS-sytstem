@@ -195,7 +195,19 @@ namespace IAUS.NPCScriptableObj
 
             NPCChararacter stats = spawnedGO.AddComponent<NPCChararacter>();
             stats.SetupNPCData(npcDataEntity, 10);
+          
+            foreach (AIStates state in AIStatesAvailable)
+            {
+                switch (state)
+                {
+                    case AIStates.Retreat:
+                        var data = new RetreatCitizen();
+                        data._coolDownTime = 2.5f;
+                        manager.AddComponentData(npcDataEntity, data);
+                        break;
+                }
 
+            }
 
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
 

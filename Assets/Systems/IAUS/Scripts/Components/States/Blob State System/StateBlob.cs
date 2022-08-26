@@ -18,7 +18,9 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData ManaAmmo;
         public ConsiderationScoringData ManaAmmo2;
         public ConsiderationScoringData DistanceToTarget;
-        public ConsiderationScoringData influence;
+        public ConsiderationScoringData EnemyInfluence;
+        public ConsiderationScoringData FriendlyInfluence;
+
 
 
 
@@ -114,6 +116,16 @@ namespace IAUS.ECS.StateBlobSystem
             }));
 
             Entities.ForEach((EntityQueryBuilder.F_DDD<SpawnDefendersState, IAUSBrain, SetupBrainTag>)((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                G.stateRef = CreateReference();
+                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }); ;
+            }));
+            Entities.ForEach((EntityQueryBuilder.F_DDD<RetreatCitizen, IAUSBrain, SetupBrainTag>)((ref RetreatCitizen G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 G.stateRef = CreateReference();
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
                 {

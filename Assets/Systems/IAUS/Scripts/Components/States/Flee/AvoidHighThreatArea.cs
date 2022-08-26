@@ -20,8 +20,8 @@ namespace IAUS.ECS.Component
         public int Index;
         public AIStates name { get { return AIStates.RetreatToLocation; } }
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData ProximityInArea => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData ThreatInArea => stateRef.Value.Array[Index].Health;
+        public ConsiderationScoringData ProximityInArea => stateRef.Value.Array[Index].FriendlyInfluence;
+        public ConsiderationScoringData ThreatInArea => stateRef.Value.Array[Index].EnemyInfluence;
         public int FactionMemberID { get; set; }
         [BurstDiscard]
         public float3 LocationOfHighestThreat
