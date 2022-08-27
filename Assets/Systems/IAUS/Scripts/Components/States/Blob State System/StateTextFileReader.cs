@@ -76,25 +76,25 @@ namespace IAUS.ECS.StateBlobSystem
                     switch (consideration)
                     {
                         case Considerations.Health:
-                            temp.Health = LineRead(4, lines[i]);
+                            temp.Health = LineRead( lines[i]);
                             break;
                         case Considerations.DistanceToTarget:
-                            temp.DistanceToTarget = LineRead(4, lines[i]);
+                            temp.DistanceToTarget = LineRead(lines[i]);
                             break;
                         case Considerations.DistanceToPOI:
-                            temp.DistanceToPlaceOfInterest = LineRead(4, lines[i]);
+                            temp.DistanceToPlaceOfInterest = LineRead( lines[i]);
                             break;
                         case Considerations.Time:
-                            temp.Timer = LineRead(4, lines[i]);
+                            temp.Timer = LineRead( lines[i]);
                             break;
                         case Considerations.ManaAmmo:
-                            temp.ManaAmmo = LineRead(4, lines[i]);
+                            temp.ManaAmmo = LineRead( lines[i]);
                             break;
                         case Considerations.FriendlyInfluence:
-                            temp.FriendlyInfluence = LineRead(4, lines[i]);
+                            temp.FriendlyInfluence = LineRead( lines[i]);
                             break;
                         case Considerations.EnemyInfluence:
-                            temp.EnemyInfluence = LineRead(4, lines[i]);
+                            temp.EnemyInfluence = LineRead( lines[i]);
                             break;
 
                     }
@@ -119,7 +119,7 @@ namespace IAUS.ECS.StateBlobSystem
         }
 
 
-        static ConsiderationScoringData LineRead(int StartPoint, string Line)
+        static ConsiderationScoringData LineRead( string Line, int StartPoint=4)
         {
             ConsiderationScoringData output = new ConsiderationScoringData()
             {

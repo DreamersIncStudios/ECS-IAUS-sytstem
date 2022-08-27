@@ -178,7 +178,13 @@ namespace IAUS.NPCScriptableObj
                 GOCompanion = spawnedGO
             });
 
+            manager.SetComponentData(npcDataEntity, new InfluenceComponent
+            { 
+                factionID = Self.FactionID,
+                Protection = 2,
+                Threat = 0
 
+            });
             if (spawnedGO.GetComponent<NavMeshAgent>() == null)
             {
                 NavMeshAgent agent = spawnedGO.AddComponent<NavMeshAgent>();
@@ -203,6 +209,9 @@ namespace IAUS.NPCScriptableObj
                     case AIStates.Retreat:
                         var data = new RetreatCitizen();
                         data._coolDownTime = 2.5f;
+                        data.RetreatRange = stats.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue * 5.0f / 100f;
+                        data.CrowdMin = 4;
+                        data.ThreatThreshold = 4;
                         manager.AddComponentData(npcDataEntity, data);
                         break;
                 }

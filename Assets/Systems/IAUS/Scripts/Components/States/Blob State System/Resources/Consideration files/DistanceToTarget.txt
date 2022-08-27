@@ -26,3 +26,7 @@ Normal,NPC,3,Traverse,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,NPC,0,Patrol,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,NPC,1,Patrol,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,NPC,2,Traverse,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
+Normal,NPC,0,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
+Normal,NPC,1,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
+Normal,NPC,2,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
+Normal,NPC,3,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000

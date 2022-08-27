@@ -2,19 +2,15 @@ using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
 using PixelCrushers.LoveHate;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-
-
 namespace IAUS.ECS.Component
 {
-    [Serializable]
-    public struct RetreatCitizen : BaseRetreat
+    public struct FindAndMoveToCover : BaseRetreat
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
@@ -23,10 +19,12 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData ProximityInArea => stateRef.Value.Array[Index].FriendlyInfluence;
         public ConsiderationScoringData ThreatInArea => stateRef.Value.Array[Index].EnemyInfluence;
         public ConsiderationScoringData DistanceFromThreat => stateRef.Value.Array[Index].DistanceToTarget;
+        public int FactionMemberID { get; set; }
+
         public float ThreatThreshold;
         public float CrowdMin;
         public float RetreatRange; // TODO set based off speed stat and balance
-        public int FactionMemberID { get; set; }
+
         [BurstDiscard]
         public float3 LocationOfHighestThreat
         {
@@ -72,4 +70,5 @@ namespace IAUS.ECS.Component
         }
 
     }
+
 }

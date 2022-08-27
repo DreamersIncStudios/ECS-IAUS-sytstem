@@ -18,6 +18,7 @@ namespace IAUS.ECS.Component {
         public float3 Position;
         public float TimeToWaitatWaypoint;
         public float2 InfluenceAtPosition;
+        public bool Avoid;
 
         
 
