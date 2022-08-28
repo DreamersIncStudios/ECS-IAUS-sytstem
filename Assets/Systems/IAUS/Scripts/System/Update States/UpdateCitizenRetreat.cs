@@ -63,11 +63,12 @@ namespace IAUS.ECS.Systems
                 {
                     RetreatCitizen retreat = Retreats[i];
                     NPCStats stats = Stats[i];
+                    Debug.Log(retreat.GridValueAtPos);
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
                         * retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
                         * retreat.ThreatInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.y/retreat.ThreatThreshold))
-                        * retreat.DistanceFromThreat.Output(0)
+                        * retreat.DistanceFromThreat.Output(1.0f)
                         ;
                     retreat.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * retreat.mod) * TotalScore);
                     Retreats[i] = retreat;

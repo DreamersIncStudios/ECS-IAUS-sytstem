@@ -120,7 +120,8 @@ namespace IAUS.NPCScriptableObj
                typeof(Movement),
                typeof(TravelWaypointBuffer),
                typeof(StateBuffer),
-                               typeof(Vision),
+               typeof(Perceptibility),
+               typeof(Vision),
                typeof(ScanPositionBuffer),
                typeof(CompanionGO)
                );
@@ -171,7 +172,12 @@ namespace IAUS.NPCScriptableObj
                 CanBeTargetByPlayer = true,
                 Type = TargetType.Character,
             });
-
+            manager.SetComponentData(npcDataEntity, new Perceptibility
+            {
+                visibilityStates = VisibilityStates.Visible,
+                movement = MovementStates.Stadning_Still,
+                noiseState = NoiseState.Normal
+            });
             GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
             manager.SetComponentData(npcDataEntity, new CompanionGO
             {

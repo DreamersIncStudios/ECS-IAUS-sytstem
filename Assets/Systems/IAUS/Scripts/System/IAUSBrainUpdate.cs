@@ -158,7 +158,7 @@ namespace IAUS.ECS.Systems
                                 temp.Status = StayInRangeOfTarget[entity].Status;
                                 break;
                             case AIStates.Retreat:
-                                temp.StateName = AIStates.Retreat;
+                                temp.StateName = AIStates.RetreatToLocation;
                                 if (RetreatCitizenScore.HasComponent(entity))
                                 {
                                     temp.TotalScore = RetreatCitizenScore[entity].TotalScore;
