@@ -61,13 +61,14 @@ namespace IAUS.ECS.Component
 
         public float HideTime;
 
-        public float3 CurPos { get; set; }
+        public float3 CurPos { get { return showCurPos; } set { showCurPos = value; } }
+        public float3 showCurPos;
         [BurstDiscard]
         public float2 GridValueAtPos
         {
             get
             {
-                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValueNormalized(LoveHate.factionDatabase.GetFaction(FactionMemberID));
+                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValue(LoveHate.factionDatabase.GetFaction(FactionMemberID));
             }
         }
 

@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component
         int FactionMemberID { get; set; }
         float3 LocationOfHighestThreat { get; }
         float3 LocationOfLowestThreat { get; }
-        [SerializeField] public float3 CurPos { get; set; }
+       float3 CurPos { get; set; }
         float2 GridValueAtPos { get; }
 
     }

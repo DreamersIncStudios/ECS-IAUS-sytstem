@@ -214,6 +214,7 @@ namespace IAUS.NPCScriptableObj
                 {
                     case AIStates.Retreat:
                         var data = new RetreatCitizen();
+                        data.FactionMemberID = Self.FactionID;
                         data._coolDownTime = 2.5f;
                         data.RetreatRange = stats.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue * 5.0f / 100f;
                         data.CrowdMin = 4;

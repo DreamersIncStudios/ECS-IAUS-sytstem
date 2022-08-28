@@ -126,28 +126,30 @@ namespace DreamersInc.InflunceMapSystem
         }
 
         public int2 GetValue(Faction faction) {
-            List<Faction> Foes = new List<Faction>();
-            List<Faction> Friends = new List<Faction>();
-            List<Faction> Neutral = new List<Faction>();
+
+            List<Faction> foes = new List<Faction>();
+            List<Faction> friends = new List<Faction>();
+            List<Faction> neutral = new List<Faction>();
 
             foreach (var item in LoveHate.factionDatabase. GetFaction(faction.id).relationships)
             {
                 if (item.GetTrait(0)>50)
-                    Friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else if (item.GetTrait(0) < 50)
-                    Foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else
-                    Neutral.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    neutral.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
             }
-
             int2[] value = new int2[2];
-            for (int i = 0; i < Friends.Count; i++)
+            for (int i = 0; i < friends.Count; i++)
             {
-                value[0] += gridValue[Friends[i]];
+                if(gridValue.TryGetValue(friends[i], out int2 output))
+                    value[0] += output;
             }
-            for (int i = 0; i < Foes.Count; i++)
+            for (int i = 0; i < foes.Count; i++)
             {
-                value[1] += gridValue[Foes[i]];
+                if (gridValue.TryGetValue(foes[i], out int2 output))
+                    value[1] += output;
             }
 
             return new int2(value[0].x,value[1].y);
@@ -204,7 +206,13 @@ namespace DreamersInc.InflunceMapSystem
 
         public override string ToString()
         {
-            return gridValue.ToString();
+            string output ="";
+            foreach (var val in gridValue)
+            {
+                output += val.ToString();
+            }
+
+            return output;
         }
     }
 
