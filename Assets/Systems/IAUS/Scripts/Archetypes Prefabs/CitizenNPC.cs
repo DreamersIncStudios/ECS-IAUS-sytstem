@@ -123,6 +123,7 @@ namespace IAUS.NPCScriptableObj
                typeof(Perceptibility),
                typeof(Vision),
                typeof(ScanPositionBuffer),
+               typeof(CopyTransformFromGameObject),
                typeof(CompanionGO)
                );
 
@@ -224,7 +225,7 @@ namespace IAUS.NPCScriptableObj
                 }
 
             }
-
+            manager.AddComponentObject(npcDataEntity, spawnedGO.transform);
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
         }
@@ -262,14 +263,6 @@ namespace IAUS.NPCScriptableObj
     {
         protected override void OnUpdate()
         {
-            Entities.ForEach((Entity entity, ref LocalToWorld local, CompanionGO GO) => {
-                EntityManager.SetComponentData(entity, new Translation { Value = GO.GOCompanion.transform.position });
-
-            });
-            Entities.ForEach((Entity entity, ref Rotation rot, CompanionGO GO) => {
-                EntityManager.SetComponentData(entity, new Rotation { Value = GO.GOCompanion.transform.rotation });
-
-            });
             Entities.ForEach((Entity entity, ref EntityHasDiedTag tag, CompanionGO go) => {
                 Debug.Log("Play Death Animation");
                 Object.Destroy(go.GOCompanion, .5f);

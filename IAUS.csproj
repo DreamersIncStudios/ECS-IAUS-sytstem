@@ -89,7 +89,6 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Leader.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\Interface\IInfluence.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\StayInRange.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\AvoidHighThreatArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />

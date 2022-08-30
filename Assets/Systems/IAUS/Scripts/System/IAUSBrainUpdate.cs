@@ -87,7 +87,9 @@ namespace IAUS.ECS.Systems
                 AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
                 GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
                 RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
-                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true),
+                CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+
 
 
             }.Schedule(IAUSBrains, systemDeps);
@@ -260,7 +262,7 @@ namespace IAUS.ECS.Systems
                             if (!AttackStateScore.HasComponent(entity))
                                 CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.Retreat:
+                            case AIStates.RetreatToLocation:
                             if (!RetreatCitizenScore.HasComponent(entity))
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
@@ -333,7 +335,7 @@ namespace IAUS.ECS.Systems
                                 CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
                                 break;
 
-                            case AIStates.Retreat:
+                            case AIStates.RetreatToLocation:
                                 CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.GatherResources:
@@ -367,7 +369,7 @@ namespace IAUS.ECS.Systems
                             case AIStates.Attack:
                                 CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
                                 break;
-                            case AIStates.Retreat:
+                            case AIStates.RetreatToLocation:
                                 CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
                                 break;
                             case AIStates.GatherResources:

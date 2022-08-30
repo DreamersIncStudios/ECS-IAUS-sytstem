@@ -1,5 +1,6 @@
 using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.Component;
+using PixelCrushers.LoveHate;
 using Stats;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,10 +65,9 @@ namespace IAUS.ECS.Systems
                 {
                     RetreatCitizen retreat = Retreats[i];
                     NPCStats stats = Stats[i];
-                    Debug.Log(InfluenceGridMaster.Instance.grid.GetGridObject(retreat.CurPos).ToString());
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
-                        * retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
+//* retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
                         * retreat.ThreatInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.y/retreat.ThreatThreshold))
                         * retreat.DistanceFromThreat.Output(1.0f)
                         ;

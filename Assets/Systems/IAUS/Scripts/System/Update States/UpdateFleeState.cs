@@ -52,7 +52,7 @@ namespace IAUS.ECS.Systems
 
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            systemDeps = new ScoreStateCitizen()
+            systemDeps = new ScoreStateEnemyRetreat()
             {
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
@@ -65,7 +65,7 @@ namespace IAUS.ECS.Systems
         }
 
         //TODO Abstract at later Date
-        public struct ScoreStateCitizen : IJobChunk
+        public struct ScoreStateEnemyRetreat : IJobChunk
         {
             [ReadOnly] public ComponentTypeHandle<EnemyStats> StatsChunk;
             public ComponentTypeHandle<RetreatCitizen> RetreatChunk;

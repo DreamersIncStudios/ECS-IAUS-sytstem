@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -68,6 +68,7 @@
     <Compile Include="Assets\Systems\Global\Scripts\FreqPhasing.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\SMT\SMTOptions.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\Player_Control.cs" />
+    <Compile Include="Assets\Systems\Global\Scripts\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Systems\Global\Generic Grid System\GridGeneric.cs" />
     <Compile Include="Assets\Systems\Global\GameMasterTest.cs" />
     <Compile Include="Assets\Systems\Global\Scripts\Terrain Physics\DOTSTerrainCollider.cs" />
@@ -783,6 +784,10 @@
     <ProjectReference Include="Unity.Physics.Hybrid.csproj">
       <Project>{11E19E6D-6AF3-9F73-31C1-83906CE1BBE0}</Project>
       <Name>Unity.Physics.Hybrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{DBC48231-0756-9ABB-731A-A36E45417703}</Project>
+      <Name>Unity.Burst</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>

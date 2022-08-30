@@ -143,16 +143,23 @@ namespace DreamersInc.InflunceMapSystem
             int2[] value = new int2[2];
             for (int i = 0; i < friends.Count; i++)
             {
-                if(gridValue.TryGetValue(friends[i], out int2 output))
+                if (gridValue.TryGetValue(friends[i], out int2 output))
+                {
                     value[0] += output;
+                }
             }
             for (int i = 0; i < foes.Count; i++)
             {
                 if (gridValue.TryGetValue(foes[i], out int2 output))
+                {
                     value[1] += output;
+                }
             }
-
-            return new int2(value[0].x,value[1].y);
+            var output2 = new int2();
+            output2.x = value[0].x;
+            output2.y = value[1].y;
+              //  new int2(value[0].x, value[1].y)
+            return output2;
         }
         public float2 GetValueNormalized(Faction faction) {
             return (float2)GetValue(faction)/ MAX;
