@@ -10,58 +10,34 @@ using Random = UnityEngine.Random;
 
 namespace Stats
 {
-    public class NPCChararacter : BaseCharacter,IConvertGameObjectToEntity
+    public class NPCChararacter : BaseCharacter
     {
-        public override void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            float ModValue = 1.1f;
-            GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
-            GetVital((int)VitalName.Health).BaseValue = 50;
-            GetVital((int)VitalName.Mana).BaseValue = 25;
+        public CharacterClass BaseStats;
 
-            base.Convert(entity, dstManager, conversionSystem);
-            var data = new NPCStats()
-            {
-                MaxHealth = MaxHealth,
-                MaxMana = MaxMana,
-                CurHealth = CurHealth,
-                CurMana = CurMana,
-                selfEntityRef = entity
-            };
-            dstManager.AddComponentData(entity, data);
-            Level = 5;
-            StatUpdate();
-        }
-        public async void SetupNPCData(Entity entity, uint level)
+        public void SetupDataEntity(Entity entity)
         {
 
-            float ModValue = (float)level * 1.5f;
             SelfEntityRef = entity;
-
-            GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(20 * ModValue);
-            GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(20 * ModValue);
-            GetVital((int)VitalName.Health).StartValue = 500;
-            GetVital((int)VitalName.Mana).StartValue = 250;
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
+            em.AddBuffer<EffectStatusBuffer>(entity);
+            //Todo get level and stat data
+            this.Level = BaseStats.Level;
+            float ModValue = BaseStats.LevelMod;
+            this.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(BaseStats.Strength * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(BaseStats.Awareness * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(BaseStats.Charisma * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(BaseStats.Resistance * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(BaseStats.WillPower * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(BaseStats.Vitality * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(BaseStats.Skill * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(BaseStats.Speed * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(BaseStats.Luck * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(BaseStats.Concentration * ModValue);
+            this.GetVital((int)VitalName.Health).StartValue = 500;
+            this.GetVital((int)VitalName.Mana).StartValue = 250;
             World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(entity, new NPCStats { selfEntityRef = entity });
             StatUpdate();
+
         }
 
         public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element)
@@ -70,15 +46,16 @@ namespace Stats
             float defense = typeOf switch
             {
                 TypeOfDamage.MagicAoE => MagicDef,
-                TypeOfDamage.Melee => MeleeDef,
                 _ => MeleeDef,
             };
-            Debug.Log((float)Amount / defense);
+
             int damageToProcess = -Mathf.FloorToInt(Amount * defense * Random.Range(.92f, 1.08f));
+            // Debug.Log(damageToProcess + " HP of damage to target "+ Name);
             AdjustHealth health = new AdjustHealth() { Value = damageToProcess };
             World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, health);
         }
-        public override void ReactToHit(float impact, Vector3 Test, Vector3 Forward, TypeOfDamage typeOf = TypeOfDamage.Melee , Element element= Element.None)
+
+        public override void ReactToHit(float impact, Vector3 Test, Vector3 Forward, TypeOfDamage typeOf = TypeOfDamage.Melee, Element element = Element.None)
         {
             //Todo Figure out element resistances, conditional mods, and possible affinity 
             float defense = typeOf switch
@@ -88,15 +65,18 @@ namespace Stats
                 _ => MeleeDef,
             };
 
-            ReactToContact reactTo = new ReactToContact() { 
+            ReactToContact reactTo = new ReactToContact()
+            {
                 ForwardVector = Forward,
                 positionVector = this.transform.position,
                 RightVector = transform.right,
-                HitIntensity = Mathf.FloorToInt( impact / (defense * 10.0f) * Random.Range(.92f, 1.08f)),
-                HitContactPoint =Test
+                HitIntensity = 4.45f,//Todo balance the mathe Mathf.FloorToInt(impact / (defense * 10.0f) * Random.Range(.92f, 1.08f)),
+                HitContactPoint = Test
             };
-            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, reactTo);
-
+            if (!World.DefaultGameObjectInjectionWorld.EntityManager.HasComponent<ReactToContact>(SelfEntityRef))
+                World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, reactTo);
         }
+
+
     }
 }

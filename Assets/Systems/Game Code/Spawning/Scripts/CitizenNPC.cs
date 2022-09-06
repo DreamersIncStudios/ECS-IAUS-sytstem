@@ -17,6 +17,10 @@ using Unity.Transforms;
 using Utilities;
 using Unity.Mathematics;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
+using System.Linq;
+using Unity.Physics;
+using Unity.Physics.Authoring;
 
 namespace IAUS.NPCScriptableObj
 {
@@ -26,7 +30,7 @@ namespace IAUS.NPCScriptableObj
     {
         [Range(1, 500)]
         public int Count;
-        public GameObject Model;
+        public List<GameObject> Models;
         public AITarget Self;
         public List<AIStates> AIStatesAvailable;
         public MovementBuilderData GetMovement;
@@ -35,76 +39,25 @@ namespace IAUS.NPCScriptableObj
         public Vision GetVision;
         public InfluenceComponent GetInfluence;
 
+        public PhysicsCategoryTags belongsTo;
+        public PhysicsCategoryTags collideWith;
+
         EntityArchetype citizen;
-        public async void Spawn(Vector3 pos)
+        bool loaded;
+        public void LoadModals()
         {
-            for (int i = 0; i <= Count; i++)
+            GameObject[] goLoaded = Resources.LoadAll("Players", typeof(GameObject)).Cast<GameObject>().ToArray();
+            foreach (var go in goLoaded)
             {
-                Utilities.GlobalFunctions.RandomPoint(pos, 5.0f, out Vector3 Spos);
-                GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
-
-                Self = new AITarget()
-                {
-                   
-                    FactionID = GetInfluence.factionID,
-                    Type = TargetType.Character,
-                    CanBeTargetByPlayer = false
-
-                };
-
-
-                if (!spawnedGO.GetComponent<NavMeshAgent>())
-                    spawnedGO.AddComponent<NavMeshAgent>();
-
-                spawnedGO.AddComponent<ConvertToEntity>().ConversionMode = ConvertToEntity.Mode.ConvertAndInjectGameObject;
-                
-                BaseAIAuthoringSO aiAuthoring = spawnedGO.AddComponent<BaseAIAuthoringSO>();
-                NPCChararacter npcStat = spawnedGO.AddComponent<NPCChararacter>();
-                npcStat.SetAttributeBaseValue(10, 300, 100, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
-
-                //AIAuthoring.faction = getFaction;
-                aiAuthoring.Self = Self;
-                aiAuthoring.GetAttackType = new List<AttackTypeInfo>();
-                aiAuthoring.movement = AIMove;
-                foreach (AIStates state in AIStatesAvailable)
-                {
-                    switch (state)
-                    {
-                        case AIStates.Traverse:
-                            aiAuthoring.AddTraverse = true;
-                            aiAuthoring.buildMovement = GetMovement;
-                            var adder = spawnedGO.AddComponent<WaypointCreation>();
-                            await Task.Delay(TimeSpan.FromSeconds(1));
-                            adder.CreateWaypoints(GetMovement.Range, GetMovement.NumberOfStops, false);
-
-                            break;
-                        case AIStates.Wait:
-                            aiAuthoring.AddWait = true;
-                            aiAuthoring.waitBuilder = GetWait;
-                            break;
-                    }
-
-                }
-
-                AISensesAuthoring Senses = spawnedGO.AddComponent<AISensesAuthoring>();
-                Senses.Vision = true;
-                Senses.VisionData = GetVision;
-                //Senses.Hearing = true;
-                //Senses.HearingData = new Hearing();
-               
-                npcStat.Name = NPCUtility.GetNameFile();
-                aiAuthoring.factionID = 3; //  TODO Set up later;
-                aiAuthoring.GetInfluence = GetInfluence;
-                aiAuthoring.SetupSystem();
-
-                await Task.Delay(TimeSpan.FromSeconds(5f));
-         
-
+                Models.Add(go);
             }
+            loaded = true;
         }
 
-        public void SpawnDataEntity(Vector3 Pos,string entityName = "") {
-            Utilities.GlobalFunctions.RandomPoint(Pos, 5.0f, out Vector3 Spos);
+
+
+        public void SpawnNPCandCreateDataEntity(Vector3 Pos,string entityName = "") {
+            Utilities.GlobalFunctions.RandomPoint(Pos, 150.0f, out Vector3 spawnPos);
 
             EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             EntityArchetype npcDataArch = manager.CreateArchetype(
@@ -124,7 +77,8 @@ namespace IAUS.NPCScriptableObj
                typeof(Vision),
                typeof(ScanPositionBuffer),
                typeof(CopyTransformFromGameObject),
-               typeof(CompanionGO)
+               typeof(PhysicsCollider),
+               typeof(PhysicsWorldIndex)
                );
 
             Entity npcDataEntity = manager.CreateEntity(npcDataArch);
@@ -132,7 +86,28 @@ namespace IAUS.NPCScriptableObj
                 manager.SetName(npcDataEntity, entityName);
             else
                 manager.SetName(npcDataEntity, "NPC Data");
-            manager.SetComponentData(npcDataEntity, new Translation { Value = Pos });
+
+            int cnt = Random.Range(0, Models.Count-1);
+            GameObject spawnedGO = GameObject.Instantiate(Models[cnt], spawnPos, Quaternion.identity);
+            UnityEngine.CapsuleCollider col = spawnedGO.GetComponent<UnityEngine.CapsuleCollider>();
+            BlobAssetReference<Unity.Physics.Collider> spCollider = Unity.Physics.CapsuleCollider.Create(new CapsuleGeometry()
+            {
+                Radius = col.radius,
+                Vertex0 = col.center+ new Vector3(0,col.height,0),
+                Vertex1 = new float3(0, 0, 0)
+
+            }, new CollisionFilter()
+            {
+                BelongsTo = belongsTo.Value,
+                CollidesWith = collideWith.Value,
+                GroupIndex = 0
+            }
+);
+            manager.SetComponentData(npcDataEntity, new PhysicsCollider()
+            { Value = spCollider });
+
+
+            manager.SetComponentData(npcDataEntity, new Translation { Value = spawnPos });
 
 
             manager.SetComponentData(npcDataEntity, new Wait
@@ -179,11 +154,6 @@ namespace IAUS.NPCScriptableObj
                 movement = MovementStates.Stadning_Still,
                 noiseState = NoiseState.Normal
             });
-            GameObject spawnedGO = GameObject.Instantiate(Model, Spos, Quaternion.identity);
-            manager.SetComponentData(npcDataEntity, new CompanionGO
-            {
-                GOCompanion = spawnedGO
-            });
 
             manager.SetComponentData(npcDataEntity, new InfluenceComponent
             { 
@@ -196,7 +166,6 @@ namespace IAUS.NPCScriptableObj
             {
                 NavMeshAgent agent = spawnedGO.AddComponent<NavMeshAgent>();
             }
-
             manager.SetComponentData(npcDataEntity, new Movement
             {
                 CanMove = true,
@@ -206,8 +175,8 @@ namespace IAUS.NPCScriptableObj
                 Acceleration = 5
             });
 
-            NPCChararacter stats = spawnedGO.AddComponent<NPCChararacter>();
-            stats.SetupNPCData(npcDataEntity, 10);
+            NPCChararacter stats = spawnedGO.GetComponent<NPCChararacter>();
+            stats.SetupDataEntity(npcDataEntity);
           
             foreach (AIStates state in AIStatesAvailable)
             {
@@ -225,7 +194,12 @@ namespace IAUS.NPCScriptableObj
                 }
 
             }
+            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<NavMeshAgent>());
+            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<UnityEngine.CapsuleCollider>());
+
             manager.AddComponentObject(npcDataEntity, spawnedGO.transform);
+            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<Rigidbody>());
+
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
         }
@@ -259,17 +233,5 @@ namespace IAUS.NPCScriptableObj
         }
 
     }
-    public partial class SyncCompanionGOPosition : ComponentSystem
-    {
-        protected override void OnUpdate()
-        {
-            Entities.ForEach((Entity entity, ref EntityHasDiedTag tag, CompanionGO go) => {
-                Debug.Log("Play Death Animation");
-                Object.Destroy(go.GOCompanion, .5f);
-                EntityManager.DestroyEntity(entity);
-            });
-
-
-        }
-    }
+   
 }

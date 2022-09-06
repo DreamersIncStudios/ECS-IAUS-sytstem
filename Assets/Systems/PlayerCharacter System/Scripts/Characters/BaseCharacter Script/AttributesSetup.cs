@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DreamersInc.DamageSystem.Interfaces;
 namespace Stats
 {
-    public abstract partial class BaseCharacter : MonoBehaviour, IConvertGameObjectToEntity, IDamageable
+    public abstract partial class BaseCharacter : MonoBehaviour, IDamageable
     {
 
         private void SetupVitalBase()

@@ -14,7 +14,7 @@ namespace IAUS.NPCScriptableObj {
             foreach (CitizenNPC citizen in Citizens)
                 for (int i = 0; i < citizen.Count; i++)
                 {
-                    citizen.SpawnDataEntity(pos);
+                    citizen.SpawnNPCandCreateDataEntity(pos);
                 }
         }
     }
