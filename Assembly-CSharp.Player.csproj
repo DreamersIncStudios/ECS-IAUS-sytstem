@@ -65,7 +65,6 @@
     <Compile Include="Assets\Systems\Sample Game Code\Spawner.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerIAUSSetup.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\TimerCountdown.cs" />
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
+    <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -847,6 +847,10 @@
     <ProjectReference Include="Unity.Deformations.Player.csproj">
       <Project>{3AA91A2A-C636-C8A4-9651-5FE10AAB7680}</Project>
       <Name>Unity.Deformations.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="BestiaryAssem.Player.csproj">
+      <Project>{939B96B4-3BD1-F9B3-7D0E-2C689CCA1C48}</Project>
+      <Name>BestiaryAssem.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

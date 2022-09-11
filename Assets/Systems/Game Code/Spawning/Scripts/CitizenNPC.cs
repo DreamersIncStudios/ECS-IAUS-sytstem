@@ -121,7 +121,7 @@ namespace IAUS.NPCScriptableObj
                 viewRadius = 45,
                 EngageRadius = 20,
 
-            }); ;
+            }); 
             manager.SetComponentData(npcDataEntity, new IAUSBrain
             {
                 factionID = Self.FactionID,
