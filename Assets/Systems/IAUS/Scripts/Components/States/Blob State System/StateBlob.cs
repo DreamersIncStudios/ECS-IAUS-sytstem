@@ -52,17 +52,24 @@ namespace IAUS.ECS.StateBlobSystem
 
         public override string ToString()
         {
-            return NPCLevel.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " "+ aIStates.ToString();
+            return NPCLevel.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " " + aIStates.ToString();
         }
     }
 
     [UpdateBefore(typeof(IAUS.ECS.Systems.IAUSBrainSetupSystem))]
     public class SetupAIStateBlob : ComponentSystem
     {
+        BlobAssetReference<AIStateBlobAsset> reference;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            reference = CreateReference();
+        }
+
         protected override void OnUpdate()
         {
             Entities.ForEach((EntityQueryBuilder.F_DDD<Patrol, IAUSBrain, SetupBrainTag>)((ref Patrol p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                p.stateRef = CreateReference();
+                p.stateRef = reference;
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -73,7 +80,7 @@ namespace IAUS.ECS.StateBlobSystem
                 });
             }));
             Entities.ForEach((EntityQueryBuilder.F_DDD<Traverse, IAUSBrain, SetupBrainTag>)((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                p.stateRef = CreateReference();
+                p.stateRef = reference;
                 p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -84,7 +91,7 @@ namespace IAUS.ECS.StateBlobSystem
             }));
 
             Entities.ForEach((EntityQueryBuilder.F_DDD<Wait, IAUSBrain, SetupBrainTag>)((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                w.stateRef = CreateReference();
+                w.stateRef = reference;
                 w.Index = w.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -94,7 +101,7 @@ namespace IAUS.ECS.StateBlobSystem
                 });
             }));
             Entities.ForEach((EntityQueryBuilder.F_DDD<GatherResourcesState, IAUSBrain, SetupBrainTag>)((ref GatherResourcesState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.stateRef = CreateReference();
+                G.stateRef = reference;
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -105,7 +112,7 @@ namespace IAUS.ECS.StateBlobSystem
             }));
 
             Entities.ForEach((EntityQueryBuilder.F_DDD<RepairState, IAUSBrain, SetupBrainTag>)((ref RepairState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.stateRef = CreateReference();
+                G.stateRef = reference;
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -116,7 +123,7 @@ namespace IAUS.ECS.StateBlobSystem
             }));
 
             Entities.ForEach((EntityQueryBuilder.F_DDD<SpawnDefendersState, IAUSBrain, SetupBrainTag>)((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.stateRef = CreateReference();
+                G.stateRef = reference;
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -126,7 +133,7 @@ namespace IAUS.ECS.StateBlobSystem
                 }); ;
             }));
             Entities.ForEach((EntityQueryBuilder.F_DDD<RetreatCitizen, IAUSBrain, SetupBrainTag>)((ref RetreatCitizen G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.stateRef = CreateReference();
+                G.stateRef = reference;
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
@@ -140,7 +147,7 @@ namespace IAUS.ECS.StateBlobSystem
                 for (int i = 0; i < attacks.Length; i++)
                 {
                     AttackTypeInfo attack = attacks[i];
-                    attack.stateRef = CreateReference();
+                    attack.stateRef = reference;
 
                     attack.Index = attack.stateRef.Value.GetConsiderationIndex(new Identity()
                     {
@@ -185,5 +192,5 @@ namespace IAUS.ECS.StateBlobSystem
         }
 
     }
-   
+
 }

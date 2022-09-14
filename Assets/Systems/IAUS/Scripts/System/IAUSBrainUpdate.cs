@@ -5,10 +5,12 @@ using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
+using IAUS.ECS.StateBlobSystem;
+
 namespace IAUS.ECS.Systems
 {
 
-
+    [UpdateAfter(typeof(SetupAIStateBlob))]
     public class IAUSUpdateGroup : ComponentSystemGroup
     {
         public IAUSUpdateGroup()

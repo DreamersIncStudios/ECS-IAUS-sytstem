@@ -25,8 +25,15 @@ namespace IAUS.ECS.Systems
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
             RetreatScore = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(NPCStats)), ComponentType.ReadOnly(typeof(IAUSBrain)) }
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(RetreatCitizen)), ComponentType.ReadOnly(typeof(NPCStats)), ComponentType.ReadOnly(typeof(IAUSBrain)),
+                ComponentType.ReadOnly(typeof(LocalToWorld))}
             });
+
+
+            RetreatScore.SetChangedVersionFilter(
+                new ComponentType[] {
+                    ComponentType.ReadOnly(typeof(LocalToWorld)),
+                });
         }
         protected override void OnUpdate()
         {

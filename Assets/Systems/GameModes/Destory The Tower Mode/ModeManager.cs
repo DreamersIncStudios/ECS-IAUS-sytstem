@@ -42,21 +42,21 @@ namespace GameModes.DestroyTheTower
         public void SetupRound(int index) {
             InPlay = false;
             CurrentRound = index;
-            FunctionTimer.Create(StartRound, 360, "Round Start");
+            FunctionTimer.Create(StartRound, 10, "Round Start");
 
             TimeLeftInRound = Rounds[index].TimeLimit;
              CopyPlayerAtStartOfRound();
-            GameMaster.Instance.State = GameStates.WaitingToStartLevel;
+            //Todo fix this GameMaster.Instance.State = GameStates.WaitingToStartLevel;
 
         }
         public void StartRound() {
             if (!InPlay)
             {
-                FunctionTimer.Create(GameOver, Rounds[CurrentRound].TimeLimit, "Round Timer");
+                FunctionTimer.Create(GameOver, Rounds[CurrentRound].TimeLimit*60, "Round Timer");
                 TM.SpawnTower(Rounds[CurrentRound].Level, Rounds[CurrentRound].NumberOfTowers);
 
                 InPlay = true;
-                GameMaster.Instance.State = GameStates.Playing;
+              //  GameMaster.Instance.State = GameStates.Playing;
                 OnRoundStart.Invoke();
             }
         }

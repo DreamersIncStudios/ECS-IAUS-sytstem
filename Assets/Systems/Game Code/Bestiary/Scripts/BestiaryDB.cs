@@ -50,6 +50,7 @@ namespace BestiaryLibrary
                typeof(GatherResourcesState),
                typeof(AttackTargetState),
                typeof(AttackTypeInfo),
+               typeof(SpawnDefendersState),
                typeof(StateBuffer),
                typeof(Perceptibility),
                typeof(Vision),
@@ -93,8 +94,8 @@ namespace BestiaryLibrary
             });
             manager.SetComponentData(npcDataEntity, new PhysicsCollider()
             { Value = spCollider });
-            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<UnityEngine.CapsuleCollider>());
-            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<Rigidbody>());
+            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<UnityEngine.BoxCollider>());
+          // add if needed  manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<Rigidbody>());
 
             #endregion
 
@@ -122,7 +123,7 @@ namespace BestiaryLibrary
                 factionID = 2,
                 Difficulty = Difficulty.Normal, //Todo Pull information from game master
                 Attitude = Status.Normal,
-                NPCLevel = NPCLevel.NPC
+                NPCLevel = NPCLevel.Tower
             });
             manager.SetComponentData(npcDataEntity, new Vision
             {
@@ -135,9 +136,31 @@ namespace BestiaryLibrary
             {
                 StartTime = 1.0f
             });
+            //TODO add Attack Buffers
 
+            DynamicBuffer<AttackTypeInfo> info = manager.GetBuffer<AttackTypeInfo>(npcDataEntity);
+            info.Add(new AttackTypeInfo()
+            {
+                style = AttackStyle.Range,
+                AttackRange = 10,
+                Attacktimer = 4
+            }) ;
+            manager.SetComponentData(npcDataEntity, new GatherResourcesState
+            {
+              _coolDownTime = 5,
+              
+            });
+            manager.SetComponentData(npcDataEntity, new AttackTargetState
+            {
+                _coolDownTime = 5,
 
-
+            });
+            manager.SetComponentData(npcDataEntity, new SpawnDefendersState
+            {
+                _coolDownTime = 5,
+                SpawnTimer = 15,
+                MaxNumberOfDefender = 6, //TODO pull this from text file
+            });
             #endregion
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
 

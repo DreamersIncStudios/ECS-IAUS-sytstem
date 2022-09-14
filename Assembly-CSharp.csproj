@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Assets\Systems\Sample Game Code\Spawner.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
-    <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerIAUSSetup.cs" />
     <Compile Include="Assets\Systems\Debug Tools\RetreatTestingTool.cs" />
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
     <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
+    <Compile Include="Assets\Systems\PhysicSystemLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -132,7 +132,7 @@ namespace IAUS.NPCScriptableObj
             manager.SetComponentData(npcDataEntity, new Traverse
             {
                 BufferZone = 0.75f,
-                _coolDownTime = 0,
+                _coolDownTime = 5,
                 NumberOfWayPoints = 5
             });
             DynamicBuffer<TravelWaypointBuffer> buffer = manager.GetBuffer<TravelWaypointBuffer>(npcDataEntity);
