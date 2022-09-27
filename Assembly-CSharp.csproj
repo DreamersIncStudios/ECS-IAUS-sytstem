@@ -68,6 +68,7 @@
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
+    <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
     <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
@@ -75,12 +76,11 @@
     <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\CitizenNPC.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
+    <Compile Include="Assets\Systems\PhysicSystemLink.cs" />
     <Compile Include="Assets\GameMaster.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
-    <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
-    <Compile Include="Assets\Systems\PhysicSystemLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -808,6 +808,10 @@
       <Project>{85ACF834-6895-2E58-ABBB-7974BDB45ABB}</Project>
       <Name>Unity.Entities.Editor.Properties</Name>
     </ProjectReference>
+    <ProjectReference Include="BestiaryAssem.csproj">
+      <Project>{66449187-F857-D9D5-BB27-9537B224FA2D}</Project>
+      <Name>BestiaryAssem</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{FA88BBE6-AEC5-ED63-EA54-80E4F8BA4533}</Project>
       <Name>Unity.TextMeshPro</Name>
@@ -1031,10 +1035,6 @@
     <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
       <Project>{46F8609C-E552-8C4F-CD37-5C7E4E3C8209}</Project>
       <Name>Unity.RenderPipelines.Core.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="BestiaryAssem.csproj">
-      <Project>{66449187-F857-D9D5-BB27-9537B224FA2D}</Project>
-      <Name>BestiaryAssem</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

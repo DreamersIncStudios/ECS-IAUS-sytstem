@@ -32,7 +32,6 @@ namespace BestiaryLibrary
             {
                 modelFromResources.Add(go);
             }
-            Debug.Log(modelFromResources.Count);
             return modelFromResources;
         }
 
@@ -65,7 +64,7 @@ namespace BestiaryLibrary
                 manager.SetName(npcDataEntity, entityName);
             else
                 manager.SetName(npcDataEntity, "Tower Data");
-            var Models = LoadModels("NPCs/Combat");
+            var Models = LoadModels("NPCs/Combat/Tower");
             int cnt = Random.Range(0, Models.Count);
             #region GameObject Setup
             GameObject spawnedGO = GameObject.Instantiate(Models[0], Position+ new Vector3(0, 1.525f, 0), Quaternion.identity);
@@ -163,6 +162,9 @@ namespace BestiaryLibrary
             });
             #endregion
             manager.AddComponent<SetupBrainTag>(npcDataEntity);
+
+            StaticObjectControllerAuthoring controller = spawnedGO.GetComponent<StaticObjectControllerAuthoring>();
+            controller.SetupControllerEntityData(npcDataEntity);
 
             return npcDataEntity;
 

@@ -68,6 +68,7 @@
     <Compile Include="Assets\Resources\NPC\SoundAuthoring.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\PlayerSetup.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\RoundSettings.cs" />
+    <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
     <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\WorldNPCSpwan.cs" />
     <Compile Include="Assets\Scripts\For Testing Only\DamageCubeTester.cs" />
     <Compile Include="Assets\Systems\Sample Game Code\EnemySetup.cs" />
@@ -75,12 +76,11 @@
     <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\CitizenNPC.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\Tower Scripts\TowerManager.cs" />
+    <Compile Include="Assets\Systems\PhysicSystemLink.cs" />
     <Compile Include="Assets\GameMaster.cs" />
     <Compile Include="Assets\Systems\GameModes\Destory The Tower Mode\ModeManager.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\EntityConversionComponent.cs" />
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
-    <Compile Include="Assets\Systems\Game Code\Spawning\Scripts\NPCSpawn.cs" />
-    <Compile Include="Assets\Systems\PhysicSystemLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -716,6 +716,10 @@
       <Project>{F4D9C57E-4A15-4FFA-411E-FF003399AA04}</Project>
       <Name>IAUS.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="BestiaryAssem.Player.csproj">
+      <Project>{939B96B4-3BD1-F9B3-7D0E-2C689CCA1C48}</Project>
+      <Name>BestiaryAssem.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Player.csproj">
       <Project>{DCA09BF1-9E06-C2F4-040D-E4555A2EBF36}</Project>
       <Name>Unity.TextMeshPro.Player</Name>
@@ -847,10 +851,6 @@
     <ProjectReference Include="Unity.Deformations.Player.csproj">
       <Project>{3AA91A2A-C636-C8A4-9651-5FE10AAB7680}</Project>
       <Name>Unity.Deformations.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="BestiaryAssem.Player.csproj">
-      <Project>{939B96B4-3BD1-F9B3-7D0E-2C689CCA1C48}</Project>
-      <Name>BestiaryAssem.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

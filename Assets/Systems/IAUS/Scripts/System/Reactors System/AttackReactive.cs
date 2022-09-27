@@ -12,8 +12,9 @@ using DreamersInc.ComboSystem.NPC;
 using DreamersInc.ComboSystem;
 using Components.MovementSystem;
 using Stats;
+using MotionSystem.Tower;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag,AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentRemovalJob))]
 
@@ -29,7 +30,6 @@ namespace IAUS.ECS.Systems.Reactive
             newComponent.AttackLocation = AIStateCompoment.HighScoreAttack.AttackTarget.LastKnownPosition;
             newComponent.moveSet= newComponent.CanAttack = false;
             newComponent.attackThis = AIStateCompoment.HighScoreAttack.AttackTarget.entity;
-           
         }
 
         public void ComponentRemoved(Entity entity, ref AttackTargetState AIStateCompoment, in AttackActionTag oldComponent)
@@ -60,17 +60,21 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
     }
+    
     [UpdateAfter(typeof(AttackTagReactor.AttackReactiveSystem))]
-    public class AttackSystem : ComponentSystem
+    public partial class MobileUnitsAttackSystem : SystemBase
     {
         public EntityQuery MeleeAttack;
         public EntityQuery RangeAttack;
         public EntityQuery AttackTagRemoved;  
         protected override void OnUpdate()
         {
-            throw new System.NotImplementedException();
+        
+        
         }
-    }
 
+  
+
+    }
 
 }

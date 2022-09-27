@@ -123,6 +123,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\Follow.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateWait.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\StaticUnitsAttackSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\SpawnDefenderReactive.cs" />

@@ -90,7 +90,7 @@ namespace Assets.Systems.Global.Function_Timer
         private void DestorySelf()
         {
             isDestroyed = true;
-            UnityEngine.Object.Destroy(functionGameObject);
+            UnityEngine.Object.Destroy(functionGameObject.gameObject);
             if (repeat)
             {
                 Create(action, startingTime, timerName, repeat);
