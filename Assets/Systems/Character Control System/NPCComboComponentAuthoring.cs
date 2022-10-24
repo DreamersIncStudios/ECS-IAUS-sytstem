@@ -2,24 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using System.Threading.Tasks;
+using System;
 
 namespace DreamersInc.ComboSystem.NPC
 {
     [RequireComponent(typeof(Animator))]
-    public class NPCComboComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
+    public class NPCComboComponentAuthoring : MonoBehaviour
     {
         public ComboSO Combo;
-        public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+
+
+        Entity entity;
+        public void SetupDataEntity(Entity entity)
         {
-            ComboSO temp = Instantiate(Combo);
-            temp.UpdateTotalProbability();
-            var data = new NPCComboComponent() { animator = GetComponent<Animator>(), combo = temp};
-            dstManager.AddComponentData(entity, data);
+            EntityManager dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            dstManager.SetComponentData(entity, new NPCComboComponent()
+            {
+                Combo = Instantiate(Combo)
+            });
         }
 
+
+        public async void Setup()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            EntityManager dstManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            ComboSO temp = Instantiate(Combo);
+            temp.UpdateTotalProbability();
+            var data = new NPCComboComponent() { Combo = temp };
+            dstManager.AddComponentData(entity, data);
+
+        }
+
+
+
     }
-    public class NPCComboComponent : IComponentData {
-        public ComboSO combo;
-        public Animator animator;
+    public class NPCComboComponent : IComponentData
+    {
+        public ComboSO Combo;
     }
 }

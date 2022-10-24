@@ -50,7 +50,7 @@ namespace IAUS.ECS.Systems
             {
                 StatsChunk = GetComponentTypeHandle<NPCStats>(true),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
-            }.ScheduleParallel(RetreatScore, systemDeps);
+            }.ScheduleSingle(RetreatScore, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;
@@ -74,7 +74,7 @@ namespace IAUS.ECS.Systems
                     NPCStats stats = Stats[i];
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
-//* retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
+                         * retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
                         * retreat.ThreatInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.y/retreat.ThreatThreshold))
                         * retreat.DistanceFromThreat.Output(1.0f)
                         ;

@@ -1,10 +1,8 @@
-﻿using Unity.Entities;
-using UnityEngine;
+﻿using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
-using PixelCrushers.LoveHate;
+using Unity.Entities;
 using Unity.Mathematics;
-using AISenses.VisionSystems;
-
+using UnityEngine;
 namespace Global.Component
 {
     [System.Serializable]
@@ -12,27 +10,80 @@ namespace Global.Component
     public struct AITarget : IComponentData
     {
         public TargetType Type;
+        public Race GetRace;
         public int FactionID;
+
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
-        //TODO change to output a relationship level;
-        public bool IsFriend(int factionID) {
-            bool test = new bool();
-            if (factionID == FactionID)
-                test = true;
-            else {
-                test = LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
-            }
-            return test; }
         public float detectionScore;
+
+        public bool IsFriend(Race race)
+        {
+            bool test = new bool();
+            switch (race)
+            {
+                case Race.Angel:
+                    switch (GetRace)
+                    {
+                        case Race.Angel:
+                        case Race.Human:
+                            test = true;
+                            break;
+                        case Race.Daemon:
+                            test = false;
+                            break;
+                    }
+                    break;
+                case Race.Daemon:
+                    switch (GetRace)
+                    {
+                        case Race.Angel:
+                        case Race.Human:
+                            test = false;
+                            break;
+                        case Race.Daemon:
+                            test = true;
+                            break;
+                    }
+                    break;
+                case Race.Human:
+                    switch (GetRace)
+                    {
+                        case Race.Angel:
+                        case Race.Human:
+                            test = true;
+                            break;
+                        case Race.Daemon:
+                            test = false;
+                            break;
+                    }
+                    break;
+            }
+
+            return test;
+        }
+
+
+    }
+    [System.Serializable]
+    public enum TargetType
+    {
+        None, Character, Location, Vehicle
+    }
+
+    //replace with threat score system at later date
+
+    public enum Race
+    {
+        None, Angel, Daemon, Human // More Types of be added 
 
     }
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-    [UpdateBefore(typeof (VisionSystemJobs))]
+    [UpdateBefore(typeof(VisionSystemJobs))]
     public partial class UpdateAITarget : ComponentSystem
     {
         protected override void OnUpdate()
@@ -43,13 +94,5 @@ namespace Global.Component
             });
         }
     }
-
-
-    [System.Serializable]
-    public enum TargetType
-    {
-        None, Character, Location, Vehicle
-    }
-
 
 }

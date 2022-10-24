@@ -10,8 +10,8 @@ using Unity.Mathematics;
 public class StaticObjectControllerAuthoring : MonoBehaviour
 {
     List<WeaponController> attachedWeapons;
-    public void SetupControllerEntityData(Entity Data){
-        EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
+    public void SetupControllerEntityData(EntityManager em, Entity Data){
+        em = World.DefaultGameObjectInjectionWorld.EntityManager;
         em.AddComponentData(Data, new TowerController { 
            Position = this.transform.position,
            Attack=false,

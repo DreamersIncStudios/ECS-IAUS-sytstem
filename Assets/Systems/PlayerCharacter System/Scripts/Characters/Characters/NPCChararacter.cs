@@ -14,11 +14,10 @@ namespace Stats
     {
         public CharacterClass BaseStats;
 
-        public void SetupDataEntity(Entity entity)
+        public void SetupDataEntity(EntityManager em, Entity entity)
         {
 
             SelfEntityRef = entity;
-            EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
             em.AddBuffer<EffectStatusBuffer>(entity);
             //Todo get level and stat data
             this.Level = BaseStats.Level;
@@ -35,7 +34,7 @@ namespace Stats
             this.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(BaseStats.Concentration * ModValue);
             this.GetVital((int)VitalName.Health).StartValue = 500;
             this.GetVital((int)VitalName.Mana).StartValue = 250;
-            World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(entity, new NPCStats { selfEntityRef = entity });
+            em.AddComponentData(entity, new NPCStats { selfEntityRef = entity });
             StatUpdate();
 
         }

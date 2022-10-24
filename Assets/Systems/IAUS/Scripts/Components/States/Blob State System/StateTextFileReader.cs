@@ -69,32 +69,39 @@ namespace IAUS.ECS.StateBlobSystem
                 int index = GetIndexOfIndentity(tempID, array);
 
                 if (index == -1)
+                {
+                   
+#if UNITY_EDITOR
                     Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.aIStates} add to Creature List Text file");
+#endif
+
+                }
+
                 else
                 {
                     var temp = array[index];
                     switch (consideration)
                     {
                         case Considerations.Health:
-                            temp.Health = LineRead( lines[i]);
+                            temp.Health = LineRead(lines[i]);
                             break;
                         case Considerations.DistanceToTarget:
                             temp.DistanceToTarget = LineRead(lines[i]);
                             break;
                         case Considerations.DistanceToPOI:
-                            temp.DistanceToPlaceOfInterest = LineRead( lines[i]);
+                            temp.DistanceToPlaceOfInterest = LineRead(lines[i]);
                             break;
                         case Considerations.Time:
-                            temp.Timer = LineRead( lines[i]);
+                            temp.Timer = LineRead(lines[i]);
                             break;
                         case Considerations.ManaAmmo:
-                            temp.ManaAmmo = LineRead( lines[i]);
+                            temp.ManaAmmo = LineRead(lines[i]);
                             break;
                         case Considerations.FriendlyInfluence:
-                            temp.FriendlyInfluence = LineRead( lines[i]);
+                            temp.FriendlyInfluence = LineRead(lines[i]);
                             break;
                         case Considerations.EnemyInfluence:
-                            temp.EnemyInfluence = LineRead( lines[i]);
+                            temp.EnemyInfluence = LineRead(lines[i]);
                             break;
 
                     }

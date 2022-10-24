@@ -6,27 +6,31 @@ using AISenses.Authoring;
 using Global.Component;
 using AISenses;
 using IAUS.ECS;
-using Components.MovementSystem;
-using IAUS.ECS.Component;
+//using IAUS.ECS.Component;
 using DreamersInc.InflunceMapSystem;
 using UnityEngine.AI;
 using Unity.Entities;
-using System.Threading.Tasks;
-using System;
 using Unity.Transforms;
-using Utilities;
 using Unity.Mathematics;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 using System.Linq;
 using Unity.Physics;
-using Unity.Physics.Authoring;
+//using DreamerInc.CombatSystem;
+using Assets.Systems.Global.Function_Timer;
+using DG.Tweening;
+using Components.MovementSystem;
+using DreamersInc.ComboSystem;
+using IAUS.ECS.Component;
+using Utilities;
+using System;
+
 namespace BestiaryLibrary
 {
-    public static class BestiaryDB 
+    public static partial class BestiaryDB
     {
         static List<GameObject> LoadModels(string path) {
-            List < GameObject> modelFromResources = new List<GameObject> ();
+            List<GameObject> modelFromResources = new List<GameObject>();
             GameObject[] goLoaded = Resources.LoadAll(path, typeof(GameObject)).Cast<GameObject>().ToArray();
             foreach (var go in goLoaded)
             {
@@ -35,139 +39,191 @@ namespace BestiaryLibrary
             return modelFromResources;
         }
 
-      public static Entity SpawnTowerAndCreateEntityData(Vector3 Position, out GameObject goRef,string entityName = "") {
-            EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            EntityArchetype npcDataArch = manager.CreateArchetype(
-               typeof(Translation),
-               typeof(Rotation),
-               typeof(LocalToWorld),
-               typeof(EnemyStats),
-               typeof(IAUSBrain),
-               typeof(AITarget),
-               typeof(InfluenceComponent),
-               typeof(Wait),
-               typeof(GatherResourcesState),
-               typeof(AttackTargetState),
-               typeof(AttackTypeInfo),
-               typeof(SpawnDefendersState),
-               typeof(StateBuffer),
-               typeof(Perceptibility),
-               typeof(Vision),
-               typeof(ScanPositionBuffer),
-               typeof(CopyTransformFromGameObject),
-               typeof(PhysicsCollider),
-               typeof(PhysicsWorldIndex)
-               );
+        private static Entity createEntity(EntityManager manager, string entityName = "")
+        {
 
-            Entity npcDataEntity = manager.CreateEntity(npcDataArch);
+            EntityArchetype baseEntityArch = manager.CreateArchetype(
+              typeof(Translation),
+              typeof(Rotation),
+              typeof(LocalToWorld),
+              typeof(CopyTransformFromGameObject)
+              );
+            Entity baseDataEntity = manager.CreateEntity(baseEntityArch);
             if (entityName != string.Empty)
-                manager.SetName(npcDataEntity, entityName);
+                manager.SetName(baseDataEntity, entityName);
             else
-                manager.SetName(npcDataEntity, "Tower Data");
-            var Models = LoadModels("NPCs/Combat/Tower");
-            int cnt = Random.Range(0, Models.Count);
-            #region GameObject Setup
-            GameObject spawnedGO = GameObject.Instantiate(Models[0], Position+ new Vector3(0, 1.525f, 0), Quaternion.identity);
-           goRef = spawnedGO;
-            manager.SetComponentData(npcDataEntity, new Translation { Value = Position });
-            manager.AddComponentObject(npcDataEntity, spawnedGO.transform);
-            if(spawnedGO.GetComponent<Animator>())
-            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<Animator>());
+                manager.SetName(baseDataEntity, "NPC Data");
 
-            #endregion
+            return baseDataEntity;
+        }
+        private static GameObject SpawnGO(EntityManager manager, Entity linkEntity, Vector3 Position, string modelPath = "", int cnt =-1)
+        {
+            var Models = LoadModels(modelPath);
+            cnt =cnt == -1? Random.Range(0, Models.Count): cnt;
+            GameObject spawnedGO = GameObject.Instantiate(Models[cnt], Position, Quaternion.identity);
+            manager.SetComponentData(linkEntity, new Translation { Value = Position });
+            manager.AddComponentObject(linkEntity, spawnedGO.transform);
+            if (spawnedGO.GetComponent<Animator>())
+                manager.AddComponentObject(linkEntity, spawnedGO.GetComponent<Animator>());
+            manager.AddComponentObject(linkEntity, spawnedGO.GetComponentInChildren<Renderer>());
 
-            //Todo Change Later Box Collider????
-            #region Physics
-            UnityEngine.BoxCollider col = spawnedGO.GetComponent<UnityEngine.BoxCollider>();
-            BlobAssetReference<Unity.Physics.Collider> spCollider = Unity.Physics.BoxCollider.Create(new BoxGeometry()
+            return spawnedGO;
+        }
+
+        private static void AddPhysics(EntityManager manager, Entity entityLink, GameObject spawnedGO, PhysicsShape shape, PhysicsInfo physicsInfo)
+        {
+            BlobAssetReference<Unity.Physics.Collider> spCollider = new BlobAssetReference<Unity.Physics.Collider>();
+            switch (shape)
             {
-                Center= col.center,
-                Size= col.size,
-                Orientation = quaternion.identity,
+                case PhysicsShape.Capsule:
+                    UnityEngine.CapsuleCollider col = spawnedGO.GetComponent<UnityEngine.CapsuleCollider>();
+                    spCollider = Unity.Physics.CapsuleCollider.Create(new CapsuleGeometry()
+                    {
+                        Radius = col.radius,
+                        Vertex0 = col.center + new Vector3(0, col.height, 0),
+                        Vertex1 = new float3(0, 0, 0)
 
-            }, new CollisionFilter()
-            {
-                BelongsTo = (1 >> 10),
-                CollidesWith = (1 >> 11),
-                GroupIndex = 0
-            });
-            manager.SetComponentData(npcDataEntity, new PhysicsCollider()
+                    }, new CollisionFilter()
+                    {
+                        BelongsTo = physicsInfo.BelongsTo.Value,
+                        CollidesWith = physicsInfo.CollidesWith.Value,
+                        GroupIndex = 0
+                    });
+
+                    manager.AddComponentObject(entityLink, spawnedGO.GetComponent<UnityEngine.CapsuleCollider>());
+                    manager.AddComponentObject(entityLink, spawnedGO.GetComponent<Rigidbody>());
+
+                    break;
+                case PhysicsShape.Box:
+                    UnityEngine.BoxCollider box = spawnedGO.GetComponent<UnityEngine.BoxCollider>();
+                    spCollider = Unity.Physics.BoxCollider.Create(new BoxGeometry()
+                    {
+                        Center = box.center,
+                        Size = box.size,
+                        Orientation = quaternion.identity,
+
+                    }, new CollisionFilter()
+                    {
+                        BelongsTo = physicsInfo.BelongsTo.Value,
+                        CollidesWith = physicsInfo.CollidesWith.Value,
+                        GroupIndex = 0
+                    });
+                    manager.AddComponentData(entityLink, new PhysicsCollider()
+                    { Value = spCollider });
+                    manager.AddComponentObject(entityLink, spawnedGO.GetComponent<UnityEngine.BoxCollider>());
+
+                    break;
+            }
+            manager.AddSharedComponentData(entityLink, new PhysicsWorldIndex());
+            manager.AddComponentData(entityLink, new PhysicsCollider()
             { Value = spCollider });
-            manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<UnityEngine.BoxCollider>());
-          // add if needed  manager.AddComponentObject(npcDataEntity, spawnedGO.GetComponent<Rigidbody>());
-
-            #endregion
-
-            #region Stats
-            EnemyCharacter stats = spawnedGO.GetComponent<EnemyCharacter>();
-            stats.SetupDataEntity(npcDataEntity);
-
-
-            #endregion
-            #region IAUS
-            manager.SetComponentData(npcDataEntity, new AITarget
+            manager.AddComponentData(entityLink, new PhysicsInfo
             {
-                FactionID = 2,
-                CanBeTargetByPlayer = true,
-                Type = TargetType.Character,
+                BelongsTo = physicsInfo.BelongsTo,
+                CollidesWith = physicsInfo.CollidesWith
             });
-            manager.SetComponentData(npcDataEntity, new Perceptibility
-            {
-                visibilityStates = VisibilityStates.Visible,
-                movement = MovementStates.Stadning_Still,
-                noiseState = NoiseState.Normal
-            });
-            manager.SetComponentData(npcDataEntity, new IAUSBrain
-            {
-                factionID = 2,
-                Difficulty = Difficulty.Normal, //Todo Pull information from game master
-                Attitude = Status.Normal,
-                NPCLevel = NPCLevel.Tower
-            });
-            manager.SetComponentData(npcDataEntity, new Vision
-            {
-                ViewAngle = 360,
-                viewRadius = 45,
-                EngageRadius = 20,
+        }
 
-            });
-            manager.SetComponentData(npcDataEntity, new Wait
-            {
-                StartTime = 1.0f
-            });
-            //TODO add Attack Buffers
+        private static void AddTargetingAndInfluence(EntityManager manager, Entity entityLink, AITarget aiTarget, Vision visionData, Perceptibility perceptibility, InfluenceComponent influence)
+        {
+            manager.AddComponentData(entityLink, aiTarget);
+            manager.AddComponentData(entityLink, influence);
+            manager.AddComponentData(entityLink, visionData);
+            manager.AddComponentData(entityLink, perceptibility);
+            manager.AddBuffer<ScanPositionBuffer>(entityLink);
 
-            DynamicBuffer<AttackTypeInfo> info = manager.GetBuffer<AttackTypeInfo>(npcDataEntity);
-            info.Add(new AttackTypeInfo()
-            {
-                style = AttackStyle.Range,
-                AttackRange = 10,
-                Attacktimer = 4
-            }) ;
-            manager.SetComponentData(npcDataEntity, new GatherResourcesState
-            {
-              _coolDownTime = 5,
-              
-            });
-            manager.SetComponentData(npcDataEntity, new AttackTargetState
-            {
-                _coolDownTime = 5,
+       
+        }
 
-            });
-            manager.SetComponentData(npcDataEntity, new SpawnDefendersState
+        private static void AddMovementSystems(EntityManager em, Entity entityLink, GameObject spawnedGO)
+        {
+            em.AddComponentData(entityLink, new Movement()
             {
-                _coolDownTime = 5,
-                SpawnTimer = 15,
-                MaxNumberOfDefender = 6, //TODO pull this from text file
+                CanMove = true,
+                //Todo pull info from data 
+                MovementSpeed = 10,
+                StoppingDistance = 1.0f,
+                Acceleration = 5
             });
-            #endregion
-            manager.AddComponent<SetupBrainTag>(npcDataEntity);
 
-            StaticObjectControllerAuthoring controller = spawnedGO.GetComponent<StaticObjectControllerAuthoring>();
-            controller.SetupControllerEntityData(npcDataEntity);
+            em.AddComponentObject(entityLink, spawnedGO.GetComponent<NavMeshAgent>());
+        }
 
-            return npcDataEntity;
+        private static void AddCombat(EntityManager em, Entity entityLink)
+        {
+            em.AddComponentData(entityLink, new Command()
+            {
+                InputQueue = new Queue<AnimationTrigger>(),
+                BareHands = false,
+                WeaponIsEquipped = true
+            });
+        }
+
+        private static void AddAdditionalStates(Vector3 Pos,AITarget Self, List<AIStates> AIStatesAvailable, EntityManager manager, Entity entityLink, BaseCharacter stats)
+        {
+            foreach (AIStates state in AIStatesAvailable)
+            {
+                switch (state)
+                {
+                    case AIStates.Retreat:
+
+                        manager.AddComponentData(entityLink, new RetreatCitizen() {
+                            FactionMemberID = Self.FactionID,
+                       _coolDownTime = 2.5f,
+                        RetreatRange = stats.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue * 5.0f / 100f,
+                      CrowdMin = 4,
+                       ThreatThreshold = 4
+                });
+                        break;
+                    case AIStates.Traverse:
+                        manager.AddComponentData(entityLink, new Traverse
+                        {
+                            BufferZone = 0.75f,
+                            _coolDownTime = 5,
+                            NumberOfWayPoints = 5
+                        });
+                        DynamicBuffer< TravelWaypointBuffer > buffer = manager.AddBuffer<TravelWaypointBuffer>(entityLink);
+                        List<TravelWaypointBuffer> Waypoints = GetPoints(75, 5, Pos);
+                        break;
+                    case AIStates.Wait:
+                        manager.AddComponentData(entityLink, new Wait
+                        {
+                            StartTime = 1.0f
+                        });
+                        break;
+                }
+
+            }
+        }
+
+        private static List<TravelWaypointBuffer> GetPoints(uint range, uint NumOfPoints, Vector3 pos, bool Safe = true)
+        {
+
+            List<TravelWaypointBuffer> Points = new List<TravelWaypointBuffer>();
+            while (Points.Count < NumOfPoints)
+            {
+                if (GlobalFunctions.RandomPoint(pos, range, out Vector3 position))
+                {
+                    Points.Add(new TravelWaypointBuffer()
+                    {
+                        WayPoint = new Waypoint()
+                        {
+                            Position = (float3)position,
+                            Point = new AITarget()
+                            {
+                                Type = TargetType.Location,
+                                FactionID = -1
+                            },
+
+                            TimeToWaitatWaypoint = UnityEngine.Random.Range(5, 10)
+                        }
+                    }
+                 );
+                }
+            }
+            return Points;
 
         }
+        enum PhysicsShape { Box, Capsule, Sphere,  Cyclinder, Custom}
     }
 }

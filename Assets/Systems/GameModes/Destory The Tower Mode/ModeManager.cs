@@ -76,7 +76,7 @@ namespace GameModes.DestroyTheTower
         }
         public void GameOver() { 
             //TODO Fade to black 
-            GameMaster.Instance.State = GameStates.Game_Over;
+            //GameMaster.Instance.State = GameStates.Game_Over;
         }
         SaveDataDTT data;
         void CopyPlayerAtStartOfRound() {

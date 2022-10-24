@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 450
+  - Count: 400
     Models:
     - {fileID: 8640967807621267401, guid: 108f020d9c0c88d4e9ddfabf47ae480f, type: 3}
     - {fileID: 8640967807621267401, guid: 108f020d9c0c88d4e9ddfabf47ae480f, type: 3}
     Self:
       Type: 1
+      GetRace: 0
       FactionID: 3
       NumOfEntityTargetingMe: 0
       GetInstanceID: 0
