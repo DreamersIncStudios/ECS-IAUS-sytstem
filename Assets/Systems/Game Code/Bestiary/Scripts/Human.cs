@@ -23,7 +23,7 @@ namespace BestiaryLibrary
 {
     public static partial class BestiaryDB
     {
-        public static Entity SpawnBasicAndCreateEntityData(Vector3 Position, PhysicsInfo physicsInfo, string entityName = "")
+        public static Entity SpawnBasicHumanAndCreateEntityData(Vector3 Position, PhysicsInfo physicsInfo, string entityName = "")
         {
             EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             Entity entityLink = createEntity(manager, entityName);
@@ -55,7 +55,7 @@ namespace BestiaryLibrary
             AddMovementSystems(manager, entityLink, spawnedGO);
 
             spawnedGO.GetComponent<EnemyCharacter>().SetupDataEntity(manager, entityLink);
-            spawnedGO.tag = "Enemy NPC";
+            spawnedGO.tag = "NPC";
             // spawnedGO.GetComponent<NPCCharacterController>().SetupDataEntity(entityLink);
             spawnedGO.GetComponent<NPCComboComponentAuthoring>().SetupDataEntity(entityLink);
 
