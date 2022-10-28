@@ -2,6 +2,7 @@ using AISenses;
 using DreamersInc.ComboSystem.NPC;
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
+using IAUS.ECS;
 using IAUS.ECS.Component;
 using Stats;
 using System.Collections;
@@ -37,7 +38,7 @@ namespace BestiaryLibrary
                     {
                         viewRadius = 55,
                         EngageRadius = 40,
-                        ViewAngle = 360
+                        ViewAngle = 160
                     },
                     new Perceptibility()
                     {
@@ -48,7 +49,7 @@ namespace BestiaryLibrary
             return entityLink;
         }
 
-        public static void SpawnDameonGruntandCreateDataEntity(Vector3 Pos, PhysicsInfo physicsInfo, AITarget Self, Perceptibility perceptibility, InfluenceComponent influence, List<AIStates> AIStatesAvailable, string entityName = "")
+        public static void SpawnDameonGruntandCreateDataEntity(Vector3 Pos, PhysicsInfo physicsInfo, List<AIStates> AIStatesAvailable, string entityName = "")
         {
             EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 

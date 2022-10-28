@@ -83,6 +83,9 @@
     <Compile Include="Assets\Systems\UtilitySystems\TransfomSync.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Models\fbx\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2021.3.11f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
     </Reference>

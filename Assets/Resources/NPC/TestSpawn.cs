@@ -6,6 +6,7 @@ using AISenses;
 using Unity.Entities;
 using System.Threading.Tasks;
 using System;
+using BestiaryLibrary;
 
 public class TestSpawn : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class TestSpawn : MonoBehaviour
     public WorldNPCSpwan NPCToSpawn;
     public void Start()
     {
-         //InvokeRepeating(nameof(Spawn), 0, 15);
-  
+
         NPCToSpawn.SpawnWorld(this.transform.position);
+
+        BestiaryDB.SpawnDameonGruntandCreateDataEntity(this.transform.position, new Global.Component.PhysicsInfo(), new List<IAUS.ECS.AIStates>());
+
     }
     async void Spawn()
     {
