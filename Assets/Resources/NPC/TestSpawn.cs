@@ -17,7 +17,7 @@ public class TestSpawn : MonoBehaviour
 
         NPCToSpawn.SpawnWorld(this.transform.position);
 
-        BestiaryDB.SpawnDameonGruntandCreateDataEntity(this.transform.position, new Global.Component.PhysicsInfo(), new List<IAUS.ECS.AIStates>());
+        BestiaryDB.SpawnDameonGruntandCreateDataEntity(this.transform.position, new Global.Component.PhysicsInfo(), new List<IAUS.ECS.AIStates>(), "Daemon Hound");
 
     }
     async void Spawn()

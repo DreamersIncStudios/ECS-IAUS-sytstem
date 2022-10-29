@@ -30,6 +30,7 @@ namespace BestiaryLibrary
                     {
                         Type = TargetType.Character,
                         GetRace = Race.Daemon,
+                        FactionID = 1,
                         MaxNumberOfTarget = 5,
                         CanBeTargetByPlayer = true,
                         CenterOffset = new float3(0, 1, 0)
@@ -45,7 +46,11 @@ namespace BestiaryLibrary
                         visibilityStates = VisibilityStates.Visible,
                         movement = MovementStates.Stadning_Still,
                         noiseState = NoiseState.Normal
-                    }, new InfluenceComponent());
+                    }, new InfluenceComponent() {
+                        factionID = 1, 
+                        Protection =4,
+                        Threat =8,
+                    });
             return entityLink;
         }
 
@@ -63,6 +68,35 @@ namespace BestiaryLibrary
             {
                 buffer.Add(item);
             }
+            manager.AddComponentData(entityLink, new IAUSBrain()
+            {
+                Difficulty = Difficulty.Normal,
+                factionID = 1,
+                Attitude = Status.Brave,
+                NPCLevel = NPCLevel.Grunt
+            });
+            manager.AddComponentData(entityLink, new AttackTargetState()
+            {
+
+            });
+            DynamicBuffer<AttackTypeInfo> attacks =manager.AddBuffer<AttackTypeInfo>(entityLink);
+            attacks.Add(new AttackTypeInfo() { 
+                style = AttackStyle.Melee,
+                AttackRange = 3,
+                Attacktimer =3.5f
+            });
+            //attacks.Add(new AttackTypeInfo()
+            //{
+            //    style = AttackStyle.MagicRange,
+            //    AttackRange = 15,
+            //    Attacktimer = 20f
+            //});
+
+            manager.AddComponentData(entityLink, new Patrol() { });
+            manager.AddComponentData(entityLink, new Wait() { });
+            manager.AddComponentData(entityLink, new SetupBrainTag());
+
+
         }
     }
 }
