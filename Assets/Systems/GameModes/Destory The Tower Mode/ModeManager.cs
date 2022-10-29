@@ -4,10 +4,10 @@ using UnityEngine;
 using Stats;
 using DreamersIncStudios.MoonShot;
 using GameModes.DestroyTheTower.TowerSystem;
-using System.Timers;
-using GameModes.DestroyTheTower.TimerSystems;
 using TMPro;
 using UnityEngine.Events;
+using Assets.Systems.Global.Function_Timer;
+
 namespace GameModes.DestroyTheTower
 {
     public class ModeManager : MonoBehaviour
@@ -20,13 +20,13 @@ namespace GameModes.DestroyTheTower
         public int CurrentRound{get; private set;}
         public float TimeLeftInRound { get; private set; }
         public bool InPlay;
-        public PlayerCharacter StartingCharacter { get; private set; }
-        public PlayerCharacter CharacterReference;
+     //   public PlayerCharacter StartingCharacter { get; private set; }
+     //   public PlayerCharacter CharacterReference;
 
         // Start is called before the first frame update
         void Start()
         {
-            CharacterReference = GameObject.FindObjectOfType<PlayerCharacter>();
+    //        CharacterReference = GameObject.FindObjectOfType<PlayerCharacter>();
             TM.Parent = this.transform;
             CurrentRound = 0; // TODO pull from Save File later
             SetupRound(CurrentRound);
@@ -35,29 +35,28 @@ namespace GameModes.DestroyTheTower
         // Update is called once per frame
         void Update()
         {
-            TimerDisplay.text = RoundTimer.DisplayTimeLeft;
 
-            TimerDisplay.ForceMeshUpdate(true);
         }
-        TimerCountDown RoundTimer;
         public GameObject TimerUI;
         [SerializeField] public TextMeshProUGUI TimerDisplay;//=> TimerUI.GetComponent<TextMeshProUGUI>();
         public void SetupRound(int index) {
             InPlay = false;
             CurrentRound = index;
-           RoundTimer = new TimerCountDown(Rounds[index].TimeLimit,TimerDisplay);
+            FunctionTimer.Create(StartRound, 10, "Round Start");
+
             TimeLeftInRound = Rounds[index].TimeLimit;
              CopyPlayerAtStartOfRound();
-            TM.SpawnTower(Rounds[index].Level, Rounds[index].NumberOfTowers);
-            GameMaster.Instance.State = GameStates.WaitingToStartLevel;
+            //Todo fix this GameMaster.Instance.State = GameStates.WaitingToStartLevel;
 
         }
         public void StartRound() {
             if (!InPlay)
             {
+                FunctionTimer.Create(GameOver, Rounds[CurrentRound].TimeLimit*60, "Round Timer");
+                TM.SpawnTower(Rounds[CurrentRound].Level, Rounds[CurrentRound].NumberOfTowers);
+
                 InPlay = true;
-                GameMaster.Instance.State = GameStates.Playing;
-                RoundTimer.StartCountdown();
+              //  GameMaster.Instance.State = GameStates.Playing;
                 OnRoundStart.Invoke();
             }
         }
@@ -69,7 +68,7 @@ namespace GameModes.DestroyTheTower
                 Object.Destroy(tower);
             }
             ResetPlayer();
-            RoundTimer.Stop();
+            FunctionTimer.StopTimer("Round Timer");
             SetupRound(CurrentRound);
         }
         public void RoundWon() {
@@ -77,16 +76,16 @@ namespace GameModes.DestroyTheTower
         }
         public void GameOver() { 
             //TODO Fade to black 
-            GameMaster.Instance.State = GameStates.Game_Over;
+            //GameMaster.Instance.State = GameStates.Game_Over;
         }
         SaveDataDTT data;
         void CopyPlayerAtStartOfRound() {
-            data = new SaveDataDTT(CharacterReference);
+       //     data = new SaveDataDTT(CharacterReference);
         }
         void ResetPlayer() {
-            CharacterReference = StartingCharacter;
+        //    CharacterReference = StartingCharacter;
             //TODO Add inventory cloning
-            CharacterReference.StatUpdate();
+     //       CharacterReference.StatUpdate();
         }
 
 

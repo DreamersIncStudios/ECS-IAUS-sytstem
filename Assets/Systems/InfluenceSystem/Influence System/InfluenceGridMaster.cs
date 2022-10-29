@@ -10,8 +10,8 @@ namespace DreamersInc.InflunceMapSystem
     {
         public static InfluenceGridMaster Instance;
         public GridGenericXZ<InfluenceGridObject> grid { get; private set; }
-        private int width = 300;
-        private int height = 300;
+        private int width = 3000;
+        private int height = 3000;
         private Vector3 center => Vector3.zero - new Vector3(width / 2, 0, height / 2);
 
 

@@ -25,7 +25,7 @@ namespace IAUS.ECS.Component
         /// Utility score for Attackable target in Ranges
         /// </summary>
         public ConsiderationScoringData TargetInRange =>   stateRef.Value.Array[Index].DistanceToTarget; 
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].influence;
+        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
 
 
        [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }

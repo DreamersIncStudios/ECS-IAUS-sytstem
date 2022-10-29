@@ -12,35 +12,7 @@ namespace IAUS.ECS.StateBlobSystem
     public class StateTextFileReader
     {
 
-        public static StateAsset[] FileRead()
-        {
-            TextAsset textFile = Resources.Load("StateTest") as TextAsset;
-            var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            StateAsset[] array = new StateAsset[lines.Length];
-            for (int i = 0; i < lines.Length; i++)
-            {
-                var parts = lines[i].Split(',');
-                array[i] = new StateAsset()
-                {
-                    ID = new Identity()
-                    {
-                        Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
-                        NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                        FactionID = int.TryParse(parts[2], out int result) ? result : 0,
-                        aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
-                    },
-                    Health = LineRead(4, lines[i]),
-                    DistanceToPlaceOfInterest = LineRead(11, lines[i]),
-                    Timer = LineRead(18, lines[i]),
-                    ManaAmmo = LineRead(25, lines[i]),
-                    DistanceToTarget = LineRead(32, lines[i])
-                };
-
-            }
-
-            return array;
-
-        }
+       
         public static StateAsset[] SetupStateAsset()
         {
             TextAsset textFile = Resources.Load("Creature List") as TextAsset;
@@ -70,7 +42,9 @@ namespace IAUS.ECS.StateBlobSystem
             SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
             SetupConsideration(array, "Consideration files/ManaAmmo2", Considerations.ManaAmmo2);
             SetupConsideration(array, "Consideration files/Time", Considerations.Time);
-            SetupConsideration(array, "Consideration files/Influence", Considerations.Influence);
+            SetupConsideration(array, "Consideration files/Enemy Influence", Considerations.EnemyInfluence);
+            SetupConsideration(array, "Consideration files/Friendly Influence 1", Considerations.FriendlyInfluence);
+
 
             return array.ToArray();
         }
@@ -95,26 +69,39 @@ namespace IAUS.ECS.StateBlobSystem
                 int index = GetIndexOfIndentity(tempID, array);
 
                 if (index == -1)
+                {
+                   
+#if UNITY_EDITOR
                     Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.aIStates} add to Creature List Text file");
+#endif
+
+                }
+
                 else
                 {
                     var temp = array[index];
                     switch (consideration)
                     {
                         case Considerations.Health:
-                            temp.Health = LineRead(4, lines[i]);
+                            temp.Health = LineRead(lines[i]);
                             break;
                         case Considerations.DistanceToTarget:
-                            temp.DistanceToTarget = LineRead(4, lines[i]);
+                            temp.DistanceToTarget = LineRead(lines[i]);
                             break;
                         case Considerations.DistanceToPOI:
-                            temp.DistanceToPlaceOfInterest = LineRead(4, lines[i]);
+                            temp.DistanceToPlaceOfInterest = LineRead(lines[i]);
                             break;
                         case Considerations.Time:
-                            temp.Timer = LineRead(4, lines[i]);
+                            temp.Timer = LineRead(lines[i]);
                             break;
                         case Considerations.ManaAmmo:
-                            temp.ManaAmmo = LineRead(4, lines[i]);
+                            temp.ManaAmmo = LineRead(lines[i]);
+                            break;
+                        case Considerations.FriendlyInfluence:
+                            temp.FriendlyInfluence = LineRead(lines[i]);
+                            break;
+                        case Considerations.EnemyInfluence:
+                            temp.EnemyInfluence = LineRead(lines[i]);
                             break;
 
                     }
@@ -139,7 +126,7 @@ namespace IAUS.ECS.StateBlobSystem
         }
 
 
-        static ConsiderationScoringData LineRead(int StartPoint, string Line)
+        static ConsiderationScoringData LineRead( string Line, int StartPoint=4)
         {
             ConsiderationScoringData output = new ConsiderationScoringData()
             {
@@ -166,5 +153,5 @@ namespace IAUS.ECS.StateBlobSystem
         
     }
 
-    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, Influence, ManaAmmo2, }
+    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
 }

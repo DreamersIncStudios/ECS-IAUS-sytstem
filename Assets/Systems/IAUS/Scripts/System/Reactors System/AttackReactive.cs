@@ -12,8 +12,9 @@ using DreamersInc.ComboSystem.NPC;
 using DreamersInc.ComboSystem;
 using Components.MovementSystem;
 using Stats;
+using MotionSystem.Tower;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag,AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentRemovalJob))]
 
@@ -29,7 +30,6 @@ namespace IAUS.ECS.Systems.Reactive
             newComponent.AttackLocation = AIStateCompoment.HighScoreAttack.AttackTarget.LastKnownPosition;
             newComponent.moveSet= newComponent.CanAttack = false;
             newComponent.attackThis = AIStateCompoment.HighScoreAttack.AttackTarget.entity;
-           
         }
 
         public void ComponentRemoved(Entity entity, ref AttackTargetState AIStateCompoment, in AttackActionTag oldComponent)
@@ -60,201 +60,21 @@ namespace IAUS.ECS.Systems.Reactive
         }
 
     }
+    
     [UpdateAfter(typeof(AttackTagReactor.AttackReactiveSystem))]
-    public class AttackSystem : ComponentSystem
+    public partial class MobileUnitsAttackSystem : SystemBase
     {
-        EntityQuery AttackAdded;
-        EntityQuery AttackRemoved;
-        EntityQuery AttackTime;
-        EntityQuery ActiveAttack;
-
-
-        EntityCommandBufferSystem _entityCommandBufferSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-
-            AttackAdded = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
-                , ComponentType.ReadOnly(typeof(LocalToWorld))
-                },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent)) }
-            });
-            AttackRemoved = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
-                },
-                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackActionTag)) }
-            });
-            AttackTime = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
-              , ComponentType.ReadWrite(typeof(AttackActionTag)) },
-            });
-            ActiveAttack = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackTargetState)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(AttackTypeInfo))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)),ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))
-              , ComponentType.ReadWrite(typeof(AttackActionTag)) },
-            });
-
-
-        }
-
+        public EntityQuery MeleeAttack;
+        public EntityQuery RangeAttack;
+        public EntityQuery AttackTagRemoved;  
         protected override void OnUpdate()
         {
-            BufferFromEntity<NPCAttackBuffer> bufferFromEntity = GetBufferFromEntity<NPCAttackBuffer>(false);
-
-            Entities.WithNone(ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent))).
-                ForEach((Entity entity, ref AttackActionTag tag, /*NPCComboComponent comboList,*/ Command handler) => {
-                DynamicBuffer<NPCAttackBuffer> buffer = bufferFromEntity[entity];
-                    //    int index =comboList.combo.GetAnimationComboIndex(handler.StateInfo);
-                    //restart:
-
-                    //float indexPicked = Random.Range(0, comboList.combo.GetMaxProbAtCurrentState(index));
-
-                    //foreach (var item in comboList.combo.ComboList[index].Triggers)
-                    //{
-                    //    if (item.Picked(indexPicked))
-                    //    {
-
-                    //        buffer.Add(new NPCAttackBuffer()
-                    //        {
-                    //            Trigger = item
-                    //        });
-                    //        if (item.AttackAgain(Random.Range(2, 100)))
-                    //        {
-                    //            index = comboList.combo.GetAnimationComboIndex(item.TriggeredAnimName);
-                    //            goto restart;
-                    //        }
-                    //    }
-                    //}
-
-                    //Todo use for IAUS Testing only
-
-                    buffer.Add(new NPCAttackBuffer()
-                    {
-                        Trigger = new AnimationTrigger()
-                        {
-                            Type = AttackType.LightAttack
-                        }
-                    });
-
-                });
-
-            Entities.
-                ForEach((Entity entity, ref Movement move, ref AttackActionTag tag) => {
-                    if (bufferFromEntity.HasComponent(entity))
-                    {
-                        DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
-                        if (!A.IsEmpty)
-                        {
-                            switch (A[0].Trigger.Type)
-                            {
-                                case AttackType.LightAttack:
-                                case AttackType.HeavyAttack:
-                                    //Move to attack range then trigger animation;
-                                    if (!tag.moveSet)
-                                    {
-                                        move.SetLocation(tag.AttackLocation);
-                                        tag.moveSet = true;
-                                    }
-                                    if (tag.moveSet && move.Completed)
-                                    {
-                                        tag.CanAttack = true;
-                                        move.CanMove = false;
-                                    }
-
-                                    break;
-                                case AttackType.Projectile:
-                                    //Rotate Target and then trigger attack 
-
-                                    break;
-
-                            }
-                        }
-                    }
-            });
-            //TODO correct in full game 
-            ComponentDataFromEntity<Wait> WaitState = GetComponentDataFromEntity<Wait>(false);
-            ComponentDataFromEntity<EnemyStats> enemy = GetComponentDataFromEntity<EnemyStats>(false);
-            ComponentDataFromEntity<PlayerStatComponent> player = GetComponentDataFromEntity<PlayerStatComponent>(false);
-
-            Entities.
-               ForEach((Entity entity, ref AttackActionTag tag, Command inputc) => {
-                   if (inputc.InputQueue == null)
-                       inputc.InputQueue = new Queue<AnimationTrigger>();
-               DynamicBuffer<NPCAttackBuffer> A = bufferFromEntity[entity];
-                   if (!A.IsEmpty)
-                   {
-                       switch (A[0].Trigger.Type)
-                       {
-                           case AttackType.LightAttack:
-                           case AttackType.HeavyAttack:
-                               if (tag.CanAttack)
-                               {
-                                   inputc.InputQueue.Enqueue(A[0].Trigger);
-                                   if (WaitState.HasComponent(entity))
-                                   {
-
-                                       if (enemy.HasComponent(tag.attackThis))
-                                       {
-                                           var stat = enemy[tag.attackThis];
-
-                                           stat.AdjustHealth(-250);
-                                           enemy[tag.attackThis] = stat;
-                                           if (stat.CurHealth <= 0.0f)
-                                           {
-                                               EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
-                                               EntityManager.RemoveComponent<AttackActionTag>(entity);
-                                           }
-                                       }
-                                       if (player.HasComponent(tag.attackThis))
-                                       {
-                                           var stat = player[tag.attackThis];
-
-                                           stat.AdjustHealth(-250);
-                                           player[tag.attackThis] = stat;
-                                           if (stat.CurHealth <= 0.0f)
-                                           {
-                                               EntityManager.AddComponent<EntityHasDiedTag>(tag.attackThis);
-                                               EntityManager.RemoveComponent<AttackActionTag>(entity);
-                                           }
-                                       }
-                                       else
-                                       {
-                                           Wait temp = WaitState[entity];
-                                           temp.Timer = temp.StartTime = 10;
-                                           A.RemoveAt(0);
-                                           WaitState[entity] = temp;
-                                       }
-                                   }
-                               }
-                               break;
-                           case AttackType.Projectile:
-                               //Rotate Target and then trigger attack 
-
-                               break;
-                       }
-                   }
-                   else {
-                       Debug.Log("Goto Wait");
-                       
-                       EntityManager.RemoveComponent<AttackActionTag>(entity);
-                   }
-               });
-
-            Entities.WithNone(ComponentType.ReadWrite(typeof(AttackActionTag))).ForEach(( DynamicBuffer<NPCAttackBuffer> A,
-                ref AIReactiveSystemBase<AttackActionTag, AttackTargetState, AttackTagReactor>.StateComponent tag) => {
-                A.Clear();
-            });
+        
         
         }
-    }
 
+  
+
+    }
 
 }

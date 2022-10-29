@@ -2,7 +2,8 @@ using Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using BestiaryLibrary;
+using Global.Component;
 
 namespace GameModes.DestroyTheTower.TowerSystem
 {
@@ -12,7 +13,7 @@ namespace GameModes.DestroyTheTower.TowerSystem
         public List<GameObject> TowerModels;
         public Transform Parent;
         public List<GameObject> TowersInScene { get; private set; }
-
+        public PhysicsInfo physicsInfo;
         public TowerManager() {
         }
        public void LoadGOFromResources()
@@ -30,15 +31,13 @@ namespace GameModes.DestroyTheTower.TowerSystem
                 Start:
                 if (Utilities.GlobalFunctions.RandomPoint(Vector3.zero, 100, out Vector3 pos))
                 {
-                    TowersInScene.Add(GameObject.Instantiate(TowerModels[0], pos, Quaternion.identity));
+                    BestiaryDB.SpawnTowerAndCreateEntityData(pos, physicsInfo, out GameObject goRef);
+                    TowersInScene.Add(goRef);
                 }
                 else
                     goto Start;
             }
-            foreach (GameObject go in TowersInScene) {
-                go.GetComponent<TowerStats>().UpdateLevel(Level);
-                go.transform.SetParent(Parent);
-            }
+          
         }
 
 

@@ -42,6 +42,7 @@ namespace DreamersInc.InflunceMapSystem
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
     public sealed partial class UpdateInfluenceGridSystem : SystemBase
     {
         EntityQuery Influencers;
@@ -55,9 +56,11 @@ namespace DreamersInc.InflunceMapSystem
 
             }
             });
+            //Todo Add Set Initial/Static Job
+
             Influencers.SetChangedVersionFilter(new ComponentType[] {
             ComponentType.ReadWrite(typeof(LocalToWorld))
-        });
+            });
         }
 
         protected override void OnUpdate()

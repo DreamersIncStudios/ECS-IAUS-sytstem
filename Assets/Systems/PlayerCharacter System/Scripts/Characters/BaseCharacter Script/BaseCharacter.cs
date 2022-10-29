@@ -1,14 +1,16 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
-using Unity.Entities;
-using System.Threading.Tasks;
 using DreamersInc.DamageSystem.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Unity.Entities;
+using UnityEngine;
+
+[assembly: InternalsVisibleTo("PlayerCharacterSystem.Player")]
 namespace Stats
 {
     [Serializable]
-    public  abstract partial class BaseCharacter : MonoBehaviour, IConvertGameObjectToEntity, IDamageable
+    public abstract partial class BaseCharacter : MonoBehaviour, IDamageable
     {
 
         private string _name;
@@ -21,8 +23,6 @@ namespace Stats
         private Elemental[] _ElementalMods;
         public bool InPlay;
         public bool InvincibleMode;
-
-        public AlteredStatus AlteredStatus { get; private set; } //Todo Implement 
         public bool Alive
         {
             get
@@ -56,14 +56,9 @@ namespace Stats
 
         public bool Dead { get; private set; }
 
-        public Entity SelfEntityRef { get;  set; } //Todo reset set private when duplication issue fixed
+        public Entity SelfEntityRef { get; set; }
 
 
-        public void AdjustMana(int mod)
-        {
-            AdjustMana mana = new AdjustMana() { Value = mod };
-            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, mana);
-        }
 
         public void Awake()
         {
@@ -96,14 +91,13 @@ namespace Stats
 
 
 
-        public DynamicBuffer<EffectStatusBuffer> StatusBuffers;
-        public virtual void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            SelfEntityRef = entity;
-            dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
-            StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
-
-        }
+        //TODO Delete 
+        //public virtual void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+        //{
+        //    SelfEntityRef = entity;
+        //    dstManager.AddComponent<Unity.Transforms.CopyTransformFromGameObject>(entity);
+        //    StatusBuffers = dstManager.AddBuffer<EffectStatusBuffer>(entity);
+        //}
 
         public string Name
         {
@@ -202,7 +196,7 @@ namespace Stats
             return _stats[index];
         }
 
-    
+
 
 
         public void StatUpdate()
@@ -216,16 +210,8 @@ namespace Stats
 
             CurHealth = MaxHealth = GetVital((int)VitalName.Health).AdjustBaseValue;
             CurMana = MaxMana = GetVital((int)VitalName.Mana).AdjustBaseValue;
-            if (SelfEntityRef != Entity.Null)
-            {
-                World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana });
-            }
-            else
-            { 
-                 throw new ArgumentNullException(nameof(SelfEntityRef), $"The entity has not been assigned GO{ this.gameObject.name}");
-            }
+            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, new LevelUpComponent() { MaxHealth = maxHealth, MaxMana = maxMana, CurHealth = CurHealth, CurMana = CurMana });
         }
-
 
         public List<Attributes> GetAttributes()
         {
@@ -272,7 +258,6 @@ namespace Stats
             StatUpdate();
         }
 
-        public bool SetAlteredStatus(AlteredStatus statusToChangeTo) { return false; } //Todo make a bool Implemented
 
 
         public abstract void TakeDamage(int Amount, TypeOfDamage typeOf, Element element);

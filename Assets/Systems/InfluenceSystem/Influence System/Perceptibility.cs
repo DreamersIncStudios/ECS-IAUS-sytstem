@@ -6,6 +6,7 @@ using System;
 
 namespace DreamersInc.InflunceMapSystem
 {
+    [GenerateAuthoringComponent]
     public struct Perceptibility : IComponentData
     {
        [SerializeField] public float Score => (visibiltyScore + MovementScore + noiseScore) / 3.0f;

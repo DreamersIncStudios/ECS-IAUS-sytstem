@@ -72,7 +72,7 @@ namespace AISenses.VisionSystems
                 TargetArray = TargetEntityQuery.ToComponentDataArray<AITarget>(Allocator.TempJob),
                 TargetPosition = TargetEntityQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob),
                 TargetEntity = TargetEntityQuery.ToEntityArray(Allocator.TempJob),
-            }.ScheduleSingle(SeerEntityQuery, systemDeps);
+            }.Schedule(SeerEntityQuery, systemDeps);
             entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
             systemDeps.Complete();
             Dependency = systemDeps;
@@ -85,9 +85,9 @@ namespace AISenses.VisionSystems
             public BufferTypeHandle<ScanPositionBuffer> ScanBufferChunk;
             [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
             [ReadOnly] public ComponentTypeHandle<Vision> VisionChunk;
-            [DeallocateOnJobCompletion] public NativeArray<AITarget> TargetArray;
-            [DeallocateOnJobCompletion] public NativeArray<LocalToWorld> TargetPosition;
-            [DeallocateOnJobCompletion] public NativeArray<Entity> TargetEntity;
+            [DeallocateOnJobCompletion] [NativeDisableParallelForRestriction] public NativeArray<AITarget> TargetArray;
+            [DeallocateOnJobCompletion][NativeDisableParallelForRestriction] public NativeArray<LocalToWorld> TargetPosition;
+            [DeallocateOnJobCompletion][NativeDisableParallelForRestriction] public NativeArray<Entity> TargetEntity;
 
             [ReadOnly] public CollisionWorld world;
             [ReadOnly] public PhysicsWorld physicsWorld;

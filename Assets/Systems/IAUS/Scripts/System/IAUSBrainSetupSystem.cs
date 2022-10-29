@@ -208,8 +208,6 @@ namespace IAUS.ECS.Systems
                  NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                     Debug.Log("test");
-
                     entityCommandBuffer.RemoveComponent<SetupBrainTag>(chunkIndex, Entities[i]);
                 }
             }

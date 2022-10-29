@@ -15,7 +15,7 @@ public class GameMasterTest : MonoBehaviour
 #if UNITY_WSA
         SMTOverride = true;
 #endif
-        Debug.Log(SystemInfo.processorCount);
+      
         if (SMTOverride)
         {
             JobsUtility.JobWorkerCount = SystemInfo.processorCount - 1;

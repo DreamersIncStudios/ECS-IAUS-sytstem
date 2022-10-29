@@ -7,19 +7,35 @@ namespace Stats
 {
     [System.Serializable]
     public class PlayerCharacter : BaseCharacter
-
     {
-        public override void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
-        {
-            base.Convert(entity, dstManager, conversionSystem);
-            var data = new PlayerStatComponent() { MaxHealth = MaxHealth, MaxMana = MaxMana, CurHealth = CurHealth, CurMana = CurMana,
-                selfEntityRef = entity
-            };
-            conversionSystem.DeclareAssetDependency(gameObject,this);
-            dstManager.AddComponentData(entity, data);
+        public CharacterClass BaseStats;
 
+        public void SetupDataEntity(Entity entity)
+        {
+
+            SelfEntityRef = entity;
+            EntityManager em = World.DefaultGameObjectInjectionWorld.EntityManager;
+            em.AddBuffer<EffectStatusBuffer>(entity);
+            //Todo get level and stat data
+            this.Level = BaseStats.Level;
+            float ModValue = BaseStats.LevelMod;
+            this.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(BaseStats.Strength * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(BaseStats.Awareness * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Charisma).BaseValue = (int)(BaseStats.Charisma * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Resistance).BaseValue = (int)(BaseStats.Resistance * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.WillPower).BaseValue = (int)(BaseStats.WillPower * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Vitality).BaseValue = (int)(BaseStats.Vitality * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Skill).BaseValue = (int)(BaseStats.Skill * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Speed).BaseValue = (int)(BaseStats.Speed * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Luck).BaseValue = (int)(BaseStats.Luck * ModValue);
+            this.GetPrimaryAttribute((int)AttributeName.Concentration).BaseValue = (int)(BaseStats.Concentration * ModValue);
+            this.GetVital((int)VitalName.Health).StartValue = 500;
+            this.GetVital((int)VitalName.Mana).StartValue = 250;
+            World.DefaultGameObjectInjectionWorld.EntityManager.SetComponentData(entity, new PlayerStatComponent { selfEntityRef = entity });
             StatUpdate();
+
         }
+
 
         public override void TakeDamage(int Amount, TypeOfDamage typeOf, Element element = 0)
         {
@@ -27,22 +43,12 @@ namespace Stats
             float defense = typeOf switch
             {
                 TypeOfDamage.MagicAoE => MagicDef,
-                TypeOfDamage.Recovery => 1.0f,
-                        
                 _ => MeleeDef,
             };
-            int damageToProcess = new int();
-            if (typeOf != TypeOfDamage.Recovery)
-            {
-                damageToProcess = -Mathf.FloorToInt(Amount * defense * Random.Range(.92f, 1.08f));
-            }
-            else
-            {
-                damageToProcess = Mathf.FloorToInt(Amount * defense );
-            }
+
+            int damageToProcess = -Mathf.FloorToInt(Amount * defense * Random.Range(.92f, 1.08f));
             AdjustHealth health = new AdjustHealth() { Value = damageToProcess };
-            
-         World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, health);
+            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponentData(SelfEntityRef, health);
 
         }
 
