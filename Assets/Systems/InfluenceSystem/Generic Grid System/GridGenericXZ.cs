@@ -90,7 +90,9 @@ namespace DreamersInc.Utils
             x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
             z = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
         }
-
+        public TGridObject[,] GetGridArray() { 
+            return gridArray;
+        }
         public void SetGridObject(int x, int z, TGridObject value)
         {
             if (x >= 0 && z >= 0 && x < width && z < height)

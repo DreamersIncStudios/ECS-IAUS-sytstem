@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component
         int FactionMemberID { get; set; }
         float3 LocationOfHighestThreat { get; }
         float3 LocationOfLowestThreat { get; }
-        float2 GridValueAtPos { get; }
+        float2 InfluenceValueAtPos { get; }
 
     }
 

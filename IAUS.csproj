@@ -71,6 +71,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseConsiderations.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\TerrorizeAreaState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\SquadMembership.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TraverseReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\MoveToTargetReactive.cs" />
@@ -104,13 +105,16 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\InvestigateTargetArea.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateInfluences.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\GatherResourcesReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTerrorizeState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCDatabase.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackType.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TerrorizeReactor.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
@@ -134,11 +138,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\CitizenRetreatReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\TerrorizeAreaState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddTerrorArea.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTerrorizeState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TerrorizeReactor.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateInfluences.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

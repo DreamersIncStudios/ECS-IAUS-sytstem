@@ -166,14 +166,15 @@ namespace DreamersInc.InflunceMapSystem
         {
             float HighValue = 0.0f;
             int startX, startY;
-            startX = x - 50;
-            startY = y - 50;
+            startX = x - 25;
+            startY = y - 25;
             i = j = 0;
-            for (int SearchX = 0; SearchX < 100; SearchX++)
+            InfluenceGridObject[,] array = grid.GetGridArray();
+            for (int SearchX = 0; SearchX < 50; SearchX++)
             {
-                for (int SearchY = 0; SearchY < 100; SearchY++)
+                for (int SearchY = 0; SearchY < 50; SearchY++)
                 {
-                    float thisCellValue = grid.GetGridObject(startX + SearchX, startY + SearchY).GetValueNormalized(faction).y;
+                    float thisCellValue = array[startX + SearchX, startY + SearchY].GetValueNormalized(faction).y;
                     if (thisCellValue > HighValue)
                     {
                         HighValue = thisCellValue;

@@ -5,6 +5,8 @@ using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS.StateBlobSystem;
 using IAUS.ECS.Consideration;
+using Unity.Mathematics;
+
 namespace IAUS.ECS.Component
 {
     public struct TerrorizeAreaState : IBaseStateScorer
@@ -14,14 +16,17 @@ namespace IAUS.ECS.Component
         public int Index;
         public AIStates name { get { return AIStates.Terrorize; } }
         public TerrorizeSubstates terrorizeSubstate;
-        public float PlayerInfluenceNearMe;
+        public float2 InfluenceValueAtPos;
+        public float DistanceToClosestTarget { get; set; }
+        public float MaxTerrorizeRadius;
+        public float targetingRangeInput => DistanceToClosestTarget / MaxTerrorizeRadius;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
          /// <summary>
         /// Utility score for Attackable target in Ranges
         /// </summary>
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-
+        public float InfluenceRatio => InfluenceValueAtPos.x / InfluenceValueAtPos.y;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; } }

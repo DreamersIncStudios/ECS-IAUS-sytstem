@@ -75,8 +75,8 @@ namespace IAUS.ECS.Systems
                     EnemyStats stats = Stats[i];
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
-                        * retreat.ProximityInArea.Output(retreat.GridValueAtPos.x)
-                        * retreat.ThreatInArea.Output(retreat.GridValueAtPos.y)
+                        * retreat.ProximityInArea.Output(retreat.InfluenceValueAtPos.x)
+                        * retreat.ThreatInArea.Output(retreat.InfluenceValueAtPos.y)
                         ;
                     retreat.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * retreat.mod) * TotalScore);
                     Retreats[i] = retreat;

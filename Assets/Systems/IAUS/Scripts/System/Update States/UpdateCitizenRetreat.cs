@@ -66,8 +66,8 @@ namespace IAUS.ECS.Systems
                     NPCStats stats = Stats[i];
                     float TotalScore =
                          retreat.HealthRatio.Output(stats.HealthRatio)
-                         * retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.x/retreat.CrowdMin))
-                        * retreat.ThreatInArea.Output(Mathf.Clamp01( retreat.GridValueAtPos.y/retreat.ThreatThreshold))
+                         * retreat.ProximityInArea.Output(Mathf.Clamp01( retreat.InfluenceValueAtPos.x/retreat.CrowdMin))
+                        * retreat.ThreatInArea.Output(Mathf.Clamp01( retreat.InfluenceValueAtPos.y/retreat.ThreatThreshold))
                         * retreat.DistanceFromThreat.Output(1.0f)
                         ;
                     retreat.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * retreat.mod) * TotalScore);

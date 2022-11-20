@@ -51,7 +51,31 @@ namespace IAUS.ECS.Systems
             throw new System.NotImplementedException();
         }
 
-    
+        [BurstCompile]
+        public struct FindClosestTarget : IJobChunk
+        {
+            [ReadOnly]public BufferTypeHandle<ScanPositionBuffer> EnemyChunk;
+            public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
+                BufferAccessor<ScanPositionBuffer> bufferAccessor = chunk.GetBufferAccessor(EnemyChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    TerrorizeAreaState terror = terrors[i];
+                    DynamicBuffer<ScanPositionBuffer> buffer = bufferAccessor[i];
+                    terror.DistanceToClosestTarget = buffer[0].dist;
+                    for (int j = 1; j < buffer.Length; j++)
+                    {
+                        if(terror.DistanceToClosestTarget> buffer[j].dist)
+                            terror.DistanceToClosestTarget = buffer[j].dist;
+                    }
+                    terrors[i] = terror;
+
+                }
+            }
+        }
 
         [BurstCompile]
         public struct ScoreTerrorizeState : IJobChunk
@@ -69,7 +93,8 @@ namespace IAUS.ECS.Systems
                     if (terror.stateRef.IsCreated)
                     {
                         float healthRatio = Stats[i].HealthRatio;
-                        float TotalScore =  terror.HealthRatio.Output(healthRatio) * terror.TargetInRange.Output(1.0f);
+                        float TotalScore =  terror.HealthRatio.Output(healthRatio) * terror.TargetInRange.Output(terror.targetingRangeInput)*
+                            terror.Influence.Output(terror.InfluenceRatio);
                         terror.TotalScore = terror.Status != ActionStatus.CoolDown ? Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * terror.mod) * TotalScore) : 0.0f;
                     }
                     terrors[i] = terror;

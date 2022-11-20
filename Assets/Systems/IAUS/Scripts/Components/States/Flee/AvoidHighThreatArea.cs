@@ -47,7 +47,7 @@ namespace IAUS.ECS.Component
 
         public float HideTime;
         [BurstDiscard]
-        public float2 GridValueAtPos { get; set; }
+        public float2 InfluenceValueAtPos { get; set; }
       
 
     }

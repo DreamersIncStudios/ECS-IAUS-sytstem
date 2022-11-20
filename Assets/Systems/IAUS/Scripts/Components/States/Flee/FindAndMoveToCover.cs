@@ -61,7 +61,7 @@ namespace IAUS.ECS.Component
 
         public float3 CurPos { get; set; }
         [BurstDiscard]
-        public float2 GridValueAtPos
+        public float2 InfluenceValueAtPos
         {
             get
             {
