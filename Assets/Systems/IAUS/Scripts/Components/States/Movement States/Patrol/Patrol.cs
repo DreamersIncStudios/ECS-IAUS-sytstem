@@ -44,7 +44,7 @@ namespace IAUS.ECS.Component
        [SerializeField] public float BufferZone { get; set; }
 
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ?  Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance ): 0;
-     
+        public bool AttackTarget { get; set; }
 
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;

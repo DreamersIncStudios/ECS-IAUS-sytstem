@@ -16,7 +16,7 @@ namespace IAUS.ECS.Component
         public int Index { get; set; }
 
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
-      public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
+      public ConsiderationScoringData RangeToTarget { get { return stateRef.Value.Array[Index].DistanceToTarget; } }
        public ConsiderationScoringData ManaAmmoAmount { get { return stateRef.Value.Array[Index].ManaAmmo; } }
         public Target AttackTarget;
        // [BurstDiscard]
@@ -47,7 +47,7 @@ namespace IAUS.ECS.Component
 
             return output;
         }
-        public float Score { get; set;   }
+       [SerializeField] public float Score { get; set;   }
     }
 
     public enum AttackStyle { 

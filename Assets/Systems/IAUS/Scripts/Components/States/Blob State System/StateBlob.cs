@@ -143,6 +143,17 @@ namespace IAUS.ECS.StateBlobSystem
                 }); ;
             }));
 
+            Entities.ForEach((EntityQueryBuilder.F_DDD<TerrorizeAreaState, IAUSBrain, SetupBrainTag>)((ref TerrorizeAreaState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                G.stateRef = reference;
+                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }); ;
+            }));
+
             Entities.ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState a) => {
                 for (int i = 0; i < attacks.Length; i++)
                 {

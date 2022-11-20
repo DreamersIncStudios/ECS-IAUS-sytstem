@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   citizens:
-  - Count: 150
+  - Count: 300
     Models:
     - {fileID: 8640967807621267401, guid: 108f020d9c0c88d4e9ddfabf47ae480f, type: 3}
     - {fileID: 8640967807621267401, guid: 108f020d9c0c88d4e9ddfabf47ae480f, type: 3}
@@ -40,6 +40,10 @@ MonoBehaviour:
       StartTime: 1
       CoolDownTime: 5
     AIMove:
+      TargetLocation:
+        x: 0
+        y: 0
+        z: 0
       MovementSpeed: 10
       TargetLocationCrowded: 0
       MaxInfluenceAtPoint: 20
@@ -47,6 +51,7 @@ MonoBehaviour:
         x: 0
         y: 0
         z: 0
+      CanMove: 0
       StoppingDistance: 1
       Acceleration: 3
       DistanceRemaining: 0

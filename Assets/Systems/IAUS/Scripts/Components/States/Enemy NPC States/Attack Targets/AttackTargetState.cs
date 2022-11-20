@@ -44,7 +44,10 @@ namespace IAUS.ECS.Component
         public Entity attackThis;
         public bool moveSet { get; set; }
         public bool CanAttack { get; set; }
+        public AttackSubStates SubState;
+        [SerializeField] public bool InCoolDown => CoolDownTime > 0.0f;
+        [SerializeField] public float CoolDownTime { get; set; }
     }
 
-
+    public enum AttackSubStates { Attack, Recover, Chase_MoveIntoAttackRange, Stun}
 }

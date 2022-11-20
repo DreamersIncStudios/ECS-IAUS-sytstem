@@ -138,7 +138,7 @@ namespace IAUS.ECS.Systems
 
                         float healthRatio = Stats[i].HealthRatio;
                         float TotalScore = patrol.DistanceToPoint.Output(patrol.DistanceRatio) * patrol.HealthRatio.Output(healthRatio) * patrol.TargetInRange.Output(attackRatio);
-                        patrol.TotalScore = patrol.Status != ActionStatus.CoolDown ? Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore) : 0.0f;
+                        patrol.TotalScore = patrol.Status != ActionStatus.CoolDown && !patrol.AttackTarget ? Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * patrol.mod) * TotalScore) : 0.0f;
                     }
                     patrols[i] = patrol;
                 }

@@ -9,7 +9,7 @@ namespace Components.MovementSystem
     [GenerateAuthoringComponent]
     public struct Movement : IComponentData
     {
-        public float3 TargetLocation { get; private set; }
+        public float3 TargetLocation;// { get; private set; }
         public float MovementSpeed;
         public bool TargetLocationCrowded;
         public int MaxInfluenceAtPoint;
@@ -20,7 +20,8 @@ namespace Components.MovementSystem
         { MovementSpeed = SpeedFactor; }
 
         //public float SprintSpeed // To Be Added if needed
-        public bool CanMove { get; set; }
+        public bool CanMove;
+        public bool reset { get; set; }
         public bool Completed => WithinRangeOfTargetLocation ;
         public float StoppingDistance;
         public float Acceleration;

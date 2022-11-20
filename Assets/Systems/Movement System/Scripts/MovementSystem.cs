@@ -49,8 +49,6 @@ namespace IAUS.ECS.Systems
                         move.SetTargetLocation = false;
                     }
 
-
-
                     if (Agent.hasPath)
                     {
                         if (move.WithinRangeOfTargetLocation)
