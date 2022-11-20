@@ -138,6 +138,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddTerrorArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTerrorizeState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TerrorizeReactor.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateInfluences.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

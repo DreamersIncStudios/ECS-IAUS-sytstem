@@ -45,13 +45,6 @@ namespace IAUS.ECS.Systems
         {
             JobHandle systemDeps = Dependency;
 
-            systemDeps = new GetInfluenceAtPosition<RetreatCitizen>() {
-                RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
-                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
-            }.ScheduleSingle(DistanceCheck, systemDeps);
-
-            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-
             systemDeps = new ScoreStateEnemyRetreat()
             {
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true),
@@ -91,25 +84,7 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        public struct GetInfluenceAtPosition<RETREAT> : IJobChunk
-            where RETREAT : unmanaged, BaseRetreat
-        {
-            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
-            public ComponentTypeHandle<RETREAT> RetreatChunk; 
-            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
-            {
-                NativeArray<RETREAT> Retreats = chunk.GetNativeArray(RetreatChunk);
-                NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(TransformChunk);
 
-                for (int i = 0; i < chunk.Count; i++)
-                {
-                    RETREAT retreat = Retreats[i];
-                    retreat.CurPos = toWorlds[i].Position;
-                    Retreats[i] = retreat;
-                    
-                }
-            }
-        }
     }
         
     

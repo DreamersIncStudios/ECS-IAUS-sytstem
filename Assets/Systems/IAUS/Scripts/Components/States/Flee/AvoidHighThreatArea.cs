@@ -28,24 +28,10 @@ namespace IAUS.ECS.Component
         public float RetreatRange; // TODO set based off speed stat and balance
         public int FactionMemberID { get; set; }
         [BurstDiscard]
-        public float3 LocationOfHighestThreat
-        {
-            get
-            {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetHighestThreatCell(LoveHate.factionDatabase.GetFaction(FactionMemberID), true, out int x, out int y);
-                return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
-            }
-        }
+        public float3 LocationOfHighestThreat { get;set;  }
 
         [BurstDiscard]
-        public float3 LocationOfLowestThreat
-        {
-            get
-            {
-                InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetLowestThreatCell(LoveHate.factionDatabase.GetFaction(FactionMemberID), true, out int x, out int y);
-                return InfluenceGridMaster.Instance.grid.GetWorldPosition(x, y);
-            }
-        }
+        public float3 LocationOfLowestThreat { get; set; }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -60,17 +46,9 @@ namespace IAUS.ECS.Component
         [SerializeField] public float _totalScore { get; set; }
 
         public float HideTime;
-
-        public float3 CurPos { get { return showCurPos; } set { showCurPos = value; } }
-        public float3 showCurPos;
         [BurstDiscard]
-        public float2 GridValueAtPos
-        {
-            get
-            {
-                return InfluenceGridMaster.Instance.grid.GetGridObject(CurPos).GetValue(LoveHate.factionDatabase.GetFaction(FactionMemberID));
-            }
-        }
+        public float2 GridValueAtPos { get; set; }
+      
 
     }
 }

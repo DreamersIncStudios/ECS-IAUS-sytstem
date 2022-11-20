@@ -14,7 +14,7 @@ namespace IAUS.ECS.Component
         public int Index;
         public AIStates name { get { return AIStates.Terrorize; } }
         public TerrorizeSubstates terrorizeSubstate;
-
+        public float PlayerInfluenceNearMe;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
          /// <summary>
         /// Utility score for Attackable target in Ranges
@@ -36,7 +36,7 @@ namespace IAUS.ECS.Component
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
     }
-    public enum TerrorizeSubstates { FindAttack, MoveToTarget, AttackTarget,  }
+    public enum TerrorizeSubstates { None, FindTarget, MoveToTarget, AttackTarget,  }
 
     public struct TerrorizeAreaStateTag : IComponentData {
         public TerrorizeSubstates CurSubState;

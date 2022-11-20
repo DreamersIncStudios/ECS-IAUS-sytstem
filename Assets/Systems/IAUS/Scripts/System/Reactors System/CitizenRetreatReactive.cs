@@ -91,7 +91,8 @@ namespace IAUS.ECS.Systems.Reactive
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 RetreatChunk = GetComponentTypeHandle<RetreatCitizen>(false),
                 TravelBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(false),
-                TraverseChunk = GetComponentTypeHandle<Traverse>(false)
+                TraverseChunk = GetComponentTypeHandle<Traverse>(false),
+                toWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
             }.Schedule(_componentAddedQuery, systemDeps);
 
             Dependency = systemDeps;
@@ -105,6 +106,7 @@ namespace IAUS.ECS.Systems.Reactive
             public ComponentTypeHandle<Movement> MovementChunk;
             public ComponentTypeHandle<RetreatCitizen> RetreatChunk;
             public ComponentTypeHandle<Traverse> TraverseChunk;
+            [ReadOnly]public ComponentTypeHandle<LocalToWorld> toWorldChunk;
             public BufferTypeHandle<TravelWaypointBuffer> TravelBufferChunk;
 
             [BurstDiscard]
@@ -114,6 +116,7 @@ namespace IAUS.ECS.Systems.Reactive
                 NativeArray<Movement> Moves = chunk.GetNativeArray(MovementChunk);
                 NativeArray<RetreatCitizen> retreats = chunk.GetNativeArray(RetreatChunk);
                 NativeArray<Traverse> Traverses = chunk.GetNativeArray(TraverseChunk);
+                NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(toWorldChunk);
                 BufferAccessor<TravelWaypointBuffer> bufferAccessor = chunk.GetBufferAccessor(TravelBufferChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
@@ -140,7 +143,7 @@ namespace IAUS.ECS.Systems.Reactive
 
                             traverse.CurWaypoint = buffer[traverse.WaypointIndex].WayPoint;
 
-                            traverse.StartingDistance = Vector3.Distance(retreats[i].CurPos, traverse.CurWaypoint.Position);
+                            traverse.StartingDistance = Vector3.Distance(toWorlds[i].Position, traverse.CurWaypoint.Position);
                         }
                     }
                     else

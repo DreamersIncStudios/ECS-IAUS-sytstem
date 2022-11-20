@@ -18,7 +18,7 @@ namespace IAUS.ECS.Systems.Reactive
     {
         public void ComponentAdded(Entity entity, ref TerrorizeAreaStateTag newComponent, ref TerrorizeAreaState AIStateCompoment)
         {
-            throw new System.NotImplementedException();
+            newComponent.CurSubState = AIStateCompoment.terrorizeSubstate = TerrorizeSubstates.FindTarget;
         }
 
         public void ComponentRemoved(Entity entity, ref TerrorizeAreaState AIStateCompoment, in TerrorizeAreaStateTag oldComponent)
@@ -40,35 +40,5 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
 
-    [UpdateBefore(typeof(TerrorizeReactor.TerrorizeReactiveSystem))]
-    public partial class UpdateTerrorizeState : SystemBase
-    {
-        private EntityQuery _componentAddedQuery;
-        private EntityQuery _terrorize;
-        EntityCommandBufferSystem _entityCommandBufferSystem;
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaStateTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(LocalToWorld))
-                },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
-            });
-            _terrorize = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaStateTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)),
-                ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
-            });
 
-            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-        }
-        protected override void OnUpdate()
-        { 
-        
-        }
-    }
 }
