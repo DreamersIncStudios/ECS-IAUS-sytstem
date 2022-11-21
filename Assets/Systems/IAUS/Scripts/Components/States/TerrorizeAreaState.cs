@@ -6,6 +6,7 @@ using Unity.Entities;
 using IAUS.ECS.StateBlobSystem;
 using IAUS.ECS.Consideration;
 using Unity.Mathematics;
+using AISenses;
 
 namespace IAUS.ECS.Component
 {
@@ -32,9 +33,9 @@ namespace IAUS.ECS.Component
         public float CoolDownTime { get { return _coolDownTime; } }
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
+        public Target attackThis;
 
-
-        public float mod { get { return 1.0f - (1.0f / 4.0f); } }
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
@@ -43,7 +44,7 @@ namespace IAUS.ECS.Component
     }
     public enum TerrorizeSubstates { None, FindTarget, MoveToTarget, AttackTarget,  }
 
-    public struct TerrorizeAreaStateTag : IComponentData {
+    public struct TerrorizeAreaTag : IComponentData {
         public TerrorizeSubstates CurSubState;
     }
 }

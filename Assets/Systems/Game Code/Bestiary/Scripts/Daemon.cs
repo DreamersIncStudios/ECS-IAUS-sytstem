@@ -73,18 +73,20 @@ namespace BestiaryLibrary
                 Difficulty = Difficulty.Normal,
                 factionID = 1,
                 Attitude = Status.Brave,
-                NPCLevel = NPCLevel.Grunt
+                NPCLevel = NPCLevel.Daemon
             });
-            manager.AddComponentData(entityLink, new AttackTargetState()
-            {
+            manager.AddComponentData(entityLink, new TerrorizeAreaState() { MaxTerrorizeRadius = 200 });
 
-            });
-            DynamicBuffer<AttackTypeInfo> attacks =manager.AddBuffer<AttackTypeInfo>(entityLink);
-            attacks.Add(new AttackTypeInfo() { 
-                style = AttackStyle.Melee,
-                AttackRange = 3,
-                Attacktimer =3.5f
-            });
+            //manager.AddComponentData(entityLink, new AttackTargetState()
+            //{
+
+            //});
+            //DynamicBuffer<AttackTypeInfo> attacks =manager.AddBuffer<AttackTypeInfo>(entityLink);
+            //attacks.Add(new AttackTypeInfo() { 
+            //    style = AttackStyle.Melee,
+            //    AttackRange = 3,
+            //    Attacktimer =3.5f
+            //});
             //attacks.Add(new AttackTypeInfo()
             //{
             //    style = AttackStyle.MagicRange,
@@ -92,8 +94,8 @@ namespace BestiaryLibrary
             //    Attacktimer = 20f
             //});
 
-            manager.AddComponentData(entityLink, new Patrol() { });
-            manager.AddComponentData(entityLink, new Wait() { });
+            //manager.AddComponentData(entityLink, new Patrol() { });
+            //manager.AddComponentData(entityLink, new Wait() { });
             manager.AddComponentData(entityLink, new SetupBrainTag());
 
 

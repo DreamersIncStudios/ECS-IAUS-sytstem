@@ -30,3 +30,7 @@ Normal,NPC,0,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
 Normal,NPC,1,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
 Normal,NPC,2,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
 Normal,NPC,3,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-1.0000,0.9100,0.2000
+Normal,Daemon,1,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
+Normal,Daemon,0,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
+Normal,Daemon,2,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
+Normal,Daemon,3,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500

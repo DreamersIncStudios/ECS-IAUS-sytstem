@@ -10,3 +10,7 @@ Normal,NPC,0,Traverse;Wait;RetreatToLocation;FindCover
 Normal,NPC,1,Traverse;Wait;RetreatToLocation;FindCover
 Normal,NPC,2,Traverse;Wait;RetreatToLocation;FindCover
 Normal,NPC,3,Traverse;Wait;RetreatToLocation;FindCover
+Normal,Daemon,0,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp
+Normal,Daemon,1,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp
+Normal,Daemon,2,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp
+Normal,Daemon,3,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp

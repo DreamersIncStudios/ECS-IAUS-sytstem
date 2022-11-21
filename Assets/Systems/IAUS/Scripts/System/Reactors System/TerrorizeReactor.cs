@@ -8,30 +8,31 @@ using Unity.Entities;
 using Unity.Burst;
 using Components.MovementSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, IAUS.ECS.Systems.Reactive.TerrorizeReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
-    public struct TerrorizeReactor : IComponentReactorTagsForAIStates<TerrorizeAreaStateTag, TerrorizeAreaState>
+    public struct TerrorizeReactor : IComponentReactorTagsForAIStates<TerrorizeAreaTag, TerrorizeAreaState>
     {
-        public void ComponentAdded(Entity entity, ref TerrorizeAreaStateTag newComponent, ref TerrorizeAreaState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref TerrorizeAreaTag newComponent, ref TerrorizeAreaState AIStateCompoment)
         {
+            AIStateCompoment.Status = ActionStatus.Running;
             newComponent.CurSubState = AIStateCompoment.terrorizeSubstate = TerrorizeSubstates.FindTarget;
         }
 
-        public void ComponentRemoved(Entity entity, ref TerrorizeAreaState AIStateCompoment, in TerrorizeAreaStateTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref TerrorizeAreaState AIStateCompoment, in TerrorizeAreaTag oldComponent)
         {
-            throw new System.NotImplementedException();
+            AIStateCompoment.attackThis = new AISenses.Target();
         }
 
-        public void ComponentValueChanged(Entity entity, ref TerrorizeAreaStateTag newComponent, ref TerrorizeAreaState AIStateCompoment, in TerrorizeAreaStateTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref TerrorizeAreaTag newComponent, ref TerrorizeAreaState AIStateCompoment, in TerrorizeAreaTag oldComponent)
         {
-            throw new System.NotImplementedException();
+           
         }
 
-        public class TerrorizeReactiveSystem : AIReactiveSystemBase<TerrorizeAreaStateTag, TerrorizeAreaState, TerrorizeReactor>
+        public class TerrorizeReactiveSystem : AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, TerrorizeReactor>
         {
             protected override TerrorizeReactor CreateComponentReactor()
             {

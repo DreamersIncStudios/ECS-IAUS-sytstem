@@ -20,6 +20,8 @@ namespace IAUS.ECS.Systems
         EntityQuery _AttackStateEntity;
         EntityQuery _FleeStateEntity;
         EntityQuery _gatherStateEntity;
+        EntityQuery _terrorStateEntity;
+
         EntityQuery _CallForHelp { get; set; }
 
         EntityCommandBufferSystem _entityCommandBufferSystem;
@@ -76,6 +78,11 @@ namespace IAUS.ECS.Systems
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(SpawnDefendersState))}
+            });
+            _terrorStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                    ComponentType.ReadWrite(typeof(TerrorizeAreaState))}
             });
 
             Starter = GetEntityQuery(new EntityQueryDesc()
@@ -184,8 +191,18 @@ namespace IAUS.ECS.Systems
                 SpawnChunk = GetComponentTypeHandle<SpawnDefendersState>(false)
             }.ScheduleParallel(_CallForHelp, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
-            // This is to be the last job of this system
 
+            systemDeps = new AddTerrorArea()
+            {
+                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                EntityChunk = GetEntityTypeHandle(),
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false),
+                Distance = GetComponentDataFromEntity<DistanceToConsideration>(true),
+            }.ScheduleParallel(_terrorStateEntity, systemDeps);
+            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+
+            // This is to be the last job of this system
             systemDeps = new RemoveSetupTag()
             {
                 entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),

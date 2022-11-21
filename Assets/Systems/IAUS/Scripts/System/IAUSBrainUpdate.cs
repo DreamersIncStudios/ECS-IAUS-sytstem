@@ -60,9 +60,8 @@ namespace IAUS.ECS.Systems
                 AttackStateScore = GetComponentDataFromEntity<AttackTargetState>(true),
                 GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
                 RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
-                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true)
-
-
+                SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true),
+                TerrorStateScore = GetComponentDataFromEntity<TerrorizeAreaState>(true)
             }.Schedule(IAUSBrains, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -90,10 +89,8 @@ namespace IAUS.ECS.Systems
                 GatherStateScore = GetComponentDataFromEntity<GatherResourcesState>(true),
                 RepairStateScore = GetComponentDataFromEntity<RepairState>(true),
                 SpawnStateScore = GetComponentDataFromEntity<SpawnDefendersState>(true),
+                TerrorStateScore = GetComponentDataFromEntity<TerrorizeAreaState>(true),
                 CommandBufferParallel = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-
-
-
             }.Schedule(IAUSBrains, systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
@@ -120,6 +117,8 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<RepairState> RepairStateScore;
             [NativeDisableParallelForRestriction] [ReadOnly] public ComponentDataFromEntity<SpawnDefendersState> SpawnStateScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<TerrorizeAreaState> TerrorStateScore;
+
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
@@ -200,6 +199,15 @@ namespace IAUS.ECS.Systems
                                 }
 
                                 break;
+                            case AIStates.Terrorize:
+                                temp.StateName = AIStates.Terrorize;
+                                if (TerrorStateScore.HasComponent(entity))
+                                {
+                                    temp.TotalScore = TerrorStateScore[entity].TotalScore;
+                                    temp.Status = TerrorStateScore[entity].Status;
+                                }
+
+                                break;
                         }
                         states[j] = temp;
 
@@ -225,6 +233,8 @@ namespace IAUS.ECS.Systems
             [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<GatherResourcesState> GatherStateScore;
             [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<RepairState> RepairStateScore;
             [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<SpawnDefendersState> SpawnStateScore;
+            [NativeDisableParallelForRestriction][ReadOnly] public ComponentDataFromEntity<TerrorizeAreaState> TerrorStateScore;
+
             public EntityCommandBuffer.ParallelWriter CommandBufferParallel;
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
@@ -280,8 +290,11 @@ namespace IAUS.ECS.Systems
                             if (!SpawnStateScore .HasComponent(entity))
                                 CommandBufferParallel.AddComponent<SpawnTag>(chunkIndex, Entities[i]);
                                 break;
+                        case AIStates.Terrorize:
+                            if (!TerrorStateScore.HasComponent(entity))
+                                CommandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, Entities[i]);
+                            break;
 
-                       
                     }
                 }
             }
@@ -349,6 +362,9 @@ namespace IAUS.ECS.Systems
                             case AIStates.CallBackUp:
                                 CommandBufferParallel.RemoveComponent<SpawnTag>(chunkIndex, Entities[i]);
                                 break;
+                            case AIStates.Terrorize:
+                                CommandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, Entities[i]);
+                                break;
                         }
                         //add new action tag
                         switch (tester.StateName)
@@ -382,6 +398,9 @@ namespace IAUS.ECS.Systems
                                 break;
                             case AIStates.CallBackUp:
                                 CommandBufferParallel.AddComponent<SpawnTag>(chunkIndex, Entities[i]);
+                                break;
+                            case AIStates.Terrorize:
+                                CommandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, Entities[i]);
                                 break;
                         }
                         brain.CurrentState = tester.StateName;
