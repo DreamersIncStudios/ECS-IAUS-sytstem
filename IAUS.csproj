@@ -82,9 +82,9 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Chase Targets\MoveToTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\EnemyDatabase.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddRetreatState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateCitizenRetreat.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateCitizenRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\Patrol\Patrol.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\StayInRangeUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\StayInRangeUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\TravelWaypointBuffer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Leader.cs" />
@@ -92,14 +92,14 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\StayInRange.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\AvoidHighThreatArea.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateFleeState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateFleeState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\Interface\INPCBasics.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\CooldownCountdownSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\RepairTowerReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\NPCAttackBuffer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\FindAndMoveToCover.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\SystemGrouping.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTraverse.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateTraverse.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\StateTextFileReader.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddWaitState.cs" />
@@ -108,16 +108,16 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateInfluences.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\GatherResourcesReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTerrorizeState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateTerrorizeState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\NPC INFO\NPCDatabase.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdatePatrol.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdatePatrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackType.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Leader\Grunt.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\TerrorizeReactor.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoringSO.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateTowerStateSystem.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateTowerStateSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddStayInRange.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Towers State\SpawnDefendersState.cs" />
@@ -125,8 +125,8 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Attack Targets\AttackTargetState.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Enemy NPC States\Group Up\Follow\Follow.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateWait.cs" />
-    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\UpdateMoveToTarget.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateWait.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Scores\UpdateMoveToTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Reactors System\Tower Actions\StaticUnitsAttackSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Authoring\BaseAIAuthoring.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Archetypes Prefabs\EnemyNPCSO.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\AttackSubSystem\UpdateAttackBufferScoresSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\System\Add States\AddTerrorArea.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\System\Update States\Actions\UpdateTerrorizeAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Systems\IAUS\Scripts\Components\States\Blob State System\Resources\StateTest.txt" />

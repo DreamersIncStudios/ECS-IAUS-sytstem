@@ -20,5 +20,12 @@ http://intrinsicalgorithm.com/IAonAI/2013/02/both-my-gdc-lectures-on-utility-the
 
 https://www.gdcvault.com/play/1018040/Architecture-Tricks-Managing-Behaviors-in starts at 33 min mark
 
+In an effort to get an Project Rebirth to a Release Candidate, this project will remain  on Entities 0.51 for the time being. Once a stable build of Project Rebirth is a achieved and Entities 1.0 is stable with full feature release, refactoring update will began. 
+
+This project depend the following Paid Assets. If you know of good full feature open source replacements, please log an issue with a link to the repo and they will be considered for future updates. 
+Love/Hate by Pixel Crushers https://assetstore.unity.com/packages/tools/ai/love-hate-33063
+Love/Hate is a relationship and personality simulator for Unity. It models characters’ feelings about each other using emotional states and value-based judgment of deeds, including gameplay actions done by the player. This system is tied into the influence grid. This will allow NPC to determine if the are in a hostile or friend area and evaluate location for cover, escape, and/or support.
+
+New blog site in development ghost.dreamersinc.studio
 
 Copyright 2019,2020,2021,2022 Dreamers Inc Studios Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

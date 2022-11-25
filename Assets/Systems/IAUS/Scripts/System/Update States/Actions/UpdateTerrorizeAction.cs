@@ -1,0 +1,170 @@
+using Unity.Entities;
+using Unity.Collections;
+using Unity.Jobs;
+using IAUS.ECS.Component;
+using Unity.Burst;
+using Unity.Transforms;
+using UnityEngine;
+using Stats;
+using AISenses;
+using DreamersInc.InflunceMapSystem;
+using PixelCrushers.LoveHate;
+using Utilities.ReactiveSystem;
+using IAUS.ECS.Systems.Reactive;
+using Components.MovementSystem;
+using Unity.Physics.Systems;
+using Unity.Mathematics;
+using Unity.Physics;
+
+namespace IAUS.ECS.Systems {
+    public partial class UpdateTerrorizeAction : SystemBase
+    {
+
+        private EntityQuery _componentAddedQuery;
+        private EntityQuery _terrorize;
+        EntityCommandBufferSystem _entityCommandBufferSystem;
+
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaTag)),
+                    ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(LocalToWorld))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
+            });
+            _terrorize = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
+                , ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
+            });
+
+        }
+
+        protected override void OnUpdate()
+        {
+            JobHandle systemDeps = Dependency;
+            systemDeps = new FindTargetToTerrorize() { 
+                EnemyChunk = GetBufferTypeHandle<ScanPositionBuffer>(true),
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
+            }.Schedule(_componentAddedQuery,systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            systemDeps = new FindTargetToTerrorize() {
+                EnemyChunk = GetBufferTypeHandle<ScanPositionBuffer>(true),
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
+            }.Schedule(_terrorize, systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            systemDeps = new LookForTargetAndUpdate() {
+                Positions = GetComponentDataFromEntity<LocalToWorld>(true),
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false),
+                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
+            }.Schedule(_terrorize, systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            systemDeps = new MoveToTargetToTerrrize() { 
+                MoveChunk = GetComponentTypeHandle<Movement>(false),
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
+            }.Schedule(_terrorize,systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+        }
+
+        [BurstCompile]
+        public struct LookForTargetAndUpdate : IJobChunk
+        {
+            [NativeDisableParallelForRestriction]
+            [ReadOnly] public ComponentDataFromEntity<LocalToWorld> Positions;
+            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
+            public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
+
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<LocalToWorld> Transforms = chunk.GetNativeArray(TransformChunk);
+                NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    TerrorizeAreaState terror = terrors[i];
+                    LocalToWorld transform = Transforms[i];
+                    float dist = Vector3.Distance(transform.Position, Positions[terror.attackThis.entity].Position);
+                    if (dist < terror.MaxTerrorizeRadius)
+                    {
+                        terror.attackThis.DistanceTo = dist;
+                        terror.attackThis.LastKnownPosition = Positions[terror.attackThis.entity].Position;
+                    }
+                    else
+                    {
+                        terror.terrorizeSubstate = TerrorizeSubstates.FindTarget;
+                    }
+                    terrors[i] = terror;
+
+                }
+            }
+        }
+        [BurstCompile]
+        public struct MoveToTargetToTerrrize : IJobChunk
+        {
+            public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
+            public ComponentTypeHandle<Movement> MoveChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
+                NativeArray<Movement> moves = chunk.GetNativeArray(MoveChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Movement move = moves[i];
+                    move.SetLocation(terrors[i].attackThis.LastKnownPosition);
+                }
+            }
+        }
+
+        [BurstCompile]
+        public struct FindTargetToTerrorize : IJobChunk
+        {
+            [ReadOnly] public BufferTypeHandle<ScanPositionBuffer> EnemyChunk;
+            public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+                NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
+                BufferAccessor<ScanPositionBuffer> bufferAccessor = chunk.GetBufferAccessor(EnemyChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    TerrorizeAreaState terror = terrors[i];
+                    DynamicBuffer<ScanPositionBuffer> buffer = bufferAccessor[i];
+                    if (buffer.IsEmpty || terror.terrorizeSubstate != TerrorizeSubstates.FindTarget)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (buffer.Length > 1)
+                        {
+                            terror.attackThis = buffer[0].target;
+                            for (int j = 1; j < buffer.Length; j++)
+                            {
+                                if (terror.attackThis.DistanceTo > buffer[j].target.DistanceTo && buffer[j].target.CanSee)
+                                    terror.attackThis = buffer[j];
+                            }
+                        }
+                        terror.terrorizeSubstate = TerrorizeSubstates.MoveToTarget;
+                    }
+                    terrors[i] = terror;
+
+                }
+            }
+        }
+
+    }
+
+
+}

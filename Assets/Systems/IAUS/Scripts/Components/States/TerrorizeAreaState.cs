@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component
         public float2 InfluenceValueAtPos;
         public float DistanceToClosestTarget { get; set; }
         public float MaxTerrorizeRadius;
-        public float targetingRangeInput => DistanceToClosestTarget / MaxTerrorizeRadius;
+        public float targetingRangeInput => !HasAttack? DistanceToClosestTarget / MaxTerrorizeRadius: attackThis.DistanceTo / MaxTerrorizeRadius;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
          /// <summary>
         /// Utility score for Attackable target in Ranges
@@ -34,7 +34,8 @@ namespace IAUS.ECS.Component
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public Target attackThis;
-
+        public bool HasAttack => attackThis.CanSee;
+    
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
