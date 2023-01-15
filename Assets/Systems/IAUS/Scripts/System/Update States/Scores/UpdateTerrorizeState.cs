@@ -3,13 +3,10 @@ using Unity.Collections;
 using Unity.Jobs;
 using IAUS.ECS.Component;
 using Unity.Burst;
-using Unity.Transforms;
 using UnityEngine;
 using Stats;
 using AISenses;
-using Utilities.ReactiveSystem;
 using IAUS.ECS.Systems.Reactive;
-using Components.MovementSystem;
 using Unity.Physics;
 
 namespace IAUS.ECS.Systems
@@ -18,8 +15,6 @@ namespace IAUS.ECS.Systems
     public partial class UpdateTerrorizeState : SystemBase
     {
         private EntityQuery terrorizorEntities;
-        private EntityQuery _componentAddedQuery;
-        private EntityQuery _terrorize;
         EntityCommandBufferSystem _entityCommandBufferSystem;
         protected override void OnCreate()
         {
@@ -31,19 +26,6 @@ namespace IAUS.ECS.Systems
                     ComponentType.ReadOnly(typeof(IAUSBrain)),
                 }
             });
-            _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaTag)),
-                    ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(LocalToWorld))
-                },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
-            });
-            _terrorize = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(TerrorizeAreaState)), ComponentType.ReadWrite(typeof(TerrorizeAreaTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadOnly(typeof(AIReactiveSystemBase<TerrorizeAreaTag, TerrorizeAreaState, TerrorizeReactor>.StateComponent)) }
-            });
-
         }
 
         protected override void OnUpdate()
@@ -60,6 +42,7 @@ namespace IAUS.ECS.Systems
                 StatsChunk = GetComponentTypeHandle<EnemyStats>(true),
                 TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
             }.Schedule(terrorizorEntities, systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
 
 

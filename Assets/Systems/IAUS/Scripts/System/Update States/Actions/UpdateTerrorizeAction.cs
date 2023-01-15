@@ -5,18 +5,26 @@ using IAUS.ECS.Component;
 using Unity.Burst;
 using Unity.Transforms;
 using UnityEngine;
-using Stats;
 using AISenses;
-using DreamersInc.InflunceMapSystem;
-using PixelCrushers.LoveHate;
 using Utilities.ReactiveSystem;
 using IAUS.ECS.Systems.Reactive;
 using Components.MovementSystem;
-using Unity.Physics.Systems;
-using Unity.Mathematics;
 using Unity.Physics;
 
+
 namespace IAUS.ECS.Systems {
+
+    [UpdateAfter(typeof(IAUSUpdateGroup))]
+    public class IAUSUpdateStateGroup : ComponentSystemGroup
+    {
+        public IAUSUpdateStateGroup()
+        {
+            RateManager = new RateUtils.VariableRateManager(6000, true);
+
+        }
+
+    }
+    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
     public partial class UpdateTerrorizeAction : SystemBase
     {
 
@@ -63,7 +71,7 @@ namespace IAUS.ECS.Systems {
             systemDeps = new LookForTargetAndUpdate() {
                 Positions = GetComponentDataFromEntity<LocalToWorld>(true),
                 TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false),
-                TransformChunk = GetComponentTypeHandle<LocalToWorld>(true)
+                EntityChunk = GetEntityTypeHandle()
             }.Schedule(_terrorize, systemDeps);
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
@@ -72,6 +80,14 @@ namespace IAUS.ECS.Systems {
                 TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
             }.Schedule(_terrorize,systemDeps);
             _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+           
+            systemDeps = new Attack()
+            {
+                TerrorChunk = GetComponentTypeHandle<TerrorizeAreaState>(false)
+            }.Schedule(_terrorize, systemDeps);
+            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+            Dependency = systemDeps;
 
         }
 
@@ -80,28 +96,30 @@ namespace IAUS.ECS.Systems {
         {
             [NativeDisableParallelForRestriction]
             [ReadOnly] public ComponentDataFromEntity<LocalToWorld> Positions;
-            [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
+            [ReadOnly] public EntityTypeHandle EntityChunk;
             public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
 
 
             public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
             {
-                NativeArray<LocalToWorld> Transforms = chunk.GetNativeArray(TransformChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     TerrorizeAreaState terror = terrors[i];
-                    LocalToWorld transform = Transforms[i];
-                    float dist = Vector3.Distance(transform.Position, Positions[terror.attackThis.entity].Position);
-                    if (dist < terror.MaxTerrorizeRadius)
+                    if (terror.HasAttack)
                     {
-                        terror.attackThis.DistanceTo = dist;
-                        terror.attackThis.LastKnownPosition = Positions[terror.attackThis.entity].Position;
-                    }
-                    else
-                    {
-                        terror.terrorizeSubstate = TerrorizeSubstates.FindTarget;
+                        float dist = Vector3.Distance(Positions[entities[i]].Position, Positions[terror.attackThis.entity].Position);
+                        if (dist < terror.MaxTerrorizeRadius)
+                        {
+                            terror.attackThis.DistanceTo = dist;
+                            terror.attackThis.LastKnownPosition = Positions[terror.attackThis.entity].Position;
+                        }
+                        else
+                        {
+                            terror.terrorizeSubstate = TerrorizeSubstates.FindTarget;
+                        }
                     }
                     terrors[i] = terror;
 
@@ -121,8 +139,18 @@ namespace IAUS.ECS.Systems {
 
                 for (int i = 0; i < chunk.Count; i++)
                 {
+                    TerrorizeAreaState terror = terrors[i];
                     Movement move = moves[i];
-                    move.SetLocation(terrors[i].attackThis.LastKnownPosition);
+                    if (terror.terrorizeSubstate != TerrorizeSubstates.MoveToTarget)
+                        continue;
+
+                    move.SetLocation(terror.attackThis.LastKnownPosition);
+                    if (move.WithinRangeOfTargetLocation) {
+                        terror.terrorizeSubstate = TerrorizeSubstates.AttackTarget;
+                    }
+
+                    moves[i]= move;
+                    terrors[i]= terror;
                 }
             }
         }
@@ -163,6 +191,36 @@ namespace IAUS.ECS.Systems {
                 }
             }
         }
+
+        [BurstCompile]
+        public struct Attack : IJobChunk
+        {
+            public ComponentTypeHandle<TerrorizeAreaState> TerrorChunk;
+
+            public void Execute(ArchetypeChunk chunk, int chunkIndex, int firstEntityIndex)
+            {
+
+                NativeArray<TerrorizeAreaState> terrors = chunk.GetNativeArray(TerrorChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    TerrorizeAreaState terror = terrors[i];
+                    if (terror.terrorizeSubstate != TerrorizeSubstates.AttackTarget)
+                        continue;
+                    if (terror.attackThis.DistanceTo < 2.5)
+                    {
+                        Debug.Log("Attack");
+                    }
+                    else {
+                        terror.terrorizeSubstate = TerrorizeSubstates.MoveToTarget;
+                    }
+                    terrors[i] = terror;
+
+
+                }
+            }
+        }
+
 
     }
 

@@ -27,10 +27,9 @@ namespace IAUS.ECS.Component
         public float CrowdMin;
         public float RetreatRange; // TODO set based off speed stat and balance
         public int FactionMemberID { get; set; }
-        [BurstDiscard]
+
         public float3 LocationOfHighestThreat { get;set;  }
 
-        [BurstDiscard]
         public float3 LocationOfLowestThreat { get; set; }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
