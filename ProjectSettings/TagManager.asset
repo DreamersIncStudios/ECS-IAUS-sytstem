@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerEyes
+  - Enemy NPC
   layers:
   - Default
   - TransparentFX
@@ -13,11 +15,11 @@ TagManager:
   - UI
   - 
   - 
-  - Player
+  - NPC
   - Environement
-  - 
-  - 
-  - 
+  - Player
+  - Attackable NPC
+  - Attackable Structure
   - 
   - 
   - 
