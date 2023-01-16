@@ -250,3 +250,16 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.collab-proxy from version 1.17.1 to 1.17.2
+
+=== Sat Jan 14 21:43:51 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.ai.navigation@1.1.1
+The following packages were updated:
+  com.unity.burst from version 1.6.6 to 1.8.2
+  com.unity.collab-proxy from version 1.17.2 to 1.17.7
+  com.unity.ide.visualstudio from version 2.0.16 to 2.0.17
+  com.unity.test-framework from version 1.1.31 to 1.1.33

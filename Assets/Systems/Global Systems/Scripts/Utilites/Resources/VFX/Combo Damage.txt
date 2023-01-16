@@ -1,0 +1,7 @@
+1,VFX/Sword Slash/Sword Slash 1,
+2,VFX/Sword Slash/Sword Slash 2,
+3,VFX/Sword Slash/Sword Slash 3,
+4,VFX/Sword Slash/Sword Slash 4,
+5,VFX/Sword Slash/Sword Slash 5,
+6,VFX/Spell Circles/Tower Spawn,
+7,VFX/Spell Circles/Heal,

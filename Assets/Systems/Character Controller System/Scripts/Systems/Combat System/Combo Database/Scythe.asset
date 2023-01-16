@@ -1,0 +1,211 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33edf1fa5fbc3746945edee092f9710, type: 3}
+  m_Name: Scythe
+  m_EditorClassIdentifier: 
+  _comboLists:
+  - name: 1
+    Unlocked: 1
+    _comboList:
+    - CurrentAnim: 7
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 8
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 9
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.68
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 2
+        TransitionDuration: 0.1
+        TransitionOffset: 0.125
+        EndofCurrentAnim: 0.5
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 2
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.68
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 3
+        TransitionDuration: 0.1
+        TransitionOffset: 0.125
+        EndofCurrentAnim: 0.5
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 3
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.68
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 4
+        TransitionDuration: 0.12
+        TransitionOffset: 0.1
+        EndofCurrentAnim: 0.5
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 3
+      Alternate: 1
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.68
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 5
+        TransitionDuration: 0.125
+        TransitionOffset: 0.1
+        EndofCurrentAnim: 0.5
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+  - name: 2
+    Unlocked: 1
+    _comboList:
+    - CurrentAnim: 7
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 8
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 9
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.15
+        y: 0.65
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 2
+        TransitionDuration: 0.15
+        TransitionOffset: 0.1
+        EndofCurrentAnim: 0.5
+        Chance: 0
+        ChanceForNextAttack: 0
+        LevelUnlocked: 0
+        delay: 0
+  ComboNamesText: {fileID: 0}
+  ComboListIndex: 0
+  ShowMovesPanel: 0
