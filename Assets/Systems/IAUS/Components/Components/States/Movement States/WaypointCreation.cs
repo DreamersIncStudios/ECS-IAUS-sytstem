@@ -7,9 +7,11 @@ using Utilities;
 using Global.Component;
 using log4net.Util;
 using Unity.Transforms;
+using IAUS.ECS.StateBlobSystem;
 
 namespace IAUS.ECS.Component
 {
+    [UpdateBefore(typeof(SetupAIStateBlob))]
     public partial class WaypointCreationSystem : SystemBase
     {
         protected override void OnUpdate()
@@ -34,7 +36,7 @@ namespace IAUS.ECS.Component
         List<TravelWaypointBuffer> GetPoints(float3 start, uint range, uint NumOfPoints, bool Safe)
         {
 
-            List<TravelWaypointBuffer> Points = new List<TravelWaypointBuffer>();
+            List<TravelWaypointBuffer> Points = new();
             while (Points.Count < NumOfPoints)
             {
                 if (GlobalFunctions.RandomPoint(start, range, out Vector3 position))

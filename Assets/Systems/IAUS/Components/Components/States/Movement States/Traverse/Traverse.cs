@@ -9,7 +9,7 @@ namespace IAUS.ECS.Component
     public struct Traverse : MovementState
     {
 
-        public uint NumberOfWayPoints { get; set; }
+        public uint NumberOfWayPoints { get; set; } 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
         public AIStates name { get { return AIStates.Traverse; } }

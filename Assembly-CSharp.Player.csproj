@@ -300,9 +300,6 @@
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.2.2f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
     </Reference>
@@ -675,10 +672,6 @@
       <Project>{8CEC0841-DC91-7B5F-7ABF-9511736E689B}</Project>
       <Name>Unity.ScriptableBuildPipeline.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.Player.csproj">
-      <Project>{704CB35D-0599-BD19-5B57-5A44C011D287}</Project>
-      <Name>Unity.Services.Core.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Global.Player.csproj">
       <Project>{26A6717A-2C4D-CC59-CF45-4B2C1E9C5A5E}</Project>
       <Name>Global.Player</Name>
@@ -747,13 +740,13 @@
       <Project>{E2536153-9B0A-9C48-D105-7CFC8C349F9A}</Project>
       <Name>Unity.Serialization.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.Player.csproj">
-      <Project>{0E563D2F-A3E7-7E12-A1F6-E39F861EAD52}</Project>
-      <Name>Unity.Platforms.UI.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="PixelCrush.Player.csproj">
       <Project>{7F48CFF0-8B03-DDE5-C6FB-8CEE3E20F7FF}</Project>
       <Name>PixelCrush.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Platforms.UI.Player.csproj">
+      <Project>{0E563D2F-A3E7-7E12-A1F6-E39F861EAD52}</Project>
+      <Name>Unity.Platforms.UI.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.UI.Player.csproj">
       <Project>{40692822-60D8-A157-FFEB-A330A0144420}</Project>
@@ -787,10 +780,6 @@
       <Project>{21C54F01-B0FA-0D45-EF40-99CD36976896}</Project>
       <Name>Unity.Entities.Hybrid.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.Environments.Player.csproj">
-      <Project>{6694BC20-60B4-213D-3042-71A16B0EA3A2}</Project>
-      <Name>Unity.Services.Core.Environments.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Physics.Player.csproj">
       <Project>{6B626A0F-9FFB-2F36-E15F-4FE05C0AC6FE}</Project>
       <Name>Unity.Physics.Player</Name>
@@ -798,10 +787,6 @@
     <ProjectReference Include="Unity.Physics.Hybrid.Player.csproj">
       <Project>{A532A9EA-A900-401F-4F9E-0DEC31C45A7B}</Project>
       <Name>Unity.Physics.Hybrid.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.Analytics.Player.csproj">
-      <Project>{EFE58BB2-1068-7750-9A7E-2D8E2B0A5C86}</Project>
-      <Name>Unity.Services.Core.Analytics.Player</Name>
     </ProjectReference>
     <ProjectReference Include="DOTween.Modules.Player.csproj">
       <Project>{5B92BF93-991C-94C3-4BD9-90EFF2D58AAE}</Project>

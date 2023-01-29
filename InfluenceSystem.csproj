@@ -353,7 +353,7 @@
       <HintPath>Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization.Config">
       <HintPath>Assets\Plugins\Sirenix\Assemblies\Sirenix.Serialization.Config.dll</HintPath>
@@ -371,10 +371,10 @@
       <HintPath>Assets\Plugins\Demigiant\DOTween\Editor\DOTweenEditor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="log4netPlastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.OdinInspector.Attributes">
       <HintPath>Assets\Plugins\Sirenix\Assemblies\Sirenix.OdinInspector.Attributes.dll</HintPath>
@@ -388,9 +388,6 @@
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -398,7 +395,7 @@
       <HintPath>Library\PackageCache\com.unity.burst@1.8.2\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
-      <HintPath>Library\PackageCache\com.unity.collab-proxy@1.17.7\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+      <HintPath>Library\PackageCache\com.unity.collab-proxy@2.0.0\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.2.2f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

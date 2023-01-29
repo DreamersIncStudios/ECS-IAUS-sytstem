@@ -363,9 +363,6 @@
     <Reference Include="Sirenix.Utilities.Editor">
       <HintPath>Assets\Plugins\Sirenix\Assemblies\Sirenix.Utilities.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\PackageCache\com.unity.nuget.mono-cecil@1.11.4\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -756,10 +753,6 @@
       <Project>{C3A63B2C-5AF9-D4C6-C4A6-27F51859025D}</Project>
       <Name>Unity.ScriptableBuildPipeline</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.csproj">
-      <Project>{29188B43-CA7A-D67C-6EBD-C6DFC0DCB425}</Project>
-      <Name>Unity.Services.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Entities.Build.csproj">
       <Project>{ADC83F31-3A49-F1BB-3F87-4D4F3B201C0A}</Project>
       <Name>Unity.Entities.Build</Name>
@@ -892,13 +885,13 @@
       <Project>{7094A782-2EC2-D866-65E8-808EC439CB56}</Project>
       <Name>Unity.Scenes.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.csproj">
-      <Project>{C773703B-FB6C-BA9D-9166-DE60D8FDE0F1}</Project>
-      <Name>Unity.Platforms.UI</Name>
-    </ProjectReference>
     <ProjectReference Include="PixelCrush.csproj">
       <Project>{F47C1827-2C0B-D522-3AC3-1CCE86503BA7}</Project>
       <Name>PixelCrush</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Platforms.UI.csproj">
+      <Project>{C773703B-FB6C-BA9D-9166-DE60D8FDE0F1}</Project>
+      <Name>Unity.Platforms.UI</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.UI.csproj">
       <Project>{B64A7551-45C6-530C-C8B9-A8674E577F3D}</Project>
@@ -956,10 +949,6 @@
       <Project>{F3B5100D-540F-9025-C6E8-7E9127B0D75D}</Project>
       <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.Environments.csproj">
-      <Project>{E12EF72C-B094-D565-4543-6881CB8796FA}</Project>
-      <Name>Unity.Services.Core.Environments</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Physics.csproj">
       <Project>{0A84E2CD-C171-3283-D717-03BEA1853284}</Project>
       <Name>Unity.Physics</Name>
@@ -971,10 +960,6 @@
     <ProjectReference Include="Unity.Physics.Hybrid.csproj">
       <Project>{11E19E6D-6AF3-9F73-31C1-83906CE1BBE0}</Project>
       <Name>Unity.Physics.Hybrid</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Services.Core.Analytics.csproj">
-      <Project>{D933B3B7-4D60-9896-B45F-54EC1941E94D}</Project>
-      <Name>Unity.Services.Core.Analytics</Name>
     </ProjectReference>
     <ProjectReference Include="DOTween.Modules.csproj">
       <Project>{BCC83EC8-9F7F-4364-3FC1-B902E23410E6}</Project>

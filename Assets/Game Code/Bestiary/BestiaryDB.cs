@@ -1,4 +1,7 @@
 using Global.Component;
+using IAUS.ECS;
+using IAUS.ECS.Component;
+using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
@@ -58,14 +61,51 @@ namespace DreamersInc.BestiarySystem
             }
             return null;
         }
-        public static void SpawnCreature(uint ID) { 
+        public static void SpawnCreature(uint ID)
+        {
             var info = GetCreature(ID);
             var go = Instantiate(info.Prefab);
             EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            Entity testing = CreateEntity(manager, info.Name);
-            AddPhysics(manager, testing, go, PhysicsShape.Capsule, info.PhysicsInfo);
+            Entity entity = CreateEntity(manager, info.Name);
+            AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
+            BaseCharacterComponent character = new();
+
+            character.SetupDataEntity(info.stats);
+            manager.AddComponentObject(entity, character);
+            manager.AddComponent<AIStat>(entity);
+            manager.AddComponent<IAUSBrain>(entity);    
+            foreach (var state in info.AIStatesToAdd)
+            {
+                switch (state)
+                {
+                    case AIStates.Patrol:
+                        var patrol = new Patrol()
+                        {
+                            NumberOfWayPoints = 10
+                        };
+                        manager.AddComponentData(entity,patrol);
+                        manager.AddBuffer<TravelWaypointBuffer>(entity);
+                        break;
+
+                    case AIStates.Traverse:
+                        var traverse = new Traverse()
+                        {
+                            NumberOfWayPoints = 10
+                        };
+                        manager.AddComponentData(entity,traverse);
+                        manager.AddBuffer<TravelWaypointBuffer>(entity);
+                        break;
+
+                    case AIStates.Wait:
+                        manager.AddComponent<Wait>(entity);
+                        break;
+                }
+            }
+            manager.AddBuffer<StateBuffer>(entity);
+
+            manager.AddComponent<SetupBrainTag>(entity);
         }
-        private static Entity CreateEntity(EntityManager manager, string entityName = "")
+            private static Entity CreateEntity(EntityManager manager, string entityName = "")
         {
 
             EntityArchetype baseEntityArch = manager.CreateArchetype(
@@ -78,6 +118,7 @@ namespace DreamersInc.BestiarySystem
                 manager.SetName(baseDataEntity, entityName);
             else
                 manager.SetName(baseDataEntity, "NPC Data");
+        
 
             return baseDataEntity;
         }

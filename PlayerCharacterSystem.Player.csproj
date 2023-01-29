@@ -90,6 +90,7 @@
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\Mono Design\BaseCharacter Script\BaseCharacter.cs" />
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\Mono Design\Characters\NPCChararacter.cs" />
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Components\ReactToContact.cs" />
+    <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\Entities Design\AIStat.cs" />
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\Mono Design\Characters\EnemyCharacter.cs" />
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\Attribute.cs" />
     <Compile Include="Assets\Systems\Character Stat System\Scripts\Characters\AlteredStatus.cs" />
@@ -316,9 +317,6 @@
     </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@3.0.2\Runtime\AOT\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.2.2f1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>

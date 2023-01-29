@@ -15,22 +15,22 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   stats:
-    title: 0
-    Name: 
-    Level: 0
-    Strength: 0
-    Vitality: 0
-    Awareness: 0
-    Speed: 0
-    Skill: 0
-    Resistance: 0
-    Concentration: 0
-    WillPower: 0
-    Charisma: 0
-    Luck: 0
-    difficultyMod: 0
-    LevelMod: 0
-  AIStatesToAdd: 01000000
+    title: 1
+    Name: Test Dummy
+    Level: 10
+    Strength: 10
+    Vitality: 10
+    Awareness: 10
+    Speed: 10
+    Skill: 10
+    Resistance: 10
+    Concentration: 10
+    WillPower: 10
+    Charisma: 10
+    Luck: 10
+    difficultyMod: 10
+    LevelMod: 5
+  AIStatesToAdd: 010000000a000000
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
   PhysicsInfo:
     BelongsTo:
