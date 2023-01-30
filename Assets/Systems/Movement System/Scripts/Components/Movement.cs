@@ -24,6 +24,14 @@ namespace Components.MovementSystem
         public float Acceleration;
         public float DistanceRemaining;
         public bool SetTargetLocation { get; set; }
+
+        public void SetLocation(float3 position)
+        {
+            TargetLocation = position;
+            SetTargetLocation = true;
+            CanMove = true;
+        }
+
     }
 
 

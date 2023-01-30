@@ -12,30 +12,6 @@ using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Systems
 {
-    [BurstCompile]
-    public struct GetDistanceToNextPoint<T> : IJobChunk 
-    where T : unmanaged, MovementState
-    {
-        public ComponentTypeHandle<T> MoveChunk;
-        [ReadOnly] public ComponentTypeHandle<LocalToWorld> TransformChunk;
-        public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
-        {
-            NativeArray<T> MovesStyles = chunk.GetNativeArray(ref MoveChunk);
-            NativeArray<LocalToWorld> toWorlds = chunk.GetNativeArray(ref TransformChunk);
-
-            for (int i = 0; i < chunk.Count; i++)
-            {
-                T patrol = MovesStyles[i];
-                patrol.distanceToPoint = Vector3.Distance(patrol.CurWaypoint.Position, toWorlds[i].Position);
-                if (patrol.Complete)
-                    patrol.distanceToPoint = 0.0f;
-                MovesStyles[i] = patrol;
-            }
-
-        }
-
-      }
-
 
     [BurstCompile]
     public struct CompletionChecker<T, A> : IJobChunk

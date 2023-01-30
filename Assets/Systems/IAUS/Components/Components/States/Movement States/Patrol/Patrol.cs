@@ -38,8 +38,8 @@ namespace IAUS.ECS.Component
 
         public int WaypointIndex { get; set; }
         public Waypoint CurWaypoint { get; set; }
-        public float distanceToPoint { get; set; }
-        public float StartingDistance { get; set; }
+        [SerializeField]public float distanceToPoint { get; set; }
+        [SerializeField] public float StartingDistance { get; set; }
        [SerializeField] public float BufferZone { get; set; }
 
         public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ?  Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance ): 0;

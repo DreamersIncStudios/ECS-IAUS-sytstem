@@ -95,8 +95,8 @@
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Components\CinemachinePOV.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Core\ConfinerOven.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Helpers\CinemachineTouchInputMapper.cs" />
-    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Core\SignalSourceAsset.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Behaviours\CinemachineFollowZoom.cs" />
+    <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Core\SignalSourceAsset.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Core\NoiseSettings.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Core\TargetPositionCache.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine@2.9.5\Runtime\Behaviours\CinemachineRecomposer.cs" />

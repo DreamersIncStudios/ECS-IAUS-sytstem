@@ -19,4 +19,6 @@ public readonly partial struct WaitAspect : IAspect
             return TotalScore;
         }
     }
+
+    public ActionStatus Status { get => wait.ValueRO.Status; }
 }

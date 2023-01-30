@@ -5,7 +5,6 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Utilities;
 using Global.Component;
-using log4net.Util;
 using Unity.Transforms;
 using IAUS.ECS.StateBlobSystem;
 

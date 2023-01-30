@@ -30,10 +30,12 @@ namespace IAUS.ECS.Systems
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-           systemDeps = Entities.ForEach(( ref Movement movement, in TransformAspect CurPos) => 
+           systemDeps = Entities.ForEach(( ref Movement movement, in WorldTransform CurPos) => 
            {
-                movement.DistanceRemaining = Vector3.Distance(movement.TargetLocation, CurPos.WorldPosition);
+                movement.DistanceRemaining = Vector3.Distance(movement.TargetLocation, CurPos.Position);
            }).ScheduleParallel(systemDeps);
+            World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>().AddJobHandleForProducer(systemDeps);
+            Dependency = systemDeps;
 
             Entities.WithoutBurst().ForEach((NavMeshAgent Agent, ref Movement move) =>
             {
@@ -66,7 +68,6 @@ namespace IAUS.ECS.Systems
 
             }).Run();
             
-            Dependency= systemDeps;
 
         }
 

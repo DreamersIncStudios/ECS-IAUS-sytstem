@@ -85,10 +85,12 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Traverse\Traverse.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\PatrolAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseStateScorer.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateTextFileReader.cs" />

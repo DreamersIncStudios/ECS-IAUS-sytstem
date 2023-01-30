@@ -36,13 +36,12 @@ namespace IAUS.ECS.Systems
             _PatrolStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Patrol)) ,ComponentType.ReadOnly(typeof(LocalToWorld)) },
+                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Patrol)) ,ComponentType.ReadOnly(typeof(WorldTransform)) },
             });
-
             _traverseStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Traverse)) ,ComponentType.ReadOnly(typeof(LocalToWorld)) },
+                        ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Traverse)) ,ComponentType.ReadOnly(typeof(WorldTransform)) },
             });
             _waitStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
@@ -106,7 +105,7 @@ namespace IAUS.ECS.Systems
                 StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
                 MovementChunk = GetComponentTypeHandle<Patrol>(false),
                 PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
-                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
+                ToWorldChunk = GetComponentTypeHandle<WorldTransform>(true)
             }.ScheduleParallel(_PatrolStateEntity, systemDeps);
 
             ecbSystem.AddJobHandleForProducer(systemDeps);
@@ -115,7 +114,7 @@ namespace IAUS.ECS.Systems
                 StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
                 MovementChunk = GetComponentTypeHandle<Traverse>(false),
                 PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
-                ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true)
+                ToWorldChunk = GetComponentTypeHandle<WorldTransform>(true)
             }.ScheduleParallel(_traverseStateEntity, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
 

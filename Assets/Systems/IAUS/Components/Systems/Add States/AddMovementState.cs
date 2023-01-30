@@ -13,7 +13,7 @@ namespace IAUS.ECS.Systems {
     {
 
         public ComponentTypeHandle<T> MovementChunk;
-        [ReadOnly]public ComponentTypeHandle<LocalToWorld> ToWorldChunk;
+        [ReadOnly]public ComponentTypeHandle<WorldTransform> ToWorldChunk;
 
         public BufferTypeHandle<StateBuffer> StateBufferChunk;
         [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> PatrolBufferChunk;
@@ -21,7 +21,7 @@ namespace IAUS.ECS.Systems {
         public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
         {
             NativeArray<T> MovementStyle = chunk.GetNativeArray(ref MovementChunk);
-            NativeArray<LocalToWorld> toWorld = chunk.GetNativeArray( ref ToWorldChunk);
+            NativeArray<WorldTransform> toWorld = chunk.GetNativeArray( ref ToWorldChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor( ref StateBufferChunk);
             BufferAccessor<TravelWaypointBuffer> PatrolBufferAccessor = chunk.GetBufferAccessor(ref PatrolBufferChunk);
 

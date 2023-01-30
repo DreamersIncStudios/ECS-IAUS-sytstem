@@ -1,6 +1,8 @@
+using Components.MovementSystem;
 using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
+using MotionSystem;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.AI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -69,11 +72,24 @@ namespace DreamersInc.BestiarySystem
             Entity entity = CreateEntity(manager, info.Name);
             AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
             BaseCharacterComponent character = new();
-
+            TransformGO transformLink = new() {
+                transform = go.transform
+            };
+            manager.AddComponentData(entity, transformLink);
             character.SetupDataEntity(info.stats);
             manager.AddComponentObject(entity, character);
+            var agent = go.GetComponent<NavMeshAgent>();
+            manager.AddComponentObject(entity, agent);
+            var move = new Movement() {
+                Acceleration = agent.acceleration,
+                MovementSpeed = agent.speed,
+                StoppingDistance= agent.stoppingDistance,
+                Offset = agent.baseOffset,
+            };
+            manager.AddComponentData(entity, move);
             manager.AddComponent<AIStat>(entity);
             manager.AddComponent<IAUSBrain>(entity);    
+
             foreach (var state in info.AIStatesToAdd)
             {
                 switch (state)

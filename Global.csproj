@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\Global Systems\Scripts\Utilites\DOTSTerrainCollider.cs" />
+    <Compile Include="Assets\Systems\Global Systems\Scripts\ReactiveSystem\ReactiveSystemBase.cs" />
     <Compile Include="Assets\Systems\Global Systems\Scripts\Utilites\Player_Control.cs" />
     <Compile Include="Assets\Systems\Global Systems\Scripts\Utilites\GlobalFunctions.cs" />
     <Compile Include="Assets\Systems\Global Systems\Scripts\AnimatorComponent.cs" />
