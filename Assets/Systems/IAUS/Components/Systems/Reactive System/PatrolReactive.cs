@@ -20,13 +20,15 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment)
         {
             AIStateCompoment.Status = ActionStatus.Running;
+            newComponent.WaitTime = AIStateCompoment.CurWaypoint.TimeToWaitatWaypoint;
         }
 
         public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
         {
             if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
             {
-
+                AIStateCompoment.Status = ActionStatus.CoolDown;
+                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
             }
             else
             {
@@ -53,6 +55,7 @@ namespace IAUS.ECS.Systems.Reactive
     {
         private EntityQuery _componentAddedQuery;
         private EntityQuery _patrolling;
+
         EntityCommandBufferSystem _entityCommandBufferSystem;
 
         protected override void OnCreate()
@@ -61,17 +64,17 @@ namespace IAUS.ECS.Systems.Reactive
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(LocalToWorld))
+                , ComponentType.ReadOnly(typeof(WorldTransform))
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
             _patrolling = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(LocalToWorld)),
+                , ComponentType.ReadOnly(typeof(WorldTransform)),
                     ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
-
+ 
             _entityCommandBufferSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
 
         }

@@ -14,19 +14,6 @@ namespace IAUS.ECS.Systems
 
     public partial class MovementSystem : SystemBase
     {
-        private EntityQuery Mover;
-
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            Mover = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalToWorld))}
-
-            });
-
-        }
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;

@@ -8,11 +8,16 @@ using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Burst;
 using Components.MovementSystem;
+using Unity.Burst.Intrinsics;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.StateComponent))]
 
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.StateComponent))]
+
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
@@ -36,6 +41,7 @@ namespace IAUS.ECS.Systems.Reactive
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
 
             }
+            AIStateCompoment.Timer = 0.01f;
         }
 
         public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref Wait AIStateCompoment, in WaitActionTag oldComponent)
@@ -49,9 +55,76 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 return new WaitTagReactor();
             }
+
         }
     }
 
+    public struct PatrolWaitTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Wait>
+    {
+        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment)
+        {
+          
+        }
+
+        public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
+        {
+            AIStateCompoment.Timer = oldComponent.WaitTime;
+        }
+
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
+        {
+        }
+        public class WaitReactiveSystem2 : AIReactiveSystemBase<PatrolActionTag, Wait, PatrolWaitTagReactor>
+        {
+            protected override PatrolWaitTagReactor CreateComponentReactor()
+            {
+                return new PatrolWaitTagReactor();
+            }
+
+        }
+    }
+
+    public partial class WaitFinished : SystemBase
+    {
+        EntityQuery waiters;
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            waiters = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(WorldTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),
+                    ComponentType.ReadWrite(typeof(AIReactiveSystemBase < WaitActionTag, Wait, WaitTagReactor >.StateComponent ))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
+            });
+        }
+
+        protected override void OnUpdate()
+        {
+            new Test().Schedule(waiters);
+
+        }
+    }
+    [BurstCompile]
+    partial struct Test : IJobEntity {
+
+        public void Execute( ref Patrol patrol, in WorldTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
+            if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
+            {
+                patrol.WaypointIndex = 0;
+            }
+            else
+            {
+                patrol.WaypointIndex++;
+            }
+
+            patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
+            patrol.StartingDistance = Vector3.Distance(ToWorld.Position, patrol.CurWaypoint.Position);
+        }
+    
+    }
+
    
+    
 
 }

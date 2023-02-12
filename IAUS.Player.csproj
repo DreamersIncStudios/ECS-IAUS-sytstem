@@ -93,8 +93,10 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateTextFileReader.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseConsiderations.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\SpawnDefendersState.cs" />

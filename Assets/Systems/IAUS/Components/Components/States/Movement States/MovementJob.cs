@@ -14,20 +14,16 @@ namespace IAUS.ECS.Systems
 {
 
     [BurstCompile]
-    public struct CompletionChecker<T, A> : IJobChunk
+    public struct CompletionChecker<T> : IJobChunk
                    where T : unmanaged, MovementState
-           where A : unmanaged, IComponentData
     {
         public ComponentTypeHandle<T> MoveChunk;
         public ComponentTypeHandle<Wait> WaitChunk;
         [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> WaypointChunk;
-        [ReadOnly] public EntityTypeHandle EntityChunk;
-        public EntityCommandBuffer.ParallelWriter Buffer;
         public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
         {
             NativeArray<T> Moves = chunk.GetNativeArray(ref MoveChunk);
             NativeArray<Wait> Waits = chunk.GetNativeArray(ref WaitChunk);
-            NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
                 T move = Moves[i];
@@ -35,8 +31,7 @@ namespace IAUS.ECS.Systems
 
                 if (move.Complete)
                 {
-                    Buffer.RemoveComponent<A>(unfilteredChunkIndex, entities[i]);
-
+                    Debug.Log("finished");
                     move.Status = ActionStatus.CoolDown;
                     move.ResetTime = move.CurWaypoint.TimeToWaitatWaypoint;
                     //Todo Add info on next travel point here

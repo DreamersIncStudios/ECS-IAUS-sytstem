@@ -23,13 +23,13 @@ namespace IAUS.ECS.Component {
         /// <summary>
         /// How much time NPC has left to wait at location.
         /// </summary>
-        public float Timer { get; set; }
+       [SerializeField] public float Timer { get; set; }
         public float StartTime;
         public float TimePercent => Mathf.Clamp01( Timer / StartTime);
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; }  }
-        public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
+        public bool InCooldown => Status == ActionStatus.CoolDown;
 
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }

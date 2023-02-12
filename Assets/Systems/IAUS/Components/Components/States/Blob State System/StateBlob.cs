@@ -70,14 +70,14 @@ namespace IAUS.ECS.StateBlobSystem
         {
             Entities.WithoutBurst().ForEach((ref Patrol p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 p.stateRef = reference;
-                p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
+                p.SetIndex( p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = p.name,
                     FactionID = brain.factionID,
                     //TODO fill out all Levels
                     NPCLevel = brain.NPCLevel
-                });
+                }));
             }).Run();
             Entities.WithoutBurst().ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 p.stateRef = reference;

@@ -7,37 +7,42 @@ using Unity.Mathematics;
 namespace IAUS.ECS.Component
 {
     [Serializable]
-    public struct Patrol :  MovementState
+    public struct Patrol : MovementState
     {
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
+        public int Index { get; private set; }
+
+        public void SetIndex(int index) {
+            Index= index;
+        }
+
         public AIStates name { get { return AIStates.Patrol; } }
 
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         /// <summary>
         /// Utility score for travel to current waypoint assigned
         /// </summary>
-        public ConsiderationScoringData DistanceToPoint  => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
+        public ConsiderationScoringData DistanceToPoint => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
 
         /// <summary>
         /// Utility score for Attackable target in Ranges
         /// </summary>
-        public ConsiderationScoringData TargetInRange =>   stateRef.Value.Array[Index].DistanceToTarget; 
+        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
 
 
-       [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
+        [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
-        public float CoolDownTime { get { return _coolDownTime; }}
-        public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
+        public float CoolDownTime { get { return _coolDownTime; } }
+        public bool InCooldown => Status == ActionStatus.CoolDown;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public uint NumberOfWayPoints { get; set; }
+       [SerializeField] public uint NumberOfWayPoints { get; set; }
         public bool TravelInOrder { get; set; }
 
-        public int WaypointIndex { get; set; }
-        public Waypoint CurWaypoint { get; set; }
+        [SerializeField] public int WaypointIndex { get; set; }
+        [SerializeField] public Waypoint CurWaypoint { get; set; }
         [SerializeField]public float distanceToPoint { get; set; }
         [SerializeField] public float StartingDistance { get; set; }
        [SerializeField] public float BufferZone { get; set; }
@@ -78,6 +83,7 @@ namespace IAUS.ECS.Component
     }
     public struct PatrolActionTag : IComponentData {
         public bool UpdateWayPoint;
+        public float WaitTime;
     
     }
 }

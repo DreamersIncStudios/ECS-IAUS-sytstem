@@ -31,6 +31,8 @@ namespace IAUS.ECS.Systems
         public void OnDestroy(ref SystemState state)
         {
         }
+        [BurstCompile]
+
         public void OnUpdate(ref SystemState state)
         {
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -41,11 +43,14 @@ namespace IAUS.ECS.Systems
          
             var traverseUpdate = new UpdateTraverse();
             traverseUpdate.Schedule();
-            
+            var waitUpdate = new UpdateWait();
+            waitUpdate.Schedule();
+
             new FindHighState() { CommandBufferParallel = ecb.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()}.Schedule();
 
         }
     }
+    [BurstCompile]
     partial struct UpdatePatrol : IJobEntity {
         void Execute(ref PatrolAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
@@ -66,9 +71,11 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    [BurstCompile]
+
     partial struct UpdateTraverse : IJobEntity
     {
-        void Execute(in TraverseAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(ref TraverseAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -87,9 +94,11 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    [BurstCompile]
+
     partial struct UpdateWait : IJobEntity
     {
-        void Execute(in WaitAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(ref WaitAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -108,6 +117,8 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    [BurstCompile]
+
     partial struct FindHighState : IJobEntity {
 
         public EntityCommandBuffer.ParallelWriter CommandBufferParallel;

@@ -131,6 +131,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Physics.Editor", "Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Burst.Editor", "Unity.Burst.Editor.csproj", "{688714CF-A3B6-50D0-599D-44D8B85ACE96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{7362A908-031F-B399-FDCF-D5E277C12E61}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Sysroot.Linux_x86_64", "Unity.Sysroot.Linux_x86_64.csproj", "{D8A68A5B-5ABC-55B1-EFCB-08D877B62751}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.AI.Navigation.Updater", "Unity.AI.Navigation.Updater.csproj", "{66306081-89F8-5D2B-3F0E-D5FDC7020468}"
@@ -603,6 +605,10 @@ Global
 		{688714CF-A3B6-50D0-599D-44D8B85ACE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{688714CF-A3B6-50D0-599D-44D8B85ACE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{688714CF-A3B6-50D0-599D-44D8B85ACE96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7362A908-031F-B399-FDCF-D5E277C12E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7362A908-031F-B399-FDCF-D5E277C12E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7362A908-031F-B399-FDCF-D5E277C12E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7362A908-031F-B399-FDCF-D5E277C12E61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8A68A5B-5ABC-55B1-EFCB-08D877B62751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8A68A5B-5ABC-55B1-EFCB-08D877B62751}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8A68A5B-5ABC-55B1-EFCB-08D877B62751}.Release|Any CPU.ActiveCfg = Release|Any CPU

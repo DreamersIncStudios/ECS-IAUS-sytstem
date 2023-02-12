@@ -4,7 +4,6 @@ using UnityEngine;
 using Stats;
 using IAUS.ECS;
 using UnityEditor;
-using Dreamers.Global;
 using Global.Component;
 
 namespace DreamersInc.BestiarySystem
@@ -33,7 +32,7 @@ namespace DreamersInc.BestiarySystem
     public static class Creator {
         [MenuItem("Assets/Create/Creature Info")]
         static public void CreateCreatureInfo() {
-            ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
             BestiaryDB.LoadDatabase(true);
             info.setItemID((uint)BestiaryDB.Creatures.Count + 1);
         }

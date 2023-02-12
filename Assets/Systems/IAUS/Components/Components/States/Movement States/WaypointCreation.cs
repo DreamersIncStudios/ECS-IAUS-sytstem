@@ -7,7 +7,7 @@ using Utilities;
 using Global.Component;
 using Unity.Transforms;
 using IAUS.ECS.StateBlobSystem;
-
+using Random = UnityEngine.Random;
 namespace IAUS.ECS.Component
 {
     [UpdateBefore(typeof(SetupAIStateBlob))]
@@ -51,7 +51,7 @@ namespace IAUS.ECS.Component
                                 //FactionID = -1
                             },
 
-                            TimeToWaitatWaypoint = UnityEngine.Random.Range(5, 10)
+                            TimeToWaitatWaypoint = Random.Range(5, 25)
                         }
                     }
                  );

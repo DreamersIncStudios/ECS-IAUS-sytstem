@@ -17,7 +17,7 @@ using Random = UnityEngine.Random;
 
 namespace DreamersInc.BestiarySystem
 {
-    public class BestiaryDB : MonoBehaviour
+    public sealed partial class BestiaryDB : MonoBehaviour
     {
         //Text file or ScriptableOjects;
         static public List<CreatureInfo> Creatures;
@@ -97,7 +97,9 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Patrol:
                         var patrol = new Patrol()
                         {
-                            NumberOfWayPoints = 10
+                            NumberOfWayPoints = 10,
+                            BufferZone = .25f,
+                            _coolDownTime = 5.5f
                         };
                         manager.AddComponentData(entity,patrol);
                         manager.AddBuffer<TravelWaypointBuffer>(entity);
@@ -106,14 +108,20 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Traverse:
                         var traverse = new Traverse()
                         {
-                            NumberOfWayPoints = 10
+                            NumberOfWayPoints = 10,
+                            BufferZone = .25f,
+                            _coolDownTime = 5.5f
                         };
                         manager.AddComponentData(entity,traverse);
                         manager.AddBuffer<TravelWaypointBuffer>(entity);
                         break;
 
                     case AIStates.Wait:
-                        manager.AddComponent<Wait>(entity);
+                        var wait = new Wait()
+                        {
+                            _coolDownTime = 5.5f
+                        };
+                        manager.AddComponentData(entity, wait);
                         break;
                 }
             }
@@ -121,7 +129,7 @@ namespace DreamersInc.BestiarySystem
 
             manager.AddComponent<SetupBrainTag>(entity);
         }
-            private static Entity CreateEntity(EntityManager manager, string entityName = "")
+        private static Entity CreateEntity(EntityManager manager, string entityName = "")
         {
 
             EntityArchetype baseEntityArch = manager.CreateArchetype(
@@ -134,7 +142,7 @@ namespace DreamersInc.BestiarySystem
                 manager.SetName(baseDataEntity, entityName);
             else
                 manager.SetName(baseDataEntity, "NPC Data");
-        
+
 
             return baseDataEntity;
         }
@@ -193,7 +201,7 @@ namespace DreamersInc.BestiarySystem
             LoadDatabase();
             Debug.Log(Creatures.Count);
         }
-        enum PhysicsShape { Box, Capsule, Sphere, Cyclinder, Custom }
     }
+    public enum PhysicsShape { Box, Capsule, Sphere, Cyclinder, Custom }
 
 }
