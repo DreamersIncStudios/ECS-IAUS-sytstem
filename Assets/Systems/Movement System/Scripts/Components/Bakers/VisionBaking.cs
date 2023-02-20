@@ -33,7 +33,7 @@ namespace DreamersInc.MovementSys
                     ViewAngle = authoring.ViewAngle,
                     EngageRadius = authoring.EngageRadius,
                     AlertModifer = authoring.AlertModifer,
-                    viewRadius = authoring.viewRadius
+                    ViewRadius = authoring.viewRadius
                 };
                AddComponent(data);
                 AddComponent(new PhysicsInfo {

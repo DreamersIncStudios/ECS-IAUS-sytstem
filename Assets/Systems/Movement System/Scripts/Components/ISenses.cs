@@ -6,13 +6,14 @@ using Stats;
 using Unity.Mathematics;
 using Unity.Collections;
 using Global.Component;
+using Stats.Entities;
 
 namespace AISenses
 {
     public interface ISenses : IComponentData
     {
-        void InitializeSense(BaseCharacter baseCharacter);
-        void UpdateSense(BaseCharacter baseCharacter);
+        void InitializeSense(BaseCharacterComponent baseCharacter);
+        void UpdateSense(BaseCharacterComponent baseCharacter);
 
     }
 
@@ -55,16 +56,27 @@ namespace AISenses
         public float3 HeadPositionOffset;
         public float3 ThreatPosition;
 
-        public float viewRadius;
+        public float ViewRadius;
         [Range(0, 360)]
         public int ViewAngle;
         public float EngageRadius;
         public float AlertModifer; // If AI is on high alert they will notice the enemy sooner
-        public void InitializeSense(BaseCharacter baseCharacter)
+        public void InitializeSense(BaseCharacterComponent baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
+            ViewRadius = 250;
+            ViewAngle = 120;
+            EngageRadius = 50;
+            AlertModifer = 1;
         }
-        public void UpdateSense(BaseCharacter baseCharacter) { }
+        public void UpdateSense(BaseCharacterComponent baseCharacter)
+        {
+            AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
+            ViewRadius = 250;
+            ViewAngle = 120;
+            EngageRadius = 50;
+            AlertModifer = 1;
+        }
 
     }
     [InternalBufferCapacity(100)]

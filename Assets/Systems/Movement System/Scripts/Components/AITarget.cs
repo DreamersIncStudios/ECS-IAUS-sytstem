@@ -3,63 +3,35 @@ using DreamersInc.InflunceMapSystem;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using PixelCrushers.LoveHate;
+
 namespace Global.Component
 {
     [System.Serializable]
+    /// Do not add [GenerateAuthoring] tag use AITargetCreate
     public struct AITarget : IComponentData
     {
         public TargetType Type;
-        public Race GetRace;
+        public int FactionID;
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
-        public float detectionScore;
-
-        public bool IsFriend(Race race) {
-            bool test = new();
-            switch (race) {
-                case Race.Angel:
-                    switch (GetRace) {
-                        case Race.Angel:
-                        case Race.Human:
-                            test = true;
-                            break;
-                        case Race.Daemon:
-                            test = false;
-                            break;
-                    }
-                    break;
-                case Race.Daemon:
-                    switch (GetRace)
-                    {
-                        case Race.Angel:
-                        case Race.Human:
-                            test = false;
-                            break;
-                        case Race.Daemon:
-                            test = true;
-                            break;
-                    }
-                    break;
-                case Race.Human:
-                    switch (GetRace)
-                    {
-                        case Race.Angel:
-                        case Race.Human:
-                            test = true;
-                            break;
-                        case Race.Daemon:
-                            test = false;
-                            break;
-                    }
-                    break;
+        //TODO change to output a relationship level;
+        public bool IsFriend(int factionID)
+        {
+            bool test = new bool();
+            if (factionID == FactionID)
+                test = true;
+            else
+            {
+                test = LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
             }
-            
-            return test; }
-
+            return test;
+        }
+        public float detectionScore;
 
     }
     [System.Serializable]
@@ -68,13 +40,8 @@ namespace Global.Component
         None, Character, Location, Vehicle
     }
 
-    //replace with threat score system at later date
 
-    public enum Race
-    {
-       None, Angel, Daemon, Human, Beast // More Types of be added 
 
-    }
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
     [UpdateBefore(typeof(VisionSystemJobs))]
     public partial class UpdateAITarget : SystemBase

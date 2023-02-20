@@ -272,3 +272,11 @@ Update Mode: updateDependencies
 The following packages were updated:
   com.unity.collab-proxy from version 1.17.7 to 2.0.0
   com.unity.render-pipelines.universal from version 14.0.4 to 14.0.5
+
+=== Sat Feb 18 22:47:25 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.render-pipelines.universal from version 14.0.4 to 14.0.6

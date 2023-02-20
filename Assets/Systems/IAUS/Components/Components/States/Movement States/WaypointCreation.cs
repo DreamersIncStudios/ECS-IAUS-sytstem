@@ -17,7 +17,7 @@ namespace IAUS.ECS.Component
         {
             foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, WorldTransform, Patrol, SetupBrainTag>())
             {
-                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 100, patrol.NumberOfWayPoints, true);
+                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, patrol.NumberOfWayPoints, true);
                 foreach (var item in Waypoints)
                 {
                     buffer.Add(item);
@@ -25,7 +25,7 @@ namespace IAUS.ECS.Component
             }
             foreach (var (buffer, transform, traverse, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, WorldTransform, Traverse, SetupBrainTag>())
             {
-                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 100, traverse.NumberOfWayPoints, true);
+                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, traverse.NumberOfWayPoints, true);
                 foreach (var item in Waypoints)
                 {
                     buffer.Add(item);

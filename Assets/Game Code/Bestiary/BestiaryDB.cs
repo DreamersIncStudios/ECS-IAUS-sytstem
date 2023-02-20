@@ -1,3 +1,4 @@
+using AISenses;
 using Components.MovementSystem;
 using Global.Component;
 using IAUS.ECS;
@@ -75,9 +76,21 @@ namespace DreamersInc.BestiarySystem
             TransformGO transformLink = new() {
                 transform = go.transform
             };
+            manager.AddComponentData(entity, new AITarget()
+            {
+                FactionID = 2,// TODO add info.factionID,
+                NumOfEntityTargetingMe = 3,
+                CanBeTargetByPlayer = false,
+                Type = TargetType.Character,
+                CenterOffset = new float3(0, 1, 0) //todo add value to SO
+
+            });
             manager.AddComponentData(entity, transformLink);
             character.SetupDataEntity(info.stats);
             manager.AddComponentObject(entity, character);
+            var vision = new Vision();
+            vision.InitializeSense(character);
+            manager.AddComponentData(entity, vision);
             var agent = go.GetComponent<NavMeshAgent>();
             manager.AddComponentObject(entity, agent);
             var move = new Movement() {
@@ -88,8 +101,8 @@ namespace DreamersInc.BestiarySystem
             };
             manager.AddComponentData(entity, move);
             manager.AddComponent<AIStat>(entity);
-            manager.AddComponent<IAUSBrain>(entity);    
-
+            manager.AddComponent<IAUSBrain>(entity);
+            manager.AddBuffer<ScanPositionBuffer>(entity);
             foreach (var state in info.AIStatesToAdd)
             {
                 switch (state)
@@ -123,6 +136,11 @@ namespace DreamersInc.BestiarySystem
                         };
                         manager.AddComponentData(entity, wait);
                         break;
+                    case AIStates.Attack:
+
+
+                        break;
+                   
                 }
             }
             manager.AddBuffer<StateBuffer>(entity);
@@ -143,6 +161,8 @@ namespace DreamersInc.BestiarySystem
             else
                 manager.SetName(baseDataEntity, "NPC Data");
 
+            manager.SetComponentData(baseDataEntity, new WorldTransform() { Scale = 1 });
+            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
 
             return baseDataEntity;
         }
