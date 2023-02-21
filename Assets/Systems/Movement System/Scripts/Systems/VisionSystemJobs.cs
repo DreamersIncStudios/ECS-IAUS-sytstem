@@ -19,7 +19,7 @@ namespace AISenses.VisionSystems
         }
 
     }
-    [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
+   // [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
     public partial struct VisionSystemJobs : ISystem
     {
         private EntityQuery TargetEntityQuery;
@@ -75,9 +75,11 @@ namespace AISenses.VisionSystems
 
                         if (Vector3.Angle(transform.Forward(), dirToTarget) < vision.ViewAngle / 2.0f)
                         {
+                            //Todo if Object in when X distance add to list without raycast
+
                             RaycastInput raycastInput = new RaycastInput()
                             {
-                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * .75f,
+                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f, //Make offset radius to get rid of self intersection
                                 End = TargetPosition[j].Position + TargetArray[j].CenterOffset,
                                 Filter = new CollisionFilter()
                                 {
@@ -86,7 +88,7 @@ namespace AISenses.VisionSystems
                                     GroupIndex = 0
                                 }
                             };
-
+                            Debug.DrawLine(raycastInput.Start, raycastInput.End, Color.red);
                             if (world.CastRay(raycastInput, out RaycastHit raycastHit))
                             {
                                 if (raycastHit.Entity.Equals(TargetEntity[j]))

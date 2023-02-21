@@ -79,7 +79,6 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\AttackStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateBlob.cs" />
@@ -94,6 +93,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\PatrolAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\States\AttackState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />
