@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Assets\Systems\InfluenceSystem\Location Information\PointOfInterest.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Generic Grid System\GridGenericXZ.cs" />
+    <Compile Include="Assets\Systems\InfluenceSystem\Influence System\InfluenceAspect.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Influence System\InfluenceComponent.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Influence System\InfluenceGridMaster.cs" />
     <Compile Include="Assets\Systems\InfluenceSystem\Generic Grid System\Utilities.cs" />
@@ -699,6 +700,10 @@
     <ProjectReference Include="PixelCrush.Player.csproj">
       <Project>{7F48CFF0-8B03-DDE5-C6FB-8CEE3E20F7FF}</Project>
       <Name>PixelCrush.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Collections.Player.csproj">
+      <Project>{30F76500-8833-C109-69B2-CC8F94FBEBA0}</Project>
+      <Name>Unity.Collections.Player</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{F4C8C874-C83E-CCC0-30D5-E31416C5707F}</Project>
