@@ -72,10 +72,14 @@
     <Compile Include="Assets\Game Code\Bestiary\testing.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Authoring\SpawnTag.cs" />
     <Compile Include="Assets\Game Code\Bestiary\BestiaryDB.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnBase.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnPlayer.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\PlayerInfo.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
     <Compile Include="Assets\Game Code\Bestiary\CreatureInfo.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
-    <Compile Include="Assets\Game Code\Bestiary\Systems\BestiarySpawnSystem.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\AddIAUS.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnNPC.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Models\fbx\Readme.txt" />

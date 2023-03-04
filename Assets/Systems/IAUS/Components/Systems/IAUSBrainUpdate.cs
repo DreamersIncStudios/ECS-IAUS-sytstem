@@ -15,7 +15,7 @@ namespace IAUS.ECS.Systems
     {
         public IAUSUpdateGroup()
         {
-            RateManager = new RateUtils.VariableRateManager(2500, true);
+            RateManager = new RateUtils.VariableRateManager(250, true);
 
         }
 
@@ -133,7 +133,6 @@ namespace IAUS.ECS.Systems
             }
             if (tester.StateName != brain.CurrentState && tester.Status == ActionStatus.Idle)
             {
-
                 switch (brain.CurrentState)
                 {
                     case AIStates.Patrol:
@@ -211,20 +210,7 @@ namespace IAUS.ECS.Systems
                 }
                 brain.CurrentState = tester.StateName;
             }
-            else
-            {
-                switch (brain.CurrentState) {
-                    case AIStates.Patrol:
-                            CommandBufferParallel.AddComponent(chunkIndex, entity, new PatrolActionTag() { UpdateWayPoint = false });
-                        break;
-                    case AIStates.Traverse:
-                            CommandBufferParallel.AddComponent(chunkIndex, entity, new TraverseActionTag() { UpdateWayPoint = false });
-                        break;
-                    case AIStates.Wait:
-                            CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, entity);
-                        break;
-                }
-            }
+          
 
 
         }

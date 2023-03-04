@@ -99,3 +99,7 @@ MonoBehaviour:
       Category29: 1
       Category30: 1
       Category31: 1
+  Equipment:
+    EquippedWeapons:
+    - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}
+    EquippedArmors: []

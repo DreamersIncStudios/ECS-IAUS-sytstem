@@ -16,6 +16,7 @@ public readonly partial struct WaitAspect : IAspect
         {
             float TotalScore = wait.ValueRO.TimeLeft.Output(wait.ValueRO.TimePercent) * wait.ValueRO.HealthRatio.Output(stat.ValueRO.HealthRatio);
             wait.ValueRW.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.ValueRO.mod) * TotalScore);
+            TotalScore = wait.ValueRW.TotalScore; 
             return TotalScore;
         }
     }

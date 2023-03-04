@@ -12,48 +12,6 @@ using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Systems
 {
-
-    [BurstCompile]
-    public struct CompletionChecker<T> : IJobChunk
-                   where T : unmanaged, MovementState
-    {
-        public ComponentTypeHandle<T> MoveChunk;
-        public ComponentTypeHandle<Wait> WaitChunk;
-        [ReadOnly] public BufferTypeHandle<TravelWaypointBuffer> WaypointChunk;
-        public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
-        {
-            NativeArray<T> Moves = chunk.GetNativeArray(ref MoveChunk);
-            NativeArray<Wait> Waits = chunk.GetNativeArray(ref WaitChunk);
-            for (int i = 0; i < chunk.Count; i++)
-            {
-                T move = Moves[i];
-                Wait wait = Waits[i];
-
-                if (move.Complete)
-                {
-                    Debug.Log("finished");
-                    move.Status = ActionStatus.CoolDown;
-                    move.ResetTime = move.CurWaypoint.TimeToWaitatWaypoint;
-                    //Todo Add info on next travel point here
-                    wait.Timer = wait.StartTime = move.CurWaypoint.TimeToWaitatWaypoint;
-                    if (move.TravelInOrder)
-                    {
-                        move.WaypointIndex++;
-                        if (move.WaypointIndex >= move.NumberOfWayPoints)
-                            move.WaypointIndex = 0;
-                    }
-                    else { 
-                        move.WaypointIndex= (int)((move.WaypointIndex+1) % move.NumberOfWayPoints);
-                    }
-
-                    Moves[i] = move;
-                    Waits[i] = wait;
-
-                }
-            }
-        }
-    }
-
     //TODO rework job
     //  [BurstCompile]
     public struct CheckThreatAtWaypoint<T> : IJobChunk

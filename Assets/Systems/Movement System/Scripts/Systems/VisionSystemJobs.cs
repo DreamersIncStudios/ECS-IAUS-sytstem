@@ -19,7 +19,7 @@ namespace AISenses.VisionSystems
         }
 
     }
-   // [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
+    [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
     public partial struct VisionSystemJobs : ISystem
     {
         private EntityQuery TargetEntityQuery;

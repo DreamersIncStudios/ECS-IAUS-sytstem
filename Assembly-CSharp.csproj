@@ -72,10 +72,14 @@
     <Compile Include="Assets\Game Code\Bestiary\testing.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Authoring\SpawnTag.cs" />
     <Compile Include="Assets\Game Code\Bestiary\BestiaryDB.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnBase.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnPlayer.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\PlayerInfo.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
     <Compile Include="Assets\Game Code\Bestiary\CreatureInfo.cs" />
     <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
-    <Compile Include="Assets\Game Code\Bestiary\Systems\BestiarySpawnSystem.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\AddIAUS.cs" />
+    <Compile Include="Assets\Game Code\Bestiary\SpawnNPC.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Models\fbx\Readme.txt" />
@@ -979,10 +983,6 @@
     <ProjectReference Include="Unity.MemoryProfiler.Editor.MemoryProfilerModule.csproj">
       <Project>{705A2528-5605-1940-C8A4-02E532E0AD5E}</Project>
       <Name>Unity.MemoryProfiler.Editor.MemoryProfilerModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{6FB041E3-09F4-2E80-E27D-F9471375F5AA}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="MovementSystem.csproj">
       <Project>{AF76716F-B8AC-908B-F362-53B828C97F52}</Project>

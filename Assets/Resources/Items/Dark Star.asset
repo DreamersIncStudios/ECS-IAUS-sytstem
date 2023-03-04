@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a0ee8eca644834e89372b01366a8ec, type: 3}
+  m_Name: Dark Star
+  m_EditorClassIdentifier: 
+  _itemID: 11
+  _itemName: DarkStar
+  _desc: 
+  _icon: {fileID: 0}
+  _value: 9999999
+  _type: 2
+  _stackable: 0
+  _questItem: 0
+  maxStackCount: 0
+  quality: 4
+  _model: {fileID: 8340900014861943573, guid: 4faf82a2e83ff834f8265665742b6c6c, type: 3}
+  _equipToHuman: 1
+  _heldBone: 18
+  _equipBone: 7
+  _modifiers: []
+  _levelRQD: 6
+  _weaponType: 0
+  slot: 0
+  maxDurable: 0
+  breakable: 0
+  _upgradeable: 1
+  _sheathedPos: {x: 0, y: 0, z: -0.002}
+  _heldPos: {x: -0.00448, y: 0.001102, z: 0.00311}
+  _sheathedRot: {x: 0, y: 0, z: 0}
+  _heldRot: {x: 83.15, y: -17.688, z: -139.351}

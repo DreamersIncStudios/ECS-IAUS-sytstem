@@ -10,7 +10,7 @@ public class testing : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            BestiaryDB.SpawnCreature(1);
+            BestiaryDB.SpawnNPC(1);
         }
     }
 

@@ -68,14 +68,14 @@ namespace Dreamers.InventorySystem
 
         public bool Equip(BaseCharacterComponent player)
         {
-            var anim = player.GOrepresentative.GetComponent<Animator>();
+             player.GOrepresentative.TryGetComponent<Animator>(out var anim);
             if (player.Level >= LevelRqd)
             {
                 if (Model != null)
                 {
                     WeaponModel = Instantiate(Model);
                     // Consider adding and enum as all character maybe not be human 
-                    if (EquipToHuman)
+                    if (EquipToHuman && anim != null)
                     {
                         Transform bone =anim.GetBoneTransform(EquipBone);
                         if (bone)

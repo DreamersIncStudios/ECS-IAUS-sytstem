@@ -1,8 +1,5 @@
-using AISenses;
 using Components.MovementSystem;
 using Global.Component;
-using IAUS.ECS;
-using IAUS.ECS.Component;
 using MotionSystem;
 using Stats.Entities;
 using System.Collections;
@@ -12,9 +9,6 @@ using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.AI;
-using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -22,29 +16,44 @@ namespace DreamersInc.BestiarySystem
     {
         //Text file or ScriptableOjects;
         static public List<CreatureInfo> Creatures;
+        static public List<PlayerInfo> Players;
         static public bool IsLoaded { get; private set; }
-        private static void ValidateDatabase() {
+        private static void ValidateDatabase()
+        {
             if (Creatures == null || !IsLoaded)
             {
-                Creatures = new List<CreatureInfo>();
+                Creatures = new();
+                Players = new();
                 IsLoaded = false;
             }
-            else { 
-                IsLoaded= true;
+            else
+            {
+                IsLoaded = true;
             }
         }
 
-        public static void LoadDatabase(bool ForceLoad = false) {
+        public static void LoadDatabase(bool ForceLoad = false)
+        {
 
             if (IsLoaded && !ForceLoad)
                 return;
             Creatures = new List<CreatureInfo>();
-            CreatureInfo[] SO = Resources.LoadAll<CreatureInfo>(@"Creatures");
-            foreach (var item in SO)
+            CreatureInfo[] creatureSO = Resources.LoadAll<CreatureInfo>(@"Creatures");
+            foreach (var item in creatureSO)
             {
-                if(!Creatures.Contains(item))
+                if (!Creatures.Contains(item))
                     Creatures.Add(item);
             }
+
+            Players = new();
+            PlayerInfo[] playerSO = Resources.LoadAll<PlayerInfo>(@"Player Characters");
+            foreach (var item in playerSO)
+            {
+                if (!Players.Contains(item))
+                    Players.Add(item);
+            }
+
+
             IsLoaded = true;
         }
 
@@ -58,170 +67,25 @@ namespace DreamersInc.BestiarySystem
         {
             ValidateDatabase();
             LoadDatabase();
-            foreach(CreatureInfo creature in Creatures)
+            foreach (CreatureInfo creature in Creatures)
             {
-                 if(creature.ID== id) return creature;
+                if (creature.ID == id) return creature;
 
             }
             return null;
         }
-        public static void SpawnCreature(uint ID)
+
+        public static PlayerInfo GetPlayer(uint id)
         {
-            var info = GetCreature(ID);
-            var go = Instantiate(info.Prefab);
-            EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            Entity entity = CreateEntity(manager, info.Name);
-            AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
-            BaseCharacterComponent character = new();
-            TransformGO transformLink = new() {
-                transform = go.transform
-            };
-            manager.AddComponentData(entity, new AITarget()
-            {
-                FactionID = 2,// TODO add info.factionID,
-                NumOfEntityTargetingMe = 3,
-                CanBeTargetByPlayer = false,
-                Type = TargetType.Character,
-                CenterOffset = new float3(0, 1, 0) //todo add value to SO
-
-            });
-            manager.AddComponentData(entity, transformLink);
-            character.SetupDataEntity(info.stats);
-            manager.AddComponentObject(entity, character);
-            var vision = new Vision();
-            vision.InitializeSense(character);
-            manager.AddComponentData(entity, vision);
-            var agent = go.GetComponent<NavMeshAgent>();
-            manager.AddComponentObject(entity, agent);
-            var move = new Movement() {
-                Acceleration = agent.acceleration,
-                MovementSpeed = agent.speed,
-                StoppingDistance= agent.stoppingDistance,
-                Offset = agent.baseOffset,
-            };
-            manager.AddComponentData(entity, move);
-            manager.AddComponent<AIStat>(entity);
-            manager.AddComponent<IAUSBrain>(entity);
-            manager.AddBuffer<ScanPositionBuffer>(entity);
-            foreach (var state in info.AIStatesToAdd)
-            {
-                switch (state)
-                {
-                    case AIStates.Patrol:
-                        var patrol = new Patrol()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity,patrol);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
-
-                    case AIStates.Traverse:
-                        var traverse = new Traverse()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity,traverse);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
-
-                    case AIStates.Wait:
-                        var wait = new Wait()
-                        {
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, wait);
-                        break;
-                    case AIStates.Attack:
-
-
-                        break;
-                   
-                }
-            }
-            manager.AddBuffer<StateBuffer>(entity);
-
-            manager.AddComponent<SetupBrainTag>(entity);
-        }
-        private static Entity CreateEntity(EntityManager manager, string entityName = "")
-        {
-
-            EntityArchetype baseEntityArch = manager.CreateArchetype(
-              typeof(WorldTransform),
-              typeof(LocalTransform),
-              typeof(LocalToWorld)
-              );
-            Entity baseDataEntity = manager.CreateEntity(baseEntityArch);
-            if (entityName != string.Empty)
-                manager.SetName(baseDataEntity, entityName);
-            else
-                manager.SetName(baseDataEntity, "NPC Data");
-
-            manager.SetComponentData(baseDataEntity, new WorldTransform() { Scale = 1 });
-            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-
-            return baseDataEntity;
-        }
-        private static void AddPhysics(EntityManager manager, Entity entityLink, GameObject spawnedGO, PhysicsShape shape, PhysicsInfo physicsInfo)
-        {
-            BlobAssetReference<Unity.Physics.Collider> spCollider = new BlobAssetReference<Unity.Physics.Collider>();
-            switch (shape)
-            {
-                case PhysicsShape.Capsule:
-                    UnityEngine.CapsuleCollider col = spawnedGO.GetComponent<UnityEngine.CapsuleCollider>();
-                    spCollider = Unity.Physics.CapsuleCollider.Create(new CapsuleGeometry()
-                    {
-                        Radius = col.radius,
-                        Vertex0 = col.center + new Vector3(0, col.height, 0),
-                        Vertex1 = new float3(0, 0, 0)
-
-                    }, new CollisionFilter()
-                    {
-                        BelongsTo = physicsInfo.BelongsTo.Value,
-                        CollidesWith = physicsInfo.CollidesWith.Value,
-                        GroupIndex = 0
-                    });
-
-
-                    break;
-                case PhysicsShape.Box:
-                    UnityEngine.BoxCollider box = spawnedGO.GetComponent<UnityEngine.BoxCollider>();
-                    spCollider = Unity.Physics.BoxCollider.Create(new BoxGeometry()
-                    {
-                        Center = box.center,
-                        Size = box.size,
-                        Orientation = quaternion.identity,
-
-                    }, new CollisionFilter()
-                    {
-                        BelongsTo = physicsInfo.BelongsTo.Value,
-                        CollidesWith = physicsInfo.CollidesWith.Value,
-                        GroupIndex = 0
-                    });
-                    manager.AddComponentData(entityLink, new PhysicsCollider()
-                    { Value = spCollider });
-                    break;
-            }
-            manager.AddSharedComponent(entityLink, new PhysicsWorldIndex());
-            manager.AddComponentData(entityLink, new PhysicsCollider()
-            { Value = spCollider });
-            manager.AddComponentData(entityLink, new PhysicsInfo
-            {
-                BelongsTo = physicsInfo.BelongsTo,
-                CollidesWith = physicsInfo.CollidesWith
-            });
-        }
-
-        private void Awake()
-        {
+            ValidateDatabase();
             LoadDatabase();
-            Debug.Log(Creatures.Count);
+            foreach (var player in Players)
+            {
+                if (player.ID == id)
+                    return player;
+            }
+            return null;
         }
     }
     public enum PhysicsShape { Box, Capsule, Sphere, Cyclinder, Custom }
-
 }

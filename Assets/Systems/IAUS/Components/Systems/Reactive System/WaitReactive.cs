@@ -41,7 +41,7 @@ namespace IAUS.ECS.Systems.Reactive
                 AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
 
             }
-            AIStateCompoment.Timer = 0.01f;
+            AIStateCompoment.Timer = 0.0f;
         }
 
         public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref Wait AIStateCompoment, in WaitActionTag oldComponent)
@@ -68,7 +68,7 @@ namespace IAUS.ECS.Systems.Reactive
 
         public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            AIStateCompoment.Timer = oldComponent.WaitTime;
+            AIStateCompoment.StartTime=AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
         }
 
         public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)

@@ -30,7 +30,7 @@ namespace IAUS.ECS.Component
                 float totalScore = patrol.ValueRO.DistanceToPoint.Output(patrol.ValueRO.DistanceRatio) * patrol.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * patrol.ValueRO.TargetInRange.Output(attackRatio); ;
                 patrol.ValueRW.TotalScore = patrol.ValueRO.Status != ActionStatus.CoolDown && !patrol.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * patrol.ValueRO.mod) * totalScore) : 0.0f;
 
-                patrol.ValueRW.TotalScore = totalScore;
+                 totalScore = patrol.ValueRW.TotalScore;
                 return totalScore;
             }
         }
