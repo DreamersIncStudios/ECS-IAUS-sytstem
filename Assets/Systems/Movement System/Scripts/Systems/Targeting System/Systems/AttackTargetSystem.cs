@@ -4,7 +4,6 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Collections;
-using System.Linq;
 
 namespace AISenses.VisionSystems.Combat
 {

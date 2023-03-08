@@ -32,8 +32,10 @@ namespace DreamersInc.BestiarySystem
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, info.Name+" NPC");
                   AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
-                BaseCharacterComponent character = new();
-                character.GOrepresentative = go;
+                BaseCharacterComponent character = new()
+                {
+                    GOrepresentative = go
+                };
                 character.SetupDataEntity(info.stats);
                 TransformGO transformLink = new()
                 {

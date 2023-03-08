@@ -1,4 +1,5 @@
 using Components.MovementSystem;
+using DreamersInc.BestiarySystem.Testing;
 using Global.Component;
 using MotionSystem;
 using Stats.Entities;
@@ -17,6 +18,8 @@ namespace DreamersInc.BestiarySystem
         //Text file or ScriptableOjects;
         static public List<CreatureInfo> Creatures;
         static public List<PlayerInfo> Players;
+        static public List<TestingDummyInfo> Dummies;
+
         static public bool IsLoaded { get; private set; }
         private static void ValidateDatabase()
         {
@@ -24,6 +27,7 @@ namespace DreamersInc.BestiarySystem
             {
                 Creatures = new();
                 Players = new();
+                Dummies = new();
                 IsLoaded = false;
             }
             else
@@ -53,6 +57,14 @@ namespace DreamersInc.BestiarySystem
                     Players.Add(item);
             }
 
+            Dummies = new();
+            TestingDummyInfo[] testingSO = Resources.LoadAll<TestingDummyInfo>(@"Testing");
+            Debug.Log(testingSO.Length);
+            foreach (var item in testingSO)
+            {
+                if (!Dummies.Contains(item))
+                    Dummies.Add(item);
+            }
 
             IsLoaded = true;
         }
@@ -83,6 +95,17 @@ namespace DreamersInc.BestiarySystem
             {
                 if (player.ID == id)
                     return player;
+            }
+            return null;
+        }
+
+        public static TestingDummyInfo GetDummy(uint id) {
+            ValidateDatabase();
+            LoadDatabase();
+            foreach(var dummy in Dummies)
+            {
+                if(dummy.ID == id)
+                    return dummy;
             }
             return null;
         }
