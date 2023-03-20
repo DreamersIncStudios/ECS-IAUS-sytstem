@@ -8,14 +8,14 @@ namespace Components.MovementSystem
     public struct Movement : IComponentData
     {
         public float3 TargetLocation;
-        public float MovementSpeed;
+        public float MaxMovementSpeed { get; private set; }
         public bool TargetLocationCrowded;
         public int MaxInfluenceAtPoint;
         public float3 Offset;
         public bool WithinRangeOfTargetLocation => DistanceRemaining <= StoppingDistance;
 
-        void SetMovementSpeed(float SpeedStat, float SpeedFactor) // Eqauation needs to be add later to account for Speed Stat or this is done in AI system;
-        { MovementSpeed = SpeedFactor; }
+       public void SetMovementSpeed(float SpeedStat) //TODO Eqauation needs to be add later to account for Speed Stat or this is done in AI system;
+        { MaxMovementSpeed = SpeedStat/4.5f; }
 
         //public float SprintSpeed // To Be Added if needed
         public bool CanMove;

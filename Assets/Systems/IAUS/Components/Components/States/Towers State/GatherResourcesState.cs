@@ -66,11 +66,7 @@ namespace IAUS.ECS.Component
 
                 if (add)
                 {
-                    stateBuffer.Add(new StateBuffer()
-                    {
-                        StateName = AIStates.GatherResources,
-                        Status = ActionStatus.Idle
-                    });
+                    stateBuffer.Add(new StateBuffer(AIStates.GatherResources));
                 }
 
 

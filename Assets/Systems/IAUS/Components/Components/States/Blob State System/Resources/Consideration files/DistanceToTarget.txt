@@ -3,13 +3,9 @@ Normal,Grunt,0,Patrol,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,Grunt,1,Patrol,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,Grunt,2,Traverse,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,Grunt,1,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.500,0.500,0.6000
-Normal,Grunt,1,AttackRange,TRUE,FALSE,Logistic,20.0000,-.500,0.935,0.4500
 Normal,Grunt,2,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.9500,0.0500,0.6000
-Normal,Grunt,2,AttackRange,TRUE,FALSE,Logistic,20.0000,-.9500,0.935,0.4500
 Normal,Grunt,3,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
-Normal,Grunt,3,AttackRange,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
 Normal,Grunt,0,AttackMelee,TRUE,FALSE,Logistic,20.0000,0.9500,0.0500,0.6000
-Normal,Grunt,0,AttackRange,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
 Normal,Tower,0,GatherResources,TRUE,FALSE,Logistic,5000.00,-0.9500,0.950,0.4500
 Normal,Tower,1,GatherResources,TRUE,FALSE,Logistic,5000.00,-0.9500,0.950,0.4500
 Normal,Tower,2,GatherResources,TRUE,FALSE,Logistic,5000.00,-0.9500,0.950,0.4500
@@ -34,3 +30,7 @@ Normal,Daemon,1,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,0,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,2,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,3,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
+Normal,Grunt,1,AttackRange,TRUE,FALSE,Logistic,200.0000,-.8000,0.800,0.6000
+Normal,Grunt,2,AttackRange,TRUE,FALSE,Logistic,200.0000,-.8000,0.800,0.6000
+Normal,Grunt,3,AttackRange,TRUE,FALSE,Logistic,200.0000,-.8000,0.8000,0.6000
+Normal,Grunt,0,AttackRange,TRUE,FALSE,Logistic,200.0000,-.8000,0.8000,0.600

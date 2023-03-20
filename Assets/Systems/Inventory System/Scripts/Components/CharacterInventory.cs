@@ -64,5 +64,5 @@ namespace Dreamers.InventorySystem
         public EquipmentBase equipment;
         public InventoryBase inventory;
     }
-
+    public struct CheckAttackStatus : IComponentData { }
 }

@@ -21,12 +21,16 @@ namespace IAUS.ECS
         RetreatToLocation, 
         FollowTarget, 
         ChaseMoveToTarget,
-        AttackMelee, 
-        AttackRange,
         Traverse, 
         GatherResources,
         CallBackUp,
-        Terrorize
+        Terrorize,
+        AttackMelee,
+        AttackMagic,
+        AttackRange,
+        AttackMagicMelee,
+
+
 
     }
 }

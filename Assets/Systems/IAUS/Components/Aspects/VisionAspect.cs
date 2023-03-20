@@ -16,12 +16,12 @@ namespace AISenses.VisionSystems
         readonly  RefRO<AITarget> self;
 
 
-        public bool TargetInRange(out AITarget target)
+        public bool TargetInRange(out float dist)
         {
 
             if (ScanPositions.IsEmpty)
             {
-                target = new AITarget();
+                dist = 0f;
                 return false;
             }
             else
@@ -30,12 +30,12 @@ namespace AISenses.VisionSystems
                 {
                     if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
                     {
-                        target = scan.target.TargetInfo;
+                        dist = scan.target.DistanceTo;
                         return true;
                     }
                 }
             }
-            target = new AITarget();
+            dist = 0f;
             return false;
         } 
         

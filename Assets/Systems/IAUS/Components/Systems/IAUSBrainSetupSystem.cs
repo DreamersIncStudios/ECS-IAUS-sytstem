@@ -20,7 +20,7 @@ namespace IAUS.ECS.Systems
         EntityQuery _waitStateEntity;
         //        EntityQuery _GetInRangeStateEntity;
         //        EntityQuery _MoveToTargetStateEntity;
-        //        EntityQuery _AttackStateEntity;
+                EntityQuery _AttackStateEntity;
         //        EntityQuery _FleeStateEntity;
         //        EntityQuery _gatherStateEntity;
         //        EntityQuery _terrorStateEntity;
@@ -60,11 +60,11 @@ namespace IAUS.ECS.Systems
             //                    ComponentType.ReadWrite(typeof(StayInRange))}
             //            } );
 
-            //            _AttackStateEntity = GetEntityQuery(new EntityQueryDesc()
-            //            {
-            //                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
-            //                    ComponentType.ReadWrite(typeof(AttackTargetState)) , ComponentType.ReadWrite(typeof(AttackTypeInfo))}
-            //            });
+            _AttackStateEntity = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                                ComponentType.ReadWrite(typeof(AttackState)) }
+            });
             //            _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
             //            {
             //                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
@@ -127,7 +127,7 @@ namespace IAUS.ECS.Systems
             }
             .ScheduleParallel(_waitStateEntity, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
-         
+
 
             //            systemDeps = new AddStayInRange()
             //            {
@@ -150,15 +150,12 @@ namespace IAUS.ECS.Systems
             //            }.ScheduleParallel(_MoveToTargetStateEntity ,systemDeps);
             //            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
-            //            systemDeps = new AddAttacks()
-            //            {
-            //                entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter(),
-            //                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-            //                 AttackChunk = GetComponentTypeHandle<AttackTargetState>(false),
-            //                EntityChunk = GetEntityTypeHandle(),
-            //                HealthRatio = GetComponentDataFromEntity<CharacterHealthConsideration>()
-            //            }.ScheduleParallel(_AttackStateEntity, systemDeps);
-            //            _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
+            systemDeps = new AddAttacks()
+            {
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
+                AttackChunk = GetComponentTypeHandle<AttackState>(false),
+            }.ScheduleParallel(_AttackStateEntity, systemDeps);
+            ecbSystem.AddJobHandleForProducer(systemDeps);
 
             //            systemDeps = new AddRetreatState()
             //            {

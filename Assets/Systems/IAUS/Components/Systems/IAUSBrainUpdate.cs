@@ -1,4 +1,5 @@
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Aspects;
 using IAUS.ECS.StateBlobSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,7 +60,6 @@ namespace IAUS.ECS.Systems
                 if (buffer[i].StateName == AIStates.Patrol)
                 {
                     StateBuffer temp = buffer[i];
-                    temp.StateName = AIStates.Patrol;
                     temp.TotalScore = aspect.Score;
                     temp.Status = aspect.Status;
                     buffer[i] = temp;
@@ -82,7 +82,6 @@ namespace IAUS.ECS.Systems
                 if (buffer[i].StateName == AIStates.Patrol)
                 {
                     StateBuffer temp = buffer[i];
-                    temp.StateName = AIStates.Patrol;
                     temp.TotalScore = aspect.Score;
                     temp.Status = aspect.Status;
                     buffer[i] = temp;
@@ -105,7 +104,6 @@ namespace IAUS.ECS.Systems
                 if (buffer[i].StateName == AIStates.Wait)
                 {
                     StateBuffer temp = buffer[i];
-                    temp.StateName = AIStates.Wait;
                     temp.TotalScore = aspect.Score;
                     temp.Status = aspect.Status;
                     buffer[i] = temp;
@@ -117,6 +115,29 @@ namespace IAUS.ECS.Systems
         }
 
     }
+
+    partial struct UpdateAttack : IJobEntity
+    {
+        void Execute(ref AttackAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i].StateName == AIStates.Wait)
+                {
+                    StateBuffer temp = buffer[i];
+                    temp.TotalScore = aspect.Score;
+                    temp.Status = aspect.Status;
+                    buffer[i] = temp;
+
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+
     [BurstCompile]
 
     partial struct FindHighState : IJobEntity {

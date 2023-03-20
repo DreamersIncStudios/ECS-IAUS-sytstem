@@ -9,6 +9,7 @@ using DreamersInc.InflunceMapSystem;
 using Global.Component;
 using MotionSystem;
 using MotionSystem.Components;
+using Stats;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,11 +81,12 @@ namespace DreamersInc.BestiarySystem
                 var move = new Movement()
                 {
                     Acceleration = agent.acceleration,
-                    MovementSpeed = agent.speed,
                     StoppingDistance = agent.stoppingDistance,
                     Offset = agent.baseOffset,
                 };
+                move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
                 manager.AddComponentData(entity, move);
+
                 AddIAUS(entity, info);
                
             }
@@ -130,14 +132,6 @@ namespace DreamersInc.BestiarySystem
                 AddIAUS(entity, info);
                 var agent = go.GetComponent<NavMeshAgent>();
                 manager.AddComponentObject(entity, agent);
-                var move = new Movement()
-                {
-                    Acceleration = agent.acceleration,
-                    MovementSpeed = agent.speed,
-                    StoppingDistance = agent.stoppingDistance,
-                    Offset = agent.baseOffset,
-                };
-
 
                 return true;
             }
@@ -177,14 +171,7 @@ namespace DreamersInc.BestiarySystem
 
                 var agent = go.GetComponent<NavMeshAgent>();
                 manager.AddComponentObject(entity, agent);
-                var move = new Movement()
-                {
-                    Acceleration = agent.acceleration,
-                    MovementSpeed = agent.speed,
-                    StoppingDistance = agent.stoppingDistance,
-                    Offset = agent.baseOffset,
-                };
-
+      
                 return true;
             }
             else

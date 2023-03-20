@@ -109,6 +109,11 @@ namespace Stats
 
             GetStat((int)StatName.Mana_Recover).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .25f));
             GetStat((int)StatName.Mana_Recover).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .25f));
+
+            GetStat((int)StatName.Speed).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Speed), .5f));
+            GetStat((int)StatName.Speed).AddDefiningAttribute(new BaseDefiningAttribute(GetPrimaryAttribute((int)AttributeName.Skill), .5f));
+
+
         }
 
         public void SetupStatsModifiers()
@@ -147,6 +152,9 @@ namespace Stats
 
             GetStat((int)StatName.Mana_Recover).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.WillPower), .25f));
             GetStat((int)StatName.Mana_Recover).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Concentration), .25f));
+            
+            GetStat((int)StatName.Speed).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Speed), 1.5f));
+            GetStat((int)StatName.Speed).AddModifier(new ModifyingAttribute(GetPrimaryAttribute((int)AttributeName.Skill), 1.5f));
         }
 
         public void SetupAbilitesBase()

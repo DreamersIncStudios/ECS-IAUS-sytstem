@@ -8,7 +8,6 @@ using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Component
 {
-    [Serializable]
     public struct SpawnDefendersState : IBaseStateScorer
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
@@ -44,46 +43,41 @@ namespace IAUS.ECS.Component
 
     public struct SpawnTag : IComponentData { public int SpawnID; }
 
-    [Unity.Burst.BurstCompile]
-    public struct AddSpawnDefendersState : IJobChunk
-    {
-        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
-        public ComponentTypeHandle<SpawnDefendersState> SpawnChunk;
-        public BufferTypeHandle<StateBuffer> StateBufferChunk;
-        public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
-        {
-            NativeArray<SpawnDefendersState> Spawns = chunk.GetNativeArray(ref SpawnChunk);
-            BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(ref StateBufferChunk);
-            for (int i = 0; i < chunk.Count; i++)
-            {
-                SpawnDefendersState c1 = Spawns[i];
-                DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
-                bool add = true;
-                for (int index = 0; index < stateBuffer.Length; index++)
-                {
-                    if (stateBuffer[index].StateName == c1.name)
-                    {
-                        add = false;
-                        continue;
-                    }
+    //public struct AddSpawnDefendersState : IJobChunk
+    //{
+    //    public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
+    //    public ComponentTypeHandle<SpawnDefendersState> SpawnChunk;
+    //    public BufferTypeHandle<StateBuffer> StateBufferChunk;
+    //    public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
+    //    {
+    //        NativeArray<SpawnDefendersState> Spawns = chunk.GetNativeArray(ref SpawnChunk);
+    //        BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(ref StateBufferChunk);
+    //        for (int i = 0; i < chunk.Count; i++)
+    //        {
+    //            SpawnDefendersState c1 = Spawns[i];
+    //            DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
+    //            bool add = true;
+    //            for (int index = 0; index < stateBuffer.Length; index++)
+    //            {
+    //                if (stateBuffer[index].StateName == c1.name)
+    //                {
+    //                    add = false;
+    //                    continue;
+    //                }
 
-                }
-                c1.Status = ActionStatus.Idle;
+    //            }
+    //            c1.Status = ActionStatus.Idle;
 
-                if (add)
-                {
-                    stateBuffer.Add(new StateBuffer()
-                    {
-                        StateName = c1.name,
-                        Status = ActionStatus.Idle
-                    });
-                }
+    //            if (add)
+    //            {
+    //                stateBuffer.Add(new StateBuffer(c1.name));
+    //            }
 
 
-                Spawns[i] = c1;
-            }
-        }
+    //            Spawns[i] = c1;
+    //        }
+    //    }
 
    
-    }
+ //   }
 }

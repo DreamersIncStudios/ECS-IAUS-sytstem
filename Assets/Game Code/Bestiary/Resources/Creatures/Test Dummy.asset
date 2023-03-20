@@ -22,7 +22,7 @@ MonoBehaviour:
     Vitality: 10
     Awareness: 10
     Speed: 10
-    Skill: 10
+    Skill: 10000
     Resistance: 10
     Concentration: 10
     WillPower: 10
@@ -30,8 +30,8 @@ MonoBehaviour:
     Luck: 10
     difficultyMod: 10
     LevelMod: 5
-  AIStatesToAdd: 010000000a000000
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
+  AIStatesToAdd: 010000000a00000004000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0
@@ -99,6 +99,20 @@ MonoBehaviour:
       Category29: 1
       Category30: 1
       Category31: 1
+  Move:
+    EquipResetTimer: 0
+    MovingTurnSpeed: 0
+    StationaryTurnSpeed: 0
+    JumpPower: 0
+    GravityMultiplier: 0
+    RunCycleLegOffset: 0
+    MoveSpeedMultiplier: 0
+    AnimSpeedMultiplier: 0
+    GroundCheckDistance: 0
+    CombatCapable: 0
+  factionID: 0
+  BaseThreat: 0
+  BaseProtection: 0
   Equipment:
     EquippedWeapons:
     - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}

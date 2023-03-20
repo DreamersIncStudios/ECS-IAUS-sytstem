@@ -46,11 +46,7 @@ namespace IAUS.ECS.Systems {
                 c1.Status = ActionStatus.Idle;
                 if (add)
                 {
-                    stateBuffer.Add(new StateBuffer()
-                    {
-                        StateName = c1.name,
-                        Status = ActionStatus.Idle
-                    });
+                    stateBuffer.Add(new StateBuffer(c1.name));
                 }
                 MovementStyle[i] = c1;
             }

@@ -1,4 +1,5 @@
 using AISenses;
+using Dreamers.InventorySystem;
 using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
@@ -67,7 +68,16 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity, wait);
                         break;
                     case AIStates.Attack:
+                        var attack = new AttackState() {
+                        _coolDownTime =5.5f,
+                        };
+                        manager.AddComponentData(entity, attack);
+                        manager.AddComponent<CheckAttackStatus>(entity);
+                        manager.AddComponent<MagicAttackSubState>(entity);
+                        manager.AddComponent<RangedAttackSubState>(entity);
 
+                        manager.AddComponent<MagicMeleeAttackSubState>(entity);
+                        manager.AddComponent<MeleeAttackSubState>(entity);
 
                         break;
 

@@ -14,11 +14,14 @@ namespace Components.MovementSystem
 
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((NavMeshAgent agent,ref Movement mover) => {
-                    agent.speed = .65f;
-                }).Run();
-            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((NavMeshAgent agent, ref Movement mover) => {
-                agent.speed = .65f;
+            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((NavMeshAgent agent, ref Movement mover) =>
+            {
+                agent.speed = .65f * mover.MaxMovementSpeed;
+            }).Run();
+
+            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((NavMeshAgent agent, ref Movement mover) =>
+            {
+                agent.speed = .65f * mover.MaxMovementSpeed;
             }).Run();
         }
     }

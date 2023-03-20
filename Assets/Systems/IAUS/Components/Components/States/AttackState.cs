@@ -14,19 +14,18 @@ namespace IAUS.ECS.Component
         public bool CapableOfMelee;
         public bool CapableOfMagic;
         public bool CapableOfProjectile;
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
+
         public int Index { get; private set; }
+        public AIStates name { get { return AIStates.Attack; } }
+
         public BlobAssetReference<AIStateBlobAsset> stateRef;
 
-        #region General
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-
-        #endregion
-
-        #region Melee
-      
-                              
-        #endregion
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -45,15 +44,28 @@ namespace IAUS.ECS.Component
 
     public struct MeleeAttackSubState : IComponentData {
         public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
+
         public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public AIStates name { get { return AIStates.AttackMelee; } }
+
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
 
     }
-    public struct MageicAttackSubState : IComponentData
+    public struct MagicAttackSubState : IComponentData
     {
         public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
         public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public AIStates name { get { return AIStates.AttackMagic; } }
+
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData Mana;
         public ConsiderationScoringData CoverInRange;
@@ -62,7 +74,13 @@ namespace IAUS.ECS.Component
     public struct MagicMeleeAttackSubState : IComponentData
     {
         public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
         public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public AIStates name { get { return AIStates.AttackMagicMelee; } }
+
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public ConsiderationScoringData Mana;
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
@@ -70,10 +88,16 @@ namespace IAUS.ECS.Component
     public struct RangedAttackSubState : IComponentData
     {
         public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
         public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public AIStates name { get { return AIStates.AttackRange; } }
+
         public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Ammo;
-        public ConsiderationScoringData CoverInRange;
+        public ConsiderationScoringData Ammo => stateRef.Value.Array[Index].ManaAmmo;
+        public ConsiderationScoringData CoverInRange => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
         public float mod { get { return 1.0f - (1.0f / 5.0f); } }
 
     }

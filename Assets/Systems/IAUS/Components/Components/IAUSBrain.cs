@@ -25,10 +25,16 @@ namespace IAUS.ECS.Component
 
     public struct StateBuffer : IBufferElementData
     {
-        public AIStates StateName;
+        public AIStates StateName { get; private set; }
         public float TotalScore;
         public ActionStatus Status;
         public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;
+
+        public StateBuffer(AIStates state) {
+            StateName = state;
+            Status = ActionStatus.Idle;
+            TotalScore = 0;
+        }
 
     }
     public enum Status { Normal, Brave, Reckless, Berserk, Cautious, Sleep, Confused, Dazed }

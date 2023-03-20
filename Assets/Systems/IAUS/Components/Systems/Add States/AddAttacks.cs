@@ -1,32 +1,34 @@
-﻿using Unity.Entities;
-using Unity.Burst;
 using IAUS.ECS.Component;
-using UnityEngine;
-using Unity.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
+using Unity.Collections;
+using Unity.Entities;
+using UnityEngine;
+
+
 
 namespace IAUS.ECS.Systems
 {
-    [BurstCompile]
-    public struct AddWaitState : IJobChunk
+    public struct AddAttacks : IJobChunk
     {
-        public ComponentTypeHandle<Wait> WaitChunk;
+        public ComponentTypeHandle<AttackState> AttackChunk;
         public BufferTypeHandle<StateBuffer> StateBufferChunk;
-
         public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
         {
-            NativeArray<Wait> Waits = chunk.GetNativeArray(ref WaitChunk);
+
+            NativeArray<AttackState> Attacks = chunk.GetNativeArray(ref AttackChunk);
             BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(ref StateBufferChunk);
             for (int i = 0; i < chunk.Count; i++)
             {
-                Wait c1 = Waits[i];
+                AttackState c1 = Attacks[i];
                 DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
 
                 bool add = true;
                 for (int index = 0; index < stateBuffer.Length; index++)
                 {
-                    if (stateBuffer[index].StateName == AIStates.Wait)
-                    { 
+                    if (stateBuffer[index].StateName == AIStates.Attack)
+                    {
                         add = false;
                         continue;
                     }
@@ -36,17 +38,13 @@ namespace IAUS.ECS.Systems
 
                 if (add)
                 {
-                    stateBuffer.Add(new StateBuffer(AIStates.Wait));
+                    stateBuffer.Add(new StateBuffer(AIStates.Attack));
 
                 }
 
 
-                Waits[i] = c1;
+                Attacks[i] = c1;
             }
-            
         }
-
-     
     }
-
 }

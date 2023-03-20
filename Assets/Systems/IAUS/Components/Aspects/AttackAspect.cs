@@ -13,7 +13,7 @@ namespace IAUS.ECS.Component.Aspects
         readonly TransformAspect Transform;
         readonly RefRW<AttackState> state;
         readonly RefRW<MeleeAttackSubState> melee;
-        readonly RefRW<MageicAttackSubState> magic;
+        readonly RefRW<MagicAttackSubState> magic;
         readonly RefRW<MagicMeleeAttackSubState> MagicMelee;
         readonly RefRW<RangedAttackSubState> Range;
         readonly VisionAspect VisionAspect;
@@ -52,7 +52,17 @@ namespace IAUS.ECS.Component.Aspects
         public float ProjectileScore { get
             {
                 if (state.ValueRO.CapableOfProjectile)
-                    return 1;
+                {
+                    if (VisionAspect.TargetInRange(out float dist))
+                    {
+                        float totalScore = Range.ValueRO.TargetInRange.Output(dist) *
+                                            Range.ValueRO.CoverInRange.Output(0) *
+                                            Range.ValueRO.Ammo.Output(statInfo.ValueRO.ManaRatio); //Todo Change this line to be inventory based if we decide to do non mana based projectiles
+
+                        return totalScore;
+                    }else
+                        return 0;
+                }
                 else return 0;
             } }
 
@@ -63,5 +73,9 @@ namespace IAUS.ECS.Component.Aspects
                 scores.Add(MagicScore);
                 scores.Add(ProjectileScore);
                 return state.ValueRW.TotalScore=scores.Max(); } }
+
+
+        public ActionStatus Status { get => state.ValueRO.Status; }
+
     }
 }

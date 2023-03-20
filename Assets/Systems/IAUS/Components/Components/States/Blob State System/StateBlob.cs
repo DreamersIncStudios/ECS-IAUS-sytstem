@@ -154,32 +154,63 @@ namespace IAUS.ECS.StateBlobSystem
                 }); ;
             }).Run();
 
-            //Entities.WithoutBurst().ForEach((DynamicBuffer<AttackTypeInfo> attacks, ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackTargetState ing) => {
-            //    for (int i = 0; i < attacks.Length; i++)
-            //    {
-            //        AttackTypeInfo attack = attacks[i];
-            //        attack.stateRef = reference;
+            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackState G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                })); 
 
-            //        attack.Index = attack.stateRef.Value.GetConsiderationIndex(new Identity()
-            //        {
-            //            Difficulty = Difficulty.Normal,
-            //            aIStates = attack.style switch
-            //            {
-            //                AttackStyle.Melee => AIStates.AttackMelee,
-            //                AttackStyle.MagicMelee => AIStates.AttackMelee, //TODO Make Magic Attack AI State,
-            //                AttackStyle.Range => AIStates.AttackRange,
-            //                AttackStyle.MagicRange => AIStates.AttackRange,//TODO Make Magic Attack Range AI State,
-            //                _ => throw new ArgumentOutOfRangeException(nameof(attack.style), $"Not expected direction value: {attack.style}"),
-            //            },
-            //            FactionID = 1,
-            //            NPCLevel = brain.NPCLevel
-            //        });
+            }).Run();
+            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MeleeAttackSubState G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
 
-            //        attacks[i] = attack;
-            //    }
-            //    a.HighScoreAttack = attacks[0];
+            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicAttackSubState G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
 
-            //}).Run();
+            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicMeleeAttackSubState G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
+
+            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref RangedAttackSubState G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
+
+            }).Run();
 
         }
 
