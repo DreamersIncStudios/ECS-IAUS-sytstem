@@ -16,12 +16,32 @@ namespace AISenses.VisionSystems
         readonly  RefRO<AITarget> self;
 
 
-        public bool TargetInRange(out float dist)
+        public bool TargetInRange()
         {
 
             if (ScanPositions.IsEmpty)
             {
-                dist = 0f;
+                return false;
+            }
+            else
+            {
+                foreach (var scan in ScanPositions)
+                {
+                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool TargetInRange(out float dist)
+        {
+            dist = 0f;
+
+            if (ScanPositions.IsEmpty)
+            {
                 return false;
             }
             else
@@ -37,8 +57,53 @@ namespace AISenses.VisionSystems
             }
             dist = 0f;
             return false;
-        } 
-        
+        }
+        public bool TargetInRange(out AITarget target)
+        {
+            target = new AITarget();
+
+            if (ScanPositions.IsEmpty)
+            {
+                return false;
+            }
+            else
+            {
+                foreach (var scan in ScanPositions)
+                {
+                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    {
+                        target = scan.target.TargetInfo;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool TargetInRange(out AITarget target, out float dist)
+        {
+            target = new AITarget();
+            dist = 0f;
+
+            if (ScanPositions.IsEmpty)
+            {
+                return false;
+            }
+            else
+            {
+                foreach (var scan in ScanPositions)
+                {
+                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    {
+                        target = scan.target.TargetInfo;
+                        dist = scan.target.DistanceTo;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public bool FriendlyInRange
         {
             get

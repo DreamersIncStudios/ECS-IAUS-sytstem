@@ -1,3 +1,4 @@
+using DreamersInc.InflunceMapSystem;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,22 +16,26 @@ namespace IAUS.ECS.Component
 
         float distanceToPoint
         {
-            get {
+            get
+            {
                 float dist = new();
-                if (patrol.ValueRO.Complete) {
+                if (patrol.ValueRO.Complete)
+                {
                     dist = 0.0f;
                 }
-                   dist = Vector3.Distance(patrol.ValueRO.CurWaypoint.Position, Transform.WorldPosition);
+                dist = Vector3.Distance(patrol.ValueRO.CurWaypoint.Position, Transform.WorldPosition);
                 return dist;
             }
         }
-        public float Score {
-            get {
+        public float Score
+        {
+            get
+            {
                 patrol.ValueRW.distanceToPoint = distanceToPoint;
-                float totalScore = patrol.ValueRO.DistanceToPoint.Output(patrol.ValueRO.DistanceRatio) * patrol.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * patrol.ValueRO.TargetInRange.Output(attackRatio); ;
+                float totalScore = patrol.ValueRO.DistanceToPoint.Output(patrol.ValueRO.DistanceRatio) * patrol.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
                 patrol.ValueRW.TotalScore = patrol.ValueRO.Status != ActionStatus.CoolDown && !patrol.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * patrol.ValueRO.mod) * totalScore) : 0.0f;
 
-                 totalScore = patrol.ValueRW.TotalScore;
+                totalScore = patrol.ValueRW.TotalScore;
                 return totalScore;
             }
         }
@@ -40,9 +45,9 @@ namespace IAUS.ECS.Component
     {
 
         readonly TransformAspect Transform;
+        readonly InfluenceAspect influenceAspect;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<Traverse> traverse;
-
 
         float distanceToPoint
         {
@@ -63,8 +68,9 @@ namespace IAUS.ECS.Component
             get
             {
                 traverse.ValueRW.distanceToPoint = distanceToPoint;
-                float totalScore = traverse.ValueRO.DistanceToPoint.Output(traverse.ValueRO.DistanceRatio) * traverse.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio);  ;
-                traverse.ValueRW.TotalScore = traverse.ValueRO.Status != ActionStatus.CoolDown  ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * traverse.ValueRO.mod) * totalScore) : 0.0f;
+                float totalScore = traverse.ValueRO.DistanceToPoint.Output(traverse.ValueRO.DistanceRatio) * traverse.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio)
+                    * traverse.ValueRO.ThreatInRange.Output(influenceAspect.ThreatRatio);
+                traverse.ValueRW.TotalScore = traverse.ValueRO.Status != ActionStatus.CoolDown ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * traverse.ValueRO.mod) * totalScore) : 0.0f;
 
                 traverse.ValueRW.TotalScore = totalScore;
                 return totalScore;

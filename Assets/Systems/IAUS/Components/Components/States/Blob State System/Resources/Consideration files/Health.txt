@@ -30,8 +30,6 @@ Normal,Tower,0,GatherResources,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Tower,2,GatherResources,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Tower,1,GatherResources,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Tower,3,GatherResources,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
-Normal,NPC,0,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
-Normal,NPC,1,Patrol,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,NPC,0,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,NPC,1,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,NPC,2,Traverse,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
@@ -48,3 +46,7 @@ Normal,Daemon,1,Terrorize,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Daemon,0,Terrorize,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Daemon,2,Terrorize,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Daemon,3,Terrorize,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,0,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,1,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,2,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Grunt,3,RetreatToLocation,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500

@@ -122,16 +122,16 @@ namespace IAUS.ECS.StateBlobSystem
                 }); ;
             }).Run();
 
-            Entities.WithoutBurst().ForEach((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.stateRef = reference;
-                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    aIStates = G.name,
-                    FactionID = brain.factionID,
-                    NPCLevel = brain.NPCLevel
-                }); ;
-            }).Run();
+            //Entities.WithoutBurst().ForEach((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+            //    G.stateRef = reference;
+            //    G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
+            //    {
+            //        Difficulty = Difficulty.Normal,
+            //        aIStates = G.name,
+            //        FactionID = brain.factionID,
+            //        NPCLevel = brain.NPCLevel
+            //    }); 
+           // }).Run();
             Entities.WithoutBurst().ForEach((ref RetreatCitizen G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 G.stateRef = reference;
                 G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
@@ -177,7 +177,21 @@ namespace IAUS.ECS.StateBlobSystem
                     NPCLevel = brain.NPCLevel
                 }));
 
-            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicAttackSubState G) =>
+            }).Run();
+            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref EscapeThreat G) =>
+            {
+                G.stateRef = reference;
+                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = G.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
+
+            }).Run();
+
+            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicAttackSubState G) =>
             {
                 G.stateRef = reference;
                 G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()

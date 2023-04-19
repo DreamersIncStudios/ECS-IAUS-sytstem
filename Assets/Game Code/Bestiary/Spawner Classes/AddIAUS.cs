@@ -70,17 +70,25 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Attack:
                         var attack = new AttackState() {
                         _coolDownTime =5.5f,
+                        CapableOfProjectile = true
                         };
                         manager.AddComponentData(entity, attack);
                         manager.AddComponent<CheckAttackStatus>(entity);
                         manager.AddComponent<MagicAttackSubState>(entity);
-                        manager.AddComponent<RangedAttackSubState>(entity);
+                        manager.AddComponentData(entity, new RangedAttackSubState() { 
+                            MaxEffectiveRange = 60,
+                        });
 
                         manager.AddComponent<MagicMeleeAttackSubState>(entity);
                         manager.AddComponent<MeleeAttackSubState>(entity);
 
                         break;
-
+                    case AIStates.RetreatToLocation:
+                        var escape = new EscapeThreat() {
+                            _coolDownTime = 10f
+                        };
+                        manager.AddComponentData(entity,escape);
+                        break;
                 }
             }
             manager.AddBuffer<StateBuffer>(entity);

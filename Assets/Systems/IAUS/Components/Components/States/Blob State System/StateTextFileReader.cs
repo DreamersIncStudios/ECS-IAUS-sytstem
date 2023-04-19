@@ -128,10 +128,7 @@ namespace IAUS.ECS.StateBlobSystem
 
         static ConsiderationScoringData LineRead( string Line, int StartPoint=4)
         {
-            ConsiderationScoringData output = new ConsiderationScoringData()
-            {
-                //  responseType = ResponseType.none
-            };
+            ConsiderationScoringData output = new();
 
             var parts = Line.Split(',');
 

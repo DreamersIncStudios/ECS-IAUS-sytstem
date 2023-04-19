@@ -25,7 +25,7 @@ namespace IAUS.ECS.Component
 
     public struct StateBuffer : IBufferElementData
     {
-        public AIStates StateName { get; private set; }
+       [SerializeField] public AIStates StateName { get; private set; }
         public float TotalScore;
         public ActionStatus Status;
         public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;

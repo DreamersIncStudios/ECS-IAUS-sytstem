@@ -87,6 +87,7 @@ namespace IAUS.ECS.Component
     }
     public struct RangedAttackSubState : IComponentData
     {
+        public float MaxEffectiveRange;
         public int Index { get; private set; }
         public void SetIndex(int index)
         {

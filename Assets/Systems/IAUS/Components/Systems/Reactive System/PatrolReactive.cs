@@ -151,19 +151,19 @@ namespace IAUS.ECS.Systems.Reactive
                     {
                         //Movement move = movements[i];
                         //DynamicBuffer<PatrolWaypointBuffer> waypointBuffer = WaypointBuffers[i];
-                        //patrol.WaypointIndex = patrol.WaypointIndex >= patrol.NumberOfWayPoints ?
-                        // patrol.WaypointIndex++ :
-                        //  patrol.WaypointIndex = 0;
+                        //escape.WaypointIndex = escape.WaypointIndex >= escape.NumberOfWayPoints ?
+                        // escape.WaypointIndex++ :
+                        //  escape.WaypointIndex = 0;
 
-                        //patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
-                        //patrol.StartingDistance = Vector3.Distance(ToWorlds[i].Position, patrol.CurWaypoint.Position);
+                        //escape.CurWaypoint = waypointBuffer[escape.WaypointIndex].WayPoint;
+                        //escape.StartingDistance = Vector3.Distance(ToWorlds[i].Position, escape.CurWaypoint.Position);
 
-                        //move.TargetLocation = patrol.CurWaypoint.Position;
+                        //move.TargetLocation = escape.CurWaypoint.Position;
                         //move.CanMove = true;
                         //move.SetTargetLocation = true;
 
                         //movements[i] = move;
-                        //patrols[i] = patrol;
+                        //patrols[i] = escape;
                     }
                 }
 

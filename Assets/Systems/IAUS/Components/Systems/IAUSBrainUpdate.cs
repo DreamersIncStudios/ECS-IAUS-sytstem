@@ -46,6 +46,9 @@ namespace IAUS.ECS.Systems
             traverseUpdate.Schedule();
             var waitUpdate = new UpdateWait();
             waitUpdate.Schedule();
+            var attackUpdate = new UpdateAttack();
+            attackUpdate.Schedule();
+            new UpdateEscape().Schedule();
 
             new FindHighState() { CommandBufferParallel = ecb.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()}.Schedule();
 
@@ -115,6 +118,7 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    [BurstCompile]
 
     partial struct UpdateAttack : IJobEntity
     {
@@ -122,7 +126,7 @@ namespace IAUS.ECS.Systems
         {
             for (int i = 0; i < buffer.Length; i++)
             {
-                if (buffer[i].StateName == AIStates.Wait)
+                if (buffer[i].StateName == AIStates.Attack)
                 {
                     StateBuffer temp = buffer[i];
                     temp.TotalScore = aspect.Score;
@@ -136,7 +140,28 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    [BurstCompile]
 
+    partial struct UpdateEscape : IJobEntity
+    {
+        void Execute(ref EscapeAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i].StateName == AIStates.RetreatToLocation)
+                {
+                    StateBuffer temp = buffer[i];
+                    temp.TotalScore = aspect.Score;
+                    temp.Status = aspect.Status;
+                    buffer[i] = temp;
+
+                    break;
+                }
+            }
+
+        }
+
+    }
 
     [BurstCompile]
 
@@ -165,20 +190,20 @@ namespace IAUS.ECS.Systems
                     case AIStates.Wait:
                         CommandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, entity);
                         break;
-                        //case AIStates.ChaseMoveToTarget:
-                        //    CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
-                        //    break;
-                        //case AIStates.GotoLeader:
-                        //    CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
-                        //    break;
-                        //case AIStates.Attack:
-                        //    //TODO Implement Add and Remove Tag;
-                        //    CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                        //    break;
+                    //case AIStates.ChaseMoveToTarget:
+                    //    CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
+                    //    break;
+                    //case AIStates.GotoLeader:
+                    //    CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
+                    //    break;
+                    //case AIStates.Attack:
+                    //    //TODO Implement Add and Remove Tag;
+                    //    CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                    //    break;
 
-                        //case AIStates.RetreatToLocation:
-                        //    CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Entities[i]);
-                        //    break;
+                    case AIStates.RetreatToLocation:
+                        CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, entity);
+                        break;
                         //case AIStates.GatherResources:
                         //    CommandBufferParallel.RemoveComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
                         //    break;
@@ -204,18 +229,18 @@ namespace IAUS.ECS.Systems
                     case AIStates.Wait:
                         CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, entity);
                         break;
-                        //case AIStates.ChaseMoveToTarget:
-                        //    CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
-                        //    break;
-                        //case AIStates.GotoLeader:
-                        //    CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
-                        //    break;
-                        //case AIStates.Attack:
-                        //    CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                        //    break;
-                        //case AIStates.RetreatToLocation:
-                        //    CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Entities[i]);
-                        //    break;
+                    //case AIStates.ChaseMoveToTarget:
+                    //    CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
+                    //    break;
+                    //case AIStates.GotoLeader:
+                    //    CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
+                    //    break;
+                    //case AIStates.Attack:
+                    //    CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
+                    //    break;
+                    case AIStates.RetreatToLocation:
+                        CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, entity);
+                        break;
                         //case AIStates.GatherResources:
                         //    CommandBufferParallel.AddComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
                         //    break;

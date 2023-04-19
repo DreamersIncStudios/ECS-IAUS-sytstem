@@ -9,7 +9,9 @@ namespace Stats.Entities
     {
         public float CurHealth, MaxHealth, CurMana, MaxMana;
         public float HealthRatio => CurHealth/ MaxHealth;
-        public float ManaRatio => CurMana/ MaxMana; 
+        public float ManaRatio => CurMana/ MaxMana;
+
+        public float Speed;
 
     }
 

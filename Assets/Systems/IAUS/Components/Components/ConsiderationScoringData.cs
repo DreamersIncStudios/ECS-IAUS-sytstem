@@ -27,7 +27,11 @@ namespace IAUS.ECS.Consideration
             switch (responseType)
             {
                 case ResponseType.LinearQuad:
+                    if(!Inverse)
                     temp = M * Mathf.Pow((input - C), K) + B;
+                    else
+                        temp = 1 - M * Mathf.Pow((input - C), K) + B;
+
                     break;
                 case ResponseType.Log:
                     temp = K * (1.0f / (1.0f + Mathf.Pow((1000.0f * M * Mathf.Exp(1)), input - C))) + B;
