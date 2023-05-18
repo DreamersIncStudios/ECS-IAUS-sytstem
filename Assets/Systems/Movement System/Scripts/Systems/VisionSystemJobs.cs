@@ -8,10 +8,11 @@ using Global.Component;
 using Unity.Mathematics;
 using Stats;
 using RaycastHit = Unity.Physics.RaycastHit;
+
 namespace AISenses.VisionSystems
 {
 
-    public class VisionTargetingUpdateGroup : ComponentSystemGroup
+    public partial class VisionTargetingUpdateGroup : ComponentSystemGroup
     {
         public VisionTargetingUpdateGroup()
         {
@@ -30,7 +31,7 @@ namespace AISenses.VisionSystems
 
                 new EntityQueryDesc()
                 {
-                    All = new ComponentType[] { ComponentType.ReadOnly(typeof(WorldTransform)), ComponentType.ReadWrite(typeof(AITarget)) }
+                    All = new ComponentType[] { ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(AITarget)) }
 
                 });
         }
@@ -47,7 +48,7 @@ namespace AISenses.VisionSystems
             {
                 world = world,
                 TargetArray = TargetEntityQuery.ToComponentDataArray<AITarget>(Allocator.TempJob),
-                TargetPosition = TargetEntityQuery.ToComponentDataArray<WorldTransform>(Allocator.TempJob),
+                TargetPosition = TargetEntityQuery.ToComponentDataArray<LocalTransform>(Allocator.TempJob),
                 TargetEntity = TargetEntityQuery.ToEntityArray(Allocator.TempJob),
             }.ScheduleParallel(state.Dependency);
 
@@ -56,16 +57,17 @@ namespace AISenses.VisionSystems
         public partial struct VisionRayCastJob : IJobEntity
         {
             [DeallocateOnJobCompletion][ReadOnly] public NativeArray<AITarget> TargetArray;
-            [DeallocateOnJobCompletion][ReadOnly] public NativeArray<WorldTransform> TargetPosition;
+            [DeallocateOnJobCompletion][ReadOnly] public NativeArray<LocalTransform> TargetPosition;
             [DeallocateOnJobCompletion][ReadOnly] public NativeArray<Entity> TargetEntity;
             [ReadOnly] public CollisionWorld world;
-            void Execute(ref DynamicBuffer<ScanPositionBuffer> buffer, ref WorldTransform transform, ref Vision vision, ref PhysicsInfo physicsInfos)
+            void Execute(ref DynamicBuffer<ScanPositionBuffer> buffer, ref LocalTransform transform, ref Vision vision, ref PhysicsInfo physicsInfos)
             {
                 buffer.Clear();
                 if (TargetArray.Length == 0)
                 {
                     return;
                 }
+
                 for (int j = 0; j < TargetArray.Length; j++)
                 {
                     float dist = Vector3.Distance(transform.Position, TargetPosition[j].Position);
@@ -75,11 +77,9 @@ namespace AISenses.VisionSystems
 
                         if (Vector3.Angle(transform.Forward(), dirToTarget) < vision.ViewAngle / 2.0f)
                         {
-                            //Todo if Object in when X distance add to list without raycast
-
                             RaycastInput raycastInput = new RaycastInput()
                             {
-                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f, //Make offset radius to get rid of self intersection
+                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 1.75f,
                                 End = TargetPosition[j].Position + TargetArray[j].CenterOffset,
                                 Filter = new CollisionFilter()
                                 {
@@ -88,7 +88,7 @@ namespace AISenses.VisionSystems
                                     GroupIndex = 0
                                 }
                             };
-                            Debug.DrawLine(raycastInput.Start, raycastInput.End, Color.red);
+
                             if (world.CastRay(raycastInput, out RaycastHit raycastHit))
                             {
                                 if (raycastHit.Entity.Equals(TargetEntity[j]))

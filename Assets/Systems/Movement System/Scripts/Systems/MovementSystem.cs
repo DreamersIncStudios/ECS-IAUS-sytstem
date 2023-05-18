@@ -4,23 +4,21 @@ using UnityEngine.AI;
 using Unity.Entities;
 using Components.MovementSystem;
 using Unity.Transforms;
-using Unity.Mathematics;
-using Unity.Collections;
 using Unity.Jobs;
-using Unity.Burst;
+using MotionSystem;
 
 namespace IAUS.ECS.Systems
 {
-
+    [UpdateAfter(typeof(TransformSyncSystem))]
     public partial class MovementSystem : SystemBase
     {
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;
-           systemDeps = Entities.ForEach(( ref Movement movement, in WorldTransform CurPos) => 
-           {
+            systemDeps = Entities.ForEach((ref Movement movement, in LocalTransform CurPos) =>
+            {
                 movement.DistanceRemaining = Vector3.Distance(movement.TargetLocation, CurPos.Position);
-           }).ScheduleParallel(systemDeps);
+            }).ScheduleParallel(systemDeps);
             World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>().AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
 
@@ -54,7 +52,7 @@ namespace IAUS.ECS.Systems
 
 
             }).Run();
-            
+
 
         }
 

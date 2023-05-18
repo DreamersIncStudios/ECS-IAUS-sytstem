@@ -57,7 +57,7 @@ namespace IAUS.ECS.Component
     }
 
     public readonly partial struct EscapeAspect : IAspect {
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Transform;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<EscapeThreat> escape;
         float distanceToPoint
@@ -69,7 +69,7 @@ namespace IAUS.ECS.Component
                 {
                     dist = 0.0f;
                 }
-                dist = Vector3.Distance(escape.ValueRO.CurWaypoint.Position, Transform.WorldPosition);
+                dist = Vector3.Distance(escape.ValueRO.CurWaypoint.Position, Transform.ValueRO.Position);
                 return dist;
             }
         }

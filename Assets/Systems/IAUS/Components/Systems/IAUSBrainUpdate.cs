@@ -12,7 +12,7 @@ namespace IAUS.ECS.Systems
 
 
     [UpdateAfter(typeof(SetupAIStateBlob))]
-    public class IAUSUpdateGroup : ComponentSystemGroup
+    public partial class IAUSUpdateGroup : ComponentSystemGroup
     {
         public IAUSUpdateGroup()
         {
@@ -118,7 +118,6 @@ namespace IAUS.ECS.Systems
         }
 
     }
-    [BurstCompile]
 
     partial struct UpdateAttack : IJobEntity
     {

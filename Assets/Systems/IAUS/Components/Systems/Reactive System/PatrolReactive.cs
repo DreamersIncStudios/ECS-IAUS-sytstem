@@ -42,7 +42,7 @@ namespace IAUS.ECS.Systems.Reactive
         {
         }
 
-        public class PatrolReactiveSystem : AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>
+        public partial class PatrolReactiveSystem : AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>
         {
             protected override PatrolTagReactor CreateComponentReactor()
             {
@@ -64,14 +64,14 @@ namespace IAUS.ECS.Systems.Reactive
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(WorldTransform))
+                , ComponentType.ReadOnly(typeof(LocalTransform))
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
             _patrolling = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))
-                , ComponentType.ReadOnly(typeof(WorldTransform)),
+                , ComponentType.ReadOnly(typeof(LocalTransform)),
                     ComponentType.ReadOnly(typeof(AIReactiveSystemBase<PatrolActionTag, Patrol, PatrolTagReactor>.StateComponent)) }
             });
  
@@ -86,7 +86,7 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 MovementChunk = GetComponentTypeHandle<Movement>(false),
                 PatrolChunk = GetComponentTypeHandle<Patrol>(false),
-                ToWorldChunk = GetComponentTypeHandle<WorldTransform>(true)
+                ToWorldChunk = GetComponentTypeHandle<LocalTransform>(true)
             }.ScheduleParallel(_componentAddedQuery, systemDeps);
 
             //systemDeps = new CheckSkipPoint()
@@ -106,12 +106,12 @@ namespace IAUS.ECS.Systems.Reactive
         {
             public ComponentTypeHandle<Movement> MovementChunk;
             public ComponentTypeHandle<Patrol> PatrolChunk;
-            [ReadOnly] public ComponentTypeHandle<WorldTransform> ToWorldChunk;
+            [ReadOnly] public ComponentTypeHandle<LocalTransform> ToWorldChunk;
             public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
             {
                 NativeArray<Movement> movements = chunk.GetNativeArray(ref MovementChunk);
                 NativeArray<Patrol> patrols = chunk.GetNativeArray(ref PatrolChunk);
-                NativeArray<WorldTransform> ToWorlds = chunk.GetNativeArray(ref ToWorldChunk);
+                NativeArray<LocalTransform> ToWorlds = chunk.GetNativeArray(ref ToWorldChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
                     Movement move = movements[i];

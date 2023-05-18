@@ -1,15 +1,15 @@
 using MotionSystem.Components;
-using System.Collections;
-using System.Collections.Generic;
+using MotionSystem.Systems;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Physics;
-using Unity.Physics.Systems;
 using Unity.Transforms;
-using UnityEngine;
+
 
 namespace MotionSystem
 {
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateBefore(typeof(AnimatorUpdate))]
     public partial struct GroundCheckSystem : ISystem
     {
         public void OnCreate(ref SystemState state)
@@ -19,25 +19,26 @@ namespace MotionSystem
 
         public void OnDestroy(ref SystemState state)
         {
-        
+
         }
 
         public void OnUpdate(ref SystemState state)
         {
-            PhysicsWorldSingleton physicsWorldSingleton = SystemAPI.GetSingleton<PhysicsWorldSingleton>();
-            var world = physicsWorldSingleton.CollisionWorld;
+            state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
+            var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+            world.UpdateBodyIndexMap();
             state.Dependency = new GroundCheckJob
             {
-                physicsWorld = physicsWorldSingleton,
                 world = world
             }.ScheduleParallel(state.Dependency);
         }
 
 
-        public partial struct GroundCheckJob : IJobEntity {
-            [ReadOnly] public PhysicsWorldSingleton physicsWorld;
+        public partial struct GroundCheckJob : IJobEntity
+        {
             [ReadOnly] public CollisionWorld world;
-            void Execute(ref WorldTransform transform, ref CharControllerE control) {
+            void Execute(ref LocalTransform transform, ref CharControllerE control)
+            {
                 if (control.SkipGroundCheck)
                 {
                     return;
@@ -46,12 +47,12 @@ namespace MotionSystem
                 groundRays.Add(new RaycastInput()
                 {
                     Start = transform.Position + new Unity.Mathematics.float3(0, .2f, 0),
-                    End = transform.Position - new Unity.Mathematics.float3(0, -control.GroundCheckDistance, 0),
+                    End = transform.Position + new Unity.Mathematics.float3(0, -control.GroundCheckDistance, 0),
                     Filter = new CollisionFilter
                     {
                         BelongsTo = ((1 << 10)),
                         CollidesWith = ((1 << 6) | (1 << 9)),
-                        GroupIndex = -1
+                        GroupIndex = 0
                     }
                 });
                 groundRays.Add(new RaycastInput()
@@ -62,7 +63,7 @@ namespace MotionSystem
                     {
                         BelongsTo = ((1 << 10)),
                         CollidesWith = ((1 << 6) | (1 << 9)),
-                        GroupIndex = -1
+                        GroupIndex = 0
                     }
                 });
                 groundRays.Add(new RaycastInput()
@@ -98,7 +99,6 @@ namespace MotionSystem
                         GroupIndex = 0
                     }
                 });
-                control.ApplyRootMotion = false;
 
                 foreach (var ray in groundRays)
                 {
@@ -107,12 +107,11 @@ namespace MotionSystem
 
                     if (control.IsGrounded = world.CastRay(ray, ref raycastArray))
                     {
-                        control.ApplyRootMotion = true;
                         groundRays.Dispose();
                         break;
                     }
                 }
-                
+
 
             }
         }

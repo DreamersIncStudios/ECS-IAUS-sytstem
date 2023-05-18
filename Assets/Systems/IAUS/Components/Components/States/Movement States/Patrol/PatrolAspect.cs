@@ -10,7 +10,7 @@ namespace IAUS.ECS.Component
 {
     public readonly partial struct PatrolAspect : IAspect
     {
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Transform;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<Patrol> patrol;
 
@@ -23,7 +23,7 @@ namespace IAUS.ECS.Component
                 {
                     dist = 0.0f;
                 }
-                dist = Vector3.Distance(patrol.ValueRO.CurWaypoint.Position, Transform.WorldPosition);
+                dist = Vector3.Distance(patrol.ValueRO.CurWaypoint.Position, Transform.ValueRO.Position);
                 return dist;
             }
         }
@@ -44,7 +44,7 @@ namespace IAUS.ECS.Component
     public readonly partial struct TraverseAspect : IAspect
     {
 
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Transform;
         readonly InfluenceAspect influenceAspect;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<Traverse> traverse;
@@ -58,7 +58,7 @@ namespace IAUS.ECS.Component
                 {
                     dist = 0.0f;
                 }
-                dist = Vector3.Distance(traverse.ValueRO.CurWaypoint.Position, Transform.WorldPosition);
+                dist = Vector3.Distance(traverse.ValueRO.CurWaypoint.Position, Transform.ValueRO.Position);
                 return dist;
             }
         }

@@ -11,7 +11,7 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Transform;
         readonly DynamicBuffer<ScanPositionBuffer> ScanPositions;
         readonly  RefRO<AITarget> self;
 

@@ -49,7 +49,7 @@ namespace IAUS.ECS.Systems.Reactive
             Debug.Log("Change");
         }
 
-        public class WaitReactiveSystem : AIReactiveSystemBase<WaitActionTag, Wait, WaitTagReactor>
+        public partial class WaitReactiveSystem : AIReactiveSystemBase<WaitActionTag, Wait, WaitTagReactor>
         {
             protected override WaitTagReactor CreateComponentReactor()
             {
@@ -74,7 +74,7 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
         {
         }
-        public class WaitReactiveSystem2 : AIReactiveSystemBase<PatrolActionTag, Wait, PatrolWaitTagReactor>
+        public partial class WaitReactiveSystem2 : AIReactiveSystemBase<PatrolActionTag, Wait, PatrolWaitTagReactor>
         {
             protected override PatrolWaitTagReactor CreateComponentReactor()
             {
@@ -92,7 +92,7 @@ namespace IAUS.ECS.Systems.Reactive
             base.OnCreate();
             waiters = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(WorldTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),
                     ComponentType.ReadWrite(typeof(AIReactiveSystemBase < WaitActionTag, Wait, WaitTagReactor >.StateComponent ))
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
@@ -108,7 +108,7 @@ namespace IAUS.ECS.Systems.Reactive
     [BurstCompile]
     partial struct Test : IJobEntity {
 
-        public void Execute( ref Patrol patrol, in WorldTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
+        public void Execute( ref Patrol patrol, in LocalTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
             if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
             {
                 patrol.WaypointIndex = 0;

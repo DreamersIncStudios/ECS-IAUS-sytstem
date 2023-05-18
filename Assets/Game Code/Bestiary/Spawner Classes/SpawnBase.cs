@@ -19,7 +19,6 @@ namespace DreamersInc.BestiarySystem
         {
 
             EntityArchetype baseEntityArch = manager.CreateArchetype(
-              typeof(WorldTransform),
               typeof(LocalTransform),
               typeof(LocalToWorld)
               );
@@ -28,7 +27,6 @@ namespace DreamersInc.BestiarySystem
                 manager.SetName(baseDataEntity, entityName);
             else
                 manager.SetName(baseDataEntity, "NPC Data");
-            manager.SetComponentData(baseDataEntity,new WorldTransform() {Scale = 1 });
             manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
 
 

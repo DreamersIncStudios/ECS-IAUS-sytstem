@@ -9,7 +9,7 @@ namespace DreamersInc.InflunceMapSystem
 {
     public readonly partial struct InfluenceAspect : IAspect
     {
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Position;
         readonly RefRO<InfluenceComponent> influence;
 
         public float DistanceToHighProtection { get { return 10; } }
@@ -20,12 +20,16 @@ namespace DreamersInc.InflunceMapSystem
         {
             get
             {
-                return InfluenceGridMaster.Instance.grid.GetGridObject(Transform.WorldPosition).GetValue(faction).y;
+                return 1;
+              //  return InfluenceGridMaster.Instance.grid.GetGridObject(Transform.WorldPosition).GetValue(faction).y;
             }
         }
         public float ProtectionAtLocation
         {
-            get { return InfluenceGridMaster.Instance.grid.GetGridObject(Transform.WorldPosition).GetValue(faction).x; }
+            get {
+                return 10;
+                //return InfluenceGridMaster.Instance.grid.GetGridObject(Transform.WorldPosition).GetValue(faction).x;
+                }
         }
 
         public float ThreatRatio

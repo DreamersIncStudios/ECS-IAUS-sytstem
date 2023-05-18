@@ -13,7 +13,7 @@ namespace IAUS.ECS.Component.Aspects
 {
     public readonly partial struct AttackAspect : IAspect
     {
-        readonly TransformAspect Transform;
+        readonly RefRO<LocalTransform> Transform;
         readonly VisionAspect VisionAspect;
         readonly InfluenceAspect influenceAspect;
         readonly RefRW<AttackState> state;

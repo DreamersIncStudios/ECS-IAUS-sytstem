@@ -15,7 +15,7 @@ namespace IAUS.ECS.Component
     {
         protected override void OnUpdate()
         {
-            foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, WorldTransform, Patrol, SetupBrainTag>())
+            foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Patrol, SetupBrainTag>())
             {
                 List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, patrol.NumberOfWayPoints, true);
                 foreach (var item in Waypoints)
@@ -23,7 +23,7 @@ namespace IAUS.ECS.Component
                     buffer.Add(item);
                 }
             }
-            foreach (var (buffer, transform, traverse, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, WorldTransform, Traverse, SetupBrainTag>())
+            foreach (var (buffer, transform, traverse, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Traverse, SetupBrainTag>())
             {
                 List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, traverse.NumberOfWayPoints, true);
                 foreach (var item in Waypoints)
