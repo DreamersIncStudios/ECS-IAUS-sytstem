@@ -56,7 +56,7 @@ namespace IAUS.ECS.Systems
     }
     [BurstCompile]
     partial struct UpdatePatrol : IJobEntity {
-        void Execute(ref PatrolAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(PatrolAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -78,7 +78,7 @@ namespace IAUS.ECS.Systems
 
     partial struct UpdateTraverse : IJobEntity
     {
-        void Execute(ref TraverseAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(TraverseAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -100,7 +100,7 @@ namespace IAUS.ECS.Systems
 
     partial struct UpdateWait : IJobEntity
     {
-        void Execute(ref WaitAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(WaitAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -121,7 +121,7 @@ namespace IAUS.ECS.Systems
 
     partial struct UpdateAttack : IJobEntity
     {
-        void Execute(ref AttackAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(AttackAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {
@@ -143,7 +143,7 @@ namespace IAUS.ECS.Systems
 
     partial struct UpdateEscape : IJobEntity
     {
-        void Execute(ref EscapeAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        void Execute(EscapeAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
             {

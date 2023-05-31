@@ -16,7 +16,9 @@ public class UITesting : MonoBehaviour
     {
         public override void Bake(UITesting authoring)
         {
-            AddComponentObject(new UITestingC()
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+
+            AddComponentObject(entity, new UITestingC()
             {
                 buttonPrefab = authoring.buttonPrefab,
                 Canvas = authoring.Canvas

@@ -16,11 +16,13 @@ namespace Stats.Entities
     {
         public override void Bake(CharacterAuthoring authoring)
         {
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
+
             BaseCharacterComponent character = new();
             character.SetupDataEntity(authoring.Info);
-                AddComponentObject (character);
-            AddComponentObject(new AnimatorComponent() { anim = authoring.animator});
-            AddComponent(new PlayerTag());
+                AddComponentObject (entity, character);
+            AddComponentObject(entity, new AnimatorComponent() { anim = authoring.animator});
+            AddComponent(entity, new PlayerTag());
         }
     }
 

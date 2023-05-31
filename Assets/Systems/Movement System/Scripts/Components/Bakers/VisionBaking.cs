@@ -27,6 +27,8 @@ namespace DreamersInc.MovementSys
         {
             public override void Bake(VisionBaking authoring)
             {
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
+
                 var data = new Vision() {
                     HeadPositionOffset = authoring.HeadPositionOffset,
                     ThreatPosition = authoring.ThreatPosition,
@@ -35,8 +37,8 @@ namespace DreamersInc.MovementSys
                     AlertModifer = authoring.AlertModifer,
                     ViewRadius = authoring.viewRadius
                 };
-               AddComponent(data);
-                AddComponent(new PhysicsInfo {
+               AddComponent(entity,data);
+                AddComponent(entity, new PhysicsInfo {
                     BelongsTo = authoring.BelongsTo,
                     CollidesWith= authoring.CollidesWith,
                 });

@@ -12,28 +12,17 @@ namespace Stats.Entities
     {
         public Image HealthBar, ManaBar;
 
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         class UIStatBaker : Baker<UIStat>
         {
             public override void Bake(UIStat authoring)
             {
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
                 PlayerCharacterUI uI = new PlayerCharacterUI()
                 {
                     HealthBar = authoring.HealthBar,
                     ManaBar = authoring.ManaBar,
                 };
-                AddComponentObject(uI); 
+                AddComponentObject(entity,uI); 
             }
         }
     }

@@ -14,9 +14,10 @@ namespace DreamersInc
         {
             public override void Bake(GameMasterAuthoring authoring)
             {
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
                 var data = new ControllerInfo();
                 data.setup(authoring.controller);
-                AddComponent(data);
+                AddComponent(entity, data);
             }
         }
     }

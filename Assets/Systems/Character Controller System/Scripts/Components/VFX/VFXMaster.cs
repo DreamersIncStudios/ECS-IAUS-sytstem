@@ -12,8 +12,10 @@ namespace DreamersInc.CharacterControllerSys.VFX
         {
             public override void Bake(VFXMaster authoring)
             {
-                AddComponentObject(new VFXSpawnMaster());
-                AddComponent(new vfxTag());
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
+
+                AddComponentObject(entity, new VFXSpawnMaster());
+                AddComponent(entity, new vfxTag());
 
             }
         }

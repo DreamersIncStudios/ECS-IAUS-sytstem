@@ -17,6 +17,7 @@ namespace DreamersInc
 
         class TerrainBaker : Baker<DOTSTerrainCollider> {
             public override void Bake(DOTSTerrainCollider authoring) {
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
                 if (authoring.terrainCollider == null || authoring.terrainCollider.terrainData == null)
                 { authoring.terrainCollider = GameObject.FindObjectOfType<TerrainCollider>(); }
 
@@ -46,11 +47,11 @@ namespace DreamersInc
                         GroupIndex = 0
                     });
                 
-                AddComponent(new PhysicsCollider()
+                AddComponent(entity,new PhysicsCollider()
                 {
                     Value = colliders
                 });
-                AddSharedComponent( new PhysicsWorldIndex() { Value = 0 });
+                AddSharedComponent(entity, new PhysicsWorldIndex() { Value = 0 });
 
 
             }
