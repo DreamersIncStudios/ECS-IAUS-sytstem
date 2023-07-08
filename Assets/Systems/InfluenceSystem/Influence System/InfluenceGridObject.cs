@@ -27,7 +27,8 @@ namespace DreamersInc.InflunceMapSystem
         }
 
 
-        public void AddValue(int2 addValue, Faction faction) {
+        public void AddValue(int2 addValue, Faction faction)
+        {
 
             if (gridValue.ContainsKey(faction))
             {
@@ -38,30 +39,32 @@ namespace DreamersInc.InflunceMapSystem
                 gridValue.Add(faction, addValue);
             }
             grid.TriggerGridObjectChanged(x, y);
-            
-    }
+
+        }
         /// <summary>
         /// Add value to grid in a diamond pattern
         /// </summary>
         /// <param name="value"></param>
         /// <param name="Totalrange"></param>
-        public void AddValue( Vector3 worldPos, int2 value, int Totalrange, int fullValueRange, Faction faction) {
+        public void AddValue(Vector3 worldPos, int2 value, int Totalrange, int fullValueRange, Faction faction)
+        {
             grid.GetXZ(worldPos, out int originX, out int originZ);
-            int2 lowerValueAmount = new int2() 
+            int2 lowerValueAmount = new int2()
             {
                 x = Mathf.RoundToInt((float)value.x / (Totalrange - fullValueRange)),
                 y = Mathf.RoundToInt((float)value.y / (Totalrange - fullValueRange))
             };
             for (int x = 0; x < Totalrange; x++)
             {
-                for (int z = 0; z < Totalrange-x; z++)
+                for (int z = 0; z < Totalrange - x; z++)
                 {
                     int radius = x + y;
                     int2 addValueAmout = value;
-                    if (radius > fullValueRange) {
+                    if (radius > fullValueRange)
+                    {
                         addValueAmout -= lowerValueAmount * (radius - fullValueRange);
                     }
-                    grid.GetGridObject(originX +x, originZ+z)?.AddValue(addValueAmout, faction);
+                    grid.GetGridObject(originX + x, originZ + z)?.AddValue(addValueAmout, faction);
                     if (x != 0)
                     {
                         grid.GetGridObject(originX - x, originZ + z)?.AddValue(addValueAmout, faction);
@@ -78,7 +81,7 @@ namespace DreamersInc.InflunceMapSystem
                 }
 
             }
-                
+
         }
         //TODO add Zero out grid tiles 
 
@@ -125,14 +128,15 @@ namespace DreamersInc.InflunceMapSystem
 
         }
 
-        public int2 GetValue(Faction faction) {
+        public int2 GetValue(Faction faction)
+        {
             List<Faction> Foes = new List<Faction>();
             List<Faction> Friends = new List<Faction>();
             List<Faction> Neutral = new List<Faction>();
 
-            foreach (var item in LoveHate.factionDatabase. GetFaction(faction.id).relationships)
+            foreach (var item in LoveHate.factionDatabase.GetFaction(faction.id).relationships)
             {
-                if (item.GetTrait(0)>50)
+                if (item.GetTrait(0) > 50)
                     Friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else if (item.GetTrait(0) < 50)
                     Foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
@@ -150,11 +154,34 @@ namespace DreamersInc.InflunceMapSystem
                 value[1] += gridValue[Foes[i]];
             }
 
-            return new int2(value[0].x,value[1].y);
+            return new int2(value[0].x, value[1].y);
         }
-        public float2 GetValueNormalized(Faction faction) {
-            return (float2)GetValue(faction)/ MAX;
+        public int2 GetAverageValue(Faction faction, int AreaSize = 10)
+        {
+            int startX, startY;
+            int2 totalInfluenceArea = new();
+            startX = x - AreaSize / 2;
+            startY = y - AreaSize / 2;
+            for (int i = 0; i < AreaSize; i++)
+            {
+                for (int j = 0; j < AreaSize; j++)
+                {
+                    totalInfluenceArea += grid.GetGridObject(startX + i, startY + j).GetValue(faction);
+                }
+            }
+            return totalInfluenceArea / AreaSize;
+
         }
+        public int2 GetAverageValue(int FactionID, int AreaSize = 10)
+        {
+            return GetAverageValue(LoveHate.GetFaction(FactionID), AreaSize);
+        }
+
+        public float2 GetValueNormalized(Faction faction)
+        {
+            return (float2)GetValue(faction) / MAX;
+        }
+
 
         public float GetHighestThreatCell(Faction faction, bool filtered, out int i, out int j)
         {
@@ -201,6 +228,7 @@ namespace DreamersInc.InflunceMapSystem
             }
             return LowValue;
         }
+
 
         public override string ToString()
         {

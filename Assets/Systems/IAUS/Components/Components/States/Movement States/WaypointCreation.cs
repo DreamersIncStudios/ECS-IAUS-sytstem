@@ -8,27 +8,39 @@ using Global.Component;
 using Unity.Transforms;
 using IAUS.ECS.StateBlobSystem;
 using Random = UnityEngine.Random;
+using Unity.Burst;
+
 namespace IAUS.ECS.Component
 {
     [UpdateBefore(typeof(SetupAIStateBlob))]
-    public partial class WaypointCreationSystem : SystemBase
+    public partial struct WaypointCreationSystem : ISystem
     {
-        protected override void OnUpdate()
+        public void OnCreate(ref SystemState state)
         {
-            foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Patrol, SetupBrainTag>())
+        }
+
+        public void OnDestroy(ref SystemState state)
+        {
+        }
+       
+        public void OnUpdate(ref SystemState state)
+        {
             {
-                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, patrol.NumberOfWayPoints, true);
-                foreach (var item in Waypoints)
+                foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Patrol, SetupBrainTag>())
                 {
-                    buffer.Add(item);
+                    List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 200, patrol.NumberOfWayPoints, true);
+                    foreach (var item in Waypoints)
+                    {
+                        buffer.Add(item);
+                    }
                 }
-            }
-            foreach (var (buffer, transform, traverse, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Traverse, SetupBrainTag>())
-            {
-                List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, traverse.NumberOfWayPoints, true);
-                foreach (var item in Waypoints)
+                foreach (var (buffer, transform, traverse, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Traverse, SetupBrainTag>())
                 {
-                    buffer.Add(item);
+                    List<TravelWaypointBuffer> Waypoints = GetPoints(transform.Position, 400, traverse.NumberOfWayPoints, true);
+                    foreach (var item in Waypoints)
+                    {
+                        buffer.Add(item);
+                    }
                 }
             }
         }
@@ -38,6 +50,8 @@ namespace IAUS.ECS.Component
             List<TravelWaypointBuffer> Points = new();
             while (Points.Count < NumOfPoints)
             {
+                Debug.Log(start);
+
                 if (GlobalFunctions.RandomPoint(start, range, out Vector3 position))
                 {
                     Points.Add(new TravelWaypointBuffer()
@@ -62,5 +76,5 @@ namespace IAUS.ECS.Component
         }
     }
 
- 
+
 }

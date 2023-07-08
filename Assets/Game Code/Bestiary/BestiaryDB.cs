@@ -59,7 +59,6 @@ namespace DreamersInc.BestiarySystem
 
             Dummies = new();
             TestingDummyInfo[] testingSO = Resources.LoadAll<TestingDummyInfo>(@"Testing");
-            Debug.Log(testingSO.Length);
             foreach (var item in testingSO)
             {
                 if (!Dummies.Contains(item))
