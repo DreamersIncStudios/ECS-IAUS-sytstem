@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using PixelCrushers.LoveHate;
+using Stats;
 
 namespace Global.Component
 {
@@ -12,6 +13,8 @@ namespace Global.Component
     public struct AITarget : IComponentData
     {
         public TargetType Type;
+        public ClassTitle ClassTitle;
+        public uint level;
         public int FactionID;
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;

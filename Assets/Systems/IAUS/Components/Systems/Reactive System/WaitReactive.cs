@@ -109,7 +109,7 @@ namespace IAUS.ECS.Systems.Reactive
     partial struct Test : IJobEntity {
 
         public void Execute( ref Patrol patrol, in LocalTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
-            if (patrol.WaypointIndex >= patrol.NumberOfWayPoints)
+            if (patrol.WaypointIndex >= patrol.NumberOfWayPoints-1)
             {
                 patrol.WaypointIndex = 0;
             }

@@ -27,8 +27,8 @@ namespace DreamersInc.BestiarySystem
                 NumOfEntityTargetingMe = 3,
                 CanBeTargetByPlayer = false,
                 Type = TargetType.Character,
-                CenterOffset = new float3(0, 1, 0) //todo add value to SO
-
+                CenterOffset = new float3(0, 1, 0), //todo add value to SO
+                level = info.ClassLevel
             });
 
             manager.AddComponent<AIStat>(entity);
@@ -45,6 +45,8 @@ namespace DreamersInc.BestiarySystem
                             BufferZone = .25f,
                             _coolDownTime = 5.5f
                         };
+                        if (info.ClassLevel > 3)
+                            patrol.StayInQuadrant = true;
                         manager.AddComponentData(entity, patrol);
                         manager.AddBuffer<TravelWaypointBuffer>(entity);
                         break;

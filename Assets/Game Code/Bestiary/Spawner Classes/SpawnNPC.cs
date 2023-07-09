@@ -31,7 +31,7 @@ namespace DreamersInc.BestiarySystem
                 go.tag = "Enemy NPC";
                 go.layer= 9;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                entity = CreateEntity(manager, info.Name+" NPC");
+                entity = CreateEntity(manager, go.transform, info.Name+" NPC");
                   AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
                 BaseCharacterComponent character = new()
                 {
@@ -71,9 +71,10 @@ namespace DreamersInc.BestiarySystem
                 {
                     FactionID = info.factionID,
                     NumOfEntityTargetingMe = 3,
-                    CanBeTargetByPlayer= true,
+                    CanBeTargetByPlayer = true,
                     Type = TargetType.Character,
-                    CenterOffset = new float3(0,1,0) //todo add value to SO
+                    level = info.ClassLevel,
+                    CenterOffset = new float3(0, 1, 0) //todo add value to SO
                 }) ;
 
                 var agent = go.GetComponent<NavMeshAgent>();

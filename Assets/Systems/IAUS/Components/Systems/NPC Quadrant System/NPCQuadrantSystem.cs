@@ -1,3 +1,4 @@
+using Global.Component;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
@@ -6,24 +7,20 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using static DreamersInc.QuadrantSystems.GenericQuadrantSystem;
 
 namespace DreamersInc.QuadrantSystems
 {
-    [DisableAutoCreation]
-    public partial class GenericQuadrantSystem : SystemBase
+    public partial struct NPCQuadrantSystem : ISystem
     {
-        private NativeParallelMultiHashMap<int, QuadrantData> quadrantMultiHashMap;
-        private const int quadrantYMultiplier = 1000;
-        private const int quadrantCellSize = 100;
-        public EntityQuery query;
         public static int GetPositionHashMapKey(float3 position)
         {
             return (int)(Mathf.Floor(position.x / quadrantCellSize) + (quadrantYMultiplier * Mathf.Floor(position.y / quadrantCellSize)));
         }
-        public int GetEntityCountInHashMap(NativeParallelMultiHashMap<int, QuadrantData> quadrantMap, int hashMapKey)
+        public int GetEntityCountInHashMap(NativeParallelMultiHashMap<int, NPCQuadrantData> quadrantMap, int hashMapKey)
         {
             int count = 0;
-            if (quadrantMap.TryGetFirstValue(hashMapKey, out QuadrantData quadrantData, out NativeParallelMultiHashMapIterator<int> iterator))
+            if (quadrantMap.TryGetFirstValue(hashMapKey, out NPCQuadrantData quadrantData, out NativeParallelMultiHashMapIterator<int> iterator))
             {
                 do
                 {
@@ -43,46 +40,58 @@ namespace DreamersInc.QuadrantSystems
             Debug.Log(GetPositionHashMapKey(position) + "" + position);
 
         }
-        protected override void OnCreate()
-        {
-            quadrantMultiHashMap = new NativeParallelMultiHashMap<int, QuadrantData>(0, Allocator.Persistent);
-            base.OnCreate();
+
+        private NativeParallelMultiHashMap<int, NPCQuadrantData> quadrantMultiHashMap;
+        private const int quadrantYMultiplier = 1000;
+        private const int quadrantCellSize = 50;
+        public EntityQuery query;
+
+        public void OnCreate(ref SystemState state) {
+            quadrantMultiHashMap = new NativeParallelMultiHashMap<int, NPCQuadrantData>(0, Allocator.Persistent);
+            query = state.GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(AITarget)) }
+            });
         }
-        protected override void OnDestroy()
-        {
+        public void OnDestroy(ref SystemState state) {
             quadrantMultiHashMap.Dispose();
-
-            base.OnDestroy();
         }
-        protected override void OnUpdate()
-        {
-
+        public void OnUpdate(ref SystemState state) {
             if (query.CalculateEntityCount() != quadrantMultiHashMap.Capacity)
             {
-                quadrantMultiHashMap.Clear();
                 quadrantMultiHashMap.Capacity = query.CalculateEntityCount();
             }
-                new SetQuadrantDataHashMapJob() { quadrantMap = quadrantMultiHashMap.AsParallelWriter() }.ScheduleParallel(query);
-            
+
+            quadrantMultiHashMap.Clear();
+            new SetQuadrantDataHashMapJob() { quadrantMap = quadrantMultiHashMap.AsParallelWriter() }.ScheduleParallel(query);
+
         }
-
-
+        public struct NPCQuadrantData
+        {
+            public Entity entity;
+            public float3 position;
+            public AITarget npcData;
+        }
+        public struct NPCQuadrantEntity :IComponentData
+        {
+           
+        }
         [BurstCompile]
         public partial struct SetQuadrantDataHashMapJob : IJobEntity
         {
-            public NativeParallelMultiHashMap<int, QuadrantData>.ParallelWriter quadrantMap;
-            public void Execute(Entity entity, [ReadOnly]in LocalTransform transform)
+            public NativeParallelMultiHashMap<int, NPCQuadrantData>.ParallelWriter quadrantMap;
+            public void Execute(Entity entity, [ReadOnly] in LocalTransform transform, in AITarget targetInfo)
             {
                 int hashMapKey = GetPositionHashMapKey(transform.Position);
-                quadrantMap.Add(hashMapKey, new QuadrantData { 
+                quadrantMap.Add(hashMapKey, new NPCQuadrantData
+                {
                     entity = entity,
-                    position = transform.Position
+                    position = transform.Position,
+                    npcData = targetInfo
+                   
                 });
             }
         }
-        public struct QuadrantData {
-            public Entity entity;
-            public float3 position;
-        }
     }
+   
 }

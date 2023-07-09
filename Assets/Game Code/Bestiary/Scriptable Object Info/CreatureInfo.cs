@@ -15,6 +15,7 @@ namespace DreamersInc.BestiarySystem
         [SerializeField] private uint creatureID;
         public uint ID { get { return creatureID; } }
         public string Name;
+        public uint ClassLevel;
         public CharacterClass stats;
         public GameObject Prefab;
         public List<AIStates> AIStatesToAdd;

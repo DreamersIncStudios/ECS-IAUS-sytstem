@@ -89,6 +89,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddAttacks.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\VisionAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\Patrol.cs" />

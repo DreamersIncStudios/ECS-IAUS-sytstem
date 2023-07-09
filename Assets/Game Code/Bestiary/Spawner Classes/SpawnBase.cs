@@ -15,8 +15,9 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        private static Entity CreateEntity(EntityManager manager, string entityName = "")
+        private static Entity CreateEntity(EntityManager manager, Transform transform, string entityName = "")
         {
+
 
             EntityArchetype baseEntityArch = manager.CreateArchetype(
               typeof(LocalTransform),
@@ -27,7 +28,12 @@ namespace DreamersInc.BestiarySystem
                 manager.SetName(baseDataEntity, entityName);
             else
                 manager.SetName(baseDataEntity, "NPC Data");
-            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+            manager.SetComponentData(baseDataEntity, new LocalTransform()
+            {
+                Position = transform.position,
+                Rotation = transform.rotation,
+                Scale = 1
+            });
 
 
             return baseDataEntity;

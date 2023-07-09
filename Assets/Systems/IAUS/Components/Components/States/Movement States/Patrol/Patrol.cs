@@ -16,7 +16,7 @@ namespace IAUS.ECS.Component
         public void SetIndex(int index) {
             Index= index;
         }
-
+        public bool StayInQuadrant;
         public AIStates name { get { return AIStates.Patrol; } }
 
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;

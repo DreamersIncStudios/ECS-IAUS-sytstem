@@ -69,4 +69,5 @@ namespace Stats
     {
         Grunt, Soldier, Ranger, Archer, Sorcer, Mage, Monk, Swordman, Thief, Knight, Bot, Generalist, Pugiblist, Beast
     }
+
 }

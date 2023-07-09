@@ -65,7 +65,7 @@ namespace DreamersInc.BestiarySystem
                 go = Instantiate(info.Prefab);
                 go.layer = 6;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-                entity = CreateEntity(manager, info.Name + " NPC");
+                entity = CreateEntity(manager, go.transform, info.Name + " NPC");
                 AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
                 BaseCharacterComponent character = new()
                 {
