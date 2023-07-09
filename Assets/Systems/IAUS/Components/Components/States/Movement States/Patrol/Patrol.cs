@@ -7,7 +7,7 @@ using Unity.Mathematics;
 namespace IAUS.ECS.Component
 {
     [Serializable]
-    public struct Patrol : MovementState
+    public struct Patrol : IMovementState
     {
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
@@ -58,7 +58,7 @@ namespace IAUS.ECS.Component
         [SerializeField] public float _totalScore { get; set; }
     }
 
-    public interface MovementState: IBaseStateScorer {
+    public interface IMovementState: IBaseStateScorer {
         public ConsiderationScoringData DistanceToPoint { get; }
         public ConsiderationScoringData HealthRatio { get; }
         public uint NumberOfWayPoints { get; set; }

@@ -29,7 +29,7 @@ namespace IAUS.ECS.Component
 
             foreach (var (buffer, transform, patrol, tag) in SystemAPI.Query<DynamicBuffer<TravelWaypointBuffer>, LocalTransform, Patrol, SetupBrainTag>())
             {
-                List<TravelWaypointBuffer> Waypoints = new List<TravelWaypointBuffer>();
+                List<TravelWaypointBuffer> Waypoints = new();
                 if (!patrol.StayInQuadrant)
                 {
                     Waypoints = GetPoints(transform.Position, 200, patrol.NumberOfWayPoints, true);

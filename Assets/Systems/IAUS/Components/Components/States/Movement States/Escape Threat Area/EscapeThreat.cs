@@ -9,7 +9,7 @@ using Stats.Entities;
 
 namespace IAUS.ECS.Component
 {
-    public struct EscapeThreat : MovementState
+    public struct EscapeThreat : IMovementState
     {
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;

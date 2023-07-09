@@ -25,14 +25,7 @@ namespace Global.Component
         //TODO change to output a relationship level;
         public bool IsFriend(int factionID)
         {
-            bool test = new bool();
-            if (factionID == FactionID)
-                test = true;
-            else
-            {
-                test = LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
-            }
-            return test;
+            return factionID == FactionID ? true : LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
         }
         public float detectionScore;
 

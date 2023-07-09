@@ -13,3 +13,7 @@ Normal,Grunt,3,AttackRange,TRUE,FALSE,Logistic,75.0000,.8500,0.1500,0.4500
 Normal,Grunt,3,AttackRange,TRUE,FALSE,Logistic,75.0000,.8500,0.1500,0.4500
 Normal,Grunt,0,AttackRange,TRUE,FALSE,Logistic,75.0000,.8500,0.1500,0.4500
 Normal,Grunt,1,AttackRange,TRUE,FALSE,Logistic,75.0000,.8500,0.1500,0.4500
+Normal,Beast,0,StayInQuadrant,TRUE,FALSE,50.0000,-1.0000,0.9100,0.2000
+Normal,Beast,1,StayInQuadrant,TRUE,FALSE,50.0000,-1.0000,0.9100,0.2000
+Normal,Beast,2,StayInQuadrant,TRUE,FALSE,50.0000,-1.0000,0.9100,0.2000
+Normal,Beast,3,StayInQuadrant,TRUE,FALSE,50.0000,-1.0000,0.9100,0.2000

@@ -9,7 +9,7 @@ using Unity.Burst.Intrinsics;
 namespace IAUS.ECS.Systems {
     [BurstCompile]
     public struct AddMovementState<T> : IJobChunk
-        where T : unmanaged, MovementState
+        where T : unmanaged, IMovementState
     {
 
         public ComponentTypeHandle<T> MovementChunk;

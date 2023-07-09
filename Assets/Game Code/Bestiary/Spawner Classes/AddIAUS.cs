@@ -91,6 +91,11 @@ namespace DreamersInc.BestiarySystem
                         };
                         manager.AddComponentData(entity,escape);
                         break;
+                    case AIStates.RetreatToQuadrant:
+                        var stay = new StayInQuadrant() {
+                            go
+                        };
+                        break;
                 }
             }
             manager.AddBuffer<StateBuffer>(entity);

@@ -35,7 +35,7 @@ namespace DreamersInc.QuadrantSystems
         }
         private static void DebugDrawQuadrant(float3 position)
         {
-            Vector3 lowerLeft = new Vector3(Mathf.Floor(position.x / quadrantCellSize) * quadrantCellSize, (quadrantYMultiplier * Mathf.Floor(position.y / quadrantCellSize) * quadrantCellSize));
+            Vector3 lowerLeft = new(Mathf.Floor(position.x / quadrantCellSize) * quadrantCellSize, (quadrantYMultiplier * Mathf.Floor(position.y / quadrantCellSize) * quadrantCellSize));
             Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+1, +0) * quadrantCellSize);
             Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+0, +1) * quadrantCellSize);
             Debug.DrawLine(lowerLeft + new Vector3(+1, +0) * quadrantCellSize, lowerLeft + new Vector3(+1, +1) * quadrantCellSize);

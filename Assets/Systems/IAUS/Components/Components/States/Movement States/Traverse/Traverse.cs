@@ -6,7 +6,7 @@ using IAUS.ECS.StateBlobSystem;
 namespace IAUS.ECS.Component
 {
     [Serializable]
-    public struct Traverse : MovementState
+    public struct Traverse : IMovementState
     {
 
         public uint NumberOfWayPoints { get; set; } 

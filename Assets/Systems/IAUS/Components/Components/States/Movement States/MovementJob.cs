@@ -15,7 +15,7 @@ namespace IAUS.ECS.Systems
     //TODO rework job
     //  [BurstCompile]
     public struct CheckThreatAtWaypoint<T> : IJobChunk
-        where T : unmanaged, MovementState
+        where T : unmanaged, IMovementState
 
     {
         public BufferTypeHandle<TravelWaypointBuffer> PatrolBuffer;
