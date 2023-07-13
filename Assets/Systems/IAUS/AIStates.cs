@@ -30,7 +30,7 @@ namespace IAUS.ECS
         AttackMagic,
         AttackRange,
         AttackMagicMelee,
-
+        WanderQuadrant
 
 
     }

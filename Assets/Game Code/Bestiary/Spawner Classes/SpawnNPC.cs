@@ -88,7 +88,7 @@ namespace DreamersInc.BestiarySystem
                 move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
                 manager.AddComponentData(entity, move);
 
-                AddIAUS(entity, info);
+                AddIAUS(entity, info,go);
                
             }
             else
@@ -130,7 +130,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddBuffer<ScanPositionBuffer>(entity);
 
                 //   go.GetComponent<VFXControl>().Init(info.Combo);
-                AddIAUS(entity, info);
+                AddIAUS(entity, info, go);
                 var agent = go.GetComponent<NavMeshAgent>();
                 manager.AddComponentObject(entity, agent);
 
@@ -168,7 +168,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddBuffer<ScanPositionBuffer>(entity);
 
                 //  go.GetComponent<VFXControl>().Init(info.Combo);
-                AddIAUS(entity, info);
+                AddIAUS(entity, info, go);
 
                 var agent = go.GetComponent<NavMeshAgent>();
                 manager.AddComponentObject(entity, agent);

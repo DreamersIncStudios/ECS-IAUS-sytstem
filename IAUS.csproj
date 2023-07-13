@@ -85,12 +85,12 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\MovementJob.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\UpdateWanderLocation.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\WanderQuadrant.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddAttacks.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\VisionAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\Patrol.cs" />
@@ -98,6 +98,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\PatrolAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\EquipmentUpdate.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\WanderQuadrant.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\AttackState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
@@ -108,12 +109,12 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddWaitState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WanderReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area\EscapeThreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\SpawnDefendersState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\StayInQuadrant.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\StateTest.txt" />
     <None Include="Assets\Systems\IAUS\IAUS Def.asmdef" />
     <None Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\Consideration files\Distance to place of Interest.txt" />
     <None Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\ash.txt" />

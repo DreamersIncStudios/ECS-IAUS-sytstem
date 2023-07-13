@@ -5,6 +5,9 @@ using Unity.Collections;
 using Unity.Transforms;
 using UnityEngine;
 using Unity.Burst.Intrinsics;
+using System.Runtime.InteropServices;
+using Utilities;
+using JetBrains.Annotations;
 
 namespace IAUS.ECS.Systems {
     [BurstCompile]
@@ -54,5 +57,34 @@ namespace IAUS.ECS.Systems {
 
      
     }
+    public partial struct AddWanderState : IJobEntity {
 
+        public EntityCommandBuffer.ParallelWriter ECB;
+        public void Execute(Entity entity, [ChunkIndexInQuery]int sortkey ,ref WanderQuadrant wander, ref DynamicBuffer<StateBuffer> stateBuffer, ref LocalTransform transform)
+        {
+           
+            bool add = true;
+            for (int index = 0; index < stateBuffer.Length; index++)
+            {
+                if (stateBuffer[index].StateName == AIStates.WanderQuadrant)
+                {
+                    add = false;
+                    continue;
+                }
+            }
+            wander.SpawnPosition = transform.Position;
+
+            wander.Status = ActionStatus.Idle;
+           
+            if (add)
+            {
+                stateBuffer.Add(new StateBuffer(wander.name));
+                ECB.AddComponent(sortkey, entity, new UpdateWanderLocationTag());
+            }
+
+        }
+
+        
+    }
+    public struct UpdateWanderLocationTag : IComponentData { }
 }

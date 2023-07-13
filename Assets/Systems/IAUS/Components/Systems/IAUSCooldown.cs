@@ -17,9 +17,11 @@ public partial struct IAUSCooldown : ISystem
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
-        new UpdatePatrol() { deltaTime= deltaTime}.Schedule();
-        new UpdateTraverse() { deltaTime = deltaTime }.Schedule();
-        new UpdateWait() { deltaTime = deltaTime }.Schedule();
+        new UpdatePatrol() { deltaTime= deltaTime}.ScheduleParallel();
+        new UpdateTraverse() { deltaTime = deltaTime }.ScheduleParallel();
+        new UpdateWait() { deltaTime = deltaTime }.ScheduleParallel();
+        new UpdateWander() { deltaTime = deltaTime }.ScheduleParallel();
+
     }
     [BurstCompile]
 
@@ -76,6 +78,26 @@ public partial struct IAUSCooldown : ISystem
             {
                 state.Status = ActionStatus.Idle;
                 state.ResetTime= 0.0f;
+            }
+        }
+
+    }
+    [BurstCompile]
+
+    partial struct UpdateWander : IJobEntity
+    {
+        public float deltaTime;
+
+        void Execute(ref WanderQuadrant state)
+        {
+            if (state.InCooldown)
+            {
+                state.ResetTime -= deltaTime;
+            }
+            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
+            {
+                state.Status = ActionStatus.Idle;
+                state.ResetTime = 0.0f;
             }
         }
 

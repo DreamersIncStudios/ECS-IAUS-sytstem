@@ -81,13 +81,24 @@ namespace IAUS.ECS.StateBlobSystem
             }).Run();
             Entities.WithoutBurst().ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 p.stateRef = reference;
-                p.Index = p.stateRef.Value.GetConsiderationIndex(new Identity()
+                p.SetIndex( p.stateRef.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = p.name,
                     FactionID = brain.factionID,
                     NPCLevel = brain.NPCLevel
-                });
+                }));
+            }).Run();
+
+            Entities.WithoutBurst().ForEach((ref WanderQuadrant p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                p.stateRef = reference;
+                p.SetIndex( p.stateRef.Value.GetConsiderationIndex(new Identity()
+                {
+                    Difficulty = Difficulty.Normal,
+                    aIStates = p.name,
+                    FactionID = brain.factionID,
+                    NPCLevel = brain.NPCLevel
+                }));
             }).Run();
 
             Entities.WithoutBurst().ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {

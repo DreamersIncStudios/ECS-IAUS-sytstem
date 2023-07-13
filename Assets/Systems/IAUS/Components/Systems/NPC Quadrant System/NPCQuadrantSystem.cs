@@ -42,8 +42,8 @@ namespace DreamersInc.QuadrantSystems
         }
 
         private NativeParallelMultiHashMap<int, NPCQuadrantData> quadrantMultiHashMap;
-        private const int quadrantYMultiplier = 1000;
-        private const int quadrantCellSize = 50;
+        public const int quadrantYMultiplier = 1000;
+        public const int quadrantCellSize = 50;
         public EntityQuery query;
 
         public void OnCreate(ref SystemState state) {

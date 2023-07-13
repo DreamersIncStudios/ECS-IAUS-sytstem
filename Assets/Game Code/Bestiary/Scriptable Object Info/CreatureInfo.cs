@@ -7,6 +7,7 @@ using UnityEditor;
 using Global.Component;
 using Dreamers.InventorySystem.Base;
 using MotionSystem.Components;
+using IAUS.ECS.Component;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -16,6 +17,7 @@ namespace DreamersInc.BestiarySystem
         public uint ID { get { return creatureID; } }
         public string Name;
         public uint ClassLevel;
+        public NPCLevel GetNPCLevel;
         public CharacterClass stats;
         public GameObject Prefab;
         public List<AIStates> AIStatesToAdd;

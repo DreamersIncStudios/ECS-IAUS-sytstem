@@ -87,6 +87,7 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
+
                 List<float> scores = new List<float>();
                 scores.Add(MeleeScore);
                 scores.Add(MagicMeleeScore);

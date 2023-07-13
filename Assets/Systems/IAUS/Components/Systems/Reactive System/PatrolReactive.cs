@@ -15,7 +15,7 @@ using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Systems.Reactive
 {
-    public struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol>
+    public partial  struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol>
     {
         public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment)
         {
@@ -95,7 +95,7 @@ namespace IAUS.ECS.Systems.Reactive
             //    PatrolChunk = GetComponentTypeHandle<Patrol>(false),
             //    ToWorldChunk = GetComponentTypeHandle<LocalToWorld>(true),
             //    WaypointChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true)
-            //}.ScheduleParallel(_patrolling, systemDeps);
+            //}.ScheduleParallel(wandering , systemDeps);
             _entityCommandBufferSystem.AddJobHandleForProducer(systemDeps);
 
             Dependency = systemDeps;

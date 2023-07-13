@@ -11,13 +11,17 @@ using Components.MovementSystem;
 using Unity.Burst.Intrinsics;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.StateComponent))]
-
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WaitActionTag, Wait, IAUS.ECS.Systems.Reactive.WaitTagReactor>.ManageComponentRemovalJob))]
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.StateComponent))]
 
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<PatrolActionTag, Wait, IAUS.ECS.Systems.Reactive.PatrolWaitTagReactor>.ManageComponentRemovalJob))]
+
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<WanderActionTag, Wait, IAUS.ECS.Systems.Reactive.WanderWaitTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WanderActionTag, Wait, IAUS.ECS.Systems.Reactive.WanderWaitTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<WanderActionTag, Wait, IAUS.ECS.Systems.Reactive.WanderWaitTagReactor>.ManageComponentRemovalJob))]
+
 
 namespace IAUS.ECS.Systems.Reactive
 {
@@ -84,15 +88,51 @@ namespace IAUS.ECS.Systems.Reactive
         }
     }
 
+
+    public struct WanderWaitTagReactor : IComponentReactorTagsForAIStates<WanderActionTag, Wait>
+    {
+        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref Wait AIStateCompoment)
+        {
+
+        }
+
+        public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
+        {
+            AIStateCompoment.StartTime = AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
+        }
+
+        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
+        {
+        }
+        public partial class WaitReactiveSystem2 : AIReactiveSystemBase<WanderActionTag, Wait, WanderWaitTagReactor>
+        {
+            protected override WanderWaitTagReactor CreateComponentReactor()
+            {
+                return new WanderWaitTagReactor();
+            }
+
+        }
+    }
+
+
     public partial class WaitFinished : SystemBase
     {
-        EntityQuery waiters;
+        EntityQuery waitersPatrol;
+        EntityQuery waitersWander;
+
         protected override void OnCreate()
         {
             base.OnCreate();
-            waiters = GetEntityQuery(new EntityQueryDesc()
+            waitersPatrol = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),
+                    ComponentType.ReadWrite(typeof(AIReactiveSystemBase < WaitActionTag, Wait, WaitTagReactor >.StateComponent ))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
+            });
+            waitersWander = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(LocalTransform)),
                     ComponentType.ReadWrite(typeof(AIReactiveSystemBase < WaitActionTag, Wait, WaitTagReactor >.StateComponent ))
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
@@ -101,12 +141,17 @@ namespace IAUS.ECS.Systems.Reactive
 
         protected override void OnUpdate()
         {
-            new Test().Schedule(waiters);
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+
+            new EndWaitPatrol().Schedule(waitersPatrol);
+            new EndWaitWander() { 
+            ecb = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
+            }.Schedule(waitersWander);
 
         }
     }
     [BurstCompile]
-    partial struct Test : IJobEntity {
+    partial struct EndWaitPatrol : IJobEntity {
 
         public void Execute( ref Patrol patrol, in LocalTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
             if (patrol.WaypointIndex >= patrol.NumberOfWayPoints-1)
@@ -123,8 +168,16 @@ namespace IAUS.ECS.Systems.Reactive
         }
     
     }
+    partial struct EndWaitWander : IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter ecb;
+        public void Execute(Entity entity, [ChunkIndexInQuery] int sortKey, ref WanderQuadrant patrol, in LocalTransform ToWorld)
+        {
+            ecb.AddComponent<UpdateWanderLocationTag>(sortKey, entity);
+        }
 
-   
-    
+    }
+
+
 
 }

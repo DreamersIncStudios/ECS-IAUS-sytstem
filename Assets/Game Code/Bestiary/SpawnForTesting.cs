@@ -20,7 +20,9 @@ public class SpawnForTesting : MonoBehaviour
         //for (int i = 0; i < 10; i++)
         //{
         BestiaryDB.SpawnNPC(1);
-    //}
+        BestiaryDB.SpawnNPC(3);
+
+        //}
         for (int i = 0; i < 15; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))

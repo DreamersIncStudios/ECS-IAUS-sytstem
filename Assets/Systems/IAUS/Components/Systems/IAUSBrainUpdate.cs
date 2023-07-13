@@ -44,6 +44,9 @@ namespace IAUS.ECS.Systems
          
             var traverseUpdate = new UpdateTraverse();
             traverseUpdate.Schedule();
+
+            var WanderUpdate = new UpdateWander();
+            WanderUpdate.Schedule();
             var waitUpdate = new UpdateWait();
             waitUpdate.Schedule();
             var attackUpdate = new UpdateAttack();
@@ -83,6 +86,27 @@ namespace IAUS.ECS.Systems
             for (int i = 0; i < buffer.Length; i++)
             {
                 if (buffer[i].StateName == AIStates.Patrol)
+                {
+                    StateBuffer temp = buffer[i];
+                    temp.TotalScore = aspect.Score;
+                    temp.Status = aspect.Status;
+                    buffer[i] = temp;
+
+                    break;
+                }
+            }
+
+        }
+
+    }
+    [BurstCompile]
+    partial struct UpdateWander: IJobEntity
+    {
+        void Execute(WanderQuadrantAspect aspect, ref DynamicBuffer<StateBuffer> buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i].StateName == AIStates.WanderQuadrant)
                 {
                     StateBuffer temp = buffer[i];
                     temp.TotalScore = aspect.Score;
@@ -189,6 +213,9 @@ namespace IAUS.ECS.Systems
                     case AIStates.Wait:
                         CommandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, entity);
                         break;
+                    case AIStates.WanderQuadrant:
+                        CommandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, entity);
+                        break;
                     //case AIStates.ChaseMoveToTarget:
                     //    CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
                     //    break;
@@ -224,6 +251,9 @@ namespace IAUS.ECS.Systems
                         break;
                     case AIStates.Traverse:
                         CommandBufferParallel.AddComponent(chunkIndex, entity, new TraverseActionTag() { UpdateWayPoint = false });
+                        break;
+                    case AIStates.WanderQuadrant:
+                        CommandBufferParallel.AddComponent<WanderActionTag>(chunkIndex, entity);
                         break;
                     case AIStates.Wait:
                         CommandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, entity);

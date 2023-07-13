@@ -14,7 +14,7 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        public static void AddIAUS(Entity entity, CreatureInfo info)
+        public static void AddIAUS(Entity entity, CreatureInfo info, GameObject GO)
         {
             
 
@@ -32,7 +32,7 @@ namespace DreamersInc.BestiarySystem
             });
 
             manager.AddComponent<AIStat>(entity);
-            manager.AddComponent<IAUSBrain>(entity);
+            manager.AddComponentData(entity, new IAUSBrain() { NPCLevel= info.GetNPCLevel});
             manager.AddBuffer<ScanPositionBuffer>(entity);
             foreach (var state in info.AIStatesToAdd)
             {
@@ -61,7 +61,16 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity, traverse);
                         manager.AddBuffer<TravelWaypointBuffer>(entity);
                         break;
+                    case AIStates.WanderQuadrant:
+                        var wander = new WanderQuadrant()
+                        {
+                            SpawnPosition = GO.transform.position,
+                            _coolDownTime = 5.5f,
+                            BufferZone = .25f,
+                        };
+                        manager.AddComponentData(entity, wander);
 
+                        break;
                     case AIStates.Wait:
                         var wait = new Wait()
                         {
@@ -93,7 +102,9 @@ namespace DreamersInc.BestiarySystem
                         break;
                     case AIStates.RetreatToQuadrant:
                         var stay = new StayInQuadrant() {
-                            go
+                           _coolDownTime =10f,
+                           SpawnPosition = GO.transform.position,
+
                         };
                         break;
                 }

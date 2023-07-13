@@ -11,7 +11,11 @@ namespace IAUS.ECS.Component
 
         public uint NumberOfWayPoints { get; set; } 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
         public AIStates name { get { return AIStates.Traverse; } }
 
 
