@@ -1,0 +1,28 @@
+{
+    "name": "CharacterControllerSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:8914db4bf3ebeec47af9f0812c81d6bb",
+        "GUID:73ed5294622c6f94394950df0cbd27fd",
+        "GUID:a5baed0c9693541a5bd947d336ec7659",
+        "GUID:734d92eba21c94caba915361bd5ac177",
+        "GUID:f372f72852c33e248aa343b9c1315df4",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:63afb046c8423dd448ae7aba042ea63d",
+        "GUID:8819f35a0fc84499b990e90a4ca1911f",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:8fe41d8c1b28bc5419bf5970df5187f9",
+        "GUID:4307f53044263cf4b835bd812fc161a4",
+        "GUID:b2d6bc618f4850c4f9c2cea7d7938709"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -243,3 +243,5 @@ UnityEngine.UI.csproj
 Assets/Scenes/new spawn test/Lightmap-1_comp_light.exr.meta
 Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png
 Assets/Scenes/new spawn test/Lightmap-1_comp_shadowmask.png.meta
+/Assets/SceneDependencyCache
+/Assets/Samples

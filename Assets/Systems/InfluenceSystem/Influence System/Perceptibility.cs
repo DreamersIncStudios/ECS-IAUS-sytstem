@@ -6,7 +6,6 @@ using System;
 
 namespace DreamersInc.InflunceMapSystem
 {
-    [GenerateAuthoringComponent]
     public struct Perceptibility : IComponentData
     {
        [SerializeField] public float Score => (visibiltyScore + MovementScore + noiseScore) / 3.0f;
@@ -14,6 +13,7 @@ namespace DreamersInc.InflunceMapSystem
         public MovementStates movement;
         public NoiseState noiseState;
 
+        private float test;
 
         float visibiltyScore =>
             visibilityStates switch { 
@@ -26,7 +26,7 @@ namespace DreamersInc.InflunceMapSystem
             };
         float MovementScore => movement switch
         {
-            MovementStates.Stadning_Still => 1.0f,
+            MovementStates.Standing_Still => 1.0f,
             MovementStates.Walking => 1.0f,
             MovementStates.Sitting => 1.0f,
             MovementStates.Running => 1.0f,
@@ -55,23 +55,19 @@ namespace DreamersInc.InflunceMapSystem
 
     public partial class ChangePerceptionSystem : SystemBase
     {
-        EntityCommandBufferSystem _entityCommandBufferSystem;
-
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-        }
+ 
         protected override void OnUpdate()
         {
-            EntityCommandBuffer.ParallelWriter entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer().AsParallelWriter();
+
+            var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ECB = ecbSingleton.CreateCommandBuffer(World.Unmanaged).AsParallelWriter();
+
 
             Entities.WithBurst().ForEach((Entity entity, int entityInQueryIndex, ref Perceptibility perception, ref ChangePerceptiopnStates change) => {
                 perception.visibilityStates = change.visibilityStates;
                 perception.movement = change.movement;
                 perception.noiseState = change.noiseState;
-                entityCommandBuffer.RemoveComponent<ChangePerceptiopnStates>(entityInQueryIndex, entity);
+                ECB.RemoveComponent<ChangePerceptiopnStates>(entityInQueryIndex, entity);
             }).ScheduleParallel();
             
         }
@@ -81,7 +77,7 @@ namespace DreamersInc.InflunceMapSystem
     public enum VisibilityStates { 
         Visible, Concealed, Hidden, Camo, Standing_Out
     }
-    public enum MovementStates { Stadning_Still, Walking, Sitting, Running, Crounched }
+    public enum MovementStates { Standing_Still, Walking, Sitting, Running, Crounched }
     public enum NoiseState {  Normal, Silent, Muffled, Sneaking, Yelling}
 
 

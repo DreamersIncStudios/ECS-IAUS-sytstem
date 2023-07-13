@@ -130,37 +130,58 @@ namespace DreamersInc.InflunceMapSystem
 
         public int2 GetValue(Faction faction)
         {
-            List<Faction> foes = new List<Faction>();
-            List<Faction> friends = new List<Faction>();
-            List<Faction> neutral = new List<Faction>();
+            List<Faction> Foes = new List<Faction>();
+            List<Faction> Friends = new List<Faction>();
+            List<Faction> Neutral = new List<Faction>();
 
             foreach (var item in LoveHate.factionDatabase.GetFaction(faction.id).relationships)
             {
                 if (item.GetTrait(0) > 50)
-                    friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    Friends.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else if (item.GetTrait(0) < 50)
-                    foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    Foes.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
                 else
-                    neutral.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
+                    Neutral.Add(LoveHate.factionDatabase.GetFaction(item.factionID));
             }
+
             int2[] value = new int2[2];
-            for (int i = 0; i < friends.Count; i++)
+            for (int i = 0; i < Friends.Count; i++)
             {
-                if (gridValue.TryGetValue(friends[i], out int2 output))
-                    value[0] += output;
+                value[0] += gridValue[Friends[i]];
             }
-            for (int i = 0; i < foes.Count; i++)
+            for (int i = 0; i < Foes.Count; i++)
             {
-                if (gridValue.TryGetValue(foes[i], out int2 output))
-                    value[1] += output;
+                value[1] += gridValue[Foes[i]];
             }
 
             return new int2(value[0].x, value[1].y);
         }
+        public int2 GetAverageValue(Faction faction, int AreaSize = 10)
+        {
+            int startX, startY;
+            int2 totalInfluenceArea = new();
+            startX = x - AreaSize / 2;
+            startY = y - AreaSize / 2;
+            for (int i = 0; i < AreaSize; i++)
+            {
+                for (int j = 0; j < AreaSize; j++)
+                {
+                    totalInfluenceArea += grid.GetGridObject(startX + i, startY + j).GetValue(faction);
+                }
+            }
+            return totalInfluenceArea / AreaSize;
+
+        }
+        public int2 GetAverageValue(int FactionID, int AreaSize = 10)
+        {
+            return GetAverageValue(LoveHate.GetFaction(FactionID), AreaSize);
+        }
+
         public float2 GetValueNormalized(Faction faction)
         {
             return (float2)GetValue(faction) / MAX;
         }
+
 
         public float GetHighestThreatCell(Faction faction, bool filtered, out int i, out int j)
         {
@@ -208,16 +229,12 @@ namespace DreamersInc.InflunceMapSystem
             return LowValue;
         }
 
+
         public override string ToString()
         {
-            string output = "";
-            foreach (var val in gridValue)
-            {
-                output += val.ToString();
-            }
-
-            return output;
+            return gridValue.ToString();
         }
     }
+
 
 }
