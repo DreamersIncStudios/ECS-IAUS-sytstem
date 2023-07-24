@@ -56,7 +56,7 @@ namespace IAUS.ECS.Systems.Reactive
         public partial class WanderSystem : SystemBase
         {
             private EntityQuery componentAddedQuery;
-            private EntityQuery wandering ;
+            private EntityQuery wanderingStopped ;
 
             EntityCommandBufferSystem entityCommandBufferSystem;
             protected override void OnCreate()
@@ -67,13 +67,15 @@ namespace IAUS.ECS.Systems.Reactive
                     All = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(WanderActionTag)), ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(LocalTransform))
                 },
-                    None = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.StateComponent)) }
+                    Absent = new ComponentType[] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.StateComponent)) }
                 });
-                wandering  = GetEntityQuery(new EntityQueryDesc()
+                wanderingStopped  = GetEntityQuery(new EntityQueryDesc()
                 {
-                    All = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(WanderActionTag)), ComponentType.ReadWrite(typeof(Movement))
+                    All = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(Movement))
                 , ComponentType.ReadOnly(typeof(LocalTransform)),
-                    ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.StateComponent)) }
+                    ComponentType.ReadOnly(typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.StateComponent)) },
+                    Absent = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderActionTag))        },
+                    
                 });
 
                 entityCommandBufferSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
@@ -81,13 +83,11 @@ namespace IAUS.ECS.Systems.Reactive
             }
             protected override void OnUpdate()
             {
-                var systemDeps = Dependency;
-                systemDeps = new WanderSetupJob() { }.ScheduleParallel(componentAddedQuery, systemDeps);
-
-                Dependency = systemDeps;
+               new WanderSetupJob().ScheduleParallel(componentAddedQuery);
+                new WanderStopJob().ScheduleParallel(wanderingStopped);
+     
             }
             public partial struct WanderSetupJob : IJobEntity {
-                public EntityCommandBuffer.ParallelWriter ecb;
                 public void Execute(ref WanderQuadrant wander, ref Movement move, [ReadOnly]LocalTransform transform) {
                     wander.StartingDistance = Vector3.Distance(transform.Position, wander.TravelPosition);
 
@@ -96,6 +96,16 @@ namespace IAUS.ECS.Systems.Reactive
                 }
 
               
+            }
+            public partial struct WanderStopJob : IJobEntity
+            {
+                public void Execute(ref WanderQuadrant wander, ref Movement move)
+                {
+                    move.CanMove = false;
+
+                }
+
+
             }
         }
     }

@@ -30,7 +30,7 @@ namespace DreamersInc.BestiarySystem
                 go.tag = "Player";
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name);
-                AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
+                AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new();
                 character.GOrepresentative = go;
                 character.SetupDataEntity(info.stats);

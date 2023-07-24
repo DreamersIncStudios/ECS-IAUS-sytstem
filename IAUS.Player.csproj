@@ -76,6 +76,8 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Adjust Nav Agent Speed\ChangeMoveSpeedSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\GatherResourcesState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\TerrorizeAreaState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\Attack Sub States\AttackSystem.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackSubStateReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\AttackAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\UpdateWanderLocation.cs" />
@@ -782,6 +785,10 @@
     <ProjectReference Include="InventorySystem.Player.csproj">
       <Project>{A9212E37-34C9-4EAC-580C-3C7C20278E81}</Project>
       <Name>InventorySystem.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CharacterControllerSystem.Player.csproj">
+      <Project>{AA7AC43D-DA28-7450-EB14-70426BE91892}</Project>
+      <Name>CharacterControllerSystem.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

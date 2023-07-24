@@ -20,11 +20,8 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData DistanceToTarget;
         public ConsiderationScoringData EnemyInfluence;
         public ConsiderationScoringData FriendlyInfluence;
-
-
-
-
     }
+
     public struct AIStateBlobAsset
     {
         public BlobArray<StateAsset> Array;
@@ -59,7 +56,7 @@ namespace IAUS.ECS.StateBlobSystem
     [UpdateBefore(typeof(IAUS.ECS.Systems.IAUSBrainSetupSystem))]
     public partial class SetupAIStateBlob : SystemBase
     {
-        BlobAssetReference<AIStateBlobAsset> reference;
+        public static BlobAssetReference<AIStateBlobAsset> reference { get; private set; }
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -156,7 +153,7 @@ namespace IAUS.ECS.StateBlobSystem
 
             Entities.WithoutBurst().ForEach((ref TerrorizeAreaState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 G.stateRef = reference;
-                G.Index = G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.Index = reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -167,8 +164,7 @@ namespace IAUS.ECS.StateBlobSystem
 
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackState G) =>
             {
-                G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -179,8 +175,7 @@ namespace IAUS.ECS.StateBlobSystem
             }).Run();
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MeleeAttackSubState G) =>
             {
-                G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -192,7 +187,7 @@ namespace IAUS.ECS.StateBlobSystem
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref EscapeThreat G) =>
             {
                 G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -204,8 +199,7 @@ namespace IAUS.ECS.StateBlobSystem
 
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicAttackSubState G) =>
             {
-                G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -215,8 +209,7 @@ namespace IAUS.ECS.StateBlobSystem
 
             }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicMeleeAttackSubState G) =>
             {
-                G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,
@@ -226,8 +219,7 @@ namespace IAUS.ECS.StateBlobSystem
 
             }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref RangedAttackSubState G) =>
             {
-                G.stateRef = reference;
-                G.SetIndex(G.stateRef.Value.GetConsiderationIndex(new Identity()
+                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     aIStates = G.name,

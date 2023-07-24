@@ -19,13 +19,8 @@ namespace IAUS.ECS.Component
             Index = index;
         }
 
-        public int Index { get; private set; }
+      [SerializeField]  public int Index { get; private set; }
         public AIStates name { get { return AIStates.Attack; } }
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
@@ -41,20 +36,19 @@ namespace IAUS.ECS.Component
         [SerializeField] public ActionStatus _status;
   
     }
-
+    public struct AttackActionTag : IComponentData {
+        public int SubStateNumber;
+    }
     public struct MeleeAttackSubState : IComponentData {
         public int Index { get; private set; }
         public void SetIndex(int index)
         {
             Index = index;
         }
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        public float AttackRange { get { return 5.5f; } } //Todo Pull from character stats speed
         public AIStates name { get { return AIStates.AttackMelee; } }
-
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
-
+      
     }
     public struct MagicAttackSubState : IComponentData
     {
@@ -63,12 +57,11 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public AIStates name { get { return AIStates.AttackMagic; } }
 
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Mana;
-        public ConsiderationScoringData CoverInRange;
+     /*   public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData Mana => stateRef.Value.Array[Index].ManaAmmo;
+        public ConsiderationScoringData CoverInRange => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;*/
         public float mod { get { return 1.0f - (1.0f / 5.0f); } }
     }
     public struct MagicMeleeAttackSubState : IComponentData
@@ -78,11 +71,10 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public AIStates name { get { return AIStates.AttackMagicMelee; } }
 
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Mana;
+  //      public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+    //    public ConsiderationScoringData Mana => stateRef.Value.Array[Index].ManaAmmo;
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
     }
     public struct RangedAttackSubState : IComponentData
@@ -93,13 +85,18 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public AIStates name { get { return AIStates.AttackRange; } }
 
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Ammo => stateRef.Value.Array[Index].ManaAmmo;
-        public ConsiderationScoringData CoverInRange => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
         public float mod { get { return 1.0f - (1.0f / 5.0f); } }
 
     }
+    public struct meleeAttackTag : IComponentData {
+        public float AttackDelay;
+    }
+    public struct magicAttackTag : IComponentData { }
+    public struct rangeAttackTag : IComponentData { }
+    public struct magicmeleeAttackTag : IComponentData { }
+
+
+    public enum SubAttackStates { }
 }

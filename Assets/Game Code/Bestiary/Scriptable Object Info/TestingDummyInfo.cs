@@ -63,10 +63,10 @@ namespace DreamersInc.BestiarySystem
                 if (info != null) 
             {
                 go = Instantiate(info.Prefab);
-                go.layer = 6;
+               // go.layer = 6;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name + " NPC");
-                AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
+                AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new()
                 {
                     GOrepresentative = go
@@ -87,7 +87,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentData(entity, new AITarget()
                 {
                     FactionID = info.factionID,
-                    NumOfEntityTargetingMe = 3,
+                    NumOfEntityTargetingMe = 300,
                     CanBeTargetByPlayer = true,
                     Type = TargetType.Character,
                     CenterOffset = new float3(0, 1, 0) //todo add value to SO

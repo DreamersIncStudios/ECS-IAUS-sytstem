@@ -1,15 +1,9 @@
-using Components.MovementSystem;
 using Global.Component;
-using Stats.Entities;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -17,7 +11,6 @@ namespace DreamersInc.BestiarySystem
     {
         private static Entity CreateEntity(EntityManager manager, Transform transform, string entityName = "")
         {
-
 
             EntityArchetype baseEntityArch = manager.CreateArchetype(
               typeof(LocalTransform),
@@ -39,8 +32,22 @@ namespace DreamersInc.BestiarySystem
             return baseDataEntity;
         }
 
-        private static void AddPhysics(EntityManager manager, Entity entityLink, GameObject spawnedGO, PhysicsShape shape, PhysicsInfo physicsInfo)
+        private static void AddPhysics(EntityManager manager, Entity entityLink, GameObject spawnedGO, PhysicsInfo physicsInfo)
         {
+            PhysicsShape shape = new PhysicsShape();
+            if (spawnedGO.GetComponent<UnityEngine.CapsuleCollider>())
+            {
+                shape = PhysicsShape.Capsule;
+                goto create;
+            }
+            if (spawnedGO.GetComponent<UnityEngine.BoxCollider>())
+            {
+                shape = PhysicsShape.Box;
+                goto create;
+            }
+            Debug.LogError("Physics Collider Type is missing");
+
+            create:
             BlobAssetReference<Unity.Physics.Collider> spCollider = new BlobAssetReference<Unity.Physics.Collider>();
             switch (shape)
             {
@@ -49,17 +56,16 @@ namespace DreamersInc.BestiarySystem
                     spCollider = Unity.Physics.CapsuleCollider.Create(new CapsuleGeometry()
                     {
                         Radius = col.radius,
-                        Vertex0 = col.center + new Vector3(0, .5f * col.height-col.radius, 0),
-                        Vertex1 = col.center - new Vector3(0, .5f * col.height - col.radius, 0),
+                        Vertex0 = col.center + new Vector3(0, col.height, 0),
+                        Vertex1 = new float3(0, 0, 0)
 
                     }, new CollisionFilter()
                     {
                         BelongsTo = physicsInfo.BelongsTo.Value,
                         CollidesWith = physicsInfo.CollidesWith.Value,
                         GroupIndex = 0
-                    }
-                    
-                    );
+                    });
+
 
                     break;
                 case PhysicsShape.Box:
@@ -76,13 +82,13 @@ namespace DreamersInc.BestiarySystem
                         CollidesWith = physicsInfo.CollidesWith.Value,
                         GroupIndex = 0
                     });
+                    manager.AddComponentData(entityLink, new PhysicsCollider()
+                    { Value = spCollider });
                     break;
             }
+            manager.AddSharedComponent(entityLink, new PhysicsWorldIndex());
             manager.AddComponentData(entityLink, new PhysicsCollider()
             { Value = spCollider });
-             manager.AddComponent<PhysicsVelocity>(entityLink);
-            manager.AddBuffer<PhysicsColliderKeyEntityPair>(entityLink);
-            manager.AddSharedComponent(entityLink, new PhysicsWorldIndex() { Value = 0});
             manager.AddComponentData(entityLink, new PhysicsInfo
             {
                 BelongsTo = physicsInfo.BelongsTo,

@@ -67,6 +67,9 @@ namespace DreamersInc.BestiarySystem
                             SpawnPosition = GO.transform.position,
                             _coolDownTime = 5.5f,
                             BufferZone = .25f,
+                            //WanderNeighborQuadrants = true
+                            //TODO Figure out way above line causes issues
+
                         };
                         manager.AddComponentData(entity, wander);
 

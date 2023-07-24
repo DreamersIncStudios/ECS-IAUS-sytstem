@@ -46,7 +46,7 @@ namespace IAUS.ECS.Component {
 
     public struct WaitActionTag : IComponentData
     {
-        public bool tester;
+        [HideInInspector]public bool tester;
     }
 
     //TODO Move to better file location 

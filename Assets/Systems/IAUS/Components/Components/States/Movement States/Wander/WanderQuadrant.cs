@@ -9,6 +9,7 @@ using Stats.Entities;
 using Unity.Transforms;
 using DreamersInc.QuadrantSystems;
 using System;
+using AISenses.VisionSystems;
 
 namespace IAUS.ECS.Component
 {
@@ -82,7 +83,26 @@ namespace IAUS.ECS.Component
         readonly RefRO<LocalTransform> transform;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<WanderQuadrant> wander;
+        readonly VisionAspect VisionAspect;
 
+        float TravelInFiveSec
+        {
+            get
+            {
+                return 5 * 10; // TODO change to stat dependent statInfo.ValueRO.Speed * 5;   
+            }
+        }
+
+        bool targetInRange
+        {
+            get
+            {
+                if (VisionAspect.TargetInRange(out _, out float dist)) {
+                    return dist < TravelInFiveSec;
+                }
+                else { return false; }
+            }
+        }
         float distanceToPoint
         {
             get
@@ -106,8 +126,8 @@ namespace IAUS.ECS.Component
 
                 }
                 wander.ValueRW.distanceToPoint = distanceToPoint;
-                float totalScore = wander.ValueRO.DistanceToPoint.Output(wander.ValueRO.DistanceRatio)* wander.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
-                wander.ValueRW.TotalScore = wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
+                float totalScore = wander.ValueRO.DistanceToPoint.Output(wander.ValueRO.DistanceRatio)* wander.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio);
+                wander.ValueRW.TotalScore = !targetInRange &&wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
 
                 totalScore = wander.ValueRW.TotalScore;
                 return totalScore;

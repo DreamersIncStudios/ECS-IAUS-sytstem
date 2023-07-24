@@ -32,7 +32,7 @@ namespace DreamersInc.BestiarySystem
                 go.layer= 9;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name+" NPC");
-                  AddPhysics(manager, entity, go, PhysicsShape.Capsule, info.PhysicsInfo);
+                  AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new()
                 {
                     GOrepresentative = go

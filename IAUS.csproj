@@ -76,6 +76,8 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Adjust Nav Agent Speed\ChangeMoveSpeedSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\GatherResourcesState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\TerrorizeAreaState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\Attack Sub States\AttackSystem.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackSubStateReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\AttackAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateBlob.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\MovementJob.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\UpdateWanderLocation.cs" />
@@ -854,6 +857,10 @@
     <ProjectReference Include="InventorySystem.csproj">
       <Project>{0B6FCC49-E058-1F58-CA77-13BDE873FE92}</Project>
       <Name>InventorySystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="CharacterControllerSystem.csproj">
+      <Project>{AA149F0B-9D32-2976-5581-2C5A9CA46EBE}</Project>
+      <Name>CharacterControllerSystem</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{A7DD60F4-5F65-8B71-2FE9-35D81C4A0146}</Project>
