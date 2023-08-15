@@ -72,7 +72,6 @@ namespace IAUS.ECS.Systems.Reactive
 
         public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
         {
-            AIStateCompoment.StartTime=AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
         }
 
         public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
@@ -98,7 +97,6 @@ namespace IAUS.ECS.Systems.Reactive
 
         public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
         {
-            AIStateCompoment.StartTime = AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
         }
 
         public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
@@ -119,7 +117,8 @@ namespace IAUS.ECS.Systems.Reactive
     {
         EntityQuery waitersPatrol;
         EntityQuery waitersWander;
-
+        EntityQuery patrolEnd;
+        EntityQuery wanderEnd;
         protected override void OnCreate()
         {
             base.OnCreate();
@@ -137,47 +136,93 @@ namespace IAUS.ECS.Systems.Reactive
                 },
                 None = new ComponentType[] { ComponentType.ReadOnly(typeof(WaitActionTag)) }
             });
+
+            patrolEnd = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)),ComponentType.ReadWrite(typeof(Wait)), ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),
+                    ComponentType.ReadWrite(typeof(AIReactiveSystemBase < PatrolActionTag, Patrol, PatrolTagReactor >.StateComponent ))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(PatrolActionTag)) }
+            });
+            wanderEnd = GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] {ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(Wait)),ComponentType.ReadWrite(typeof(LocalTransform)),
+                    ComponentType.ReadWrite(typeof(AIReactiveSystemBase < WanderActionTag, WanderQuadrant, WanderTagReactor >.StateComponent ))
+                },
+                None = new ComponentType[] { ComponentType.ReadOnly(typeof(WanderActionTag)) }
+            });
         }
 
         protected override void OnUpdate()
         {
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var systemDeps = Dependency;
+            systemDeps = new EndWaitPatrol().Schedule(waitersPatrol, systemDeps);
+            systemDeps = new EndWaitWander()
+            {
+                ecb = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
+            }.Schedule(waitersWander, systemDeps);
 
-            new EndWaitPatrol().Schedule(waitersPatrol);
-            new EndWaitWander() { 
-            ecb = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
-            }.Schedule(waitersWander);
+
+            systemDeps = new WaitUpdate<Patrol>()
+            {
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                moveChunk = GetComponentTypeHandle<Patrol>(true)
+            }.ScheduleParallel(patrolEnd, systemDeps);
+            systemDeps = new WaitUpdate<WanderQuadrant>()
+            {
+                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                moveChunk = GetComponentTypeHandle<WanderQuadrant>(true)
+            }.ScheduleParallel(wanderEnd, systemDeps);
+
+            Dependency = systemDeps;
+        }
+
+        [BurstCompile]
+        partial struct EndWaitPatrol : IJobEntity {
+
+            public void Execute(ref Patrol patrol, in LocalTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
+                if (patrol.WaypointIndex >= patrol.NumberOfWayPoints - 1)
+                {
+                    patrol.WaypointIndex = 0;
+                }
+                else
+                {
+                    patrol.WaypointIndex++;
+                }
+
+                patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
+                patrol.StartingDistance = Vector3.Distance(ToWorld.Position, patrol.CurWaypoint.Position);
+            }
 
         }
-    }
-    [BurstCompile]
-    partial struct EndWaitPatrol : IJobEntity {
-
-        public void Execute( ref Patrol patrol, in LocalTransform ToWorld, in DynamicBuffer<TravelWaypointBuffer> waypointBuffer) {
-            if (patrol.WaypointIndex >= patrol.NumberOfWayPoints-1)
-            {
-                patrol.WaypointIndex = 0;
-            }
-            else
-            {
-                patrol.WaypointIndex++;
-            }
-
-            patrol.CurWaypoint = waypointBuffer[patrol.WaypointIndex].WayPoint;
-            patrol.StartingDistance = Vector3.Distance(ToWorld.Position, patrol.CurWaypoint.Position);
-        }
-    
-    }
-    partial struct EndWaitWander : IJobEntity
-    {
-        public EntityCommandBuffer.ParallelWriter ecb;
-        public void Execute(Entity entity, [ChunkIndexInQuery] int sortKey, ref WanderQuadrant patrol, in LocalTransform ToWorld)
+        partial struct EndWaitWander : IJobEntity
         {
-            ecb.AddComponent<UpdateWanderLocationTag>(sortKey, entity);
+            public EntityCommandBuffer.ParallelWriter ecb;
+            public void Execute(Entity entity, [ChunkIndexInQuery] int sortKey, ref WanderQuadrant patrol, in LocalTransform ToWorld)
+            {
+                ecb.AddComponent<UpdateWanderLocationTag>(sortKey, entity);
+            }
+
+        }
+        partial struct WaitUpdate<MOVESTATE> : IJobChunk where MOVESTATE : unmanaged, IMovementState
+        {
+            public ComponentTypeHandle<Wait> WaitChunk;
+           [ReadOnly] public ComponentTypeHandle<MOVESTATE> moveChunk;
+            public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
+            {
+                NativeArray<MOVESTATE> move = chunk.GetNativeArray(ref moveChunk);
+                NativeArray<Wait> waits = chunk.GetNativeArray(ref WaitChunk);
+
+                for (int i = 0; i < chunk.Count; i++)
+                {
+                    Wait wait = waits[i];
+                    wait.StartTime = wait.Timer = move[i].Complete ? 15f : 0.0f;
+
+                    waits[i]= wait;
+                }
+            }
         }
 
     }
-
-
-
 }

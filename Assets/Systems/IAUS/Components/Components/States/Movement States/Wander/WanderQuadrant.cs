@@ -76,7 +76,6 @@ namespace IAUS.ECS.Component
     public struct WanderActionTag : IComponentData
     {
         public float WaitTime;
-
     }
     public readonly partial struct WanderQuadrantAspect : IAspect
     {

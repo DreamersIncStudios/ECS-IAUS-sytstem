@@ -84,6 +84,6 @@ namespace IAUS.ECS.Component
     public struct PatrolActionTag : IComponentData {
         public bool UpdateWayPoint;
         public float WaitTime;
-    
+
     }
 }

@@ -60,9 +60,6 @@ namespace Dreamers.InventorySystem
                 Gold = (int)Mathf.Clamp(Gold + amount, 0, Mathf.Infinity);
         }
     }
-    public class CharacterInvenetoryComp : IComponentData {
-        public EquipmentBase equipment;
-        public InventoryBase inventory;
-    }
+
     public struct CheckAttackStatus : IComponentData { }
 }
