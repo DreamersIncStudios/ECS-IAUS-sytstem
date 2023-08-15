@@ -77,12 +77,12 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\GatherResourcesState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\TerrorizeAreaState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\Attack Sub States\AttackSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackSubStateReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\WaypointCreation.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\AttackAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\Attack SubState Reactive\AttackSubStateReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackReactive.cs" />
@@ -111,6 +111,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\Attack SubState Reactive\MeleeReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WanderReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area\EscapeThreat.cs" />

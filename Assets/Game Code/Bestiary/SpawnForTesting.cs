@@ -19,7 +19,7 @@ public class SpawnForTesting : MonoBehaviour
         }
         for (int i = 0; i < 10; i++)
         {
-            BestiaryDB.SpawnNPC(1);
+        //    BestiaryDB.SpawnNPC(1);
             BestiaryDB.SpawnNPC(3);
 
         }

@@ -58,10 +58,10 @@ namespace IAUS.ECS.Systems.Reactive
         protected override void OnUpdate()
         {
             var systemDeps = Dependency;
-            systemDeps = new MoveToMeleeRange() {
-                MoveChunk = GetComponentTypeHandle<Movement>(false),
-                TargetChunk = GetComponentTypeHandle<AttackTarget>(true)
-            }.Schedule(meleeTagAdded, systemDeps);
+            //systemDeps = new MoveToMeleeRange() {
+            //    MoveChunk = GetComponentTypeHandle<Movement>(false),
+            //    TargetChunk = GetComponentTypeHandle<AttackTarget>(true)
+            //}.Schedule(meleeTagAdded, systemDeps);
             systemDeps = new InAttackRange().Schedule( systemDeps);
 
             Dependency = systemDeps;
@@ -93,17 +93,23 @@ namespace IAUS.ECS.Systems.Reactive
         partial struct InAttackRange: IJobEntity {
             public float DeltaTime;
             void Execute(ref Movement move, ref MeleeAttackSubState melee,ref meleeAttackTag tag, ref AttackTarget target, in LocalTransform transform) {
-                if (move.Completed) {
+                if (move.Completed) 
+                {
                     if (tag.AttackDelay > 0.0F)
+                    {
                         tag.AttackDelay -= DeltaTime;
-                    else {
+                    }
+                    else
+                    {
                         Debug.Log("Trigger Attack animation");
                         tag.AttackDelay = 6.85f; //Todo Set this is be a random number later based off stats
                     }
-                    if (Vector3.Distance(target.AttackTargetLocation, transform.Position) > melee.AttackRange) { 
-                        move.SetLocation(target.AttackTargetLocation);
-                    }
+
                 }
+                //if (Vector3.Distance(target.AttackTargetLocation, transform.Position) > melee.AttackRange)
+                //{
+                //    move.SetLocation(target.AttackTargetLocation);
+                //}
             }
         }
     }

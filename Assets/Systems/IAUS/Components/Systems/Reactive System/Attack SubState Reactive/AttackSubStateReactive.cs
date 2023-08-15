@@ -9,9 +9,6 @@ using Unity.Transforms;
 using UnityEngine;
 using Utilities.ReactiveSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<magicmeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicMeleeTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<magicmeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicMeleeTagReactor>.ManageComponentAdditionJob))]
@@ -25,23 +22,7 @@ using Utilities.ReactiveSystem;
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<rangeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.RangeTagReactor>.ManageComponentAdditionJob))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<rangeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.RangeTagReactor>.ManageComponentRemovalJob))]
 namespace IAUS.ECS.Systems.Reactive {
-    public partial struct MeleeTagReactor : IComponentReactorTagsForAIStates<meleeAttackTag, AttackState>
-    {
-        public void ComponentAdded(Entity entity, ref meleeAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
 
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in meleeAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref meleeAttackTag newComponent, ref AttackState AIStateCompoment, in meleeAttackTag oldComponent)
-        {
-
-        }
-    }
 
     public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<magicmeleeAttackTag, AttackState>
     {
@@ -57,6 +38,15 @@ namespace IAUS.ECS.Systems.Reactive {
 
         public void ComponentValueChanged(Entity entity, ref magicmeleeAttackTag newComponent, ref AttackState AIStateCompoment, in magicmeleeAttackTag oldComponent)
         {
+
+        }
+
+        public partial class ReactiveSystem : AIReactiveSystemBase<magicmeleeAttackTag, AttackState, MagicMeleeTagReactor>
+        {
+            protected override MagicMeleeTagReactor CreateComponentReactor()
+            {
+                return new MagicMeleeTagReactor();
+            }
 
         }
     }
