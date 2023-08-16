@@ -18,17 +18,6 @@ namespace IAUS.ECS.Component
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        /// <summary>
-        /// Utility score for travel to current waypoint assigned
-        /// </summary>
-        public ConsiderationScoringData DistanceToPoint => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
-
-        /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
 
         [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -83,7 +72,7 @@ namespace IAUS.ECS.Component
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<WanderQuadrant> wander;
         readonly VisionAspect VisionAspect;
-
+        BlobAssetReference<AIStateBlobAsset> reference => SetupAIStateBlob.reference;
         float TravelInFiveSec
         {
             get
@@ -115,6 +104,8 @@ namespace IAUS.ECS.Component
                 return dist;
             }
         }
+
+
         public float Score
         {
             get
@@ -124,8 +115,18 @@ namespace IAUS.ECS.Component
                     throw new ArgumentOutOfRangeException(nameof(wander), $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.name} state is implements");
 
                 }
+                float totalScore;
                 wander.ValueRW.distanceToPoint = distanceToPoint;
-                float totalScore = wander.ValueRO.DistanceToPoint.Output(wander.ValueRO.DistanceRatio)* wander.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio);
+                if (VisionAspect.TargetInRange(out _, out float dist))
+                {
+                    totalScore = reference.Value.Array[wander.ValueRO.Index].DistanceToPlaceOfInterest.Output(wander.ValueRO.DistanceRatio) * reference.Value.Array[wander.ValueRO.Index].Health.Output(statInfo.ValueRO.HealthRatio) *
+                        reference.Value.Array[wander.ValueRO.Index].DistanceToTarget.Output(Mathf.Clamp01(dist/TravelInFiveSec));
+                }
+                else
+                {
+                    totalScore = reference.Value.Array[wander.ValueRO.Index].DistanceToPlaceOfInterest.Output(wander.ValueRO.DistanceRatio) * reference.Value.Array[wander.ValueRO.Index].Health.Output(statInfo.ValueRO.HealthRatio)*
+                           reference.Value.Array[wander.ValueRO.Index].DistanceToTarget.Output(Mathf.Clamp01(0));
+                }
                 wander.ValueRW.TotalScore = !targetInRange &&wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
 
                 totalScore = wander.ValueRW.TotalScore;

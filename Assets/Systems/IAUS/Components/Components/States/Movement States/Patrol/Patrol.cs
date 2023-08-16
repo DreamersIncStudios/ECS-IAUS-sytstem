@@ -59,8 +59,7 @@ namespace IAUS.ECS.Component
     }
 
     public interface IMovementState: IBaseStateScorer {
-        public ConsiderationScoringData DistanceToPoint { get; }
-        public ConsiderationScoringData HealthRatio { get; }
+
         public uint NumberOfWayPoints { get; set; }
         public AIStates name { get; }
         public int WaypointIndex { get; set; }
