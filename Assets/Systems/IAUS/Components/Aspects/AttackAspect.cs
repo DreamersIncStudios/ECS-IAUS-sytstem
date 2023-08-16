@@ -42,18 +42,30 @@ namespace IAUS.ECS.Component.Aspects
 
         public float MeleeScore { get {
                 if (state.ValueRO.CapableOfMelee && melee.ValueRO.Index != -1) {
-                    if (VisionAspect.TargetInRange(out AITarget target, out float dist))
+                    if (state.ValueRO.HasAttack)
                     {
-                        float range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
-                        float influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                        var dist = Vector3.Distance(Transform.ValueRO.Position, state.ValueRO.AttackLocation);
+                        float range = Mathf.Clamp01(dist / (2 * TravelInFiveSec));
                         float total = reference.Value.Array[melee.ValueRO.Index].DistanceToTarget.Output(range)
-                            * reference.Value.Array[melee.ValueRO.Index].EnemyInfluence.Output(0.0f)
-                            *baseScore;
+               * reference.Value.Array[melee.ValueRO.Index].EnemyInfluence.Output(0.0f)
+               * baseScore;
                         total = Mathf.Clamp01(total + ((1.0f - total) * melee.ValueRO.mod) * total);
                         return total;
                     }
-                    else return 0.0f;
-                
+                    else
+                    {
+                        if (VisionAspect.TargetInRange(out AITarget target, out float dist))
+                        {
+                            float range = Mathf.Clamp01(dist / (2 * TravelInFiveSec));
+                            float influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                            float total = reference.Value.Array[melee.ValueRO.Index].DistanceToTarget.Output(range)
+                                * reference.Value.Array[melee.ValueRO.Index].EnemyInfluence.Output(0.0f)
+                                * baseScore;
+                            total = Mathf.Clamp01(total + ((1.0f - total) * melee.ValueRO.mod) * total);
+                            return total;
+                        }
+                        else return 0.0f;
+                    }
                 }
 
                 else return 0;

@@ -26,33 +26,33 @@ namespace IAUS.ECS.Systems.Reactive
             meleeTagAdded = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(meleeAttackTag))
+                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(MeleeAttackTag))
                 },
-                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, MeleeTagReactor>.StateComponent)) }
+                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, MeleeTagReactor>.StateComponent)) }
             });
 
             magicTagAdded = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(magicAttackTag))
+                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(MagicAttackTag))
                 },
-                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<magicAttackTag, AttackState, MagicTagReactor>.StateComponent)) }
+                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<MagicAttackTag, AttackState, MagicTagReactor>.StateComponent)) }
             });
 
             magicMeleeTagAdded = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(magicmeleeAttackTag))
+                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(MagicMeleeAttackTag))
                 },
-                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<magicmeleeAttackTag, AttackState, MagicMeleeTagReactor>.StateComponent)) }
+                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<MagicMeleeAttackTag, AttackState, MagicMeleeTagReactor>.StateComponent)) }
             });
 
             rangeTagAdded = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(rangeAttackTag))
+                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(RangeAttackTag))
                 },
-                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<rangeAttackTag, AttackState, RangeTagReactor>.StateComponent)) }
+                None = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<RangeAttackTag, AttackState, RangeTagReactor>.StateComponent)) }
             });
         }
         protected override void OnUpdate()
@@ -62,7 +62,7 @@ namespace IAUS.ECS.Systems.Reactive
             //    MoveChunk = GetComponentTypeHandle<Movement>(false),
             //    TargetChunk = GetComponentTypeHandle<AttackTarget>(true)
             //}.Schedule(meleeTagAdded, systemDeps);
-            systemDeps = new InAttackRange().Schedule( systemDeps);
+            systemDeps = new InAttackRange() { DeltaTime= SystemAPI.Time.DeltaTime}.Schedule( systemDeps);
 
             Dependency = systemDeps;
         }
@@ -92,7 +92,7 @@ namespace IAUS.ECS.Systems.Reactive
         [BurstCompile]
         partial struct InAttackRange: IJobEntity {
             public float DeltaTime;
-            void Execute(ref Movement move, ref MeleeAttackSubState melee,ref meleeAttackTag tag, ref AttackTarget target, in LocalTransform transform) {
+            void Execute(ref Movement move, ref MeleeAttackSubState melee,ref MeleeAttackTag tag, ref AttackTarget target, in LocalTransform transform) {
                 if (move.Completed) 
                 {
                     if (tag.AttackDelay > 0.0F)

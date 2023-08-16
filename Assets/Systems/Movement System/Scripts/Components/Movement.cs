@@ -1,6 +1,4 @@
-﻿
-//using System;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 
 namespace Components.MovementSystem
@@ -19,7 +17,7 @@ namespace Components.MovementSystem
 
         //public float SprintSpeed // To Be Added if needed
         public bool CanMove;
-        public bool Completed => WithinRangeOfTargetLocation ;
+       [UnityEngine.SerializeField] public bool Completed => WithinRangeOfTargetLocation ;
         public float StoppingDistance;
         public float Acceleration;
         public float DistanceRemaining;

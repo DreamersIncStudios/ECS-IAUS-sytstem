@@ -6,6 +6,7 @@ using Components.MovementSystem;
 using Unity.Transforms;
 using Unity.Jobs;
 using MotionSystem;
+using UnityEditor;
 
 namespace IAUS.ECS.Systems
 {
@@ -29,6 +30,9 @@ namespace IAUS.ECS.Systems
                     //rewrite with a set position bool;
                     if (move.SetTargetLocation)
                     {
+                        if (NavMesh.SamplePosition(move.TargetLocation, out var hit, 10, NavMesh.AllAreas))
+                            move.TargetLocation = hit.position;
+                        Debug.Log(hit.position);
                         Agent.SetDestination(move.TargetLocation);
                         Agent.isStopped = false;
                         move.SetTargetLocation = false;

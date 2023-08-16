@@ -10,34 +10,34 @@ using Unity.Transforms;
 using UnityEngine;
 using Utilities.ReactiveSystem;
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
-    public partial struct MeleeTagReactor : IComponentReactorTagsForAIStates<meleeAttackTag, AttackState>
+    public partial struct MeleeTagReactor : IComponentReactorTagsForAIStates<MeleeAttackTag, AttackState>
     {
-        public void ComponentAdded(Entity entity, ref meleeAttackTag newComponent, ref AttackState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref MeleeAttackTag newComponent, ref AttackState AIStateCompoment)
         {
 
         }
 
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in meleeAttackTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MeleeAttackTag oldComponent)
         {
 
         }
 
-        public void ComponentValueChanged(Entity entity, ref meleeAttackTag newComponent, ref AttackState AIStateCompoment, in meleeAttackTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref MeleeAttackTag newComponent, ref AttackState AIStateCompoment, in MeleeAttackTag oldComponent)
         {
 
         }
 
-        public partial class ReactiveSystem : AIReactiveSystemBase<meleeAttackTag, AttackState, MeleeTagReactor>
+        public partial class ReactiveSystem : AIReactiveSystemBase<MeleeAttackTag, AttackState, MeleeTagReactor>
         {
             protected override MeleeTagReactor CreateComponentReactor()
             {
@@ -57,8 +57,8 @@ namespace IAUS.ECS.Systems.Reactive
             componentAdded = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackTarget)),
-                ComponentType.ReadWrite(typeof(meleeAttackTag))},
-                Absent = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<meleeAttackTag, AttackState, MeleeTagReactor>.StateComponent)) }
+                ComponentType.ReadWrite(typeof(MeleeAttackTag))},
+                Absent = new ComponentType[] { ComponentType.ReadWrite(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, MeleeTagReactor>.StateComponent)) }
             });
         }
         protected override void OnUpdate()
@@ -68,10 +68,10 @@ namespace IAUS.ECS.Systems.Reactive
 
         partial struct SetMoveTarget : IJobEntity
         {
-            public void Execute(ref AttackTarget target, ref Movement move)
+            public void Execute(ref MeleeAttackTag tag, ref Movement move)
             {
-                move.SetLocation(target.AttackTargetLocation);
-
+                move.SetLocation(tag.AttackLocation);
+                Debug.Log("set");
             }
         }
     }
