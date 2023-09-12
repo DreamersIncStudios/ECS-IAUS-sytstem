@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Unity.Entities;
 using UnityEngine;
 
@@ -13,18 +14,29 @@ namespace Stats.Entities
 
         public float Speed;
 
+        public AIStat(int speed)
+        {
+            //Todo Replace with value from Character Stat 
+            this.Speed = speed;
+            CurHealth = 0;
+            MaxHealth = 0;
+            CurMana = 0;
+            MaxMana = 0;
+        }
+
     }
 
     public partial class AIStatLinkSystem : SystemBase
     {
+        [SuppressMessage("ReSharper", "Unity.BurstLoadingManagedType")]
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<BaseCharacterComponent>().ForEach((BaseCharacterComponent Base, ref AIStat aiStat )=> {
+            Entities.WithoutBurst().WithChangeFilter<BaseCharacterComponent>().ForEach((BaseCharacterComponent baseStat, ref AIStat aiStat )=> {
 
-                aiStat.CurHealth = Base.CurHealth;
-                aiStat.MaxHealth = Base.MaxHealth;
-                aiStat.CurMana = Base.CurMana;
-                aiStat.MaxMana= Base.MaxMana;
+                aiStat.CurHealth = baseStat.CurHealth;
+                aiStat.MaxHealth = baseStat.MaxHealth;
+                aiStat.CurMana = baseStat.CurMana;
+                aiStat.MaxMana= baseStat.MaxMana;
             }).Run();
         }
     }

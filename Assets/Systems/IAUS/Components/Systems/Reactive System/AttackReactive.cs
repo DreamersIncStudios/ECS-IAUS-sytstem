@@ -1,4 +1,3 @@
-using AISenses.VisionSystems.Combat;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Aspects;
@@ -15,6 +14,7 @@ using Utilities.ReactiveSystem;
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentRemovalJob))]
 
 
+
 namespace IAUS.ECS.Systems.Reactive
 {
     public partial struct AttackTagReactor : IComponentReactorTagsForAIStates<AttackActionTag, AttackState>
@@ -22,15 +22,13 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState AIStateCompoment)
         {
             AIStateCompoment.Status = ActionStatus.Running;
-            AIStateCompoment.HasAttack = true;
+
         }
 
         public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in AttackActionTag oldComponent)
         {
-            AIStateCompoment.Status = ActionStatus.CoolDown;
-            AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
-            AIStateCompoment.HasAttack = false;
-
+                AIStateCompoment.Status = ActionStatus.CoolDown;
+                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
         }
 
         public void ComponentValueChanged(Entity entity, ref AttackActionTag newComponent, ref AttackState AIStateCompoment, in AttackActionTag oldComponent)
@@ -38,8 +36,7 @@ namespace IAUS.ECS.Systems.Reactive
             Debug.Log("Change");
         }
 
-        public partial class ReactiveSystem : AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>
-        {
+        public partial class ReactiveSystem : AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor> {
             protected override AttackTagReactor CreateComponentReactor()
             {
                 return new AttackTagReactor();
@@ -52,57 +49,54 @@ namespace IAUS.ECS.Systems.Reactive
             protected override void OnCreate()
             {
                 base.OnCreate();
-                attackTagAdd = GetEntityQuery(new EntityQueryDesc()
+                attackTagAdd =  
+                    GetEntityQuery(new EntityQueryDesc()
                 {
-                    All = new ComponentType[] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)), ComponentType.ReadWrite(typeof(Movement))
-                , ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadOnly(typeof(AttackTarget))
+                    All = new [] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)),
+                        ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform))
                 },
-                    None = new ComponentType[] { ComponentType.ReadOnly(typeof(MeleeAttackTag)), ComponentType.ReadOnly(typeof(MagicAttackTag)), ComponentType.ReadOnly(typeof(MagicMeleeAttackTag)), ComponentType.ReadOnly(typeof(RangeAttackTag)) }
+                    Absent = new [] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>.StateComponent)) }
                 });
-
-
+           
             }
             protected override void OnUpdate()
             {
-                foreach (var (tag, aspect) in SystemAPI.Query<RefRW<AttackActionTag>, AttackAspect>()) {
-                    tag.ValueRW.SubStateNumber = aspect.HighState;
-                }
                 var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-                var tst = new DefineAttackType() { ecb = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter() };
-                tst.Schedule(attackTagAdd);
-                foreach(var (tag,entity) in SystemAPI.Query<MeleeAttackTag>().WithEntityAccess().WithNone<AttackActionTag>()) {
-                    ecb.CreateCommandBuffer(World.Unmanaged).RemoveComponent<MeleeAttackTag>(entity);
-                }
+                new GetHighestSubState().ScheduleParallel();
+                new DefineAttackType() { ecb = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter() }.ScheduleParallel(attackTagAdd);
             }
 
-
-            partial struct DefineAttackType : IJobEntity
+            partial struct GetHighestSubState : IJobEntity
             {
-                public EntityCommandBuffer.ParallelWriter ecb;
-                public void Execute(Entity entity, [ChunkIndexInQuery] int sortKey, ref AttackActionTag tag, ref AttackTarget target, AttackState state)
+                void Execute(AttackAspect aspect, ref AttackActionTag tag)
                 {
-                    state.AttackLocation = target.AttackTargetLocation;
-                    switch (tag.SubStateNumber)
-                    {
-                        case 0:
-                            ecb.AddComponent(sortKey, entity, new MeleeAttackTag()
-                            {
-                                AttackDelay = 6.5f,
-                                AttackLocation = target.AttackTargetLocation
-                            }) ;
-                            break;
-                        case 1:
-                            ecb.AddComponent<MagicMeleeAttackTag>(sortKey, entity);
-                            break;
-                        case 2:
-                            ecb.AddComponent<MagicAttackTag>(sortKey, entity);
-                            break;
-                        case 3:
-                            ecb.AddComponent<RangeAttackTag>(sortKey, entity);
-                            break;
-                    }
+                    tag.SubStateNumber = aspect.HighState;
                 }
 
+            }
+
+            partial struct DefineAttackType : IJobEntity {
+                public EntityCommandBuffer.ParallelWriter ecb;
+                 void Execute(Entity entity, [ChunkIndexInQuery] int sortKey,ref Movement move, ref AttackActionTag tag)
+                 {
+
+                     move.CanMove = false;
+                    switch (tag.SubStateNumber) {
+                        case 1:
+                            ecb.AddComponent<MeleeAttackTag>(sortKey, entity);
+                                break;
+                        case 2:
+                            ecb.AddComponent<MagicMeleeAttackTag>(sortKey, entity);
+                            break;
+                        case 3:
+                            ecb.AddComponent<MagicAttackTag>(sortKey, entity);
+                            break;
+                        case 4:
+                            ecb.AddComponent<RangeAttackTag>(sortKey, entity);
+                            break;
+
+                    }
+                }
             }
         }
     }

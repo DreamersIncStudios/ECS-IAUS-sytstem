@@ -2,6 +2,8 @@ using AISenses;
 using Global.Component;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -27,7 +29,7 @@ namespace AISenses.VisionSystems
             {
                 foreach (var scan in ScanPositions)
                 {
-                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    if (!scan.target.IsFriendly)
                     {
                         return true;
                     }
@@ -48,7 +50,7 @@ namespace AISenses.VisionSystems
             {
                 foreach (var scan in ScanPositions)
                 {
-                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    if (!scan.target.IsFriendly)
                     {
                         dist = scan.target.DistanceTo;
                         return true;
@@ -70,7 +72,7 @@ namespace AISenses.VisionSystems
             {
                 foreach (var scan in ScanPositions)
                 {
-                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    if (!scan.target.IsFriendly)
                     {
                         target = scan.target.TargetInfo;
                         return true;
@@ -93,7 +95,7 @@ namespace AISenses.VisionSystems
             {
                 foreach (var scan in ScanPositions)
                 {
-                    if (!scan.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                    if (!scan.target.IsFriendly)
                     {
                         target = scan.target.TargetInfo;
                         dist = scan.target.DistanceTo;
@@ -114,12 +116,40 @@ namespace AISenses.VisionSystems
                 {
                     foreach (var target in ScanPositions)
                     {
-                        if (target.target.TargetInfo.IsFriend(self.ValueRO.FactionID))
+                        if (target.target.IsFriendly)
                             return true;
                     }
                 }
                 return false;
             }
+        }
+
+        public Target GetClosestEnemy()
+        {
+            var visibleTargetInArea = ScanPositions.ToNativeArray(Allocator.Temp);
+            visibleTargetInArea.Sort(new SortScanPositionByDistance());
+            foreach (var target in visibleTargetInArea)
+            {
+                if (!target.target.IsFriendly)
+                {
+                    return target.target;
+                }
+            }
+
+            return new Target();
+        }
+
+        public Target GetClosestFriend()
+        {
+            
+            var visibleTargetInArea = ScanPositions.ToNativeArray(Allocator.Temp);
+            visibleTargetInArea.Sort(new SortScanPositionByDistance());
+            foreach (var target in visibleTargetInArea.Where(target => target.target.IsFriendly))
+            {
+                return target.target;
+            }
+
+            return new Target();
         }
     }
 }

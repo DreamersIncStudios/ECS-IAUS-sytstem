@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
 using Unity.Mathematics;
 using Unity.Entities;
@@ -15,9 +12,14 @@ namespace IAUS.ECS.Component
 {
     public struct WanderQuadrant : IMovementState
     {
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
+        
         public int Index;
+      
+        /// <summary>
+        /// Utility score for Attackable target in Ranges
+        /// </summary>
+      //  public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+      //  public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
 
         [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
@@ -29,12 +31,13 @@ namespace IAUS.ECS.Component
         public bool TravelInOrder { get; set; }
         public uint NumberOfWayPoints { get { return 1; } set { } }
 
-        [SerializeField] public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        [SerializeField] public float DistanceRatio => !float.IsPositiveInfinity((float)distanceToPoint / (float)StartingDistance) ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
 
 
-        public AIStates name => AIStates.WanderQuadrant;
+        public AIStates Name => AIStates.WanderQuadrant;
 
-        public int WaypointIndex { get { return 1; } set { } }
+        public int WaypointIndex { get => 1;
+            set { } }
         public float3 TravelPosition;
         [SerializeField] public Waypoint CurWaypoint { get; set; }
 
@@ -42,19 +45,16 @@ namespace IAUS.ECS.Component
         [SerializeField] public float StartingDistance { get; set; }
         [SerializeField] public float BufferZone { get; set; }
 
-        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+        public float mod => 1.0f - (1.0f / 3.0f);
 
-        [SerializeField] public ActionStatus _status;
-        [SerializeField] public float _coolDownTime;
-        [SerializeField] public float _resetTime { get; set; }
-        [SerializeField] public float _totalScore { get; set; }
+        public ActionStatus _status;
+        public float _coolDownTime;
+        public float _resetTime { get; set; }
+        public float _totalScore { get; set; }
       [SerializeField]  public bool AttackTarget { get; set; }
 
         public float3 SpawnPosition;
-        public int Hashkey
-        {
-            get { return NPCQuadrantSystem.GetPositionHashMapKey((int3)SpawnPosition); }
-        }
+        public int HashKey => NPCQuadrantSystem.GetPositionHashMapKey((int3)SpawnPosition);
         public bool WanderNeighborQuadrants;
         public void SetIndex(int index)
         {
@@ -65,33 +65,22 @@ namespace IAUS.ECS.Component
     public struct WanderActionTag : IComponentData
     {
         public float WaitTime;
+
     }
     public readonly partial struct WanderQuadrantAspect : IAspect
     {
         readonly RefRO<LocalTransform> transform;
         readonly RefRO<AIStat> statInfo;
         readonly RefRW<WanderQuadrant> wander;
-        readonly VisionAspect VisionAspect;
-        BlobAssetReference<AIStateBlobAsset> reference => SetupAIStateBlob.reference;
-        float TravelInFiveSec
-        {
-            get
-            {
-                return 5 * 10; // TODO change to stat dependent statInfo.ValueRO.Speed * 5;   
-            }
-        }
+        private readonly VisionAspect vision;
+        private readonly RefRO<IAUSBrain> brain;
 
-        bool targetInRange
+
+        private StateAsset GetAsset(int index)
         {
-            get
-            {
-                if (VisionAspect.TargetInRange(out _, out float dist)) {
-                    return dist < TravelInFiveSec;
-                }
-                else { return false; }
-            }
+            return brain.ValueRO.State.Value.Array[index];
         }
-        float distanceToPoint
+        float DistanceToPoint
         {
             get
             {
@@ -104,30 +93,21 @@ namespace IAUS.ECS.Component
                 return dist;
             }
         }
-
-
         public float Score
         {
             get
             {
                 if (wander.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wander), $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.name} state is implements");
+                    throw new ArgumentOutOfRangeException(nameof(wander), $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.Name} state is implements");
+                }
 
-                }
-                float totalScore;
-                wander.ValueRW.distanceToPoint = distanceToPoint;
-                if (VisionAspect.TargetInRange(out _, out float dist))
-                {
-                    totalScore = reference.Value.Array[wander.ValueRO.Index].DistanceToPlaceOfInterest.Output(wander.ValueRO.DistanceRatio) * reference.Value.Array[wander.ValueRO.Index].Health.Output(statInfo.ValueRO.HealthRatio) *
-                        reference.Value.Array[wander.ValueRO.Index].DistanceToTarget.Output(Mathf.Clamp01(dist/TravelInFiveSec));
-                }
-                else
-                {
-                    totalScore = reference.Value.Array[wander.ValueRO.Index].DistanceToPlaceOfInterest.Output(wander.ValueRO.DistanceRatio) * reference.Value.Array[wander.ValueRO.Index].Health.Output(statInfo.ValueRO.HealthRatio)*
-                           reference.Value.Array[wander.ValueRO.Index].DistanceToTarget.Output(Mathf.Clamp01(0));
-                }
-                wander.ValueRW.TotalScore = !targetInRange &&wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
+                var asset = GetAsset(wander.ValueRO.Index);
+                wander.ValueRW.distanceToPoint = DistanceToPoint;
+                var distToEnemy = vision.GetClosestEnemy().DistanceTo;
+                var totalScore = asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio)* asset.Health.Output(statInfo.ValueRO.HealthRatio)*
+                                   asset.DistanceToTargetEnemy.Output(Mathf.Clamp01(distToEnemy/50.0f)); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
+                wander.ValueRW.TotalScore = wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
 
                 totalScore = wander.ValueRW.TotalScore;
                 return totalScore;

@@ -6,6 +6,7 @@ using IAUS.ECS;
 using UnityEditor;
 using Global.Component;
 using Dreamers.InventorySystem.Base;
+using DreamersInc.ComboSystem;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
 
@@ -28,7 +29,7 @@ namespace DreamersInc.BestiarySystem
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
-
+        public ComboSO AttackComboSO;
 
 #if UNITY_EDITOR
 

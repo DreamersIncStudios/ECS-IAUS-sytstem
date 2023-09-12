@@ -31,11 +31,9 @@ namespace AISenses.VisionSystems.Combat
                         //Attack in direction of point target
                         var visibleTargetInArea = buffer.ToNativeArray(Allocator.Temp);
                         visibleTargetInArea.Sort(new SortScanPositionByDistance());
-                        for (int i = 0; i < visibleTargetInArea.Length; i++)
-                        {
 
-                        }
                         attackTarget.AttackTargetLocation = visibleTargetInArea[0].target.LastKnownPosition;
+                        attackTarget.IsFriendly = visibleTargetInArea[0].target.IsFriendly;
                     }
                     else
                     {

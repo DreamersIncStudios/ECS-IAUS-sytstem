@@ -6,6 +6,8 @@ using Global.Component;
 using DreamersInc.InflunceMapSystem;
 using System;
 using IAUS.ECS.Consideration;
+using IAUS.ECS.StateBlobSystem;
+
 namespace IAUS.ECS.Component
 {
 
@@ -20,6 +22,7 @@ namespace IAUS.ECS.Component
         public Status Attitude;
         public Difficulty Difficulty;
         public NPCLevel NPCLevel;
+        public BlobAssetReference<AIStateBlobAsset> State;
     }
     public struct SetupBrainTag : IComponentData { }
 

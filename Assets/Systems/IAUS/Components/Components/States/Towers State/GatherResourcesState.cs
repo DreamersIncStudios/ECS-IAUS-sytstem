@@ -14,7 +14,7 @@ namespace IAUS.ECS.Component
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; set; }
        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
         public AIStates name { get { return AIStates.GatherResources; } }
 

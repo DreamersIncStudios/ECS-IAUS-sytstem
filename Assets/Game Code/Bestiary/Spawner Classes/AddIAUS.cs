@@ -4,17 +4,17 @@ using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using Stats.Entities;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace DreamersInc.BestiarySystem
 {
-    public sealed partial class BestiaryDB : MonoBehaviour
+    public sealed partial class BestiaryDB 
     {
-        public static void AddIAUS(Entity entity, CreatureInfo info, GameObject GO)
+        // ReSharper disable once InconsistentNaming
+        // ReSharper disable once IdentifierTypo
+        private static void AddIAUS(Entity entity, CreatureInfo info, GameObject go)
         {
             
 
@@ -31,7 +31,7 @@ namespace DreamersInc.BestiarySystem
                 level = info.ClassLevel
             });
 
-            manager.AddComponent<AIStat>(entity);
+            manager.AddComponentData(entity, new AIStat(10));
             manager.AddComponentData(entity, new IAUSBrain() { NPCLevel= info.GetNPCLevel});
             manager.AddBuffer<ScanPositionBuffer>(entity);
             foreach (var state in info.AIStatesToAdd)
@@ -64,7 +64,7 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.WanderQuadrant:
                         var wander = new WanderQuadrant()
                         {
-                            SpawnPosition = GO.transform.position,
+                            SpawnPosition = go.transform.position,
                             _coolDownTime = 5.5f,
                             BufferZone = .25f,
                             //WanderNeighborQuadrants = true
@@ -82,11 +82,7 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity, wait);
                         break;
                     case AIStates.Attack:
-                        var attack = new AttackState() {
-                        _coolDownTime =5.5f,
-                        CapableOfProjectile = true
-                        };
-                        manager.AddComponentData(entity, attack);
+                        manager.AddComponentData(entity, new AttackState(5.5f,true,false,false));
                         manager.AddComponent<CheckAttackStatus>(entity);
                         manager.AddComponent<MagicAttackSubState>(entity);
                         manager.AddComponentData(entity, new RangedAttackSubState() { 
@@ -94,21 +90,18 @@ namespace DreamersInc.BestiarySystem
                         });
 
                         manager.AddComponent<MagicMeleeAttackSubState>(entity);
-                        manager.AddComponent<MeleeAttackSubState>(entity);
+                        var melee = new MeleeAttackSubState();
+                        if(info.AttackComboSO)
+                            melee.SetupPossibleAttacks(info.AttackComboSO);
+                        manager.AddComponentData(entity, melee);
 
                         break;
                     case AIStates.RetreatToLocation:
-                        var escape = new EscapeThreat() {
-                            _coolDownTime = 10f
-                        };
-                        manager.AddComponentData(entity,escape);
+          
+                        manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
                         break;
                     case AIStates.RetreatToQuadrant:
-                        var stay = new StayInQuadrant() {
-                           _coolDownTime =10f,
-                           SpawnPosition = GO.transform.position,
-
-                        };
+                        manager.AddComponentData(entity,new StayInQuadrant(coolDownTime: 10f, spawnPosition: go.transform.position));
                         break;
                 }
             }

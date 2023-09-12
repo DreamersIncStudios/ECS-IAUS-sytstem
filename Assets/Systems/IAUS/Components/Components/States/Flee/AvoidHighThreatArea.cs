@@ -22,7 +22,7 @@ namespace IAUS.ECS.Component
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData ProximityInArea => stateRef.Value.Array[Index].FriendlyInfluence;
         public ConsiderationScoringData ThreatInArea => stateRef.Value.Array[Index].EnemyInfluence;
-        public ConsiderationScoringData DistanceFromThreat => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData DistanceFromThreat => stateRef.Value.Array[Index].DistanceToTargetEnemy;
         public float ThreatThreshold;
         public float CrowdMin;
         public float RetreatRange; // TODO set based off speed stat and balance

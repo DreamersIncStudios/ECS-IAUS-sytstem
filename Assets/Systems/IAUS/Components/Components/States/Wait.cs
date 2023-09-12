@@ -17,7 +17,7 @@ namespace IAUS.ECS.Component {
         /// <summary>
         /// Utility score for Attackable target in Ranges
         /// </summary>
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
        [SerializeField] public bool Complete => Timer <= 0.0f;
         /// <summary>

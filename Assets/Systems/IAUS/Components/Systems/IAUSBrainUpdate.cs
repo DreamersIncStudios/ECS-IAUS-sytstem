@@ -264,7 +264,7 @@ namespace IAUS.ECS.Systems
                     //    CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                     //    break;
                     case AIStates.Attack:
-                        CommandBufferParallel.AddComponent(chunkIndex, entity, new AttackActionTag() { SubStateNumber =-1});
+                        CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, entity);
                         break;
                     case AIStates.RetreatToLocation:
                         CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, entity);

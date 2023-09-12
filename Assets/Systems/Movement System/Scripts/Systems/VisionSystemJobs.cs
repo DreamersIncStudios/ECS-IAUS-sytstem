@@ -89,25 +89,23 @@ namespace AISenses.VisionSystems
                                     GroupIndex = 0
                                 }
                             };
-                            if (world.CastRay(raycastInput, out RaycastHit raycastHit))
+                            if (!world.CastRay(raycastInput, out RaycastHit raycastHit)) continue;
+                            if (raycastHit.Entity.Equals(TargetEntity[i]))
                             {
-                                if (raycastHit.Entity.Equals(TargetEntity[i]))
+
+                                buffer.Add(new ScanPositionBuffer()
                                 {
-
-                                    buffer.Add(new ScanPositionBuffer()
+                                    target = new Target()
                                     {
-                                        target = new Target()
-                                        {
-                                            CanSee = true,
-                                            DistanceTo = dist,
-                                            LastKnownPosition = TargetPosition[i].Position,
-                                            TargetInfo = TargetArray[i],
-                                            entity = TargetEntity[i]
-                                        },
-                                        dist = dist
+                                        CanSee = true,
+                                        DistanceTo = dist,
+                                        LastKnownPosition = TargetPosition[i].Position,
+                                        TargetInfo = TargetArray[i],
+                                        Entity = TargetEntity[i]
+                                    },
+                                    dist = dist
 
-                                    });
-                                }
+                                });
                             }
                         }
                     }
@@ -117,5 +115,4 @@ namespace AISenses.VisionSystems
             }
         }
     }
-
 }

@@ -1,41 +1,50 @@
-using IAUS.ECS.Component;
+using DreamersInc.ComboSystem;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Sirenix.Utilities;
 using Unity.Entities;
-using Unity.Mathematics;
+using Unity.Collections;
 using UnityEngine;
 
 namespace IAUS.ECS.Component
 {
     public struct AttackState : IBaseStateScorer
     {
+        public AttackState(float coolDownTime, bool melee, bool magic, bool range)
+        {
+            this.coolDownTime = coolDownTime;
+            CapableOfMelee = melee;
+            CapableOfMagic = magic;
+            CapableOfProjectile = range;
+            status = ActionStatus.Idle;
+            Index = 0;
+            resetTime = 0;
+            totalScore = 0;
+        }
+
         public bool CapableOfMelee;
         public bool CapableOfMagic;
         public bool CapableOfProjectile;
-        public bool HasAttack { get; set; }
         public void SetIndex(int index)
         {
             Index = index;
         }
 
-      [SerializeField]  public int Index { get; private set; }
-        public readonly AIStates name { get { return AIStates.Attack; } }
-
-        public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
-        public ActionStatus Status { get { return _status; } set { _status = value; } }
-        public readonly float CoolDownTime { get { return _coolDownTime; } }
+        public int Index { get; private set; }
+        public AIStates Name => AIStates.Attack;
+        
+        public float TotalScore { get => totalScore;
+            set { totalScore = value; } }
+        public ActionStatus Status { get { return status; } set { status = value; } }
+        public float CoolDownTime { get { return coolDownTime; } }
         public bool InCooldown => Status == ActionStatus.CoolDown;
-        public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public readonly float mod { get { return 1.0f - (1.0f / 4.0f); } }
-        public float3 AttackLocation { get; set; }
+        public float ResetTime { get { return resetTime; } set { resetTime = value; } }
+        public float mod { get { return 1.0f - (1.0f / 4.0f); } }
 
-        [SerializeField] public float _coolDownTime;
-        [SerializeField] public float _resetTime { get; set; }
-        [SerializeField] public float _totalScore { get; set; }
-        [SerializeField] public ActionStatus _status;
+          float coolDownTime;
+         float resetTime { get; set; }
+         float totalScore { get; set; }
+         ActionStatus status;
   
     }
     public struct AttackActionTag : IComponentData {
@@ -47,10 +56,37 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public float AttackRange { get { return 5.5f; } } //Todo Pull from character stats speed
-        public readonly AIStates name { get { return AIStates.AttackMelee; } }
-        public readonly float mod { get { return 1.0f - (1.0f / 3.0f); } }
-      
+        public float AttackRange { get; set; } //Todo Pull from character stats speed
+        public AIStates Name => AIStates.AttackMelee;
+
+        public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+
+        public void SetupPossibleAttacks(ComboSO combo)
+        {
+            UnlockedMoves = new FixedList512Bytes<AIComboInfo>();
+            foreach (var item in combo.ComboLists)
+            {
+                if(item.Unlocked && !item.AnimationList.IsNullOrEmpty())
+                    UnlockedMoves.Add(new AIComboInfo()
+                    {
+                        AttackName = item.Name,
+                        Chance =  (int)item.AnimationList[0].Trigger.Chance,
+                        Trigger =  item.AnimationList[0].Trigger
+                    });
+                
+            }
+        }
+
+        public int SelectAttackIndex {
+            get
+            {
+                //Todo updated solution using LootBox system
+                var maxRange = UnlockedMoves.Length;
+                return Mathf.RoundToInt(Random.Range(0, maxRange));
+
+            }
+        }
+        public FixedList512Bytes<AIComboInfo> UnlockedMoves;
     }
     public struct MagicAttackSubState : IComponentData
     {
@@ -59,12 +95,14 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public readonly AIStates name { get { return AIStates.AttackMagic; } }
+        public static AIStates Name => AIStates.AttackMagic;
 
-     /*   public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Mana => stateRef.Value.Array[Index].ManaAmmo;
-        public ConsiderationScoringData CoverInRange => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;*/
-        public readonly float mod { get { return 1.0f - (1.0f / 5.0f); } }
+       // public ConsiderationScoringData TargetInRange => StateRef.Value.Array[Index].DistanceToTarget;
+        //public ConsiderationScoringData Mana => StateRef.Value.Array[Index].ManaAmmo;
+        //public ConsiderationScoringData CoverInRange => StateRef.Value.Array[Index].DistanceToPlaceOfInterest;
+        public float mod { get { return 1.0f - (1.0f / 5.0f); } }
+        public void SetupPossibleAttacks(){}
+        
     }
     public struct MagicMeleeAttackSubState : IComponentData
     {
@@ -73,11 +111,11 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public readonly AIStates name { get { return AIStates.AttackMagicMelee; } }
+        public static AIStates Name => AIStates.AttackMagicMelee;
 
-  //      public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-    //    public ConsiderationScoringData Mana => stateRef.Value.Array[Index].ManaAmmo;
-        public readonly float mod { get { return 1.0f - (1.0f / 4.0f); } }
+        public float Mod => 1.0f - (1.0f / 4.0f);
+        public void SetupPossibleAttacks(){}
+        
     }
     public struct RangedAttackSubState : IComponentData
     {
@@ -87,15 +125,17 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public readonly AIStates name { get { return AIStates.AttackRange; } }
+        public BlobAssetReference<AIStateBlobAsset> StateRef;
+        public static AIStates Name => AIStates.AttackRange;
 
-        public readonly float mod { get { return 1.0f - (1.0f / 5.0f); } }
+      //  public ConsiderationScoringData TargetInRange => StateRef.Value.Array[Index].DistanceToTarget;
+      //  public ConsiderationScoringData Ammo => StateRef.Value.Array[Index].ManaAmmo;
+      //  public ConsiderationScoringData CoverInRange => StateRef.Value.Array[Index].DistanceToPlaceOfInterest;
+      //  public float Mod => 1.0f - (1.0f / 5.0f);
+        public void SetupPossibleAttacks(){}
 
     }
-    public struct MeleeAttackTag : IComponentData {
-        public float AttackDelay;
-        public float3 AttackLocation;
-    }
+    public struct MeleeAttackTag : IComponentData { }
     public struct MagicAttackTag : IComponentData { }
     public struct RangeAttackTag : IComponentData { }
     public struct MagicMeleeAttackTag : IComponentData { }

@@ -9,20 +9,28 @@ using Unity.Transforms;
 using UnityEngine;
 using Utilities.ReactiveSystem;
 
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MagicMeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicMeleeTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MagicMeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicMeleeTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MagicMeleeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicMeleeTagReactor>.ManageComponentRemovalJob))]
-
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MagicAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MagicAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MagicAttackTag, AttackState, IAUS.ECS.Systems.Reactive.MagicTagReactor>.ManageComponentRemovalJob))]
-
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<RangeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.RangeTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RangeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.RangeTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<RangeAttackTag, AttackState, IAUS.ECS.Systems.Reactive.RangeTagReactor>.ManageComponentRemovalJob))]
 namespace IAUS.ECS.Systems.Reactive {
+    public partial struct MeleeTagReactor : IComponentReactorTagsForAIStates<MeleeAttackTag, AttackState>
+    {
+        public void ComponentAdded(Entity entity, ref MeleeAttackTag newComponent, ref AttackState AIStateCompoment)
+        {
 
+        }
+
+        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MeleeAttackTag oldComponent)
+        {
+
+        }
+
+        public void ComponentValueChanged(Entity entity, ref MeleeAttackTag newComponent, ref AttackState AIStateCompoment, in MeleeAttackTag oldComponent)
+        {
+
+        }
+    }
 
     public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<MagicMeleeAttackTag, AttackState>
     {
@@ -38,15 +46,6 @@ namespace IAUS.ECS.Systems.Reactive {
 
         public void ComponentValueChanged(Entity entity, ref MagicMeleeAttackTag newComponent, ref AttackState AIStateCompoment, in MagicMeleeAttackTag oldComponent)
         {
-
-        }
-
-        public partial class ReactiveSystem : AIReactiveSystemBase<MagicMeleeAttackTag, AttackState, MagicMeleeTagReactor>
-        {
-            protected override MagicMeleeTagReactor CreateComponentReactor()
-            {
-                return new MagicMeleeTagReactor();
-            }
 
         }
     }

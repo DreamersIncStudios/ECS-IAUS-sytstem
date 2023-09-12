@@ -18,12 +18,13 @@ namespace DreamersInc.ComboSystem
         [SerializeField] uint triggerAnimIndex;
         public bool Alternate;
         public uint TriggerAnimIndex { get { return triggerAnimIndex; } set { triggerAnimIndex = value; } }
-        public string CurrentStateName { get { return CurrentAnim.ToString() + TriggerAnimIndex; } }
+        public string CurrentStateName => CurrentAnim.ToString() + TriggerAnimIndex;
         public float2 NormalizedInputTime;
         public float AnimationEndTime;
         public bool InputAllowed(float time) => time > NormalizedInputTime.x && time < NormalizedInputTime.y;
         public float MaxProb { get; set; }
         public AnimationTrigger Trigger;
+        public float Chance;
         // TODO consider adding late inputs ??????
 
     }

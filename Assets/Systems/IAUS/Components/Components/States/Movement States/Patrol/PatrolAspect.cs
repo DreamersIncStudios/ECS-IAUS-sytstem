@@ -33,7 +33,7 @@ namespace IAUS.ECS.Component
             {
                 if (patrol.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(patrol), $"Please check Creature list and Consideration Data to make sure {patrol.ValueRO.name} state is implements");
+                    throw new ArgumentOutOfRangeException(nameof(patrol), $"Please check Creature list and Consideration Data to make sure {patrol.ValueRO.Name} state is implements");
 
                 }
                 patrol.ValueRW.distanceToPoint = distanceToPoint;
