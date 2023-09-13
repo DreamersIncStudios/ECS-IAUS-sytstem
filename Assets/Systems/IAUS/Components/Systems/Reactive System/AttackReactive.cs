@@ -55,7 +55,11 @@ namespace IAUS.ECS.Systems.Reactive
                     All = new [] { ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(AttackActionTag)),
                         ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform))
                 },
-                    Absent = new [] { ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>.StateComponent)) }
+                    Absent = new []
+                    {
+                        ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>.StateComponent)), 
+                        ComponentType.ReadOnly(typeof(MeleeAttackTag)),ComponentType.ReadOnly(typeof(MagicAttackTag)),ComponentType.ReadOnly(typeof(MagicMeleeAttackTag)),ComponentType.ReadOnly(typeof(RangeAttackTag))
+                    }
                 });
            
             }
@@ -79,19 +83,20 @@ namespace IAUS.ECS.Systems.Reactive
                 public EntityCommandBuffer.ParallelWriter ecb;
                  void Execute(Entity entity, [ChunkIndexInQuery] int sortKey,ref Movement move, ref AttackActionTag tag)
                  {
+                     Debug.Log("HIIIIII");
 
                      move.CanMove = false;
                     switch (tag.SubStateNumber) {
-                        case 1:
+                        case 0:
                             ecb.AddComponent<MeleeAttackTag>(sortKey, entity);
                                 break;
-                        case 2:
+                        case 1:
                             ecb.AddComponent<MagicMeleeAttackTag>(sortKey, entity);
                             break;
-                        case 3:
+                        case 2:
                             ecb.AddComponent<MagicAttackTag>(sortKey, entity);
                             break;
-                        case 4:
+                        case 3:
                             ecb.AddComponent<RangeAttackTag>(sortKey, entity);
                             break;
 

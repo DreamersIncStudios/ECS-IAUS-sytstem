@@ -1,3 +1,4 @@
+using System.Linq;
 using DreamersInc.ComboSystem;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
@@ -58,35 +59,32 @@ namespace IAUS.ECS.Component
         }
         public float AttackRange { get; set; } //Todo Pull from character stats speed
         public AIStates Name => AIStates.AttackMelee;
-
+        public float AttackDelay;
+        public bool AttackNow => AttackDelay <= 0.0f;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+        FixedList512Bytes<AIComboInfo> unlockedMoves;
 
         public void SetupPossibleAttacks(ComboSO combo)
         {
-            UnlockedMoves = new FixedList512Bytes<AIComboInfo>();
-            foreach (var item in combo.ComboLists)
+            unlockedMoves = new FixedList512Bytes<AIComboInfo>();
+            foreach (var item in combo.ComboLists.Where(item => item.Unlocked && !item.AnimationList.IsNullOrEmpty()))
             {
-                if(item.Unlocked && !item.AnimationList.IsNullOrEmpty())
-                    UnlockedMoves.Add(new AIComboInfo()
-                    {
-                        AttackName = item.Name,
-                        Chance =  (int)item.AnimationList[0].Trigger.Chance,
-                        Trigger =  item.AnimationList[0].Trigger
-                    });
-                
+                unlockedMoves.Add(new AIComboInfo()
+                {
+                    AttackName = item.Name,
+                    Chance =  (int)item.AnimationList[0].Trigger.Chance,
+                    Trigger =  item.AnimationList[0].Trigger
+                });
             }
         }
 
-        public int SelectAttackIndex {
-            get
-            {
+        public  int SelectAttackIndex(uint seed) {
                 //Todo updated solution using LootBox system
-                var maxRange = UnlockedMoves.Length;
-                return Mathf.RoundToInt(Random.Range(0, maxRange));
-
-            }
+                var maxRange = unlockedMoves.Length;
+                AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(0, 7);
+                return Unity.Mathematics.Random.CreateFromIndex(seed).NextInt(0, maxRange);
         }
-        public FixedList512Bytes<AIComboInfo> UnlockedMoves;
+
     }
     public struct MagicAttackSubState : IComponentData
     {
@@ -135,7 +133,12 @@ namespace IAUS.ECS.Component
         public void SetupPossibleAttacks(){}
 
     }
-    public struct MeleeAttackTag : IComponentData { }
+
+    public struct MeleeAttackTag : IComponentData
+    {
+        public int AttackIndex;
+
+    }
     public struct MagicAttackTag : IComponentData { }
     public struct RangeAttackTag : IComponentData { }
     public struct MagicMeleeAttackTag : IComponentData { }

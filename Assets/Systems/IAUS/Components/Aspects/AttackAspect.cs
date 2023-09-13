@@ -55,7 +55,7 @@ namespace IAUS.ECS.Component.Aspects
                         var asset = GetAsset(melee.ValueRO.Index);
                         float range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
                         float influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec); 
-                        Debug.Log($"base score: {BaseScore} RangeScore; {asset.DistanceToTargetEnemy.Output(range)} Threat Score: {asset.EnemyInfluence.Output(0.0f)}");
+                        //Debug.Log($"base score: {BaseScore} RangeScore; {asset.DistanceToTargetEnemy.Output(range)} Threat Score: {asset.EnemyInfluence.Output(0.0f)}");
                         float total = asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(0.0f)*BaseScore;
                         total = Mathf.Clamp01(total + ((1.0f - total) * melee.ValueRO.mod) * total);
                         return total;
