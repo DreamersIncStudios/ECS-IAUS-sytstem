@@ -29,9 +29,13 @@ namespace IAUS.ECS.Systems
                     //rewrite with a set position bool;
                     if (move.SetTargetLocation)
                     {
-                        agent.SetDestination(move.TargetLocation);
-                        agent.isStopped = false;
-                        move.SetTargetLocation = false;
+                        if (NavMesh.SamplePosition(move.TargetLocation, out var hit, 5, NavMesh.AllAreas))
+                        {
+                            move.TargetLocation = hit.position;
+                            agent.SetDestination(hit.position);
+                            agent.isStopped = false;
+                            move.SetTargetLocation = false;
+                        }
                     }
 
 

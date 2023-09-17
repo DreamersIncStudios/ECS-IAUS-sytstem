@@ -36,7 +36,7 @@ namespace Global.Component
 
 
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-    [UpdateBefore(typeof(VisionSystemJobs))]
+    [UpdateBefore(typeof(TargetingQuadrantSystem))]
     public partial class UpdateAITarget : SystemBase
     {
         protected override void OnUpdate()

@@ -83,8 +83,6 @@ namespace IAUS.ECS.Systems.Reactive
                 public EntityCommandBuffer.ParallelWriter ecb;
                  void Execute(Entity entity, [ChunkIndexInQuery] int sortKey,ref Movement move, ref AttackActionTag tag)
                  {
-                     Debug.Log("HIIIIII");
-
                      move.CanMove = false;
                     switch (tag.SubStateNumber) {
                         case 0:

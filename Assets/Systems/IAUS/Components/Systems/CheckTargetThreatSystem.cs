@@ -4,7 +4,7 @@ using Unity.Entities;
 namespace AISenses.VisionSystems
 {
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-    [UpdateAfter(typeof(VisionSystemJobs))]
+    [UpdateAfter(typeof(TargetingQuadrantSystem))]
     public partial class CheckTargetThreatSystem : SystemBase
     {
         protected override void OnUpdate()
