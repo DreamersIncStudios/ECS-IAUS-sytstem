@@ -25,7 +25,7 @@ namespace IAUS.ECS.Component
          /// <summary>
         /// Utility score for Attackable target in Ranges
         /// </summary>
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
         public float InfluenceRatio => InfluenceValueAtPos.x / InfluenceValueAtPos.y;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

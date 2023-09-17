@@ -12,6 +12,7 @@ namespace AISenses.VisionSystems.Combat
         public bool isTargeting;
         public float2 AttackDir;
         public float MoveRange;
+        public bool IsFriendly;
         public float3 MoveTo(float3 curPos)
         {
             float dist = Vector3.Distance(curPos, AttackTargetLocation);

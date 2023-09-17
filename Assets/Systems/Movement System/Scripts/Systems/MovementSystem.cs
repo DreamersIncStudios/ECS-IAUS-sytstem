@@ -22,31 +22,32 @@ namespace IAUS.ECS.Systems
             World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>().AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
 
-            Entities.WithoutBurst().ForEach((NavMeshAgent Agent, ref Movement move) =>
+            Entities.WithoutBurst().ForEach((NavMeshAgent agent, ref Movement move) =>
             {
                 if (move.CanMove)
                 {
                     //rewrite with a set position bool;
                     if (move.SetTargetLocation)
                     {
-                        Agent.SetDestination(move.TargetLocation);
-                        Agent.isStopped = false;
-                        move.SetTargetLocation = false;
+                        if (NavMesh.SamplePosition(move.TargetLocation, out var hit, 5, NavMesh.AllAreas))
+                        {
+                            move.TargetLocation = hit.position;
+                            agent.SetDestination(hit.position);
+                            agent.isStopped = false;
+                            move.SetTargetLocation = false;
+                        }
                     }
 
 
-
-                    if (Agent.hasPath)
+                    if (!agent.hasPath) return;
+                    if (move.WithinRangeOfTargetLocation)
                     {
-                        if (move.WithinRangeOfTargetLocation)
-                        {
-                            move.CanMove = false;
-                        }
+                        move.CanMove = false;
                     }
                 }
                 else
                 {
-                    Agent.isStopped = true;
+                    agent.isStopped = true;
 
                 }
 

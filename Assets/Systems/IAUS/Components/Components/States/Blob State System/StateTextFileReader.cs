@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using DreamersInc.InflunceMapSystem;
 using System;
+using System.Linq;
 using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
 namespace IAUS.ECS.StateBlobSystem
@@ -15,38 +16,41 @@ namespace IAUS.ECS.StateBlobSystem
        
         public static StateAsset[] SetupStateAsset()
         {
-            TextAsset textFile = Resources.Load("Creature List") as TextAsset;
-            var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            List<StateAsset> array = new List<StateAsset>();
-            for (int i = 0; i < lines.Length; i++)
+            var textFile = Resources.Load("Creature List") as TextAsset;
+            if (textFile != null)
             {
-                var parts = lines[i].Split(',');
-                var stateParts = parts[3].Split(';');
-                foreach (var state in stateParts)
-                {
-                    array.Add( new StateAsset()
+                var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                var array = (from t in lines
+                    select t.Split(',')
+                    into parts
+                    let stateParts = parts[3].Split(';')
+                    from state in stateParts
+                    select new StateAsset()
                     {
                         ID = new Identity()
                         {
                             Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                             NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                            FactionID = int.TryParse(parts[2], out int result) ? result : 0,
-                            aIStates =(AIStates)Enum.Parse(typeof(AIStates), state)
+                            FactionID = int.TryParse(parts[2], out var result) ? result : 0,
+                            AIStates = (AIStates)Enum.Parse(typeof(AIStates), state)
                         }
-                    });
-                }
+                    }).ToList();
+                SetupConsideration(array, "Consideration files/Health", Considerations.Health);
+                SetupConsideration(array, "Consideration files/DistanceToTarget Enemy", Considerations.DistanceToTargetEnemy);
+                SetupConsideration(array, "Consideration files/DistanceToTarget Ally", Considerations.DistanceToTargetAlly);
+                SetupConsideration(array, "Consideration files/DistanceToTarget Location", Considerations.DistanceToTargetLocation);
+                SetupConsideration(array, "Consideration files/Distance to place of Interest", Considerations.DistanceToPOI);
+                SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
+                SetupConsideration(array, "Consideration files/ManaAmmo2", Considerations.ManaAmmo2);
+                SetupConsideration(array, "Consideration files/Time", Considerations.Time);
+                SetupConsideration(array, "Consideration files/Enemy Influence", Considerations.EnemyInfluence);
+                SetupConsideration(array, "Consideration files/Friendly Influence 1", Considerations.FriendlyInfluence);
+
+
+                return array.ToArray();
             }
-            SetupConsideration(array, "Consideration files/Health", Considerations.Health);
-            SetupConsideration(array, "Consideration files/DistanceToTarget", Considerations.DistanceToTarget);
-            SetupConsideration(array, "Consideration files/Distance to place of Interest", Considerations.DistanceToPOI);
-            SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
-            SetupConsideration(array, "Consideration files/ManaAmmo2", Considerations.ManaAmmo2);
-            SetupConsideration(array, "Consideration files/Time", Considerations.Time);
-            SetupConsideration(array, "Consideration files/Enemy Influence", Considerations.EnemyInfluence);
-            SetupConsideration(array, "Consideration files/Friendly Influence 1", Considerations.FriendlyInfluence);
-
-
-            return array.ToArray();
+            else
+                return null;
         }
         public static void SetupConsideration(List<StateAsset> array , string textFilePath, Considerations consideration)
         {
@@ -56,23 +60,23 @@ namespace IAUS.ECS.StateBlobSystem
                     $"{textFilePath}");
             }
             var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < lines.Length; i++)
+            foreach (var t in lines)
             {
-                var parts = lines[i].Split(',');
+                var parts = t.Split(',');
                 var tempID = new Identity()
                 {
                     Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
                     NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
                     FactionID = int.TryParse(parts[2], out int result) ? result : 0,
-                    aIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
+                    AIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
                 };
-                int index = GetIndexOfIndentity(tempID, array);
+                var index = GetIndexOfIdentity(tempID, array);
 
                 if (index == -1)
                 {
                    
 #if UNITY_EDITOR
-                    Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.aIStates} add to Creature List Text file");
+                    Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.AIStates} add to Creature List Text file");
 #endif
 
                 }
@@ -83,66 +87,74 @@ namespace IAUS.ECS.StateBlobSystem
                     switch (consideration)
                     {
                         case Considerations.Health:
-                            temp.Health = LineRead(lines[i]);
+                            temp.Health = LineRead(t);
                             break;
-                        case Considerations.DistanceToTarget:
-                            temp.DistanceToTarget = LineRead(lines[i]);
+                        case Considerations.DistanceToTargetEnemy:
+                            temp.DistanceToTargetEnemy = LineRead(t);
+                            break;
+                        case Considerations.DistanceToTargetAlly:
+                            temp.DistanceToTargetAlly = LineRead(t);
+                            break; 
+                        case Considerations.DistanceToTargetLocation:
+                            temp.DistanceToTargetLocation = LineRead(t);
                             break;
                         case Considerations.DistanceToPOI:
-                            temp.DistanceToPlaceOfInterest = LineRead(lines[i]);
+                            temp.DistanceToPlaceOfInterest = LineRead(t);
                             break;
                         case Considerations.Time:
-                            temp.Timer = LineRead(lines[i]);
+                            temp.Timer = LineRead(t);
                             break;
                         case Considerations.ManaAmmo:
-                            temp.ManaAmmo = LineRead(lines[i]);
+                            temp.ManaAmmo = LineRead(t);
                             break;
                         case Considerations.FriendlyInfluence:
-                            temp.FriendlyInfluence = LineRead(lines[i]);
+                            temp.FriendlyInfluence = LineRead(t);
                             break;
                         case Considerations.EnemyInfluence:
-                            temp.EnemyInfluence = LineRead(lines[i]);
+                            temp.EnemyInfluence = LineRead(t);
                             break;
 
+                        case Considerations.ManaAmmo2:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(consideration), consideration, null);
                     }
                     array[index] = temp;
                 }
             }
         }
 
-        public static int GetIndexOfIndentity(Identity ID, List<StateAsset> StateArray)
+        private static int GetIndexOfIdentity(Identity ID, List<StateAsset> stateArray)
         {
-            int index = -1;
-            for (int i = 0; i < StateArray.Count; i++)
+            var index = -1;
+            for (var i = 0; i < stateArray.Count; i++)
             {
-                if (StateArray[i].ID.Equals(ID))
-                {
-                    index = i;
-                    return index;
-                }
+                if (!stateArray[i].ID.Equals(ID)) continue;
+                index = i;
+                return index;
             }
             return index;
 
         }
 
 
-        static ConsiderationScoringData LineRead( string Line, int StartPoint=4)
+        static ConsiderationScoringData LineRead( string line, int startPoint=4)
         {
             ConsiderationScoringData output = new();
 
-            var parts = Line.Split(',');
+            var parts = line.Split(',');
 
-            if (bool.Parse(parts[StartPoint]))
+            if (bool.Parse(parts[startPoint]))
             {
 
                 output = new ConsiderationScoringData()
                 {
-                    Inverse = bool.TryParse(parts[StartPoint + 1], out var b) ? b : false,
-                    responseType = (ResponseType)Enum.Parse(typeof(ResponseType), parts[StartPoint + 2]),
-                    M = float.TryParse(parts[StartPoint + 3], out var M) ? M : 0,
-                    K = float.TryParse(parts[StartPoint + 4], out var K) ? K : 0,
-                    B = float.TryParse(parts[StartPoint + 5], out var B) ? B : 0,
-                    C = float.TryParse(parts[StartPoint + 6], out var C) ? C : 0
+                    Inverse = bool.TryParse(parts[startPoint + 1], out var b) && b,
+                    responseType = (ResponseType)Enum.Parse(typeof(ResponseType), parts[startPoint + 2]),
+                    M = float.TryParse(parts[startPoint + 3], out var M) ? M : 0,
+                    K = float.TryParse(parts[startPoint + 4], out var K) ? K : 0,
+                    B = float.TryParse(parts[startPoint + 5], out var B) ? B : 0,
+                    C = float.TryParse(parts[startPoint + 6], out var C) ? C : 0
                 };
             }
             return output;
@@ -150,5 +162,5 @@ namespace IAUS.ECS.StateBlobSystem
         
     }
 
-    public enum Considerations { Health, DistanceToTarget, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
+    public enum Considerations { Health, DistanceToTargetEnemy,DistanceToTargetLocation,DistanceToTargetAlly, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
 }

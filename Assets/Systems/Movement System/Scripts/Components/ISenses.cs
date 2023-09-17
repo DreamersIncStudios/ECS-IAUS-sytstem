@@ -6,7 +6,9 @@ using Stats;
 using Unity.Mathematics;
 using Unity.Collections;
 using Global.Component;
+using PixelCrushers.LoveHate;
 using Stats.Entities;
+using Unity.Burst;
 
 namespace AISenses
 {
@@ -110,7 +112,16 @@ namespace AISenses
 
     public struct Target
     {
-        public Entity entity;
+        public Entity Entity;
+        public bool IsFriendly;
+        [BurstDiscard]
+        public void CheckIsFriendly(int factionID)
+        {
+            IsFriendly = factionID == TargetInfo.FactionID ||
+                         LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(TargetInfo.FactionID) > 51;
+
+        }
+
         public AITarget TargetInfo;
         public float DistanceTo;
         public float3 LastKnownPosition;

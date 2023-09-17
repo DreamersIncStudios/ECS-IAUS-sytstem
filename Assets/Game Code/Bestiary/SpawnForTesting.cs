@@ -19,31 +19,31 @@ public class SpawnForTesting : MonoBehaviour
         }
         //for (int i = 0; i < 10; i++)
         //{
-        BestiaryDB.SpawnNPC(1);
+      //  BestiaryDB.SpawnNPC(1);
         BestiaryDB.SpawnNPC(3);
 
         //}
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 25; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
                 BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
             else
                 i--;
         }
-        for (int i = 0; i < 15; i++)
-        {
-            if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
-                BestiaryDB.SpawnDummy(3, pos + (float3)Vector3.up * 2);
-            else
-                i--;
-        }
-        for (int i = 0; i < 6; i++)
-        {
-            if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
-                BestiaryDB.SpawnDummy(1, pos + (float3)Vector3.up * 2);
-            else
-                i--;
-        }
+        //for (int i = 0; i < 15; i++)
+        //{
+        //    if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
+        //        BestiaryDB.SpawnDummy(3, pos + (float3)Vector3.up * 2);
+        //    else
+        //        i--;
+        //}
+        //for (int i = 0; i < 6; i++)
+        //{
+        //    if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
+        //        BestiaryDB.SpawnDummy(1, pos + (float3)Vector3.up * 2);
+        //    else
+        //        i--;
+        //}
     }
 
     // Update is called once per frame

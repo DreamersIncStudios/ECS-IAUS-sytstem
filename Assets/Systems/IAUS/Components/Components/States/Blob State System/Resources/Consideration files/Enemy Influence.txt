@@ -22,3 +22,7 @@ Normal,Daemon,1,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,0,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,2,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,3,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
+Normal,Beast,0,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Beast,1,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Beast,2,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500
+Normal,Beast,3,AttackMelee,TRUE,FALSE,Logistic,20.0000,1.0000,0.0000,0.4500

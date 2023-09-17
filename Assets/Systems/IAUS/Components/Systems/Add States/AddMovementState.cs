@@ -49,7 +49,7 @@ namespace IAUS.ECS.Systems {
                 c1.Status = ActionStatus.Idle;
                 if (add)
                 {
-                    stateBuffer.Add(new StateBuffer(c1.name));
+                    stateBuffer.Add(new StateBuffer(c1.Name));
                 }
                 MovementStyle[i] = c1;
             }
@@ -78,7 +78,7 @@ namespace IAUS.ECS.Systems {
            
             if (add)
             {
-                stateBuffer.Add(new StateBuffer(wander.name));
+                stateBuffer.Add(new StateBuffer(wander.Name));
                 ECB.AddComponent(sortkey, entity, new UpdateWanderLocationTag());
             }
 

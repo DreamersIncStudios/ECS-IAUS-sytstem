@@ -112,6 +112,11 @@ namespace IAUS.ECS.Component
 
         }
     }
-
+    [System.Serializable]
+    public struct WaypointSetup : IComponentData
+    {
+        public uint NumberOfStops;
+        public uint Range;
+    }
 
 }

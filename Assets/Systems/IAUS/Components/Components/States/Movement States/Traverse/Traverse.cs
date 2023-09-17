@@ -16,7 +16,7 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public AIStates name { get { return AIStates.Traverse; } }
+        public AIStates Name { get { return AIStates.Traverse; } }
 
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }

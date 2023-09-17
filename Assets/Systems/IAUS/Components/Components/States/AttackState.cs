@@ -1,16 +1,28 @@
-using IAUS.ECS.Component;
+using System.Linq;
+using DreamersInc.ComboSystem;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Sirenix.Utilities;
 using Unity.Entities;
+using Unity.Collections;
 using UnityEngine;
 
 namespace IAUS.ECS.Component
 {
     public struct AttackState : IBaseStateScorer
     {
+        public AttackState(float coolDownTime, bool melee, bool magic, bool range)
+        {
+            this.coolDownTime = coolDownTime;
+            CapableOfMelee = melee;
+            CapableOfMagic = magic;
+            CapableOfProjectile = range;
+            status = ActionStatus.Idle;
+            Index = 0;
+            resetTime = 0;
+            totalScore = 0;
+        }
+
         public bool CapableOfMelee;
         public bool CapableOfMagic;
         public bool CapableOfProjectile;
@@ -20,40 +32,58 @@ namespace IAUS.ECS.Component
         }
 
         public int Index { get; private set; }
-        public AIStates name { get { return AIStates.Attack; } }
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-
-        public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
-        public ActionStatus Status { get { return _status; } set { _status = value; } }
-        public float CoolDownTime { get { return _coolDownTime; } }
+        public AIStates Name => AIStates.Attack;
+        
+        public float TotalScore { get => totalScore;
+            set { totalScore = value; } }
+        public ActionStatus Status { get { return status; } set { status = value; } }
+        public float CoolDownTime { get { return coolDownTime; } }
         public bool InCooldown => Status == ActionStatus.CoolDown;
-        public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
+        public float ResetTime { get { return resetTime; } set { resetTime = value; } }
         public float mod { get { return 1.0f - (1.0f / 4.0f); } }
 
-
-        [SerializeField] public float _coolDownTime;
-        [SerializeField] public float _resetTime { get; set; }
-        [SerializeField] public float _totalScore { get; set; }
-        [SerializeField] public ActionStatus _status;
+          float coolDownTime;
+         float resetTime { get; set; }
+         float totalScore { get; set; }
+         ActionStatus status;
   
     }
-
+    public struct AttackActionTag : IComponentData {
+        public int SubStateNumber;
+    }
     public struct MeleeAttackSubState : IComponentData {
         public int Index { get; private set; }
         public void SetIndex(int index)
         {
             Index = index;
         }
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public AIStates name { get { return AIStates.AttackMelee; } }
-
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public float AttackRange { get; set; } //Todo Pull from character stats speed
+        public AIStates Name => AIStates.AttackMelee;
+        public float AttackDelay;
+        public bool AttackNow => AttackDelay <= 0.0f;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
+        FixedList512Bytes<AIComboInfo> unlockedMoves;
+
+        public void SetupPossibleAttacks(ComboSO combo)
+        {
+            unlockedMoves = new FixedList512Bytes<AIComboInfo>();
+            foreach (var item in combo.ComboLists.Where(item => item.Unlocked && !item.AnimationList.IsNullOrEmpty()))
+            {
+                unlockedMoves.Add(new AIComboInfo()
+                {
+                    AttackName = item.Name,
+                    Chance =  (int)item.AnimationList[0].Trigger.Chance,
+                    Trigger =  item.AnimationList[0].Trigger
+                });
+            }
+        }
+
+        public  int SelectAttackIndex(uint seed) {
+                //Todo updated solution using LootBox system
+                var maxRange = unlockedMoves.Length;
+                AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(4, 15);
+                return Unity.Mathematics.Random.CreateFromIndex(seed).NextInt(0, maxRange);
+        }
 
     }
     public struct MagicAttackSubState : IComponentData
@@ -63,13 +93,10 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public AIStates name { get { return AIStates.AttackMagic; } }
-
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Mana;
-        public ConsiderationScoringData CoverInRange;
+        public static AIStates Name => AIStates.AttackMagic;
         public float mod { get { return 1.0f - (1.0f / 5.0f); } }
+        public void SetupPossibleAttacks(){}
+        
     }
     public struct MagicMeleeAttackSubState : IComponentData
     {
@@ -78,12 +105,11 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public AIStates name { get { return AIStates.AttackMagicMelee; } }
+        public static AIStates Name => AIStates.AttackMagicMelee;
 
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Mana;
-        public float mod { get { return 1.0f - (1.0f / 4.0f); } }
+        public float Mod => 1.0f - (1.0f / 4.0f);
+        public void SetupPossibleAttacks(){}
+        
     }
     public struct RangedAttackSubState : IComponentData
     {
@@ -93,13 +119,22 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public AIStates name { get { return AIStates.AttackRange; } }
-
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-        public ConsiderationScoringData Ammo => stateRef.Value.Array[Index].ManaAmmo;
-        public ConsiderationScoringData CoverInRange => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
-        public float mod { get { return 1.0f - (1.0f / 5.0f); } }
+        public static AIStates Name => AIStates.AttackRange;
+        
+       public float Mod => 1.0f - (1.0f / 5.0f);
+        public void SetupPossibleAttacks(){}
 
     }
+
+    public struct MeleeAttackTag : IComponentData
+    {
+        public int AttackIndex;
+
+    }
+    public struct MagicAttackTag : IComponentData { }
+    public struct RangeAttackTag : IComponentData { }
+    public struct MagicMeleeAttackTag : IComponentData { }
+
+
+    public enum SubAttackStates { }
 }

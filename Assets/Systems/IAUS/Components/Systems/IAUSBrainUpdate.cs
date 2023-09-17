@@ -37,8 +37,7 @@ namespace IAUS.ECS.Systems
         public void OnUpdate(ref SystemState state)
         {
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-
-
+  
             var patrolUpdate = new UpdatePatrol();
             patrolUpdate.Schedule();
          
@@ -222,10 +221,10 @@ namespace IAUS.ECS.Systems
                     //case AIStates.GotoLeader:
                     //    CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                     //    break;
-                    //case AIStates.Attack:
-                    //    //TODO Implement Add and Remove Tag;
-                    //    CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                    //    break;
+                    case AIStates.Attack:
+                        //TODO Implement Add and Remove Tag;
+                        CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, entity);
+                        break;
 
                     case AIStates.RetreatToLocation:
                         CommandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, entity);
@@ -264,9 +263,9 @@ namespace IAUS.ECS.Systems
                     //case AIStates.GotoLeader:
                     //    CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
                     //    break;
-                    //case AIStates.Attack:
-                    //    CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Entities[i]);
-                    //    break;
+                    case AIStates.Attack:
+                        CommandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, entity);
+                        break;
                     case AIStates.RetreatToLocation:
                         CommandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, entity);
                         break;

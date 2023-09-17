@@ -49,7 +49,7 @@ namespace DreamersInc.ComboSystem
                 {
                     foreach (ComboSingle combotest in ComboList.Combo.ComboLists)
                     {
-                        foreach (AnimationCombo comboOption in combotest.ComboList)
+                        foreach (AnimationCombo comboOption in combotest.AnimationList)
                         {
                             if (handler.StateInfo.IsName(comboOption.CurrentStateName.ToString()))
                             {

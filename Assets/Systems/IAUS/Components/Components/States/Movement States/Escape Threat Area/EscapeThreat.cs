@@ -14,7 +14,7 @@ namespace IAUS.ECS.Component
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; private set; }
-        public AIStates name { get { return AIStates.RetreatToLocation; } }
+        public AIStates Name { get { return AIStates.RetreatToLocation; } }
 
 
         public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
@@ -47,6 +47,12 @@ namespace IAUS.ECS.Component
         public float mod => throw new System.NotImplementedException();
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
+
+        public EscapeThreat(float coolDownTime) : this()
+        {
+            _coolDownTime = coolDownTime;
+        }
+
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using Unity.Entities;
+﻿/*using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Transforms;
@@ -8,6 +8,7 @@ using Global.Component;
 using Unity.Mathematics;
 using Stats;
 using RaycastHit = Unity.Physics.RaycastHit;
+using System.Linq;
 
 namespace AISenses.VisionSystems
 {
@@ -68,19 +69,19 @@ namespace AISenses.VisionSystems
                     return;
                 }
 
-                for (int j = 0; j < TargetArray.Length; j++)
+                for (int i = 0; i < TargetArray.Length; i++)
                 {
-                    float dist = Vector3.Distance(transform.Position, TargetPosition[j].Position);
+                    float dist = Vector3.Distance(transform.Position, TargetPosition[i].Position);
                     if (dist < vision.ViewRadius)
                     {
-                        Vector3 dirToTarget = ((Vector3)TargetPosition[j].Position - (Vector3)(transform.Position + new float3(0, 1, 0))).normalized;
+                        Vector3 dirToTarget = ((Vector3)TargetPosition[i].Position - (Vector3)(transform.Position + new float3(0, 1, 0))).normalized;
 
                         if (Vector3.Angle(transform.Forward(), dirToTarget) < vision.ViewAngle / 2.0f)
                         {
                             RaycastInput raycastInput = new RaycastInput()
                             {
-                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 1.75f,
-                                End = TargetPosition[j].Position + TargetArray[j].CenterOffset,
+                                Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
+                                End = TargetPosition[i].Position + TargetArray[i].CenterOffset,
                                 Filter = new CollisionFilter()
                                 {
                                     BelongsTo = ((1 << 10)),
@@ -88,33 +89,30 @@ namespace AISenses.VisionSystems
                                     GroupIndex = 0
                                 }
                             };
-
-                            if (world.CastRay(raycastInput, out RaycastHit raycastHit))
+                            if (!world.CastRay(raycastInput, out RaycastHit raycastHit)) continue;
+                            if (raycastHit.Entity.Equals(TargetEntity[i]))
                             {
-                                if (raycastHit.Entity.Equals(TargetEntity[j]))
+
+                                buffer.Add(new ScanPositionBuffer()
                                 {
-
-                                    buffer.Add(new ScanPositionBuffer()
+                                    target = new Target()
                                     {
-                                        target = new Target()
-                                        {
-                                            CanSee = true,
-                                            DistanceTo = dist,
-                                            LastKnownPosition = TargetPosition[j].Position,
-                                            TargetInfo = TargetArray[j],
-                                            entity = TargetEntity[j]
-                                        },
-                                        dist = dist
+                                        CanSee = true,
+                                        DistanceTo = dist,
+                                        LastKnownPosition = TargetPosition[i].Position,
+                                        TargetInfo = TargetArray[i],
+                                        Entity = TargetEntity[i]
+                                    },
+                                    dist = dist
 
-                                    });
-                                }
+                                });
                             }
                         }
                     }
 
                 }
+
             }
         }
     }
-
-}
+}*/

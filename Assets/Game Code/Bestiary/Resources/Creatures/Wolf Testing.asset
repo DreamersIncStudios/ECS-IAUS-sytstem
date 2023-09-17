@@ -33,7 +33,7 @@ MonoBehaviour:
     difficultyMod: 10
     LevelMod: 5
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
-  AIStatesToAdd: 1a0000000a000000
+  AIStatesToAdd: 1a0000000a00000004000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0
@@ -112,10 +112,11 @@ MonoBehaviour:
     AnimSpeedMultiplier: 0
     GroundCheckDistance: 0
     CombatCapable: 0
-  factionID: 0
-  BaseThreat: 0
-  BaseProtection: 0
+  factionID: 1
+  BaseThreat: 4
+  BaseProtection: 10
   Equipment:
     EquippedWeapons:
     - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}
+    - {fileID: 11400000, guid: 0d0acd3bd1c799444be09c9ecdfd4218, type: 2}
     EquippedArmors: []

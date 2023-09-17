@@ -83,12 +83,12 @@ namespace AISenses.VisionSystems
                     if (!looking)
                     {
                       
-                        temp = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.entity).transform.gameObject;
+                        temp = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.Entity).transform.gameObject;
                         if (CameraControl.Instance.OnTargetChanged != null)
                         {
                             CameraControl.Instance.OnTargetChanged(this, new CameraControl.OnTargetChangedEventArgs
                             {
-                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.entity).transform.gameObject
+                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.Entity).transform.gameObject
                             }) ;
                         }
                         looking = true;
@@ -104,7 +104,7 @@ namespace AISenses.VisionSystems
                         {
                             CameraControl.Instance.OnTargetChanged(this, new CameraControl.OnTargetChangedEventArgs
                             {
-                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.entity).transform.gameObject
+                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.Entity).transform.gameObject
                     });
                         }
                            
@@ -120,7 +120,7 @@ namespace AISenses.VisionSystems
                         {
                             CameraControl.Instance.OnTargetChanged(this, new CameraControl.OnTargetChangedEventArgs
                             {
-                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.entity).transform.gameObject
+                                Target = EntityManager.GetComponentObject<AnimatorComponent>(buffer[index].target.Entity).transform.gameObject
                     });
                         }
                     }

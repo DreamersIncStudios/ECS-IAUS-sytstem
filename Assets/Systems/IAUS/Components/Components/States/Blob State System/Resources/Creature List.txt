@@ -14,7 +14,7 @@ Normal,Daemon,0,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;AttackMele
 Normal,Daemon,1,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;AttackMelee;AttackMagic;AttackRange;AttackMagicMelee
 Normal,Daemon,2,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;AttackMelee;AttackMagic;AttackRange;AttackMagicMelee
 Normal,Daemon,3,Terrorize;Heal_Self_Item;Retreat;Attack;Guard;GroupUp;AttackMelee;AttackMagic;AttackRange;AttackMagicMelee
-Normal,Beast,0,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait
-Normal,Beast,1,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait
-Normal,Beast,2,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait
-Normal,Beast,3,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait
+Normal,Beast,0,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait;AttackMelee
+Normal,Beast,1,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait;AttackMelee
+Normal,Beast,2,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait;AttackMelee
+Normal,Beast,3,RetreatToQuadrant;WanderQuadrant;Attack;AttackMagic;AttackRange;Wait;AttackMelee

@@ -19,7 +19,7 @@ namespace IAUS.ECS.Component
         public int Index { get; private set; }
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData DistanceToPoint => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
         public float3 SpawnPosition;
         public int Hashkey
@@ -43,6 +43,13 @@ namespace IAUS.ECS.Component
 
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
+
+        public StayInQuadrant(float coolDownTime, float3 spawnPosition) : this()
+        {
+            _coolDownTime = coolDownTime;
+            SpawnPosition = spawnPosition;
+        }
+
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
         public bool AttackTarget { get; set; }

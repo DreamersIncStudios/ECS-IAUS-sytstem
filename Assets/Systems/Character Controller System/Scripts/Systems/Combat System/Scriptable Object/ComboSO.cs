@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 //using Core.SaveSystems;
 
 namespace DreamersInc.ComboSystem
@@ -56,7 +58,7 @@ namespace DreamersInc.ComboSystem
         }
         public AnimationTrigger GetTrigger(AnimatorStateInfo state) {
             foreach (ComboSingle combo in ComboLists) {
-                foreach (AnimationCombo test in combo.ComboList) {
+                foreach (AnimationCombo test in combo.AnimationList) {
                     if(state.IsName(test.Trigger.TriggerString))
                         return test.Trigger;
                 }
@@ -132,12 +134,21 @@ namespace DreamersInc.ComboSystem
     [System.Serializable]
     public class ComboSingle {
         [SerializeField] ComboNames name;
-        public ComboNames Name { get { return name; } set { name = value; } } // Change To String ???????????
+        public ComboNames Name { get => name;
+            set => name = value;
+        } // Change To String ???????????
         public bool Unlocked;
         
 
-        [SerializeField] List<AnimationCombo> comboList;
-        [HideInInspector] public List<AnimationCombo> ComboList { get { return comboList; } }
+        [FormerlySerializedAs("comboList")] [SerializeField]
+        private List<AnimationCombo> animationList;
+        [HideInInspector] public List<AnimationCombo> AnimationList => animationList;
     }
 
+    public struct AIComboInfo
+    {
+        public int Chance;
+        public ComboNames AttackName;
+        public AnimationTrigger Trigger;
+    }
 }

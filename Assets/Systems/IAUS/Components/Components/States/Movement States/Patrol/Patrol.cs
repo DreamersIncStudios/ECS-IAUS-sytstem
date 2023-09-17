@@ -17,7 +17,7 @@ namespace IAUS.ECS.Component
             Index= index;
         }
         public bool StayInQuadrant;
-        public AIStates name { get { return AIStates.Patrol; } }
+        public AIStates Name { get { return AIStates.Patrol; } }
 
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         /// <summary>
@@ -28,7 +28,7 @@ namespace IAUS.ECS.Component
         /// <summary>
         /// Utility score for Attackable target in Ranges
         /// </summary>
-        public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
+        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
         public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
 
 
@@ -59,10 +59,9 @@ namespace IAUS.ECS.Component
     }
 
     public interface IMovementState: IBaseStateScorer {
-        public ConsiderationScoringData DistanceToPoint { get; }
-        public ConsiderationScoringData HealthRatio { get; }
+
         public uint NumberOfWayPoints { get; set; }
-        public AIStates name { get; }
+        public AIStates Name { get; }
         public int WaypointIndex { get; set; }
         public Waypoint CurWaypoint { get; set; }
         public float distanceToPoint { get; set; }

@@ -23,10 +23,7 @@ namespace Global.Component
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
         //TODO change to output a relationship level;
-        public bool IsFriend(int factionID)
-        {
-            return factionID == FactionID ? true : LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(FactionID) > 51;
-        }
+      
         public float detectionScore;
 
     }
@@ -39,7 +36,7 @@ namespace Global.Component
 
 
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-    [UpdateBefore(typeof(VisionSystemJobs))]
+    [UpdateBefore(typeof(TargetingQuadrantSystem))]
     public partial class UpdateAITarget : SystemBase
     {
         protected override void OnUpdate()
