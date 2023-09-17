@@ -1,9 +1,5 @@
 using Components.MovementSystem;
 using IAUS.ECS.Component;
-using IAUS.ECS.Component.Aspects;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using AISenses.VisionSystems.Combat;
 using Unity.Burst;
 using Unity.Entities;
@@ -11,7 +7,6 @@ using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
 using Utilities.ReactiveSystem;
-using Random = Unity.Mathematics.Random;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentAdditionJob))]
@@ -46,6 +41,7 @@ namespace IAUS.ECS.Systems.Reactive {
 
         }
 
+        [UpdateAfter(typeof(AttackTagReactor.AttackUpdateSystem))]
         partial class MeleeReactiveSystem : SystemBase
         {
             private EntityQuery meleeAttackersRemoved;
@@ -90,8 +86,7 @@ namespace IAUS.ECS.Systems.Reactive {
 
             protected override void OnUpdate()
             {
-                new SetAttack() { Seed = (uint)UnityEngine.Random.Range(1, 10000) }.ScheduleParallel();
-                new MoveToAttackPosition().ScheduleParallel(meleeAttackersAdded);
+
                 new AttackTargetEnemy()
                 {
                     Seed = (uint)UnityEngine.Random.Range(1, 10000),
@@ -99,36 +94,27 @@ namespace IAUS.ECS.Systems.Reactive {
                 }.ScheduleParallel();
             }
 
-            [BurstCompile]
-            private partial struct SetAttack : IJobEntity
-            {
-                public uint Seed;
 
-                void Execute(ref MeleeAttackTag tag, ref  MeleeAttackSubState state)
-                {
-                    tag.AttackIndex = state.SelectAttackIndex(Seed);
-                }
-            }
-
-            [BurstCompile]
-            private partial struct MoveToAttackPosition : IJobEntity
-            {
-                void Execute(ref Movement move, ref AttackTarget target)
-                {
-                    move.SetLocation(target.AttackTargetLocation);
-                }
-            }
 
             private partial struct AttackTargetEnemy : IJobEntity
             {
                 public float DeltaTime;
                 public uint Seed;
-                void Execute(ref Movement move, ref MeleeAttackSubState state, ref MeleeAttackTag tag)
+                void Execute(ref Movement move, ref AttackTarget target, ref MeleeAttackSubState state, ref MeleeAttackTag tag)
                 {
-                    if (move.Completed && !state.AttackNow)
+                    if (!move.CanMove)
+                    {
+                        tag.AttackIndex = state.SelectAttackIndex(Seed);
+                        move.SetLocation(target.AttackTargetLocation);
+                        Debug.Log(move.TargetLocation);
+                        Debug.Log(target.AttackTargetLocation);
+
+                    }
+
+                    if (move.StoppingDistance<4.0f && !state.AttackNow)
                     {
                         state.AttackDelay -= DeltaTime;
-                    }else if (state.AttackNow)
+                    }else if (state.AttackNow && move.CanMove)
                     {
                         Debug.Log($"hit Enemy with attack {tag.AttackIndex}");
                         tag.AttackIndex = state.SelectAttackIndex(Seed);

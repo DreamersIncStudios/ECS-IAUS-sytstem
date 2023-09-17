@@ -43,22 +43,23 @@
   <ItemGroup>
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.8f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.8f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.QueryBuilder.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.LambdaJobs.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.Common.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.Query.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.AspectGenerator.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.Common.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.EntityQueryBulkOperations.dll" />
-    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.14\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.JobEntityGenerator.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.QueryBuilder.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.LambdaJobs.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.Common.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.SystemAPI.Query.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.Analyzer.CodeFixes.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.AspectGenerator.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.Common.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.SystemGenerator.EntityQueryBulkOperations.dll" />
+    <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.JobEntityGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Systems\Movement System\Scripts\Systems\Targeting System\Systems\AttackTargetSystem.cs" />
      <Compile Include="Assets\Systems\Movement System\Scripts\Systems\ThreatAvoidanceSystem.cs" />
+     <Compile Include="Assets\Systems\Movement System\Scripts\Systems\TargetingQuadrantSystem.cs" />
      <Compile Include="Assets\Systems\Movement System\Scripts\Systems\MovementSystem.cs" />
      <Compile Include="Assets\Systems\Movement System\Scripts\Components\ISenses.cs" />
      <Compile Include="Assets\Systems\Movement System\Scripts\Components\Bakers\VisionBaking.cs" />

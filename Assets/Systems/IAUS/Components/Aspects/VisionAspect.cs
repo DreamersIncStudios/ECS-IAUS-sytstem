@@ -1,33 +1,40 @@
-using AISenses;
 using Global.Component;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
-using UnityEngine;
-
 
 namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        readonly RefRO<LocalTransform> Transform;
-        readonly DynamicBuffer<ScanPositionBuffer> ScanPositions;
-        readonly  RefRO<AITarget> self;
+        private readonly RefRO<LocalTransform> transform;
+        private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
+        private readonly  RefRO<AITarget> self;
 
+        public bool TargetInReactRange
+        {
+            get
+            {
+                foreach (var item in scanPositions)
+                    if (item is { dist: < 25, target: { IsFriendly: false } })
+                        return true;
+
+                return false;
+            }
+
+        }
 
         public bool TargetInRange()
         {
 
-            if (ScanPositions.IsEmpty)
+            if (scanPositions.IsEmpty)
             {
                 return false;
             }
             else
             {
-                foreach (var scan in ScanPositions)
+                foreach (var scan in scanPositions)
                 {
                     if (!scan.target.IsFriendly)
                     {
@@ -42,13 +49,13 @@ namespace AISenses.VisionSystems
         {
             dist = 0f;
 
-            if (ScanPositions.IsEmpty)
+            if (scanPositions.IsEmpty)
             {
                 return false;
             }
             else
             {
-                foreach (var scan in ScanPositions)
+                foreach (var scan in scanPositions)
                 {
                     if (!scan.target.IsFriendly)
                     {
@@ -64,13 +71,13 @@ namespace AISenses.VisionSystems
         {
             target = new AITarget();
 
-            if (ScanPositions.IsEmpty)
+            if (scanPositions.IsEmpty)
             {
                 return false;
             }
             else
             {
-                foreach (var scan in ScanPositions)
+                foreach (var scan in scanPositions)
                 {
                     if (!scan.target.IsFriendly)
                     {
@@ -87,13 +94,13 @@ namespace AISenses.VisionSystems
             target = new AITarget();
             dist = 0f;
 
-            if (ScanPositions.IsEmpty)
+            if (scanPositions.IsEmpty)
             {
                 return false;
             }
             else
             {
-                foreach (var scan in ScanPositions)
+                foreach (var scan in scanPositions)
                 {
                     if (!scan.target.IsFriendly)
                     {
@@ -110,11 +117,11 @@ namespace AISenses.VisionSystems
         {
             get
             {
-                if (ScanPositions.IsEmpty)
+                if (scanPositions.IsEmpty)
                     return false;
                 else
                 {
-                    foreach (var target in ScanPositions)
+                    foreach (var target in scanPositions)
                     {
                         if (target.target.IsFriendly)
                             return true;
@@ -126,7 +133,7 @@ namespace AISenses.VisionSystems
 
         public Target GetClosestEnemy()
         {
-            var visibleTargetInArea = ScanPositions.ToNativeArray(Allocator.Temp);
+            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
             foreach (var target in visibleTargetInArea)
             {
@@ -142,7 +149,7 @@ namespace AISenses.VisionSystems
         public Target GetClosestFriend()
         {
             
-            var visibleTargetInArea = ScanPositions.ToNativeArray(Allocator.Temp);
+            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
             foreach (var target in visibleTargetInArea.Where(target => target.target.IsFriendly))
             {

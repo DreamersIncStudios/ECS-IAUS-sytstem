@@ -81,7 +81,7 @@ namespace IAUS.ECS.Component
         public  int SelectAttackIndex(uint seed) {
                 //Todo updated solution using LootBox system
                 var maxRange = unlockedMoves.Length;
-                AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(0, 7);
+                AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(4, 15);
                 return Unity.Mathematics.Random.CreateFromIndex(seed).NextInt(0, maxRange);
         }
 
@@ -94,10 +94,6 @@ namespace IAUS.ECS.Component
             Index = index;
         }
         public static AIStates Name => AIStates.AttackMagic;
-
-       // public ConsiderationScoringData TargetInRange => StateRef.Value.Array[Index].DistanceToTarget;
-        //public ConsiderationScoringData Mana => StateRef.Value.Array[Index].ManaAmmo;
-        //public ConsiderationScoringData CoverInRange => StateRef.Value.Array[Index].DistanceToPlaceOfInterest;
         public float mod { get { return 1.0f - (1.0f / 5.0f); } }
         public void SetupPossibleAttacks(){}
         
@@ -123,13 +119,9 @@ namespace IAUS.ECS.Component
         {
             Index = index;
         }
-        public BlobAssetReference<AIStateBlobAsset> StateRef;
         public static AIStates Name => AIStates.AttackRange;
-
-      //  public ConsiderationScoringData TargetInRange => StateRef.Value.Array[Index].DistanceToTarget;
-      //  public ConsiderationScoringData Ammo => StateRef.Value.Array[Index].ManaAmmo;
-      //  public ConsiderationScoringData CoverInRange => StateRef.Value.Array[Index].DistanceToPlaceOfInterest;
-      //  public float Mod => 1.0f - (1.0f / 5.0f);
+        
+       public float Mod => 1.0f - (1.0f / 5.0f);
         public void SetupPossibleAttacks(){}
 
     }
