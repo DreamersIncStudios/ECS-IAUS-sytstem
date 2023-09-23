@@ -13,7 +13,9 @@ namespace AISenses.VisionSystems
             {
                 for (int i = 0; i <  buffer.Length; i++)
                 {
-                    buffer[i].target.CheckIsFriendly(brain.factionID);
+                    var temp = buffer[i];
+                    temp.target.CheckIsFriendly(brain.FactionID);
+                    buffer[i] = temp;
                 }
              
             }).WithoutBurst().Run();

@@ -23,7 +23,7 @@ namespace DreamersInc.BestiarySystem
 
             manager.AddComponentData(entity, new AITarget()
             {
-                FactionID = 2,// TODO add info.factionID,
+                FactionID = info.FactionID,
                 NumOfEntityTargetingMe = 3,
                 CanBeTargetByPlayer = false,
                 Type = TargetType.Character,
@@ -32,7 +32,11 @@ namespace DreamersInc.BestiarySystem
             });
 
             manager.AddComponentData(entity, new AIStat(10));
-            manager.AddComponentData(entity, new IAUSBrain() { NPCLevel= info.GetNPCLevel});
+            manager.AddComponentData(entity, new IAUSBrain()
+            {
+                NPCLevel= info.GetNPCLevel,
+                FactionID = info.FactionID
+            });
             manager.AddBuffer<ScanPositionBuffer>(entity);
             foreach (var state in info.AIStatesToAdd)
             {

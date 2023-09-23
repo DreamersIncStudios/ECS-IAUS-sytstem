@@ -119,7 +119,7 @@ namespace AISenses
         {
             IsFriendly = factionID == TargetInfo.FactionID ||
                          LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(TargetInfo.FactionID) > 51;
-
+         
         }
 
         public AITarget TargetInfo;

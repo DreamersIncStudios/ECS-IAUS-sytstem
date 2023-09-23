@@ -64,6 +64,7 @@ namespace AISenses.VisionSystems
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, TargetQuadrantData>(0, Allocator.Persistent);
+            query = new EntityQueryBuilder(Allocator.TempJob).WithAll<LocalTransform, AITarget>().Build(ref state);
         }
         [BurstCompile]
        public void OnDestroy(ref SystemState state)
@@ -87,7 +88,7 @@ namespace AISenses.VisionSystems
         }
       void UpdateQuadrantHashMap(ref SystemState systemState)
       {
-          query = new EntityQueryBuilder(Allocator.TempJob).WithAll<LocalTransform, AITarget>().Build(ref systemState);
+
           if (query.CalculateEntityCount() != quadrantMultiHashMap.Capacity)
           {
               quadrantMultiHashMap.Clear();

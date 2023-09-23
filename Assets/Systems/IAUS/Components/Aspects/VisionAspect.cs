@@ -3,6 +3,7 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
+using UnityEngine;
 
 namespace AISenses.VisionSystems
 {
@@ -18,7 +19,10 @@ namespace AISenses.VisionSystems
             {
                 foreach (var item in scanPositions)
                     if (item is { dist: < 25, target: { IsFriendly: false } })
+                    {
+                        Debug.Log("A target in range");
                         return true;
+                    }
 
                 return false;
             }
@@ -142,7 +146,6 @@ namespace AISenses.VisionSystems
                     return target.target;
                 }
             }
-
             return new Target();
         }
 

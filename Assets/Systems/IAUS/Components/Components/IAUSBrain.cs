@@ -7,6 +7,7 @@ using DreamersInc.InflunceMapSystem;
 using System;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
+using UnityEngine.Serialization;
 
 namespace IAUS.ECS.Component
 {
@@ -18,7 +19,7 @@ namespace IAUS.ECS.Component
     {
         public AITarget Target;
         public AIStates CurrentState;
-        public int factionID; // ID CHanging?
+         public int FactionID;// ID CHanging?
         public Status Attitude;
         public Difficulty Difficulty;
         public NPCLevel NPCLevel;

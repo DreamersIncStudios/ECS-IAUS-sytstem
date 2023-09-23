@@ -9,6 +9,7 @@ using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
+using UnityEngine.Serialization;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -24,8 +25,8 @@ namespace DreamersInc.BestiarySystem
         public List<AIStates> AIStatesToAdd;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
-        [Header("influence ")]
-        public int factionID;
+        [FormerlySerializedAs("factionID")] [Header("influence ")]
+        public int FactionID;
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;

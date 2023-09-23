@@ -36,7 +36,7 @@ namespace IAUS.ECS.Systems
                 for (int j = 0; j < buffer.Length; j++)
                 {
                     TravelWaypointBuffer point = buffer[j];
-                    point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(LoveHate.factionDatabase.GetFaction(Brains[i].factionID));
+                    point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(LoveHate.factionDatabase.GetFaction(Brains[i].FactionID));
                     buffer[j] = point;
                     if (j == patrol.WaypointIndex)
                     {

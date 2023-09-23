@@ -63,13 +63,13 @@ namespace DreamersInc.BestiarySystem
               //  manager.AddComponent<StoreWeapon>(entity);
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    factionID = info.FactionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });
                 manager.AddComponentData(entity, new AITarget()
                 {
-                    FactionID = info.factionID,
+                    FactionID = info.FactionID,
                     NumOfEntityTargetingMe = 3,
                     CanBeTargetByPlayer = true,
                     Type = TargetType.Character,
@@ -117,7 +117,7 @@ namespace DreamersInc.BestiarySystem
                 //manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    factionID = info.FactionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });
@@ -155,7 +155,7 @@ namespace DreamersInc.BestiarySystem
              //   manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    factionID = info.FactionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });

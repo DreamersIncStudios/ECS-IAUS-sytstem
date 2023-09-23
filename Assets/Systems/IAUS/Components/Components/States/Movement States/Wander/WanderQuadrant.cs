@@ -31,7 +31,7 @@ namespace IAUS.ECS.Component
         public bool TravelInOrder { get; set; }
         public uint NumberOfWayPoints { get { return 1; } set { } }
 
-        [SerializeField] public float DistanceRatio => !float.IsPositiveInfinity(distanceToPoint / StartingDistance) ? Mathf.Clamp01(distanceToPoint / StartingDistance) : 0;
+        [SerializeField] public float DistanceRatio  => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
 
 
         public AIStates Name => AIStates.WanderQuadrant;
@@ -81,7 +81,8 @@ namespace IAUS.ECS.Component
             return brain.ValueRO.State.Value.Array[index];
         }
 
-        private float DistanceToPoint => wander.ValueRO.Complete ? 0.0f : Vector3.Distance(wander.ValueRO.TravelPosition, transform.ValueRO.Position);
+        private float DistanceToPoint => Vector3.Distance(wander.ValueRO.TravelPosition, transform.ValueRO.Position) < wander.ValueRO.BufferZone
+            ? 0 : Vector3.Distance(wander.ValueRO.TravelPosition, transform.ValueRO.Position);
 
         public float Score
         {
@@ -91,15 +92,17 @@ namespace IAUS.ECS.Component
                 {
                     throw new ArgumentOutOfRangeException(nameof(wander), $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.Name} state is implements");
                 }
-
-                var asset = GetAsset(wander.ValueRO.Index);
-                wander.ValueRW.distanceToPoint = DistanceToPoint;
-                var distToEnemy = vision.GetClosestEnemy().DistanceTo;
                 if (vision.TargetInReactRange)
                 {
                     return 0.0f;
                 }
 
+                var asset = GetAsset(wander.ValueRO.Index);
+                wander.ValueRW.distanceToPoint = DistanceToPoint;
+                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
+                    ? vision.GetClosestEnemy().DistanceTo
+                    : 50;
+            
                 var totalScore = asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio)* asset.Health.Output(statInfo.ValueRO.HealthRatio)*
                                  asset.DistanceToTargetEnemy.Output(Mathf.Clamp01(distToEnemy/50.0f)); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
                 wander.ValueRW.TotalScore = wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;

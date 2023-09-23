@@ -9,8 +9,6 @@ namespace IAUS.ECS.Component
     [Serializable]
     public struct Patrol : IMovementState
     {
-
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; private set; }
 
         public void SetIndex(int index) {
@@ -18,19 +16,6 @@ namespace IAUS.ECS.Component
         }
         public bool StayInQuadrant;
         public AIStates Name { get { return AIStates.Patrol; } }
-
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-        /// <summary>
-        /// Utility score for travel to current waypoint assigned
-        /// </summary>
-        public ConsiderationScoringData DistanceToPoint => stateRef.Value.Array[Index].DistanceToPlaceOfInterest;
-
-        /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-
 
         [SerializeField] public bool Complete { get { return BufferZone > distanceToPoint; } }
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

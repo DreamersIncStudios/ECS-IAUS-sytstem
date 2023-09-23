@@ -14,7 +14,7 @@ namespace Global.Component
     {
         public TargetType Type;
         public ClassTitle ClassTitle;
-        public uint level;
+        public uint level{get; set; }
         public int FactionID;
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;

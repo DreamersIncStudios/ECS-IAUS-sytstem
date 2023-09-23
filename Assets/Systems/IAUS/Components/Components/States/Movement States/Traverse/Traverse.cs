@@ -10,18 +10,12 @@ namespace IAUS.ECS.Component
     {
 
         public uint NumberOfWayPoints { get; set; } 
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; private set; }
         public void SetIndex(int index)
         {
             Index = index;
         }
         public AIStates Name { get { return AIStates.Traverse; } }
-
-
-        public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
-        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
-        public ConsiderationScoringData ThreatInRange => stateRef.Value.Array[Index].EnemyInfluence;
 
         public bool Complete => BufferZone > distanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
