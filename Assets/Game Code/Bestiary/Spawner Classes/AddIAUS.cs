@@ -86,7 +86,7 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity, wait);
                         break;
                     case AIStates.Attack:
-                        manager.AddComponentData(entity, new AttackState(5.5f,true,false,false));
+                        manager.AddComponentData(entity, new AttackState(5.5f,info.CapableOfMelee,info.CapableOfMagic,info.CapableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
                         manager.AddComponent<MagicAttackSubState>(entity);
                         manager.AddComponentData(entity, new RangedAttackSubState() { 

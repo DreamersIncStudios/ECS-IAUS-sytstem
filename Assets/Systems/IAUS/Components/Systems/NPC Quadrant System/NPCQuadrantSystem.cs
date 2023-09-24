@@ -15,7 +15,7 @@ namespace DreamersInc.QuadrantSystems
     {
         public static int GetPositionHashMapKey(float3 position)
         {
-            return (int)(Mathf.Floor(position.x / quadrantCellSize) + (quadrantYMultiplier * Mathf.Floor(position.y / quadrantCellSize)));
+            return (int)(Mathf.Floor(position.x / quadrantCellSize) + (quadrantZMultiplier * Mathf.Floor(position.z / quadrantCellSize)));
         }
         public int GetEntityCountInHashMap(NativeParallelMultiHashMap<int, NPCQuadrantData> quadrantMap, int hashMapKey)
         {
@@ -32,17 +32,17 @@ namespace DreamersInc.QuadrantSystems
         }
         private static void DebugDrawQuadrant(float3 position)
         {
-            Vector3 lowerLeft = new (Mathf.Floor(position.x / quadrantCellSize) * quadrantCellSize, (quadrantYMultiplier * Mathf.Floor(position.y / quadrantCellSize) * quadrantCellSize));
-            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+1, +0) * quadrantCellSize);
-            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+0, +1) * quadrantCellSize);
-            Debug.DrawLine(lowerLeft + new Vector3(+1, +0) * quadrantCellSize, lowerLeft + new Vector3(+1, +1) * quadrantCellSize);
-            Debug.DrawLine(lowerLeft + new Vector3(+0, +1) * quadrantCellSize, lowerLeft + new Vector3(+0, +0) * quadrantCellSize);
+            Vector3 lowerLeft = new (Mathf.Floor(position.x / quadrantCellSize) * quadrantCellSize, (quadrantZMultiplier * Mathf.Floor(position.z / quadrantCellSize) * quadrantCellSize));
+            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+1,+0, +0) * quadrantCellSize);
+            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+0,+0, +1) * quadrantCellSize);
+            Debug.DrawLine(lowerLeft + new Vector3(+1,+0, +0) * quadrantCellSize, lowerLeft + new Vector3(+1, +0,+1) * quadrantCellSize);
+            Debug.DrawLine(lowerLeft + new Vector3(+0,+0, +1) * quadrantCellSize, lowerLeft + new Vector3(+0, +0,+0) * quadrantCellSize);
             Debug.Log(GetPositionHashMapKey(position) + "" + position);
 
         }
 
         private NativeParallelMultiHashMap<int, NPCQuadrantData> quadrantMultiHashMap;
-        public const int quadrantYMultiplier = 1000;
+        public const int quadrantZMultiplier = 1000;
         public const int quadrantCellSize = 50;
         public EntityQuery query;
 
@@ -57,8 +57,9 @@ namespace DreamersInc.QuadrantSystems
             quadrantMultiHashMap.Dispose();
         }
         public void OnUpdate(ref SystemState state) {
-            if (query.CalculateEntityCount() != quadrantMultiHashMap.Capacity)
+            if (query.CalculateEntityCount() > quadrantMultiHashMap.Capacity)
             {
+                quadrantMultiHashMap.Clear();
                 quadrantMultiHashMap.Capacity = query.CalculateEntityCount();
             }
 

@@ -9,6 +9,7 @@ using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
+using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
 
 namespace DreamersInc.BestiarySystem
@@ -32,6 +33,12 @@ namespace DreamersInc.BestiarySystem
         public EquipmentSave Equipment;
         public ComboSO AttackComboSO;
 
+        [Header("Attack Info")] [ShowIf("hasAttack")]
+        public bool CapableOfMelee;
+
+        [ShowIf("hasAttack")] public bool CapableOfMagic;
+        [ShowIf("hasAttack")]public bool CapableOfRange;
+        private bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)

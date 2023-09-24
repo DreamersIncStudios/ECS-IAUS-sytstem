@@ -23,7 +23,7 @@ namespace Dreamers.InventorySystem.Interfaces
         //List skills SOs
     }
     public enum WeaponType { 
-        Sword, H2BoardSword, Katana, Bo_Staff, Mage_Staff, Club, Pistol, Bow, Axe, Gloves, Enchanter_Stone
+        Sword, H2BoardSword, Katana, Bo_Staff, Mage_Staff, Club, Pistol, Bow, Axe, Gloves, Enchanter_Stone,Claws
     }
     public enum WeaponSlot { Primary, Secondary, Projectile}
 }

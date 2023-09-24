@@ -11,11 +11,11 @@ namespace IAUS.ECS.Component {
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, ref AttackState aspect, ref CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, ref AttackState attackState, ref CheckAttackStatus tag) => {
 
-                aspect.CapableOfMelee = false;
-                aspect.CapableOfMagic = false;
-                aspect.CapableOfProjectile = false;
+                attackState.CapableOfMelee = false;
+                attackState.CapableOfMagic = false;
+                attackState.CapableOfProjectile = false;
 
 
 
@@ -30,20 +30,23 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Bo_Staff:
                         case WeaponType.Club:
                         case WeaponType.Gloves:
-                            aspect.CapableOfMelee = true;
+                            case WeaponType.Claws:
+                            attackState.CapableOfMelee = true;
                             break;
-
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                            aspect.CapableOfMagic = true;
+                            attackState.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                            aspect.CapableOfProjectile = true;
+                            attackState.CapableOfProjectile = true;
                             break;
                     }
+                    
+                    if (test.Equipment.EquippedAbility.Count > 0)
+                        attackState.CapableOfMagic = true;
                 }
 
                 EntityManager.RemoveComponent<CheckAttackStatus>(entity);

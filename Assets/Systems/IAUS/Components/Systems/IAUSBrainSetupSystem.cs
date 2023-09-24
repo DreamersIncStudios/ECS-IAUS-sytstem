@@ -4,7 +4,6 @@ using Unity.Jobs;
 using Unity.Collections;
 using Unity.Burst;
 using Unity.Transforms;
-using UnityEngine;
 using Unity.Burst.Intrinsics;
 
 //TODO Complete Rewrite
@@ -13,7 +12,7 @@ namespace IAUS.ECS.Systems
 {
     public partial class IAUSBrainSetupSystem : SystemBase
     {
-        EntityQuery Starter;
+        EntityQuery starter;
         EntityQuery patrolStateEntity;
         EntityQuery wanderStateEntity;
 
@@ -37,22 +36,23 @@ namespace IAUS.ECS.Systems
 
             patrolStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
+                All = new[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
                         ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Patrol)) ,ComponentType.ReadOnly(typeof(LocalTransform)) },
             });
             wanderStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),ComponentType.ReadWrite(typeof(StateBuffer)),
+                All = new[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),ComponentType.ReadWrite(typeof(StateBuffer)),
                     ComponentType.ReadWrite(typeof(WanderQuadrant)) ,ComponentType.ReadOnly(typeof(LocalTransform)) },
             });
             traverseStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
+                All = new[] {
+                    ComponentType.ReadOnly(typeof(TravelWaypointBuffer)), ComponentType.ReadOnly(typeof(SetupBrainTag)),
                         ComponentType.ReadWrite(typeof(StateBuffer)),ComponentType.ReadWrite(typeof(Traverse)) ,ComponentType.ReadOnly(typeof(LocalTransform)) },
             });
             waitStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),
+                All = new[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),
                                     ComponentType.ReadWrite(typeof(StateBuffer)), ComponentType.ReadWrite(typeof(Wait)) }
             });
             //            _GetInRangeStateEntity = GetEntityQuery(new EntityQueryDesc()
@@ -69,7 +69,7 @@ namespace IAUS.ECS.Systems
 
             attackStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
+                All = new[] { ComponentType.ReadOnly(typeof(SetupBrainTag)), ComponentType.ReadWrite(typeof(StateBuffer)),
                                 ComponentType.ReadWrite(typeof(AttackState)) }
             });
             //            _FleeStateEntity = GetEntityQuery(new EntityQueryDesc()
@@ -94,7 +94,7 @@ namespace IAUS.ECS.Systems
             //                    ComponentType.ReadWrite(typeof(TerrorizeAreaState))}
             //            });
 
-            Starter = GetEntityQuery(new EntityQueryDesc()
+            starter = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { typeof(IAUSBrain), typeof(StateBuffer), typeof(SetupBrainTag) }
 
@@ -103,14 +103,14 @@ namespace IAUS.ECS.Systems
         }
         protected override void OnUpdate()
         {
-            JobHandle systemDeps = Dependency;
+            var systemDeps = Dependency;
             var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             var ecbSystem = World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
 
             systemDeps = new AddMovementState<Patrol>()
             {
-                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-                MovementChunk = GetComponentTypeHandle<Patrol>(false),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(),
+                MovementChunk = GetComponentTypeHandle<Patrol>(),
                 PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
                 ToWorldChunk = GetComponentTypeHandle<LocalTransform>(true)
             }.ScheduleParallel(patrolStateEntity, systemDeps);
@@ -118,8 +118,8 @@ namespace IAUS.ECS.Systems
             ecbSystem.AddJobHandleForProducer(systemDeps);
             systemDeps = new AddMovementState<Traverse>()
             {
-                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-                MovementChunk = GetComponentTypeHandle<Traverse>(false),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(),
+                MovementChunk = GetComponentTypeHandle<Traverse>(),
                 PatrolBufferChunk = GetBufferTypeHandle<TravelWaypointBuffer>(true),
                 ToWorldChunk = GetComponentTypeHandle<LocalTransform>(true)
             }.ScheduleParallel(traverseStateEntity, systemDeps);
@@ -132,8 +132,8 @@ namespace IAUS.ECS.Systems
 
             systemDeps = new AddWaitState()
             {
-                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-                WaitChunk = GetComponentTypeHandle<Wait>(false),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(),
+                WaitChunk = GetComponentTypeHandle<Wait>(),
             }
             .ScheduleParallel(waitStateEntity, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
@@ -162,8 +162,8 @@ namespace IAUS.ECS.Systems
 
             systemDeps = new AddAttacks()
             {
-                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(false),
-                AttackChunk = GetComponentTypeHandle<AttackState>(false),
+                StateBufferChunk = GetBufferTypeHandle<StateBuffer>(),
+                AttackChunk = GetComponentTypeHandle<AttackState>(),
             }.ScheduleParallel(attackStateEntity, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
 
@@ -208,9 +208,9 @@ namespace IAUS.ECS.Systems
             // This is to be the last job of this system
             systemDeps = new RemoveSetupTag()
             {
-                entityCommandBuffer = ecbSystem.CreateCommandBuffer().AsParallelWriter(),
+                EntityCommandBuffer = ecbSystem.CreateCommandBuffer().AsParallelWriter(),
                 EntityChunk = GetEntityTypeHandle()
-            }.ScheduleParallel(Starter, systemDeps);
+            }.ScheduleParallel(starter, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
 
    
@@ -223,14 +223,14 @@ namespace IAUS.ECS.Systems
         public struct RemoveSetupTag : IJobChunk
         {
             [ReadOnly] public EntityTypeHandle EntityChunk;
-            public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
+            public EntityCommandBuffer.ParallelWriter EntityCommandBuffer;
 
             public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
             {
-                NativeArray<Entity> Entities = chunk.GetNativeArray(EntityChunk);
+                NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; i++)
                 {
-                    entityCommandBuffer.RemoveComponent<SetupBrainTag>(unfilteredChunkIndex, Entities[i]);
+                    EntityCommandBuffer.RemoveComponent<SetupBrainTag>(unfilteredChunkIndex, entities[i]);
                 }
             }
 

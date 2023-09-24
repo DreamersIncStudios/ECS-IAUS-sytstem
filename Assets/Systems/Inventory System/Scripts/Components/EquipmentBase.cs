@@ -31,6 +31,8 @@ namespace Dreamers.InventorySystem.Base {
            LoadEquipment(player,save);
         }
         public EquipmentSave Save;
+        public List<Abilities> EquippedAbility;
+
         public void Init(EquipmentSave save, int size = 2)
         {
             EquippedArmor = new Dictionary<ArmorType, ArmorSO>();

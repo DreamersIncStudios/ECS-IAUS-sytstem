@@ -19,5 +19,5 @@ Normal,Beast,2,RetreatToQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.35
 Normal,Beast,3,RetreatToQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Beast,0,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Beast,1,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
-Normal,Beast,0,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
-Normal,Beast,1,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,2,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,3,WanderQuadrant,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500

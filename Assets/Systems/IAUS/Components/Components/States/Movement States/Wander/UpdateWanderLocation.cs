@@ -22,8 +22,8 @@ namespace IAUS.ECS.Component
 
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey + 1));
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey - 1));
-                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey + NPCQuadrantSystem.quadrantYMultiplier));
-                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey - NPCQuadrantSystem.quadrantYMultiplier));
+                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey + NPCQuadrantSystem.quadrantZMultiplier));
+                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey - NPCQuadrantSystem.quadrantZMultiplier));
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey));
                    
                     wander.TravelPosition = positions[2];

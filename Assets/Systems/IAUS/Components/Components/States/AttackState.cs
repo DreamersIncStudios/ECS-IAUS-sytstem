@@ -11,7 +11,7 @@ namespace IAUS.ECS.Component
 {
     public struct AttackState : IBaseStateScorer
     {
-        public AttackState(float coolDownTime, bool melee, bool magic, bool range)
+        public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
             CapableOfMelee = melee;
