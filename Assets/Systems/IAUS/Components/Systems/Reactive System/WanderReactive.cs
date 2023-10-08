@@ -88,7 +88,7 @@ namespace IAUS.ECS.Systems.Reactive
      
             }
             public partial struct WanderSetupJob : IJobEntity {
-                public void Execute(ref WanderQuadrant wander, ref Movement move, [ReadOnly]LocalTransform transform) {
+                 void Execute(ref WanderQuadrant wander, ref Movement move, [ReadOnly]LocalTransform transform) {
                     wander.StartingDistance = Vector3.Distance(transform.Position, wander.TravelPosition);
 
                     move.SetLocation(wander.TravelPosition);
@@ -99,7 +99,7 @@ namespace IAUS.ECS.Systems.Reactive
             }
             public partial struct WanderStopJob : IJobEntity
             {
-                public void Execute(ref WanderQuadrant wander, ref Movement move)
+                void Execute(ref WanderQuadrant wander, ref Movement move)
                 {
                     move.CanMove = false;
 

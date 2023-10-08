@@ -60,7 +60,7 @@ namespace IAUS.ECS.Component
         public float AttackRange { get; set; } //Todo Pull from character stats speed
         public AIStates Name => AIStates.AttackMelee;
         public float AttackDelay;
-        public bool AttackNow => AttackDelay <= 0.0f;
+       [SerializeField] public bool AttackNow => AttackDelay <= 0.0f;
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
         FixedList512Bytes<AIComboInfo> unlockedMoves;
 
@@ -83,6 +83,11 @@ namespace IAUS.ECS.Component
                 var maxRange = unlockedMoves.Length;
                 AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(4, 15);
                 return Unity.Mathematics.Random.CreateFromIndex(seed).NextInt(0, maxRange);
+        }
+
+        public AnimationTrigger GetAnimationTrigger(int index)
+        {
+            return unlockedMoves[index].Trigger;
         }
 
     }
@@ -129,6 +134,7 @@ namespace IAUS.ECS.Component
     public struct MeleeAttackTag : IComponentData
     {
         public int AttackIndex;
+        public int PositionIndex;
 
     }
     public struct MagicAttackTag : IComponentData { }

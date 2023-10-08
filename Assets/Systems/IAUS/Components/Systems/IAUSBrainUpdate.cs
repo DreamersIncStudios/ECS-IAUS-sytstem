@@ -21,6 +21,11 @@ namespace IAUS.ECS.Systems
         }
 
     }
+    public partial class IAUSUpdateStateGroup : ComponentSystemGroup
+    {
+ 
+    }
+
 
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
     public partial struct IAUSBrainUpdate : ISystem

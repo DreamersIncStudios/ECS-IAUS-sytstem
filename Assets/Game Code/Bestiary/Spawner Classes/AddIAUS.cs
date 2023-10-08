@@ -66,16 +66,13 @@ namespace DreamersInc.BestiarySystem
                         manager.AddBuffer<TravelWaypointBuffer>(entity);
                         break;
                     case AIStates.WanderQuadrant:
-                        var wander = new WanderQuadrant()
-                        {
-                            SpawnPosition = go.transform.position,
-                            _coolDownTime = 5.5f,
-                            BufferZone = .25f,
-                            //WanderNeighborQuadrants = true
-                            //TODO Figure out way above line causes issues
-
-                        };
-                        manager.AddComponentData(entity, wander);
+                       
+                        manager.AddComponentData(entity, new WanderQuadrant(
+                            spawnPosition: go.transform.position,
+                             coolDownTime: 5.5f,
+                            bufferZone: .25f,
+                            wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
+                        ));
 
                         break;
                     case AIStates.Wait:

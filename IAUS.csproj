@@ -76,6 +76,7 @@
      <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\UpdateWanderLocation.cs" />
      <Compile Include="Assets\Systems\IAUS\Components\Components\States\InvestigateTargetArea.cs" />
      <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
+     <Compile Include="Assets\Systems\IAUS\Components\Interface\IGOAP.cs" />
      <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
      <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
      <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
@@ -105,6 +106,7 @@
      <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\StayInQuadrant.cs" />
      <Folder Include="Assets\Systems\IAUS\Components\Systems\Reactive System" />
      <Folder Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area" />
+     <Folder Include="Assets\Systems\IAUS\Components\Goals" />
      <Folder Include="Assets\Systems\IAUS" />
      <Folder Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\Consideration files" />
      <None Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\Consideration files\DistanceToTarget Ally.txt" />
@@ -130,6 +132,7 @@
      <Folder Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander" />
      <Folder Include="Assets\Systems\IAUS\Components\Systems\Add States" />
      <Folder Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Traverse" />
+     <Folder Include="Assets\Systems\IAUS\Components\Interface" />
      <None Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\Resources\Consideration files\Time.txt" />
      <Folder Include="Assets\Systems\IAUS\Components" />
      <Folder Include="Assets\Systems\IAUS\Components\Components\States\Flee" />

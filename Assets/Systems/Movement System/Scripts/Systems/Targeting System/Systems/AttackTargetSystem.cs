@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Unity.Entities;
-using Unity.Mathematics;
 using Unity.Collections;
 
 namespace AISenses.VisionSystems.Combat
@@ -15,29 +11,40 @@ namespace AISenses.VisionSystems.Combat
         protected override void OnUpdate()
         {
 
-            Entities.ForEach((ref AttackTarget attackTarget, ref DynamicBuffer<ScanPositionBuffer> buffer) =>
+            Entities.ForEach((ref AttackTarget attackTarget, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision) =>
             {
                 if (buffer.Length == 0)
                     return;
-                if (attackTarget.isTargeting && buffer.Length >= attackTarget.AttackTargetIndex)
+                if (attackTarget.IsTargeting && buffer.Length >= attackTarget.AttackTargetIndex)
                 {
                     attackTarget.AttackTargetLocation = buffer[attackTarget.AttackTargetIndex].target.LastKnownPosition;
                 }
                 else
                 {
-                    NativeArray<ScanPositionBuffer> scans = buffer.ToNativeArray(Allocator.Temp);
+                    var scans = buffer.ToNativeArray(Allocator.Temp);
                     if (buffer.Length > 0)
                     {
                         //Attack in direction of point target
                         var visibleTargetInArea = buffer.ToNativeArray(Allocator.Temp);
                         visibleTargetInArea.Sort(new SortScanPositionByDistance());
-
-                        attackTarget.AttackTargetLocation = visibleTargetInArea[0].target.LastKnownPosition;
-                        attackTarget.IsFriendly = visibleTargetInArea[0].target.IsFriendly;
+                        var indexOf = 0;
+                        for (var i = 0; i < buffer.Length; i++)
+                        {
+                            if (visibleTargetInArea[i].target.IsFriendly) continue;
+                            indexOf = i;
+                            break;
+                        }
+                 
+                        if (vision.EngageRadius > visibleTargetInArea[indexOf].dist)
+                        {
+                            attackTarget.TargetEntity = visibleTargetInArea[indexOf].target.Entity; 
+                            attackTarget.AttackTargetLocation = visibleTargetInArea[indexOf].target.LastKnownPosition;
+                            attackTarget.TargetInRange = true;
+                        }
                     }
                     else
                     {
-                        attackTarget.AttackTargetLocation = new float3(1, 1, 1);
+                        attackTarget.TargetInRange = false;
                     }
                     scans.Dispose();
                 }
