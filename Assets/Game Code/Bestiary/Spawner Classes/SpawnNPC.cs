@@ -182,12 +182,14 @@ namespace DreamersInc.BestiarySystem
 
         public static bool SpawnNPC(uint ID, Vector3 Position, EquipmentSave equipment = null)
         {
-            if (SpawnNPC(ID, out GameObject go, equipment))
+            var info = GetCreature(ID);
+            if (info != null)
             {
-                go.transform.position = Position;
+                CharacterBuilder.CreateCharacter(info.Name).Build();
                 return true;
             }
-            else { return false; }
+            else
+                return false;
         }
 
     }
