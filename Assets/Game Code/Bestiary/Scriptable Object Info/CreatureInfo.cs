@@ -34,10 +34,10 @@ namespace DreamersInc.BestiarySystem
         public ComboSO AttackComboSO;
 
         [Header("Attack Info")] [ShowIf("hasAttack")]
-        public bool CapableOfMelee;
+        public bool CapableOfMelee = false;
 
-        [ShowIf("hasAttack")] public bool CapableOfMagic;
-        [ShowIf("hasAttack")]public bool CapableOfRange;
+        [ShowIf("hasAttack")] public bool CapableOfMagic = false;
+        [ShowIf("hasAttack")] public bool CapableOfRange = false;
         private bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 #if UNITY_EDITOR
 

@@ -12,7 +12,7 @@ public class testing : MonoBehaviour
     {
         for (int i = 0; i < 10; i++)
         {
-            BestiaryDB.SpawnNPC(1);
+            BestiaryDB.SpawnNPC(1, new Vector3(0,1,0));
         }
 
         //for (int i = 0; i < 15; i++)

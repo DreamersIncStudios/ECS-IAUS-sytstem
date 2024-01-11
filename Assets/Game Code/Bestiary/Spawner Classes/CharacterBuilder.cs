@@ -6,6 +6,7 @@ using AISenses.VisionSystems.Combat;
 using Components.MovementSystem;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
+using DreamersInc;
 using DreamersInc.BestiarySystem;
 using DreamersInc.ComboSystem;
 using DreamersInc.InflunceMapSystem;
@@ -34,25 +35,65 @@ public class CharacterBuilder
     private string tag;
     public CharacterBuilder WithModel(GameObject go, Vector3 Position, string tagging)
     {
-        model = Object.Instantiate(go);
+        return WithModel(go,Position,tagging,out _);
+    }  
+    public CharacterBuilder WithModel(GameObject go, Vector3 Position, string tagging, out GameObject Spawned)
+    {
+        Spawned = model = Object.Instantiate(go);
         go.transform.position = Position;
         tag = tagging;
         tag = go.tag = tagging;
         return this;
-    }
+    }  
 
     public CharacterBuilder WithAnimation()
     {
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        
+        TransformGO transformLink = new()
+        {
+            transform = model.transform
+        };
+        manager.AddComponentData(entity, transformLink);
         return this;
     }
 
     public CharacterBuilder WithAIControl()
-    {
+    {       
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        var agent = model.GetComponent<NavMeshAgent>();
+        manager.AddComponentObject(entity, agent);
+        var move = new Movement()
+        {
+            Acceleration = agent.acceleration,
+            StoppingDistance = agent.stoppingDistance,
+            Offset = agent.baseOffset,
+        };
+        move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
+        manager.AddComponentData(entity, move);
+        manager.AddComponentData(entity, new AI_Control());
+        manager.AddComponentData(entity, new AIStat() { Speed = 10 });
         return this;
     }
 
     public CharacterBuilder WithPlayerControl()
     {
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        manager.AddComponent<Player_Control>(entity);
+        manager.AddComponent<AttackTarget>(entity);
+        manager.AddComponentObject(entity, new Command()
+        {
+
+        });
+
+        return this;
         return this;
     }
 
@@ -148,12 +189,14 @@ public class CharacterBuilder
         if (model == null) return this;
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        BaseCharacterComponent character = new()
+        BaseCharacterComponent data = new()
         {
             GOrepresentative = model // todo change to instance 
         };
-        character.SetupDataEntity(stats);
-        manager.AddComponentObject(entity, character);
+        data.SetupDataEntity(stats);
+        manager.AddComponentObject(entity, data);
+
+        this.character = data;
         return this;
     }
     public CharacterBuilder WithCharacterDetection()
@@ -180,7 +223,7 @@ public class CharacterBuilder
         
         return this;
     }
-    public CharacterBuilder WithFactionInfluence(int factionID, int baseProtection, int baseThreat, uint classLevel)
+    public CharacterBuilder WithFactionInfluence(int factionID, int baseProtection, int baseThreat, uint classLevel, bool isPlayer = false)
     {
         this.factionID = factionID;
         this.classLevel = classLevel;
@@ -197,7 +240,7 @@ public class CharacterBuilder
         {
             FactionID = factionID,
             NumOfEntityTargetingMe = 3,
-            CanBeTargetByPlayer = true,
+            CanBeTargetByPlayer = isPlayer,
             Type = TargetType.Character,
             level = classLevel,
             CenterOffset = new float3(0, 1, 0) //todo add value to SO
@@ -243,7 +286,8 @@ public class CharacterBuilder
         manager.AddComponentData(entity, new IAUSBrain()
         {
             NPCLevel= getNpcLevel,
-            FactionID = factionID
+            FactionID = factionID,
+            Difficulty = Difficulty.Normal // TODO  pull from Game setting in future 
         });
         foreach (var state in aiStatesToAdd)
             {
@@ -328,22 +372,24 @@ public class CharacterBuilder
         return entity;
     }
 
-    public static CharacterBuilder CreateCharacter(string entityName)
+    public static CharacterBuilder CreateCharacter(string entityName, out Entity spawnedEntity)
     {
-        EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        EntityArchetype baseEntityArch = manager.CreateArchetype(
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var baseEntityArch = manager.CreateArchetype(
             typeof(LocalTransform),
             typeof(LocalToWorld)
         );
-        Entity baseDataEntity = manager.CreateEntity(baseEntityArch);
-        if (entityName != string.Empty)
-            manager.SetName(baseDataEntity, entityName);
-        else
-            manager.SetName(baseDataEntity, "NPC Data");
+        var baseDataEntity = manager.CreateEntity(baseEntityArch);
+        manager.SetName(baseDataEntity, entityName != string.Empty ? entityName : "NPC Data");
         manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-        entity = baseDataEntity;
+        spawnedEntity =  entity = baseDataEntity;
 
         return new CharacterBuilder();
+    }
+
+    public static CharacterBuilder CreateCharacter(string entityName)
+    {
+        return CreateCharacter(entityName, out _);
     }
     
 }

@@ -37,7 +37,7 @@ namespace IAUS.ECS.Component
                     return 0.0f;
                 }
                 var asset = GetAsset(patrol.ValueRO.Index);
-                patrol.ValueRW.distanceToPoint = distanceToPoint;
+                patrol.ValueRW.DistanceToPoint = distanceToPoint;
                 float totalScore = asset.DistanceToTargetLocation.Output(patrol.ValueRO.DistanceRatio) * asset.Health.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * wander.ValueRO.TargetInRange.Output(attackRatio); ;
                 patrol.ValueRW.TotalScore = patrol.ValueRO.Status != ActionStatus.CoolDown && !patrol.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * patrol.ValueRO.mod) * totalScore) : 0.0f;
 
@@ -70,7 +70,7 @@ namespace IAUS.ECS.Component
                 {
                     return 0.0f;
                 }
-                traverse.ValueRW.distanceToPoint = distanceToPoint;
+                traverse.ValueRW.DistanceToPoint = distanceToPoint;
                 var asset = GetAsset(traverse.ValueRO.Index);
 
                 var totalScore = asset.DistanceToTargetLocation.Output(traverse.ValueRO.DistanceRatio) * asset.Health.Output(statInfo.ValueRO.HealthRatio); 

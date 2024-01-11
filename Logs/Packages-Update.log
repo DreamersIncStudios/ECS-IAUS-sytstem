@@ -321,3 +321,13 @@ The following packages were updated:
   com.unity.render-pipelines.universal from version 14.0.8 to 14.0.9
   com.unity.scriptablebuildpipeline from version 1.21.9 to 1.21.21
   com.unity.timeline from version 1.7.5 to 1.7.6
+
+=== Wed Jan 10 20:58:58 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.burst from version 1.8.10 to 1.8.11
+  com.unity.ide.rider from version 3.0.26 to 3.0.27
+  com.unity.probuilder from version 5.2.0 to 5.2.2

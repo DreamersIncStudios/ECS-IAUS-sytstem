@@ -25,7 +25,8 @@ namespace Dreamers.InventorySystem.Base {
         }
         public void Init(EquipmentSave save, BaseCharacterComponent player, int size =2) {
             EquippedArmor = new Dictionary<ArmorType, ArmorSO>();
-            EquippedWeapons = new Dictionary<WeaponSlot, WeaponSO>(); 
+            EquippedWeapons = new Dictionary<WeaponSlot, WeaponSO>();
+            EquippedAbility = new List<Abilities>();
             QuickAccessItems= new List<ItemSlot>();
             NumOfQuickAccessSlots=  size;
            LoadEquipment(player,save);

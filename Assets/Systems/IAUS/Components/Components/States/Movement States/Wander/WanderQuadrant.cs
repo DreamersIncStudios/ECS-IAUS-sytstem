@@ -17,15 +17,8 @@ namespace IAUS.ECS.Component
     public struct WanderQuadrant : IMovementState
     {
         
-        public int Index;
-      
-        /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-      //  public ConsiderationScoringData TargetInRange => stateRef.Value.Array[Index].DistanceToTarget;
-      //  public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-
-        public bool Complete { get { return BufferZone > distanceToPoint; } }
+        public int Index { get; private set; }
+        public bool Complete { get { return BufferZone > DistanceToPoint; } }
         public float TotalScore { get { return totalScore; } set { totalScore = value; } }
         public ActionStatus Status { get { return status; } set { status = value; } }
         public float CoolDownTime { get { return coolDownTime; } }
@@ -35,7 +28,7 @@ namespace IAUS.ECS.Component
         public bool TravelInOrder { get; set; }
         public uint NumberOfWayPoints { get { return 1; } set { } }
 
-        public float DistanceRatio  => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        public float DistanceRatio  => (float)DistanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)DistanceToPoint / (float)StartingDistance) : 0;
 
 
         public AIStates Name => AIStates.WanderQuadrant;
@@ -45,9 +38,9 @@ namespace IAUS.ECS.Component
         public float3 TravelPosition;
         public Waypoint CurWaypoint { get; set; }
 
-         public float distanceToPoint { get; set; }
-         public float StartingDistance { get; set; }
-         public float BufferZone { get; set; }
+        [SerializeField]public float DistanceToPoint { get; set; }
+        [SerializeField] public float StartingDistance { get; set; }
+        [SerializeField] public float BufferZone { get; set; }
 
         public float mod => 1.0f - (1.0f / 3.0f);
 
@@ -109,15 +102,23 @@ namespace IAUS.ECS.Component
                 {
                     return 0.0f;
                 }
-
+                if (wander.ValueRO.Status == ActionStatus.Idle && wander.ValueRO.SpawnPosition.Equals(wander.ValueRO.TravelPosition))
+                {
+                    wander.ValueRW.SpawnPosition.x += 35;
+                    wander.ValueRW.SpawnPosition.z += 45;
+                    wander.ValueRW.StartingDistance = DistanceToPoint;
+                }
+             
                 var asset = GetAsset(wander.ValueRO.Index);
-                wander.ValueRW.distanceToPoint = DistanceToPoint;
+                wander.ValueRW.DistanceToPoint = DistanceToPoint;
+
+
                 var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
                     ? vision.GetClosestEnemy().DistanceTo
                     : 50;
-                var totalScore = asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio)* asset.Health.Output(statInfo.ValueRO.HealthRatio)*
-                                 asset.DistanceToTargetEnemy.Output(Mathf.Clamp01(distToEnemy/50.0f)); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
-                wander.ValueRW.TotalScore = wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
+                var totalScore = Mathf.Clamp01(asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio)* asset.Health.Output(statInfo.ValueRO.HealthRatio)*
+                                 asset.DistanceToTargetEnemy.Output(Mathf.Clamp01(distToEnemy/50.0f))); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
+                wander.ValueRW.TotalScore = wander.ValueRO.Status != ActionStatus.CoolDown  ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore) : 0.0f;
 
                 totalScore = wander.ValueRW.TotalScore;
                 return totalScore;
