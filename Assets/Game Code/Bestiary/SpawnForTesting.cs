@@ -11,7 +11,8 @@ public class SpawnForTesting : MonoBehaviour
     void Start()
     {
         var info = BestiaryDB.GetCreature(3);
-        CharacterBuilder.CreateCharacter("Kas").WithModel(info.Prefab, Vector3.zero,"Player").WithEntityPhysics(info.PhysicsInfo).Build();
+        CharacterBuilder.CreateCharacter("Kas").WithModel(info.Prefab, Vector3.zero, "Player")
+            .WithEntityPhysics(info.PhysicsInfo).Build();
         List<float3> positions = new List<float3>();
         while (positions.Count < 70)
         {
@@ -29,13 +30,14 @@ public class SpawnForTesting : MonoBehaviour
             }
 
         }
-        // for (int i = 0; i < 25; i++)
-        // {
-        //     if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
-        //         BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
-        //     else
-        //         i--;
-        // }
+
+        for (int i = 0; i < 25; i++)
+        {
+            if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
+                BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
+            else
+                i--;
+        }
         //for (int i = 0; i < 15; i++)
         //{
         //    if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))

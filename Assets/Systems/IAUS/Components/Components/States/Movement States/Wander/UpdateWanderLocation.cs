@@ -42,18 +42,15 @@ namespace IAUS.ECS.Component
         }
         float3 GetWanderPoint(float3 CurPosition, int hashKey)
         {
-            float3 position = new float3();
-            while (position.Equals( float3.zero)) {
-                if (GlobalFunctions.RandomPoint(CurPosition, 1050, out float3 pos)) {
-                    if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) == hashKey) 
+            while (true) {
+                if (GlobalFunctions.RandomPoint(CurPosition, 100, out float3 pos)) {
+                    if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) == hashKey)
                     {
-                        position = pos; 
-                        break;
+                        return pos;
                     }
                 
                 }
             }
-            return position;
         }
 
     }
