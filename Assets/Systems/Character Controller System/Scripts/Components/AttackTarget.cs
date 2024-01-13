@@ -4,6 +4,10 @@ using Unity.Mathematics;
 
 namespace AISenses.VisionSystems.Combat
 {
+    /// <summary>
+    /// This Component is for moving the Character toward the target it is attacking
+    /// Animation Helper 
+    /// </summary>
     public struct AttackTarget : IComponentData
     {
         public float3 AttackTargetLocation;

@@ -85,16 +85,26 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Attack:
                         manager.AddComponentData(entity, new AttackState(5.5f,info.CapableOfMelee,info.CapableOfMagic,info.CapableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
-                        manager.AddComponent<MagicAttackSubState>(entity);
-                        manager.AddComponentData(entity, new RangedAttackSubState() { 
-                            MaxEffectiveRange = 60,
-                        });
+                        if (info.CapableOfMelee)
+                        {
+                            var melee = new MeleeAttackSubState();
+                            if(info.AttackComboSO)
+                                melee.SetupPossibleAttacks(info.AttackComboSO);
+                            manager.AddComponentData(entity, melee); 
+                        }
 
-                        manager.AddComponent<MagicMeleeAttackSubState>(entity);
-                        var melee = new MeleeAttackSubState();
-                        if(info.AttackComboSO)
-                            melee.SetupPossibleAttacks(info.AttackComboSO);
-                        manager.AddComponentData(entity, melee);
+                        if (info.CapableOfMagic)
+                        {
+                            manager.AddComponent<MagicAttackSubState>(entity);
+                        }
+
+                        if (info.CapableOfRange)
+                        {
+                            manager.AddComponentData(entity, new RangedAttackSubState() { 
+                                MaxEffectiveRange = 60,
+                            });                            
+                        }
+                        //Todo look at equipped spells and abilities to determine if sword arts are available for 
 
                         break;
                     case AIStates.RetreatToLocation:

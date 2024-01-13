@@ -343,7 +343,7 @@ public class CharacterBuilder
                             MaxEffectiveRange = 60,
                         });
 
-                        manager.AddComponent<MagicMeleeAttackSubState>(entity);
+                        manager.AddComponent<WeaponSkillsAttackSubState>(entity);
                         var melee = new MeleeAttackSubState();
                         //if(info.AttackComboSO)
                          //   melee.SetupPossibleAttacks(info.AttackComboSO);

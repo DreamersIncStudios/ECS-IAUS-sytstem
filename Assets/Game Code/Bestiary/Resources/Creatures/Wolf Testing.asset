@@ -112,7 +112,7 @@ MonoBehaviour:
     AnimSpeedMultiplier: 0
     GroundCheckDistance: 0
     CombatCapable: 0
-  factionID: 1
+  FactionID: 2
   BaseThreat: 4
   BaseProtection: 10
   Equipment:
@@ -120,3 +120,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}
     - {fileID: 11400000, guid: 0d0acd3bd1c799444be09c9ecdfd4218, type: 2}
     EquippedArmors: []
+  AttackComboSO: {fileID: 0}
+  CapableOfMelee: 0
+  CapableOfMagic: 0
+  CapableOfRange: 0

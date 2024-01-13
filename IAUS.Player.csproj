@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\TravelWaypointBuffer.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\AttackState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\AvoidHighThreatArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\FindAndMoveToCover.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Adjust Nav Agent Speed\ChangeMoveSpeedSystem.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\InvestigateTargetArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
     <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\AttackTargetSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddAttacks.cs" />
@@ -88,7 +90,6 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\EquipmentUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\WanderQuadrant.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\AttackState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />

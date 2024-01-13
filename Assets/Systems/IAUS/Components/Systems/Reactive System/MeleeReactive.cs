@@ -1,3 +1,4 @@
+using System;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using AISenses.VisionSystems.Combat;
@@ -8,6 +9,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Utilities.ReactiveSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
@@ -117,59 +119,65 @@ namespace IAUS.ECS.Systems.Reactive {
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref Movement move,
                     ref AttackTarget target, ref MeleeAttackSubState state, ref MeleeAttackTag tag, in LocalTransform transform)
                 {
+                    var surroundCharacter = Surround[target.TargetEntity];
                     if (!move.CanMove)
                     {
-                        if (target.TargetEntity == Entity.Null)
+                        try
                         {
-                            Debug.Log("WHY!!??!!");
-                            return;
+                          
+                            var temp = new AttackPosition();
+                            var closest = 100f;
+                            foreach (var item in surroundCharacter.PositionsSurroundingCharacter)
+                            {
+                                if (item.Occupied) continue;
+                                var distTo = Vector3.Distance(item.Position, transform.Position);
+                                if (!(distTo < closest)) continue;
+                                closest = distTo;
+                                temp = item;
+                            }
+
+                            var location = temp.Position;
+                            tag.PositionIndex = surroundCharacter.PositionsSurroundingCharacter.IndexOf(temp);
+                            temp.Occupied = true;
+                            surroundCharacter.PositionsSurroundingCharacter[0] = temp;
+                            Surround[target.TargetEntity] = surroundCharacter;
+                            tag.AttackIndex = state.SelectAttackIndex(Seed);
+                            move.SetLocation(location);
                         }
-
-                        var test = Surround[target.TargetEntity];
-                        var temp = new AttackPosition();
-                        var closest = 100f;
-                        foreach (var item in test.PositionsSurroundingCharacter)
-                        {     
-                            if (item.Occupied) continue;
-                            var distTo = Vector3.Distance(item.Position, transform.Position);
-                            if (!(distTo < closest)) continue;
-                            closest = distTo;
-                            temp = item;
+                        catch (Exception e)
+                        {
+                        
+                            throw new AssertionException(e.Message, e.Message+$": {e.StackTrace}");
                         }
-
-                        var location = temp.Position;
-                        tag.PositionIndex = test.PositionsSurroundingCharacter.IndexOf(temp);
-                        temp.Occupied = true;
-                        test.PositionsSurroundingCharacter[0] = temp;
-                        Surround[target.TargetEntity] = test;
-                        tag.AttackIndex = state.SelectAttackIndex(Seed);
-                        move.SetLocation(location);
-
                     }
                     else
                     {
-                        if (target.TargetEntity == Entity.Null)
+                        try
                         {
-                            Debug.Log("WHY!!??!!");
-                            return;
+                            var targetInfo = surroundCharacter.PositionsSurroundingCharacter[tag.PositionIndex];
+                            var dist = Vector3.Distance(targetInfo.Position, transform.Position);
+                            if (!move.TargetLocation.Equals(targetInfo.Position) && dist > 10.5f)
+                            {
+                                move.SetLocation(targetInfo.Position);
+                            }
+
+                            if (move.DistanceRemaining < 4.0f && !state.AttackNow)
+                            {
+                                state.AttackDelay -= DeltaTime;
+                            }
+                            else if (state.AttackNow && move.CanMove)
+                            {
+                                tag.AttackIndex = state.SelectAttackIndex(Seed);
+                                //  ECB.AddComponent(chunkIndex, entity,
+                                //    new AIAttackInput(state.GetAnimationTrigger((tag.AttackIndex))));
+                            }
                         }
-                        var targetInfo = Surround[target.TargetEntity].PositionsSurroundingCharacter[tag.PositionIndex];
-                        var dist = Vector3.Distance(targetInfo.Position, transform.Position);
-                        if (!move.TargetLocation.Equals(targetInfo.Position) && dist > 10.5f)
+                        catch (Exception e)
                         {
-                            move.SetLocation(targetInfo.Position);
+                            throw new AssertionException(e.Message,e.Message+$": {e.StackTrace}");
                         }
 
-                        if (move.DistanceRemaining < 4.0f && !state.AttackNow)
-                        {
-                            state.AttackDelay -= DeltaTime;
-                        }
-                        else if (state.AttackNow && move.CanMove)
-                        {
-                            tag.AttackIndex = state.SelectAttackIndex(Seed);
-                          //  ECB.AddComponent(chunkIndex, entity,
-                            //    new AIAttackInput(state.GetAnimationTrigger((tag.AttackIndex))));
-                        }
+
                     }
                 }
             }
@@ -181,19 +189,19 @@ namespace IAUS.ECS.Systems.Reactive {
     
     [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
 
-    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<MagicMeleeAttackTag, AttackState>
+    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<WeaponSkillAttackTag, AttackState>
     {
-        public void ComponentAdded(Entity entity, ref MagicMeleeAttackTag newComponent, ref AttackState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment)
         {
 
         }
 
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MagicMeleeAttackTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
         {
 
         }
 
-        public void ComponentValueChanged(Entity entity, ref MagicMeleeAttackTag newComponent, ref AttackState AIStateCompoment, in MagicMeleeAttackTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
         {
 
         }

@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component.Aspects
         readonly RefRW<AttackState> state;
         readonly RefRW<MeleeAttackSubState> melee;
         readonly RefRW<MagicAttackSubState> magic;
-        readonly RefRW<MagicMeleeAttackSubState> MagicMelee;
+        readonly RefRW<WeaponSkillsAttackSubState> MagicMelee;
         readonly RefRW<RangedAttackSubState> Range;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRO<IAUSBrain> brain;
@@ -30,10 +30,7 @@ namespace IAUS.ECS.Component.Aspects
         {
             return brain.ValueRO.State.Value.Array[index];
         }
-
-        public AITarget Target( float dist) {
-            return new AITarget();
-        }
+        
         float BaseScore
         {
             get
@@ -50,13 +47,13 @@ namespace IAUS.ECS.Component.Aspects
 
         public float MeleeScore { get {
                 if (state.ValueRO.CapableOfMelee && melee.ValueRO.Index != -1) {
-                    if (VisionAspect.TargetInRange(out AITarget target, out float dist))
+                    if (VisionAspect.TargetInRange(out _, out float dist))
                     {
                         var asset = GetAsset(melee.ValueRO.Index);
-                        float range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
-                        float influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec); 
+                        var range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
+                        var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec); 
                         //Debug.Log($"base score: {BaseScore} RangeScore; {asset.DistanceToTargetEnemy.Output(range)} Threat Score: {asset.EnemyInfluence.Output(0.0f)}");
-                        float total = asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(0.0f)*BaseScore;
+                        var total = asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(influenceDist)*BaseScore;
                         total = Mathf.Clamp01(total + ((1.0f - total) * melee.ValueRO.mod) * total);
                         return total;
                     }
@@ -92,7 +89,7 @@ namespace IAUS.ECS.Component.Aspects
                 var asset = GetAsset(Range.ValueRO.Index);
                 if (state.ValueRO.CapableOfProjectile)
                 {
-                    if (VisionAspect.TargetInRange(out AITarget target,out float dist))
+                    if (VisionAspect.TargetInRange(out _ , out var dist))
                     {
                       
 
