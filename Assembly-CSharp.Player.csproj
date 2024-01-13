@@ -65,11 +65,9 @@
     <Compile Include="Assets\Game Code\Bestiary\SpawnForTesting.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\PlayerInfo.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\TestingDummyInfo.cs" />
-    <Compile Include="Assets\Models\Jammo-Character\Scripts\MovementInput.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\SpawnNPC.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\CharacterBuilder.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\SpawnPlayer.cs" />
-    <Compile Include="Assets\Models\Jammo-Character\Scripts\CharacterSkinController.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\CreatureInfo.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\il2cpp\Managed\UnityEngine.dll</HintPath>
@@ -661,6 +659,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.Player.csproj">
+      <Project>{dfb7bc10-cc48-83c7-15e9-f45d94bba03c}</Project>
+      <Name>Assembly-CSharp-firstpass.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.ScriptableBuildPipeline.Player.csproj">
       <Project>{4108ec8c-91dc-5f7b-7abf-9511736e689b}</Project>
       <Name>Unity.ScriptableBuildPipeline.Player</Name>
@@ -737,13 +739,13 @@
       <Project>{536153e2-0a9b-489c-d105-7cfc8c349f9a}</Project>
       <Name>Unity.Serialization.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.Player.csproj">
-      <Project>{2f3d560e-e7a3-127e-a1f6-e39f861ead52}</Project>
-      <Name>Unity.Platforms.UI.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="PixelCrush.Player.csproj">
       <Project>{f0cf487f-038b-e5dd-c6fb-8cee3e20f7ff}</Project>
       <Name>PixelCrush.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Platforms.UI.Player.csproj">
+      <Project>{2f3d560e-e7a3-127e-a1f6-e39f861ead52}</Project>
+      <Name>Unity.Platforms.UI.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.UI.Player.csproj">
       <Project>{22286940-d860-57a1-ffeb-a330a0144420}</Project>
@@ -756,10 +758,6 @@
     <ProjectReference Include="Unity.Scenes.Player.csproj">
       <Project>{ce5cace5-a782-47f9-4bbe-faa3c4a6f27d}</Project>
       <Name>Unity.Scenes.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Custom.Player.csproj">
-      <Project>{55155861-5785-589b-c72e-78471d8491ad}</Project>
-      <Name>Unity.Physics.Custom.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Jobs.Player.csproj">
       <Project>{7ba1ddde-b702-bcca-863e-06049a176b85}</Project>

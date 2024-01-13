@@ -722,10 +722,6 @@
       <Project>{f0cf487f-038b-e5dd-c6fb-8cee3e20f7ff}</Project>
       <Name>PixelCrush.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Custom.Player.csproj">
-      <Project>{55155861-5785-589b-c72e-78471d8491ad}</Project>
-      <Name>Unity.Physics.Custom.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{74c8c8f4-3ec8-c0cc-30d5-e31416c5707f}</Project>
       <Name>UnityEngine.UI.Player</Name>
