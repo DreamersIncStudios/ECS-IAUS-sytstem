@@ -1,0 +1,772 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33edf1fa5fbc3746945edee092f9710, type: 3}
+  m_Name: GreatSword r1
+  m_EditorClassIdentifier: 
+  comboLists:
+  - name: 1
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 7
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 8
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: 0, y: 0, z: 180}
+          LifeTime: 1.5
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 8
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 8
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1.5
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 9
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 8
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 8
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1.5
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.45
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 2
+        TransitionDuration: 0.25
+        TransitionOffset: 0.075
+        EndofCurrentAnim: 0.5
+        AttackVFX:
+          ID: 1
+          Forward: 0.5
+          Up: 0.75
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0.7
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 2
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.05
+        y: 0.65
+      AnimationEndTime: 0.6
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 3
+        TransitionDuration: 0.25
+        TransitionOffset: 0.1
+        EndofCurrentAnim: 0.55
+        AttackVFX:
+          ID: 1
+          Forward: 0.5
+          Up: 0.75
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 3
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.05
+        y: 55
+      AnimationEndTime: 0.45
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 4
+        TransitionDuration: 0.125
+        TransitionOffset: 0.1
+        EndofCurrentAnim: 0.45
+        AttackVFX:
+          ID: 5
+          Forward: 0.3
+          Up: 0.75
+          Rot: {x: 190, y: -90, z: 0}
+          LifeTime: 0.75
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 2
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.05
+        y: 0.57
+      AnimationEndTime: 0.56
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0.1
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.45
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+  - name: 2
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 1
+      triggerAnimIndex: 4
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.65
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 3
+        TransitionDuration: 0.2
+        TransitionOffset: 0.05
+        EndofCurrentAnim: 0.65
+        AttackVFX:
+          ID: 2
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 70}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 3
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.5
+      AnimationEndTime: 0.53
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 4
+        TransitionDuration: 0.1
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.53
+        AttackVFX:
+          ID: 3
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 4
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.6
+      AnimationEndTime: 0.55
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 5
+        TransitionDuration: 0.25
+        TransitionOffset: 0.06
+        EndofCurrentAnim: 0.55
+        AttackVFX:
+          ID: 10
+          Forward: 0
+          Up: 1.25
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 2
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 5
+      Alternate: 1
+      NormalizedInputTime:
+        x: 0
+        y: 0.65
+      AnimationEndTime: 0.6
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 7
+        TransitionDuration: 0.25
+        TransitionOffset: 0.24
+        EndofCurrentAnim: 0.615
+        AttackVFX:
+          ID: 11
+          Forward: 0
+          Up: 1.25
+          Rot: {x: 0, y: 90, z: 0}
+          LifeTime: 2
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 7
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.75
+      AnimationEndTime: 0.7
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0.25
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.78
+        AttackVFX:
+          ID: 1
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+  - name: 3
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 1
+      triggerAnimIndex: 4
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.65
+      AnimationEndTime: 0.55
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 3
+        TransitionDuration: 0.12
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.58
+        AttackVFX:
+          ID: 1
+          Forward: 0.25
+          Up: 0.25
+          Rot: {x: 0, y: 0, z: 70}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 3
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.5
+      AnimationEndTime: 0.53
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 6
+        TransitionDuration: 0.1
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.6
+        AttackVFX:
+          ID: 1
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 6
+      Alternate: 1
+      NormalizedInputTime:
+        x: 0
+        y: 0.4
+      AnimationEndTime: 0.36
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 7
+        TransitionDuration: 0.12
+        TransitionOffset: 0.14
+        EndofCurrentAnim: 0.36
+        AttackVFX:
+          ID: 1
+          Forward: 0.2
+          Up: 0.75
+          Rot: {x: 0, y: 0, z: 180}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 7
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.6
+      AnimationEndTime: 0.75
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0.25
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 8
+          Forward: 0.2
+          Up: 0.25
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0.75
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+  - name: 4
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 7
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 1
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: -30, y: -10, z: 270}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 8
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 1
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: -30, y: -10, z: 270}
+          LifeTime: 1
+          ChanceToPlay: 0
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 9
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 1
+          Forward: 0.2
+          Up: 0.9
+          Rot: {x: -30, y: -10, z: 270}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.45
+      AnimationEndTime: 0.62
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 2
+        TransitionDuration: 0.14
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.62
+        AttackVFX:
+          ID: 12
+          Forward: 0
+          Up: 2.25
+          Rot: {x: 90, y: 0, z: -135}
+          LifeTime: 1.5
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 2
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.45
+      AnimationEndTime: 0.65
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 6
+        TransitionDuration: 0.098
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.725
+        AttackVFX:
+          ID: 9
+          Forward: 0.45
+          Up: 1.1
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0.75
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 6
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.05
+        y: 0.45
+      AnimationEndTime: 0.49
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 8
+        TransitionDuration: 0.0925
+        TransitionOffset: 0.088
+        EndofCurrentAnim: 0.51
+        AttackVFX:
+          ID: 2
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 120}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+    - CurrentAnim: 1
+      triggerAnimIndex: 8
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.05
+        y: 0.45
+      AnimationEndTime: 0.5
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 9
+        TransitionDuration: 0.11
+        TransitionOffset: 0.066
+        EndofCurrentAnim: 0.51
+        AttackVFX:
+          ID: 2
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 120}
+          LifeTime: 1
+          ChanceToPlay: 100
+        Chance: 80
+        ChanceForNextAttack: 60
+        delay: 0
+  - name: 5
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 1
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.5
+      AnimationEndTime: 0.488
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 8
+        TransitionDuration: 0.1
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.5
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 8
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.5
+      AnimationEndTime: 0.488
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 10
+        TransitionDuration: 0.12
+        TransitionOffset: 0.08
+        EndofCurrentAnim: 0.5
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 10
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: 0.57
+      AnimationEndTime: 0.57
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 1
+        TransitionDuration: 0.12
+        TransitionOffset: 0.08
+        EndofCurrentAnim: 0.5
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+  - name: 12
+    Unlocked: 1
+    comboList:
+    - CurrentAnim: 12
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.7
+      AnimationEndTime: 0.65
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0.15
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.65
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 12
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.7
+      AnimationEndTime: 0.75
+      Trigger:
+        attackType: 1
+        triggerAnimIndex: 1
+        TransitionDuration: 0.15
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.75
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 12
+      triggerAnimIndex: 1
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.7
+      AnimationEndTime: 0.73
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 9
+        TransitionDuration: 0.15
+        TransitionOffset: 0.2
+        EndofCurrentAnim: 0.75
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 12
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.25
+        y: 0.7
+      AnimationEndTime: 0.73
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 9
+        TransitionDuration: 0.15
+        TransitionOffset: 0.2
+        EndofCurrentAnim: 0.75
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 2
+      triggerAnimIndex: 9
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0.35
+        y: 0.62
+      AnimationEndTime: 0.6
+      Trigger:
+        attackType: 2
+        triggerAnimIndex: 6
+        TransitionDuration: 0.2
+        TransitionOffset: 0
+        EndofCurrentAnim: 0.6
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+    - CurrentAnim: 11
+      triggerAnimIndex: 0
+      Alternate: 0
+      NormalizedInputTime:
+        x: 0
+        y: Infinity
+      AnimationEndTime: 0
+      Trigger:
+        attackType: 0
+        triggerAnimIndex: 0
+        TransitionDuration: 0
+        TransitionOffset: 0
+        EndofCurrentAnim: 0
+        AttackVFX:
+          ID: 0
+          Forward: 0
+          Up: 0
+          Rot: {x: 0, y: 0, z: 0}
+          LifeTime: 0
+          ChanceToPlay: 0
+        Chance: 0
+        ChanceForNextAttack: 0
+        delay: 0
+  ComboNamesText: {fileID: 4900000, guid: a19039daec949e045a0b2e09c44e752d, type: 3}
+  ComboListIndex: 0
+  ShowMovesPanel: 0

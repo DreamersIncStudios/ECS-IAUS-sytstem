@@ -331,3 +331,30 @@ The following packages were updated:
   com.unity.burst from version 1.8.10 to 1.8.11
   com.unity.ide.rider from version 3.0.26 to 3.0.27
   com.unity.probuilder from version 5.2.0 to 5.2.2
+
+=== Sat Jan 13 21:26:01 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.cinemachine from version 2.3.4 to 2.9.5
+  com.unity.collab-proxy from version 1.2.16 to 2.2.0
+  com.unity.ext.nunit from version 1.0.0 to 1.0.6
+  com.unity.ide.rider from version 1.1.4 to 3.0.27
+  com.unity.ide.vscode from version 1.2.1 to 1.2.5
+  com.unity.postprocessing from version 2.2.2 to 3.2.2
+  com.unity.recorder from version 2.0.3-preview.1 to 4.0.2
+  com.unity.test-framework from version 1.1.14 to 1.1.33
+  com.unity.textmeshpro from version 2.0.1 to 3.0.6
+  com.unity.timeline from version 1.2.6 to 1.7.6
+
+=== Sat Jan 13 21:26:01 2024
+
+Packages were changed.
+Update Mode: mergeDefaultDependencies
+
+The following packages were added:
+  com.unity.collab-proxy@2.2.0
+  com.unity.postprocessing@3.2.2
+  com.unity.recorder@4.0.2

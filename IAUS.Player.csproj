@@ -11,7 +11,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>IAUS</RootNamespace>
     <ProjectGuid>{7ec5d9f4-154a-fa4f-411e-ff003399aa04}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -26,11 +26,11 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\Bin\Debug\IAUS\Player\</OutputPath>
-    <DefineConstants>UNITY_2022_3_16;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;CROSS_PLATFORM_INPUT;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;UNITY_PHYSICS_CUSTOM;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>UNITY_2022_3_16;UNITY_2022_3;UNITY_2022;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_INITIALIZES_MEMORY_MANAGER_EXPLICITLY;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;CROSS_PLATFORM_INPUT;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;UNITY_PHYSICS_CUSTOM;ODIN_VALIDATOR;ODIN_VALIDATOR_3_1;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
@@ -57,53 +57,12 @@
     <Analyzer Include="D:\Projects\ECS IAUS sytstem\Library\PackageCache\com.unity.entities@1.0.16\Unity.Entities\SourceGenerators\Unity.Entities.SourceGen.JobEntityGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\TravelWaypointBuffer.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\AttackState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\AvoidHighThreatArea.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\FindAndMoveToCover.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Adjust Nav Agent Speed\ChangeMoveSpeedSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\GatherResourcesState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\TerrorizeAreaState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\WaypointCreation.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Aspects\AttackAspect.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\ConsiderationScoringData.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\AttackReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateBlob.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\MovementJob.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\UpdateWanderLocation.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\InvestigateTargetArea.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBrain.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Interfaces\IAIState.cs" />
     <Compile Include="Assets\Systems\IAUS\AIStates.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\AttackTargetSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddAttacks.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Aspects\VisionAspect.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\Patrol.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Traverse\Traverse.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\PatrolAspect.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseStateScorer.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\EquipmentUpdate.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Wander\WanderQuadrant.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\PatrolReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateTextFileReader.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseConsiderations.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\MeleeReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\CheckTargetThreatSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddWaitState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WanderReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area\EscapeThreat.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\SpawnDefendersState.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\StayInQuadrant.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Interfaces\IMovementState.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\PatrolArea.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\il2cpp\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -694,73 +653,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Unity.Entities.Player.csproj">
-      <Project>{12dd501b-8f70-251c-2d75-f2510cc43dfc}</Project>
-      <Name>Unity.Entities.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Entities.Hybrid.Player.csproj">
-      <Project>{014fc521-fab0-450d-ef40-99cd36976896}</Project>
-      <Name>Unity.Entities.Hybrid.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Mathematics.Player.csproj">
-      <Project>{498ac2e1-fd66-6535-659e-18b9f2941ecd}</Project>
-      <Name>Unity.Mathematics.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Burst.Player.csproj">
-      <Project>{f68c3f86-964b-414a-88ea-d30c81be99e9}</Project>
-      <Name>Unity.Burst.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Player.csproj">
-      <Project>{85d151dc-2959-792a-ab1e-55de3b79b56a}</Project>
-      <Name>Unity.Transforms.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Collections.Player.csproj">
-      <Project>{0065f730-3388-09c1-69b2-cc8f94fbeba0}</Project>
-      <Name>Unity.Collections.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Transforms.Hybrid.Player.csproj">
-      <Project>{3ce76982-a2f6-7cbd-f30c-adc01e0e21a5}</Project>
-      <Name>Unity.Transforms.Hybrid.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Player.csproj">
-      <Project>{0f6a626b-fb9f-362f-e15f-4fe05c0ac6fe}</Project>
-      <Name>Unity.Physics.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="UnityEngine.UI.Player.csproj">
-      <Project>{74c8c8f4-3ec8-c0cc-30d5-e31416c5707f}</Project>
-      <Name>UnityEngine.UI.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="InfluenceSystem.Player.csproj">
-      <Project>{b2113d45-ec78-25d1-718a-c67a6dae1358}</Project>
-      <Name>InfluenceSystem.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Jobs.Player.csproj">
-      <Project>{7ba1ddde-b702-bcca-863e-06049a176b85}</Project>
-      <Name>Unity.Jobs.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="MovementSystem.Player.csproj">
-      <Project>{625389e0-14e9-ab8f-5ae7-b4396eb3b8c4}</Project>
-      <Name>MovementSystem.Player</Name>
+    <ProjectReference Include="EntityUtilities.Player.csproj">
+      <Project>{9be3c2a3-1926-21b6-2f1c-16a4780069b9}</Project>
+      <Name>EntityUtilities.Player</Name>
     </ProjectReference>
     <ProjectReference Include="PlayerCharacterSystem.Player.csproj">
       <Project>{960fd81d-f6a2-3988-14a0-d21a158cd01c}</Project>
       <Name>PlayerCharacterSystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="PixelCrush.Player.csproj">
-      <Project>{f0cf487f-038b-e5dd-c6fb-8cee3e20f7ff}</Project>
-      <Name>PixelCrush.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Global.Player.csproj">
-      <Project>{7a71a626-4d2c-59cc-cf45-4b2c1e9c5a5e}</Project>
-      <Name>Global.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="InventorySystem.Player.csproj">
       <Project>{372e21a9-c934-ac4e-580c-3c7c20278e81}</Project>
       <Name>InventorySystem.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="CharacterControllerSystem.Player.csproj">
-      <Project>{3dc47aaa-28da-5074-eb14-70426be91892}</Project>
-      <Name>CharacterControllerSystem.Player</Name>
+    <ProjectReference Include="Unity.Entities.Player.csproj">
+      <Project>{12dd501b-8f70-251c-2d75-f2510cc43dfc}</Project>
+      <Name>Unity.Entities.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Collections.Player.csproj">
+      <Project>{0065f730-3388-09c1-69b2-cc8f94fbeba0}</Project>
+      <Name>Unity.Collections.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Player.csproj">
+      <Project>{498ac2e1-fd66-6535-659e-18b9f2941ecd}</Project>
+      <Name>Unity.Mathematics.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.Player.csproj">
+      <Project>{74c8c8f4-3ec8-c0cc-30d5-e31416c5707f}</Project>
+      <Name>UnityEngine.UI.Player</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
