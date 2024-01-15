@@ -36,11 +36,11 @@ namespace IAUS.BlobAssets
 
         protected override void OnUpdate()
         {
-            Entities.ForEach((ref PatrolArea patrolArea, in SetupIAUSBrainTag tag) =>
+            Entities.WithoutBurst().ForEach((ref PatrolArea patrolArea, in SetupIAUSBrainTag tag) =>
             {
                 patrolArea.WaypointBlobRef = waypointReference;
 
-            }).ScheduleParallel();
+            }).Run();
         }
     }
     

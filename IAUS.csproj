@@ -770,6 +770,10 @@
       <Project>{2f850514-4258-6560-fe37-0e6a145cac68}</Project>
       <Name>Unity.Mathematics</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Burst.csproj">
+      <Project>{3182c4db-5607-bb9a-731a-a36e45417703}</Project>
+      <Name>Unity.Burst</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{f460dda7-655f-718b-2fe9-35d81c4a0146}</Project>
       <Name>UnityEditor.UI</Name>

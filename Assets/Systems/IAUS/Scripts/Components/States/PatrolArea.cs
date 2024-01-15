@@ -41,7 +41,5 @@ namespace IAUS.Components.States
     public struct Waypoint {
         public float3 Position;
         public float TimeToWaitatWaypoint;
-        public float2 InfluenceAtPosition;
-        public bool Avoid;
     }
 }

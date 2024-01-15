@@ -679,6 +679,10 @@
       <Project>{498ac2e1-fd66-6535-659e-18b9f2941ecd}</Project>
       <Name>Unity.Mathematics.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Burst.Player.csproj">
+      <Project>{f68c3f86-964b-414a-88ea-d30c81be99e9}</Project>
+      <Name>Unity.Burst.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{74c8c8f4-3ec8-c0cc-30d5-e31416c5707f}</Project>
       <Name>UnityEngine.UI.Player</Name>
