@@ -4,6 +4,7 @@ using Stats;
 using UnityEngine;
 using IAUS;
 using MotionSystem.Components;
+using Sirenix.OdinInspector;
 
 namespace DreamersInc.Bestiary
 {
@@ -17,7 +18,12 @@ namespace DreamersInc.Bestiary
         public GameObject Prefab;
         public List<AIStates> AIStatesToAdd;
         public MovementData Move;
-        
+
+        private bool patrolStateInclude => AIStatesToAdd.Contains(AIStates.Patrol);
+        [ShowIf("patrolStateInclude")] 
+        [SerializeField] private bool selectPatrolPoints;
+
+        [ShowIf("selectPatrolPoints")] [SerializeField] private List<Vector3> waypoints;
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)

@@ -63,6 +63,8 @@
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\PatrolArea.cs" />
     <Compile Include="Assets\Systems\IAUS\Scripts\Components\IAUSBrain.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Waypoint Blob Assets\WaypointGO.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Components\States\Waypoint Blob Assets\WaypointData.cs" />
     <None Include="Assets\Systems\IAUS\IAUS.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

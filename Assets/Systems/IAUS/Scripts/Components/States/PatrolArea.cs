@@ -1,4 +1,5 @@
-﻿using IAUS.Interfaces;
+﻿using IAUS.BlobAssets;
+using IAUS.Interfaces;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -27,7 +28,7 @@ namespace IAUS.Components.States
         public float ResetTime { get; set; }
         public float mod => 1.0f - (1.0f / 4.0f);
         public FixedList64Bytes<uint> Waypoints;
-
+        public BlobAssetReference<WaypointData> WaypointBlobRef;
         public int Index { get; private set; }
 
         public void SetIndex(int index) {
