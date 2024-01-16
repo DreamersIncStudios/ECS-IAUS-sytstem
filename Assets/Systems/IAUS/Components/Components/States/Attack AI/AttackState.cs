@@ -54,7 +54,6 @@ namespace IAUS.ECS.Component
         public int SubStateNumber;
     }
     public struct MeleeAttackSubState : IComponentData {
-        public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public float3 AttackTargetLocation;
         public bool TargetInRange;
@@ -68,33 +67,7 @@ namespace IAUS.ECS.Component
         public float AttackDelay;
        [SerializeField] public bool AttackNow => AttackDelay <= 0.0f;
         public float mod => 1.0f - (1.0f / 3.0f);
-        FixedList512Bytes<AIComboInfo> unlockedMoves;
 
-        public void SetupPossibleAttacks(ComboSO combo)
-        {
-            unlockedMoves = new FixedList512Bytes<AIComboInfo>();
-            foreach (var item in combo.ComboLists.Where(item => item.Unlocked && !item.AnimationList.IsNullOrEmpty()))
-            {
-                unlockedMoves.Add(new AIComboInfo()
-                {
-                    AttackName = item.Name,
-                    Chance =  (int)item.AnimationList[0].Trigger.Chance,
-                    Trigger =  item.AnimationList[0].Trigger
-                });
-            }
-        }
-
-        public  int SelectAttackIndex(uint seed) {
-                //Todo updated solution using LootBox system
-                var maxRange = unlockedMoves.Length;
-                AttackDelay = Unity.Mathematics.Random.CreateFromIndex(seed).NextFloat(4, 15);
-                return Unity.Mathematics.Random.CreateFromIndex(seed).NextInt(0, maxRange);
-        }
-
-        public AnimationTrigger GetAnimationTrigger(int index)
-        {
-            return unlockedMoves[index].Trigger;
-        }
 
     }
     public struct MagicAttackSubState : IComponentData

@@ -115,69 +115,44 @@ namespace IAUS.ECS.Systems.Reactive {
                 public uint Seed;
                 public EntityCommandBuffer.ParallelWriter ECB;
                 [NativeDisableParallelForRestriction] public ComponentLookup<SurroundCharacter> Surround;
-
+                [ReadOnly][NativeDisableParallelForRestriction] public ComponentLookup<LocalTransform> TransformGet;
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref Movement move,
-                    ref AttackTarget target, ref MeleeAttackSubState state, ref MeleeAttackTag tag, in LocalTransform transform)
+                    ref AttackTarget target, ref MeleeAttackSubState state, ref MeleeAttackTag tag,
+                    in LocalTransform transform)
                 {
-                    var surroundCharacter = Surround[target.TargetEntity];
-                    if (!move.CanMove)
+                    if (Surround.TryGetComponent(target.TargetEntity, out var surroundCharacter))
                     {
-                        try
+                        var targetInfo = surroundCharacter.PositionsSurroundingCharacter[tag.PositionIndex];
+                        var dist = Vector3.Distance(targetInfo.Position, transform.Position);
+                        if (dist > 10.5f)
                         {
-                          
-                            var temp = new AttackPosition();
-                            var closest = 100f;
-                            foreach (var item in surroundCharacter.PositionsSurroundingCharacter)
-                            {
-                                if (item.Occupied) continue;
-                                var distTo = Vector3.Distance(item.Position, transform.Position);
-                                if (!(distTo < closest)) continue;
-                                closest = distTo;
-                                temp = item;
-                            }
-
-                            var location = temp.Position;
-                            tag.PositionIndex = surroundCharacter.PositionsSurroundingCharacter.IndexOf(temp);
-                            temp.Occupied = true;
-                            surroundCharacter.PositionsSurroundingCharacter[0] = temp;
-                            Surround[target.TargetEntity] = surroundCharacter;
-                            tag.AttackIndex = state.SelectAttackIndex(Seed);
-                            move.SetLocation(location);
+                            //TODO select a surround position
+                            move.SetLocation(targetInfo.Position);
                         }
-                        catch (Exception e)
+                        if (move.DistanceRemaining < 4.0f && !state.AttackNow)
                         {
-                        
-                            throw new AssertionException(e.Message, e.Message+$": {e.StackTrace}");
+                            state.AttackDelay -= DeltaTime;
+                        }         else if (state.AttackNow && move.CanMove)
+                        {
+                            Debug.Log("We Attack AT DAWN");
                         }
                     }
                     else
                     {
-                        try
+                        var enemyTransform = TransformGet[target.TargetEntity];
+                        var dist = Vector3.Distance(enemyTransform.Position, transform.Position);
+                        if (dist > 10.5f)
                         {
-                            var targetInfo = surroundCharacter.PositionsSurroundingCharacter[tag.PositionIndex];
-                            var dist = Vector3.Distance(targetInfo.Position, transform.Position);
-                            if (!move.TargetLocation.Equals(targetInfo.Position) && dist > 10.5f)
-                            {
-                                move.SetLocation(targetInfo.Position);
-                            }
-
-                            if (move.DistanceRemaining < 4.0f && !state.AttackNow)
-                            {
-                                state.AttackDelay -= DeltaTime;
-                            }
-                            else if (state.AttackNow && move.CanMove)
-                            {
-                                tag.AttackIndex = state.SelectAttackIndex(Seed);
-                                //  ECB.AddComponent(chunkIndex, entity,
-                                //    new AIAttackInput(state.GetAnimationTrigger((tag.AttackIndex))));
-                            }
+                            //TODO select a surround position
+                            move.SetLocation(enemyTransform.Position);
                         }
-                        catch (Exception e)
+                        if (move.DistanceRemaining < 4.0f && !state.AttackNow)
                         {
-                            throw new AssertionException(e.Message,e.Message+$": {e.StackTrace}");
+                            state.AttackDelay -= DeltaTime;
+                        }         else if (state.AttackNow && move.CanMove)
+                        {
+                            Debug.Log("We Attack AT DAWN");
                         }
-
-
                     }
                 }
             }

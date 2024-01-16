@@ -12,16 +12,18 @@ using UnityEngine;
 
 namespace IAUS.ECS.Component.Aspects
 {
+    
+
     public readonly partial struct AttackAspect : IAspect
     {
         readonly RefRO<LocalTransform> Transform;
         readonly VisionAspect VisionAspect;
         readonly InfluenceAspect influenceAspect;
         readonly RefRW<AttackState> state;
-        readonly RefRW<MeleeAttackSubState> melee;
-        readonly RefRW<MagicAttackSubState> magic;
-        readonly RefRW<WeaponSkillsAttackSubState> MagicMelee;
-        readonly RefRW<RangedAttackSubState> Range;
+        [Optional]readonly RefRW<MeleeAttackSubState> melee;
+        [Optional] readonly RefRW<MagicAttackSubState> magic;
+        [Optional]readonly RefRW<WeaponSkillsAttackSubState> MagicMelee;
+        [Optional]readonly RefRW<RangedAttackSubState> Range;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRO<IAUSBrain> brain;
 
@@ -111,7 +113,6 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
-
                 List<float> scores = new List<float>();
                 scores.Add(MeleeScore);
                 scores.Add(MagicMeleeScore);

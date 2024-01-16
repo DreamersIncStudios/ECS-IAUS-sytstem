@@ -30,7 +30,7 @@ namespace AISenses.VisionSystems.Combat
             {
                 if (buffer.Length == 0)
                     return;
-                if (attackState.IsTargeting && buffer.Length >= melee.AttackTargetIndex)
+                if (attackState.IsTargeting && buffer.Length+1 >= melee.AttackTargetIndex)
                 {
                     melee.AttackTargetLocation = buffer[melee.AttackTargetIndex].target.LastKnownPosition;
                 }
@@ -56,7 +56,7 @@ namespace AISenses.VisionSystems.Combat
 
                         if (vision.EngageRadius > visibleTargetInArea[indexOf].dist)
                         {
-                            melee.TargetEntity = visibleTargetInArea[indexOf].target.Entity;
+                       //     melee.TargetEntity = visibleTargetInArea[indexOf].target.Entity;
                             melee.AttackTargetLocation = visibleTargetInArea[indexOf].target.LastKnownPosition;
                             melee.TargetInRange = true;
                         }

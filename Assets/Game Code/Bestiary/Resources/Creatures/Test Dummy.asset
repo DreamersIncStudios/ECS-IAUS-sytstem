@@ -15,6 +15,7 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   ClassLevel: 0
+  GetNPCLevel: 0
   stats:
     title: 0
     Name: Test Dummy
@@ -105,16 +106,20 @@ MonoBehaviour:
     MovingTurnSpeed: 0
     StationaryTurnSpeed: 0
     JumpPower: 0
-    GravityMultiplier: 0
+    GravityMultiplier: 2
     RunCycleLegOffset: 0
     MoveSpeedMultiplier: 0
     AnimSpeedMultiplier: 0
     GroundCheckDistance: 0
     CombatCapable: 0
-  factionID: 0
+  FactionID: 0
   BaseThreat: 0
   BaseProtection: 0
   Equipment:
     EquippedWeapons:
     - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}
     EquippedArmors: []
+  AttackComboSO: {fileID: 0}
+  CapableOfMelee: 1
+  CapableOfMagic: 0
+  CapableOfRange: 0

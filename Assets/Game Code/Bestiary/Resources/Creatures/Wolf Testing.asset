@@ -106,7 +106,7 @@ MonoBehaviour:
     MovingTurnSpeed: 0
     StationaryTurnSpeed: 0
     JumpPower: 0
-    GravityMultiplier: 0
+    GravityMultiplier: 2
     RunCycleLegOffset: 0
     MoveSpeedMultiplier: 0
     AnimSpeedMultiplier: 0
@@ -121,6 +121,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0d0acd3bd1c799444be09c9ecdfd4218, type: 2}
     EquippedArmors: []
   AttackComboSO: {fileID: 0}
-  CapableOfMelee: 0
+  CapableOfMelee: 1
   CapableOfMagic: 0
   CapableOfRange: 0

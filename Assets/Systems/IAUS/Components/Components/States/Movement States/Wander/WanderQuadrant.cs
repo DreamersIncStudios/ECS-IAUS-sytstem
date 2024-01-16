@@ -98,10 +98,7 @@ namespace IAUS.ECS.Component
                 {
                     throw new ArgumentOutOfRangeException(nameof(wander), $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.Name} state is implements");
                 }
-                if (vision.TargetInReactRange)
-                {
-                    return 0.0f;
-                }
+             
                 if (wander.ValueRO.Status == ActionStatus.Idle && wander.ValueRO.SpawnPosition.Equals(wander.ValueRO.TravelPosition))
                 {
                     wander.ValueRW.SpawnPosition.x += 35;

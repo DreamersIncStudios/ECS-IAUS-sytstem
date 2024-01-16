@@ -88,8 +88,7 @@ namespace DreamersInc.BestiarySystem
                         if (info.CapableOfMelee)
                         {
                             var melee = new MeleeAttackSubState();
-                            if(info.AttackComboSO)
-                                melee.SetupPossibleAttacks(info.AttackComboSO);
+
                             manager.AddComponentData(entity, melee); 
                         }
 

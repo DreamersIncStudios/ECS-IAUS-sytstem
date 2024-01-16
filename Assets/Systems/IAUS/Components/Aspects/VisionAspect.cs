@@ -20,7 +20,6 @@ namespace AISenses.VisionSystems
                 foreach (var item in scanPositions)
                     if (item is { dist: < 25, target: { IsFriendly: false } })
                     {
-                        Debug.Log("A target in range");
                         return true;
                     }
 
