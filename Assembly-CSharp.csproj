@@ -61,7 +61,6 @@
     <Compile Include="Assets\Game Code\Bestiary\Authoring\SpawnTag.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\SpawnBase.cs" />
     <Compile Include="Assets\Game Code\Bestiary\BestiaryDB.cs" />
-    <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\AddIAUS.cs" />
     <Compile Include="Assets\Game Code\Bestiary\SpawnForTesting.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\PlayerInfo.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\TestingDummyInfo.cs" />

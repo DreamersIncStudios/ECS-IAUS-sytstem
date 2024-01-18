@@ -26,20 +26,6 @@ namespace IAUS.ECS.Component
         public BlobAssetReference<AIStateBlobAsset> State;
     }
     public struct SetupBrainTag : IComponentData { }
-
-    public struct StateBuffer : IBufferElementData
-    {
-       [SerializeField] public AIStates StateName { get; private set; }
-        public float TotalScore;
-        public ActionStatus Status;
-        public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;
-
-        public StateBuffer(AIStates state) {
-            StateName = state;
-            Status = ActionStatus.Idle;
-            TotalScore = 0;
-        }
-
-    }
+    
     public enum Status { Normal, Brave, Reckless, Berserk, Cautious, Sleep, Confused, Dazed }
 }

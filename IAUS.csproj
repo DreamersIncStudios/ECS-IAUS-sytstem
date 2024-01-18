@@ -81,7 +81,6 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\AttackTargetSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WaitReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\NPC Quadrant System\NPCQuadrantSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddAttacks.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Aspects\VisionAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Patrol\Patrol.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Traverse\Traverse.cs" />
@@ -93,13 +92,13 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\RepairState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />
+    <Compile Include="Assets\Systems\IAUS\Components\Components\IAUSBlackboard.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Blob State System\StateTextFileReader.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseConsiderations.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\MeleeReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\CheckTargetThreatSystem.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddWaitState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WanderReactive.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area\EscapeThreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\SpawnDefendersState.cs" />

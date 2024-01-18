@@ -362,8 +362,6 @@ public class CharacterBuilder
                         break;
                 }
             }
-            manager.AddBuffer<StateBuffer>(entity);
-
             manager.AddComponent<SetupBrainTag>(entity);
 
         return this;
