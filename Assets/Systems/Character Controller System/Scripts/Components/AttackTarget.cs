@@ -11,7 +11,6 @@ namespace AISenses.VisionSystems.Combat
     public struct AttackTarget : IComponentData
     {
         public float3 AttackTargetLocation;
-        public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public bool IsTargeting;
         public float2 AttackDir;

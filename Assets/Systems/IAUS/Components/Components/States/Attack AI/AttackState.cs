@@ -56,6 +56,7 @@ namespace IAUS.ECS.Component
     public struct MeleeAttackSubState : IComponentData {
         public int AttackTargetIndex;
         public float3 AttackTargetLocation;
+        public Entity TargetEntity{ get; set; }
         public bool TargetInRange;
         public int Index { get; private set; }
         public void SetIndex(int index)
