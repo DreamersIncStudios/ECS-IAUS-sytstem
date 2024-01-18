@@ -1,21 +1,24 @@
-
 using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 
 namespace AISenses.VisionSystems.Combat
 {
+    /// <summary>
+    /// This Component is for moving the Character toward the target it is attacking
+    /// Animation Helper 
+    /// </summary>
     public struct AttackTarget : IComponentData
     {
         public float3 AttackTargetLocation;
         public int AttackTargetIndex;
-        public bool isTargeting;
+        public bool IsTargeting;
         public float2 AttackDir;
         public float MoveRange;
-        public bool IsFriendly;
+        public bool TargetInRange { get; set; }
         public float3 MoveTo(float3 curPos)
         {
-            float dist = Vector3.Distance(curPos, AttackTargetLocation);
+            var dist = Vector3.Distance(curPos, AttackTargetLocation);
             if (AttackTargetLocation.Equals(new float3(1, 1, 1)))
                 return new float3(1, 1, 1);
 
@@ -25,7 +28,7 @@ namespace AISenses.VisionSystems.Combat
             }
             else
             {
-                float ratio = MoveRange / dist;
+                var ratio = MoveRange / dist;
                 return Vector3.Lerp(curPos, AttackTargetLocation, ratio);
             }
         }

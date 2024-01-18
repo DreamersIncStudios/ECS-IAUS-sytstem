@@ -10,19 +10,27 @@ public class SpawnForTesting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        var info = BestiaryDB.GetCreature(3);
+        CharacterBuilder.CreateCharacter("Kas").WithModel(info.Prefab, Vector3.zero, "Player")
+            .WithEntityPhysics(info.PhysicsInfo).Build();
         List<float3> positions = new List<float3>();
         while (positions.Count < 70)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
                 positions.Add(pos);
         }
-        //for (int i = 0; i < 10; i++)
-        //{
-      //  BestiaryDB.SpawnNPC(1);
-        BestiaryDB.SpawnNPC(3);
 
-        //}
+        for (int i = 0; i < 20; i++)
+        {
+            if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
+                BestiaryDB.SpawnNPC(3, pos);
+            else
+            {
+                i--;
+            }
+
+        }
+
         for (int i = 0; i < 25; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))

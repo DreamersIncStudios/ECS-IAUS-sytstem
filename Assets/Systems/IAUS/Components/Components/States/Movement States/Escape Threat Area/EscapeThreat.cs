@@ -17,19 +17,19 @@ namespace IAUS.ECS.Component
         public AIStates Name { get { return AIStates.RetreatToLocation; } }
 
 
-        public ConsiderationScoringData DistanceToPoint { get { return stateRef.Value.Array[Index].Health; } }
+        public ConsiderationScoringData DistanceToPosition { get { return stateRef.Value.Array[Index].Health; } }
         public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].DistanceToPlaceOfInterest; } }
         public ConsiderationScoringData ThreatInRange => stateRef.Value.Array[Index].EnemyInfluence;
 
-        [SerializeField] public float DistanceRatio => (float)distanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)distanceToPoint / (float)StartingDistance) : 0;
+        [SerializeField] public float DistanceRatio => (float)DistanceToPoint / (float)StartingDistance != Mathf.Infinity ? Mathf.Clamp01((float)DistanceToPoint / (float)StartingDistance) : 0;
 
         public uint NumberOfWayPoints { get { return 1; }
             set {
             }
         }
-        [SerializeField] public float distanceToPoint { get; set; }
+        [SerializeField] public float DistanceToPoint { get; set; }
 
-        public bool Complete => BufferZone > distanceToPoint;
+        public bool Complete => BufferZone > DistanceToPoint;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
 
@@ -84,8 +84,8 @@ namespace IAUS.ECS.Component
         {
             get
             {
-                escape.ValueRW.distanceToPoint = distanceToPoint;
-                float totalScore = escape.ValueRO.DistanceToPoint.Output(escape.ValueRO.DistanceRatio) * escape.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
+                escape.ValueRW.DistanceToPoint = distanceToPoint;
+                float totalScore = escape.ValueRO.DistanceToPosition.Output(escape.ValueRO.DistanceRatio) * escape.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
                 escape.ValueRW.TotalScore = escape.ValueRO.Status != ActionStatus.CoolDown ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * escape.ValueRO.mod) * totalScore) : 0.0f;
 
                 totalScore = escape.ValueRW.TotalScore;

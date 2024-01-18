@@ -22,8 +22,8 @@ namespace IAUS.ECS.Component
 
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey + 1));
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey - 1));
-                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey + NPCQuadrantSystem.quadrantYMultiplier));
-                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey - NPCQuadrantSystem.quadrantYMultiplier));
+                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey + NPCQuadrantSystem.quadrantZMultiplier));
+                    positions.Add(GetWanderPoint(transform.Position, wander.HashKey - NPCQuadrantSystem.quadrantZMultiplier));
                     positions.Add(GetWanderPoint(transform.Position, wander.HashKey));
                    
                     wander.TravelPosition = positions[2];
@@ -42,18 +42,15 @@ namespace IAUS.ECS.Component
         }
         float3 GetWanderPoint(float3 CurPosition, int hashKey)
         {
-            float3 position = new float3();
-            while (position.Equals( float3.zero)) {
-                if (GlobalFunctions.RandomPoint(CurPosition, 1050, out float3 pos)) {
-                    if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) == hashKey) 
+            while (true) {
+                if (GlobalFunctions.RandomPoint(CurPosition, 100, out float3 pos)) {
+                    if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) == hashKey)
                     {
-                        position = pos; 
-                        break;
+                        return pos;
                     }
                 
                 }
             }
-            return position;
         }
 
     }

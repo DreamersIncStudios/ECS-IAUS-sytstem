@@ -81,7 +81,7 @@ namespace AISenses
         }
 
     }
-    [InternalBufferCapacity(100)]
+    [InternalBufferCapacity(0)]
     public struct ScanPositionBuffer : IBufferElementData
     {
         public Target target;
@@ -119,7 +119,7 @@ namespace AISenses
         {
             IsFriendly = factionID == TargetInfo.FactionID ||
                          LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(TargetInfo.FactionID) > 51;
-
+         
         }
 
         public AITarget TargetInfo;

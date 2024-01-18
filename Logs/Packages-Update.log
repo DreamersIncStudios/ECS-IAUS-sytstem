@@ -305,3 +305,29 @@ The following packages were updated:
   com.unity.burst from version 1.8.4 to 1.8.7
   com.unity.probuilder from version 5.0.7 to 5.1.0
   com.unity.render-pipelines.universal from version 14.0.7 to 14.0.8
+
+=== Wed Dec 13 23:46:08 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ai.navigation from version 1.1.4 to 1.1.5
+  com.unity.burst from version 1.8.8 to 1.8.10
+  com.unity.ide.rider from version 3.0.25 to 3.0.26
+  com.unity.ide.visualstudio from version 2.0.20 to 2.0.22
+  com.unity.memoryprofiler from version 1.0.0 to 1.1.0
+  com.unity.probuilder from version 5.1.1 to 5.2.0
+  com.unity.render-pipelines.universal from version 14.0.8 to 14.0.9
+  com.unity.scriptablebuildpipeline from version 1.21.9 to 1.21.21
+  com.unity.timeline from version 1.7.5 to 1.7.6
+
+=== Wed Jan 10 20:58:58 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.burst from version 1.8.10 to 1.8.11
+  com.unity.ide.rider from version 3.0.26 to 3.0.27
+  com.unity.probuilder from version 5.2.0 to 5.2.2

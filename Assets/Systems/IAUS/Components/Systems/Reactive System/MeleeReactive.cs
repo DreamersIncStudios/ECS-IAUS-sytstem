@@ -1,11 +1,15 @@
+using System;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using AISenses.VisionSystems.Combat;
+using DreamersInc.CombatSystem;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.Assertions;
 using Utilities.ReactiveSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
@@ -13,6 +17,7 @@ using Utilities.ReactiveSystem;
 [assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive {
+    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
     public partial struct MeleeTagReactor : IComponentReactorTagsForAIStates<MeleeAttackTag, MeleeAttackSubState>
     {
         public void ComponentAdded(Entity entity, ref MeleeAttackTag newComponent,
@@ -31,6 +36,7 @@ namespace IAUS.ECS.Systems.Reactive {
         {
 
         }
+        [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
 
         partial class ReactiveSystem : AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, MeleeTagReactor>
         {
@@ -41,6 +47,8 @@ namespace IAUS.ECS.Systems.Reactive {
 
         }
 
+        [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
+
         [UpdateAfter(typeof(AttackTagReactor.AttackUpdateSystem))]
         partial class MeleeReactiveSystem : SystemBase
         {
@@ -50,7 +58,6 @@ namespace IAUS.ECS.Systems.Reactive {
 
             protected override void OnCreate()
             {
-                base.OnCreate();
                 meleeAttackersAdded = GetEntityQuery(new EntityQueryDesc()
                 {
                     All = new[]
@@ -86,59 +93,68 @@ namespace IAUS.ECS.Systems.Reactive {
 
             protected override void OnUpdate()
             {
-
+                var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+                
                 new AttackTargetEnemy()
                 {
                     Seed = (uint)UnityEngine.Random.Range(1, 10000),
-                    DeltaTime = SystemAPI.Time.DeltaTime
+                    DeltaTime = SystemAPI.Time.DeltaTime,
+                    
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
                 }.ScheduleParallel();
+
             }
 
 
-
+//[BurstCompile]
             private partial struct AttackTargetEnemy : IJobEntity
             {
                 public float DeltaTime;
                 public uint Seed;
-                void Execute(ref Movement move, ref AttackTarget target, ref MeleeAttackSubState state, ref MeleeAttackTag tag)
+                public EntityCommandBuffer.ParallelWriter ECB;
+                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref Movement move,
+                    ref MeleeAttackSubState state, ref MeleeAttackTag tag,
+                    in LocalTransform transform)
                 {
-                    if (!move.CanMove)
+                    var dist = Vector3.Distance(state.AttackTargetLocation, transform.Position);
+                    if (dist > 10.5f)
                     {
-                        tag.AttackIndex = state.SelectAttackIndex(Seed);
-                        move.SetLocation(target.AttackTargetLocation);
-                        Debug.Log(move.TargetLocation);
-                        Debug.Log(target.AttackTargetLocation);
-
+                        //TODO select a surround position
+                        move.SetLocation(state.AttackTargetLocation);
                     }
 
-                    if (move.StoppingDistance<4.0f && !state.AttackNow)
+                    if (move.DistanceRemaining < 4.0f && !state.AttackNow)
                     {
                         state.AttackDelay -= DeltaTime;
-                    }else if (state.AttackNow && move.CanMove)
+                    }
+                    else if (state.AttackNow && move.CanMove)
                     {
-                        Debug.Log($"hit Enemy with attack {tag.AttackIndex}");
-                        tag.AttackIndex = state.SelectAttackIndex(Seed);
+                        Debug.Log("We Attack AT DAWN");
+                        state.AttackDelay += 10.5f;
                     }
                 }
             }
 
         }
 
+
     }
+    
+    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
 
-    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<MagicMeleeAttackTag, AttackState>
+    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<WeaponSkillAttackTag, AttackState>
     {
-        public void ComponentAdded(Entity entity, ref MagicMeleeAttackTag newComponent, ref AttackState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment)
         {
 
         }
 
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MagicMeleeAttackTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
         {
 
         }
 
-        public void ComponentValueChanged(Entity entity, ref MagicMeleeAttackTag newComponent, ref AttackState AIStateCompoment, in MagicMeleeAttackTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
         {
 
         }
@@ -160,6 +176,8 @@ namespace IAUS.ECS.Systems.Reactive {
 
         }
     }
+    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
+
     public partial struct RangeTagReactor : IComponentReactorTagsForAIStates<RangeAttackTag, AttackState>
     {
         public void ComponentAdded(Entity entity, ref RangeAttackTag newComponent, ref AttackState AIStateCompoment)

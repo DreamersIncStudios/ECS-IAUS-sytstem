@@ -134,7 +134,7 @@ namespace AISenses.VisionSystems
                     }
                 }
                 attackTarget.AttackTargetIndex = index;
-                attackTarget.isTargeting = looking;
+                attackTarget.IsTargeting = looking;
 
 
             }).Run();

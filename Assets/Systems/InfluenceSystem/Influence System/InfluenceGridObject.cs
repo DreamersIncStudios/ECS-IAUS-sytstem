@@ -145,31 +145,34 @@ namespace DreamersInc.InflunceMapSystem
             }
 
             int2[] value = new int2[2];
-            for (int i = 0; i < Friends.Count; i++)
-            {
-                value[0] += gridValue[Friends[i]];
-            }
-            for (int i = 0; i < Foes.Count; i++)
-            {
-                value[1] += gridValue[Foes[i]];
-            }
+            if(Friends.Count>0)
+                for (int i = 0; i < Friends.Count; i++)
+                {
+                    if (gridValue.TryGetValue(Friends[i], out int2 temp))
+                            value[0] += temp;
+                }
+            if(Foes.Count>0)
+                for (int i = 0; i < Foes.Count; i++)
+                {
+                    if (gridValue.TryGetValue(Foes[i], out int2 temp))
+                        value[1] += temp;
+                }
 
             return new int2(value[0].x, value[1].y);
         }
-        public int2 GetAverageValue(Faction faction, int AreaSize = 10)
+        public int2 GetAverageValue(Faction faction, int areaSize = 10)
         {
-            int startX, startY;
             int2 totalInfluenceArea = new();
-            startX = x - AreaSize / 2;
-            startY = y - AreaSize / 2;
-            for (int i = 0; i < AreaSize; i++)
+            var startX = x - areaSize / 2;
+            var startY = y - areaSize / 2;
+            for (var i = 0; i < areaSize; i++)
             {
-                for (int j = 0; j < AreaSize; j++)
+                for (var j = 0; j < areaSize; j++)
                 {
                     totalInfluenceArea += grid.GetGridObject(startX + i, startY + j).GetValue(faction);
                 }
             }
-            return totalInfluenceArea / AreaSize;
+            return totalInfluenceArea / areaSize;
 
         }
         public int2 GetAverageValue(int FactionID, int AreaSize = 10)

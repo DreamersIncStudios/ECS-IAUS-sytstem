@@ -58,7 +58,7 @@ namespace IAUS.ECS.Systems.Reactive
                     Absent = new []
                     {
                         ComponentType.ReadOnly(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>.StateComponent)), 
-                        ComponentType.ReadOnly(typeof(MeleeAttackTag)),ComponentType.ReadOnly(typeof(MagicAttackTag)),ComponentType.ReadOnly(typeof(MagicMeleeAttackTag)),ComponentType.ReadOnly(typeof(RangeAttackTag))
+                        ComponentType.ReadOnly(typeof(MeleeAttackTag)),ComponentType.ReadOnly(typeof(MagicAttackTag)),ComponentType.ReadOnly(typeof(WeaponSkillAttackTag)),ComponentType.ReadOnly(typeof(RangeAttackTag))
                     }
                 });
            
@@ -89,7 +89,7 @@ namespace IAUS.ECS.Systems.Reactive
                             ecb.AddComponent<MeleeAttackTag>(sortKey, entity);
                                 break;
                         case 1:
-                            ecb.AddComponent<MagicMeleeAttackTag>(sortKey, entity);
+                            ecb.AddComponent<WeaponSkillAttackTag>(sortKey, entity);
                             break;
                         case 2:
                             ecb.AddComponent<MagicAttackTag>(sortKey, entity);

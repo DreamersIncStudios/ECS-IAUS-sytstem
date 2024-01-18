@@ -67,23 +67,23 @@ namespace IAUS.ECS.StateBlobSystem
                 
             }).Run();
             Entities.WithoutBurst().ForEach((ref Patrol p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                p.stateRef = reference;
-                p.SetIndex( p.stateRef.Value.GetConsiderationIndex(new Identity()
+    
+                p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = p.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     //TODO fill out all Levels
                     NPCLevel = brain.NPCLevel
                 }));
             }).Run();
             Entities.WithoutBurst().ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                p.stateRef = reference;
-                p.SetIndex( p.stateRef.Value.GetConsiderationIndex(new Identity()
+   
+                p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = p.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
             }).Run();
@@ -93,7 +93,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = p.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
             }).Run();
@@ -104,7 +104,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = w.name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 });
             }).Run();
@@ -114,7 +114,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = g.name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }); ;
             }).Run();
@@ -124,7 +124,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 });             }).Run();
 
@@ -143,7 +143,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }); ;
             }).Run();
@@ -153,7 +153,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 });          }).Run();
 
@@ -163,7 +163,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 })); 
 
@@ -174,7 +174,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
 
@@ -185,7 +185,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = G.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
 
@@ -197,17 +197,17 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = MagicAttackSubState.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
 
-            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicMeleeAttackSubState G) =>
+            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref WeaponSkillsAttackSubState G) =>
             {
                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
-                    AIStates = MagicMeleeAttackSubState.Name,
-                    FactionID = brain.factionID,
+                    AIStates = WeaponSkillsAttackSubState.Name,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
 
@@ -217,7 +217,7 @@ namespace IAUS.ECS.StateBlobSystem
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = RangedAttackSubState.Name,
-                    FactionID = brain.factionID,
+                    FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
 

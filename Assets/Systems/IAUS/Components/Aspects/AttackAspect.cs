@@ -12,16 +12,18 @@ using UnityEngine;
 
 namespace IAUS.ECS.Component.Aspects
 {
+    
+
     public readonly partial struct AttackAspect : IAspect
     {
-        readonly RefRO<LocalTransform> Transform;
-        readonly VisionAspect VisionAspect;
+        readonly RefRO<LocalTransform> transform;
+        readonly VisionAspect visionAspect;
         readonly InfluenceAspect influenceAspect;
         readonly RefRW<AttackState> state;
-        readonly RefRW<MeleeAttackSubState> melee;
-        readonly RefRW<MagicAttackSubState> magic;
-        readonly RefRW<MagicMeleeAttackSubState> MagicMelee;
-        readonly RefRW<RangedAttackSubState> Range;
+        [Optional]readonly RefRW<MeleeAttackSubState> melee;
+        [Optional] readonly RefRW<MagicAttackSubState> magic;
+        [Optional] private readonly RefRW<WeaponSkillsAttackSubState> magicMelee;
+        [Optional]readonly RefRW<RangedAttackSubState> Range;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRO<IAUSBrain> brain;
 
@@ -31,32 +33,21 @@ namespace IAUS.ECS.Component.Aspects
             return brain.ValueRO.State.Value.Array[index];
         }
 
-        public AITarget Target( float dist) {
-            return new AITarget();
-        }
-        float BaseScore
-        {
-            get
-            {
-                float temp = new float();
-                temp = GetAsset(state.ValueRO.Index).Health.Output(statInfo.ValueRO.HealthRatio);
-                return temp;
-            }
-        }
-        float TravelInFiveSec { get {
-                return statInfo.ValueRO.Speed * 5;   
-            }
-        }
+        private float BaseScore => GetAsset(state.ValueRO.Index).Health.Output(statInfo.ValueRO.HealthRatio);
 
-        public float MeleeScore { get {
+        private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
+
+        private float MeleeScore { get
+            {
+                if (!melee.IsValid) return 0.0f;
                 if (state.ValueRO.CapableOfMelee && melee.ValueRO.Index != -1) {
-                    if (VisionAspect.TargetInRange(out AITarget target, out float dist))
+                    if (visionAspect.TargetInRange(out _, out float dist))
                     {
                         var asset = GetAsset(melee.ValueRO.Index);
-                        float range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
-                        float influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec); 
+                        var range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
+                        var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec); 
                         //Debug.Log($"base score: {BaseScore} RangeScore; {asset.DistanceToTargetEnemy.Output(range)} Threat Score: {asset.EnemyInfluence.Output(0.0f)}");
-                        float total = asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(0.0f)*BaseScore;
+                        var total = asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(influenceDist)*BaseScore;
                         total = Mathf.Clamp01(total + ((1.0f - total) * melee.ValueRO.mod) * total);
                         return total;
                     }
@@ -67,59 +58,63 @@ namespace IAUS.ECS.Component.Aspects
                 else return 0;
             } 
         }
-        public float MagicMeleeScore { get
-            {
-                
-                //var asset = GetAsset(MagicMelee.ValueRO.Index);
-                if (state.ValueRO.CapableOfMelee && state.ValueRO.CapableOfMagic)
-                    return 1;
-                else return 0;
-            } } 
 
-        public float MagicScore { get
+        private float MagicMeleeScore { get
             {
-                
+                if (!magic.IsValid || !melee.IsValid) return 0.0f;
+                    return 1;
+         
+            } }
+
+        private float MagicScore { get
+            {
+                if (!magic.IsValid) return 0.0f;
                 var asset = GetAsset(magic.ValueRO.Index);
-                if (state.ValueRO.CapableOfMagic)
                     return 1;
-                else return 0;
-            } }
+
+            } 
+        }
 
 
-        public float ProjectileScore { get
+        private float ProjectileScore
+        {
+            get
             {
-                
-                var asset = GetAsset(Range.ValueRO.Index);
-                if (state.ValueRO.CapableOfProjectile)
-                {
-                    if (VisionAspect.TargetInRange(out AITarget target,out float dist))
-                    {
-                      
+                if (!Range.IsValid) return 0.0f;
 
-                        float range = Mathf.Clamp01(dist/Range.ValueRO.MaxEffectiveRange);
-                        float influenceDist = Mathf.Clamp01( influenceAspect.DistanceToHighProtection / TravelInFiveSec);
-                        float totalScore = asset.DistanceToTargetEnemy.Output(range) *
-                                            asset.DistanceToPlaceOfInterest.Output(influenceDist) *
-                                            asset.ManaAmmo.Output(statInfo.ValueRO.ManaRatio)*BaseScore; //Todo Change this line to be inventory based if we decide to do non mana based projectiles
-                        totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * melee.ValueRO.mod) * totalScore);
-                        return totalScore;
-                    }else
-                        return 0;
+                var asset = GetAsset(Range.ValueRO.Index);
+
+                if (visionAspect.TargetInRange(out _, out var dist))
+                {
+
+
+                    var range = Mathf.Clamp01(dist / Range.ValueRO.MaxEffectiveRange);
+                    var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                    var totalScore = asset.DistanceToTargetEnemy.Output(range) *
+                                     asset.DistanceToPlaceOfInterest.Output(influenceDist) *
+                                     asset.ManaAmmo.Output(statInfo.ValueRO.ManaRatio) *
+                                     BaseScore; //Todo Change this line to be inventory based if we decide to do non mana based projectiles
+                    totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * melee.ValueRO.mod) * totalScore);
+                    return totalScore;
                 }
-                else return 0;
-            } }
+                else
+                    return 0;
+
+            }
+        }
 
 
         public float Score
         {
             get
             {
-
-                List<float> scores = new List<float>();
-                scores.Add(MeleeScore);
-                scores.Add(MagicMeleeScore);
-                scores.Add(MagicScore);
-                scores.Add(ProjectileScore);
+                var scores = new List<float>
+                {
+                    MeleeScore,
+                    MagicMeleeScore,
+                    MagicScore,
+                    ProjectileScore
+                };
                 return state.ValueRW.TotalScore = scores.Max();
             }
         }
@@ -128,16 +123,17 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
-                List<float> scores = new List<float>();
-                scores.Add(MeleeScore); 
-                scores.Add(MagicMeleeScore);
-                scores.Add(MagicScore);
-                scores.Add(ProjectileScore);
+                var scores = new List<float>
+                {
+                    MeleeScore,
+                    MagicMeleeScore,
+                    MagicScore,
+                    ProjectileScore
+                };
                 return scores.IndexOf(scores.Max());
             }
         }
 
-        public ActionStatus Status { get => state.ValueRO.Status; }
-
+        public ActionStatus Status => state.ValueRO.Status;
     }
 }

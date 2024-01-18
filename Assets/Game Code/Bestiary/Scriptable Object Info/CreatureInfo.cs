@@ -9,6 +9,8 @@ using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
+using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -24,13 +26,19 @@ namespace DreamersInc.BestiarySystem
         public List<AIStates> AIStatesToAdd;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
-        [Header("influence ")]
-        public int factionID;
+        [FormerlySerializedAs("factionID")] [Header("influence ")]
+        public int FactionID;
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
         public ComboSO AttackComboSO;
 
+        [Header("Attack Info")] [ShowIf("hasAttack")]
+        public bool CapableOfMelee = false;
+
+        [ShowIf("hasAttack")] public bool CapableOfMagic = false;
+        [ShowIf("hasAttack")] public bool CapableOfRange = false;
+        private bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)
