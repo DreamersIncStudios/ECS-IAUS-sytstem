@@ -106,7 +106,7 @@ namespace IAUS.ECS.Systems.Reactive {
             }
 
 
-//[BurstCompile]
+[BurstCompile]
             private partial struct AttackTargetEnemy : IJobEntity
             {
                 public float DeltaTime;
@@ -121,6 +121,7 @@ namespace IAUS.ECS.Systems.Reactive {
                     {
                         //TODO select a surround position
                         move.SetLocation(state.AttackTargetLocation);
+                        state.AttackDelay = 10;
                     }
 
                     if (move.DistanceRemaining < 4.0f && !state.AttackNow)
@@ -129,7 +130,6 @@ namespace IAUS.ECS.Systems.Reactive {
                     }
                     else if (state.AttackNow && move.CanMove)
                     {
-                        Debug.Log("We Attack AT DAWN");
                         state.AttackDelay += 10.5f;
                     }
                 }
@@ -139,61 +139,4 @@ namespace IAUS.ECS.Systems.Reactive {
 
 
     }
-    
-    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
-
-    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<WeaponSkillAttackTag, AttackState>
-    {
-        public void ComponentAdded(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
-        {
-
-        }
-    }
-    public partial struct MagicTagReactor : IComponentReactorTagsForAIStates<MagicAttackTag, AttackState>
-    {
-        public void ComponentAdded(Entity entity, ref MagicAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MagicAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref MagicAttackTag newComponent, ref AttackState AIStateCompoment, in MagicAttackTag oldComponent)
-        {
-
-        }
-    }
-    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
-
-    public partial struct RangeTagReactor : IComponentReactorTagsForAIStates<RangeAttackTag, AttackState>
-    {
-        public void ComponentAdded(Entity entity, ref RangeAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in RangeAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref RangeAttackTag newComponent, ref AttackState AIStateCompoment, in RangeAttackTag oldComponent)
-        {
-
-        }
-    }
-
 }

@@ -94,7 +94,6 @@ public class CharacterBuilder
         });
 
         return this;
-        return this;
     }
 
     public CharacterBuilder WithVFX()
@@ -178,8 +177,8 @@ public class CharacterBuilder
                 BelongsTo = physicsInfo.BelongsTo,
                 CollidesWith = physicsInfo.CollidesWith
             });
-            var RB = model.GetComponent<Rigidbody>();
-            manager.AddComponentObject(entity, RB);
+            if(model.TryGetComponent<Rigidbody>(out var rb))
+                manager.AddComponentObject(entity, rb);
         return this;
     }
 

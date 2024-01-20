@@ -55,7 +55,7 @@ namespace IAUS.ECS.Component
     }
     public struct MeleeAttackSubState : IComponentData {
         public int AttackTargetIndex;
-        public float3 AttackTargetLocation;
+        public float3 AttackTargetLocation { get; set; }
         public Entity TargetEntity{ get; set; }
         public bool TargetInRange;
         public int Index { get; private set; }
@@ -73,10 +73,12 @@ namespace IAUS.ECS.Component
     }
     public struct MagicAttackSubState : IComponentData
     {
+        public bool AttackNow;
         public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public float3 AttackTargetLocation;
         public bool TargetInRange;
+        public float AttackDelay;
         public int Index { get; private set; }
         public void SetIndex(int index)
         {
@@ -104,11 +106,13 @@ namespace IAUS.ECS.Component
     }
     public struct RangedAttackSubState : IComponentData
     {
+        public bool AttackNow;
         public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public float MaxEffectiveRange;
         public bool TargetInRange;
         public float3 AttackTargetLocation;
+        public float AttackDelay;
         public int Index { get; private set; }
         public void SetIndex(int index)
         {

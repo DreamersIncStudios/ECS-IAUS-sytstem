@@ -1,3 +1,4 @@
+/*
 using DreamersInc.InflunceMapSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,3 +56,4 @@ namespace DreamersInc.MovementSys
         }
     }
 }
+*/

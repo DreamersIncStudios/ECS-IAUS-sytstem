@@ -171,7 +171,7 @@ namespace IAUS.ECS.Component.Aspects
                 wait.IsValid? wait.ValueRO.Status: ActionStatus.Disabled, ScoreOfWaitState));
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
-                .First(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
+                .FirstOrDefault(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
             return high.TotalScore == 0.0f ? AIStates.None : high.StateName;
         }
 
@@ -194,12 +194,6 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.WanderQuadrant:
                     commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, Self);
                     break;
-                //case AIStates.ChaseMoveToTarget:
-                //    CommandBufferParallel.RemoveComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.GotoLeader:
-                //    CommandBufferParallel.RemoveComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
-                //    break;
                 case AIStates.Attack:
                     //TODO Implement Add and Remove Tag;
                     commandBufferParallel.RemoveComponent<MeleeAttackTag>(chunkIndex,Self);
@@ -209,18 +203,7 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-                //case AIStates.GatherResources:
-                //    CommandBufferParallel.RemoveComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.Heal_Magic:
-                //    CommandBufferParallel.RemoveComponent<HealSelfTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.CallBackUp:
-                //    CommandBufferParallel.RemoveComponent<SpawnTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.Terrorize:
-                //    CommandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, Entities[i]);
-                //    break;
+      
             }
             //add new action tag
             switch (highScoreState)
@@ -238,44 +221,18 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Wait:
                     commandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, Self);
                     break;
-                //case AIStates.ChaseMoveToTarget:
-                //    CommandBufferParallel.AddComponent<MoveToTargetActionTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.GotoLeader:
-                //    CommandBufferParallel.AddComponent<StayInRangeActionTag>(chunkIndex, Entities[i]);
-                //    break;
                 case AIStates.Attack:
                     commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Self);
                     break;
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-                //case AIStates.GatherResources:
-                //    CommandBufferParallel.AddComponent<GatherResourcesTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.Heal_Magic:
-                //    CommandBufferParallel.AddComponent<HealSelfTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.CallBackUp:
-                //    CommandBufferParallel.AddComponent<SpawnTag>(chunkIndex, Entities[i]);
-                //    break;
-                //case AIStates.Terrorize:
-                //    CommandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, Entities[i]);
-                //    break;
             }
             
             brain.ValueRW.CurrentState = highScoreState;
         }
     }
     
-   public partial struct IAUSUpdateJob: IJobEntity
-   {
-       public EntityCommandBuffer.ParallelWriter CommandBufferParallel;
-       
-       void Execute([ChunkIndexInQuery] int chunkIndex,  IAUSBlackboard blackboard)
-       {
-           blackboard.UpdateCurrentState(CommandBufferParallel, chunkIndex);
-       }
-   }
+
     
 }

@@ -21,7 +21,7 @@ public class SpawnForTesting : MonoBehaviour
                 positions.Add(pos);
         }
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
                 BestiaryDB.SpawnNPC(3, pos);
@@ -61,6 +61,21 @@ public class SpawnForTesting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void spawn()
+    {   
+        for (int i = 0; i < 100; i++)
+        {
+            if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
+                BestiaryDB.SpawnNPC(3, pos);
+            else
+            {
+                i--;
+            }
+
+        }
         
     }
 }

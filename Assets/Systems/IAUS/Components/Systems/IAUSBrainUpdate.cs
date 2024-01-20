@@ -49,6 +49,14 @@ namespace IAUS.ECS.Systems
 
         }
     }
- 
+    public partial struct IAUSUpdateJob: IJobEntity
+    {
+        public EntityCommandBuffer.ParallelWriter CommandBufferParallel;
+       
+        void Execute([ChunkIndexInQuery] int chunkIndex,  IAUSBlackboard blackboard)
+        {
+            blackboard.UpdateCurrentState(CommandBufferParallel, chunkIndex);
+        }
+    }
     
 }
