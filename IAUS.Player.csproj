@@ -69,7 +69,6 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Add States\AddMovementState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\ConsiderationScoringData.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\MagicAttackReactive.cs" />
-    <Compile Include="Assets\Systems\IAUS\Components\Components\States\WaitAspect.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainUpdate.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Flee\BaseRetreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\RangeAttackReactive.cs" />

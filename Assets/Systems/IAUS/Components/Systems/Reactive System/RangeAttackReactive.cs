@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
 using Unity.Burst;
@@ -54,7 +52,7 @@ namespace IAUS.ECS.Systems.Reactive
                 
             new AttackTargetEnemy()
             {
-                Seed = (uint)UnityEngine.Random.Range(1, 10000),
+                Seed = (uint)Random.Range(1, 10000),
                 DeltaTime = SystemAPI.Time.DeltaTime,
                     
                 ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()

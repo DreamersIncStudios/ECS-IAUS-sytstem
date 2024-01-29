@@ -1,10 +1,4 @@
-using System.Linq;
-using DreamersInc.ComboSystem;
-using IAUS.ECS.Consideration;
-using IAUS.ECS.StateBlobSystem;
-using Sirenix.Utilities;
 using Unity.Entities;
-using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -66,14 +60,14 @@ namespace IAUS.ECS.Component
         public float AttackRange { get; set; } //Todo Pull from character stats speed
         public AIStates Name => AIStates.AttackMelee;
         public float AttackDelay;
-       [SerializeField] public bool AttackNow => AttackDelay <= 0.0f;
+       public bool AttackNow => AttackDelay <= 0.0f;
         public float mod => 1.0f - (1.0f / 3.0f);
 
 
     }
     public struct MagicAttackSubState : IComponentData
     {
-        public bool AttackNow;
+        public bool AttackNow=> AttackDelay <= 0.0f;
         public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public float3 AttackTargetLocation;
@@ -106,7 +100,7 @@ namespace IAUS.ECS.Component
     }
     public struct RangedAttackSubState : IComponentData
     {
-        public bool AttackNow;
+        public bool AttackNow=> AttackDelay <= 0.0f;
         public Entity TargetEntity { get; set; }
         public int AttackTargetIndex;
         public float MaxEffectiveRange;
@@ -131,9 +125,13 @@ namespace IAUS.ECS.Component
         public int PositionIndex;
 
     }
-    public struct MagicAttackTag : IComponentData { }
-    public struct RangeAttackTag : IComponentData { }
-    public struct WeaponSkillAttackTag : IComponentData { }
+    public struct MagicAttackTag : IComponentData {       public int AttackIndex;
+        public int PositionIndex;}
+    public struct RangeAttackTag : IComponentData {   
+        public int AttackIndex;
+        public int PositionIndex; }
+    public struct WeaponSkillAttackTag : IComponentData {      public int AttackIndex;
+        public int PositionIndex; }
 
 
     public enum SubAttackStates { }

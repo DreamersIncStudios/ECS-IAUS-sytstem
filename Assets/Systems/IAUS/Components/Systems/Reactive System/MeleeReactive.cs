@@ -3,6 +3,7 @@ using Components.MovementSystem;
 using IAUS.ECS.Component;
 using AISenses.VisionSystems.Combat;
 using DreamersInc.CombatSystem;
+using DreamersInc.ComboSystem;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -102,6 +103,17 @@ namespace IAUS.ECS.Systems.Reactive {
                     
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
                 }.ScheduleParallel();
+                
+                Entities.WithoutBurst().ForEach(
+                    (Command handler,Animator anim, PlayerComboComponent comboList, ref MeleeAttackSubState meleeAttackersAdded, ref SelectAndAttack select ) =>
+                    {
+                       if(anim.IsInTransition(0))return;
+                       if (comboList.Combo.GetAttack(out var trigger))
+                       {
+                           handler.InputQueue.Enqueue(trigger);
+                       }
+
+                    }).Run();
 
             }
 
@@ -131,6 +143,7 @@ namespace IAUS.ECS.Systems.Reactive {
                     else if (state.AttackNow && move.CanMove)
                     {
                         state.AttackDelay += 10.5f;
+                        ECB.AddComponent<SelectAndAttack>(chunkIndex,entity);
                     }
                 }
             }
@@ -138,5 +151,9 @@ namespace IAUS.ECS.Systems.Reactive {
         }
 
 
+    }
+
+    public struct SelectAndAttack : IComponentData
+    {
     }
 }

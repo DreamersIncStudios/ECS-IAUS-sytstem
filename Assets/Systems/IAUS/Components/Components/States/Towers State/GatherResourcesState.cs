@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS.StateBlobSystem;
 using IAUS.ECS.Consideration;
-using Unity.Collections;
-using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Component
 {

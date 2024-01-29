@@ -105,6 +105,11 @@ namespace DreamersInc.ComboSystem
            List<ComboDefinition> comboDefinitions = GetComboDefinitions();
             // Launch Modal Window 
         }
+
+        public bool GetAttack(out AnimationTrigger trigger)
+        {
+            throw new NotImplementedException();
+        }
     }
    
     

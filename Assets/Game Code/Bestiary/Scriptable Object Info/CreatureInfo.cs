@@ -38,7 +38,7 @@ namespace DreamersInc.BestiarySystem
 
         [ShowIf("hasAttack")] public bool CapableOfMagic = false;
         [ShowIf("hasAttack")] public bool CapableOfRange = false;
-        private bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
+        public  bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)

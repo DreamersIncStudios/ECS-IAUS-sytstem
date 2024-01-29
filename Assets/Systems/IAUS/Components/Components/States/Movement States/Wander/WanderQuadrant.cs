@@ -20,7 +20,7 @@ namespace IAUS.ECS.Component
         public int Index { get; private set; }
         public bool Complete { get { return BufferZone > DistanceToPoint; } }
         public float TotalScore { get { return totalScore; } set { totalScore = value; } }
-        public ActionStatus Status { get { return status; } set { status = value; } }
+        public ActionStatus Status {get; set; }
         public float CoolDownTime { get { return coolDownTime; } }
         public bool InCooldown => Status == ActionStatus.CoolDown;
         public float ResetTime { get { return resetTime; } set { resetTime = value; } }
@@ -43,8 +43,7 @@ namespace IAUS.ECS.Component
         [SerializeField] public float BufferZone { get; set; }
 
         public float mod => 1.0f - (1.0f / 3.0f);
-
-        ActionStatus status;
+        
         float coolDownTime;
         float resetTime { get; set; }
         float totalScore { get; set; }

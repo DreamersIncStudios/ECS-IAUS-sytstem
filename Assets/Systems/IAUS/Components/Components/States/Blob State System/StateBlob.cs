@@ -2,6 +2,8 @@ using Unity.Collections;
 using Unity.Entities;
 using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
+using UnityEngine;
+
 namespace IAUS.ECS.StateBlobSystem
 {
     public struct StateAsset
@@ -63,6 +65,7 @@ namespace IAUS.ECS.StateBlobSystem
         {
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag) =>
             {
+                Debug.Log("run");
                 brain.State = reference;
                 
             }).Run();
@@ -99,14 +102,13 @@ namespace IAUS.ECS.StateBlobSystem
             }).Run();
 
             Entities.WithoutBurst().ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                w.stateRef = reference;
-                w.Index = w.stateRef.Value.GetConsiderationIndex(new Identity()
+               w.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
                 {
                     Difficulty = Difficulty.Normal,
                     AIStates = w.name,
                     FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
-                });
+                }));
             }).Run();
             Entities.WithoutBurst().ForEach((ref GatherResourcesState g, ref IAUSBrain brain, ref SetupBrainTag tag) => {
                 

@@ -1,13 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.Entities;
+﻿using Unity.Entities;
 using Global.Component;
-using DreamersInc.InflunceMapSystem;
 using System;
-using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
-using UnityEngine.Serialization;
 
 namespace IAUS.ECS.Component
 {

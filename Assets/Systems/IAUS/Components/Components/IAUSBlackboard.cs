@@ -86,7 +86,7 @@ namespace IAUS.ECS.Component.Aspects
             get
             {
                 if (!traverse.IsValid) return 0.0f;
-                if (patrol.ValueRO.Index == -1)
+                if (traverse.ValueRO.Index == -1)
                 {
                     throw new ArgumentOutOfRangeException(nameof(traverse),
                         $"Please check Creature list and Consideration Data to make sure {traverse.ValueRO.Name} state is implements");
@@ -146,7 +146,8 @@ namespace IAUS.ECS.Component.Aspects
                     throw new ArgumentOutOfRangeException(nameof(wait), $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.name} state is implements");
 
                 }
-                float TotalScore = wait.ValueRO.TimeLeft.Output(wait.ValueRO.TimePercent) * wait.ValueRO.HealthRatio.Output(statInfo.ValueRO.HealthRatio);
+                var asset = GetAsset(wait.ValueRO.Index);
+                float TotalScore = asset.Timer.Output(wait.ValueRO.TimePercent) * asset.Health.Output(statInfo.ValueRO.HealthRatio);
                 wait.ValueRW.TotalScore = Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.ValueRO.mod) * TotalScore);
                 TotalScore = wait.ValueRW.TotalScore; 
                 return TotalScore;

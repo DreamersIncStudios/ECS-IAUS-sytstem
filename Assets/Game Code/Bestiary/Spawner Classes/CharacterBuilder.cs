@@ -33,6 +33,8 @@ public class CharacterBuilder
     private int factionID;
     private uint classLevel;
     private string tag;
+    private ComboSO combo;
+
     public CharacterBuilder WithModel(GameObject go, Vector3 Position, string tagging)
     {
         return WithModel(go,Position,tagging,out _);
@@ -181,7 +183,18 @@ public class CharacterBuilder
                 manager.AddComponentObject(entity, rb);
         return this;
     }
+    public CharacterBuilder WithCombat(ComboSO combo)
+    {
+        this.combo = combo;
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        //manager.AddComponent<StoreWeapon>(entity);
 
+        var comboInfo = Object.Instantiate(combo);
+        manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
+        return this;
+    }
     public CharacterBuilder WithStats(CharacterClass stats)
     {
         if (entity == Entity.Null) return this;

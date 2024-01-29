@@ -7,34 +7,45 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-  
-
         public static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO, out Entity entity) {
             
             var info = GetCreature(ID);
-            if (info)
+            if (!info) throw new AssertionException(nameof(ID), $"ID {ID} not valid entry in Database");
+            if (info.hasAttack)
             {
                 CharacterBuilder.CreateCharacter(info.Name, out entity)
                     .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
                     .WithStats(info.stats)
                     .WithEntityPhysics(info.PhysicsInfo)
-                   // .WithInventorySystem(info.Inventory, info.Equipment)
+                    // .WithInventorySystem(info.Inventory, info.Equipment)
                     .WithAIControl()
                     .WithCharacterDetection()
                     .WithAnimation()
+                    .WithCombat(info.AttackComboSO)
                     .WithMovement(info.Move)
                     .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
-                    .WithAI(info.GetNPCLevel,info.AIStatesToAdd,info.CapableOfMelee,info.CapableOfMagic, info.CapableOfRange)
+                    .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
+                        info.CapableOfRange)
                     .Build();
                 return true;
             }
-            else
-            {
-                throw new AssertionException(nameof(ID),$"ID {ID} not valid entry in Database");
-                
-            }
 
-           
+            CharacterBuilder.CreateCharacter(info.Name, out entity)
+                .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
+                .WithStats(info.stats)
+                .WithEntityPhysics(info.PhysicsInfo)
+                // .WithInventorySystem(info.Inventory, info.Equipment)
+                .WithAIControl()
+                .WithCharacterDetection()
+                .WithAnimation()
+                .WithMovement(info.Move)
+                .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
+                    info.CapableOfRange)
+                .Build();
+            return true;
+
+
         }
         public static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO)
         {

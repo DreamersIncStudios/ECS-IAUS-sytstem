@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using AISenses.VisionSystems.Combat;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
@@ -49,50 +47,14 @@ namespace IAUS.ECS.Systems.Reactive
     [UpdateAfter(typeof(AttackTagReactor.AttackUpdateSystem))]
     partial class MagicAttackReactive : SystemBase
     {
-        private EntityQuery magicAttackersRemoved;
-        private EntityQuery magicAttackersAdded;
-
-        protected override void OnCreate()
-        {
-            magicAttackersAdded = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new[]
-                {
-                    ComponentType.ReadWrite(typeof(MagicAttackSubState)),
-                    ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(MeleeAttackTag)),
-                    ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform)),
-                    ComponentType.ReadOnly(typeof(AttackTarget))
-                },
-                Absent = new[]
-                {
-                    ComponentType.ReadOnly(
-                        typeof(AIReactiveSystemBase<MagicAttackTag, MagicAttackSubState, MagicTagReactor>.
-                            StateComponent))
-                }
-
-            });
-            magicAttackersRemoved = GetEntityQuery(new EntityQueryDesc()
-            {
-                All = new[]
-                {
-                    ComponentType.ReadWrite(typeof(MagicAttackSubState)),
-                    ComponentType.ReadWrite(typeof(AttackState)),
-                    ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform)),
-                    ComponentType.ReadOnly(
-                        typeof(AIReactiveSystemBase<MagicAttackTag, MagicAttackSubState, MagicTagReactor>.
-                            StateComponent))
-                },
-                Absent = new[] { ComponentType.ReadWrite(typeof(MagicAttackTag)) }
-
-            });
-        }
+       
         protected override void OnUpdate()
         {
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
                 
             new AttackTargetEnemy()
             {
-                Seed = (uint)UnityEngine.Random.Range(1, 10000),
+                Seed = (uint)Random.Range(1, 10000),
                 DeltaTime = SystemAPI.Time.DeltaTime,
                     
                 ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()

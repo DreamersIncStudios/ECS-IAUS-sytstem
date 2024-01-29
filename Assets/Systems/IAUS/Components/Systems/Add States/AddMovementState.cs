@@ -5,9 +5,6 @@ using Unity.Collections;
 using Unity.Transforms;
 using UnityEngine;
 using Unity.Burst.Intrinsics;
-using System.Runtime.InteropServices;
-using Utilities;
-using JetBrains.Annotations;
 
 namespace IAUS.ECS.Systems {
     [BurstCompile]
