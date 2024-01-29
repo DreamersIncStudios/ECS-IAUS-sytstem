@@ -104,14 +104,14 @@ namespace IAUS.ECS.Systems.Reactive {
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
                 }.ScheduleParallel();
                 
-                Entities.WithoutBurst().ForEach(
-                    (Command handler,Animator anim, PlayerComboComponent comboList, ref MeleeAttackSubState meleeAttackersAdded, ref SelectAndAttack select ) =>
+                Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                    (Entity entity,Command handler,Animator anim, PlayerComboComponent comboList, ref MeleeAttackSubState meleeAttackersAdded, ref SelectAndAttack select ) =>
                     {
                        if(anim.IsInTransition(0))return;
-                       if (comboList.Combo.GetAttack(out var trigger))
-                       {
-                           handler.InputQueue.Enqueue(trigger);
-                       }
+                     
+                           handler.InputQueue.Enqueue(comboList.Combo.GetAttack());
+                           EntityManager.RemoveComponent<SelectAndAttack>(entity);
+                       
 
                     }).Run();
 
