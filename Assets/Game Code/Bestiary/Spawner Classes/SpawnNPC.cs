@@ -21,7 +21,7 @@ namespace DreamersInc.BestiarySystem
                     .WithAIControl()
                     .WithCharacterDetection()
                     .WithAnimation()
-                    .WithCombat(info.AttackComboSO)
+                    .WithNPCAttack(info.AttackSequence)
                     .WithMovement(info.Move)
                     .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                     .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,

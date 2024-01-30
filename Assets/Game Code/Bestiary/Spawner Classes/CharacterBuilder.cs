@@ -83,6 +83,18 @@ public class CharacterBuilder
         return this;
     }
 
+    public CharacterBuilder WithNPCAttack(NPCAttackSequence sequence)
+    {
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        manager.AddComponentObject(entity, new NPCAttack()
+        {
+            AttackSequence = sequence
+        });
+        return this;  
+    }
+
     public CharacterBuilder WithPlayerControl()
     {
         if (entity == Entity.Null) return this;
@@ -90,10 +102,7 @@ public class CharacterBuilder
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponent<Player_Control>(entity);
         manager.AddComponent<AttackTarget>(entity);
-        manager.AddComponentObject(entity, new Command()
-        {
-
-        });
+        manager.AddComponentObject(entity, new Command());
 
         return this;
     }
@@ -223,6 +232,7 @@ public class CharacterBuilder
         
         return this;
     }
+    
     public CharacterBuilder WithInventorySystem(EquipmentSave Equipment)
     {
         if (entity == Entity.Null) return this;

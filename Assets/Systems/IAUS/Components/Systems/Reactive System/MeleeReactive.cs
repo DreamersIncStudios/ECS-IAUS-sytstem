@@ -105,14 +105,11 @@ namespace IAUS.ECS.Systems.Reactive {
                 }.ScheduleParallel();
                 
                 Entities.WithoutBurst().WithStructuralChanges().ForEach(
-                    (Entity entity,Command handler,Animator anim, PlayerComboComponent comboList, ref MeleeAttackSubState meleeAttackersAdded, ref SelectAndAttack select ) =>
+                    (Entity entity,Command handler,Animator anim, NPCAttack comboList, ref MeleeAttackSubState meleeAttackersAdded, ref SelectAndAttack select ) =>
                     {
                        if(anim.IsInTransition(0))return;
-                     
-                           handler.InputQueue.Enqueue(comboList.Combo.GetAttack());
+                           handler.InputQueue.Enqueue(comboList.AttackSequence.PickAttack());
                            EntityManager.RemoveComponent<SelectAndAttack>(entity);
-                       
-
                     }).Run();
 
             }

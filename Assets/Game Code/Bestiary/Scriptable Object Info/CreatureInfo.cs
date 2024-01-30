@@ -31,7 +31,7 @@ namespace DreamersInc.BestiarySystem
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
-        public ComboSO AttackComboSO;
+        public NPCAttackSequence AttackSequence;
 
         [Header("Attack Info")] [ShowIf("hasAttack")]
         public bool CapableOfMelee = false;
