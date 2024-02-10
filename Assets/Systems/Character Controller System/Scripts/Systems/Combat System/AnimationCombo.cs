@@ -39,9 +39,9 @@ namespace DreamersInc.ComboSystem
         ComboNames name;
         public ComboNames Name { get { return name; } set { name = value; } } // TODO Remove
         public uint TriggerAnimIndex { get { return triggerAnimIndex; } set { triggerAnimIndex = value; } }
-        public AttackType attackType;
+        public AttackType AttackType;
         public uint triggerAnimIndex;
-        public string TriggerString { get { return attackType.ToString() + TriggerAnimIndex; } }
+        public string TriggerString { get { return AttackType.ToString() + TriggerAnimIndex; } }
         public float TransitionDuration;
         public float TransitionOffset;
         public float EndofCurrentAnim;

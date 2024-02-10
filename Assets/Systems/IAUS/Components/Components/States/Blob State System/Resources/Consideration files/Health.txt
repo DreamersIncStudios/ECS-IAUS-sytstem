@@ -54,3 +54,7 @@ Normal,Beast,0,Attack,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Beast,1,Attack,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Beast,2,Attack,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
 Normal,Beast,3,Attack,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,0,ChaseMoveToTarget,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,1,ChaseMoveToTarget,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,2,ChaseMoveToTarget,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500
+Normal,Beast,3,ChaseMoveToTarget,TRUE,FALSE,Logistic,50.0000,-0.9500,0.9350,0.3500

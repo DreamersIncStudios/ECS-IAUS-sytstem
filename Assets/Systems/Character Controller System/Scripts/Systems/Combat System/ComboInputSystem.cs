@@ -49,8 +49,7 @@ namespace DreamersInc.ComboSystem
                 {
                     foreach (ComboSingle combotest in ComboList.Combo.ComboLists)
                     {
-                        foreach (AnimationCombo comboOption in combotest.AnimationList)
-                        {
+                        foreach (AnimationCombo comboOption in combotest.ComboList){
                             if (handler.StateInfo.IsName(comboOption.CurrentStateName.ToString()))
                             {
                                 handler.currentStateExitTime = comboOption.AnimationEndTime;
@@ -59,7 +58,7 @@ namespace DreamersInc.ComboSystem
                                     AnimationTrigger trigger = comboOption.Trigger;
                                     if (combotest.Unlocked && handler.QueueIsEmpty)
                                     {
-                                        switch (trigger.attackType)
+                                        switch (trigger.AttackType)
                                         {
                                             case AttackType.LightAttack:
                                                 if (PC.LightAttackb)
@@ -119,7 +118,7 @@ namespace DreamersInc.ComboSystem
                     AnimationTrigger temp = handler.InputQueue.Dequeue();
                     if (!anim.GetBool("Weapon In Hand"))
                     {
-                        switch (temp.attackType)
+                        switch (temp.AttackType)
                         {
                             case AttackType.LightAttack:
                                 anim.CrossFade("Equip_Light", temp.TransitionDuration, 0, temp.TransitionOffset, temp.EndofCurrentAnim);

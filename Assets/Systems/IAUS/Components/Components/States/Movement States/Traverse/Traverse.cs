@@ -1,8 +1,6 @@
 using UnityEngine;
 using Unity.Entities;
 using System;
-using IAUS.ECS.Consideration;
-using IAUS.ECS.StateBlobSystem;
 namespace IAUS.ECS.Component
 {
     [Serializable]

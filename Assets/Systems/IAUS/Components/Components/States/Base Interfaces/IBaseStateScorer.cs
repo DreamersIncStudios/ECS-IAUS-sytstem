@@ -8,6 +8,7 @@ namespace IAUS.ECS.Component {
         /// AI State score
         /// </summary>
         float TotalScore { get; }
+        public AIStates Name { get; }
         /// <summary>
         /// Current Operational statues of given AI State
         /// </summary>
@@ -26,6 +27,8 @@ namespace IAUS.ECS.Component {
         float ResetTime { get; set; }
         float mod { get; }
        // public int refIndex { get; set; }
+       public int Index { get; }
+       void SetIndex(int index);
 
     }
 

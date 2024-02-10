@@ -1,15 +1,12 @@
-using System;
+using System.Collections.Generic;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
-using AISenses.VisionSystems.Combat;
-using DreamersInc.CombatSystem;
+using DreamersInc.ComboSystem;
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.Assertions;
 using Utilities.ReactiveSystem;
 
 [assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, IAUS.ECS.Systems.Reactive.MeleeTagReactor>.StateComponent))]
@@ -52,65 +49,33 @@ namespace IAUS.ECS.Systems.Reactive {
         [UpdateAfter(typeof(AttackTagReactor.AttackUpdateSystem))]
         partial class MeleeReactiveSystem : SystemBase
         {
-            private EntityQuery meleeAttackersRemoved;
-
-            private EntityQuery meleeAttackersAdded;
-
-            protected override void OnCreate()
-            {
-                meleeAttackersAdded = GetEntityQuery(new EntityQueryDesc()
-                {
-                    All = new[]
-                    {
-                        ComponentType.ReadWrite(typeof(MeleeAttackSubState)),
-                        ComponentType.ReadWrite(typeof(AttackState)), ComponentType.ReadWrite(typeof(MeleeAttackTag)),
-                        ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform)),
-                        ComponentType.ReadOnly(typeof(AttackTarget))
-                    },
-                    Absent = new[]
-                    {
-                        ComponentType.ReadOnly(
-                            typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, MeleeTagReactor>.
-                                StateComponent))
-                    }
-
-                });
-                meleeAttackersRemoved = GetEntityQuery(new EntityQueryDesc()
-                {
-                    All = new[]
-                    {
-                        ComponentType.ReadWrite(typeof(MeleeAttackSubState)),
-                        ComponentType.ReadWrite(typeof(AttackState)),
-                        ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform)),
-                        ComponentType.ReadOnly(
-                            typeof(AIReactiveSystemBase<MeleeAttackTag, MeleeAttackSubState, MeleeTagReactor>.
-                                StateComponent))
-                    },
-                    Absent = new[] { ComponentType.ReadWrite(typeof(MeleeAttackTag)) }
-
-                });
-            }
-
+        
             protected override void OnUpdate()
             {
                 var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
                 
                 new AttackTargetEnemy()
                 {
-                    Seed = (uint)UnityEngine.Random.Range(1, 10000),
                     DeltaTime = SystemAPI.Time.DeltaTime,
-                    
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
                 }.ScheduleParallel();
+                
+                Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                    (Entity entity,Command handler,Animator anim, NPCAttack comboList,  in SelectAndAttack select,in MeleeAttackSubState meleeAttackersAdded) =>
+                    {
+                        handler.InputQueue ??= new Queue<AnimationTrigger>();
+                       if(anim.IsInTransition(0))return;
+                           handler.InputQueue.Enqueue(comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.Melee)[0]);
+                           EntityManager.RemoveComponent<SelectAndAttack>(entity);
+                    }).Run();
 
             }
 
 
-//[BurstCompile]
+[BurstCompile]
             private partial struct AttackTargetEnemy : IJobEntity
             {
                 public float DeltaTime;
-                public uint Seed;
                 public EntityCommandBuffer.ParallelWriter ECB;
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref Movement move,
                     ref MeleeAttackSubState state, ref MeleeAttackTag tag,
@@ -121,6 +86,7 @@ namespace IAUS.ECS.Systems.Reactive {
                     {
                         //TODO select a surround position
                         move.SetLocation(state.AttackTargetLocation);
+                        state.AttackDelay = 10;
                     }
 
                     if (move.DistanceRemaining < 4.0f && !state.AttackNow)
@@ -129,8 +95,8 @@ namespace IAUS.ECS.Systems.Reactive {
                     }
                     else if (state.AttackNow && move.CanMove)
                     {
-                        Debug.Log("We Attack AT DAWN");
                         state.AttackDelay += 10.5f;
+                        ECB.AddComponent<SelectAndAttack>(chunkIndex,entity);
                     }
                 }
             }
@@ -139,61 +105,12 @@ namespace IAUS.ECS.Systems.Reactive {
 
 
     }
-    
-    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
 
-    public partial struct MagicMeleeTagReactor : IComponentReactorTagsForAIStates<WeaponSkillAttackTag, AttackState>
+    public struct SelectAndAttack : IComponentData
     {
-        public void ComponentAdded(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref WeaponSkillAttackTag newComponent, ref AttackState AIStateCompoment, in WeaponSkillAttackTag oldComponent)
-        {
-
-        }
     }
-    public partial struct MagicTagReactor : IComponentReactorTagsForAIStates<MagicAttackTag, AttackState>
+    public class NPCAttack : IComponentData
     {
-        public void ComponentAdded(Entity entity, ref MagicAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in MagicAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref MagicAttackTag newComponent, ref AttackState AIStateCompoment, in MagicAttackTag oldComponent)
-        {
-
-        }
+        public NPCAttackSequence AttackSequence;
     }
-    [UpdateInGroup(typeof(IAUSUpdateStateGroup))]
-
-    public partial struct RangeTagReactor : IComponentReactorTagsForAIStates<RangeAttackTag, AttackState>
-    {
-        public void ComponentAdded(Entity entity, ref RangeAttackTag newComponent, ref AttackState AIStateCompoment)
-        {
-
-        }
-
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in RangeAttackTag oldComponent)
-        {
-
-        }
-
-        public void ComponentValueChanged(Entity entity, ref RangeAttackTag newComponent, ref AttackState AIStateCompoment, in RangeAttackTag oldComponent)
-        {
-
-        }
-    }
-
 }

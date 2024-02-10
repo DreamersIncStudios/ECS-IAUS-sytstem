@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using System;
-using IAUS.ECS.Consideration;
-using IAUS.ECS.StateBlobSystem;
-using Unity.Mathematics;
 namespace IAUS.ECS.Component
 {
     [Serializable]
@@ -46,7 +43,7 @@ namespace IAUS.ECS.Component
     public interface IMovementState: IBaseStateScorer {
 
         public uint NumberOfWayPoints { get; set; }
-        public AIStates Name { get; }
+ 
         public int WaypointIndex { get; set; }
         public Waypoint CurWaypoint { get; set; }
         public float DistanceToPoint { get; set; }

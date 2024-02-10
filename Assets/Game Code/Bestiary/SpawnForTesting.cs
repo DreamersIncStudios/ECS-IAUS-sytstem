@@ -7,6 +7,7 @@ using Utilities;
 
 public class SpawnForTesting : MonoBehaviour
 {
+    [SerializeField] private bool SpawnDummies;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class SpawnForTesting : MonoBehaviour
                 positions.Add(pos);
         }
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
                 BestiaryDB.SpawnNPC(3, pos);
@@ -31,12 +32,15 @@ public class SpawnForTesting : MonoBehaviour
 
         }
 
-        for (int i = 0; i < 25; i++)
+        if (SpawnDummies)
         {
-            if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
-                BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
-            else
-                i--;
+            for (int i = 0; i < 25; i++)
+            {
+                if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
+                    BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
+                else
+                    i--;
+            }
         }
         //for (int i = 0; i < 15; i++)
         //{
@@ -57,6 +61,21 @@ public class SpawnForTesting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void spawn()
+    {   
+        for (int i = 0; i < 100; i++)
+        {
+            if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
+                BestiaryDB.SpawnNPC(3, pos);
+            else
+            {
+                i--;
+            }
+
+        }
         
     }
 }

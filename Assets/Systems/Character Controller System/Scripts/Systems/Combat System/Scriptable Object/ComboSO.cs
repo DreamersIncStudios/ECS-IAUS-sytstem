@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 //using Core.SaveSystems;
 
@@ -10,20 +12,25 @@ namespace DreamersInc.ComboSystem
 {
     [CreateAssetMenu(fileName = "Combo", menuName = "ComboSystem/Combo Data")]
 
+    // ReSharper disable once InconsistentNaming
     public class ComboSO : ScriptableObject, ICombos
     {
 
-        [SerializeField] List<ComboSingle> _comboLists;
-        [HideInInspector] public List<ComboSingle> ComboLists { get { return _comboLists; } }
+        [FormerlySerializedAs("_comboLists")] [SerializeField]
+        List<ComboSingle> comboLists;
+
+        [HideInInspector] public List<ComboSingle> ComboLists => comboLists;
 
         public TextAsset ComboNamesText;
-        public int ComboListIndex; 
-        public void UnlockCombo(ComboNames Name)
+        public int ComboListIndex;
+
+        public void UnlockCombo(ComboNames name)
         {
             //TODO Implement Unlocking System
         }
 
-        public bool GetAnimationTrigger(AnimatorStateInfo State, ComboInfo info, out AnimationTrigger trigger, out float endtime)
+        public bool GetAnimationTrigger(AnimatorStateInfo state, ComboInfo info, out AnimationTrigger trigger,
+            out float endtime)
         {
             endtime = 0.0f;
             trigger = new AnimationTrigger();
@@ -47,74 +54,98 @@ namespace DreamersInc.ComboSystem
         }
 
         #region NPC Attack system
+
         public void OnValidate()
         {
             UpdateTotalProbability();
 
         }
+
         public void UpdateTotalProbability()
         {
-           
+
         }
-        public AnimationTrigger GetTrigger(AnimatorStateInfo state) {
-            foreach (ComboSingle combo in ComboLists) {
-                foreach (AnimationCombo test in combo.AnimationList) {
-                    if(state.IsName(test.Trigger.TriggerString))
+
+        public AnimationTrigger GetTrigger(AnimatorStateInfo state)
+        {
+            foreach (ComboSingle combo in ComboLists)
+            {
+                foreach (AnimationCombo test in combo.ComboList)
+                {
+                    if (state.IsName(test.Trigger.TriggerString))
                         return test.Trigger;
                 }
             }
 
             return new AnimationTrigger();
         }
+
         public VFX GetVFX(AnimatorStateInfo state)
         {
             return GetTrigger(state).AttackVFX;
         }
-        public int GetAnimationComboIndex(AnimatorStateInfo state) {
-           
-            throw new ArgumentOutOfRangeException("Animation not registered in Combo SO System");
+
+        public int GetAnimationComboIndex(AnimatorStateInfo state)
+        {
+
+            throw new ArgumentOutOfRangeException(nameof(state));
 
         }
+
         public int GetAnimationComboIndex(string state)
         {
-     
-            throw new ArgumentOutOfRangeException("Animation not registered in Combo SO System");
+
+            throw new ArgumentOutOfRangeException(nameof(state));
         }
- 
+
         #endregion
 
-   
 
-    public List<string> GetListOfComboNames() { 
-            List<string> list = new();
+
+        public List<string> GetListOfComboNames()
+        {
             var lines = ComboNamesText.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var parts =  lines[ComboListIndex].Split(';');
-            foreach (var part in parts) { 
-                list.Add(part);
-            }
-            return list;
+            var parts = lines[ComboListIndex].Split(';');
+            return parts.ToList();
         }
-        public List<ComboDefinition> GetComboDefinitions() {
-            List<ComboDefinition> temp = new ();
-           
-            
+
+        public List<ComboDefinition> GetComboDefinitions()
+        {
+            List<ComboDefinition> temp = new();
+
+
             return temp;
         }
+
         public void DisplayCombo()
         {
-           List<ComboDefinition> comboDefinitions = GetComboDefinitions();
+            List<ComboDefinition> comboDefinitions = GetComboDefinitions();
             // Launch Modal Window 
         }
+
+
+        public AnimationTrigger GetAttack
+        {
+            get
+            {
+                var options = new List<AnimationTrigger>();
+                foreach (var combo in ComboLists)
+                {
+                    if (combo.Unlocked)
+                        options.Add(combo.ComboList[0].Trigger);
+                }
+
+                var temp = new System.Random().Next(options.Count);
+                return options[temp];
+            }
+        }
     }
-   
-    
-    
-    
-    
+
+
     [System.Serializable]
     public struct ComboInfo
     {
-        public ComboNames name;
+        [FormerlySerializedAs("name")] public ComboNames Name;
         public bool Unlocked;
     }
     //[System.Serializable]
@@ -126,29 +157,20 @@ namespace DreamersInc.ComboSystem
     [System.Serializable]
     public class ComboDefinition
     {
-        public string name;
+        [FormerlySerializedAs("name")] public string Name;
         public ComboNames ComboEnumName;
         public bool Unlocked { get; set; }
-        [NonReorderable] public Queue<AttackType> test;
+        [NonReorderable] public Queue<AttackType> Test;
     }
     [System.Serializable]
     public class ComboSingle {
         [SerializeField] ComboNames name;
-        public ComboNames Name { get => name;
-            set => name = value;
-        } // Change To String ???????????
+        public ComboNames Name { get { return name; } set { name = value; } } // Change To String ???????????
         public bool Unlocked;
         
 
-        [FormerlySerializedAs("comboList")] [SerializeField]
-        private List<AnimationCombo> animationList;
-        [HideInInspector] public List<AnimationCombo> AnimationList => animationList;
+        [SerializeField] List<AnimationCombo> comboList;
+        [HideInInspector] public List<AnimationCombo> ComboList { get { return comboList; } }
     }
 
-    public struct AIComboInfo
-    {
-        public int Chance;
-        public ComboNames AttackName;
-        public AnimationTrigger Trigger;
-    }
 }

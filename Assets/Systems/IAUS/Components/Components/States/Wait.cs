@@ -8,17 +8,10 @@ namespace IAUS.ECS.Component {
     [Serializable]
     public struct Wait : IBaseStateScorer
     {
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
+        public int Index { get; private set; }
 
-        public AIStates name { get { return AIStates.Wait; } }
-        public ConsiderationScoringData TimeLeft { get { return  stateRef.Value.Array[Index].Timer; } }
-        public ConsiderationScoringData HealthRatio { get { return stateRef.Value.Array[Index].Health; } }
-        /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
-
+        public AIStates Name { get { return AIStates.Wait; } }
+   
        [SerializeField] public bool Complete => Timer <= 0.0f;
         /// <summary>
         /// How much time NPC has left to wait at location.
@@ -37,6 +30,10 @@ namespace IAUS.ECS.Component {
         [SerializeField] public float _coolDownTime;
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
     }
     [Serializable]
     public struct WaitBuilderData {

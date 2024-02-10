@@ -1,6 +1,5 @@
 using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.Component;
-using Stats.Entities;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Collections;

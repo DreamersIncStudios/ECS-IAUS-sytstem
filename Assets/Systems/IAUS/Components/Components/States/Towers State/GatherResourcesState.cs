@@ -1,22 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS.StateBlobSystem;
 using IAUS.ECS.Consideration;
-using Unity.Collections;
-using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Component
 {
     public struct GatherResourcesState : IBaseStateScorer
     {
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index { get; set; }
+        public BlobAssetReference<AIStateBlobAsset> stateRef;   
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
-        public AIStates name { get { return AIStates.GatherResources; } }
+        public AIStates Name { get { return AIStates.GatherResources; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 
@@ -38,40 +38,6 @@ namespace IAUS.ECS.Component
     }
 
     public struct GatherResourcesTag : IComponentData {  }
-    [Unity.Burst.BurstCompile]
-    public struct AddGatherResourcesState : IJobChunk
-    {
-        public EntityCommandBuffer.ParallelWriter entityCommandBuffer;
-        public ComponentTypeHandle<GatherResourcesState> GatherChunk;
-        public BufferTypeHandle<StateBuffer> StateBufferChunk;
-        public void Execute(in ArchetypeChunk chunk, int unfilteredChunkIndex, bool useEnabledMask, in v128 chunkEnabledMask)
-        {
-            NativeArray<GatherResourcesState> Gathers = chunk.GetNativeArray(ref GatherChunk);
-            BufferAccessor<StateBuffer> StateBufferAccesor = chunk.GetBufferAccessor(ref StateBufferChunk);
-            for (int i = 0; i < chunk.Count; i++)
-            {
-                GatherResourcesState c1 = Gathers[i];
-                DynamicBuffer<StateBuffer> stateBuffer = StateBufferAccesor[i];
-                bool add = true;
-                for (int index = 0; index < stateBuffer.Length; index++)
-                {
-                    if (stateBuffer[index].StateName == AIStates.GatherResources)
-                    {
-                        add = false;
-                        continue;
-                    }
 
-                }
-                c1.Status = ActionStatus.Idle;
-
-                if (add)
-                {
-                    stateBuffer.Add(new StateBuffer(AIStates.GatherResources));
-                }
-
-
-                Gathers[i] = c1;
-            }
-        }
-    }
+   
 }

@@ -33,6 +33,8 @@ public class CharacterBuilder
     private int factionID;
     private uint classLevel;
     private string tag;
+    private ComboSO combo;
+
     public CharacterBuilder WithModel(GameObject go, Vector3 Position, string tagging)
     {
         return WithModel(go,Position,tagging,out _);
@@ -51,7 +53,8 @@ public class CharacterBuilder
         if (entity == Entity.Null) return this;
         if (model == null) return this;
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        
+        var anim = model.GetComponent<Animator>();
+        manager.AddComponentObject(entity, anim);
         TransformGO transformLink = new()
         {
             transform = model.transform
@@ -81,6 +84,19 @@ public class CharacterBuilder
         return this;
     }
 
+
+    public CharacterBuilder WithNPCAttack(NPCAttackSequence sequence)
+    {
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        manager.AddComponentObject(entity, new NPCAttack()
+        {
+            AttackSequence = sequence
+        });
+        return this;  
+    }
+
     public CharacterBuilder WithPlayerControl()
     {
         if (entity == Entity.Null) return this;
@@ -88,12 +104,8 @@ public class CharacterBuilder
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponent<Player_Control>(entity);
         manager.AddComponent<AttackTarget>(entity);
-        manager.AddComponentObject(entity, new Command()
-        {
+        manager.AddComponentObject(entity, new Command());
 
-        });
-
-        return this;
         return this;
     }
 
@@ -178,11 +190,22 @@ public class CharacterBuilder
                 BelongsTo = physicsInfo.BelongsTo,
                 CollidesWith = physicsInfo.CollidesWith
             });
-            var RB = model.GetComponent<Rigidbody>();
-            manager.AddComponentObject(entity, RB);
+            if(model.TryGetComponent<Rigidbody>(out var rb))
+                manager.AddComponentObject(entity, rb);
         return this;
     }
+    public CharacterBuilder WithCombat(ComboSO combo)
+    {
+        this.combo = combo;
+        if (entity == Entity.Null) return this;
+        if (model == null) return this;
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        //manager.AddComponent<StoreWeapon>(entity);
 
+        var comboInfo = Object.Instantiate(combo);
+        manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
+        return this;
+    }
     public CharacterBuilder WithStats(CharacterClass stats)
     {
         if (entity == Entity.Null) return this;
@@ -211,6 +234,7 @@ public class CharacterBuilder
         
         return this;
     }
+    
     public CharacterBuilder WithInventorySystem(EquipmentSave Equipment)
     {
         if (entity == Entity.Null) return this;
@@ -335,6 +359,7 @@ public class CharacterBuilder
                         break;
                     case AIStates.Attack:
                         manager.AddComponent<AttackTarget>(entity);
+                        manager.AddComponent<PursueTarget>(entity);
                         manager.AddComponentObject(entity, new Command());
                         manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
@@ -362,8 +387,6 @@ public class CharacterBuilder
                         break;
                 }
             }
-            manager.AddBuffer<StateBuffer>(entity);
-
             manager.AddComponent<SetupBrainTag>(entity);
 
         return this;

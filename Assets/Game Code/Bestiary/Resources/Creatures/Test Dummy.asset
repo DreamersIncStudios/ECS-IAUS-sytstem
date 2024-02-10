@@ -119,7 +119,7 @@ MonoBehaviour:
     EquippedWeapons:
     - {fileID: 11400000, guid: 53a6d28ffc390cc4abd4e8470ccf340d, type: 2}
     EquippedArmors: []
-  AttackComboSO: {fileID: 0}
+  AttackSequence: {fileID: 11400000, guid: 7bd0cf86178d6c44187ca09a301b8312, type: 2}
   CapableOfMelee: 1
   CapableOfMagic: 0
   CapableOfRange: 0

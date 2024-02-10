@@ -13,7 +13,7 @@ namespace IAUS.ECS.Component
 {
     public struct StayInQuadrant : IBaseStateScorer
     {
-        public AIStates name { get { return AIStates.RetreatToQuadrant; } }
+        public AIStates Name { get { return AIStates.RetreatToQuadrant; } }
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; private set; }

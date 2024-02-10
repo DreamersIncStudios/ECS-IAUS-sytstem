@@ -10,13 +10,17 @@ namespace IAUS.ECS.Component
     public struct RepairState : IBaseStateScorer
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef { get; set; }
-        public int Index { get; set; }
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
       [SerializeField]  public ConsiderationScoringData EnergyMana => stateRef.Value.Array[Index].ManaAmmo;
         
-        public AIStates name { get { return AIStates.Heal_Magic; } }
+        public AIStates Name { get { return AIStates.Heal_Magic; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 

@@ -31,14 +31,14 @@ namespace DreamersInc.BestiarySystem
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
-        public ComboSO AttackComboSO;
+        public NPCAttackSequence AttackSequence;
 
         [Header("Attack Info")] [ShowIf("hasAttack")]
         public bool CapableOfMelee = false;
 
         [ShowIf("hasAttack")] public bool CapableOfMagic = false;
         [ShowIf("hasAttack")] public bool CapableOfRange = false;
-        private bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
+        public  bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)

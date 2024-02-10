@@ -1,3 +1,4 @@
+using System;
 using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
@@ -19,18 +20,22 @@ namespace IAUS.ECS.Component.Aspects
         readonly RefRO<LocalTransform> transform;
         readonly VisionAspect visionAspect;
         readonly InfluenceAspect influenceAspect;
-        readonly RefRW<AttackState> state;
-        [Optional]readonly RefRW<MeleeAttackSubState> melee;
+        [Optional] readonly RefRW<AttackState> state;
+        [Optional] readonly RefRW<MeleeAttackSubState> melee;
         [Optional] readonly RefRW<MagicAttackSubState> magic;
         [Optional] private readonly RefRW<WeaponSkillsAttackSubState> magicMelee;
         [Optional]readonly RefRW<RangedAttackSubState> Range;
         readonly RefRO<AIStat> statInfo;
-        private readonly RefRO<IAUSBrain> brain;
+        private readonly RefRW<IAUSBrain> brain;
 
 
         private StateAsset GetAsset(int index)
         {
-            return brain.ValueRO.State.Value.Array[index];
+            if (brain.ValueRO.State.IsCreated)
+                return brain.ValueRO.State.Value.Array[index];
+            else 
+                throw new ArgumentOutOfRangeException(nameof(brain.ValueRO.State),
+                    $"Blob asset not set up yet");
         }
 
         private float BaseScore => GetAsset(state.ValueRO.Index).Health.Output(statInfo.ValueRO.HealthRatio);
@@ -134,6 +139,6 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
-        public ActionStatus Status => state.ValueRO.Status;
+        public ActionStatus Status => state.IsValid ? state.ValueRO.Status : ActionStatus.Disabled;
     }
 }
