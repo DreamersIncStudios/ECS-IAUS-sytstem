@@ -47,7 +47,8 @@ namespace IAUS.ECS.Component
     public struct AttackActionTag : IComponentData {
         public int SubStateNumber;
     }
-    public struct MeleeAttackSubState : IComponentData {
+    public struct MeleeAttackSubState : IComponentData
+    {
         public int AttackTargetIndex;
         public float3 AttackTargetLocation { get; set; }
         public Entity TargetEntity{ get; set; }

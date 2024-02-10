@@ -7,12 +7,16 @@ namespace IAUS.ECS.Component
 {
     public struct GatherResourcesState : IBaseStateScorer
     {
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index { get; set; }
+        public BlobAssetReference<AIStateBlobAsset> stateRef;   
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
 
-        public AIStates name { get { return AIStates.GatherResources; } }
+        public AIStates Name { get { return AIStates.GatherResources; } }
 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
 

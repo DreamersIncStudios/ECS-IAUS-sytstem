@@ -13,8 +13,12 @@ namespace IAUS.ECS.Component
     public struct FindAndMoveToCover : BaseRetreat
     {
         public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
-        public AIStates name { get { return AIStates.RetreatToLocation; } }
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
+        public AIStates Name { get { return AIStates.RetreatToLocation; } }
         public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
         public ConsiderationScoringData ProximityInArea => stateRef.Value.Array[Index].FriendlyInfluence;
         public ConsiderationScoringData ThreatInArea => stateRef.Value.Array[Index].EnemyInfluence;

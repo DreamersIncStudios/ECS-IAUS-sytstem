@@ -8,9 +8,9 @@ namespace IAUS.ECS.Component {
     [Serializable]
     public struct Wait : IBaseStateScorer
     {
-        public int Index;
+        public int Index { get; private set; }
 
-        public AIStates name { get { return AIStates.Wait; } }
+        public AIStates Name { get { return AIStates.Wait; } }
    
        [SerializeField] public bool Complete => Timer <= 0.0f;
         /// <summary>

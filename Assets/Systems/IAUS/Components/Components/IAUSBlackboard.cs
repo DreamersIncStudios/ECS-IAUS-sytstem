@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AISenses.VisionSystems;
+using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.StateBlobSystem;
 using Stats.Entities;
 using Unity.Entities;
@@ -21,10 +22,12 @@ namespace IAUS.ECS.Component.Aspects
         private readonly RefRW<IAUSBrain> brain; 
         private readonly VisionAspect vision;
         private readonly AttackAspect attack;
+        private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
         [Optional] private readonly RefRW<Wait> wait;
+        [Optional] private readonly RefRW<PursueTarget> pursueTarget;
         public readonly Entity Self;
         
         private StateAsset GetAsset(int index)
@@ -143,7 +146,7 @@ namespace IAUS.ECS.Component.Aspects
                 if (!wait.IsValid) return 0.0f;
                 if(wait.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wait), $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.name} state is implements");
+                    throw new ArgumentOutOfRangeException(nameof(wait), $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
 
                 }
                 var asset = GetAsset(wait.ValueRO.Index);
@@ -154,8 +157,31 @@ namespace IAUS.ECS.Component.Aspects
             } 
             
         }
+        private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
+        float ScoreOfPursue
+        {
+            get
+            {
+                if (!pursueTarget.IsValid) return 0.0f;
+                if(pursueTarget.ValueRO.Index == -1)
+                    throw new ArgumentOutOfRangeException(nameof(wait), $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
+                var asset = GetAsset(pursueTarget.ValueRO.Index);
+                
+                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
+                    ? vision.GetClosestEnemy().DistanceTo
+                    : 50;
+                var range = Mathf.Clamp01(distToEnemy /(2*TravelInFiveSec));
+            var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
 
-       public AIStates GetHighState ()
+           var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) * asset.DistanceToTargetEnemy.Output(range)*asset.EnemyInfluence.Output(influenceDist);
+           totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * pursueTarget.ValueRO.mod) * totalScore);
+                return totalScore;
+
+            }
+
+        }
+
+        public AIStates GetHighState ()
         {
             var stateInfo = new List<StateInfo>();
             stateInfo.Add(new StateInfo(AIStates.Attack, attack.Status, attack.Score));
@@ -171,6 +197,8 @@ namespace IAUS.ECS.Component.Aspects
             stateInfo.Add(new StateInfo(AIStates.Wait,
                 wait.IsValid? wait.ValueRO.Status: ActionStatus.Disabled, ScoreOfWaitState));
 
+            stateInfo.Add(new StateInfo(AIStates.ChaseMoveToTarget,
+                pursueTarget.IsValid? wait.ValueRO.Status: ActionStatus.Disabled, ScoreOfPursue));
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
                 .FirstOrDefault(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
             return high.TotalScore == 0.0f ? AIStates.None : high.StateName;
@@ -204,7 +232,9 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-      
+                case AIStates.ChaseMoveToTarget:
+                    commandBufferParallel.RemoveComponent<ChaseTargetTag>(chunkIndex, Self);
+                    break;
             }
             //add new action tag
             switch (highScoreState)
@@ -228,6 +258,10 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
+                case AIStates.ChaseMoveToTarget:
+                    commandBufferParallel.AddComponent<ChaseTargetTag>(chunkIndex, Self);
+                    break;
+
             }
             
             brain.ValueRW.CurrentState = highScoreState;

@@ -14,8 +14,12 @@ namespace IAUS.ECS.Component
     {
 
         public BlobAssetReference<AIStateBlobAsset> stateRef;
-        public int Index;
-        public AIStates name { get { return AIStates.Terrorize; } }
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
+        public AIStates Name { get { return AIStates.Terrorize; } }
         public TerrorizeSubstates terrorizeSubstate;
         public float2 InfluenceValueAtPos;
         public float DistanceToClosestTarget { get; set; }

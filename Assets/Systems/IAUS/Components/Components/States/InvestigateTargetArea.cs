@@ -8,8 +8,13 @@ namespace IAUS.ECS.Component
     [Serializable]
     public struct InvestigateTargetArea : IBaseStateScorer
     {
-        public int refIndex { get; set; }
+        public int Index { get; private set; }
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
 
+        public AIStates Name { get; }
         public ConsiderationScoringData HealthRatio;
         public ConsiderationScoringData InfluenceInArea;
         public ConsiderationScoringData DistanceToSafe;

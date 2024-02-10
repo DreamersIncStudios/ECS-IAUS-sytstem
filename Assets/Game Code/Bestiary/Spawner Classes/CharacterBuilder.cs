@@ -53,7 +53,8 @@ public class CharacterBuilder
         if (entity == Entity.Null) return this;
         if (model == null) return this;
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        
+        var anim = model.GetComponent<Animator>();
+        manager.AddComponentObject(entity, anim);
         TransformGO transformLink = new()
         {
             transform = model.transform
@@ -82,6 +83,7 @@ public class CharacterBuilder
         manager.AddComponentData(entity, new AIStat() { Speed = 10 });
         return this;
     }
+
 
     public CharacterBuilder WithNPCAttack(NPCAttackSequence sequence)
     {
@@ -357,6 +359,7 @@ public class CharacterBuilder
                         break;
                     case AIStates.Attack:
                         manager.AddComponent<AttackTarget>(entity);
+                        manager.AddComponent<PursueTarget>(entity);
                         manager.AddComponentObject(entity, new Command());
                         manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
