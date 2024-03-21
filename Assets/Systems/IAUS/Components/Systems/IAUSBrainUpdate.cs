@@ -1,16 +1,10 @@
-using IAUS.ECS.Component;
 using IAUS.ECS.Component.Aspects;
 using IAUS.ECS.StateBlobSystem;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
-using UnityEngine;
 
 namespace IAUS.ECS.Systems
 {
-
-
     [UpdateAfter(typeof(SetupAIStateBlob))]
     public partial class IAUSUpdateGroup : ComponentSystemGroup
     {
@@ -19,13 +13,11 @@ namespace IAUS.ECS.Systems
             RateManager = new RateUtils.VariableRateManager(250, true);
 
         }
-
     }
     public partial class IAUSUpdateStateGroup : ComponentSystemGroup
     {
  
     }
-
 
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
     public partial struct IAUSBrainUpdate : ISystem

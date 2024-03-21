@@ -92,15 +92,12 @@ namespace AISenses
     }
 
     public struct SortScanPositionByDistance : IComparer<ScanPositionBuffer>
+{
+    public int Compare(ScanPositionBuffer x, ScanPositionBuffer y)
     {
-        public int Compare(ScanPositionBuffer x, ScanPositionBuffer y)
-        {
-            if (x.dist > y.dist)
-                return 1;
-            else
-                return -1;
-        }
+        return x.dist.CompareTo(y.dist);
     }
+}
 
     public struct HitDistanceComparer : IComparer<ScanPositionBuffer>
     {

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6140b41ae9f8e42871e14eaeb82f9f, type: 3}
+  m_Name: Basic attack
+  m_EditorClassIdentifier: 
+  AttackSequences:
+  - rid: 3392731372142985216
+  - rid: 3392731372142985217
+  TotalProbabilityWeightMelee: 53.1
+  TotalProbabilityWeightMagic: 47.1
+  TotalProbabilityWeightProjectile: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 3392731372142985216
+      type: {class: MagicAttackSequence, ns: DreamersInc.ComboSystem, asm: CharacterControllerSystem}
+      data:
+        Attacks: []
+        probabilityWeight: 47.1
+        probabilityPercent: 100
+    - rid: 3392731372142985217
+      type: {class: MeleeAttackSequence, ns: DreamersInc.ComboSystem, asm: CharacterControllerSystem}
+      data:
+        Attacks: []
+        probabilityWeight: 53.1
+        probabilityPercent: 100
