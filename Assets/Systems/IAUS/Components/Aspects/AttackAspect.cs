@@ -19,8 +19,8 @@ namespace IAUS.ECS.Component.Aspects
     {
         readonly RefRO<LocalTransform> transform;
         readonly VisionAspect visionAspect;
-        readonly InfluenceAspect influenceAspect;
-        [Optional] readonly RefRW<AttackState> state;
+        readonly InfluenceAspect influenceAspect;  
+        readonly RefRW<AttackState> state;
         [Optional] readonly RefRW<MeleeAttackSubState> melee;
         [Optional] readonly RefRW<MagicAttackSubState> magic;
         [Optional] private readonly RefRW<WeaponSkillsAttackSubState> magicMelee;
@@ -66,7 +66,7 @@ namespace IAUS.ECS.Component.Aspects
 
         private float MagicMeleeScore { get
             {
-                if (!magic.IsValid || !melee.IsValid) return 0.0f;
+                if (!magic.IsValid ) return 0.0f;
                     return 1;
          
             } }
@@ -91,8 +91,6 @@ namespace IAUS.ECS.Component.Aspects
 
                 if (visionAspect.TargetInRange(out _, out var dist))
                 {
-
-
                     var range = Mathf.Clamp01(dist / Range.ValueRO.MaxEffectiveRange);
                     var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
                     var totalScore = asset.DistanceToTargetEnemy.Output(range) *
