@@ -27,28 +27,28 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public struct WaitTagReactor : IComponentReactorTagsForAIStates<WaitActionTag, Wait>
     {
-        public void ComponentAdded(Entity entity, ref WaitActionTag newComponent, ref Wait AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WaitActionTag newComponent, ref Wait aiStateComponent)
         {
-            AIStateCompoment.Status = ActionStatus.Running;
+            aiStateComponent.Status = ActionStatus.Running;
         }
 
-        public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in WaitActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref Wait aiStateComponent, in WaitActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete)
+            if (aiStateComponent.Complete)
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
             }
             else
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime * 2;
 
             }
-            AIStateCompoment.Timer = 0.0f;
+            aiStateComponent.Timer = 0.0f;
         }
 
-        public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref Wait AIStateCompoment, in WaitActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WaitActionTag newComponent, ref Wait aiStateComponent, in WaitActionTag oldComponent)
         {
             Debug.Log("Change");
         }
@@ -65,17 +65,17 @@ namespace IAUS.ECS.Systems.Reactive
 
     public struct PatrolWaitTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Wait>
     {
-        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Wait aiStateComponent)
         {
           
         }
 
-        public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref Wait aiStateComponent, in PatrolActionTag oldComponent)
         {
-            AIStateCompoment.StartTime=AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
+            aiStateComponent.StartTime=aiStateComponent.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
         }
 
-        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait AIStateCompoment, in PatrolActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Wait aiStateComponent, in PatrolActionTag oldComponent)
         {
         }
         public partial class WaitReactiveSystem2 : AIReactiveSystemBase<PatrolActionTag, Wait, PatrolWaitTagReactor>
@@ -91,17 +91,17 @@ namespace IAUS.ECS.Systems.Reactive
 
     public struct WanderWaitTagReactor : IComponentReactorTagsForAIStates<WanderActionTag, Wait>
     {
-        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref Wait AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref Wait aiStateComponent)
         {
 
         }
 
-        public void ComponentRemoved(Entity entity, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref Wait aiStateComponent, in WanderActionTag oldComponent)
         {
-            AIStateCompoment.StartTime = AIStateCompoment.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
+            aiStateComponent.StartTime = aiStateComponent.Timer = 15.5f; // TODO figure out what oldComponent.WaitTime = 0
         }
 
-        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref Wait AIStateCompoment, in WanderActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref Wait aiStateComponent, in WanderActionTag oldComponent)
         {
         }
         public partial class WaitReactiveSystem2 : AIReactiveSystemBase<WanderActionTag, Wait, WanderWaitTagReactor>

@@ -4,7 +4,9 @@ using System.Linq;
 using AISenses;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Aspects;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
@@ -23,21 +25,21 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public partial struct PursueReactor : IComponentReactorTagsForAIStates<ChaseTargetTag, PursueTarget>
     {
-        public void ComponentAdded(Entity entity, ref ChaseTargetTag newComponent, ref PursueTarget AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref ChaseTargetTag newComponent, ref PursueTarget aiStateComponent)
         {        
-            AIStateCompoment.Status = ActionStatus.Running;
+            aiStateComponent.Status = ActionStatus.Running;
         }
 
-        public void ComponentRemoved(Entity entity, ref PursueTarget AIStateCompoment, in ChaseTargetTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref PursueTarget aiStateComponent, in ChaseTargetTag oldComponent)
         {
             
-            if(AIStateCompoment.Status != ActionStatus.Success)
-                AIStateCompoment.TargetEntity = Entity.Null;
-            AIStateCompoment.Status = ActionStatus.CoolDown;
-            AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+            if(aiStateComponent.Status != ActionStatus.Success)
+                aiStateComponent.TargetEntity = Entity.Null;
+            aiStateComponent.Status = ActionStatus.CoolDown;
+            aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
         }
 
-        public void ComponentValueChanged(Entity entity, ref ChaseTargetTag newComponent, ref PursueTarget AIStateCompoment,
+        public void ComponentValueChanged(Entity entity, ref ChaseTargetTag newComponent, ref PursueTarget aiStateComponent,
             in ChaseTargetTag oldComponent)
         {
             Debug.Log("Change");
@@ -89,12 +91,12 @@ namespace IAUS.ECS.Systems.Reactive
         protected override void OnUpdate()
         {
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-
             new ChaseTarget()
             {
                 ecb = ecb.CreateCommandBuffer(World.DefaultGameObjectInjectionWorld.Unmanaged)
             }.Schedule();
         }
+        
 
         partial struct ChaseTarget: IJobEntity
         {

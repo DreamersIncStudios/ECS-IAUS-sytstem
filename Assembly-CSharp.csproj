@@ -72,7 +72,6 @@
     <Compile Include="Assets\Game Code\Bestiary\Spawner Classes\SpawnPlayer.cs" />
     <Compile Include="Assets\Game Code\Bestiary\Scriptable Object Info\CreatureInfo.cs" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ProfilerModules\memory-profiler-window.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\null-string-field.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-content_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Hierarchy\hierarchy-item.uss" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\ReferenceUnlit.shader" />
@@ -88,28 +87,23 @@
     <None Include="Library\PackageCache\com.unity.modules.screencapture\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.cloth\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Controls\TabView\tab-view_light.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\install-quick-search-popup.uxml" />
     <None Include="Assets\Models\fbx\Readme.txt" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\NormalPreview.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Library\PackageCache\com.unity.test-framework.performance\package.json" />
-    <None Include="Library\PackageCache\com.unity.properties\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequesttexture\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\search-and-goto-buttons_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\common_light.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\install-quick-search-popup.uss" />
     <None Include="Library\PackageCache\com.unity.modules.ai\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\pagination-element.uxml" />
     <None Include="Library\PackageCache\com.unity.entities.graphics\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\key-value-pair.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details-entity_light.uss" />
     <None Include="Library\PackageCache\com.unity.progrids\Font\SIL Open Font License.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\PieChart.uss" />
     <None Include="Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\README.txt" />
     <None Include="Library\PackageCache\com.unity.ugui\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-component_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\autocomplete.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\nullable-foldout.uss" />
     <None Include="Library\PackageCache\com.unity.cinemachine\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\common_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\key-value-pair.uxml" />
@@ -125,7 +119,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Preferences\preferences-value.uxml" />
     <None Include="Library\PackageCache\com.unity.modules.assetbundle\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Components\component-type-view.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\lazy-load-reference.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\system-dependency-view.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Preferences\preferences-value.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -135,7 +128,6 @@
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\LineBillboard.shader" />
     <None Include="Library\PackageCache\com.unity.modules.imgui\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Spinner\spinner_light.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\build-configuration-dependency.uxml" />
     <None Include="Library\PackageCache\com.unity.sysroot.linux-x86_64\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-dropdown_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\SystemSchedule\system-schedule-item.uss" />
@@ -144,8 +136,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Journaling\entities-journaling-details-component.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ActiveBuildConfiguration\active-build-config-popup.uxml" />
     <None Include="Library\PackageCache\com.unity.test-framework.performance\ValidationExceptions.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration-dependency.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration-dependency_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details-component_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\search-and-goto-buttons.uss" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\VertexPicker.shader" />
@@ -163,22 +153,19 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\lazy-load-reference.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details_dark.uss" />
     <None Include="Library\PackageCache\com.unity.toolchain.win-x86_64-linux-x86_64\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\add-collection-item.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-right-pane_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Hierarchy\hierarchy-loading.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\StyleSheets\Extensions\common.uss" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationConfig.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Library\PackageCache\com.unity.entities\ValidationExceptions.json" />
     <None Include="Assets\Models\Jammo-Character\Textures\mixbot1.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\list-element-default.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\query-view.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\list-element.uss" />
     <None Include="Library\PackageCache\com.unity.modules.terrainphysics\package.json" />
     <None Include="Library\PackageCache\com.unity.mathematics\package.json" />
     <None Include="Library\PackageCache\com.unity.scriptablebuildpipeline\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration-dependency_light.uss" />
     <None Include="Library\PackageCache\com.unity.burst\ValidationExceptions.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\common_light.uss" />
     <None Include="Library\PackageCache\com.unity.sysroot\package.json" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\ScrollHighlight.shader" />
     <None Include="Library\PackageCache\com.unity.memoryprofiler\package.json" />
@@ -189,14 +176,12 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Hierarchy\hierarchy-prefab-stage.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Content\component-attribute.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\foldout-without-action-button.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\common.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-configuration.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\null-string-field.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Components\components-window_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\entity-inspector-relationships-tab.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details-entity_dark.uss" />
     <None Include="Library\PackageCache\com.unity.editorcoroutines\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\pagination-element.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ActiveBuildConfiguration\search-field.uxml" />
     <None Include="Library\PackageCache\com.unity.progrids\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-configuration-dependency_dark.uss" />
@@ -224,7 +209,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\classic-build-profile.uxml" />
     <None Include="Library\PackageCache\com.unity.modules.imageconversion\package.json" />
     <None Include="Library\PackageCache\com.unity.rendering.light-transport\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\search-element.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\autocomplete_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Common\foldout-with-action-button.uxml" />
     <None Include="Library\PackageCache\com.unity.shadergraph\package.json" />
@@ -233,12 +217,10 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Content\section.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Common\entity-view.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\add-collection-item.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\common_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Inspector\entity-field.uxml" />
     <None Include="Library\PackageCache\com.unity.modules.unityanalytics\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\build-configuration-dependency.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\pagination-element.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\add-collection-item.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-dropdown.uss" />
     <None Include="Library\PackageCache\com.kyrylokuzyk.primetween\package.json" />
     <None Include="Library\PackageCache\com.unity.ide.rider\package.json" />
@@ -246,14 +228,13 @@
     <None Include="Library\PackageCache\com.unity.searcher\package.json" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\EdgePicker.shader" />
     <None Include="Library\PackageCache\com.unity.modules.video\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-popup_light.uss" />
     <None Include="Library\PackageCache\com.unity.shadergraph\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.test-framework\package.json" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\VertexShader.shader" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Content\entity-query-header.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\set-element-default.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Controls\TabView\tab-view.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\circular-reference.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Inspector\tag-component-element.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-popup.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\list-element.uss" />
@@ -266,11 +247,8 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\classic-build-profile_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Controls\foldout-field_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\structural-changes-profiler-window_dark.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\search-element-filter-popup.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Inspector\entity-header.uxml" />
     <None Include="Library\PackageCache\com.unity.modules.particlesystem\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\classic-build-profile_dark.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\build-configuration.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\null-string-field.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-window_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Journaling\entities-journaling-details.uxml" />
@@ -283,7 +261,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\entity-field.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Upgrade\AssetIdRemap-4_0_0.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Components\components-window.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\entity-inspector-aspects-tab_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details_light.uss" />
@@ -292,9 +269,7 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\type-inspector.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Content\header.uss" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationExceptions.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\two-pane-split-view.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ProfilerModules\memory-profiler-tree-view-item.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\complicated-type-test.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-window_light.uss" />
     <None Include="Library\PackageCache\com.unity.modules.wind\package.json" />
@@ -305,7 +280,6 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Library\PackageCache\com.unity.modules.umbra\package.json" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\SmoothingPreview.shader" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration_light.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Library\PackageCache\com.unity.cinemachine\license.txt" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-tree-view-item.uss" />
@@ -313,7 +287,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-left-pane_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ActiveBuildConfiguration\active-build-config-window-item.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Search\search-element-filter-popup.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-component.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\variables_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Journaling\entities-journaling-details-entity.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
@@ -330,7 +303,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\nullable-foldout.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Content\component.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\search-element-filter-popup.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\set-element.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-popup_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-configuration_dark.uss" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\ProBuilderCG.cginc" />
@@ -351,11 +323,8 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\set-element-default.uss" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\entity-header.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\null-string-field.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\key-value-pair.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\variables.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ActiveBuildConfiguration\active-build-config-popup-item.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\list-element-default.uss" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequestaudio\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-popup-item.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\entities-journaling-details-component_dark.uss" />
@@ -366,14 +335,12 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\circular-reference.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-window-item_dark.uss" />
     <None Include="Library\PackageCache\com.unity.modules.hierarchycore\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-component_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\dots-editor-common_light.uss" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_SDF_SSD.cginc" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-component_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\key-value-pair.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\component-header.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Controls\TabView\tab-view_dark.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\entity-view.uss" />
     <None Include="Library\PackageCache\com.unity.ai.navigation\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Hierarchy\hierarchy.uss" />
@@ -386,27 +353,22 @@
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\PointBillboard.shader" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Inspector\entity-inspector-components-tab.uxml" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
-    <None Include="Library\PackageCache\com.unity.platforms\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ProfilerModules\structural-changes-profiler-window.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ProfilerModules\memory-profiler-component.uxml" />
-    <None Include="Library\PackageCache\com.unity.entities\ValidationExceptions.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Library\PackageCache\com.unity.modules.director\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\dots-editor-common_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Journaling\search-and-goto-buttons.uxml" />
-    <None Include="Library\PackageCache\com.unity.ide.vscode\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-dropdown_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\ActiveBuildConfiguration\active-build-config-window.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\structural-changes-profiler-tree-view-item.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Search\search-element.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\circular-reference.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Content\entity-query.uss" />
     <None Include="Library\PackageCache\com.unity.modules.terrain\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Hierarchy\hierarchy-toolbar.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-right-pane_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Search\search-element-filter-popup.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ProfilerModules\memory-profiler-component.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-component_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\variables_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\active-build-config-window.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\search-field_light.uss" />
@@ -415,10 +377,8 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Hierarchy\hierarchy-prefab-stage.uxml" />
     <None Include="Library\PackageCache\com.unity.modules.androidjni\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\entity-inspector-aspects-tab.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\build-component.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Spinner\spinner_dark.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\complicated-type-test.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Components\components-window.uss" />
     <None Include="Library\PackageCache\com.unity.ugui\PackageConversionData_Assets.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\StyleSheets\Extensions\dark.uss" />
@@ -429,23 +389,19 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\SystemSchedule\system-schedule-toolbar.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\pagination-element.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\lazy-load-reference.uxml" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\classic-build-profile.uss" />
     <None Include="Library\PackageCache\com.unity.mathematics\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-component_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\SystemSchedule\system-schedule.uss" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Journaling\search-and-goto-buttons_light.uss" />
     <None Include="Library\PackageCache\com.unity.modules.animation\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\build-configuration_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\classic-build-profile_dark.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\DebugWindows\system-debug-window.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-configuration-dependency.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Spinner\spinner.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\type-inspector.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uss\build-configuration_light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\StyleSheets\Extensions\light.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\SystemSchedule\system-schedule-toolbar.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uss\classic-build-profile_light.uss" />
     <None Include="Library\PackageCache\com.unity.collections\ValidationExceptions.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Library\PackageCache\com.unity.burst\Unity.Burst.Unsafe.xml" />
@@ -460,7 +416,6 @@
     <None Include="Library\PackageCache\com.unity.modules.uielements\package.json" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\ActiveBuildConfiguration\search-field.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Inspector\inspector.uss" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\lazy-load-reference.uxml" />
     <None Include="Library\PackageCache\com.unity.probuilder\Content\Shader\FaceHighlight.shader" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\Unity.Entities.UI\uxml\build-component.uxml" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
@@ -475,8 +430,6 @@
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uxml\Common\component-view.uxml" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\DebugWindows\debug-window.uss" />
     <None Include="Library\PackageCache\com.unity.entities\Editor Default Resources\uss\Common\system-list-view.uss" />
-    <None Include="Library\PackageCache\com.unity.ide.vscode\package.json" />
-    <None Include="Library\PackageCache\com.unity.platforms\Editor Default Resources\uxml\classic-build-profile.uxml" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.0b12\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -1253,10 +1206,6 @@
       <Project>{e36196e4-a1d4-6df9-8179-5fa012d803a5}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Custom.Editor.csproj">
-      <Project>{d78a417f-7e26-2f4b-db6e-4d1b0346043c}</Project>
-      <Name>Unity.Physics.Custom.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="PlayerCharacterSystem.csproj">
       <Project>{f14d4434-3e2e-f2fe-cfbb-3a9fac041f45}</Project>
       <Name>PlayerCharacterSystem</Name>
@@ -1268,6 +1217,10 @@
     <ProjectReference Include="PPv2URPConverters.csproj">
       <Project>{a3d57c00-9fb1-bda7-08b8-f73c408c11c9}</Project>
       <Name>PPv2URPConverters</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Custom.Editor.csproj">
+      <Project>{d78a417f-7e26-2f4b-db6e-4d1b0346043c}</Project>
+      <Name>Unity.Physics.Custom.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Sirenix.OdinInspector.Modules.UnityMathematics.csproj">
       <Project>{89bb7d18-aa65-c5e3-f803-a0e9f5e9b0b4}</Project>
@@ -1453,10 +1406,6 @@
       <Project>{4c6e6d9c-4be3-ac2e-90b7-648f5c7224a7}</Project>
       <Name>PrimeTween.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.Editor.csproj">
-      <Project>{cb709a8c-b271-79b8-c1e3-82ab0307163d}</Project>
-      <Name>Unity.Platforms.UI.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Entities.UI.Editor.csproj">
       <Project>{892cdc1a-0baa-2066-ed4a-f2bbbe206367}</Project>
       <Name>Unity.Entities.UI.Editor</Name>
@@ -1484,10 +1433,6 @@
     <ProjectReference Include="Unity.Collections.csproj">
       <Project>{adc82650-8cac-9f5c-ea66-7d2e7d869fe9}</Project>
       <Name>Unity.Collections</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.csproj">
-      <Project>{3b7073c7-6cfb-9dba-9166-de60d8fde0f1}</Project>
-      <Name>Unity.Platforms.UI</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Rendering.LightTransport.Editor.csproj">
       <Project>{4c847be6-84b0-83a4-c706-cb4e83ddfea8}</Project>
@@ -1541,10 +1486,6 @@
       <Project>{4d99f8a3-0f79-87db-e578-f6afddbb8a7c}</Project>
       <Name>Unity.ProBuilder</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VSCode.Editor.csproj">
-      <Project>{47471911-6c46-97d5-10de-d16bff458031}</Project>
-      <Name>Unity.VSCode.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.MemoryProfiler.Editor.MemoryProfilerModule.csproj">
       <Project>{28255a70-0556-4019-c8a4-02e532e0ad5e}</Project>
       <Name>Unity.MemoryProfiler.Editor.MemoryProfilerModule</Name>
@@ -1552,6 +1493,10 @@
     <ProjectReference Include="PixelCrush.csproj">
       <Project>{27187cf4-0b2c-22d5-3ac3-1cce86503ba7}</Project>
       <Name>PixelCrush</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Custom.csproj">
+      <Project>{7901aa3a-f091-60ef-01aa-5c495b7a9feb}</Project>
+      <Name>Unity.Physics.Custom</Name>
     </ProjectReference>
     <ProjectReference Include="DOTween.Modules.csproj">
       <Project>{c83ec8bc-7f9f-6443-3fc1-b902e23410e6}</Project>
@@ -1588,10 +1533,6 @@
     <ProjectReference Include="Unity.Entities.UI.csproj">
       <Project>{51754ab6-c645-0c53-c8b9-a8674e577f3d}</Project>
       <Name>Unity.Entities.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Custom.csproj">
-      <Project>{7901aa3a-f091-60ef-01aa-5c495b7a9feb}</Project>
-      <Name>Unity.Physics.Custom</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.csproj">
       <Project>{0d11a544-ea09-04eb-8347-073d865b9216}</Project>

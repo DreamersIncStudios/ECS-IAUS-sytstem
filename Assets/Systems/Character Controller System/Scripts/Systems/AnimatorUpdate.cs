@@ -24,16 +24,14 @@ namespace MotionSystem.Systems
 
 
 
-            Entities.WithoutBurst().ForEach((AnimatorComponent AnimC, ref CharControllerE control) =>
+            Entities.WithoutBurst().ForEach((Animator Anim, Rigidbody RB, ref CharControllerE control) =>
             {
 
-                Animator Anim = AnimC.anim;
-                Rigidbody RB = AnimC.RB;
+        
                 Transform transform = Anim.transform;
                 //if (Anim.GetFloat("AnimSpeed") != control.AnimationSpeed)
                 //    Anim.SetFloat("AnimSpeed", control.AnimationSpeed);
 
-                float m_TurnAmount;
                 float m_ForwardAmount;
 
 
@@ -41,7 +39,7 @@ namespace MotionSystem.Systems
 
                 //  m_TurnAmount = control.Move.x;
                 m_ForwardAmount = control.Move.z;
-                m_TurnAmount = Mathf.Atan2(control.Move.x, control.Move.z);
+                var m_TurnAmount = Mathf.Atan2(control.Move.x, control.Move.z);
 
                 if (!control.Targetting)
                 {

@@ -18,28 +18,28 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public partial struct WanderTagReactor : IComponentReactorTagsForAIStates<WanderActionTag, WanderQuadrant>
     {
-        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref WanderQuadrant AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref WanderQuadrant aiStateComponent)
         {
-            AIStateCompoment.Status = ActionStatus.Running;
+            aiStateComponent.Status = ActionStatus.Running;
             newComponent.WaitTime = 10;
         }
 
-        public void ComponentRemoved(Entity entity, ref WanderQuadrant AIStateCompoment, in WanderActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref WanderQuadrant aiStateComponent, in WanderActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
+            if (aiStateComponent.Complete || aiStateComponent.Status == ActionStatus.Success)
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
             }
             else
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime * 2;
 
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref WanderQuadrant AIStateCompoment, in WanderActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent, ref WanderQuadrant aiStateComponent, in WanderActionTag oldComponent)
         {
             throw new System.NotImplementedException();
         }

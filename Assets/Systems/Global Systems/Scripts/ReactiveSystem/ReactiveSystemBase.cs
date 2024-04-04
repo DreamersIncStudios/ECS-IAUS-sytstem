@@ -11,9 +11,9 @@ namespace Utilities.ReactiveSystem
     public interface IComponentReactorTagsForAIStates<COMPONENT, AICOMPONENT>
     {
 
-        void ComponentAdded(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT AIStateCompoment);
-        void ComponentRemoved(Entity entity, ref AICOMPONENT AIStateCompoment, in COMPONENT oldComponent);
-        void ComponentValueChanged(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT AIStateCompoment, in COMPONENT oldComponent);
+        void ComponentAdded(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT aiStateComponent);
+        void ComponentRemoved(Entity entity, ref AICOMPONENT aiStateComponent, in COMPONENT oldComponent);
+        void ComponentValueChanged(Entity entity, ref COMPONENT newComponent, ref AICOMPONENT aiStateComponent, in COMPONENT oldComponent);
     }
 
 

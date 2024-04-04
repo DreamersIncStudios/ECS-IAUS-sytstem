@@ -104,6 +104,7 @@
     <Compile Include="Assets\Systems\IAUS\Components\Systems\WaitStateAction.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSBrainSetupSystem.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\Reactive System\WanderReactive.cs" />
+    <Compile Include="Assets\Systems\IAUS\Scripts\Utilities\Meditator.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\Escape Threat Area\EscapeThreat.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Towers State\SpawnDefendersState.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Movement States\StayInQuadrant.cs" />

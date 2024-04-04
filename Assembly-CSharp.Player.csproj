@@ -806,10 +806,6 @@
       <Project>{0065f730-3388-09c1-69b2-cc8f94fbeba0}</Project>
       <Name>Unity.Collections.Player</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Platforms.UI.Player.csproj">
-      <Project>{2f3d560e-e7a3-127e-a1f6-e39f861ead52}</Project>
-      <Name>Unity.Platforms.UI.Player</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Physics.Player.csproj">
       <Project>{0f6a626b-fb9f-362f-e15f-4fe05c0ac6fe}</Project>
       <Name>Unity.Physics.Player</Name>
@@ -846,6 +842,10 @@
       <Project>{f0cf487f-038b-e5dd-c6fb-8cee3e20f7ff}</Project>
       <Name>PixelCrush.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Custom.Player.csproj">
+      <Project>{55155861-5785-589b-c72e-78471d8491ad}</Project>
+      <Name>Unity.Physics.Custom.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="DOTween.Modules.Player.csproj">
       <Project>{93bf925b-1c99-c394-4bd9-90eff2d58aae}</Project>
       <Name>DOTween.Modules.Player</Name>
@@ -865,10 +865,6 @@
     <ProjectReference Include="Unity.Entities.UI.Player.csproj">
       <Project>{22286940-d860-57a1-ffeb-a330a0144420}</Project>
       <Name>Unity.Entities.UI.Player</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.Physics.Custom.Player.csproj">
-      <Project>{55155861-5785-589b-c72e-78471d8491ad}</Project>
-      <Name>Unity.Physics.Custom.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Entities.Player.csproj">
       <Project>{12dd501b-8f70-251c-2d75-f2510cc43dfc}</Project>
