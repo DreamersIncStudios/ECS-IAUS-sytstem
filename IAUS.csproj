@@ -65,6 +65,7 @@
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Adjust Nav Agent Speed/ChangeMoveSpeedSystem.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/PursueReactive.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/WaypointCreation.cs" />
+    <Compile Include="Assets/Systems/IAUS/GOAP/AgentBelief.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/MagicAttackReactive.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/RangeAttackReactive.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/AttackReactive.cs" />
@@ -76,13 +77,15 @@
     <Compile Include="Assets/Systems/IAUS/Components/Aspects/VisionAspect.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/Patrol/PatrolAspect.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Base Interfaces/IBaseStateScorer.cs" />
+    <Compile Include="Assets/Systems/IAUS/Sensors/ISenses.cs" />
+    <Compile Include="Assets/Systems/IAUS/Sensors/VisionSystemJobs.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Attack AI/PursueTarget.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Wait.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/IAUSCooldown.cs" />
+    <Compile Include="Assets/Systems/IAUS/Sensors/Targeting System/Systems/TargetingSystem.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/IAUSBlackboard.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Base Interfaces/IBaseConsiderations.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/CheckTargetThreatSystem.cs" />
-    <Compile Include="Assets/Systems/IAUS/Scripts/Utilities/Mediator.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Towers State/GatherResourcesState.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/TerrorizeAreaState.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Aspects/AttackAspect.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/MovementJob.cs" />
     <Compile Include="Assets/Systems/IAUS/AIStates.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/NPC Quadrant System/NPCQuadrantSystem.cs" />
+    <Compile Include="Assets/Systems/IAUS/AITarget.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/Patrol/Patrol.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/Traverse/Traverse.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/EquipmentUpdate.cs" />
@@ -107,6 +111,8 @@
     <Compile Include="Assets/Systems/IAUS/Components/Systems/Reactive System/WanderReactive.cs" />
     <Compile Include="Assets/Systems/IAUS/Scripts/Utilities/Meditator.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/Escape Threat Area/EscapeThreat.cs" />
+    <Compile Include="Assets/Systems/IAUS/Sensors/TargetingQuadrantSystem.cs" />
+    <Compile Include="Assets/Systems/IAUS/GOAP/ISensor.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Towers State/SpawnDefendersState.cs" />
     <Compile Include="Assets/Systems/IAUS/Components/Components/States/Movement States/StayInQuadrant.cs" />
     <None Include="Assets/Systems/IAUS/Components/Components/States/Blob State System/Resources/Consideration files/DistanceToTarget Ally.txt" />
@@ -950,6 +956,18 @@
     <ProjectReference Include="CharacterControllerSystem.csproj">
       <Project>{0b9f14aa-329d-7629-5581-2c5a9ca46ebe}</Project>
       <Name>CharacterControllerSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="CameraSystem.csproj">
+      <Project>{f498b9a1-5fad-2629-d1a7-aec641bf5f6c}</Project>
+      <Name>CameraSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="Cinemachine.csproj">
+      <Project>{89fb6540-85e6-2589-62dd-51ec49498937}</Project>
+      <Name>Cinemachine</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Physics.Custom.csproj">
+      <Project>{7901aa3a-f091-60ef-01aa-5c495b7a9feb}</Project>
+      <Name>Unity.Physics.Custom</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

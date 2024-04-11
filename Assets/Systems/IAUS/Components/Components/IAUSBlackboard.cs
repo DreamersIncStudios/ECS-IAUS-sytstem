@@ -18,7 +18,7 @@ namespace IAUS.ECS.Component.Aspects
 
     public readonly partial struct IAUSBlackboard : IAspect
     {
-        readonly RefRO<LocalTransform> transform;
+        public readonly RefRO<LocalTransform> Transform;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect vision;
@@ -54,9 +54,9 @@ namespace IAUS.ECS.Component.Aspects
 
         float DistanceToPoint(float3 posToCheck, float StopBuffer = 0.5f)
         {
-            return Vector3.Distance(posToCheck, transform.ValueRO.Position) < StopBuffer
+            return Vector3.Distance(posToCheck, Transform.ValueRO.Position) < StopBuffer
                 ? 0
-                : Vector3.Distance(posToCheck, transform.ValueRO.Position);
+                : Vector3.Distance(posToCheck, Transform.ValueRO.Position);
         }
 
         public float ScoreOfPatrolState

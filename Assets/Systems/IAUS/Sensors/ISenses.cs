@@ -6,22 +6,23 @@ using Stats;
 using Unity.Mathematics;
 using Unity.Collections;
 using Global.Component;
+using IAUS.Core.GOAP;
 using PixelCrushers.LoveHate;
 using Stats.Entities;
 using Unity.Burst;
 
 namespace AISenses
 {
-    public interface ISenses : IComponentData
-    {
-        void InitializeSense(BaseCharacterComponent baseCharacter);
-        void UpdateSense(BaseCharacterComponent baseCharacter);
-
-    }
 
     [System.Serializable]
-    public struct Vision : ISenses
+    public struct Vision : ISensor
     {
+        public float detectionRange { get; set; }
+        public float timer { get; set; } // consider using Variable Rate Manager;
+
+        public Entity targetEntity { get; set; }
+        public float3 TargetPosition { get; set; }
+        public float3 LastKnownPosition { get; set; }
         public int DetectionRate
         {
             get

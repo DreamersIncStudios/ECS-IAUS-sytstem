@@ -61,14 +61,7 @@
     <Compile Include="Assets/Systems/Movement System/Scripts/Systems/ThreatAvoidanceSystem.cs" />
     <Compile Include="Assets/Systems/Movement System/Scripts/Systems/MovementSystem.cs" />
     <Compile Include="Assets/Systems/Movement System/Scripts/Components/PhysicsInfo.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Components/Bakers/Editor/VisionBakingEditor.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Systems/TargetingQuadrantSystem.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Components/ISenses.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Components/Bakers/VisionBaking.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Components/AITarget.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Systems/VisionSystemJobs.cs" />
     <Compile Include="Assets/Systems/Movement System/Scripts/Components/Movement.cs" />
-    <Compile Include="Assets/Systems/Movement System/Scripts/Systems/Targeting System/Systems/TargetingSystem.cs" />
     <Reference Include="UnityEngine">
       <HintPath>/Volumes/Drive Mac/Unity Hub/6000.0.0b12/PlaybackEngines/WindowsStandaloneSupport/Variations/mono/Managed/UnityEngine.dll</HintPath>
     </Reference>
