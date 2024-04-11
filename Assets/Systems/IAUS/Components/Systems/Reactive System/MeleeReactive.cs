@@ -67,10 +67,11 @@ namespace IAUS.ECS.Systems.Reactive
                 (Entity entity, Command handler, Animator anim, NPCAttack comboList, in SelectAndAttack select) =>
                 {
                     handler.InputQueue ??= new Queue<AnimationTrigger>();
-                    if (!anim.IsInTransition(0)) return;
-                    handler.InputQueue.Enqueue(
+                    if (anim.IsInTransition(0)) return;
+                 /*   handler.InputQueue.Enqueue(
                         comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.Melee)[0]);
-                    EntityManager.RemoveComponent<SelectAndAttack>(entity);
+                   */
+                 EntityManager.RemoveComponent<SelectAndAttack>(entity);
                     Debug.Log("attacked");
                 }).Run();
 
