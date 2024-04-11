@@ -1,6 +1,9 @@
 using System;
+using AISenses;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace IAUS.Core.GOAP
@@ -13,7 +16,8 @@ namespace IAUS.Core.GOAP
         Entity targetEntity { get; set; }
         float3 TargetPosition { get; set; }
         float3 LastKnownPosition { get; set; }
-        public bool IsInRange => !TargetPosition.Equals( float3.zero);
+        public bool IsInRange { get; }
+        public bool UpdateTargetPosition { get; }
 
     }
 
@@ -28,7 +32,18 @@ namespace IAUS.Core.GOAP
 
         protected override void OnUpdate()
         {
-            throw new NotImplementedException();
+            var transforms = SystemAPI.GetComponentLookup<LocalTransform>();
+                
+            Entities.WithoutBurst().ForEach((ref Vision vision) =>
+            {
+                if (vision.targetEntity == Entity.Null) return;
+                vision.TargetPosition = transforms[vision.targetEntity].Position;
+                if (vision is not { IsInRange: true, UpdateTargetPosition: true }) return;
+                vision.LastKnownPosition = vision.TargetPosition;
+                if (SensorChange == null) return;
+                SensorChange(this, new OnTargetChanged() { });
+
+            }).Run();
         }
 
     }

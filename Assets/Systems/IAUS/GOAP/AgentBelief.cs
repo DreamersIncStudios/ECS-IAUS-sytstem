@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace IAUS.Core.GOAP
 {
-
     public class BeliefFactory
     {
         private readonly Dictionary<string, AgentBelief> beliefs;
@@ -20,6 +19,14 @@ namespace IAUS.Core.GOAP
         {
             beliefs.Add(Key, new AgentBelief.Builder(Key).
                 WithCondition(condition)
+                .Build());
+        }
+
+        public void AddSensorBelief(string Key, ISensor sensor)
+        {
+            beliefs.Add(Key, new AgentBelief.Builder(Key)
+                    .WithCondition(() => sensor.IsInRange)
+                .WithLocation(() => sensor.TargetPosition)
                 .Build());
         }
 

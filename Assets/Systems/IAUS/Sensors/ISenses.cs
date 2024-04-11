@@ -19,6 +19,10 @@ namespace AISenses
     {
         public float detectionRange { get; set; }
         public float timer { get; set; } // consider using Variable Rate Manager;
+        public bool IsInRange => !TargetPosition.Equals( float3.zero);
+
+        public bool UpdateTargetPosition =>
+            !LastKnownPosition.Equals(TargetPosition) || !LastKnownPosition.Equals(float3.zero);
 
         public Entity targetEntity { get; set; }
         public float3 TargetPosition { get; set; }
