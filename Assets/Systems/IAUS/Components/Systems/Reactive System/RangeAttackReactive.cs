@@ -18,15 +18,15 @@ namespace IAUS.ECS.Systems.Reactive
 
     public partial struct RangeTagReactor : IComponentReactorTagsForAIStates<RangeAttackTag, RangedAttackSubState>
     {
-        public void ComponentAdded(Entity entity, ref RangeAttackTag newComponent, ref RangedAttackSubState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref RangeAttackTag newComponent, ref RangedAttackSubState aiStateComponent)
         {
         }
 
-        public void ComponentRemoved(Entity entity, ref RangedAttackSubState AIStateCompoment, in RangeAttackTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref RangedAttackSubState aiStateComponent, in RangeAttackTag oldComponent)
         {
         }
 
-        public void ComponentValueChanged(Entity entity, ref RangeAttackTag newComponent, ref RangedAttackSubState AIStateCompoment,
+        public void ComponentValueChanged(Entity entity, ref RangeAttackTag newComponent, ref RangedAttackSubState aiStateComponent,
             in RangeAttackTag oldComponent)
         {
         }

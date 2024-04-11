@@ -17,28 +17,28 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public partial  struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol>
     {
-        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol aiStateComponent)
         {
-            AIStateCompoment.Status = ActionStatus.Running;
-            newComponent.WaitTime = AIStateCompoment.CurWaypoint.TimeToWaitatWaypoint;
+            aiStateComponent.Status = ActionStatus.Running;
+            newComponent.WaitTime = aiStateComponent.CurWaypoint.TimeToWaitatWaypoint;
         }
 
-        public void ComponentRemoved(Entity entity, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref Patrol aiStateComponent, in PatrolActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
+            if (aiStateComponent.Complete || aiStateComponent.Status == ActionStatus.Success)
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
             }
             else
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+                aiStateComponent.Status = ActionStatus.CoolDown;
+                aiStateComponent.ResetTime = aiStateComponent.CoolDownTime * 2;
 
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol AIStateCompoment, in PatrolActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol aiStateComponent, in PatrolActionTag oldComponent)
         {
         }
 

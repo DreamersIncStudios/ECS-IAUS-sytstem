@@ -19,20 +19,20 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public partial struct AttackTagReactor : IComponentReactorTagsForAIStates<AttackActionTag, AttackState>
     {
-        public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState aiStateComponent)
         {
-            AIStateCompoment.Status = ActionStatus.Running;
+            aiStateComponent.Status = ActionStatus.Running;
 
         }
 
-        public void ComponentRemoved(Entity entity, ref AttackState AIStateCompoment, in AttackActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref AttackState aiStateComponent, in AttackActionTag oldComponent)
         {
-            AIStateCompoment.Status = ActionStatus.CoolDown;
-            AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+            aiStateComponent.Status = ActionStatus.CoolDown;
+            aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
         }
 
         public void ComponentValueChanged(Entity entity, ref AttackActionTag newComponent,
-            ref AttackState AIStateCompoment, in AttackActionTag oldComponent)
+            ref AttackState aiStateComponent, in AttackActionTag oldComponent)
         {
             Debug.Log("Change");
         }

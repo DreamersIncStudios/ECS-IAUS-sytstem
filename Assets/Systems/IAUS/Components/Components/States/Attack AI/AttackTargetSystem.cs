@@ -55,7 +55,7 @@ namespace AISenses.VisionSystems.Combat
 
                         if (vision.EngageRadius > visibleTargetInArea[indexOf].dist)
                         {
-                       //     melee.TargetEntity = visibleTargetInArea[indexOf].target.Entity;
+                            //     melee.TargetEntity = visibleTargetInArea[indexOf].target.Entity;
                             melee.AttackTargetLocation = visibleTargetInArea[indexOf].target.LastKnownPosition;
                             melee.TargetInRange = true;
                             melee.TargetEntity = visibleTargetInArea[indexOf].target.Entity;

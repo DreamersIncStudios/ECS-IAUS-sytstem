@@ -19,15 +19,15 @@ namespace IAUS.ECS.Systems.Reactive
 
     public partial struct MagicTagReactor : IComponentReactorTagsForAIStates<MagicAttackTag, MagicAttackSubState>
     {
-        public void ComponentAdded(Entity entity, ref MagicAttackTag newComponent, ref MagicAttackSubState AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref MagicAttackTag newComponent, ref MagicAttackSubState aiStateComponent)
         {
         }
 
-        public void ComponentRemoved(Entity entity, ref MagicAttackSubState AIStateCompoment, in MagicAttackTag oldComponent)
+        public void ComponentRemoved(Entity entity, ref MagicAttackSubState aiStateComponent, in MagicAttackTag oldComponent)
         {
         }
 
-        public void ComponentValueChanged(Entity entity, ref MagicAttackTag newComponent, ref MagicAttackSubState AIStateCompoment,
+        public void ComponentValueChanged(Entity entity, ref MagicAttackTag newComponent, ref MagicAttackSubState aiStateComponent,
             in MagicAttackTag oldComponent)
         {
         }

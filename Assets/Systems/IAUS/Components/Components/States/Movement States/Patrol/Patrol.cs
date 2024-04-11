@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using System;
+using IAUS.ECS.Component.Aspects;
+
 namespace IAUS.ECS.Component
 {
     [Serializable]
@@ -38,6 +40,10 @@ namespace IAUS.ECS.Component
         [SerializeField] public float _coolDownTime;
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
+        public void Accept()
+        {
+          
+        }
     }
 
     public interface IMovementState: IBaseStateScorer {
