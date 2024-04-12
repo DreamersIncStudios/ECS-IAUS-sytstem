@@ -2,6 +2,7 @@ using Global.Component;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -9,9 +10,8 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        private readonly RefRO<LocalTransform> transform;
         private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
-        private readonly  RefRO<AITarget> self;
+        private readonly RefRW<Vision> vision;
 
         public bool TargetInReactRange
         {
@@ -30,66 +30,16 @@ namespace AISenses.VisionSystems
 
         public bool TargetInRange()
         {
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return TargetInRange(out _, out _);
         }
 
         public bool TargetInRange(out float dist)
         {
-            dist = 0f;
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        dist = scan.target.DistanceTo;
-                        return true;
-                    }
-                }
-            }
-            dist = 0f;
-            return false;
+            return TargetInRange(out _, out dist);
         }
         public bool TargetInRange(out AITarget target)
         {
-            target = new AITarget();
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        target = scan.target.TargetInfo;
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return TargetInRange(out target, out _);
         }
 
         public bool TargetInRange(out AITarget target, out float dist)
@@ -99,18 +49,20 @@ namespace AISenses.VisionSystems
 
             if (scanPositions.IsEmpty)
             {
+                vision.ValueRW.targetEnemyEntity = Entity.Null;
+                vision.ValueRW.LastKnownPositionEnemy = float3.zero;
                 return false;
             }
             else
             {
                 foreach (var scan in scanPositions)
                 {
-                    if (!scan.target.IsFriendly)
-                    {
-                        target = scan.target.TargetInfo;
-                        dist = scan.target.DistanceTo;
-                        return true;
-                    }
+                    if (scan.target.IsFriendly) continue;
+                    target = scan.target.TargetInfo;
+                    dist = scan.target.DistanceTo;
+                    vision.ValueRW.targetEnemyEntity = scan.target.Entity;
+                    vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
+                    return true;
                 }
             }
             return false;
