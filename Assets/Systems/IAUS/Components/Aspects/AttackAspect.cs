@@ -44,7 +44,7 @@ namespace IAUS.ECS.Component.Aspects
             {
                 if (!melee.IsValid) return 0.0f;
                 if (state.ValueRO.CapableOfMelee && melee.ValueRO.Index != -1) {
-                    if (visionAspect.TargetInRange(out _, out float dist))
+                    if (visionAspect.TargetEnemyTargetInRange(out _, out float dist))
                     {
                         var asset = GetAsset(melee.ValueRO.Index);
                         var range = Mathf.Clamp01(dist /(2*TravelInFiveSec));
@@ -87,7 +87,7 @@ namespace IAUS.ECS.Component.Aspects
 
                 var asset = GetAsset(Range.ValueRO.Index);
 
-                if (visionAspect.TargetInRange(out _, out var dist))
+                if (visionAspect.TargetEnemyTargetInRange(out _, out var dist))
                 {
                     var range = Mathf.Clamp01(dist / Range.ValueRO.MaxEffectiveRange);
                     var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);

@@ -82,7 +82,6 @@
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Base Interfaces\IBaseStateScorer.cs" />
     <Compile Include="Assets\Systems\IAUS\Sensors\ISenses.cs" />
     <Compile Include="Assets\Systems\IAUS\GOAP\ActionPlan.cs" />
-    <Compile Include="Assets\Systems\IAUS\Sensors\VisionSystemJobs.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Attack AI\PursueTarget.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Components\States\Wait.cs" />
     <Compile Include="Assets\Systems\IAUS\Components\Systems\IAUSCooldown.cs" />

@@ -19,14 +19,48 @@ namespace AISenses
     {
         public float detectionRange { get; set; }
         public float timer { get; set; } // consider using Variable Rate Manager;
-        public bool IsInRange => !TargetPosition.Equals( float3.zero);
+        public bool IsInRange(TargetAlignmentType alignmentType) => !TargetPosition(alignmentType).Equals( float3.zero);
 
-        public bool UpdateTargetPosition =>
-            !LastKnownPosition.Equals(TargetPosition) || !LastKnownPosition.Equals(float3.zero);
+        public bool UpdateTargetPosition(TargetAlignmentType alignmentType) =>
+            !LastKnownPosition(alignmentType).Equals(TargetPosition(alignmentType)) || !LastKnownPosition(alignmentType).Equals(float3.zero);
 
-        public Entity targetEntity { get; set; }
-        public float3 TargetPosition { get; set; }
-        public float3 LastKnownPosition { get; set; }
+        public Entity targetEntity(TargetAlignmentType alignmentType)
+        {
+            return alignmentType switch
+            {
+                TargetAlignmentType.Enemy => targetEnemyEntity,
+                TargetAlignmentType.Friendly => targetFriendlyEntity,
+                _ => Entity.Null
+            };
+        }
+
+        public float3 TargetPosition(TargetAlignmentType alignmentType)
+        {
+            return alignmentType switch
+            {
+                TargetAlignmentType.Enemy => TargetEnemyPosition,
+                TargetAlignmentType.Friendly => TargetFriendlyPosition,
+                _ => float3.zero
+            };
+        }
+
+        public float3 LastKnownPosition(TargetAlignmentType alignmentType)
+        {
+            return alignmentType switch
+            {
+                TargetAlignmentType.Enemy => LastKnownPositionEnemy,
+                TargetAlignmentType.Friendly => LastKnownPositionFriendly,
+                _ => float3.zero
+            };
+        }
+
+        public Entity targetEnemyEntity { get; set; }
+        public Entity targetFriendlyEntity { get; set; }
+ 
+        public float3 TargetEnemyPosition { get; set; }
+        public float3 LastKnownPositionEnemy { get; set; }
+        public float3 TargetFriendlyPosition { get; set; }
+        public float3 LastKnownPositionFriendly { get; set; }
         public int DetectionRate
         {
             get
@@ -133,4 +167,8 @@ namespace AISenses
         public float PerceptilabilityScore;
     }
 
+    public enum TargetAlignmentType
+    {
+        All,Enemy, Friendly
+    }
 }

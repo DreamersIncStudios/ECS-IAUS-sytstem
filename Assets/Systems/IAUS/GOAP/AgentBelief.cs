@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AISenses;
 using IAUS.ECS.Component.Aspects;
 using Unity.Mathematics;
 using UnityEngine;
@@ -22,11 +23,11 @@ namespace IAUS.Core.GOAP
                 .Build());
         }
 
-        public void AddSensorBelief(string Key, ISensor sensor)
+        public void AddSensorBelief(string Key, ISensor sensor, TargetAlignmentType alignmentType)
         {
             beliefs.Add(Key, new AgentBelief.Builder(Key)
-                    .WithCondition(() => sensor.IsInRange)
-                .WithLocation(() => sensor.TargetPosition)
+                    .WithCondition(() => sensor.IsInRange(alignmentType))
+                .WithLocation(() => sensor.TargetPosition(alignmentType))
                 .Build());
         }
 

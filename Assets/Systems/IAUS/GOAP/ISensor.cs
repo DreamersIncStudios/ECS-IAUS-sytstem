@@ -13,11 +13,11 @@ namespace IAUS.Core.GOAP
         public float detectionRange { get; set; }
         float timer { get; set; } // consider using Variable Rate Manager;
 
-        Entity targetEntity { get; set; }
-        float3 TargetPosition { get; set; }
-        float3 LastKnownPosition { get; set; }
-        public bool IsInRange { get; }
-        public bool UpdateTargetPosition { get; }
+        Entity targetEntity(TargetAlignmentType alignmentType);
+        float3 TargetPosition(TargetAlignmentType alignmentType);
+        float3 LastKnownPosition(TargetAlignmentType alignmentType);
+        public bool IsInRange(TargetAlignmentType alignmentType);
+        public bool UpdateTargetPosition(TargetAlignmentType alignmentType);
 
     }
 
@@ -36,13 +36,13 @@ namespace IAUS.Core.GOAP
                 
             Entities.WithoutBurst().ForEach((ref Vision vision) =>
             {
-                if (vision.targetEntity == Entity.Null) return;
+             /*   if (vision.targetEntity == Entity.Null) return;
                 vision.TargetPosition = transforms[vision.targetEntity].Position;
                 if (vision is not { IsInRange: true, UpdateTargetPosition: true }) return;
                 vision.LastKnownPosition = vision.TargetPosition;
                 if (SensorChange == null) return;
                 SensorChange(this, new OnTargetChanged() { });
-
+*/
             }).Run();
         }
 
