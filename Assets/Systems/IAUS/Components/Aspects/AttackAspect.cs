@@ -1,9 +1,7 @@
 using System;
 using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
-using Global.Component;
 using Stats.Entities;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using IAUS.ECS.StateBlobSystem;
