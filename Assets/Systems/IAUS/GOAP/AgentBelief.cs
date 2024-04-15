@@ -39,8 +39,6 @@ namespace IAUS.Core.GOAP
                 .WithLocation(()=>location)
                 .Build());
         }
-
-        
     }
 
     public class AgentBelief

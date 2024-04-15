@@ -1,14 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AISenses;
 using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.StateBlobSystem;
 using Stats.Entities;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Properties;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -21,7 +20,7 @@ namespace IAUS.ECS.Component.Aspects
         public readonly RefRO<LocalTransform> Transform;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
-        private readonly VisionAspect vision;
+        private readonly VisionAspect visionAspect;
         private readonly AttackAspect attack;
         private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
@@ -140,8 +139,8 @@ namespace IAUS.ECS.Component.Aspects
                 ;
 
 
-                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
-                    ? vision.GetClosestEnemy().DistanceTo
+                var distToEnemy = visionAspect.GetClosestEnemy().Entity != Entity.Null
+                    ? visionAspect.GetClosestEnemy().DistanceTo
                     : 50;
                 var totalScore = Mathf.Clamp01(asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio) *
                                                asset.Health.Output(statInfo.ValueRO.HealthRatio) *
@@ -193,8 +192,8 @@ namespace IAUS.ECS.Component.Aspects
                         $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
                 var asset = GetAsset(pursueTarget.ValueRO.Index);
 
-                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
-                    ? vision.GetClosestEnemy().DistanceTo
+                var distToEnemy = visionAspect.GetClosestEnemy().Entity != Entity.Null
+                    ? visionAspect.GetClosestEnemy().DistanceTo
                     : 50;
                 var range = Mathf.Clamp01(distToEnemy / (2 * TravelInFiveSec));
                 var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
