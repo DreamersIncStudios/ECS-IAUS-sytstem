@@ -11,7 +11,7 @@ namespace IAUS.Core.GOAP
     {
         private readonly Dictionary<string, AgentBelief> beliefs;
         private IAUSBlackboard agent;
-        public BeliefFactory(Dictionary<string, AgentBelief> beliefs)
+        public BeliefFactory(GoapAgent agent, Dictionary<string, AgentBelief> beliefs)
         {
             this.beliefs = beliefs;
         }

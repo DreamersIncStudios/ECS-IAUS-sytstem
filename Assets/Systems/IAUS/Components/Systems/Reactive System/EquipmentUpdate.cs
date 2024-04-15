@@ -5,17 +5,18 @@ using UnityEngine;
 using Dreamers.InventorySystem;
 using IAUS.ECS.Component.Aspects;
 using Dreamers.InventorySystem.Interfaces;
+using IAUS.Core.GOAP;
 
 namespace IAUS.ECS.Component {
     public partial class EquipmentUpdate : SystemBase
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, ref AttackState attackState, ref CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, AttackGoapAgent goapAgent, ref AttackState attackState, ref CheckAttackStatus tag) => {
 
-                attackState.CapableOfMelee = false;
-                attackState.CapableOfMagic = false;
-                attackState.CapableOfProjectile = false;
+               goapAgent.CapableOfMelee= attackState.CapableOfMelee = false;
+               goapAgent.CapableOfMagic=attackState.CapableOfMagic = false;
+               goapAgent.CapableOfProjectile=attackState.CapableOfProjectile = false;
 
 
 
@@ -31,22 +32,22 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Club:
                         case WeaponType.Gloves:
                             case WeaponType.Claws:
-                            attackState.CapableOfMelee = true;
+                                goapAgent.CapableOfMelee=      attackState.CapableOfMelee = true;
                             break;
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                            attackState.CapableOfMagic = true;
+                            goapAgent.CapableOfMagic= attackState.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                            attackState.CapableOfProjectile = true;
+                            goapAgent.CapableOfProjectile=     attackState.CapableOfProjectile = true;
                             break;
                     }
                     
                     if (test.Equipment.EquippedAbility.Count > 0)
-                        attackState.CapableOfMagic = true;
+                        goapAgent.CapableOfMagic=  attackState.CapableOfMagic = true;
                 }
 
                 EntityManager.RemoveComponent<CheckAttackStatus>(entity);

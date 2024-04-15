@@ -11,17 +11,17 @@ namespace IAUS.Core.GOAP
         AgentGoal CurrentGoal { get; set; }
 
         public ActionPlan ActionPlan { get; set; }
-        public AgentActions CurrentAction{ get; set; }
+        public AgentAction currentAction{ get; set; }
 
         public Dictionary<string, AgentBelief> Beliefs{ get; set; }
-        public HashSet<AgentActions> actions{ get; set; }
+        public HashSet<AgentAction> actions{ get; set; }
         public HashSet<AgentGoal> goals{ get; set; }
 
         void SetupBeliefs()
         {
         }
 
-        void SetupAction()
+        void SetupActions()
         {
         }
 
@@ -31,7 +31,7 @@ namespace IAUS.Core.GOAP
         void HandleTargetChanged(object sender, SensorEventManagement.OnTargetChanged e)
         {
             Debug.Log("Target Change, Clear current action and goal ");
-            CurrentAction = null;
+            currentAction = null;
             CurrentGoal = null;
         }
     }

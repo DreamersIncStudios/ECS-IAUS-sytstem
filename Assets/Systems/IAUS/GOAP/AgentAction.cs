@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace IAUS.Core.GOAP
 {
-    public class AgentActions
+    public class AgentAction
     {
-        AgentActions(string name)
+        AgentAction(string name)
         {
             Name = name;
         }
@@ -38,11 +38,11 @@ namespace IAUS.Core.GOAP
 
         public class Builder
         {
-            private readonly AgentActions action;
+            private readonly AgentAction action;
 
             public Builder(string Name)
             {
-                action = new AgentActions(Name)
+                action = new AgentAction(Name)
                 {
                     cost = 1
                 };
@@ -68,6 +68,9 @@ namespace IAUS.Core.GOAP
             {
                 action.Effects.Add(effect);
                 return this;
+            }
+            public AgentAction Build() {
+                return action;
             }
         }
 

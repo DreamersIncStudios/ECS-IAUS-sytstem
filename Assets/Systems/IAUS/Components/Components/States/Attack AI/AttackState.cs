@@ -10,19 +10,17 @@ namespace IAUS.ECS.Component
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
-            CapableOfMelee = melee;
-            CapableOfMagic = magic;
-            CapableOfProjectile = range;
             status = ActionStatus.Idle;
             Index = 0;
             resetTime = 0;
             totalScore = 0;
             IsTargeting = true;
+            CapableOfMelee = melee;
+            CapableOfMagic = magic;
+            CapableOfProjectile = range;
         }
 
-        public bool CapableOfMelee;
-        public bool CapableOfMagic;
-        public bool CapableOfProjectile;
+        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public void SetIndex(int index)
         {
             Index = index;
