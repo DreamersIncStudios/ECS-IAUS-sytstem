@@ -17,19 +17,19 @@ namespace AISenses
     [System.Serializable]
     public struct Vision : ISensor
     {
-        public float detectionRange { get; set; }
-        public float timer { get; set; } // consider using Variable Rate Manager;
+        public float DetectionRange { get; set; }
+        public float Timer { get; set; } // consider using Variable Rate Manager;
         public bool IsInRange(TargetAlignmentType alignmentType) => !TargetPosition(alignmentType).Equals( float3.zero);
 
         public bool UpdateTargetPosition(TargetAlignmentType alignmentType) =>
             !LastKnownPosition(alignmentType).Equals(TargetPosition(alignmentType)) || !LastKnownPosition(alignmentType).Equals(float3.zero);
 
-        public Entity targetEntity(TargetAlignmentType alignmentType)
+        public Entity TargetEntity(TargetAlignmentType alignmentType)
         {
             return alignmentType switch
             {
-                TargetAlignmentType.Enemy => targetEnemyEntity,
-                TargetAlignmentType.Friendly => targetFriendlyEntity,
+                TargetAlignmentType.Enemy => TargetEnemyEntity,
+                TargetAlignmentType.Friendly => TargetFriendlyEntity,
                 _ => Entity.Null
             };
         }
@@ -54,8 +54,8 @@ namespace AISenses
             };
         }
 
-        public Entity targetEnemyEntity { get; set; }
-        public Entity targetFriendlyEntity { get; set; }
+        public Entity TargetEnemyEntity { get; set; }
+        public Entity TargetFriendlyEntity { get; set; }
  
         public float3 TargetEnemyPosition { get; set; }
         public float3 LastKnownPositionEnemy { get; set; }
@@ -66,7 +66,7 @@ namespace AISenses
             get
             {
                 int returnValue = new int();
-                switch (EnemyAwarnessLevel)
+                switch (EnemyAwarenessLevel)
                 {
                     case 0:
                         returnValue = 180;
@@ -93,7 +93,7 @@ namespace AISenses
         public int AlertRate { get; set; }
 
         [Range(0, 5)]
-        public int EnemyAwarnessLevel;  // Character alert level
+        public int EnemyAwarenessLevel;  // Character alert level
         public float3 HeadPositionOffset;
         public float3 ThreatPosition;
 

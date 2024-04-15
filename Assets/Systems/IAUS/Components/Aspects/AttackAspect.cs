@@ -4,6 +4,7 @@ using DreamersInc.InflunceMapSystem;
 using Stats.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using AISenses;
 using IAUS.ECS.StateBlobSystem;
 using Unity.Entities;
 using Unity.Transforms;
@@ -16,7 +17,9 @@ namespace IAUS.ECS.Component.Aspects
     public readonly partial struct AttackAspect : IAspect
     {
         readonly RefRO<LocalTransform> transform;
-        readonly VisionAspect visionAspect;
+        readonly VisionAspect visionAspect;    
+       // private readonly RefRO<Vision> vision;
+
         readonly InfluenceAspect influenceAspect;  
         readonly RefRW<AttackState> state;
         [Optional] readonly RefRW<MeleeAttackSubState> melee;
@@ -31,6 +34,7 @@ namespace IAUS.ECS.Component.Aspects
         {
             if (brain.ValueRO.State.IsCreated)
                 return brain.ValueRO.State.Value.Array[index];
+            
             else 
                 throw new ArgumentOutOfRangeException(nameof(brain.ValueRO.State),
                     $"Blob asset not set up yet");

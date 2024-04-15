@@ -11,6 +11,7 @@ using DreamersInc.BestiarySystem;
 using DreamersInc.ComboSystem;
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
+using IAUS.Core.GOAP;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using MotionSystem;
@@ -370,13 +371,14 @@ public class CharacterBuilder
                             MaxEffectiveRange = 60,
                         });
                         manager.AddComponent<WeaponSkillsAttackSubState>(entity);
-
+        
                         if (CapableOfMelee)
                         {
                             var melee = new MeleeAttackSubState();
                             manager.AddComponentData(entity, melee);
                         }
 
+                        manager.AddComponentObject(entity, new AttackGoapAgent());
                         break;
                     case AIStates.RetreatToLocation:
           

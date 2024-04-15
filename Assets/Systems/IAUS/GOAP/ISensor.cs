@@ -1,19 +1,17 @@
 using System;
 using AISenses;
 using Unity.Entities;
-using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace IAUS.Core.GOAP
 {
     public interface ISensor: IComponentData
     {
-        public float detectionRange { get; set; }
-        float timer { get; set; } // consider using Variable Rate Manager;
+        public float DetectionRange { get; set; }
+        float Timer { get; set; } // consider using Variable Rate Manager;
 
-        Entity targetEntity(TargetAlignmentType alignmentType);
+        Entity TargetEntity(TargetAlignmentType alignmentType);
         float3 TargetPosition(TargetAlignmentType alignmentType);
         float3 LastKnownPosition(TargetAlignmentType alignmentType);
         public bool IsInRange(TargetAlignmentType alignmentType);

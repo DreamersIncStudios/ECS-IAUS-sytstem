@@ -23,7 +23,7 @@ namespace Utilities.ReactiveSystem
         where COMPONENT_REACTOR : struct, IComponentReactorTagsForAIStates<COMPONENT, AICOMPONENT>
     {
         /// <summary>
-        /// Struct implmenting IComponentReactor<COMPONENT> that implements the behavior when COMPONENT is added, removed or changed value.
+        /// Struct implementing IComponentReactor<COMPONENT> that implements the behavior when COMPONENT is added, removed or changed value.
         /// </summary>
         private COMPONENT_REACTOR _reactor;
         /// <summary>
@@ -34,12 +34,10 @@ namespace Utilities.ReactiveSystem
         /// Query to detect the removal of COMPONENT from an entity.
         /// </summary>
         private EntityQuery _componentRemovedQuery;
+
+        // private EntityQuery _componentValueChangedQuery;
         /// <summary>
-        /// Query to gateher all entity that need to check for change in value.
-        /// </summary>
-       // private EntityQuery _componentValueChangedQuery;
-        /// <summary>
-        /// EnityCommandBufferSystem used to add and remove the StateComponent.
+        /// EntityCommandBufferSystem used to add and remove the StateComponent.
         /// </summary>
         private EntityCommandBufferSystem _entityCommandBufferSystem;
 
@@ -59,13 +57,13 @@ namespace Utilities.ReactiveSystem
 
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(COMPONENT)), ComponentType.ReadWrite(typeof(AICOMPONENT)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(StateComponent)) }
+                All = new [] { ComponentType.ReadWrite(typeof(COMPONENT)), ComponentType.ReadWrite(typeof(AICOMPONENT)) },
+                None = new [] { ComponentType.ReadOnly(typeof(StateComponent)) }
             });
             _componentRemovedQuery = GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadOnly(typeof(StateComponent)), ComponentType.ReadWrite(typeof(AICOMPONENT)) },
-                None = new ComponentType[] { ComponentType.ReadOnly(typeof(COMPONENT)) }
+                All = new [] { ComponentType.ReadOnly(typeof(StateComponent)), ComponentType.ReadWrite(typeof(AICOMPONENT)) },
+                None = new [] { ComponentType.ReadOnly(typeof(COMPONENT)) }
             });
             //_componentValueChangedQuery = GetEntityQuery(new EntityQueryDesc()
             //{
@@ -87,7 +85,7 @@ namespace Utilities.ReactiveSystem
             return World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>();
         }
         /// <summary>
-        /// This system call the COMPONENT_REACTOR.ComponentAdded method on all enttiy that have a new COMPONENT.
+        /// This system call the COMPONENT_REACTOR.ComponentAdded method on all entity that have a new COMPONENT.
         /// </summary>
         [BurstCompile]
         public struct ManageComponentAdditionJob : IJobChunk
@@ -105,21 +103,21 @@ namespace Utilities.ReactiveSystem
                 NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
                 for (int i = 0; i < chunk.Count; ++i)
                 {
-                    // Calls the mathod and reassign the COMPONENT to take into account any modification that may have accured during the method call.
+                    // Calls the method and reassign the COMPONENT to take into account any modification that may have accrued during the method call.
                     COMPONENT component = components[i];
                     AICOMPONENT AIcomponent = aiComponents[i];
                     Entity entity = entities[i];
                     Reactor.ComponentAdded(entity, ref component, ref AIcomponent);
                     components[i] = component;
                     aiComponents[i] = AIcomponent;
-                    // Add the system state component and set it's value that on the next frame, the ManageComponentValueChangeJob can handle any change in the COMPONENT value.
+                    // Add the system state component and set its value that on the next frame, the ManageComponentValueChangeJob can handle any change in the COMPONENT value.
                     EntityCommandBuffer.AddComponent<StateComponent>(unfilteredChunkIndex, entities[i]);
                     EntityCommandBuffer.SetComponent(unfilteredChunkIndex, entities[i], new StateComponent() { Value = component });
                 }
             }
         }
         /// <summary>
-        /// This system call the COMPONENT_REACTOR.ComponentRemoved method on all enttiy that were strip down of their COMPONENT.
+        /// This system call the COMPONENT_REACTOR.ComponentRemoved method on all entity that were strip down of their COMPONENT.
         /// </summary>
         [BurstCompile]
         public struct ManageComponentRemovalJob : IJobChunk
@@ -139,14 +137,14 @@ namespace Utilities.ReactiveSystem
                 NativeArray<AICOMPONENT> aiComponents = chunk.GetNativeArray(ref AIComponentChunk);
                 for (int i = 0; i < chunk.Count; ++i)
                 {
-                    // Calls the mathod with the last know copy of the component, this copy is read only has the component will be remove by hte end of the frame.
+                    // Calls the method with the last know copy of the component, this copy is read only has the component will be remove by the end of the frame.
                     Entity entity = entities[i];
                     AICOMPONENT AIcomponent = aiComponents[i];
                     StateComponent stateComponent = stateComponents[i];
                     Reactor.ComponentRemoved(entity, ref AIcomponent, in stateComponent.Value);
 
                     aiComponents[i] = AIcomponent;
-                    // Remove the state component so that the entiyt can be destroyed or listen again for COMPONENT addition.
+                    // Remove the state component so that the entity can be destroyed or listen again for COMPONENT addition.
                     EntityCommandBuffer.RemoveComponent<StateComponent>(unfilteredChunkIndex, entities[i]);
                 }
             }
@@ -172,7 +170,7 @@ namespace Utilities.ReactiveSystem
         //        NativeArray<Entity> entities = chunk.GetNativeArray(EntityChunk);
         //        for (int i = 0; i < chunk.Count; ++i)
         //        {
-        //            // Chaeck if the value changed since last frame.
+        //            // Check if the value changed since last frame.
         //            StateComponent stateComponent = stateComponents[i];
         //            COMPONENT component = components[i];
         //            Entity entity = entities[i];
@@ -181,7 +179,7 @@ namespace Utilities.ReactiveSystem
         //            if (ByteBufferUtility.AreEqualStruct(stateComponent.Value, component)) continue;
         //            // If it did change, call the method with the new value and the old value (from the last know copy of the COMPONENT)
         //            Reactor.ComponentValueChanged(entity, ref component, ref AIcomponent, in stateComponent.Value);
-        //            // Ressign the COMPONENT to take into account any modification that may have accured during the method call.
+        //            // Resign the COMPONENT to take into account any modification that may have accrued during the method call.
         //            components[i] = component;
         //            aiComponents[i] = AIcomponent;
 
@@ -234,9 +232,9 @@ namespace Utilities.ReactiveSystem
     }
         public static class ByteBufferUtility
         {
-            public static bool AreEqualStruct<T>(T frist, T second) where T : unmanaged
+            public static bool AreEqualStruct<T>(T first, T second) where T : unmanaged
             {
-                NativeArray<byte> firstArray = ConvertToNativeBytes<T>(frist, Allocator.Temp);
+                NativeArray<byte> firstArray = ConvertToNativeBytes<T>(first, Allocator.Temp);
                 NativeArray<byte> secondArray = ConvertToNativeBytes<T>(second, Allocator.Temp);
                 if (firstArray.Length != secondArray.Length) return false;
                 for (int i = 0; i < firstArray.Length; ++i)
