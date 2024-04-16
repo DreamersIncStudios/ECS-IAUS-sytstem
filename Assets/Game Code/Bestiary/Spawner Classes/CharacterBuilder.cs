@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using AISenses;
 using AISenses.VisionSystems.Combat;
@@ -29,7 +28,7 @@ using Object = UnityEngine.Object;
 public class CharacterBuilder
 {
     private GameObject model;
-    private static Entity entity;
+    private readonly Entity entity;
     private BaseCharacterComponent character;
     private int factionID;
     private uint classLevel;
@@ -362,6 +361,15 @@ public class CharacterBuilder
                         manager.AddComponent<AttackTarget>(entity);
                         manager.AddComponent<PursueTarget>(entity);
                         manager.AddComponentObject(entity, new Command());
+                        var goap = new AttackGoapAgent()
+                        {
+                            CapableOfMelee = CapableOfMelee,
+                            CapableOfMagic = CapableOfMagic,
+                            CapableOfProjectile = CapableOfRange,
+                            SelfRef =  entity
+                        };
+                        goap.Init();
+                        manager.AddComponentObject(entity, goap);
                         manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
                         if(CapableOfMagic)
@@ -377,8 +385,6 @@ public class CharacterBuilder
                             var melee = new MeleeAttackSubState();
                             manager.AddComponentData(entity, melee);
                         }
-
-                        manager.AddComponentObject(entity, new AttackGoapAgent());
                         break;
                     case AIStates.RetreatToLocation:
           
@@ -400,7 +406,7 @@ public class CharacterBuilder
         return entity;
     }
 
-    public static CharacterBuilder CreateCharacter(string entityName, out Entity spawnedEntity)
+    public  CharacterBuilder(string entityName, out Entity spawnedEntity)
     {
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var baseEntityArch = manager.CreateArchetype(
@@ -410,14 +416,22 @@ public class CharacterBuilder
         var baseDataEntity = manager.CreateEntity(baseEntityArch);
         manager.SetName(baseDataEntity, entityName != string.Empty ? entityName : "NPC Data");
         manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-        spawnedEntity =  entity = baseDataEntity;
+        spawnedEntity =entity = baseDataEntity;
 
-        return new CharacterBuilder();
     }
-
-    public static CharacterBuilder CreateCharacter(string entityName)
+    public CharacterBuilder(string entityName)
     {
-        return CreateCharacter(entityName, out _);
+        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var baseEntityArch = manager.CreateArchetype(
+            typeof(LocalTransform),
+            typeof(LocalToWorld)
+        );
+        var baseDataEntity = manager.CreateEntity(baseEntityArch);
+        manager.SetName(baseDataEntity, entityName != string.Empty ? entityName : "NPC Data");
+        manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+        entity = baseDataEntity;
+
     }
+    
     
 }

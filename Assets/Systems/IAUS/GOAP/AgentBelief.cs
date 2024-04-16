@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using AISenses;
 using IAUS.ECS.Component.Aspects;
+using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace IAUS.Core.GOAP
@@ -10,11 +12,17 @@ namespace IAUS.Core.GOAP
     public class BeliefFactory
     {
         private readonly Dictionary<string, AgentBelief> beliefs;
-        private IAUSBlackboard agent;
-        public BeliefFactory(GoapAgent agent, Dictionary<string, AgentBelief> beliefs)
+        private Entity entity;
+        public BeliefFactory(Entity agent, Dictionary<string, AgentBelief> beliefs)
         {
             this.beliefs = beliefs;
+            entity = agent;
         }
+
+        float3 EntityPosition=> World.DefaultGameObjectInjectionWorld.EntityManager
+                    .GetComponentData<LocalTransform>(entity).Position;
+            
+        
 
         public void AddBelief(string Key, Func<bool> condition)
         {
@@ -31,14 +39,14 @@ namespace IAUS.Core.GOAP
                 .Build());
         }
 
-        bool inRangeOf(Vector3 pos, float range) => Vector3.Distance(agent.Transform.ValueRO.Position, pos) < range;
         public void AddBelief(string Key, float distance, float3 location)
         {
-            beliefs.Add(Key, new AgentBelief.Builder(Key).
-                WithCondition(()=>inRangeOf(location, distance))
+            beliefs.Add(Key, new AgentBelief.Builder(Key)
                 .WithLocation(()=>location)
                 .Build());
         }
+        bool inRangeOf(Vector3 pos, float range) => Vector3.Distance(EntityPosition, pos) < range;
+
     }
 
     public class AgentBelief

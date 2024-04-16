@@ -12,6 +12,7 @@ namespace IAUS.Core.GOAP
 {
     public class AttackGoapAgent : GoapAgent
     {
+        public Entity SelfRef;
         public AgentGoal lastGoal { get; set; }
         public AgentGoal CurrentGoal { get; set; }
         public ActionPlan ActionPlan { get; set; }
@@ -35,6 +36,14 @@ namespace IAUS.Core.GOAP
             };
 
             return inRange;
+        }
+
+        public void Init()
+        {
+            gPlanner = new GoapPlanner();
+            SetupBeliefs();
+            SetupGoals();
+            SetupActions();
         }
 
         public void Update()
@@ -80,7 +89,8 @@ namespace IAUS.Core.GOAP
 
         public void SetupBeliefs()
         {
-            BeliefFactory factory = new BeliefFactory(this, Beliefs);
+            Beliefs = new Dictionary<string, AgentBelief>();
+            var factory = new BeliefFactory(SelfRef, Beliefs);
             
             factory.AddBelief("Nothing", () => false);
             factory.AddBelief("IsCapableOfMelee", () => CapableOfMelee);
