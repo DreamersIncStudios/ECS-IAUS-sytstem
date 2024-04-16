@@ -37,6 +37,11 @@ namespace IAUS.Core.GOAP
                 goal.DesiredEffects.Add(effect);
                 return this;
             }
+
+            public AgentGoal Build()
+            {
+                return goal;
+            }
         }
     }
 }

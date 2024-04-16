@@ -54,7 +54,7 @@ namespace IAUS.Core.GOAP
             Name = name;
         }
 
-        public bool Evalute()
+        public bool Evaluate()
         {
             return condition();
         }

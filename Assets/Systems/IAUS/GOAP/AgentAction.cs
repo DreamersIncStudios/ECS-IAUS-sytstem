@@ -29,7 +29,7 @@ namespace IAUS.Core.GOAP
             if(!strategy.Complete) return;
             foreach (var effect in Effects)
             {
-                effect.Evalute();
+                effect.Evaluate();
             }
         }
         

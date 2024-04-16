@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AISenses;
 using AISenses.VisionSystems;
 using Unity.Entities;
@@ -18,7 +19,8 @@ namespace IAUS.Core.GOAP
         public Dictionary<string, AgentBelief> Beliefs { get; set; }
         public HashSet<AgentAction> actions { get; set; }
         public HashSet<AgentGoal> goals { get; set; }
-
+        private IGoapPlanner gPlanner;
+        
         public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public float3 TargetPosition, MyPosition;
 
@@ -33,6 +35,47 @@ namespace IAUS.Core.GOAP
             };
 
             return inRange;
+        }
+
+        public void Update()
+        {
+            if (currentAction == null)
+            {
+                Debug.Log("Calculating any potential new plan ");
+                CalculatePlan();
+                if (ActionPlan != null && ActionPlan.Actions.Count > 0)
+                {
+                    CurrentGoal = ActionPlan.AgentGoal;
+                    currentAction = ActionPlan.Actions.Pop();
+                    currentAction.Start();
+                    Debug.Log($"Goal: {CurrentGoal.Name} with {ActionPlan.Actions.Count} actions in plan");
+                    Debug.Log($"Popped action: {currentAction.Name}");
+                    // Verify all precondition effects are true
+                    if (currentAction.Preconditions.All(b => b.Evaluate())) {
+                        currentAction.Start();
+                    } else {
+                        Debug.Log("Preconditions not met, clearing current action and goal");
+                        currentAction = null;
+                        CurrentGoal = null;
+                    }
+                }
+            }
+        }
+
+        private void CalculatePlan()
+        {
+            var priorityLevel = CurrentGoal?.Priority ?? 0;
+            var goalsToCheck = goals;
+            if (CurrentGoal != null)
+            {
+                goalsToCheck = new HashSet<AgentGoal>(goals.Where(g => g.Priority > priorityLevel));
+            }
+
+            var potentialPlan = gPlanner.Plan(this, goalsToCheck, lastGoal);
+            if (potentialPlan != null)
+            {
+                ActionPlan = potentialPlan; 
+            }
         }
 
         public void SetupBeliefs()
@@ -56,16 +99,29 @@ namespace IAUS.Core.GOAP
                 .AddEffect(Beliefs["Nothing"])
                 .Build());
             actions.Add(new AgentAction.Builder("Move To Melee Range")
-                .WithStrategy()
-                .AddEffect(Beliefs["Nothing"])
+                .WithStrategy(new GotoLocation())
+                .AddEffect(Beliefs["InRangeForMelee"])
                 .Build());
             actions.Add(new AgentAction.Builder("Move To Magic Range")
-                .WithStrategy()
-                .AddEffect(Beliefs["Nothing"])
+                .WithStrategy(new GotoLocation())
+                .AddEffect(Beliefs["InRangeForMagic"])
                 .Build());
             actions.Add(new AgentAction.Builder("Move To Projectile Range")
-                .WithStrategy()
-                .AddEffect(Beliefs["Nothing"])
+                .WithStrategy(new GotoLocation())
+                .AddEffect(Beliefs["InRangeForProjectile"])
+                .Build());
+        }
+
+        public void SetupGoals()
+        {
+            goals = new HashSet<AgentGoal>();
+            goals.Add(new AgentGoal.Builder("Cooldown")
+                .WithPriority(1)
+                .AddDesiredEffect(Beliefs["Nothing"])
+                .Build());
+            goals.Add(new AgentGoal.Builder("Move to Melee Range")
+                .WithPriority(1)
+                .AddDesiredEffect(Beliefs["InRangeForMelee"])
                 .Build());
         }
     }
