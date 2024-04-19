@@ -13,8 +13,21 @@ namespace AISenses.VisionSystems
         private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
         private readonly RefRW<Vision> vision;
 
-        public Entity TargetEntity(TargetAlignmentType type) => vision.ValueRO.TargetEntity(type);
-        public float3 TargetPosition(TargetAlignmentType type) => vision.ValueRO.TargetPosition(type);
+        public Entity TargetEntity(TargetAlignmentType type)
+        {
+            TargetEnemyTargetInRange();
+            FriendlyInRange();
+            return vision.ValueRO.TargetEntity(type);
+        }
+
+        public float3 TargetPosition(TargetAlignmentType type)
+        {
+            TargetEnemyTargetInRange();
+            FriendlyInRange();
+
+            return vision.ValueRO.TargetPosition(type);
+        }
+
         public bool TargetInReactRange
         {
             get
@@ -30,7 +43,7 @@ namespace AISenses.VisionSystems
 
         }
 
-        public bool TargetEnemyTargetInRange()
+        private bool TargetEnemyTargetInRange()
         {
             return TargetEnemyTargetInRange(out _, out _);
         }
@@ -70,10 +83,8 @@ namespace AISenses.VisionSystems
             return false;
         }
 
-        public bool FriendlyInRange
+        public bool FriendlyInRange()
         {
-            get
-            {
                 if (scanPositions.IsEmpty)
                     return false;
                 else
@@ -85,7 +96,7 @@ namespace AISenses.VisionSystems
                     }
                 }
                 return false;
-            }
+            
         }
 
         public Target GetClosestEnemy()

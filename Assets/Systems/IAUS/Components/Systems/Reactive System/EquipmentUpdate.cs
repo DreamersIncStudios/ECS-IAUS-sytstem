@@ -12,13 +12,12 @@ namespace IAUS.ECS.Component {
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, AttackGoapAgent goapAgent, ref AttackState attackState, ref CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackState attackState, in CheckAttackStatus tag) => {
 
-               goapAgent.CapableOfMelee= attackState.CapableOfMelee = false;
-               goapAgent.CapableOfMagic=attackState.CapableOfMagic = false;
-               goapAgent.CapableOfProjectile=attackState.CapableOfProjectile = false;
-
-
+               attackState.CapableOfMelee = false;
+             attackState.CapableOfMagic = false;
+             attackState.CapableOfProjectile = false;
+             EntityManager.RemoveComponent<CheckAttackStatus>(entity);
 
                 foreach (var item in test.Equipment.EquippedWeapons)
                 {
@@ -32,25 +31,24 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Club:
                         case WeaponType.Gloves:
                             case WeaponType.Claws:
-                                goapAgent.CapableOfMelee=      attackState.CapableOfMelee = true;
+                                  attackState.CapableOfMelee = true;
                             break;
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                            goapAgent.CapableOfMagic= attackState.CapableOfMagic = true;
+                           attackState.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                            goapAgent.CapableOfProjectile=     attackState.CapableOfProjectile = true;
+                              attackState.CapableOfProjectile = true;
                             break;
                     }
                     
                     if (test.Equipment.EquippedAbility.Count > 0)
-                        goapAgent.CapableOfMagic=  attackState.CapableOfMagic = true;
+                        attackState.CapableOfMagic = true;
                 }
 
-                EntityManager.RemoveComponent<CheckAttackStatus>(entity);
             }).Run();
         }
     }

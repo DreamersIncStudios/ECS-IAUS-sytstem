@@ -314,88 +314,66 @@ public class CharacterBuilder
             Difficulty = Difficulty.Normal // TODO  pull from Game setting in future 
         });
         foreach (var state in aiStatesToAdd)
+        {
+            switch (state)
             {
-                switch (state)
-                {
-                    case AIStates.Patrol:
-                        var patrol = new Patrol()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        if (classLevel > 3)
-                            patrol.StayInQuadrant = true;
-                        manager.AddComponentData(entity, patrol);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
+                case AIStates.Patrol:
+                    var patrol = new Patrol()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    if (classLevel > 3)
+                        patrol.StayInQuadrant = true;
+                    manager.AddComponentData(entity, patrol);
+                    manager.AddBuffer<TravelWaypointBuffer>(entity);
+                    break;
 
-                    case AIStates.Traverse:
-                        var traverse = new Traverse()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, traverse);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
-                    case AIStates.WanderQuadrant:
+                case AIStates.Traverse:
+                    var traverse = new Traverse()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(entity, traverse);
+                    manager.AddBuffer<TravelWaypointBuffer>(entity);
+                    break;
+                case AIStates.WanderQuadrant:
                        
-                        manager.AddComponentData(entity, new WanderQuadrant(
-                            spawnPosition: model.transform.position,
-                             coolDownTime: 5.5f,
-                            bufferZone: .25f,
-                            wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
-                        ));
+                    manager.AddComponentData(entity, new WanderQuadrant(
+                        spawnPosition: model.transform.position,
+                        coolDownTime: 5.5f,
+                        bufferZone: .25f,
+                        wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
+                    ));
 
-                        break;
-                    case AIStates.Wait:
-                        var wait = new Wait()
-                        {
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, wait);
-                        break;
-                    case AIStates.Attack:
-                        manager.AddComponent<AttackTarget>(entity);
-                        manager.AddComponent<PursueTarget>(entity);
-                        manager.AddComponentObject(entity, new Command());
-                        var goap = new AttackGoapAgent()
-                        {
-                            CapableOfMelee = CapableOfMelee,
-                            CapableOfMagic = CapableOfMagic,
-                            CapableOfProjectile = CapableOfRange,
-                            SelfRef =  entity
-                        };
-                        goap.Init();
-                        manager.AddComponentObject(entity, goap);
-                        manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
-                        manager.AddComponent<CheckAttackStatus>(entity);
-                        if(CapableOfMagic)
-                            manager.AddComponent<MagicAttackSubState>(entity);
-                        if(CapableOfRange)
-                            manager.AddComponentData(entity, new RangedAttackSubState() { 
-                            MaxEffectiveRange = 60,
-                        });
-                        manager.AddComponent<WeaponSkillsAttackSubState>(entity);
-        
-                        if (CapableOfMelee)
-                        {
-                            var melee = new MeleeAttackSubState();
-                            manager.AddComponentData(entity, melee);
-                        }
-                        break;
-                    case AIStates.RetreatToLocation:
+                    break;
+                case AIStates.Wait:
+                    var wait = new Wait()
+                    {
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(entity, wait);
+                    break;
+                case AIStates.Attack:
+                    manager.AddComponent<AttackTarget>(entity);
+                    manager.AddComponentObject(entity, new Command());
+                    manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
+                    manager.AddComponent<CheckAttackStatus>(entity);
+               
+                    break;
+                case AIStates.RetreatToLocation:
           
-                        manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
-                        break;
-                    case AIStates.RetreatToQuadrant:
-                        manager.AddComponentData(entity,new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
-                        break;
-                }
+                    manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
+                    break;
+                case AIStates.RetreatToQuadrant:
+                    manager.AddComponentData(entity,new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
+                    break;
             }
-            manager.AddComponent<SetupBrainTag>(entity);
+        }
+        manager.AddComponent<SetupBrainTag>(entity);
 
         return this;
     }

@@ -1,15 +1,17 @@
-﻿using AISenses.VisionSystems;
+﻿using System.Collections.Generic;
+using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
+using NUnit.Framework;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using PixelCrushers.LoveHate;
 using Stats;
+using Unity.Collections;
 
 namespace Global.Component
 {
     [System.Serializable]
-    /// Do not add [GenerateAuthoring] tag use AITargetCreate
     public struct AITarget : IComponentData
     {
         public TargetType Type;
@@ -47,5 +49,5 @@ namespace Global.Component
             }).Schedule();
         }
     }
-
+    
 }
