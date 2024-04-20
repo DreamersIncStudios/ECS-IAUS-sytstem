@@ -54,6 +54,7 @@ namespace IAUS.ECS.Systems.Reactive
                     {
                         ComponentType.ReadWrite(typeof(AttackState)),
                         ComponentType.ReadWrite(typeof(AttackActionTag)),
+                        
                         ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform))
                     },
                     Absent = new[]
@@ -75,12 +76,12 @@ namespace IAUS.ECS.Systems.Reactive
 
             protected override void OnUpdate()
             {
-                new DetermineAction().Schedule(attackTagAdd);
+                new DetermineAction().Schedule();
             }
 
             partial struct DetermineAction: IJobEntity
             {
-                void Execute( AttackAspect aspect)
+                void Execute( AttackAspect aspect, in AttackActionTag tag)
                 {
                     aspect.DeterminePlan();
                 }

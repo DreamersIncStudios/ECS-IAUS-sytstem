@@ -27,14 +27,14 @@ namespace AISenses.VisionSystems
         protected override void OnCreate()
         {
             base.OnCreate();
+            RequireForUpdate<PhysicsWorldSingleton>();
             EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
-            collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
         }
 
         protected override void OnUpdate()
         {
 
-            collisionWorld.UpdateBodyIndexMap();
+            collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state, in LocalTransform transform) =>
                 {
 
