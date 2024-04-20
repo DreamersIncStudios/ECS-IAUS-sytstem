@@ -35,29 +35,17 @@ namespace AISenses.VisionSystems
         {
 
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state, in LocalTransform transform) =>
+            Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state) =>
                 {
-
-                    mapVision.Locations.c1 = MagicTargetPosition(ref mapVision, ref state, transform);
-
-                    if (state.CapableOfMelee)
-                    {
-                        //look for position cost to target to attack from if cant get close set float3.zero
-                    }
-                    else
-                        mapVision.Locations.c0 = float3.zero;  
-                    if (state.CapableOfProjectile)
-                    {
-                        //look for cover position to attack from  if not in range set float3.zero
-                    }
-                    else
-                        mapVision.Locations.c2 = float3.zero;
+                    mapVision.Locations.c0 = MeleeTargetPosition( state);
+                    mapVision.Locations.c1 = MagicTargetPosition(ref mapVision, ref state);
+                    mapVision.Locations.c2 = RangeTargetPosition(ref mapVision, ref state);
                 }).WithoutBurst()
                 .Run();
         }
 
         private CollisionWorld collisionWorld;
-        private float3 MagicTargetPosition(ref MapVision mapVision, ref AttackState state, LocalTransform transform)
+        private float3 MagicTargetPosition(ref MapVision mapVision, ref AttackState state)
         {   
             if (!state.CapableOfMagic) return float3.zero;
             foreach(var (staticObject, objectTransform, physicsInfo) in SystemAPI.Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo >())
@@ -66,7 +54,7 @@ namespace AISenses.VisionSystems
                 if (distFromObjectToTarget is <= 15 or >= 50) continue;
                 var raycastInput = new RaycastInput()
                 {
-                    Start = objectTransform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
+                    Start = objectTransform.Position + new float3(0, 1, 0) + objectTransform.Forward() * 3f,
                     End = state.TargetPosition + new float3(0, 1, 0) ,
                     Filter = new CollisionFilter()
                     {
@@ -82,13 +70,13 @@ namespace AISenses.VisionSystems
             return new float3();
         }
 
-        private float3 MeleeTargetPosition(ref MapVision mapVision, ref AttackState state, LocalTransform transform)
+        private float3 MeleeTargetPosition( AttackState state)
         {
             if (!state.CapableOfMelee) return float3.zero;
             return GlobalFunctions.RandomPoint(state.TargetPosition, 7.5f, out float3 target) ? target : float3.zero;
         }
 
-        private float3 RangeTargetPosition(ref MapVision mapVision, ref AttackState state, LocalTransform transform)
+        private float3 RangeTargetPosition(ref MapVision mapVision, ref AttackState state)
         {   
             if (!state.CapableOfProjectile) return float3.zero;
             foreach(var (staticObject, objectTransform, physicsInfo) in SystemAPI.Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo >())
@@ -97,7 +85,7 @@ namespace AISenses.VisionSystems
                 if (distFromObjectToTarget is <= 15 or >= 50) continue;
                 var raycastInput = new RaycastInput()
                 {
-                    Start = objectTransform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
+                    Start = objectTransform.Position + new float3(0, 1, 0) + objectTransform.Forward() * 3f,
                     End = state.TargetPosition + new float3(0, 1, 0) ,
                     Filter = new CollisionFilter()
                     {

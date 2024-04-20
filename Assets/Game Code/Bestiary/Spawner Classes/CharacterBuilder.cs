@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AISenses;
+using AISenses.VisionSystems;
 using AISenses.VisionSystems.Combat;
 using Components.MovementSystem;
 using Dreamers.InventorySystem;
@@ -231,7 +232,7 @@ public class CharacterBuilder
         vision.InitializeSense(character);
         manager.AddBuffer<ScanPositionBuffer>(entity);
         manager.AddComponentData(entity, vision);
-        
+        manager.AddComponent<MapVision>(entity);
         return this;
     }
     

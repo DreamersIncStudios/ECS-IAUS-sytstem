@@ -4,6 +4,7 @@ using System.Linq;
 using AISenses;
 using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
+using Global.Component;
 using IAUS.ECS.StateBlobSystem;
 using Stats.Entities;
 using Unity.Entities;
@@ -184,8 +185,14 @@ namespace IAUS.ECS.Component.Aspects
             get
             {
                 if (!attack.IsValid) return 0.0f;
-                if (!visionAspect.TargetEnemyTargetInRange(out float dist)) return 0.0f;
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist))
+                {
+                    attack.ValueRW.TargetPosition = float3.zero;
+                    return 0.0f;
+                }
 
+                attack.ValueRW.TargetPosition = visionAspect.TargetEnemyPosition;
+            
                 if (wait.ValueRO.Index == -1)
                 {
                     throw new ArgumentOutOfRangeException(nameof(wait),

@@ -13,6 +13,8 @@ namespace AISenses.VisionSystems
         private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
         private readonly RefRW<Vision> vision;
 
+        public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
+        public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
         public Entity TargetEntity(TargetAlignmentType type)
         {
             TargetEnemyTargetInRange();
@@ -57,6 +59,7 @@ namespace AISenses.VisionSystems
             return TargetEnemyTargetInRange(out target, out _);
         }
 
+
         public bool TargetEnemyTargetInRange(out AITarget target, out float dist)
         {
             target = new AITarget();
@@ -65,7 +68,6 @@ namespace AISenses.VisionSystems
             if (scanPositions.IsEmpty)
             {
                 vision.ValueRW.TargetEnemyEntity = Entity.Null;
-                vision.ValueRW.LastKnownPositionEnemy = float3.zero;
                 return false;
             }
             else
@@ -76,7 +78,7 @@ namespace AISenses.VisionSystems
                     target = scan.target.TargetInfo;
                     dist = scan.target.DistanceTo;
                     vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
-                    vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
+                   vision.ValueRW.TargetEnemyPosition = vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
                     return true;
                 }
             }
