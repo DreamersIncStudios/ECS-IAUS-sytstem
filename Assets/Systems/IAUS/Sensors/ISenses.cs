@@ -56,7 +56,7 @@ namespace AISenses
         public Entity TargetEnemyEntity { get; set; }
         public Entity TargetFriendlyEntity { get; set; }
  
-        public float3 TargetEnemyPosition { get; set; }
+        [SerializeField] public float3 TargetEnemyPosition { get; set; }
         public float3 LastKnownPositionEnemy { get; set; }
         public float3 TargetFriendlyPosition { get; set; }
         public float3 LastKnownPositionFriendly { get; set; }

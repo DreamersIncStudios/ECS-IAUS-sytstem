@@ -162,6 +162,15 @@ namespace AISenses.VisionSystems
                 FindTargets(hashMapKey - 1 - QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
             }
 
+            /// <summary>
+            /// Finds the targets based on the given input parameters.
+            /// </summary>
+            /// <param name="hashMapKey">The key for the quadrant map lookup.</param>
+            /// <param name="entity">The target entity.</param>
+            /// <param name="buffer">The buffer containing scan position information.</param>
+            /// <param name="vision">The vision structure containing target information.</param>
+            /// <param name="transform">The local transform of the target entity.</param>
+            /// <param name="physicsInfo">The physics information of the target entity.</param>
             void FindTargets(int hashMapKey, Entity entity, DynamicBuffer<ScanPositionBuffer> buffer, Vision vision,
                 LocalTransform transform, PhysicsInfo physicsInfo)
             {
@@ -246,7 +255,21 @@ namespace AISenses.VisionSystems
                 var transform = TransformComponentLookup[targetEntity];
                 var dirToTarget = GetDirectionToTarget(transform);
 
-                if (!CanSeeTarget(transform, vision, dirToTarget)) return;
+                if (!CanSeeTarget(transform, vision, dirToTarget))
+                {
+                    switch (type)
+                    {
+                     case TargetAlignmentType.Enemy:
+                         vision.TargetEnemyEntity = Entity.Null;
+                         vision.TargetEnemyPosition = float3.zero;
+                         break;
+                     case TargetAlignmentType.Friendly:
+                         vision.TargetFriendlyEntity = Entity.Null;
+                         vision.TargetFriendlyPosition = float3.zero;
+                         break;
+                    }
+                    
+                }
 
                 var raycastInput = CreateRaycastInput(transform, TargetData[targetEntity], physicsInfo);
                 if (!World.CastRay(raycastInput, out RaycastHit raycastHit)) return;

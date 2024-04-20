@@ -1,5 +1,6 @@
 using Components.MovementSystem;
 using IAUS.ECS.Component;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Transforms;
@@ -76,14 +77,19 @@ namespace IAUS.ECS.Systems.Reactive
 
             protected override void OnUpdate()
             {
-                new DetermineAction().Schedule();
+                new DetermineAction()
+                {
+                    deltaTime = SystemAPI.Time.DeltaTime
+                }.Schedule();
             }
 
             partial struct DetermineAction: IJobEntity
             {
+                [DeallocateOnJobCompletion]public float deltaTime;
                 void Execute( AttackAspect aspect, in AttackActionTag tag)
                 {
                     aspect.DeterminePlan();
+                    aspect.ExecutePlan(deltaTime);
                 }
             }
 

@@ -15,6 +15,7 @@ namespace AISenses.VisionSystems
 {
     public struct MapVision : IComponentData
     {
+        public float3 TargetPosition;
         public bool HasMeleeLocation => !Locations.c0.Equals(float3.zero);
         public bool HasRangeLocation => !Locations.c2.Equals(float3.zero);
         public bool HasMagicLocation => !Locations.c1.Equals(float3.zero);
@@ -37,7 +38,9 @@ namespace AISenses.VisionSystems
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state) =>
                 {
-                    mapVision.Locations.c0 = MeleeTargetPosition( state);
+                    if (mapVision.TargetPosition.Equals(state.TargetPosition)) return;
+                    mapVision.TargetPosition = state.TargetPosition;
+                    mapVision.Locations.c0 = MeleeTargetPosition(mapVision, state);
                     mapVision.Locations.c1 = MagicTargetPosition(ref mapVision, ref state);
                     mapVision.Locations.c2 = RangeTargetPosition(ref mapVision, ref state);
                 }).WithoutBurst()
@@ -45,6 +48,13 @@ namespace AISenses.VisionSystems
         }
 
         private CollisionWorld collisionWorld;
+        
+        /// <summary>
+        /// Determines the target position for a Magic attack by looking for cover position with line of sight
+        /// </summary>
+        /// <param name="mapVision">The MapVision component containing possible position for NPC to go to .</param>
+        /// <param name="state">The AttackState component representing the attack state.</param>
+        /// <returns>The target position for a range attack.</returns
         private float3 MagicTargetPosition(ref MapVision mapVision, ref AttackState state)
         {   
             if (!state.CapableOfMagic) return float3.zero;
@@ -70,12 +80,18 @@ namespace AISenses.VisionSystems
             return new float3();
         }
 
-        private float3 MeleeTargetPosition( AttackState state)
+        private float3 MeleeTargetPosition(MapVision map, AttackState state)
         {
             if (!state.CapableOfMelee) return float3.zero;
-            return GlobalFunctions.RandomPoint(state.TargetPosition, 7.5f, out float3 target) ? target : float3.zero;
+            return GlobalFunctions.RandomPoint(state.TargetPosition, 1.5f, out float3 target) ? target : float3.zero;
         }
 
+        /// <summary>
+        /// Determines the target position for a range attack by looking for cover position with line of sight
+        /// </summary>
+        /// <param name="mapVision">The MapVision component containing possible position for NPC to go to .</param>
+        /// <param name="state">The AttackState component representing the attack state.</param>
+        /// <returns>The target position for a range attack.</returns
         private float3 RangeTargetPosition(ref MapVision mapVision, ref AttackState state)
         {   
             if (!state.CapableOfProjectile) return float3.zero;

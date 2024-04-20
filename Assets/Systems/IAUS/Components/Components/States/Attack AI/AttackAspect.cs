@@ -26,24 +26,46 @@ namespace IAUS.ECS.Component
         {
             if (state.ValueRO.Plan != AttackPlan.None)
             {
+                float dist = new float();
                 // Is Plan still valid?
                 switch (state.ValueRO.Plan)
                 {
-                    case AttackPlan.Rest:
+                    case AttackPlan.Reset:
+                        if (!state.ValueRO.InAttackCooldown)
+                        {
+                            state.ValueRW.Plan = AttackPlan.None;
+                            DeterminePlan();
+                        }
+
                         break;
                     case AttackPlan.Evade:
                         break;
                     case AttackPlan.MoveToLocationMelee:
+                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c0);
+                        if (dist > 3) return;
+                        state.ValueRW.Plan = AttackPlan.AttackMelee;
                         break;
                     case AttackPlan.MoveToLocationMagic:
+                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c1);
+                        if (dist > 3) return;
+                        state.ValueRW.Plan = AttackPlan.AttackMagic;
                         break;
                     case AttackPlan.MoveToLocationRange:
+                         dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c2);
+                        if (dist > 3) return;
+                        state.ValueRW.Plan = AttackPlan.AttackRange;
                         break;
                     case AttackPlan.AttackMelee:
+                        if (state.ValueRO.InAttackCooldown)
+                            state.ValueRW.Plan = AttackPlan.Reset;
                         break;
                     case AttackPlan.AttackMagic:
+                        if (state.ValueRO.InAttackCooldown)
+                            state.ValueRW.Plan = AttackPlan.Reset;
                         break;
                     case AttackPlan.AttackRange:
+                        if (state.ValueRO.InAttackCooldown)
+                            state.ValueRW.Plan = AttackPlan.Reset;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -69,30 +91,42 @@ namespace IAUS.ECS.Component
         }
 
 
-        public void ExecutePlan()
+        public void ExecutePlan(float deltaTime)
         {
             switch (state.ValueRO.Plan)
             {
                 case AttackPlan.None:
-                    Debug.LogError("Npc was able to enter Execute Plan with Plan being establisted");
+                    Debug.LogError("Npc was able to enter Execute Plan with Plan being established");
                     DeterminePlan();
                     break;
-                case AttackPlan.Rest:
+                case AttackPlan.Reset:
+                    state.ValueRW.AttackResetTimer -= deltaTime;
+                    if (state.ValueRO.AttackResetTimer <= 0.0f)
+                        state.ValueRW.AttackResetTimer = 0.0f;
                     break;
                 case AttackPlan.MoveToLocationMelee:
-                    move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c0);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c0))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c0);
                     break;
                 case AttackPlan.MoveToLocationMagic:
-                    move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c1);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c1))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c1);
                     break;
                 case AttackPlan.MoveToLocationRange:
-                    move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c2);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c2))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c2);
                     break;
                 case AttackPlan.AttackMelee:
+                    Debug.Log("attacking");
+                    state.ValueRW.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
                     break;
                 case AttackPlan.AttackMagic:
+                    Debug.Log("attacking");
+                    state.ValueRW.AttackResetTimer = 15;
                     break;
                 case AttackPlan.AttackRange:
+                    Debug.Log("attacking");
+                    state.ValueRW.AttackResetTimer = 15;
                     break;
                 case AttackPlan.Evade:
                     break;
@@ -225,7 +259,7 @@ namespace IAUS.ECS.Component
     public enum AttackPlan
     {
         None,
-        Rest,
+        Reset,
         MoveToLocationMelee,
         MoveToLocationMagic,
         MoveToLocationRange,
