@@ -4,7 +4,6 @@ using Unity.Entities;
 using UnityEngine;
 using Stats;
 using Unity.Mathematics;
-using Unity.Collections;
 using Global.Component;
 using IAUS.Core.GOAP;
 using PixelCrushers.LoveHate;

@@ -27,12 +27,7 @@ namespace AISenses.VisionSystems
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Vision)), ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadWrite(typeof(ScanPositionBuffer)), ComponentType.ReadOnly(typeof(Player_Control)) },
             });
-            //           PlayersParty = GetEntityQuery(new EntityQueryDesc()
-            //            {
-            //                All = new ComponentType[] { ComponentType.ReadWrite(typeof(Vision)), ComponentType.ReadOnly(typeof(LocalToWorld)), ComponentType.ReadWrite(typeof(ScanPositionBuffer)), ComponentType.ReadOnly(typeof(PlayerParty))},
-            //                None = new ComponentType[] { ComponentType.ReadOnly(typeof(Player_Control)) }
 
-            //            });
 
         }
         int index = 0;

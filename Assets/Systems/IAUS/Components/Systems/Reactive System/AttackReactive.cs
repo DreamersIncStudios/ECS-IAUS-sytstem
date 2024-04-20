@@ -75,12 +75,15 @@ namespace IAUS.ECS.Systems.Reactive
 
             protected override void OnUpdate()
             {
-                throw new System.NotImplementedException();
+                new DetermineAction().Schedule(attackTagAdd);
             }
 
-            partial struct DetermineAction
+            partial struct DetermineAction: IJobEntity
             {
-
+                void Execute( AttackAspect aspect)
+                {
+                    aspect.DeterminePlan();
+                }
             }
 
             struct MoveToLocation

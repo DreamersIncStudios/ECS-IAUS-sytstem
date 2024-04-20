@@ -7,6 +7,8 @@ namespace IAUS.ECS.Component
 {
     public struct AttackState : IBaseStateScorer
     {
+        public float3 TargetPosition;
+
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
@@ -18,8 +20,14 @@ namespace IAUS.ECS.Component
             CapableOfMelee = melee;
             CapableOfMagic = magic;
             CapableOfProjectile = range;
+            Plan = AttackPlan.None;
+            AttackResetTimer = 0.0f;
+            TargetPosition = float3.zero;
         }
 
+        public AttackPlan Plan;
+        public float AttackResetTimer;
+        public bool InAttackCooldown => AttackResetTimer != 0.0f;
         public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public void SetIndex(int index)
         {
