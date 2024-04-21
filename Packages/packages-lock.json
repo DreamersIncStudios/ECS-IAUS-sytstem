@@ -36,7 +36,7 @@
     },
     "com.unity.collections": {
       "version": "2.4.0",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.8.12",
@@ -157,7 +157,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {
-      "version": "6.0.1-pre.2",
+      "version": "6.0.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -199,7 +199,7 @@
       }
     },
     "com.unity.render-pipelines.universal": {
-      "version": "17.0.2",
+      "version": "17.0.3",
       "depth": 0,
       "source": "builtin",
       "dependencies": {
@@ -313,6 +313,16 @@
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.macos-arm64-linux-x86_64": {
+      "version": "2.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "2.0.7",
+        "com.unity.sysroot.linux-x86_64": "2.0.6"
       },
       "url": "https://packages.unity.com"
     },
