@@ -91,7 +91,7 @@ namespace IAUS.ECS.Component
         }
 
 
-        public void ExecutePlan(float deltaTime)
+        public void ExecutePlan(Entity entity, int chunkIndex, float deltaTime, EntityCommandBuffer.ParallelWriter ECB)
         {
             switch (state.ValueRO.Plan)
             {
@@ -119,6 +119,7 @@ namespace IAUS.ECS.Component
                 case AttackPlan.AttackMelee:
                     Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
+                    ECB.AddComponent<SelectAndAttack>(chunkIndex, entity);
                     break;
                 case AttackPlan.AttackMagic:
                     Debug.Log("attacking");

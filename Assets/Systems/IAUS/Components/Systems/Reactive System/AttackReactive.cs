@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using Components.MovementSystem;
+using DreamersInc.ComboSystem;
 using IAUS.ECS.Component;
 using Unity.Collections;
 using Unity.Entities;
@@ -46,7 +48,7 @@ namespace IAUS.ECS.Systems.Reactive
         {
             private EntityQuery attackTagAdd;
             private EntityQuery attackTagRemoved;
-            
+            private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
                 attackTagAdd = GetEntityQuery(new EntityQueryDesc()
@@ -73,23 +75,39 @@ namespace IAUS.ECS.Systems.Reactive
                     },
                     All = new[] { ComponentType.ReadOnly(typeof(AttackState)) }
                 });
+                 ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 
             protected override void OnUpdate()
             {
+               
                 new DetermineAction()
                 {
-                    deltaTime = SystemAPI.Time.DeltaTime
+                    deltaTime = SystemAPI.Time.DeltaTime,
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
                 }.Schedule();
+                
+                Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                    (Entity entity, Command handler, Animator anim, NPCAttack comboList, in SelectAndAttack select) =>
+                    {
+                        handler.InputQueue ??= new Queue<AnimationTrigger>();
+                        if (anim.IsInTransition(0)) return;
+                        /*   handler.InputQueue.Enqueue(
+                               comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.Melee)[0]);
+                          */
+                        EntityManager.RemoveComponent<SelectAndAttack>(entity);
+                        Debug.Log("attacked");
+                    }).Run();
             }
 
             partial struct DetermineAction: IJobEntity
             {
-                [DeallocateOnJobCompletion]public float deltaTime;
-                void Execute( AttackAspect aspect, in AttackActionTag tag)
+                public float deltaTime;
+                public EntityCommandBuffer.ParallelWriter ECB;
+                void Execute(int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
                 {
                     aspect.DeterminePlan();
-                    aspect.ExecutePlan(deltaTime);
+                    aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
                 }
             }
 
