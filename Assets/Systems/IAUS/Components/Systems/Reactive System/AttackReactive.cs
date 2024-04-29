@@ -104,7 +104,7 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 public float deltaTime;
                 public EntityCommandBuffer.ParallelWriter ECB;
-                void Execute(int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
+                void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
                 {
                     aspect.DeterminePlan();
                     aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);

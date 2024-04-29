@@ -11,6 +11,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace IAUS.ECS.Component.Aspects
 {
@@ -28,6 +29,7 @@ namespace IAUS.ECS.Component.Aspects
         [Optional] private readonly RefRW<WanderQuadrant> wander;
         [Optional] private readonly RefRW<Wait> wait;
         [Optional] private readonly RefRW<AttackState> attack;
+        [Optional] private readonly RefRW<EvadeThreat> evade;
 
     public readonly Entity Self;
 
@@ -180,7 +182,7 @@ namespace IAUS.ECS.Component.Aspects
 
         }
 
-        float ScoreOfAttackState
+        private float ScoreOfAttackState
         {
             get
             {
@@ -204,10 +206,27 @@ namespace IAUS.ECS.Component.Aspects
                 float totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
                                    asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
                                    asset.EnemyInfluence.Output(influenceDist);
-                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);               
+                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                attack.ValueRW.TotalScore = totalScore;
                 return totalScore;
             }
 
+        }
+
+        private float ScoreOfEvadeState
+        {
+            get
+            {
+                if(evade.ValueRO.Index==-1)
+                    throw new ArgumentOutOfRangeException(nameof(wait),
+                        $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
+                var asset = GetAsset(evade.ValueRO.Index);
+
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio);
+                evade.ValueRW.TotalScore = totalScore =
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                return totalScore;
+            }
         }
         private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
 
@@ -224,7 +243,8 @@ namespace IAUS.ECS.Component.Aspects
                 new StateInfo(AIStates.WanderQuadrant,
                     wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
                 new StateInfo(AIStates.Wait,
-                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState)
+                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
+                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState)
             };
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
@@ -258,6 +278,9 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
+                case AIStates.Retreat:
+                    commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
+                    break;
             }
 
             //add new action tag
@@ -281,10 +304,9 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Attack:
                     commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Self);
                     break;
-                case AIStates.RetreatToLocation:
+                case AIStates.Retreat:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-
             }
 
             brain.ValueRW.CurrentState = highScoreState;

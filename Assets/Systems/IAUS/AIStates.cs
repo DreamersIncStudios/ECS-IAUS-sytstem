@@ -6,7 +6,7 @@ namespace IAUS.ECS
 
         None, 
         Patrol, 
-        Heal_Self_Item, 
+        Heal_Self_Item, // combine this with heal Magic to make Heal
         Heal_Magic, 
         Attack, 
         Retreat, 
@@ -18,18 +18,14 @@ namespace IAUS.ECS
         GotoLeader,
         InvestigateArea, 
         SearchArea, 
-        RetreatToLocation,
-        RetreatToQuadrant,
+        RetreatToLocation, //Todo remove
+        RetreatToQuadrant, //Todo remove
         FollowTarget, 
         ChaseMoveToTarget,
         Traverse, 
         GatherResources,
         CallBackUp,
         Terrorize,
-        AttackMelee,
-        AttackMagic,
-        AttackRange,
-        AttackMagicMelee,
         WanderQuadrant
 
 
