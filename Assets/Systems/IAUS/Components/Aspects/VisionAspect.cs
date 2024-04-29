@@ -15,6 +15,8 @@ namespace AISenses.VisionSystems
 
         public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
+        public float3 TargetCoverLocation { get; }
+
         public Entity TargetEntity(TargetAlignmentType type)
         {
             TargetEnemyTargetInRange();

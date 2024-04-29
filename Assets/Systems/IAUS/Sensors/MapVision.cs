@@ -15,7 +15,8 @@ namespace AISenses.VisionSystems
 {
     public struct MapVision : IComponentData
     {
-        public float3 TargetPosition;
+        public float3 TargetAttackPosition;
+        public float4 TargetCoverPositions; // nearest, Farthest, Lowest threat but in range, random location in range 
         public bool HasMeleeLocation => !Locations.c0.Equals(float3.zero);
         public bool HasRangeLocation => !Locations.c2.Equals(float3.zero);
         public bool HasMagicLocation => !Locations.c1.Equals(float3.zero);
@@ -38,8 +39,8 @@ namespace AISenses.VisionSystems
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state) =>
                 {
-                    if (mapVision.TargetPosition.Equals(state.TargetPosition)) return;
-                    mapVision.TargetPosition = state.TargetPosition;
+                    if (mapVision.TargetAttackPosition.Equals(state.TargetPosition)) return;
+                    mapVision.TargetAttackPosition = state.TargetPosition;
                     mapVision.Locations.c0 = MeleeTargetPosition(mapVision, state);
                     mapVision.Locations.c1 = MagicTargetPosition(ref mapVision, ref state);
                     mapVision.Locations.c2 = RangeTargetPosition(ref mapVision, ref state);
@@ -114,7 +115,24 @@ namespace AISenses.VisionSystems
                 // add more filtering stuff
                 return objectTransform.Position;
             }
-            return new float3();
+
+            return float3.zero;
+        }
+
+        public float3 ClosestSafeLocation(ref MapVision mapVision, ref EvadeThreat state, LocalTransform transform)
+        {
+            var lowestDist = 100000000.0f;
+            var outputPosition = new float3();
+            foreach (var (staticObject, objectTransform, physicsInfo) in SystemAPI
+                         .Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo>())
+            {
+                var distFromObjectToTarget = Vector3.Distance(transform.Position, objectTransform.Position);
+                if (!(distFromObjectToTarget > lowestDist)) continue;
+                lowestDist = distFromObjectToTarget;
+                outputPosition = objectTransform.Position;
+            }
+
+            return outputPosition;
         }
     }
 }
