@@ -2,6 +2,7 @@ using AISenses.VisionSystems;
 using Components.MovementSystem;
 using IAUS.ECS;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace IAUS.ECS.Component
 {
     public struct EvadeThreat : IBaseStateScorer
     {
+        public float3 EvadeTargetLocation;
         public int Index { get; private set; }
         public AIStates Name => AIStates.Retreat;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }

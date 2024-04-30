@@ -185,7 +185,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "17.0.2",
+      "version": "17.0.3",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
@@ -205,17 +205,17 @@
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
         "com.unity.burst": "1.8.9",
-        "com.unity.render-pipelines.core": "17.0.2",
-        "com.unity.shadergraph": "17.0.2",
-        "com.unity.render-pipelines.universal-config": "17.0.1"
+        "com.unity.render-pipelines.core": "17.0.3",
+        "com.unity.shadergraph": "17.0.3",
+        "com.unity.render-pipelines.universal-config": "17.0.3"
       }
     },
     "com.unity.render-pipelines.universal-config": {
-      "version": "17.0.1",
+      "version": "17.0.3",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "17.0.1"
+        "com.unity.render-pipelines.core": "17.0.3"
       }
     },
     "com.unity.rendering.light-transport": {
@@ -224,7 +224,8 @@
       "source": "builtin",
       "dependencies": {
         "com.unity.collections": "2.2.0",
-        "com.unity.mathematics": "1.2.4"
+        "com.unity.mathematics": "1.2.4",
+        "com.unity.modules.terrain": "1.0.0"
       }
     },
     "com.unity.scriptablebuildpipeline": {
@@ -259,11 +260,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
-      "version": "17.0.2",
+      "version": "17.0.3",
       "depth": 1,
       "source": "builtin",
       "dependencies": {
-        "com.unity.render-pipelines.core": "17.0.2",
+        "com.unity.render-pipelines.core": "17.0.3",
         "com.unity.searcher": "4.9.2"
       }
     },

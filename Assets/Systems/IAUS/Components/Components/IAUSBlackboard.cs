@@ -23,6 +23,7 @@ namespace IAUS.ECS.Component.Aspects
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect visionAspect;
+        private  readonly RefRO<MapVision> mapVision;
         private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
@@ -217,12 +218,35 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist) 
+                    || mapVision.ValueRO.CoverPositions.Equals(float3x4.zero))
+                {
+                    evade.ValueRW.EvadeTargetLocation = float3.zero;
+                    return 0.0f;
+                }
+
                 if(evade.ValueRO.Index==-1)
                     throw new ArgumentOutOfRangeException(nameof(wait),
                         $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
                 var asset = GetAsset(evade.ValueRO.Index);
-
-                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio);
+                var coverPosition = !mapVision.ValueRO.CoverPositions.c0.Equals(float3.zero)
+                    ?
+                    mapVision.ValueRO.CoverPositions.c0
+                    :
+                    !mapVision.ValueRO.CoverPositions.c1.Equals(float3.zero)
+                        ? mapVision.ValueRO.CoverPositions.c1
+                        :
+                        !mapVision.ValueRO.CoverPositions.c2.Equals(float3.zero)
+                            ? mapVision.ValueRO.CoverPositions.c2
+                            :
+                            !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
+                                ? mapVision.ValueRO.CoverPositions.c3
+                                : float3.zero;
+                var safeDist = Vector3.Distance(Transform.ValueRO.Position, coverPosition);
+                
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
+                                 * asset.DistanceToTargetEnemy.Output(dist / 200.0f)
+                                 * asset.DistanceToTargetLocation.Output(safeDist / 200.0f);
                 evade.ValueRW.TotalScore = totalScore =
                     Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
                 return totalScore;

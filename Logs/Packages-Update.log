@@ -359,6 +359,16 @@ The following packages were updated:
 The following packages were removed:
   com.unity.textmeshpro@3.0.6
 
+=== Wed Apr 17 06:22:52 2024
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collections from version 2.4.0-pre.2 to 2.4.0
+  com.unity.probuilder from version 6.0.1-pre.2 to 6.0.1
+  com.unity.render-pipelines.universal from version 17.0.2 to 17.0.3
+
 === Wed Apr 17 18:18:54 2024
 
 Packages were changed.
