@@ -111,19 +111,6 @@ namespace IAUS.ECS.Systems.Reactive
                 }
             }
 
-            struct MoveToLocation
-            {
-                
-            }
-
-            struct AttackTarget
-            {
-            }
-
-            struct CoolDown
-            {
-                
-            }
         }
     }
 }

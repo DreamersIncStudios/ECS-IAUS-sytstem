@@ -16,6 +16,7 @@ using IAUS.ECS;
 using IAUS.ECS.Component;
 using MotionSystem;
 using MotionSystem.Components;
+using ProjectDawn.Navigation;
 using Stats;
 using Stats.Entities;
 using Unity.Entities;
@@ -71,7 +72,11 @@ public class CharacterBuilder
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         var agent = model.GetComponent<NavMeshAgent>();
-        manager.AddComponentObject(entity, agent);
+        //manager.AddComponentObject(entity, agent);
+        manager.AddComponentData(entity, Agent.Default);
+        manager.AddComponentData(entity, AgentBody.Default);
+        manager.AddComponentData(entity, AgentLocomotion.Default);
+        manager.AddComponentData(entity, AgentShape.Default);
         var move = new Movement()
         {
             Acceleration = agent.acceleration,
@@ -287,7 +292,10 @@ public class CharacterBuilder
         if (model == null) return this;
         var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var agent = model.GetComponent<NavMeshAgent>();
-        manager.AddComponentObject(entity, agent);
+        manager.AddComponentData(entity, Agent.Default);
+        manager.AddComponentData(entity, AgentBody.Default);
+        manager.AddComponentData(entity, AgentLocomotion.Default);
+        manager.AddComponentData(entity, AgentShape.Default);
         var move = new Movement()
         {
             Acceleration = agent.acceleration,

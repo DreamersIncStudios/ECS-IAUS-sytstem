@@ -218,6 +218,8 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
+                if (!evade.IsValid) return 0.0f;
+                
                 if (!visionAspect.TargetEnemyTargetInRange(out float dist) 
                     || mapVision.ValueRO.CoverPositions.Equals(float3x4.zero))
                 {

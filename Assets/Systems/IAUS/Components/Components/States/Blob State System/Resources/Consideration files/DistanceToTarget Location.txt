@@ -20,10 +20,6 @@ Normal,Daemon,1,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,0,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,2,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
 Normal,Daemon,3,Terrorize,TRUE,FALSE,Logistic,6000,1.0000,0.0000,0.4500
-Normal,Grunt,1,AttackRange,TRUE,FALSE,LinearQuad,5.0000,2.000,0.0,0.6500
-Normal,Grunt,2,AttackRange,TRUE,FALSE,LinearQuad,5.0000,2.000,0.0,0.6500
-Normal,Grunt,3,AttackRange,TRUE,FALSE,LinearQuad,5.0000,2.000,0.0,0.6500
-Normal,Grunt,0,AttackRange,TRUE,FALSE,LinearQuad,5.0000,2.000,0.00,0.6500
 Normal,Beast,0,RetreatToQuadrant,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,Beast,1,RetreatToQuadrant,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500
 Normal,Beast,2,RetreatToQuadrant,TRUE,FALSE,Logistic,1000.0000,-0.9500,1.000,0.5500

@@ -6,6 +6,7 @@ using Components.MovementSystem;
 using Unity.Transforms;
 using Unity.Jobs;
 using MotionSystem;
+using ProjectDawn.Navigation;
 
 namespace IAUS.ECS.Systems
 {
@@ -22,7 +23,7 @@ namespace IAUS.ECS.Systems
             World.GetOrCreateSystemManaged<EndSimulationEntityCommandBufferSystem>().AddJobHandleForProducer(systemDeps);
             Dependency = systemDeps;
 
-            Entities.WithoutBurst().ForEach((NavMeshAgent agent, ref Movement move) =>
+            Entities.ForEach((AgentBody agent, ref Movement move) =>
             {
                 if (move.CanMove)
                 {
@@ -33,13 +34,13 @@ namespace IAUS.ECS.Systems
                         {
                             move.TargetLocation = hit.position;
                             agent.SetDestination(hit.position);
-                            agent.isStopped = false;
+                            agent.IsStopped = false;
                             move.SetTargetLocation = false;
                         }
                     }
 
 
-                    if (!agent.hasPath) return;
+                    //if (!agent.) return;
                     if (move.WithinRangeOfTargetLocation)
                     {
                         move.CanMove = false;
@@ -47,7 +48,7 @@ namespace IAUS.ECS.Systems
                 }
                 else
                 {
-                    agent.isStopped = true;
+                    agent.IsStopped = true;
 
                 }
 
