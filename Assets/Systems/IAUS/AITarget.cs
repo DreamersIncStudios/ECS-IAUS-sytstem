@@ -1,0 +1,53 @@
+﻿using System.Collections.Generic;
+using AISenses.VisionSystems;
+using DreamersInc.InflunceMapSystem;
+using NUnit.Framework;
+using Unity.Entities;
+using Unity.Mathematics;
+using UnityEngine;
+using PixelCrushers.LoveHate;
+using Stats;
+using Unity.Collections;
+
+namespace Global.Component
+{
+    [System.Serializable]
+    public struct AITarget : IComponentData
+    {
+        public TargetType Type;
+        public ClassTitle ClassTitle;
+        public uint level{get; set; }
+        public int FactionID;
+        public int NumOfEntityTargetingMe;
+        [HideInInspector] public int GetInstanceID;
+        public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
+        [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
+        public bool CanBeTargetByPlayer;
+        public float3 CenterOffset;
+        //TODO change to output a relationship level;
+      
+        public float detectionScore;
+
+    }
+    [System.Serializable]
+    public enum TargetType
+    {
+        None, Character, Location, Vehicle
+    }
+
+
+
+    [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
+    [UpdateBefore(typeof(TargetingQuadrantSystem))]
+    public partial class UpdateAITarget : SystemBase
+    {
+        protected override void OnUpdate()
+        {
+            Entities.ForEach((ref AITarget target, ref Perceptibility perceptibility) =>
+            {
+                target.detectionScore = perceptibility.Score;
+            }).Schedule();
+        }
+    }
+    
+}

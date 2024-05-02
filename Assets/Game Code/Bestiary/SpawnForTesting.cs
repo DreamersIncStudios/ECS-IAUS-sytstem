@@ -12,7 +12,7 @@ public class SpawnForTesting : MonoBehaviour
     void Start()
     {
         var info = BestiaryDB.GetCreature(3);
-        CharacterBuilder.CreateCharacter("Kas").WithModel(info.Prefab, Vector3.zero, "Player")
+        new CharacterBuilder( "Kas").WithModel(info.Prefab, Vector3.zero, "Player")
             .WithEntityPhysics(info.PhysicsInfo).Build();
         List<float3> positions = new List<float3>();
         while (positions.Count < 70)

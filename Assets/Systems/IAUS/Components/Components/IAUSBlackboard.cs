@@ -1,16 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AISenses;
 using AISenses.VisionSystems;
 using DreamersInc.InflunceMapSystem;
+using Global.Component;
 using IAUS.ECS.StateBlobSystem;
 using Stats.Entities;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Properties;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace IAUS.ECS.Component.Aspects
 {
@@ -18,18 +19,20 @@ namespace IAUS.ECS.Component.Aspects
 
     public readonly partial struct IAUSBlackboard : IAspect
     {
-        readonly RefRO<LocalTransform> transform;
+        public readonly RefRO<LocalTransform> Transform;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
-        private readonly VisionAspect vision;
-        private readonly AttackAspect attack;
+        private readonly VisionAspect visionAspect;
+        private  readonly RefRO<MapVision> mapVision;
         private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
         [Optional] private readonly RefRW<Wait> wait;
-        [Optional] private readonly RefRW<PursueTarget> pursueTarget;
-        public readonly Entity Self;
+        [Optional] private readonly RefRW<AttackState> attack;
+        [Optional] private readonly RefRW<EvadeThreat> evade;
+
+    public readonly Entity Self;
 
         private StateAsset GetAsset(int index)
         {
@@ -54,9 +57,9 @@ namespace IAUS.ECS.Component.Aspects
 
         float DistanceToPoint(float3 posToCheck, float StopBuffer = 0.5f)
         {
-            return Vector3.Distance(posToCheck, transform.ValueRO.Position) < StopBuffer
+            return Vector3.Distance(posToCheck, Transform.ValueRO.Position) < StopBuffer
                 ? 0
-                : Vector3.Distance(posToCheck, transform.ValueRO.Position);
+                : Vector3.Distance(posToCheck, Transform.ValueRO.Position);
         }
 
         public float ScoreOfPatrolState
@@ -140,14 +143,13 @@ namespace IAUS.ECS.Component.Aspects
                 ;
 
 
-                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
-                    ? vision.GetClosestEnemy().DistanceTo
-                    : 50;
+                var distToEnemy = visionAspect.TargetEnemyTargetInRange(out float dist)
+                    ? dist : 200.0f;
                 var totalScore = Mathf.Clamp01(asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio) *
                                                asset.Health.Output(statInfo.ValueRO.HealthRatio) *
                                                asset.DistanceToTargetEnemy.Output(
                                                    Mathf.Clamp01(distToEnemy /
-                                                                 50.0f))); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
+                                                                 200.0f))); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
                 wander.ValueRW.TotalScore =
                     wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget
                         ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore)
@@ -181,51 +183,96 @@ namespace IAUS.ECS.Component.Aspects
 
         }
 
-        private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
-
-        float ScoreOfPursue
+        private float ScoreOfAttackState
         {
             get
             {
-                if (!pursueTarget.IsValid) return 0.0f;
-                if (pursueTarget.ValueRO.Index == -1)
+                if (!attack.IsValid) return 0.0f;
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist))
+                {
+                    attack.ValueRW.TargetPosition = float3.zero;
+                    return 0.0f;
+                }
+
+                attack.ValueRW.TargetPosition = visionAspect.TargetEnemyPosition;
+            
+                if (wait.ValueRO.Index == -1)
+                {
                     throw new ArgumentOutOfRangeException(nameof(wait),
                         $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
-                var asset = GetAsset(pursueTarget.ValueRO.Index);
 
-                var distToEnemy = vision.GetClosestEnemy().Entity != Entity.Null
-                    ? vision.GetClosestEnemy().DistanceTo
-                    : 50;
-                var range = Mathf.Clamp01(distToEnemy / (2 * TravelInFiveSec));
+                }
+                var asset = GetAsset(attack.ValueRO.Index);
                 var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
-
-                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
-                                 asset.DistanceToTargetEnemy.Output(range) * asset.EnemyInfluence.Output(influenceDist);
-                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * pursueTarget.ValueRO.mod) * totalScore);
+                float totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
+                                   asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
+                                   asset.EnemyInfluence.Output(influenceDist);
+                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                attack.ValueRW.TotalScore = totalScore;
                 return totalScore;
-
             }
 
         }
 
-        public AIStates GetHighState()
+        private float ScoreOfEvadeState
         {
-            var stateInfo = new List<StateInfo>();
-            stateInfo.Add(new StateInfo(AIStates.Attack, attack.Status, attack.Score));
+            get
+            {
+                if (!evade.IsValid) return 0.0f;
+                
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist) 
+                    || mapVision.ValueRO.CoverPositions.Equals(float3x4.zero))
+                {
+                    evade.ValueRW.EvadeTargetLocation = float3.zero;
+                    return 0.0f;
+                }
 
-            stateInfo.Add(new StateInfo(AIStates.Patrol,
-                patrol.IsValid ? patrol.ValueRO.Status : ActionStatus.Disabled, ScoreOfPatrolState));
-            stateInfo.Add(new StateInfo(AIStates.Traverse,
-                traverse.IsValid ? traverse.ValueRO.Status : ActionStatus.Disabled, ScoreOfTraverseState));
+                if(evade.ValueRO.Index==-1)
+                    throw new ArgumentOutOfRangeException(nameof(wait),
+                        $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
+                var asset = GetAsset(evade.ValueRO.Index);
+                var coverPosition = !mapVision.ValueRO.CoverPositions.c0.Equals(float3.zero)
+                    ?
+                    mapVision.ValueRO.CoverPositions.c0
+                    :
+                    !mapVision.ValueRO.CoverPositions.c1.Equals(float3.zero)
+                        ? mapVision.ValueRO.CoverPositions.c1
+                        :
+                        !mapVision.ValueRO.CoverPositions.c2.Equals(float3.zero)
+                            ? mapVision.ValueRO.CoverPositions.c2
+                            :
+                            !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
+                                ? mapVision.ValueRO.CoverPositions.c3
+                                : float3.zero;
+                var safeDist = Vector3.Distance(Transform.ValueRO.Position, coverPosition);
+                
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
+                                 * asset.DistanceToTargetEnemy.Output(dist / 200.0f)
+                                 * asset.DistanceToTargetLocation.Output(safeDist / 200.0f);
+                evade.ValueRW.TotalScore = totalScore =
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                return totalScore;
+            }
+        }
+        private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
 
-            stateInfo.Add(new StateInfo(AIStates.WanderQuadrant,
-                wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState));
+        private AIStates GetHighState()
+        {
+            var stateInfo = new List<StateInfo>
+            {
+                new StateInfo(AIStates.Attack, attack.IsValid ? attack.ValueRO.Status : ActionStatus.Disabled,
+                    ScoreOfAttackState),
+                new StateInfo(AIStates.Patrol,
+                    patrol.IsValid ? patrol.ValueRO.Status : ActionStatus.Disabled, ScoreOfPatrolState),
+                new StateInfo(AIStates.Traverse,
+                    traverse.IsValid ? traverse.ValueRO.Status : ActionStatus.Disabled, ScoreOfTraverseState),
+                new StateInfo(AIStates.WanderQuadrant,
+                    wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
+                new StateInfo(AIStates.Wait,
+                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
+                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState)
+            };
 
-            stateInfo.Add(new StateInfo(AIStates.Wait,
-                wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState));
-
-            stateInfo.Add(new StateInfo(AIStates.ChaseMoveToTarget,
-                pursueTarget.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfPursue));
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
                 .FirstOrDefault(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
             return high.TotalScore == 0.0f ? AIStates.None : high.StateName;
@@ -251,16 +298,14 @@ namespace IAUS.ECS.Component.Aspects
                     commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, Self);
                     break;
                 case AIStates.Attack:
-                    //TODO Implement Add and Remove Tag;
-                    commandBufferParallel.RemoveComponent<MeleeAttackTag>(chunkIndex, Self);
                     commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Self);
                     break;
 
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-                case AIStates.ChaseMoveToTarget:
-                    commandBufferParallel.RemoveComponent<ChaseTargetTag>(chunkIndex, Self);
+                case AIStates.Retreat:
+                    commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
             }
 
@@ -285,13 +330,9 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Attack:
                     commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Self);
                     break;
-                case AIStates.RetreatToLocation:
+                case AIStates.Retreat:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Self);
                     break;
-                case AIStates.ChaseMoveToTarget:
-                    commandBufferParallel.AddComponent<ChaseTargetTag>(chunkIndex, Self);
-                    break;
-
             }
 
             brain.ValueRW.CurrentState = highScoreState;

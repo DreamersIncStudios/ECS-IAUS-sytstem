@@ -13,7 +13,7 @@ namespace DreamersInc.BestiarySystem
             if (!info) throw new AssertionException(nameof(ID), $"ID {ID} not valid entry in Database");
             if (info.hasAttack)
             {
-                CharacterBuilder.CreateCharacter(info.Name, out entity)
+                new CharacterBuilder(info.Name, out entity)
                     .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
                     .WithStats(info.stats)
                     .WithEntityPhysics(info.PhysicsInfo)
@@ -30,7 +30,7 @@ namespace DreamersInc.BestiarySystem
                 return true;
             }
 
-            CharacterBuilder.CreateCharacter(info.Name, out entity)
+            new CharacterBuilder(info.Name, out entity)
                 .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
                 .WithStats(info.stats)
                 .WithEntityPhysics(info.PhysicsInfo)

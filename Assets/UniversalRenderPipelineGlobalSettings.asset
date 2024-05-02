@@ -54,7 +54,17 @@ MonoBehaviour:
       - rid: 9216079473496293394
       - rid: 9216079473496293395
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 9216079473496293376
+      - rid: 9216079473496293377
+      - rid: 9216079473496293379
+      - rid: 9216079473496293380
+      - rid: 9216079473496293382
+      - rid: 9216079473496293385
+      - rid: 9216079473496293386
+      - rid: 9216079473496293389
+      - rid: 9216079473496293391
+      - rid: 9216079473496293394
   m_AssetVersion: 8
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -82,7 +92,7 @@ MonoBehaviour:
       type: {class: RenderGraphSettings, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Version: 0
-        m_EnableRenderCompatibilityMode: 1
+        m_EnableRenderCompatibilityMode: 0
     - rid: 9216079473496293377
       type: {class: UniversalRenderPipelineRuntimeTextures, ns: UnityEngine.Rendering.Universal,
         asm: Unity.RenderPipelines.Universal.Runtime}
@@ -113,6 +123,8 @@ MonoBehaviour:
         m_DefaultSpeedTree7Shader: {fileID: 4800000, guid: 0f4122b9a743b744abe2fb6a0a88868b,
           type: 3}
         m_DefaultSpeedTree8Shader: {fileID: -6465566751694194690, guid: 9920c1f1781549a46ba081a2a15a16ec,
+          type: 3}
+        m_DefaultSpeedTree9Shader: {fileID: -6465566751694194690, guid: cbd3e1cc4ae141c42a30e33b4d666a61,
           type: 3}
     - rid: 9216079473496293379
       type: {class: UniversalRendererResources, ns: UnityEngine.Rendering.Universal,

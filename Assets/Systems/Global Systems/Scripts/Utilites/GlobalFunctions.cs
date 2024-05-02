@@ -57,7 +57,7 @@ namespace Utilities
             result = float3.zero;
             return false;
         }
-
+    
 
         public static bool RandomPointAwayFromThreat(Vector3 PlayerLocation, Vector3 ThreatLocation, float range, out Vector3 result)        {
             for (int i = 0; i < 30; i++)

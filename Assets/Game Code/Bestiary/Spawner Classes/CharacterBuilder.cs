@@ -1,7 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using AISenses;
+using AISenses.VisionSystems;
 using AISenses.VisionSystems.Combat;
 using Components.MovementSystem;
 using Dreamers.InventorySystem;
@@ -11,10 +11,13 @@ using DreamersInc.BestiarySystem;
 using DreamersInc.ComboSystem;
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
+using IAUS.Core.GOAP;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using MotionSystem;
 using MotionSystem.Components;
+using ProjectDawn.Navigation;
+using ProjectDawn.Navigation.Hybrid;
 using Stats;
 using Stats.Entities;
 using Unity.Entities;
@@ -23,18 +26,19 @@ using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
+using LocalTransform = Unity.Transforms.LocalTransform;
 using Object = UnityEngine.Object;
 
 public class CharacterBuilder
 {
     private GameObject model;
-    private static Entity entity;
+    private readonly Entity entity;
     private BaseCharacterComponent character;
     private int factionID;
     private uint classLevel;
     private string tag;
     private ComboSO combo;
-
+    private EntityManager manager;
     public CharacterBuilder WithModel(GameObject go, Vector3 Position, string tagging)
     {
         return WithModel(go,Position,tagging,out _);
@@ -43,16 +47,24 @@ public class CharacterBuilder
     {
         Spawned = model = Object.Instantiate(go);
         go.transform.position = Position;
+
         tag = tagging;
         tag = go.tag = tagging;
+        if (entity == Entity.Null) return this;
+        manager.SetComponentData(entity, new LocalTransform()
+        {
+            Position = Position,
+            Rotation = go.transform.rotation,
+                Scale = 1
+        });
         return this;
     }  
 
     public CharacterBuilder WithAnimation()
     {
         if (entity == Entity.Null) return this;
-        if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        if (model == null) return this; 
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var anim = model.GetComponent<Animator>();
         manager.AddComponentObject(entity, anim);
         TransformGO transformLink = new()
@@ -66,16 +78,22 @@ public class CharacterBuilder
     public CharacterBuilder WithAIControl()
     {       
         if (entity == Entity.Null) return this;
-        if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        if (model == null) return this; 
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        var agent = model.GetComponent<NavMeshAgent>();
-        manager.AddComponentObject(entity, agent);
+        //var agent = model.GetComponent<AgentAuthoring>();
+        //agent.ReplaceEntity(entity);
+        //manager.AddComponentObject(entity, agent);
+     
+        manager.AddComponentData(entity, Agent.Default);
+        manager.AddComponentData(entity, AgentBody.Default);
+        manager.AddComponentData(entity, AgentLocomotion.Default);
+        manager.AddComponentData(entity, AgentShape.Default);
         var move = new Movement()
         {
-            Acceleration = agent.acceleration,
-            StoppingDistance = agent.stoppingDistance,
-            Offset = agent.baseOffset,
+            //Acceleration = agent.acceleration,
+            //StoppingDistance = agent.stoppingDistance,
+            //Offset = agent.baseOffset,
         };
         move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
         manager.AddComponentData(entity, move);
@@ -89,7 +107,7 @@ public class CharacterBuilder
     {
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponentObject(entity, new NPCAttack()
         {
             AttackSequence = sequence
@@ -101,7 +119,7 @@ public class CharacterBuilder
     {
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponent<Player_Control>(entity);
         manager.AddComponent<AttackTarget>(entity);
         manager.AddComponentObject(entity, new Command());
@@ -116,7 +134,7 @@ public class CharacterBuilder
 
     public CharacterBuilder WithEntityPhysics(PhysicsInfo physicsInfo)
     {
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         if (entity == Entity.Null)
         {
             Debug.Log("not entity");
@@ -199,7 +217,7 @@ public class CharacterBuilder
         this.combo = combo;
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         //manager.AddComponent<StoreWeapon>(entity);
 
         var comboInfo = Object.Instantiate(combo);
@@ -210,7 +228,7 @@ public class CharacterBuilder
     {
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         BaseCharacterComponent data = new()
         {
@@ -225,13 +243,13 @@ public class CharacterBuilder
     public CharacterBuilder WithCharacterDetection()
     {
         if (entity == Entity.Null) return this;
-        if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        if (model == null) return this; 
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var vision = new Vision();
         vision.InitializeSense(character);
         manager.AddBuffer<ScanPositionBuffer>(entity);
         manager.AddComponentData(entity, vision);
-        
+        manager.AddComponent<MapVision>(entity);
         return this;
     }
     
@@ -239,7 +257,7 @@ public class CharacterBuilder
     {
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         CharacterInventory inventory = new();
         inventory.Setup(Equipment, character);
@@ -253,7 +271,7 @@ public class CharacterBuilder
         this.classLevel = classLevel;
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponentData(entity, new InfluenceComponent
         {
             factionID = factionID,
@@ -284,14 +302,14 @@ public class CharacterBuilder
     {        
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        var agent = model.GetComponent<NavMeshAgent>();
-        manager.AddComponentObject(entity, agent);
+         manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        manager.AddComponentData(entity, Agent.Default);
+        manager.AddComponentData(entity, AgentBody.Default);
+        manager.AddComponentData(entity, AgentLocomotion.Default);
+        manager.AddComponentData(entity, AgentShape.Default);
         var move = new Movement()
         {
-            Acceleration = agent.acceleration,
-            StoppingDistance = agent.stoppingDistance,
-            Offset = agent.baseOffset,
+         
         };
         move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
         manager.AddComponentData(entity, move);
@@ -306,7 +324,7 @@ public class CharacterBuilder
     {
         if (entity == Entity.Null) return this;
         if (model == null) return this;
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         manager.AddComponentData(entity, new IAUSBrain()
         {
             NPCLevel= getNpcLevel,
@@ -314,80 +332,66 @@ public class CharacterBuilder
             Difficulty = Difficulty.Normal // TODO  pull from Game setting in future 
         });
         foreach (var state in aiStatesToAdd)
+        {
+            switch (state)
             {
-                switch (state)
-                {
-                    case AIStates.Patrol:
-                        var patrol = new Patrol()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        if (classLevel > 3)
-                            patrol.StayInQuadrant = true;
-                        manager.AddComponentData(entity, patrol);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
+                case AIStates.Patrol:
+                    var patrol = new Patrol()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    if (classLevel > 3)
+                        patrol.StayInQuadrant = true;
+                    manager.AddComponentData(entity, patrol);
+                    manager.AddBuffer<TravelWaypointBuffer>(entity);
+                    break;
 
-                    case AIStates.Traverse:
-                        var traverse = new Traverse()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, traverse);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
-                    case AIStates.WanderQuadrant:
+                case AIStates.Traverse:
+                    var traverse = new Traverse()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(entity, traverse);
+                    manager.AddBuffer<TravelWaypointBuffer>(entity);
+                    break;
+                case AIStates.WanderQuadrant:
                        
-                        manager.AddComponentData(entity, new WanderQuadrant(
-                            spawnPosition: model.transform.position,
-                             coolDownTime: 5.5f,
-                            bufferZone: .25f,
-                            wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
-                        ));
+                    manager.AddComponentData(entity, new WanderQuadrant(
+                        spawnPosition: model.transform.position,
+                        coolDownTime: 5.5f,
+                        bufferZone: .25f,
+                        wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
+                    ));
 
-                        break;
-                    case AIStates.Wait:
-                        var wait = new Wait()
-                        {
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, wait);
-                        break;
-                    case AIStates.Attack:
-                        manager.AddComponent<AttackTarget>(entity);
-                        manager.AddComponent<PursueTarget>(entity);
-                        manager.AddComponentObject(entity, new Command());
-                        manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
-                        manager.AddComponent<CheckAttackStatus>(entity);
-                        if(CapableOfMagic)
-                            manager.AddComponent<MagicAttackSubState>(entity);
-                        if(CapableOfRange)
-                            manager.AddComponentData(entity, new RangedAttackSubState() { 
-                            MaxEffectiveRange = 60,
-                        });
-                        manager.AddComponent<WeaponSkillsAttackSubState>(entity);
-
-                        if (CapableOfMelee)
-                        {
-                            var melee = new MeleeAttackSubState();
-                            manager.AddComponentData(entity, melee);
-                        }
-
-                        break;
-                    case AIStates.RetreatToLocation:
+                    break;
+                case AIStates.Wait:
+                    var wait = new Wait()
+                    {
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(entity, wait);
+                    break;
+                case AIStates.Attack:
+                    manager.AddComponent<AttackTarget>(entity);
+                    manager.AddComponentObject(entity, new Command());
+                    manager.AddComponentData(entity, new AttackState(5.5f, CapableOfMelee, CapableOfMagic, CapableOfRange));
+                    manager.AddComponent<CheckAttackStatus>(entity);
+               
+                    break;
+                case AIStates.RetreatToLocation:
           
-                        manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
-                        break;
-                    case AIStates.RetreatToQuadrant:
-                        manager.AddComponentData(entity,new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
-                        break;
-                }
+                    manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
+                    break;
+                case AIStates.RetreatToQuadrant:
+                    manager.AddComponentData(entity,new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
+                    break;
             }
-            manager.AddComponent<SetupBrainTag>(entity);
+        }
+        manager.AddComponent<SetupBrainTag>(entity);
 
         return this;
     }
@@ -398,9 +402,9 @@ public class CharacterBuilder
         return entity;
     }
 
-    public static CharacterBuilder CreateCharacter(string entityName, out Entity spawnedEntity)
-    {
-        var manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+    public  CharacterBuilder(string entityName, out Entity spawnedEntity)
+    { 
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
         var baseEntityArch = manager.CreateArchetype(
             typeof(LocalTransform),
             typeof(LocalToWorld)
@@ -408,14 +412,22 @@ public class CharacterBuilder
         var baseDataEntity = manager.CreateEntity(baseEntityArch);
         manager.SetName(baseDataEntity, entityName != string.Empty ? entityName : "NPC Data");
         manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-        spawnedEntity =  entity = baseDataEntity;
+        spawnedEntity =entity = baseDataEntity;
 
-        return new CharacterBuilder();
     }
-
-    public static CharacterBuilder CreateCharacter(string entityName)
+    public CharacterBuilder(string entityName)
     {
-        return CreateCharacter(entityName, out _);
+        manager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        var baseEntityArch = manager.CreateArchetype(
+            typeof(LocalTransform),
+            typeof(LocalToWorld)
+        );
+        var baseDataEntity = manager.CreateEntity(baseEntityArch);
+        manager.SetName(baseDataEntity, entityName != string.Empty ? entityName : "NPC Data");
+        manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+        entity = baseDataEntity;
+
     }
+    
     
 }

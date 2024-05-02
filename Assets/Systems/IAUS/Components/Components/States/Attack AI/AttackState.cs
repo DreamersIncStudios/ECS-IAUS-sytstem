@@ -1,3 +1,4 @@
+using IAUS.Core.GOAP;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -6,22 +7,30 @@ namespace IAUS.ECS.Component
 {
     public struct AttackState : IBaseStateScorer
     {
+        public float3 TargetPosition;
+        public Entity TargetEntity;
+
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
-            CapableOfMelee = melee;
-            CapableOfMagic = magic;
-            CapableOfProjectile = range;
             status = ActionStatus.Idle;
             Index = 0;
             resetTime = 0;
             totalScore = 0;
             IsTargeting = true;
+            CapableOfMelee = melee;
+            CapableOfMagic = magic;
+            CapableOfProjectile = range;
+            Plan = AttackPlan.None;
+            AttackResetTimer = 0.0f;
+            TargetPosition = float3.zero;
+            TargetEntity = Entity.Null;
         }
 
-        public bool CapableOfMelee;
-        public bool CapableOfMagic;
-        public bool CapableOfProjectile;
+        public AttackPlan Plan;
+        public float AttackResetTimer;
+        [SerializeField]  public bool InAttackCooldown => AttackResetTimer != 0.0f;
+        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public void SetIndex(int index)
         {
             Index = index;
@@ -47,93 +56,6 @@ namespace IAUS.ECS.Component
     public struct AttackActionTag : IComponentData {
         public int SubStateNumber;
     }
-    public struct MeleeAttackSubState : IComponentData
-    {
-        public int AttackTargetIndex;
-        public float3 AttackTargetLocation { get; set; }
-        public Entity TargetEntity{ get; set; }
-        public bool TargetInRange;
-        public int Index { get; private set; }
-        public void SetIndex(int index)
-        {
-            Index = index;
-        }
-        public float AttackRange { get; set; } //Todo Pull from character stats speed
-        public AIStates Name => AIStates.AttackMelee;
-        public float AttackDelay;
-       public bool AttackNow => AttackDelay <= 0.0f;
-        public float mod => 1.0f - (1.0f / 3.0f);
-
-
-    }
-    public struct MagicAttackSubState : IComponentData
-    {
-        public bool AttackNow=> AttackDelay <= 0.0f;
-        public Entity TargetEntity { get; set; }
-        public int AttackTargetIndex;
-        public float3 AttackTargetLocation;
-        public bool TargetInRange;
-        public float AttackDelay;
-        public int Index { get; private set; }
-        public void SetIndex(int index)
-        {
-            Index = index;
-        }
-        public static AIStates Name => AIStates.AttackMagic;
-        public float mod => 1.0f - (1.0f / 5.0f);
-        public void SetupPossibleAttacks(){}
-        
-    }
-    public struct WeaponSkillsAttackSubState : IComponentData
-    {
-        public Entity TargetEntity { get; set; }
-        public int AttackTargetIndex;
-        public int Index { get; private set; }
-        public void SetIndex(int index)
-        {
-            Index = index;
-        }
-        public static AIStates Name => AIStates.AttackMagicMelee;
-
-        public float Mod => 1.0f - (1.0f / 4.0f);
-        public void SetupPossibleAttacks(){}
-        
-    }
-    public struct RangedAttackSubState : IComponentData
-    {
-        public bool AttackNow=> AttackDelay <= 0.0f;
-        public Entity TargetEntity { get; set; }
-        public int AttackTargetIndex;
-        public float MaxEffectiveRange;
-        public bool TargetInRange;
-        public float3 AttackTargetLocation;
-        public float AttackDelay;
-        public int Index { get; private set; }
-        public void SetIndex(int index)
-        {
-            Index = index;
-        }
-        public static AIStates Name => AIStates.AttackRange;
-        
-       public float Mod => 1.0f - (1.0f / 5.0f);
-        public void SetupPossibleAttacks(){}
-
-    }
-
-    public struct MeleeAttackTag : IComponentData
-    {
-        public int AttackIndex;
-        public int PositionIndex;
-
-    }
-    public struct MagicAttackTag : IComponentData {       public int AttackIndex;
-        public int PositionIndex;}
-    public struct RangeAttackTag : IComponentData {   
-        public int AttackIndex;
-        public int PositionIndex; }
-    public struct WeaponSkillAttackTag : IComponentData {      public int AttackIndex;
-        public int PositionIndex; }
-
-
-    public enum SubAttackStates { }
+   
+    public enum SubAttackStates { melee, magic, range, magicMelee, magicRange}
 }

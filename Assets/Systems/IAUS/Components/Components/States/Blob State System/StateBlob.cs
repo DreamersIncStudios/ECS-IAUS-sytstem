@@ -158,7 +158,8 @@ namespace IAUS.ECS.StateBlobSystem
                     AIStates = G.Name,
                     FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
-                }));          }).Run();
+                }));
+            }).Run();
 
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackState G) =>
             {
@@ -169,19 +170,8 @@ namespace IAUS.ECS.StateBlobSystem
                     FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 })); 
-
             }).Run();
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MeleeAttackSubState G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-
-            }).Run();
+       
             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref EscapeThreat G) =>
             {
                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
@@ -191,51 +181,8 @@ namespace IAUS.ECS.StateBlobSystem
                     FactionID = brain.FactionID,
                     NPCLevel = brain.NPCLevel
                 }));
-
             }).Run();
 
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MagicAttackSubState G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = MagicAttackSubState.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-
-            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref WeaponSkillsAttackSubState G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = WeaponSkillsAttackSubState.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-
-            }).Run(); Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref RangedAttackSubState G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = RangedAttackSubState.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-
-            }).Run();
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref PursueTarget G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-
-            }).Run();
         }
 
         BlobAssetReference<AIStateBlobAsset> CreateReference()

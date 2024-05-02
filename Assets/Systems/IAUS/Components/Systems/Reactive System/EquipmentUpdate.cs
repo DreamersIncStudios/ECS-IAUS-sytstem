@@ -5,19 +5,19 @@ using UnityEngine;
 using Dreamers.InventorySystem;
 using IAUS.ECS.Component.Aspects;
 using Dreamers.InventorySystem.Interfaces;
+using IAUS.Core.GOAP;
 
 namespace IAUS.ECS.Component {
     public partial class EquipmentUpdate : SystemBase
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test, ref AttackState attackState, ref CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackState attackState, in CheckAttackStatus tag) => {
 
-                attackState.CapableOfMelee = false;
-                attackState.CapableOfMagic = false;
-                attackState.CapableOfProjectile = false;
-
-
+               attackState.CapableOfMelee = false;
+             attackState.CapableOfMagic = false;
+             attackState.CapableOfProjectile = false;
+             EntityManager.RemoveComponent<CheckAttackStatus>(entity);
 
                 foreach (var item in test.Equipment.EquippedWeapons)
                 {
@@ -31,17 +31,17 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Club:
                         case WeaponType.Gloves:
                             case WeaponType.Claws:
-                            attackState.CapableOfMelee = true;
+                                  attackState.CapableOfMelee = true;
                             break;
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                            attackState.CapableOfMagic = true;
+                           attackState.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                            attackState.CapableOfProjectile = true;
+                              attackState.CapableOfProjectile = true;
                             break;
                     }
                     
@@ -49,7 +49,6 @@ namespace IAUS.ECS.Component {
                         attackState.CapableOfMagic = true;
                 }
 
-                EntityManager.RemoveComponent<CheckAttackStatus>(entity);
             }).Run();
         }
     }

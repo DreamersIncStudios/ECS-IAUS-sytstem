@@ -2,6 +2,7 @@ using Global.Component;
 using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -9,9 +10,27 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        private readonly RefRO<LocalTransform> transform;
         private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
-        private readonly  RefRO<AITarget> self;
+        private readonly RefRW<Vision> vision;
+
+        public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
+        public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
+        
+
+        public Entity TargetEntity(TargetAlignmentType type)
+        {
+            TargetEnemyTargetInRange();
+            FriendlyInRange();
+            return vision.ValueRO.TargetEntity(type);
+        }
+
+        public float3 TargetPosition(TargetAlignmentType type)
+        {
+            TargetEnemyTargetInRange();
+            FriendlyInRange();
+
+            return vision.ValueRO.TargetPosition(type);
+        }
 
         public bool TargetInReactRange
         {
@@ -28,98 +47,48 @@ namespace AISenses.VisionSystems
 
         }
 
-        public bool TargetInRange()
+        private bool TargetEnemyTargetInRange()
         {
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return TargetEnemyTargetInRange(out _, out _);
         }
 
-        public bool TargetInRange(out float dist)
+        public bool TargetEnemyTargetInRange(out float dist)
         {
-            dist = 0f;
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        dist = scan.target.DistanceTo;
-                        return true;
-                    }
-                }
-            }
-            dist = 0f;
-            return false;
+            return TargetEnemyTargetInRange(out _, out dist);
         }
-        public bool TargetInRange(out AITarget target)
+        public bool TargetEnemyTargetInRange(out AITarget target)
         {
-            target = new AITarget();
-
-            if (scanPositions.IsEmpty)
-            {
-                return false;
-            }
-            else
-            {
-                foreach (var scan in scanPositions)
-                {
-                    if (!scan.target.IsFriendly)
-                    {
-                        target = scan.target.TargetInfo;
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return TargetEnemyTargetInRange(out target, out _);
         }
 
-        public bool TargetInRange(out AITarget target, out float dist)
+
+        public bool TargetEnemyTargetInRange(out AITarget target, out float dist)
         {
             target = new AITarget();
             dist = 0f;
 
             if (scanPositions.IsEmpty)
             {
+                vision.ValueRW.TargetEnemyEntity = Entity.Null;
                 return false;
             }
             else
             {
                 foreach (var scan in scanPositions)
                 {
-                    if (!scan.target.IsFriendly)
-                    {
-                        target = scan.target.TargetInfo;
-                        dist = scan.target.DistanceTo;
-                        return true;
-                    }
+                    if (scan.target.IsFriendly) continue;
+                    target = scan.target.TargetInfo;
+                    dist = scan.target.DistanceTo;
+                    vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
+                   vision.ValueRW.TargetEnemyPosition = vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
+                    return true;
                 }
             }
             return false;
         }
 
-        public bool FriendlyInRange
+        public bool FriendlyInRange()
         {
-            get
-            {
                 if (scanPositions.IsEmpty)
                     return false;
                 else
@@ -131,7 +100,7 @@ namespace AISenses.VisionSystems
                     }
                 }
                 return false;
-            }
+            
         }
 
         public Target GetClosestEnemy()
