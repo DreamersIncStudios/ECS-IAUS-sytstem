@@ -88,7 +88,17 @@ public class CharacterBuilder
         manager.AddComponentData(entity, Agent.Default);
         manager.AddComponentData(entity, AgentBody.Default);
         manager.AddComponentData(entity, AgentLocomotion.Default);
-        manager.AddComponentData(entity, AgentShape.Default);
+        manager.AddComponentData(entity, new AgentShape()
+        {
+            Radius=2,
+            Height = 4,
+            Type = ShapeType.Cylinder
+        });
+        manager.AddComponentData(entity, AgentCollider.Default);
+        manager.AddComponentData(entity, AgentSonarAvoid.Default);
+        manager.AddComponentData(entity, AgentSeparation.Default);
+        manager.AddComponentData(entity, new GiveUpStopTimer());
+
         var move = new Movement()
         {
             //Acceleration = agent.acceleration,
@@ -306,11 +316,25 @@ public class CharacterBuilder
         manager.AddComponentData(entity, Agent.Default);
         manager.AddComponentData(entity, AgentBody.Default);
         manager.AddComponentData(entity, AgentLocomotion.Default);
-        manager.AddComponentData(entity, AgentShape.Default);
+        manager.AddComponentData(entity, new AgentShape()
+        {
+            Radius=2,
+            Height = 4,
+            Type = ShapeType.Cylinder
+        });
+        manager.AddComponentData(entity, AgentCollider.Default);
+        manager.AddComponentData(entity, AgentSonarAvoid.Default);
+        manager.AddComponentData(entity, new AgentSeparation(){   
+            Radius=2,
+            Weight = 1,
+            Layers = NavigationLayers.Everything
+        });
+        manager.AddComponentData(entity, AgentSmartStop.Default);
         var move = new Movement()
         {
          
         };
+        manager.AddComponentData(entity, new GiveUpStopTimer());
         move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
         manager.AddComponentData(entity, move);
         var controllerData = new CharControllerE();
