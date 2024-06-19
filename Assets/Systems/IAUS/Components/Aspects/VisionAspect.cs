@@ -3,8 +3,6 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
-using UnityEngine;
 
 namespace AISenses.VisionSystems
 {
@@ -15,6 +13,8 @@ namespace AISenses.VisionSystems
 
         public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
+        
+
         public Entity TargetEntity(TargetAlignmentType type)
         {
             TargetEnemyTargetInRange();

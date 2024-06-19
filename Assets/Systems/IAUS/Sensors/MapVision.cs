@@ -15,12 +15,14 @@ namespace AISenses.VisionSystems
 {
     public struct MapVision : IComponentData
     {
-        public float3 TargetPosition;
-        public bool HasMeleeLocation => !Locations.c0.Equals(float3.zero);
-        public bool HasRangeLocation => !Locations.c2.Equals(float3.zero);
-        public bool HasMagicLocation => !Locations.c1.Equals(float3.zero);
+        public float3 TargetAttackPosition;
+        public bool HasMeleeLocation => !AttackLocations.c0.Equals(float3.zero);
+        public bool HasRangeLocation => !AttackLocations.c2.Equals(float3.zero);
+        public bool HasMagicLocation => !AttackLocations.c1.Equals(float3.zero);
 
-        public float3x3 Locations;
+        public float3x3 AttackLocations;
+        public float3x4 CoverPositions; // nearest, Farthest, Lowest threat but in range, random location in range 
+
     }
 
     public partial class MapVisionSystem : SystemBase
@@ -38,11 +40,17 @@ namespace AISenses.VisionSystems
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
             Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state) =>
                 {
-                    if (mapVision.TargetPosition.Equals(state.TargetPosition)) return;
-                    mapVision.TargetPosition = state.TargetPosition;
-                    mapVision.Locations.c0 = MeleeTargetPosition(mapVision, state);
-                    mapVision.Locations.c1 = MagicTargetPosition(ref mapVision, ref state);
-                    mapVision.Locations.c2 = RangeTargetPosition(ref mapVision, ref state);
+                    if (mapVision.TargetAttackPosition.Equals(state.TargetPosition)) return;
+                    mapVision.TargetAttackPosition = state.TargetPosition;
+                    mapVision.AttackLocations.c0 = MeleeTargetPosition(mapVision, state);
+                    mapVision.AttackLocations.c1 = MagicTargetPosition(ref mapVision, ref state);
+                    mapVision.AttackLocations.c2 = RangeTargetPosition(ref mapVision, ref state);
+                }).WithoutBurst()
+                .Run();
+            Entities.ForEach((ref MapVision mapVision, ref EvadeThreat state, ref LocalTransform transform) =>
+                {
+                    mapVision.CoverPositions.c0 = ClosestSafeLocation(mapVision, state,transform);
+                    mapVision.CoverPositions.c1 = FarthestSafeLocation(ref mapVision, ref state, transform);
                 }).WithoutBurst()
                 .Run();
         }
@@ -83,7 +91,7 @@ namespace AISenses.VisionSystems
         private float3 MeleeTargetPosition(MapVision map, AttackState state)
         {
             if (!state.CapableOfMelee) return float3.zero;
-            return GlobalFunctions.RandomPoint(state.TargetPosition, 1.5f, out float3 target) ? target : float3.zero;
+            return GlobalFunctions.RandomPoint(state.TargetPosition, 3.5f, out float3 target) ? target : float3.zero;
         }
 
         /// <summary>
@@ -114,7 +122,54 @@ namespace AISenses.VisionSystems
                 // add more filtering stuff
                 return objectTransform.Position;
             }
-            return new float3();
+
+            return float3.zero;
+        }
+
+        public float3 ClosestSafeLocation( MapVision mapVision, EvadeThreat state, LocalTransform transform)
+        {
+            var lowestDist = float.MaxValue;
+            var outputPosition = new float3();
+            foreach (var (staticObject, objectTransform, physicsInfo) in SystemAPI
+                         .Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo>())
+            {
+                var distFromObjectToTarget = Vector3.Distance(transform.Position, objectTransform.Position);
+                if (!(distFromObjectToTarget > lowestDist)) continue;
+                lowestDist = distFromObjectToTarget;
+                outputPosition = objectTransform.Position;
+            }
+
+            return outputPosition;
+        }
+        public float3 ClosestSafeLocationInfluenceBased( MapVision mapVision, EvadeThreat state, LocalTransform transform)
+        {
+            var lowestDist = float.MaxValue;
+            var outputPosition = new float3();
+            foreach (var (staticObject, objectTransform, physicsInfo) in SystemAPI
+                         .Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo>())
+            {
+                var distFromObjectToTarget = Vector3.Distance(transform.Position, objectTransform.Position);
+                if (!(distFromObjectToTarget > lowestDist)) continue;
+                lowestDist = distFromObjectToTarget;
+                outputPosition = objectTransform.Position;
+            }
+
+            return outputPosition;
+        }
+        public float3 FarthestSafeLocation(ref MapVision mapVision, ref EvadeThreat state, LocalTransform transform)
+        {
+            var dist = float.MinValue;
+            var outputPosition = new float3();
+            foreach (var (staticObject, objectTransform, physicsInfo) in SystemAPI
+                         .Query<RefRO<StaticInfluenceObject>, LocalTransform, PhysicsInfo>())
+            {
+                var distFromObjectToTarget = Vector3.Distance(transform.Position, objectTransform.Position);
+                if (!(distFromObjectToTarget < dist) && dist > 75.0f) continue; // Todo 75.0f make  variable based on character stats 
+                dist = distFromObjectToTarget;
+                outputPosition = objectTransform.Position;
+            }
+
+            return outputPosition;
         }
     }
 }

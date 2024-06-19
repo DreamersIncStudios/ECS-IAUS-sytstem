@@ -1,4 +1,3 @@
-
 using Unity.Entities;
 using Unity.Transforms;
 
@@ -8,9 +7,10 @@ namespace MotionSystem
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().ForEach((TransformGO go, ref LocalTransform local) => {
-                local.Position = go.transform.position;
-                local.Rotation = go.transform.rotation;
+            Entities.WithoutBurst().ForEach((TransformGO go, ref LocalTransform local) =>
+            {
+                go.transform.position = local.Position;
+                 go.transform.rotation = local.Rotation;
             }).Run();
         }
     }

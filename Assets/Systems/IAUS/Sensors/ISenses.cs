@@ -9,6 +9,7 @@ using IAUS.Core.GOAP;
 using PixelCrushers.LoveHate;
 using Stats.Entities;
 using Unity.Burst;
+// ReSharper disable FunctionRecursiveOnAllPaths
 
 namespace AISenses
 {
@@ -143,6 +144,21 @@ namespace AISenses
         {
             return lhs.dist.CompareTo(rhs.dist);
         }
+    }
+
+    public struct CoverLocationBuffer : IBufferElementData
+    {
+        public struct TargetCover
+        {
+            public float3 Location;
+            public float Dist;
+            public Entity CoverEntity;
+        }
+
+        public TargetCover Target;
+        
+        public static implicit operator TargetCover(CoverLocationBuffer e) { return e; }
+        public static implicit operator CoverLocationBuffer(TargetCover e) { return new CoverLocationBuffer { Target = e }; }
     }
 
     public struct Target

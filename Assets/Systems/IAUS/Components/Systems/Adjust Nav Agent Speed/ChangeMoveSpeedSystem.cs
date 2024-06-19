@@ -2,6 +2,7 @@ using IAUS.ECS.Component;
 using IAUS.ECS.Systems.Reactive;
 using System.Collections;
 using System.Collections.Generic;
+using ProjectDawn.Navigation;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,14 +15,14 @@ namespace Components.MovementSystem
 
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((NavMeshAgent agent, ref Movement mover) =>
+            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((AgentLocomotion agent, in Movement mover) =>
             {
-                agent.speed = .65f * mover.MaxMovementSpeed;
+                agent.Speed = .65f * mover.MaxMovementSpeed;
             }).Run();
 
-            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((NavMeshAgent agent, ref Movement mover) =>
+            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((AgentLocomotion agent, in Movement mover) =>
             {
-                agent.speed = .65f * mover.MaxMovementSpeed;
+                agent.Speed = .65f * mover.MaxMovementSpeed;
             }).Run();
         }
     }

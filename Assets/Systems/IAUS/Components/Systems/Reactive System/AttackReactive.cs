@@ -46,35 +46,11 @@ namespace IAUS.ECS.Systems.Reactive
 
         public partial class AttackUpdateSystem : SystemBase
         {
-            private EntityQuery attackTagAdd;
-            private EntityQuery attackTagRemoved;
+   
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
-                attackTagAdd = GetEntityQuery(new EntityQueryDesc()
-                {
-                    All = new[]
-                    {
-                        ComponentType.ReadWrite(typeof(AttackState)),
-                        ComponentType.ReadWrite(typeof(AttackActionTag)),
-                        
-                        ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(LocalTransform))
-                    },
-                    Absent = new[]
-                    {
-                        ComponentType.ReadOnly(
-                            typeof(AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>.
-                                StateComponent))
-                    }
-                });
-                attackTagRemoved = GetEntityQuery(new EntityQueryDesc()
-                {
-                    Absent = new[]
-                    {
-                        ComponentType.ReadWrite(typeof(AttackActionTag)),
-                    },
-                    All = new[] { ComponentType.ReadOnly(typeof(AttackState)) }
-                });
+         
                  ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 
@@ -104,26 +80,13 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 public float deltaTime;
                 public EntityCommandBuffer.ParallelWriter ECB;
-                void Execute(int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
+                void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
                 {
                     aspect.DeterminePlan();
                     aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
                 }
             }
 
-            struct MoveToLocation
-            {
-                
-            }
-
-            struct AttackTarget
-            {
-            }
-
-            struct CoolDown
-            {
-                
-            }
         }
     }
 }

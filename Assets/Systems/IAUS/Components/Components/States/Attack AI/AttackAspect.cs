@@ -41,17 +41,17 @@ namespace IAUS.ECS.Component
                     case AttackPlan.Evade:
                         break;
                     case AttackPlan.MoveToLocationMelee:
-                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c0);
+                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c0);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackMelee;
                         break;
                     case AttackPlan.MoveToLocationMagic:
-                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c1);
+                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c1);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackMagic;
                         break;
                     case AttackPlan.MoveToLocationRange:
-                         dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.Locations.c2);
+                         dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c2);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackRange;
                         break;
@@ -105,16 +105,16 @@ namespace IAUS.ECS.Component
                         state.ValueRW.AttackResetTimer = 0.0f;
                     break;
                 case AttackPlan.MoveToLocationMelee:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c0))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c0);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c0))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c0);
                     break;
                 case AttackPlan.MoveToLocationMagic:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c1))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c1);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c1))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c1);
                     break;
                 case AttackPlan.MoveToLocationRange:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.Locations.c2))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.Locations.c2);
+                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c2))
+                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c2);
                     break;
                 case AttackPlan.AttackMelee:
                     Debug.Log("attacking");

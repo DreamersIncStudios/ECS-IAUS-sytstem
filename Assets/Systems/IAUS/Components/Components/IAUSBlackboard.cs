@@ -11,10 +11,10 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace IAUS.ECS.Component.Aspects
 {
-
 
     public readonly partial struct IAUSBlackboard : IAspect
     {
@@ -22,26 +22,28 @@ namespace IAUS.ECS.Component.Aspects
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect visionAspect;
+        private  readonly RefRO<MapVision> mapVision;
         private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
         [Optional] private readonly RefRW<Wait> wait;
         [Optional] private readonly RefRW<AttackState> attack;
+        [Optional] private readonly RefRW<EvadeThreat> evade;
 
-    public readonly Entity Self;
+        private readonly Entity self;
 
         private StateAsset GetAsset(int index)
         {
             return brain.ValueRO.State.Value.Array[index];
         }
 
-        public struct StateInfo
+        private struct StateInfo
         {
             [SerializeField] public AIStates StateName { get; private set; }
-            public float TotalScore;
-            public ActionStatus Status;
-            public bool ConsiderScore => Status == ActionStatus.Idle || Status == ActionStatus.Running;
+            public readonly float TotalScore;
+            public readonly ActionStatus Status;
+            public bool ConsiderScore => Status is ActionStatus.Idle or ActionStatus.Running;
 
             public StateInfo(AIStates state, ActionStatus status, float score)
             {
@@ -52,14 +54,14 @@ namespace IAUS.ECS.Component.Aspects
 
         }
 
-        float DistanceToPoint(float3 posToCheck, float StopBuffer = 0.5f)
+        private float DistanceToPoint(float3 posToCheck, float stopBuffer = 0.5f)
         {
-            return Vector3.Distance(posToCheck, Transform.ValueRO.Position) < StopBuffer
+            return Vector3.Distance(posToCheck, Transform.ValueRO.Position) < stopBuffer
                 ? 0
                 : Vector3.Distance(posToCheck, Transform.ValueRO.Position);
         }
 
-        public float ScoreOfPatrolState
+        private float ScoreOfPatrolState
         {
             get
             {
@@ -87,7 +89,7 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
-        public float ScoreOfTraverseState
+        private float ScoreOfTraverseState
         {
             get
             {
@@ -113,7 +115,7 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
-        float ScoreOfWanderState
+        private float ScoreOfWanderState
         {
             get
             {
@@ -180,7 +182,7 @@ namespace IAUS.ECS.Component.Aspects
 
         }
 
-        float ScoreOfAttackState
+        private float ScoreOfAttackState
         {
             get
             {
@@ -201,13 +203,55 @@ namespace IAUS.ECS.Component.Aspects
                 }
                 var asset = GetAsset(attack.ValueRO.Index);
                 var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
-                float totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
-                                   asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
-                                   asset.EnemyInfluence.Output(influenceDist);
-                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);               
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
+                                 asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
+                                 asset.EnemyInfluence.Output(influenceDist);
+                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                attack.ValueRW.TotalScore = totalScore;
                 return totalScore;
             }
 
+        }
+
+        private float ScoreOfEvadeState
+        {
+            get
+            {
+                if (!evade.IsValid) return 0.0f;
+                
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist) 
+                    || mapVision.ValueRO.CoverPositions.Equals(float3x4.zero))
+                {
+                    evade.ValueRW.EvadeTargetLocation = float3.zero;
+                    return 0.0f;
+                }
+
+                if(evade.ValueRO.Index==-1)
+                    throw new ArgumentOutOfRangeException(nameof(wait),
+                        $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
+                var asset = GetAsset(evade.ValueRO.Index);
+                var coverPosition = !mapVision.ValueRO.CoverPositions.c0.Equals(float3.zero)
+                    ?
+                    mapVision.ValueRO.CoverPositions.c0
+                    :
+                    !mapVision.ValueRO.CoverPositions.c1.Equals(float3.zero)
+                        ? mapVision.ValueRO.CoverPositions.c1
+                        :
+                        !mapVision.ValueRO.CoverPositions.c2.Equals(float3.zero)
+                            ? mapVision.ValueRO.CoverPositions.c2
+                            :
+                            !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
+                                ? mapVision.ValueRO.CoverPositions.c3
+                                : float3.zero;
+                var safeDist = Vector3.Distance(Transform.ValueRO.Position, coverPosition);
+                
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
+                                 * asset.DistanceToTargetEnemy.Output(dist / 200.0f)
+                                 * asset.DistanceToTargetLocation.Output(safeDist / 200.0f);
+                evade.ValueRW.TotalScore = totalScore =
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                return totalScore;
+            }
         }
         private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
 
@@ -224,7 +268,8 @@ namespace IAUS.ECS.Component.Aspects
                 new StateInfo(AIStates.WanderQuadrant,
                     wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
                 new StateInfo(AIStates.Wait,
-                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState)
+                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
+                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState)
             };
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
@@ -240,23 +285,26 @@ namespace IAUS.ECS.Component.Aspects
             switch (brain.ValueRO.CurrentState)
             {
                 case AIStates.Patrol:
-                    commandBufferParallel.RemoveComponent<PatrolActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<PatrolActionTag>(chunkIndex, self);
                     break;
                 case AIStates.Traverse:
-                    commandBufferParallel.RemoveComponent<TraverseActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<TraverseActionTag>(chunkIndex, self);
                     break;
                 case AIStates.Wait:
-                    commandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, self);
                     break;
                 case AIStates.WanderQuadrant:
-                    commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, self);
                     break;
                 case AIStates.Attack:
-                    commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, self);
                     break;
 
                 case AIStates.RetreatToLocation:
-                    commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, Self);
+                    commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, self);
+                    break;
+                case AIStates.Retreat:
+                    commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, self);
                     break;
             }
 
@@ -265,26 +313,25 @@ namespace IAUS.ECS.Component.Aspects
             {
 
                 case AIStates.Patrol:
-                    commandBufferParallel.AddComponent(chunkIndex, Self,
+                    commandBufferParallel.AddComponent(chunkIndex, self,
                         new PatrolActionTag() { UpdateWayPoint = false });
                     break;
                 case AIStates.Traverse:
-                    commandBufferParallel.AddComponent(chunkIndex, Self,
+                    commandBufferParallel.AddComponent(chunkIndex, self,
                         new TraverseActionTag() { UpdateWayPoint = false });
                     break;
                 case AIStates.WanderQuadrant:
-                    commandBufferParallel.AddComponent<WanderActionTag>(chunkIndex, Self);
+                    commandBufferParallel.AddComponent<WanderActionTag>(chunkIndex, self);
                     break;
                 case AIStates.Wait:
-                    commandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, Self);
+                    commandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, self);
                     break;
                 case AIStates.Attack:
-                    commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, Self);
+                    commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, self);
                     break;
-                case AIStates.RetreatToLocation:
-                    commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, Self);
+                case AIStates.Retreat:
+                    commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, self);
                     break;
-
             }
 
             brain.ValueRW.CurrentState = highScoreState;
