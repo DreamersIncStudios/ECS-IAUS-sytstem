@@ -91,7 +91,7 @@ namespace AISenses.VisionSystems
         private float3 MeleeTargetPosition(MapVision map, AttackState state)
         {
             if (!state.CapableOfMelee) return float3.zero;
-            return GlobalFunctions.RandomPoint(state.TargetPosition, 1.5f, out float3 target) ? target : float3.zero;
+            return GlobalFunctions.RandomPoint(state.TargetPosition, 3.5f, out float3 target) ? target : float3.zero;
         }
 
         /// <summary>
