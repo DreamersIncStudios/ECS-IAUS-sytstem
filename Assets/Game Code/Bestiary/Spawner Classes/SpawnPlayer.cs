@@ -120,8 +120,6 @@ namespace DreamersInc.BestiarySystem
                 CameraControl.Instance.Follow.Follow = go.transform;
                 CameraControl.Instance.Target.Follow = go.transform;
 
-                CameraControl.Instance.TargetGroup.m_Targets[1].target = go.transform;
-
                 return true;
             }
             else
@@ -164,8 +162,7 @@ namespace DreamersInc.BestiarySystem
                 CameraControl.Instance.Follow.LookAt = go.GetComponentInChildren<LookHereTarget>().transform;
                 CameraControl.Instance.Follow.Follow = go.transform;
                 CameraControl.Instance.Target.Follow = go.transform;
-
-                CameraControl.Instance.TargetGroup.m_Targets[1].target = go.transform;
+                
 
                 return true;
             }
