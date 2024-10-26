@@ -113,9 +113,22 @@ namespace DreamersInc.BestiarySystem
             {
                 AttackSequence = sequence
             });
+
+            var baseEntityArch = manager.CreateArchetype(
+                typeof(LocalTransform),
+                typeof(LocalToWorld)
+            );
+            var baseDataEntity = manager.CreateEntity(baseEntityArch);
+            manager.SetName(baseDataEntity, "Attack Location Entity");
+            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+            manager.AddComponentData(baseDataEntity, new Parent()
+            {
+                Value = entity
+            });
+
+            
             return this;
         }
-
         public CharacterBuilder WithPlayerControl()
         {
             if (entity == Entity.Null) return this;
