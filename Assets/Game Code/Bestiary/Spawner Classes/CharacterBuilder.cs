@@ -11,6 +11,7 @@ using DreamersInc.InflunceMapSystem;
 using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Attacking;
 using MotionSystem;
 using MotionSystem.Components;
 using ProjectDawn.Navigation;
@@ -116,7 +117,9 @@ namespace DreamersInc.BestiarySystem
 
             var baseEntityArch = manager.CreateArchetype(
                 typeof(LocalTransform),
-                typeof(LocalToWorld)
+                typeof(LocalToWorld),
+                typeof(MeleeAttackPosition),
+                typeof(RangeAttackPosition)
             );
             var baseDataEntity = manager.CreateEntity(baseEntityArch);
             manager.SetName(baseDataEntity, "Attack Location Entity");
