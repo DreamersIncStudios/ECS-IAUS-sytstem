@@ -128,8 +128,10 @@ namespace DreamersInc.BestiarySystem
             {
                 Value = entity
             });
-
-            
+            var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
+                meleeAttackPositions.Length = 4;
+            var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
+                rangeAttackPositions.Length = 6;
             return this;
         }
         public CharacterBuilder WithPlayerControl()

@@ -10,7 +10,7 @@ namespace IAUS.ECS.Systems
     {
         public IAUSUpdateGroup()
         {
-            RateManager = new RateUtils.VariableRateManager(250, true);
+            RateManager = new RateUtils.VariableRateManager(1000, true);
 
         }
     }

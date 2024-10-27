@@ -1,10 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 using Components.MovementSystem;
 using DreamersInc.ComboSystem;
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Attacking;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using Utilities.ReactiveSystem;
@@ -56,13 +59,19 @@ namespace IAUS.ECS.Systems.Reactive
 
             protected override void OnUpdate()
             {
-               
-                new DetermineAction()
+                var depends = Dependency;
+                depends = new GetAttackPosition()
+                {
+                    GetChild = SystemAPI.GetBufferLookup<Child>(),
+                    Melee = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
+                    Range = SystemAPI.GetBufferLookup<RangeAttackPosition>()
+                }.Schedule(depends);
+                depends = new DetermineAction()
                 {
                     deltaTime = SystemAPI.Time.DeltaTime,
-                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
-                }.Schedule();
-                
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
+                }.Schedule(depends);
+                Dependency = depends;
                 Entities.WithoutBurst().WithStructuralChanges().ForEach(
                     (Entity entity, Command handler, Animator anim, NPCAttack comboList, in SelectAndAttack select) =>
                     {
@@ -76,14 +85,39 @@ namespace IAUS.ECS.Systems.Reactive
                     }).Run();
             }
 
+            partial struct GetAttackPosition: IJobEntity
+            {
+                [ReadOnly] public BufferLookup<MeleeAttackPosition> Melee;
+                [ReadOnly] public BufferLookup<RangeAttackPosition> Range;
+                [ReadOnly] public BufferLookup<Child> GetChild;
+
+                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, 
+                    ref AttackState state, in AttackActionTag tag)
+                {
+                    var child = GetChild[state.TargetEntity][0].Value;
+                    if (!state.TargetPosition.Equals(float3.zero)) return;
+                  
+                    foreach (var bufferElement in Melee[child])
+                    {
+                        if (bufferElement.State == OccupiedState.Vacant)
+                        {
+                            state.TargetPosition = bufferElement.Position;
+                            break;
+                        }
+                    }
+                }
+
+            }
             partial struct DetermineAction: IJobEntity
             {
                 public float deltaTime;
                 public EntityCommandBuffer.ParallelWriter ECB;
-                void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect, in AttackActionTag tag)
+         
+                void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect,  in AttackActionTag tag)
                 {
-                    aspect.DeterminePlan();
-                    aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
+
+                   aspect.DeterminePlan();
+                   aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
                 }
             }
 

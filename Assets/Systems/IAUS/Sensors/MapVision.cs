@@ -15,12 +15,7 @@ namespace AISenses.VisionSystems
 {
     public struct MapVision : IComponentData
     {
-        public float3 TargetAttackPosition;
-        public bool HasMeleeLocation => !AttackLocations.c0.Equals(float3.zero);
-        public bool HasRangeLocation => !AttackLocations.c2.Equals(float3.zero);
-        public bool HasMagicLocation => !AttackLocations.c1.Equals(float3.zero);
 
-        public float3x3 AttackLocations;
         public float3x4 CoverPositions; // nearest, Farthest, Lowest threat but in range, random location in range 
 
     }
@@ -38,15 +33,6 @@ namespace AISenses.VisionSystems
         {
 
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            Entities.WithAll<AttackActionTag>().ForEach((ref MapVision mapVision, ref AttackState state) =>
-                {
-                    if (mapVision.TargetAttackPosition.Equals(state.TargetPosition)) return;
-                    mapVision.TargetAttackPosition = state.TargetPosition;
-                    mapVision.AttackLocations.c0 = MeleeTargetPosition(mapVision, state);
-                    mapVision.AttackLocations.c1 = MagicTargetPosition(ref mapVision, ref state);
-                    mapVision.AttackLocations.c2 = RangeTargetPosition(ref mapVision, ref state);
-                }).WithoutBurst()
-                .Run();
             Entities.ForEach((ref MapVision mapVision, ref EvadeThreat state, ref LocalTransform transform) =>
                 {
                     mapVision.CoverPositions.c0 = ClosestSafeLocation(mapVision, state,transform);

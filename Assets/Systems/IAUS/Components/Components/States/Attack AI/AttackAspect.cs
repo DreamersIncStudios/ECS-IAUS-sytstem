@@ -4,6 +4,7 @@ using AISenses.VisionSystems;
 using Components.MovementSystem;
 using Stats.Entities;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -12,21 +13,20 @@ namespace IAUS.ECS.Component
     public readonly partial struct AttackAspect : IAspect
     {
         private readonly VisionAspect visionAspect;
-        private readonly RefRO<MapVision> mapVision;
         private readonly RefRW<AttackState> state;
         private readonly RefRO<LocalTransform> transform;
         private readonly RefRO<AIStat> stats;
         private readonly RefRW<Movement> move;
 
-        //Todo Move to AIstate to allow for Variablity 
-        public bool IsHealthy => stats.ValueRO.HealthRatio > .725f; 
-        public bool IsInDanger => stats.ValueRO.HealthRatio < .35f;
+        //Todo Move to AI state to allow for Variability 
+        private bool IsHealthy => stats.ValueRO.HealthRatio > .725f;
+        private bool IsInDanger => stats.ValueRO.HealthRatio < .35f;
 
         public void DeterminePlan()
         {
             if (state.ValueRO.Plan != AttackPlan.None)
             {
-                float dist = new float();
+                var dist = new float();
                 // Is Plan still valid?
                 switch (state.ValueRO.Plan)
                 {
@@ -41,17 +41,17 @@ namespace IAUS.ECS.Component
                     case AttackPlan.Evade:
                         break;
                     case AttackPlan.MoveToLocationMelee:
-                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c0);
+                        dist = Vector3.Distance(transform.ValueRO.Position,state.ValueRO.TargetPosition);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackMelee;
                         break;
                     case AttackPlan.MoveToLocationMagic:
-                        dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c1);
+                        dist = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackMagic;
                         break;
                     case AttackPlan.MoveToLocationRange:
-                         dist = Vector3.Distance(transform.ValueRO.Position, mapVision.ValueRO.AttackLocations.c2);
+                         dist = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
                         if (dist > 3) return;
                         state.ValueRW.Plan = AttackPlan.AttackRange;
                         break;
@@ -105,16 +105,10 @@ namespace IAUS.ECS.Component
                         state.ValueRW.AttackResetTimer = 0.0f;
                     break;
                 case AttackPlan.MoveToLocationMelee:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c0))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c0);
-                    break;
                 case AttackPlan.MoveToLocationMagic:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c1))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c1);
-                    break;
                 case AttackPlan.MoveToLocationRange:
-                    if(!move.ValueRO.TargetLocation.Equals(mapVision.ValueRO.AttackLocations.c2))
-                        move.ValueRW.SetLocation(mapVision.ValueRO.AttackLocations.c2);
+                    if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition))
+                        move.ValueRW.SetLocation(state.ValueRO.TargetPosition);
                     break;
                 case AttackPlan.AttackMelee:
                     Debug.Log("attacking");
@@ -180,7 +174,6 @@ namespace IAUS.ECS.Component
             get
             {
                 if (!state.ValueRO.CapableOfMelee) return 0;
-                if (!mapVision.ValueRO.HasMeleeLocation) return 0;
                 if (InAttackRange(3)) return 0;
                 var temp = 3;
                 if (IsInDanger) return temp;
@@ -194,7 +187,7 @@ namespace IAUS.ECS.Component
         private int TravelToTargetMagicLocation {
           get
           {
-              if (!state.ValueRO.CapableOfMagic||!mapVision.ValueRO.HasMagicLocation||InAttackRange(10)) return 0;
+              if (!state.ValueRO.CapableOfMagic||InAttackRange(10)) return 0;
               var temp = 3;
               if (IsInDanger)
               {
@@ -248,6 +241,12 @@ namespace IAUS.ECS.Component
                 var temp = 2;
                 return temp; 
             }
+        }
+
+        public Entity TargetEntity =>state.ValueRO.TargetEntity;
+        public float3 TargetPosition {
+            get => state.ValueRW.TargetPosition;
+            set => state.ValueRW.TargetPosition = value;
         }
 
         bool InAttackRange(float range)
