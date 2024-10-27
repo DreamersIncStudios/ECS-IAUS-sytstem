@@ -64,8 +64,10 @@ namespace IAUS.ECS.Systems.Reactive
                 {
                     GetChild = SystemAPI.GetBufferLookup<Child>(),
                     Melee = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
-                    Range = SystemAPI.GetBufferLookup<RangeAttackPosition>()
+                    Range = SystemAPI.GetBufferLookup<RangeAttackPosition>(),
+                    ECB = ecb.CreateCommandBuffer(World.Unmanaged)
                 }.Schedule(depends);
+                
                 depends = new DetermineAction()
                 {
                     deltaTime = SystemAPI.Time.DeltaTime,
@@ -90,18 +92,22 @@ namespace IAUS.ECS.Systems.Reactive
                 [ReadOnly] public BufferLookup<MeleeAttackPosition> Melee;
                 [ReadOnly] public BufferLookup<RangeAttackPosition> Range;
                 [ReadOnly] public BufferLookup<Child> GetChild;
+                public EntityCommandBuffer ECB;
 
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, 
                     ref AttackState state, in AttackActionTag tag)
                 {
                     var child = GetChild[state.TargetEntity][0].Value;
                     if (!state.TargetPosition.Equals(float3.zero)) return;
-                  
-                    foreach (var bufferElement in Melee[child])
+
+                    for (var i = 0; i < Melee[child].Length; i++)
                     {
+                        var index = i;
+                        var bufferElement = Melee[child][i];
                         if (bufferElement.State == OccupiedState.Vacant)
                         {
                             state.TargetPosition = bufferElement.Position;
+                            ECB.AddComponent(child, new ReserveLocationTag() { ID = index });
                             break;
                         }
                     }

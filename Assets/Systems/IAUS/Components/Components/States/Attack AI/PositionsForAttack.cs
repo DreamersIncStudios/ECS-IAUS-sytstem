@@ -60,19 +60,28 @@ namespace IAUS.ECS.Component.Attacking
         }
         
     }
+
+    public struct ReserveLocationTag : IComponentData
+    {
+        public int ID;
+    }
+
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
     public partial class UpdateAttackPositionSystem : SystemBase
     {
         private CollisionWorld collisionWorld;
+
         protected override void OnUpdate()
         {
             collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-
-            
-             Entities.WithChangeFilter<LocalToWorld>().WithoutBurst().ForEach((ref LocalToWorld transform, ref DynamicBuffer<RangeAttackPosition> attackPosition) =>
+            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+            var CommandBufferParallel = ecb.CreateCommandBuffer(World.DefaultGameObjectInjectionWorld.Unmanaged);
+            Entities.WithChangeFilter<LocalToWorld>().WithoutBurst().ForEach(
+                (ref LocalToWorld transform, ref DynamicBuffer<RangeAttackPosition> attackPosition) =>
                 {
                     for (var i = 0; i < 6; i++)
-                    {  var temp = attackPosition[i];
+                    {
+                        var temp = attackPosition[i];
                         if ((temp.State == OccupiedState.Vacant &&
                              Vector3.Distance(temp.Position, transform.Position) > 25.5f) ||
                             Vector3.Distance(temp.Position, transform.Position) > 50.5f)
@@ -86,29 +95,41 @@ namespace IAUS.ECS.Component.Attacking
                         attackPosition[i] = temp;
                     }
                 }).Run();
-            
-            Entities.WithChangeFilter<LocalToWorld>().ForEach((ref LocalToWorld transform, ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
-                {
-                    for (var i = 0; i < 4; i++)
-                    {
-                        var temp = attackPosition[i];
-                        if (temp.State == OccupiedState.Vacant ||Vector3.Distance(temp.Position, transform.Position) > 10.5f)
-                        {
-                            var target = i switch
-                            {
-                                0 => transform.Position + transform.Forward * 2,
-                                1 => transform.Position + transform.Right * 2,
-                                2 => transform.Position - transform.Forward * 2,
-                                3 => transform.Position - transform.Right * 2,
-                                _ => new float3()
-                            };
-                            temp.SetPosition(target);
-                        }
 
-                        attackPosition[i] = temp;
-                    }
-                })
+            Entities.WithChangeFilter<LocalToWorld>().ForEach(
+                    (ref LocalToWorld transform, ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
+                    {
+                        for (var i = 0; i < 4; i++)
+                        {
+                            var temp = attackPosition[i];
+                            if (temp.State == OccupiedState.Vacant ||
+                                Vector3.Distance(temp.Position, transform.Position) > 10.5f)
+                            {
+                                var target = i switch
+                                {
+                                    0 => transform.Position + transform.Forward * 2,
+                                    1 => transform.Position + transform.Right * 2,
+                                    2 => transform.Position - transform.Forward * 2,
+                                    3 => transform.Position - transform.Right * 2,
+                                    _ => new float3()
+                                };
+                                temp.SetPosition(target);
+                            }
+
+                            attackPosition[i] = temp;
+                        }
+                    })
                 .ScheduleParallel();
+            Entities.WithStructuralChanges().ForEach((Entity entity, ref ReserveLocationTag transform,
+                ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
+            {
+                var temp = attackPosition[transform.ID];
+                temp.State = OccupiedState.Reserved;
+                    attackPosition[transform.ID] = temp;
+                 EntityManager.RemoveComponent<ReserveLocationTag>(entity);
+
+            }).Run();
+
         }
 
   
