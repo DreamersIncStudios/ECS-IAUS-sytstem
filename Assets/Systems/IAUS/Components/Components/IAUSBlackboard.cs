@@ -193,7 +193,7 @@ namespace IAUS.ECS.Component.Aspects
                     return 0.0f;
                 }
 
-                attack.ValueRW.TargetPosition = visionAspect.TargetEnemyPosition;
+                attack.ValueRW.TargetEntity = visionAspect.TargetEntity(TargetAlignmentType.Enemy);
             
                 if (wait.ValueRO.Index == -1)
                 {

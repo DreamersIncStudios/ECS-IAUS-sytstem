@@ -3,6 +3,7 @@ using DG.Tweening;
 using Unity.Entities;
 using MotionSystem.Components;
 using DreamersStudio.CameraControlSystem;
+using static PrimeTween.Tween;
 // ReSharper disable Unity.BurstLoadingManagedType
 
 namespace MotionSystem.Systems
@@ -56,8 +57,16 @@ namespace MotionSystem.Systems
                     m_TurnAmount = control.Move.x;
                     if (!control.AI)
                     {
-                        if (CameraControl.Instance.TargetGroup.m_Targets[0].target != null)
-                            transform.DOLookAt(CameraControl.Instance.TargetGroup.m_Targets[0].target.position, .35f);
+                        if (CameraControl.Instance.Target.LookAt != null)
+                        {
+
+                            var forwardDirection = CameraControl.Instance.Target.LookAt.transform.position -
+                                                   transform.position;
+                            var rot = Quaternion.LookRotation(forwardDirection);
+                            if (transform.rotation != rot)
+                                Rotation(transform, rot, 0.5f);
+
+                        }
                     }
                 }
 
@@ -210,8 +219,16 @@ namespace MotionSystem.Systems
                     m_TurnAmount = control.Move.x;
                     if (!control.AI)
                     {
-                        if (CameraControl.Instance.TargetGroup.m_Targets[0].target != null)
-                            transform.DOLookAt(CameraControl.Instance.TargetGroup.m_Targets[0].target.position, .35f);
+                        if (CameraControl.Instance.Target.LookAt != null)
+                        {
+
+                            var forwardDirection = CameraControl.Instance.Target.LookAt.transform.position -
+                                                   transform.position;
+                            var rot = Quaternion.LookRotation(forwardDirection);
+                            if (transform.rotation != rot)
+                                Rotation(transform, rot, 0.5f);
+
+                        }
                     }
                 }
 

@@ -5,8 +5,10 @@ using Stats;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
+using IAUS.ECS.Component.Attacking;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEditor;
 using UnityEngine;
 
@@ -58,15 +60,23 @@ namespace DreamersInc.BestiarySystem
 
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        public static bool SpawnDummy(uint ID, out GameObject go, out Entity entity) {
+        public static bool SpawnDummy(uint ID, Vector3 pos,  out GameObject go, out Entity entity) {
             var info = GetDummy(ID);
                 if (info != null) 
             {
                 go = Instantiate(info.Prefab);
+                go.transform.position = pos;
+                
                // go.layer = 6;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name + " NPC");
                 AddPhysics(manager, entity, go, info.PhysicsInfo);
+                manager.SetComponentData(entity, new LocalTransform()
+                {
+                    Position = pos,
+                    Rotation = go.transform.rotation,
+                    Scale = 1
+                });
                 BaseCharacterComponent character = new()
                 {
                     GOrepresentative = go
@@ -92,18 +102,38 @@ namespace DreamersInc.BestiarySystem
                     Type = TargetType.Character,
                     CenterOffset = new float3(0, 1, 0) //todo add value to SO
                 });
+                
+                var baseEntityArch = manager.CreateArchetype(
+                    typeof(LocalTransform),
+                    typeof(LocalToWorld),
+                    typeof(MeleeAttackPosition),
+                    typeof(RangeAttackPosition)
+                );
+                var baseDataEntity = manager.CreateEntity(baseEntityArch);
+                manager.SetName(baseDataEntity, "Attack Location Entity");
+                manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+                manager.AddComponentData(baseDataEntity, new Parent()
+                {
+                    Value = entity
+                });
+                var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
+                meleeAttackPositions.Length = 4;
+                var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
+                rangeAttackPositions.Length = 6;
+              
             }
-                else 
+            else 
             {
                 go = null;
                 entity = Entity.Null;
             }
+                
             return info != null;
         }
 
         public static bool SpawnDummy(uint ID, Vector3 Position)
         {
-            if (SpawnDummy(ID, out GameObject go, out Entity _))
+            if (SpawnDummy(ID, Position, out GameObject go, out Entity _))
             {
                 go.transform.position = Position;
                 return true;

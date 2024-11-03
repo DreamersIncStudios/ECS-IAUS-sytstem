@@ -1,14 +1,13 @@
 ﻿using System;
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 
 namespace DreamersStudio.CameraControlSystem
 {
     public class CameraControl : MonoBehaviour
     {
-        public CinemachineFreeLook Follow;
-        public CinemachineFreeLook Target;
-        public CinemachineTargetGroup TargetGroup;
+        public CinemachineCamera Follow;
+        public CinemachineCamera Target;
         public static CameraControl Instance;
         public EventHandler<OnTargetingChangedEventArgs> OnTargetingChanged;
         GameObject playerCharacter;
@@ -20,6 +19,11 @@ namespace DreamersStudio.CameraControlSystem
         public class OnTargetChangedEventArgs : EventArgs
         {
             public GameObject Target;
+            
+            public OnTargetChangedEventArgs(GameObject target)
+            {
+                Target = target;
+            }
         }
 
         private void Awake()
@@ -47,22 +51,10 @@ namespace DreamersStudio.CameraControlSystem
             };
             OnTargetChanged += (object sender, OnTargetChangedEventArgs eventArgs) =>
             {
-                    TargetGroup.m_Targets[0].target = eventArgs.Target.transform;
+                Target.LookAt = eventArgs.Target != null ? eventArgs.Target.transform : null;
             };
 
         }
-        private void Update()
-        {
-            SetBias();
-        }
-        void SetBias() {
-            if (playerCharacter == null)
-            {
-                playerCharacter = GameObject.FindGameObjectWithTag("Player");
-                return;
-            }
-            Target.m_Heading.m_Bias = playerCharacter.transform.eulerAngles.y;
-            
-        }
+
     }
 }

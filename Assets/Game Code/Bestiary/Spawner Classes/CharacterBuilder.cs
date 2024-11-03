@@ -11,6 +11,7 @@ using DreamersInc.InflunceMapSystem;
 using Global.Component;
 using IAUS.ECS;
 using IAUS.ECS.Component;
+using IAUS.ECS.Component.Attacking;
 using MotionSystem;
 using MotionSystem.Components;
 using ProjectDawn.Navigation;
@@ -113,9 +114,10 @@ namespace DreamersInc.BestiarySystem
             {
                 AttackSequence = sequence
             });
+
+
             return this;
         }
-
         public CharacterBuilder WithPlayerControl()
         {
             if (entity == Entity.Null) return this;
@@ -233,6 +235,24 @@ namespace DreamersInc.BestiarySystem
             manager.AddComponentObject(entity, data);
 
             this.character = data;
+            
+            var baseEntityArch = manager.CreateArchetype(
+                typeof(LocalTransform),
+                typeof(LocalToWorld),
+                typeof(MeleeAttackPosition),
+                typeof(RangeAttackPosition)
+            );
+            var baseDataEntity = manager.CreateEntity(baseEntityArch);
+            manager.SetName(baseDataEntity, "Attack Location Entity");
+            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+            manager.AddComponentData(baseDataEntity, new Parent()
+            {
+                Value = entity
+            });
+            var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
+            meleeAttackPositions.Length = 4;
+            var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
+            rangeAttackPositions.Length = 6;
             return this;
         }
 

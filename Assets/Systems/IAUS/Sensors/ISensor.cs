@@ -30,18 +30,7 @@ namespace IAUS.Core.GOAP
 
         protected override void OnUpdate()
         {
-            var transforms = SystemAPI.GetComponentLookup<LocalTransform>();
-                
-            Entities.WithoutBurst().ForEach((ref Vision vision) =>
-            {
-             /*   if (vision.targetEntity == Entity.Null) return;
-                vision.TargetPosition = transforms[vision.targetEntity].Position;
-                if (vision is not { IsInRange: true, UpdateTargetPosition: true }) return;
-                vision.LastKnownPosition = vision.TargetPosition;
-                if (SensorChange == null) return;
-                SensorChange(this, new OnTargetChanged() { });
-*/
-            }).Run();
+
         }
 
     }
