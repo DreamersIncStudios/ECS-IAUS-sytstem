@@ -115,23 +115,7 @@ namespace DreamersInc.BestiarySystem
                 AttackSequence = sequence
             });
 
-            var baseEntityArch = manager.CreateArchetype(
-                typeof(LocalTransform),
-                typeof(LocalToWorld),
-                typeof(MeleeAttackPosition),
-                typeof(RangeAttackPosition)
-            );
-            var baseDataEntity = manager.CreateEntity(baseEntityArch);
-            manager.SetName(baseDataEntity, "Attack Location Entity");
-            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-            manager.AddComponentData(baseDataEntity, new Parent()
-            {
-                Value = entity
-            });
-            var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
-                meleeAttackPositions.Length = 4;
-            var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
-                rangeAttackPositions.Length = 6;
+
             return this;
         }
         public CharacterBuilder WithPlayerControl()
@@ -251,6 +235,24 @@ namespace DreamersInc.BestiarySystem
             manager.AddComponentObject(entity, data);
 
             this.character = data;
+            
+            var baseEntityArch = manager.CreateArchetype(
+                typeof(LocalTransform),
+                typeof(LocalToWorld),
+                typeof(MeleeAttackPosition),
+                typeof(RangeAttackPosition)
+            );
+            var baseDataEntity = manager.CreateEntity(baseEntityArch);
+            manager.SetName(baseDataEntity, "Attack Location Entity");
+            manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
+            manager.AddComponentData(baseDataEntity, new Parent()
+            {
+                Value = entity
+            });
+            var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
+            meleeAttackPositions.Length = 4;
+            var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
+            rangeAttackPositions.Length = 6;
             return this;
         }
 

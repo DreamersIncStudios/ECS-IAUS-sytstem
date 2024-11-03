@@ -7,6 +7,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.AI;
 using Utilities;
 
 namespace IAUS.ECS.Component
@@ -40,16 +41,17 @@ namespace IAUS.ECS.Component
 
 
         }
+        
         float3 GetWanderPoint(float3 CurPosition, int hashKey)
         {
-            while (true) {
-                if (GlobalFunctions.RandomPoint(CurPosition, 100, out float3 pos)) {
-                    if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) == hashKey)
-                    {
-                        return pos;
-                    }
-                
-                }
+            while (true)
+            {
+                if (!GlobalFunctions.RandomPoint(CurPosition, 50, out float3 pos)) continue;
+                if (NPCQuadrantSystem.GetPositionHashMapKey((int3)pos) != hashKey) continue;
+                NavMeshPath path = new NavMeshPath();
+                if (!NavMesh.CalculatePath(CurPosition, pos, NavMesh.AllAreas, path)) continue;
+                if(path.status == NavMeshPathStatus.PathComplete)
+                    return pos;
             }
         }
 
