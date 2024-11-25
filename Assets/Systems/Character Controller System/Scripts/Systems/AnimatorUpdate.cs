@@ -108,7 +108,7 @@ namespace MotionSystem.Systems
                     anim.SetFloat(Jump, rb.linearVelocity.y);
                 }
 
-                // calculate which leg is behind, so as to leave that leg trailing in the jump animation
+                // calculate which leg is behind, to leave that leg trailing in the jump animation
                 // (This code is reliant on the specific run cycle offset in our animations,
                 // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
                 float runCycle =

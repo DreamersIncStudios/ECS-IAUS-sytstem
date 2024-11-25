@@ -61,9 +61,11 @@ namespace IAUS.ECS.Component.Attacking
         
     }
 
-    public struct ReserveLocationTag : IComponentData
+    public struct ReserveLocationTag : IBufferElementData
     {
         public int ID;
+        public Entity ReserverEntity;
+
     }
 
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
@@ -102,7 +104,7 @@ namespace IAUS.ECS.Component.Attacking
                         for (var i = 0; i < 4; i++)
                         {
                             var temp = attackPosition[i];
-                            if (temp.State == OccupiedState.Vacant ||
+                            if (temp.State == OccupiedState.Vacant &&
                                 Vector3.Distance(temp.Position, transform.Position) > 10.5f)
                             {
                                 var target = i switch
@@ -120,15 +122,19 @@ namespace IAUS.ECS.Component.Attacking
                         }
                     })
                 .ScheduleParallel();
-            Entities.WithStructuralChanges().ForEach((Entity entity, ref ReserveLocationTag transform,
+            Entities.WithStructuralChanges().ForEach((Entity entity, DynamicBuffer<ReserveLocationTag> tags,
                 ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
             {
-                var temp = attackPosition[transform.ID];
-                temp.State = OccupiedState.Reserved;
-                    attackPosition[transform.ID] = temp;
-                 EntityManager.RemoveComponent<ReserveLocationTag>(entity);
-
-            }).Run();
+                for (var index = 0; index < tags.Length; index++)
+                {
+                    var tag = tags[index];
+                    if (attackPosition[tag.ID].State != OccupiedState.Vacant) continue;
+                    var temp = attackPosition[tag.ID];
+                    temp.State = OccupiedState.Occupied;
+                    attackPosition[tag.ID] = temp;
+                    tags.RemoveAt(index);
+                }
+            }).Schedule();
 
         }
 

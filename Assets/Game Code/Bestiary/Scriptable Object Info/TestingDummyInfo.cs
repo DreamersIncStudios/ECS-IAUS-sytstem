@@ -116,6 +116,7 @@ namespace DreamersInc.BestiarySystem
                 {
                     Value = entity
                 });
+                manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
                 var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
                 meleeAttackPositions.Length = 4;
                 var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);

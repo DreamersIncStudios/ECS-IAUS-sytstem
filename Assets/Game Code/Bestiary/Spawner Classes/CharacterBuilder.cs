@@ -65,7 +65,7 @@ namespace DreamersInc.BestiarySystem
             if (entity == Entity.Null) return this;
             if (model == null) return this;
             var anim = model.GetComponent<Animator>();
-            manager.AddComponentObject(entity, anim);
+           // manager.AddComponentObject(entity, anim);
             TransformGO transformLink = new()
             {
                 transform = model.transform
@@ -249,6 +249,7 @@ namespace DreamersInc.BestiarySystem
             {
                 Value = entity
             });
+            manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
             var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
             meleeAttackPositions.Length = 4;
             var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
