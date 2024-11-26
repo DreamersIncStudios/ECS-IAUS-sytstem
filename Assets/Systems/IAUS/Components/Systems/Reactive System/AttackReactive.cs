@@ -93,29 +93,27 @@ namespace IAUS.ECS.Systems.Reactive
                 [ReadOnly] public BufferLookup<MeleeAttackPosition> Melee;
                 [ReadOnly] public BufferLookup<RangeAttackPosition> Range;
                 [ReadOnly] public BufferLookup<Child> GetChild;
-                public BufferLookup<ReserveLocationTag> testing;
+                [NativeDisableParallelForRestriction]public BufferLookup<ReserveLocationTag> testing;
 
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, 
                     ref AttackState state, in AttackActionTag tag)
                 {
                     var child = GetChild[state.TargetEntity][0].Value;
-                    if (!state.TargetPosition.Equals(float3.zero)) return;
+                    state.TargetPosition = float3.zero;
 
-                    for (var i = 0; i < Melee[child].Length; i++)
+                    for (var i = 0; i < Melee[child].Length-1; i++)
                     {
                         var index = i;
                         var bufferElement = Melee[child][i];
-                        if (bufferElement.State == OccupiedState.Vacant)
+                        if (bufferElement.State != OccupiedState.Vacant) continue;
+                        state.TargetPosition = bufferElement.Position;
+                        var buffer = testing[child];
+                        buffer.Add(new ReserveLocationTag()
                         {
-                            state.TargetPosition = bufferElement.Position;
-                            var buffer = testing[child];
-                            buffer.Add(new ReserveLocationTag()
-                            {
-                                ReserverEntity = entity,
-                                ID = index,
-                            });
-                            break;
-                        }
+                            ReserverEntity = entity,
+                            ID = index,
+                        });
+                        break;
                     }
                 }
 

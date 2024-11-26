@@ -107,7 +107,7 @@ namespace IAUS.ECS.Component
                 case AttackPlan.MoveToLocationMelee:
                 case AttackPlan.MoveToLocationMagic:
                 case AttackPlan.MoveToLocationRange:
-                    if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition))
+                    if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition) && !state.ValueRO.TargetPosition.Equals(float3.zero))
                         move.ValueRW.SetLocation(state.ValueRO.TargetPosition);
                     break;
                 case AttackPlan.AttackMelee:
