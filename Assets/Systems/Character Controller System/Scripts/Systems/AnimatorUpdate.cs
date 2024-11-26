@@ -2,7 +2,7 @@
 using DG.Tweening;
 using Unity.Entities;
 using MotionSystem.Components;
-using DreamersStudio.CameraControlSystem;
+using DreamersIncStudio.CameraControlSystem;
 using static PrimeTween.Tween;
 // ReSharper disable Unity.BurstLoadingManagedType
 

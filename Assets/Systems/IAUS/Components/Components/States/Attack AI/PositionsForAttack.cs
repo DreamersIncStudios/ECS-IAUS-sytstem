@@ -145,7 +145,7 @@ namespace IAUS.ECS.Component.Attacking
                         lookup[tag.ReserverEntity] = state;
                     }
                 }
-            }).Schedule();
+            }).Schedule(); 
 
         }
 
