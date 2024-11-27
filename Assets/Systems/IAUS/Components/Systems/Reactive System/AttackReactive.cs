@@ -25,6 +25,7 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState aiStateComponent)
         {
             aiStateComponent.Status = ActionStatus.Running;
+            aiStateComponent.TargetPosition = float3.zero;
         }
 
         public void ComponentRemoved(Entity entity, ref AttackState aiStateComponent, in AttackActionTag oldComponent)
@@ -60,14 +61,6 @@ namespace IAUS.ECS.Systems.Reactive
             protected override void OnUpdate()
             {
                 var depends = Dependency;
-                depends = new GetAttackPosition()
-                {
-                    GetChild = SystemAPI.GetBufferLookup<Child>(),
-                    Melee = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
-                    Range = SystemAPI.GetBufferLookup<RangeAttackPosition>(),
-                    testing = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
-                    
-                }.ScheduleParallel(depends);
                 
                 depends = new DetermineAction()
                 {
@@ -127,7 +120,7 @@ namespace IAUS.ECS.Systems.Reactive
                 {
 
                    aspect.DeterminePlan();
-                   aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
+                   //aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
                 }
             }
 

@@ -24,82 +24,46 @@ namespace IAUS.ECS.Component
 
         public void DeterminePlan()
         {
-            if (state.ValueRO.Plan != AttackPlan.None)
+            
+            if(state.ValueRO.AttackPlans.Length!=0)return;
+            // select an attack Plan
+            int[] scores= new[]
             {
-                var dist = new float();
-                // Is Plan still valid?
-                switch (state.ValueRO.Plan)
-                {
-                    case AttackPlan.Reset:
-                        if (!state.ValueRO.InAttackCooldown)
-                        {
-                            state.ValueRW.Plan = AttackPlan.None;
-                            DeterminePlan();
-                        }
+                -1,
+                RestScore,
+                GetAttackLocation,
+                TravelToTargetMeleeLocation,
+                TravelToTargetMagicLocation,
+                TravelToTargetRangeLocation,
+                MeleeScore, MagicScore, RangeScore,
+                EvadeTarget
 
-                        break;
-                    case AttackPlan.Evade:
-                        break;
-                    case AttackPlan.MoveToLocationMelee:
-                        dist = Vector3.Distance(transform.ValueRO.Position,state.ValueRO.TargetPosition);
-                        if (dist > 3) return;
-                        state.ValueRW.Plan = AttackPlan.AttackMelee;
-                        break;
-                    case AttackPlan.MoveToLocationMagic:
-                        dist = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
-                        if (dist > 3) return;
-                        state.ValueRW.Plan = AttackPlan.AttackMagic;
-                        break;
-                    case AttackPlan.MoveToLocationRange:
-                         dist = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
-                        if (dist > 3) return;
-                        state.ValueRW.Plan = AttackPlan.AttackRange;
-                        break;
-                    case AttackPlan.AttackMelee:
-                        if (state.ValueRO.InAttackCooldown)
-                            state.ValueRW.Plan = AttackPlan.Reset;
-                        break;
-                    case AttackPlan.AttackMagic:
-                        if (state.ValueRO.InAttackCooldown)
-                            state.ValueRW.Plan = AttackPlan.Reset;
-                        break;
-                    case AttackPlan.AttackRange:
-                        if (state.ValueRO.InAttackCooldown)
-                            state.ValueRW.Plan = AttackPlan.Reset;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-            else
+            };
+            int maxScore = scores.Max();
+            var sortedScores = scores.ToList().OrderByDescending(x => x);
+            int maxIndex = scores.ToList().IndexOf(maxScore);
+            foreach (var score in sortedScores)
             {
-                // select an attack Plan
-                int[] scores = new[]
-                {
-                    RestScore,
-                    TravelToTargetMeleeLocation,
-                    TravelToTargetMagicLocation,
-                    TravelToTargetRangeLocation,
-                    MeleeScore, MagicScore, RangeScore,
-                    EvadeTarget
-
-                };
-                int maxScore = scores.Max();
-                int maxIndex = scores.ToList().IndexOf(maxScore);
-                state.ValueRW.Plan = (AttackPlan)(maxIndex+1);
+                if (score <= 0) continue;
+                if(state.ValueRW.AttackPlans.Length>=8)return;
+                var index = scores.ToList().IndexOf(score);
+                state.ValueRW.AttackPlans.Add((AttackPlan)(index));
             }
+            
+     
+            
         }
 
 
         public void ExecutePlan(Entity entity, int chunkIndex, float deltaTime, EntityCommandBuffer.ParallelWriter ECB)
         {
-            switch (state.ValueRO.Plan)
+            switch (state.ValueRO.AttackPlans[0])
             {
                 case AttackPlan.None:
                     Debug.LogError("Npc was able to enter Execute Plan with Plan being established");
                     DeterminePlan();
                     break;
-                case AttackPlan.Reset:
+                case AttackPlan.Rest:
                     state.ValueRW.AttackResetTimer -= deltaTime;
                     if (state.ValueRO.AttackResetTimer <= 0.0f)
                         state.ValueRW.AttackResetTimer = 0.0f;
@@ -243,6 +207,7 @@ namespace IAUS.ECS.Component
             }
         }
 
+        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
         public Entity TargetEntity =>state.ValueRO.TargetEntity;
         public float3 TargetPosition {
             get => state.ValueRW.TargetPosition;
@@ -259,7 +224,8 @@ namespace IAUS.ECS.Component
     public enum AttackPlan
     {
         None,
-        Reset,
+        Rest,
+        GetAttackLocation,
         MoveToLocationMelee,
         MoveToLocationMagic,
         MoveToLocationRange,
