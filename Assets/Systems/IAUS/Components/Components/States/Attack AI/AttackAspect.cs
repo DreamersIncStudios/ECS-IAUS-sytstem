@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using AISenses.VisionSystems;
 using Components.MovementSystem;
+using ProjectDawn.Navigation;
 using Stats.Entities;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -17,6 +18,7 @@ namespace IAUS.ECS.Component
         private readonly RefRO<LocalTransform> transform;
         private readonly RefRO<AIStat> stats;
         private readonly RefRW<Movement> move;
+        private readonly RefRO<AgentBody> agent;
 
         //Todo Move to AI state to allow for Variability 
         private bool IsHealthy => stats.ValueRO.HealthRatio > .725f;
@@ -39,9 +41,7 @@ namespace IAUS.ECS.Component
                 EvadeTarget
 
             };
-            int maxScore = scores.Max();
             var sortedScores = scores.ToList().OrderByDescending(x => x);
-            int maxIndex = scores.ToList().IndexOf(maxScore);
             foreach (var score in sortedScores)
             {
                 if (score <= 0) continue;
@@ -57,6 +57,7 @@ namespace IAUS.ECS.Component
 
         public void ExecutePlan(Entity entity, int chunkIndex, float deltaTime, EntityCommandBuffer.ParallelWriter ECB)
         {
+            if(state.ValueRO.AttackPlans.IsEmpty)return;
             switch (state.ValueRO.AttackPlans[0])
             {
                 case AttackPlan.None:
@@ -66,28 +67,38 @@ namespace IAUS.ECS.Component
                 case AttackPlan.Rest:
                     state.ValueRW.AttackResetTimer -= deltaTime;
                     if (state.ValueRO.AttackResetTimer <= 0.0f)
+                    {
                         state.ValueRW.AttackResetTimer = 0.0f;
+                        state.ValueRW.AttackPlans.RemoveAt(0);
+                    }
+
                     break;
                 case AttackPlan.MoveToLocationMelee:
                 case AttackPlan.MoveToLocationMagic:
                 case AttackPlan.MoveToLocationRange:
                     if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition) && !state.ValueRO.TargetPosition.Equals(float3.zero))
                         move.ValueRW.SetLocation(state.ValueRO.TargetPosition);
+                    if(agent.ValueRO.RemainingDistance<5)
+                        state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMelee:
                     Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
                     ECB.AddComponent<SelectAndAttack>(chunkIndex, entity);
+                    state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMagic:
                     Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15;
+                    state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackRange:
                     Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15;
+                    state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.Evade:
+                case AttackPlan.GetAttackLocation:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -99,7 +110,7 @@ namespace IAUS.ECS.Component
         {
             get
             {
-                if (state.ValueRO.InCooldown) return 0;
+                if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfMelee) return 0;
                 var temp = 2;
                 if (!InAttackRange(3)) return temp;
@@ -112,7 +123,7 @@ namespace IAUS.ECS.Component
         {
             get
             {
-                if (state.ValueRO.InCooldown) return 0;
+                if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfMagic) return 0;
                 var temp = 2;
                 if (!InAttackRange(10)) return temp;
@@ -125,7 +136,7 @@ namespace IAUS.ECS.Component
         {
             get
             {
-                if (state.ValueRO.InCooldown) return 0;
+                if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfProjectile) return 0;
                 var temp = 2;
                 if (!InAttackRange(30)) return temp;
@@ -138,9 +149,10 @@ namespace IAUS.ECS.Component
             get
             {
                 if (!state.ValueRO.CapableOfMelee) return 0;
-                if (InAttackRange(3)) return 0;
-                var temp = 3;
+                if (InAttackRange(6)) return 0;
+                var temp = 1;
                 if (IsInDanger) return temp;
+                temp++;
                 if (IsHealthy)
                     temp++;
                 return temp;
@@ -201,13 +213,23 @@ namespace IAUS.ECS.Component
         private int RestScore {
             get
             {
-                if (!IsInDanger) return 0;
-                var temp = 2;
+                var temp = 0;
+                if (IsInDanger) return temp;
+                if(state.ValueRO.InAttackCooldown)
+                    temp = 3;
                 return temp; 
             }
         }
 
-        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
+        private int GetAttackLocation
+        {
+            get
+            {
+                 
+                return state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
+            }
+        }
+
         public Entity TargetEntity =>state.ValueRO.TargetEntity;
         public float3 TargetPosition {
             get => state.ValueRW.TargetPosition;
@@ -216,7 +238,9 @@ namespace IAUS.ECS.Component
 
         bool InAttackRange(float range)
         {
-            return visionAspect.TargetEnemyTargetInRange(out _, out float dist) && dist <= range;
+         if(state.ValueRO.TargetPosition.Equals(float3.zero)) return false;
+         var distance = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
+         return distance <= range;
         }
 
     }

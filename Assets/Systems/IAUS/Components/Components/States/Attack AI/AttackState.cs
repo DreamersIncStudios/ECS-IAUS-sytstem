@@ -10,7 +10,7 @@ namespace IAUS.ECS.Component
     {
         public float3 TargetPosition;
         public Entity TargetEntity;
-
+        public int TargetPosistionID;
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
@@ -26,6 +26,7 @@ namespace IAUS.ECS.Component
             TargetPosition = float3.zero;
             TargetEntity = Entity.Null;
             AttackPlans = new FixedList64Bytes<AttackPlan>();
+            TargetPosistionID = -1;
         }
 
         public  FixedList32Bytes<AttackPlan> AttackPlans;

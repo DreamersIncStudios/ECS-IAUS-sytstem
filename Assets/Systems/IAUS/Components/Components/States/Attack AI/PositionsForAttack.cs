@@ -124,7 +124,7 @@ namespace IAUS.ECS.Component.Attacking
                 .ScheduleParallel();
 
             ComponentLookup<AttackState> lookup = SystemAPI.GetComponentLookup<AttackState>(false);
-            Entities.ForEach((Entity entity, DynamicBuffer<ReserveLocationTag> tags,
+            Entities.ForEach((Entity entity,DynamicBuffer<ReserveLocationTag> tags,
                  DynamicBuffer<MeleeAttackPosition> attackPosition) =>
             {
                 for (var index = 0; index < tags.Length; index++)
@@ -141,7 +141,9 @@ namespace IAUS.ECS.Component.Attacking
                         var state = lookup[tag.ReserverEntity];
                         attackPosition[tag.ID] = temp;
                         state.TargetPosition = temp;
+                        state.AttackPlans.RemoveAt(0);
                         tags.RemoveAt(index);
+                        state.TargetPosistionID = index;
                         lookup[tag.ReserverEntity] = state;
                     }
                 }
