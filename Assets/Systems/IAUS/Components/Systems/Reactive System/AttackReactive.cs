@@ -102,7 +102,7 @@ namespace IAUS.ECS.Systems.Reactive
                 [ReadOnly] public BufferLookup<Child> ChildBufferLookup;
                 [NativeDisableParallelForRestriction]public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
 
-                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, 
+                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform, 
                     ref AttackState state, in AttackActionTag tag)
                 {
                     if(state.AttackPlans.IsEmpty) return;
@@ -112,22 +112,39 @@ namespace IAUS.ECS.Systems.Reactive
                     var child = ChildBufferLookup[state.TargetEntity][0].Value;
                     state.TargetPosition = float3.zero;
 
-                    for (var i = 0; i < MeleeAttackPositions[child].Length-1; i++)
+                    List<DistCheck> dist = new();
+                    var buffer = MeleeAttackPositions[child];
+                    for (var i = 0; i < buffer.Length-1; i++)
                     {
-                        var index = i;
-                        var bufferElement = MeleeAttackPositions[child][i];
-                        if (bufferElement.State != OccupiedState.Vacant) continue;
-                        state.TargetPosition = bufferElement.Position;
-                        var buffer = ReserveLocationBuffer[child];
-                        buffer.Add(new ReserveLocationTag()
+                        var index = i; ;
+                        dist.Add(
+                            new DistCheck()
+                            {
+                                Distance =
+                                    Vector3.Distance(transform.Position, buffer[i].Position),
+                                Index =  index
+                            });
+                    }
+
+                    var orderBy = dist.OrderBy(x =>x.Distance);
+
+                    foreach (var check in orderBy)
+                    {
+                        if (buffer[check.Index].State != OccupiedState.Vacant) continue;
+                        ReserveLocationBuffer[child].Add(new ReserveLocationTag()
                         {
                             ReserverEntity = entity,
-                            ID = index,
+                            ID = check.Index
                         });
                         break;
                     }
                 }
 
+                class DistCheck
+                {
+                    public int Index;
+                    public float Distance;
+                }
             }
             partial struct DetermineAction: IJobEntity
             {
@@ -149,6 +166,14 @@ namespace IAUS.ECS.Systems.Reactive
                 public BufferLookup<MeleeAttackPosition> MeleeBufferLookup;
                 void Execute(ref AttackState state, in AttackActionTag tag)
                 {
+                    if (state.TargetPosistionID == -1) return;
+                    if (state.TargetPosistionID > 4)
+                    {
+                        state.TargetPosistionID = -1;
+                        state.AttackPlans.Insert(0, AttackPlan.GetAttackLocation);
+                        return;
+                    }
+
                     var dist = Vector3.Distance(state.TargetPosition,LocalTransformLookup[state.TargetEntity].Position);
                     if (dist < 10) return; 
                     var child = ChildBufferLookup[state.TargetEntity][0].Value;
