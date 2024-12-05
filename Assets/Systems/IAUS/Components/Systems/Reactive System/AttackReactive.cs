@@ -55,7 +55,8 @@ namespace IAUS.ECS.Systems.Reactive
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
-         
+                RequireForUpdate<RunningTag>();
+
                  ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 

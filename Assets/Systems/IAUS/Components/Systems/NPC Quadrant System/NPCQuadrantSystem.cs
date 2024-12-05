@@ -47,6 +47,8 @@ namespace DreamersInc.QuadrantSystems
         public EntityQuery query;
 
         public void OnCreate(ref SystemState state) {
+            state.RequireForUpdate<RunningTag>();
+
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, NPCQuadrantData>(0, Allocator.Persistent);
             query = state.GetEntityQuery(new EntityQueryDesc()
             {

@@ -53,6 +53,9 @@ namespace Utilities.ReactiveSystem
         protected override void OnCreate()
         {
             base.OnCreate();
+
+            RequireForUpdate<RunningTag>();
+
             _reactor = CreateComponentReactor();
 
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()

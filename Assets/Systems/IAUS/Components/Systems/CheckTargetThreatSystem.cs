@@ -7,6 +7,13 @@ namespace AISenses.VisionSystems
     [UpdateAfter(typeof(TargetingQuadrantSystem))]
     public partial class CheckTargetThreatSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<RunningTag>();
+
+        }
+
         protected override void OnUpdate()
         {
             Entities.ForEach(( DynamicBuffer<ScanPositionBuffer> buffer,ref IAUSBrain brain) =>

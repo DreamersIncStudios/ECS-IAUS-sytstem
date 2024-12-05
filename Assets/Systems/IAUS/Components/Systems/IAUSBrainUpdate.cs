@@ -8,6 +8,7 @@ namespace IAUS.ECS.Systems
     [UpdateAfter(typeof(SetupAIStateBlob))]
     public partial class IAUSUpdateGroup : ComponentSystemGroup
     {
+        
         public IAUSUpdateGroup()
         {
             RateManager = new RateUtils.VariableRateManager(1000, true);
@@ -24,6 +25,7 @@ namespace IAUS.ECS.Systems
     {
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<RunningTag>();
         }
 
         public void OnDestroy(ref SystemState state)

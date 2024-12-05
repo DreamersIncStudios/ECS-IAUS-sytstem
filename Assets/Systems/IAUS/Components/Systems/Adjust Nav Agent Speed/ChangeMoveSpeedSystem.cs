@@ -12,6 +12,12 @@ namespace Components.MovementSystem
 {
     public partial class ChangeMoveSpeedSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<RunningTag>();
+
+        }
 
         protected override void OnUpdate()
         {

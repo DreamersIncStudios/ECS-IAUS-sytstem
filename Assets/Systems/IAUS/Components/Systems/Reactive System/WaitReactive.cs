@@ -123,6 +123,7 @@ namespace IAUS.ECS.Systems.Reactive
         protected override void OnCreate()
         {
             base.OnCreate();
+            RequireForUpdate<RunningTag>();
             waitersPatrol = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] {ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(TravelWaypointBuffer)),

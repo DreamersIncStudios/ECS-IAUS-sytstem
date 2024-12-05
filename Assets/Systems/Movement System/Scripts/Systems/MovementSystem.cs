@@ -13,6 +13,12 @@ namespace IAUS.ECS.Systems
     [UpdateAfter(typeof(TransformSyncSystem))]
     public partial class MovementSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<RunningTag>();
+        }
+
         protected override void OnUpdate()
         {
             JobHandle systemDeps = Dependency;

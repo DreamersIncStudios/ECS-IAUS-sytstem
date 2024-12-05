@@ -61,6 +61,7 @@ namespace IAUS.ECS.Systems.Reactive
         protected override void OnCreate()
         {
             base.OnCreate();
+            RequireForUpdate<RunningTag>();
             _componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new ComponentType[] { ComponentType.ReadWrite(typeof(Patrol)), ComponentType.ReadWrite(typeof(PatrolActionTag)), ComponentType.ReadWrite(typeof(Movement)), ComponentType.ReadOnly(typeof(TravelWaypointBuffer))

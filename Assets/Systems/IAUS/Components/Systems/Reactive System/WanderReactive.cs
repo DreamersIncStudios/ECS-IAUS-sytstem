@@ -62,6 +62,7 @@ namespace IAUS.ECS.Systems.Reactive
             protected override void OnCreate()
             {
                 base.OnCreate();
+                RequireForUpdate<RunningTag>();
                 componentAddedQuery = GetEntityQuery(new EntityQueryDesc()
                 {
                     All = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderQuadrant)), ComponentType.ReadWrite(typeof(WanderActionTag)), ComponentType.ReadWrite(typeof(Movement))
