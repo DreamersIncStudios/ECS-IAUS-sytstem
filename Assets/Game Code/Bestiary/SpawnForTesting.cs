@@ -1,6 +1,7 @@
 using DreamersInc.BestiarySystem;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using Utilities;
@@ -29,7 +30,9 @@ public class SpawnForTesting : MonoBehaviour
             {
                 i--;
             }
-        
+
+            var entity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
+            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponent<RunningTag>(entity);
         }
         
         if (!SpawnDummies) return;

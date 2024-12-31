@@ -168,7 +168,7 @@ namespace IAUS.ECS.Systems.Reactive
                 void Execute(ref AttackState state, in AttackActionTag tag)
                 {
                     if (state.TargetPosistionID == -1) return;
-                    if (state.TargetPosistionID > 4)
+                    if (state.TargetPosistionID > 3)
                     {
                         state.TargetPosistionID = -1;
                         state.AttackPlans.Insert(0, AttackPlan.GetAttackLocation);
@@ -178,6 +178,7 @@ namespace IAUS.ECS.Systems.Reactive
                     var dist = Vector3.Distance(state.TargetPosition,LocalTransformLookup[state.TargetEntity].Position);
                     if (dist < 10) return; 
                     var child = ChildBufferLookup[state.TargetEntity][0].Value;
+                    
                     state.TargetPosition = MeleeBufferLookup[child][state.TargetPosistionID];
                     if(state.AttackPlans[0] != AttackPlan.MoveToLocationMelee)
                         state.AttackPlans.Insert(0, AttackPlan.MoveToLocationMelee);

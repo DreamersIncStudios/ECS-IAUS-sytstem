@@ -146,7 +146,8 @@ namespace IAUS.ECS.StateBlobSystem
 
             if (bool.Parse(parts[startPoint]))
             {
-
+                GameObject go = new GameObject();
+                go.try
                 output = new ConsiderationScoringData()
                 {
                     Inverse = bool.TryParse(parts[startPoint + 1], out var b) && b,
