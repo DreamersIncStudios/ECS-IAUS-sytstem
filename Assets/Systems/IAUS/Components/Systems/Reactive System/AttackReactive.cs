@@ -55,8 +55,7 @@ namespace IAUS.ECS.Systems.Reactive
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
-                RequireForUpdate<RunningTag>();
-
+         
                  ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 
@@ -167,10 +166,10 @@ namespace IAUS.ECS.Systems.Reactive
                 public BufferLookup<MeleeAttackPosition> MeleeBufferLookup;
                 void Execute(ref AttackState state, in AttackActionTag tag)
                 {
-                    if (state.TargetPosistionID == -1) return;
-                    if (state.TargetPosistionID > 3)
+                    if (state.TargetPositionID == -1) return;
+                    if (state.TargetPositionID > 4)
                     {
-                        state.TargetPosistionID = -1;
+                        state.TargetPositionID = -1;
                         state.AttackPlans.Insert(0, AttackPlan.GetAttackLocation);
                         return;
                     }
@@ -178,8 +177,7 @@ namespace IAUS.ECS.Systems.Reactive
                     var dist = Vector3.Distance(state.TargetPosition,LocalTransformLookup[state.TargetEntity].Position);
                     if (dist < 10) return; 
                     var child = ChildBufferLookup[state.TargetEntity][0].Value;
-                    
-                    state.TargetPosition = MeleeBufferLookup[child][state.TargetPosistionID];
+                    state.TargetPosition = MeleeBufferLookup[child][state.TargetPositionID];
                     if(state.AttackPlans[0] != AttackPlan.MoveToLocationMelee)
                         state.AttackPlans.Insert(0, AttackPlan.MoveToLocationMelee);
                 }

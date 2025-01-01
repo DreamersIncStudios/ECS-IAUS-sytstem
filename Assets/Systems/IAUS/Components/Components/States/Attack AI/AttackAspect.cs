@@ -221,14 +221,7 @@ namespace IAUS.ECS.Component
             }
         }
 
-        private int GetAttackLocation
-        {
-            get
-            {
-                 
-                return state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
-            }
-        }
+        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
 
         public Entity TargetEntity =>state.ValueRO.TargetEntity;
         public float3 TargetPosition {

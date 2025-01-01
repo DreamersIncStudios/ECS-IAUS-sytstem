@@ -11,7 +11,7 @@ using RaycastHit = Unity.Physics.RaycastHit;
 
 namespace IAUS.ECS.Component.Attacking
 {
-    interface AttackPosition : IBufferElementData
+    internal interface AttackPosition : IBufferElementData
     {
     
         public OccupiedState State { get; set; }
@@ -24,7 +24,7 @@ namespace IAUS.ECS.Component.Attacking
         Vacant, Reserved, Occupied
     }
 
-    [InternalBufferCapacity(10)]
+    [InternalBufferCapacity(6)]
     public struct MeleeAttackPosition : AttackPosition
     {
         public float3 Position;
@@ -143,7 +143,7 @@ namespace IAUS.ECS.Component.Attacking
                         state.TargetPosition = temp;
                         state.AttackPlans.RemoveAt(0);
                         tags.RemoveAt(index);
-                        state.TargetPosistionID = index;
+                        state.TargetPositionID = index;
                         lookup[tag.ReserverEntity] = state;
                     }
                 }
