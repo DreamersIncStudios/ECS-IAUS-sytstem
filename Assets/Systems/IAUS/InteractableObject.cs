@@ -7,13 +7,13 @@ namespace IAUS.ECS.Component
     public class InteractableObject : MonoBehaviour
     {
         [SerializeField] InteractableType Type;
-
+        [SerializeField] Weight Weight;
          class Baker : Baker<InteractableObject>
         {
             public override void Bake(InteractableObject authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
-                AddComponent(entity, new Interactable() { Type = authoring.Type });
+                AddComponent(entity, new Interactable() { Type = authoring.Type, Weight = authoring.Weight});
             }
         }
     }
@@ -21,7 +21,14 @@ namespace IAUS.ECS.Component
     public struct Interactable : IComponentData
     {
         public InteractableType Type;
-        
+        public Weight Weight;
+    }
+
+    public enum Weight
+    {
+        Light,
+        Medium,
+        Heavy,
     }
 
     [Flags]
