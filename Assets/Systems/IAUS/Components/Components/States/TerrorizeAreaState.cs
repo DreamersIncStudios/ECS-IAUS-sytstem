@@ -21,17 +21,7 @@ namespace IAUS.ECS.Component
         }
         public AIStates Name { get { return AIStates.Terrorize; } }
         public TerrorizeSubstates terrorizeSubstate;
-        public float2 InfluenceValueAtPos;
-        public float DistanceToClosestTarget { get; set; }
         public float MaxTerrorizeRadius;
-        public float targetingRangeInput => !HasAttack? DistanceToClosestTarget / MaxTerrorizeRadius: attackThis.DistanceTo / MaxTerrorizeRadius;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-         /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-        public float InfluenceRatio => InfluenceValueAtPos.x / InfluenceValueAtPos.y;
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
         public float CoolDownTime { get { return _coolDownTime; } }
@@ -41,7 +31,6 @@ namespace IAUS.ECS.Component
         public bool HasAttack => attackThis.CanSee;
     
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
-        [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
         [SerializeField] public float _coolDownTime;
         [SerializeField] public float _resetTime { get; set; }
