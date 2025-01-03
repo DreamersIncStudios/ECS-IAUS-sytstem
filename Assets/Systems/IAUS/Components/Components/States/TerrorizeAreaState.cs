@@ -27,6 +27,7 @@ namespace IAUS.ECS.Component
             TargetEntity = Entity.Null;
             AttackPlans = new FixedList64Bytes<AttackPlan>();
             TargetPositionID = -1;
+            InteractableEntity = Entity.Null;
         }
 
         public int Index { get; private set; }
@@ -51,6 +52,8 @@ namespace IAUS.ECS.Component
         public  FixedList32Bytes<AttackPlan> AttackPlans;
         public float AttackResetTimer;
         [SerializeField]  public bool InAttackCooldown => AttackResetTimer != 0.0f;
+        public Entity InteractableEntity { get; set; }
+
         public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
     }
 
