@@ -18,10 +18,27 @@ namespace IAUS.ECS.Component
         }
     }
 
-    public struct Interactable : IComponentData
+
+
+    public struct Interactable : IComponentData, IEquatable<Interactable>
     {
         public InteractableType Type;
         public Weight Weight;
+
+        public bool Equals(Interactable other)
+        {
+            return Type == other.Type && Weight == other.Weight;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Interactable other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine((int)Type, (int)Weight);
+        }
     }
 
     public enum Weight
