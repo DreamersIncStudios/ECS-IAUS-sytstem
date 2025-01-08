@@ -146,7 +146,6 @@ namespace IAUS.ECS.StateBlobSystem
 
             if (bool.Parse(parts[startPoint]))
             {
-
                 output = new ConsiderationScoringData()
                 {
                     Inverse = bool.TryParse(parts[startPoint + 1], out var b) && b,

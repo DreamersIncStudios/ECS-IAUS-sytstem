@@ -1,55 +1,64 @@
-using IAUS.ECS.Component;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
-using IAUS.ECS.StateBlobSystem;
-using IAUS.ECS.Consideration;
 using Unity.Mathematics;
 using AISenses;
+using AISenses.VisionSystems;
+using Unity.Collections;
 
 namespace IAUS.ECS.Component
 {
     public struct TerrorizeAreaState : IBaseStateScorer
     {
+        public float3 TargetPosition;
+        public Entity TargetEntity;
+        public int TargetPositionID;
+        public TerrorizeAreaState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
+        {
+            this.coolDownTime = coolDownTime;
+            _status = ActionStatus.Idle;
+            Index = 0;
+            _resetTime = 0;
+            _totalScore = 0;
+            CapableOfMelee = melee;
+            CapableOfMagic = magic;
+            CapableOfProjectile = range;
+            AttackResetTimer = 0.0f;
+            TargetPosition = float3.zero;
+            TargetEntity = Entity.Null;
+            AttackPlans = new FixedList64Bytes<AttackPlan>();
+            TargetPositionID = -1;
+            InteractableEntity = Entity.Null;
+        }
 
-        public BlobAssetReference<AIStateBlobAsset> stateRef;
         public int Index { get; private set; }
         public void SetIndex(int index)
         {
             Index = index;
         }
         public AIStates Name { get { return AIStates.Terrorize; } }
-        public TerrorizeSubstates terrorizeSubstate;
-        public float2 InfluenceValueAtPos;
-        public float DistanceToClosestTarget { get; set; }
-        public float MaxTerrorizeRadius;
-        public float targetingRangeInput => !HasAttack? DistanceToClosestTarget / MaxTerrorizeRadius: attackThis.DistanceTo / MaxTerrorizeRadius;
-        public ConsiderationScoringData HealthRatio => stateRef.Value.Array[Index].Health;
-         /// <summary>
-        /// Utility score for Attackable target in Ranges
-        /// </summary>
-        public ConsiderationScoringData TargetEnemyInRange => stateRef.Value.Array[Index].DistanceToTargetEnemy;
-        public ConsiderationScoringData Influence => stateRef.Value.Array[Index].EnemyInfluence;
-        public float InfluenceRatio => InfluenceValueAtPos.x / InfluenceValueAtPos.y;
+ 
         public float TotalScore { get { return _totalScore; } set { _totalScore = value; } }
         public ActionStatus Status { get { return _status; } set { _status = value; } }
-        public float CoolDownTime { get { return _coolDownTime; } }
+        public float CoolDownTime { get { return coolDownTime; } }
         public bool InCooldown => Status != ActionStatus.Running || Status != ActionStatus.Idle;
         public float ResetTime { get { return _resetTime; } set { _resetTime = value; } }
-        public Target attackThis;
-        public bool HasAttack => attackThis.CanSee;
     
         public float mod { get { return 1.0f - (1.0f / 3.0f); } }
-        [HideInInspector] public bool UpdatePatrolPoints;
         [SerializeField] public ActionStatus _status;
-        [SerializeField] public float _coolDownTime;
+        [SerializeField] public float coolDownTime;
         [SerializeField] public float _resetTime { get; set; }
         [SerializeField] public float _totalScore { get; set; }
+        
+        public  FixedList32Bytes<AttackPlan> AttackPlans;
+        public float AttackResetTimer;
+        [SerializeField]  public bool InAttackCooldown => AttackResetTimer != 0.0f;
+        public Entity InteractableEntity { get; set; }
+
+        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
     }
-    public enum TerrorizeSubstates { None, FindTarget, MoveToTarget, AttackTarget,  }
+
 
     public struct TerrorizeAreaTag : IComponentData {
-        public TerrorizeSubstates CurSubState;
+
     }
 }

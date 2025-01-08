@@ -30,6 +30,8 @@ namespace IAUS.ECS.Component.Aspects
         [Optional] private readonly RefRW<Wait> wait;
         [Optional] private readonly RefRW<AttackState> attack;
         [Optional] private readonly RefRW<EvadeThreat> evade;
+        [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
+        
 
         private readonly Entity self;
 
@@ -255,6 +257,22 @@ namespace IAUS.ECS.Component.Aspects
         }
         private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
 
+        private float ScoreOfTerrorizeArea
+        {
+            get
+            {
+                if (!terrorizeArea.IsValid) return 0.0f;
+                if(terrorizeArea.ValueRO.Index==-1)
+                    throw new ArgumentOutOfRangeException(nameof(terrorizeArea),
+                        $"Please check Creature list and Consideration Data to make sure {terrorizeArea.ValueRO.Name} state is implements");
+                var asset = GetAsset(terrorizeArea.ValueRO.Index);
+
+                var totalScore = new float();
+
+                return totalScore;
+            }
+        }
+
         private AIStates GetHighState()
         {
             var stateInfo = new List<StateInfo>
@@ -269,7 +287,9 @@ namespace IAUS.ECS.Component.Aspects
                     wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
                 new StateInfo(AIStates.Wait,
                     wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
-                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState)
+                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState),
+                new StateInfo(AIStates.Terrorize, terrorizeArea.IsValid ? terrorizeArea.ValueRO.Status : ActionStatus.Disabled, ScoreOfTerrorizeArea)
+     
             };
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
@@ -306,7 +326,12 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Retreat:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, self);
                     break;
+                case AIStates.Terrorize:
+                    commandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, self);
+                    break;
             }
+
+            
 
             //add new action tag
             switch (highScoreState)
@@ -331,6 +356,9 @@ namespace IAUS.ECS.Component.Aspects
                     break;
                 case AIStates.Retreat:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, self);
+                    break;
+                case AIStates.Terrorize:
+                    commandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, self);
                     break;
             }
 

@@ -9,6 +9,7 @@ public partial struct IausCooldown : ISystem
 {
     public void OnCreate(ref SystemState state)
     {
+        state.RequireForUpdate<RunningTag>();
     }
 
     public void OnDestroy(ref SystemState state)

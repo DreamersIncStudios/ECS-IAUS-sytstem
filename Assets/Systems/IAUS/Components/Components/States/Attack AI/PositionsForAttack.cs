@@ -1,6 +1,7 @@
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
 using IAUS.ECS.Systems;
+using IAUS.ECS.Systems.Reactive;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -10,7 +11,7 @@ using RaycastHit = Unity.Physics.RaycastHit;
 
 namespace IAUS.ECS.Component.Attacking
 {
-    interface AttackPosition : IBufferElementData
+    internal interface AttackPosition : IBufferElementData
     {
     
         public OccupiedState State { get; set; }
@@ -23,7 +24,7 @@ namespace IAUS.ECS.Component.Attacking
         Vacant, Reserved, Occupied
     }
 
-    [InternalBufferCapacity(10)]
+    [InternalBufferCapacity(6)]
     public struct MeleeAttackPosition : AttackPosition
     {
         public float3 Position;
@@ -61,21 +62,22 @@ namespace IAUS.ECS.Component.Attacking
         
     }
 
-    public struct ReserveLocationTag : IComponentData
+    public struct ReserveLocationTag : IBufferElementData
     {
         public int ID;
+        public Entity ReserverEntity;
+
     }
 
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
+    [UpdateAfter(typeof(AttackTagReactor.AttackUpdateSystem))]
     public partial class UpdateAttackPositionSystem : SystemBase
     {
         private CollisionWorld collisionWorld;
 
         protected override void OnUpdate()
         {
-            collisionWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var CommandBufferParallel = ecb.CreateCommandBuffer(World.DefaultGameObjectInjectionWorld.Unmanaged);
+
             Entities.WithChangeFilter<LocalToWorld>().WithoutBurst().ForEach(
                 (ref LocalToWorld transform, ref DynamicBuffer<RangeAttackPosition> attackPosition) =>
                 {
@@ -86,23 +88,23 @@ namespace IAUS.ECS.Component.Attacking
                              Vector3.Distance(temp.Position, transform.Position) > 25.5f) ||
                             Vector3.Distance(temp.Position, transform.Position) > 50.5f)
                         {
-
+            
                             var position = DetermineRangedAttackPositionValidity(transform);
                             temp.SetPosition(position);
-
+            
                         }
-
+            
                         attackPosition[i] = temp;
                     }
                 }).Run();
-
+            
             Entities.WithChangeFilter<LocalToWorld>().ForEach(
-                    (ref LocalToWorld transform, ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
+                    ( DynamicBuffer<MeleeAttackPosition> attackPosition, ref LocalToWorld transform) =>
                     {
                         for (var i = 0; i < 4; i++)
                         {
                             var temp = attackPosition[i];
-                            if (temp.State == OccupiedState.Vacant ||
+                            if (temp.State == OccupiedState.Vacant &&
                                 Vector3.Distance(temp.Position, transform.Position) > 10.5f)
                             {
                                 var target = i switch
@@ -115,20 +117,37 @@ namespace IAUS.ECS.Component.Attacking
                                 };
                                 temp.SetPosition(target);
                             }
-
+            
                             attackPosition[i] = temp;
                         }
                     })
                 .ScheduleParallel();
-            Entities.WithStructuralChanges().ForEach((Entity entity, ref ReserveLocationTag transform,
-                ref DynamicBuffer<MeleeAttackPosition> attackPosition) =>
-            {
-                var temp = attackPosition[transform.ID];
-                temp.State = OccupiedState.Reserved;
-                    attackPosition[transform.ID] = temp;
-                 EntityManager.RemoveComponent<ReserveLocationTag>(entity);
 
-            }).Run();
+            ComponentLookup<AttackState> lookup = SystemAPI.GetComponentLookup<AttackState>(false);
+            Entities.ForEach((Entity entity,DynamicBuffer<ReserveLocationTag> tags,
+                 DynamicBuffer<MeleeAttackPosition> attackPosition) =>
+            {
+                for (var index = 0; index < tags.Length; index++)
+                {
+                    var tag = tags[index];
+                    if (attackPosition[tag.ID].State != OccupiedState.Vacant)
+                    {
+                        tags.RemoveAt(index);
+                    }
+                    else
+                    {
+                        var temp = attackPosition[tag.ID];
+                        temp.State = OccupiedState.Occupied;
+                        var state = lookup[tag.ReserverEntity];
+                        attackPosition[tag.ID] = temp;
+                        state.TargetPosition = temp;
+                        state.AttackPlans.RemoveAt(0);
+                        tags.RemoveAt(index);
+                        state.TargetPositionID = index;
+                        lookup[tag.ReserverEntity] = state;
+                    }
+                }
+            }).Schedule(); 
 
         }
 

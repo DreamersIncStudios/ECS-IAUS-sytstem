@@ -2,7 +2,7 @@
 using UnityEngine;
 using Unity.Cinemachine;
 
-namespace DreamersStudio.CameraControlSystem
+namespace DreamersIncStudio.CameraControlSystem
 {
     public class CameraControl : MonoBehaviour
     {

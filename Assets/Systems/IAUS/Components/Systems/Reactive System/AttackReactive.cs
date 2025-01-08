@@ -10,6 +10,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Utilities.ReactiveSystem;
 
 
@@ -25,6 +26,7 @@ namespace IAUS.ECS.Systems.Reactive
         public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState aiStateComponent)
         {
             aiStateComponent.Status = ActionStatus.Running;
+            aiStateComponent.TargetPosition = float3.zero;
         }
 
         public void ComponentRemoved(Entity entity, ref AttackState aiStateComponent, in AttackActionTag oldComponent)
@@ -60,18 +62,24 @@ namespace IAUS.ECS.Systems.Reactive
             protected override void OnUpdate()
             {
                 var depends = Dependency;
-                depends = new GetAttackPosition()
-                {
-                    GetChild = SystemAPI.GetBufferLookup<Child>(),
-                    Melee = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
-                    Range = SystemAPI.GetBufferLookup<RangeAttackPosition>(),
-                    ECB = ecb.CreateCommandBuffer(World.Unmanaged)
-                }.Schedule(depends);
                 
                 depends = new DetermineAction()
                 {
                     deltaTime = SystemAPI.Time.DeltaTime,
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
+                }.Schedule(depends);
+                depends = new GetAttackPosition()
+                {
+                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
+                    MeleeAttackPositions = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
+                    RangedAttackBuffer = SystemAPI.GetBufferLookup<RangeAttackPosition>(),
+                    ReserveLocationBuffer = SystemAPI.GetBufferLookup<ReserveLocationTag>(false)
+                }.Schedule(depends);
+                depends = new CheckAttackPosition()
+                {
+                    ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
+                    MeleeBufferLookup = SystemAPI.GetBufferLookup<MeleeAttackPosition>(),
+                    LocalTransformLookup = SystemAPI.GetComponentLookup<LocalTransform>()
                 }.Schedule(depends);
                 Dependency = depends;
                 Entities.WithoutBurst().WithStructuralChanges().ForEach(
@@ -80,7 +88,7 @@ namespace IAUS.ECS.Systems.Reactive
                         handler.InputQueue ??= new Queue<AnimationTrigger>();
                         if (anim.IsInTransition(0)) return;
                         /*   handler.InputQueue.Enqueue(
-                               comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.Melee)[0]);
+                               comboList.AttackSequence.PickAttack(IAttackSequence.AttackType.MeleeAttackPositions)[0]);
                           */
                         EntityManager.RemoveComponent<SelectAndAttack>(entity);
                         Debug.Log("attacked");
@@ -89,30 +97,54 @@ namespace IAUS.ECS.Systems.Reactive
 
             partial struct GetAttackPosition: IJobEntity
             {
-                [ReadOnly] public BufferLookup<MeleeAttackPosition> Melee;
-                [ReadOnly] public BufferLookup<RangeAttackPosition> Range;
-                [ReadOnly] public BufferLookup<Child> GetChild;
-                public EntityCommandBuffer ECB;
+                [ReadOnly] public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
+                [ReadOnly] public BufferLookup<RangeAttackPosition> RangedAttackBuffer;
+                [ReadOnly] public BufferLookup<Child> ChildBufferLookup;
+                [NativeDisableParallelForRestriction]public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
 
-                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, 
+                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform, 
                     ref AttackState state, in AttackActionTag tag)
                 {
-                    var child = GetChild[state.TargetEntity][0].Value;
-                    if (!state.TargetPosition.Equals(float3.zero)) return;
+                    if(state.AttackPlans.IsEmpty) return;
+                    if (state.AttackPlans[0] != AttackPlan.GetAttackLocation)
+                        return;
 
-                    for (var i = 0; i < Melee[child].Length; i++)
+                    var child = ChildBufferLookup[state.TargetEntity][0].Value;
+                    state.TargetPosition = float3.zero;
+
+                    List<DistCheck> dist = new();
+                    var buffer = MeleeAttackPositions[child];
+                    for (var i = 0; i < buffer.Length-1; i++)
                     {
-                        var index = i;
-                        var bufferElement = Melee[child][i];
-                        if (bufferElement.State == OccupiedState.Vacant)
+                        var index = i; ;
+                        dist.Add(
+                            new DistCheck()
+                            {
+                                Distance =
+                                    Vector3.Distance(transform.Position, buffer[i].Position),
+                                Index =  index
+                            });
+                    }
+
+                    var orderBy = dist.OrderBy(x =>x.Distance);
+
+                    foreach (var check in orderBy)
+                    {
+                        if (buffer[check.Index].State != OccupiedState.Vacant) continue;
+                        ReserveLocationBuffer[child].Add(new ReserveLocationTag()
                         {
-                            state.TargetPosition = bufferElement.Position;
-                            ECB.AddComponent(child, new ReserveLocationTag() { ID = index });
-                            break;
-                        }
+                            ReserverEntity = entity,
+                            ID = check.Index
+                        });
+                        break;
                     }
                 }
 
+                class DistCheck
+                {
+                    public int Index;
+                    public float Distance;
+                }
             }
             partial struct DetermineAction: IJobEntity
             {
@@ -127,6 +159,29 @@ namespace IAUS.ECS.Systems.Reactive
                 }
             }
 
+            private partial struct CheckAttackPosition:IJobEntity
+            {
+                public ComponentLookup<LocalTransform> LocalTransformLookup;
+                public BufferLookup<Child> ChildBufferLookup;
+                public BufferLookup<MeleeAttackPosition> MeleeBufferLookup;
+                void Execute(ref AttackState state, in AttackActionTag tag)
+                {
+                    if (state.TargetPositionID == -1) return;
+                    if (state.TargetPositionID > 4)
+                    {
+                        state.TargetPositionID = -1;
+                        state.AttackPlans.Insert(0, AttackPlan.GetAttackLocation);
+                        return;
+                    }
+
+                    var dist = Vector3.Distance(state.TargetPosition,LocalTransformLookup[state.TargetEntity].Position);
+                    if (dist < 10) return; 
+                    var child = ChildBufferLookup[state.TargetEntity][0].Value;
+                    state.TargetPosition = MeleeBufferLookup[child][state.TargetPositionID];
+                    if(state.AttackPlans[0] != AttackPlan.MoveToLocationMelee)
+                        state.AttackPlans.Insert(0, AttackPlan.MoveToLocationMelee);
+                }
+            }
         }
     }
 }

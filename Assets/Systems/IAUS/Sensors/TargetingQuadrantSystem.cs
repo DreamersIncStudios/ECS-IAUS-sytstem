@@ -63,12 +63,15 @@ namespace AISenses.VisionSystems
 
         }
 
-        [BurstCompile]
+
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, TargetQuadrantData>(0, Allocator.Persistent);
-            query = new EntityQueryBuilder(Allocator.TempJob).WithAll<LocalTransform, AITarget>().Build(ref state);
+            query = state.GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new ComponentType[] { ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(AITarget)) }
+            });
         }
 
         [BurstCompile]

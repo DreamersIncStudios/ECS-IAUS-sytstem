@@ -1,15 +1,16 @@
 using IAUS.Core.GOAP;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace IAUS.ECS.Component
 {
-    public struct AttackState : IBaseStateScorer
+    public struct  AttackState : IBaseStateScorer
     {
         public float3 TargetPosition;
         public Entity TargetEntity;
-
+        public int TargetPositionID;
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
@@ -21,13 +22,14 @@ namespace IAUS.ECS.Component
             CapableOfMelee = melee;
             CapableOfMagic = magic;
             CapableOfProjectile = range;
-            Plan = AttackPlan.None;
             AttackResetTimer = 0.0f;
             TargetPosition = float3.zero;
             TargetEntity = Entity.Null;
+            AttackPlans = new FixedList64Bytes<AttackPlan>();
+            TargetPositionID = -1;
         }
 
-        public AttackPlan Plan;
+        public  FixedList32Bytes<AttackPlan> AttackPlans;
         public float AttackResetTimer;
         [SerializeField]  public bool InAttackCooldown => AttackResetTimer != 0.0f;
         public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
@@ -53,9 +55,6 @@ namespace IAUS.ECS.Component
          ActionStatus status;
          public bool IsTargeting;
     }
-    public struct AttackActionTag : IComponentData {
-        public int SubStateNumber;
-    }
-   
-    public enum SubAttackStates { melee, magic, range, magicMelee, magicRange}
+    public struct AttackActionTag : IComponentData { }
+    
 }

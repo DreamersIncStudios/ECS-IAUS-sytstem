@@ -9,6 +9,7 @@ using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using DreamersInc.InflunceMapSystem;
 using Global.Component;
+using IAUS.Components.Systems;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Attacking;
@@ -65,7 +66,7 @@ namespace DreamersInc.BestiarySystem
             if (entity == Entity.Null) return this;
             if (model == null) return this;
             var anim = model.GetComponent<Animator>();
-            manager.AddComponentObject(entity, anim);
+           // manager.AddComponentObject(entity, anim);
             TransformGO transformLink = new()
             {
                 transform = model.transform
@@ -249,6 +250,7 @@ namespace DreamersInc.BestiarySystem
             {
                 Value = entity
             });
+            manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
             var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
             meleeAttackPositions.Length = 4;
             var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
@@ -409,6 +411,8 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity,
                             new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
+                        manager.AddBuffer<InteractablesInRange>(entity);
+
                         break;
                     case AIStates.RetreatToLocation:
                         manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
@@ -416,6 +420,11 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.RetreatToQuadrant:
                         manager.AddComponentData(entity,
                             new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
+                        break;
+                    case AIStates.Terrorize:
+                        manager.AddComponentData(entity,
+                            new TerrorizeAreaState(5F, capableOfMelee, capableOfMagic, capableOfRange));
+                        manager.AddBuffer<InteractablesInRange>(entity);
                         break;
                 }
             }

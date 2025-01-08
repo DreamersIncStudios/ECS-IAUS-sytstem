@@ -1,6 +1,7 @@
 using DreamersInc.BestiarySystem;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using Utilities;
@@ -20,7 +21,7 @@ public class SpawnForTesting : MonoBehaviour
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
                 positions.Add(pos);
         }
-
+        
         for (int i = 0; i < 100; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
@@ -30,8 +31,10 @@ public class SpawnForTesting : MonoBehaviour
                 i--;
             }
 
+            var entity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
+            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponent<RunningTag>(entity);
         }
-
+        
         if (!SpawnDummies) return;
         {
             for (int i = 0; i < 25; i++)
