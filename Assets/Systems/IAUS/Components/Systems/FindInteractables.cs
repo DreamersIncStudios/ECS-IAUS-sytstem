@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using IAUS.ECS.Component;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -10,7 +11,6 @@ namespace IAUS.Components.Systems
     [InternalBufferCapacity(6)]
     public struct InteractablesInRange : IBufferElementData
     {
-      
             public InteractableType Type;
             public Weight Weight;
             public Entity Entity;
@@ -25,7 +25,7 @@ namespace IAUS.Components.Systems
 
         void OnCreate(ref SystemState state)
         {
-            query = SystemAPI.QueryBuilder().WithAll<LocalTransform,Interactable>().Build();
+            query = SystemAPI.QueryBuilder().WithAll<LocalTransform,InteractablesInRange>().Build();
             targets = SystemAPI.QueryBuilder().WithAll<LocalTransform, Interactable>().Build();
         }
 
@@ -42,7 +42,9 @@ namespace IAUS.Components.Systems
 
     public partial struct FindInteractables : IJobEntity
     {
-        public NativeArray<LocalTransform> InteractablesPosition;
+        [NativeDisableContainerSafetyRestriction]
+
+    public NativeArray<LocalTransform> InteractablesPosition;
         public NativeArray<Interactable> Interactables;
         public NativeArray<Entity> InteractablesEntity;
         void Execute(DynamicBuffer< InteractablesInRange> data, in LocalTransform transform)
