@@ -16,7 +16,7 @@ namespace IAUS.ECS.StateBlobSystem
     {
 
        public static StateAsset[] SetupStateAsset()
-{
+       {
     var npcStates = Resources.LoadAll<NPCAISO>(@"NPC States");
     if (npcStates.IsNullOrEmpty()) return null;
 
@@ -35,15 +35,14 @@ namespace IAUS.ECS.StateBlobSystem
     // Local function to create a StateAsset
     StateAsset CreateStateAsset(NPCAISO npcState, State state)
     {
-        var stateAsset = new StateAsset
-        {
+        var stateAsset = new StateAsset {
             ID = new Identity
             {
                 Difficulty = npcState.Difficulty,
                 NPCLevel = npcState.NPCLevel,
                 FactionID = npcState.FactionID,
                 AIStates = state.StateName
-            }
+            } 
         };
 
         foreach (var consideration in state.Considerations)

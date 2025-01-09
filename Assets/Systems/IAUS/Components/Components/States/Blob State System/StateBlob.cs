@@ -22,188 +22,187 @@ namespace IAUS.ECS.StateBlobSystem
         public ConsiderationScoringData FriendlyInfluence;
     }
 
-    public struct AIStateBlobAsset
-    {
-        public BlobArray<StateAsset> Array;
+     public struct AIStateBlobAsset
+     {
+         public BlobArray<StateAsset> Array;
 
-        public int GetConsiderationIndex(Identity identify)
-        {
-            var index = -1;
-            for (var i = 0; i < Array.Length; i++)
-            {
-                if (!Array[i].ID.Equals(identify)) continue;
-                index = i;
-                return index;
-            }
-            return index;
-        }
-    }
-    public struct Identity
-    {
-        public NPCLevel NPCLevel;
-        public int FactionID;
-        public AIStates AIStates;
-        public Difficulty Difficulty;
+         public int GetConsiderationIndex(Identity identify)
+         {
+             var index = -1;
+             for (var i = 0; i < Array.Length; i++)
+             {
+                 if (!Array[i].ID.Equals(identify)) continue;
+                 index = i;
+                 return index;
+             }
+             return index;
+         }
+     }
+     public struct Identity
+     {
+         public NPCLevel NPCLevel;
+         public int FactionID;
+         public AIStates AIStates;
+         public Difficulty Difficulty;
 
-        public override string ToString()
-        {
-            return NPCLevel.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " " + AIStates.ToString();
-        }
-    }
+         public override string ToString()
+         {
+             return NPCLevel.ToString() + " " + FactionID.ToString() + " " + Difficulty.ToString() + " " + AIStates.ToString();
+         }
+     }
 
-    [UpdateBefore(typeof(IAUS.ECS.Systems.IAUSBrainSetupSystem))]
-    public partial class SetupAIStateBlob : SystemBase
-    {
-        BlobAssetReference<AIStateBlobAsset> reference;
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            reference = CreateReference();
-        }
+     [UpdateBefore(typeof(IAUS.ECS.Systems.IAUSBrainSetupSystem))]
+     public partial class SetupAIStateBlob : SystemBase
+     {
+         BlobAssetReference<AIStateBlobAsset> reference;
+         protected override void OnCreate()
+         {
+             base.OnCreate();
+             reference = CreateReference();
+         }
 
-        //TODO Get diffultity from manager singleton 
-        
-        protected override void OnUpdate()
-        {
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, in SetupBrainTag tag) =>
-            {
-                brain.State = reference;
-                
-            }).Run();
-            Entities.WithoutBurst().ForEach((ref Patrol p, ref IAUSBrain brain, in SetupBrainTag tag) => {
+         //TODO Get diffultity from manager singleton 
+         
+         protected override void OnUpdate()
+         {
+             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, in SetupBrainTag tag) =>
+             {
+                 brain.State = reference;
+                 
+             }).Run();
+//             Entities.WithoutBurst().ForEach((ref Patrol p, ref IAUSBrain brain, in SetupBrainTag tag) => {
+//     
+//                 p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = p.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 }));
+//             }).Run();
+             Entities.WithoutBurst().ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
     
-                p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = p.Name,
-                    FactionID = brain.FactionID,
-                    //TODO fill out all Levels
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
-            Entities.WithoutBurst().ForEach((ref Traverse p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-   
-                p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = p.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
+                 p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
+                 {
+                     Difficulty = Difficulty.Normal,
+                     AIStates = p.Name,
+                     FactionID = brain.FactionID,
+                     NPCLevel = brain.NPCLevel
+                 }));
+             }).Run();
+//
+             Entities.WithoutBurst().ForEach((ref WanderQuadrant p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+                 p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
+                 {
+                     Difficulty = Difficulty.Normal,
+                     AIStates = p.Name,
+                     FactionID = brain.FactionID,
+                     NPCLevel = brain.NPCLevel
+                 }));
+             }).Run();
+//
+//             Entities.WithoutBurst().ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//                w.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = w.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 }));
+//             }).Run();
+//             Entities.WithoutBurst().ForEach((ref GatherResourcesState g, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//                 
+//                 g.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = g.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 })); ;
+//             }).Run();
+//
+//             Entities.WithoutBurst().ForEach((ref RepairState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = G.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 }));             }).Run();
+//
+//             //Entities.WithoutBurst().ForEach((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//             //    reference = reference;
+//             //    G.Index = reference.Value.GetConsiderationIndex(new Identity()
+//             //    {
+//             //        Difficulty = Difficulty.Normal,
+//             //        aIStates = G.name,
+//             //        FactionID = brain.factionID,
+//             //        NPCLevel = brain.NPCLevel
+//             //    }); 
+//            // }).Run();
+//             Entities.WithoutBurst().ForEach((ref RetreatCitizen G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = G.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 })); ;
+//             }).Run();
+//
+//             Entities.WithoutBurst().ForEach((ref TerrorizeAreaState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
+//                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = G.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 }));
+//             }).Run();
+//
+//             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackState G) =>
+//             {
+//                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = G.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 })); 
+//             }).Run();
+//        
+//             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref EscapeThreat G) =>
+//             {
+//                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+//                 {
+//                     Difficulty = Difficulty.Normal,
+//                     AIStates = G.Name,
+//                     FactionID = brain.FactionID,
+//                     NPCLevel = brain.NPCLevel
+//                 }));
+//             }).Run();
+//
+       }
 
-            Entities.WithoutBurst().ForEach((ref WanderQuadrant p, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                p.SetIndex( reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = p.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
+         BlobAssetReference<AIStateBlobAsset> CreateReference()
+         {
+             using var blobBuilder = new BlobBuilder(Allocator.Temp);
+             ref var stateBlobAsset = ref blobBuilder.ConstructRoot<AIStateBlobAsset>();
+             var assign = StateTextFileReader.SetupStateAsset();
 
-            Entities.WithoutBurst().ForEach((ref Wait w, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-               w.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = w.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
-            Entities.WithoutBurst().ForEach((ref GatherResourcesState g, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                
-                g.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = g.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                })); ;
-            }).Run();
+             var array = blobBuilder.Allocate(ref stateBlobAsset.Array, assign.Length);
 
-            Entities.WithoutBurst().ForEach((ref RepairState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));             }).Run();
-
-            //Entities.WithoutBurst().ForEach((ref SpawnDefendersState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-            //    reference = reference;
-            //    G.Index = reference.Value.GetConsiderationIndex(new Identity()
-            //    {
-            //        Difficulty = Difficulty.Normal,
-            //        aIStates = G.name,
-            //        FactionID = brain.factionID,
-            //        NPCLevel = brain.NPCLevel
-            //    }); 
-           // }).Run();
-            Entities.WithoutBurst().ForEach((ref RetreatCitizen G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                })); ;
-            }).Run();
-
-            Entities.WithoutBurst().ForEach((ref TerrorizeAreaState G, ref IAUSBrain brain, ref SetupBrainTag tag) => {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
-
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref AttackState G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                })); 
-            }).Run();
-       
-            Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref EscapeThreat G) =>
-            {
-                G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
-                {
-                    Difficulty = Difficulty.Normal,
-                    AIStates = G.Name,
-                    FactionID = brain.FactionID,
-                    NPCLevel = brain.NPCLevel
-                }));
-            }).Run();
-
-        }
-
-        BlobAssetReference<AIStateBlobAsset> CreateReference()
-        {
-            using var blobBuilder = new BlobBuilder(Allocator.Temp);
-            ref var stateBlobAsset = ref blobBuilder.ConstructRoot<AIStateBlobAsset>();
-            var assign = StateTextFileReader.SetupStateAsset();
-
-            var array = blobBuilder.Allocate(ref stateBlobAsset.Array, assign.Length);
-
-            for (int i = 0; i < assign.Length; i++)
-            {
-                array[i] = assign[i];
-            }
+             for (int i = 0; i < assign.Length; i++)
+             {
+                 array[i] = assign[i];
+             }
 
 
-            var blobAssetReference = blobBuilder.CreateBlobAssetReference<AIStateBlobAsset>(Allocator.Persistent);
+             var blobAssetReference = blobBuilder.CreateBlobAssetReference<AIStateBlobAsset>(Allocator.Persistent);
 
-            return blobAssetReference;
-        }
+             return blobAssetReference;
+         }
 
-    }
+     }
 
-}
+ }
