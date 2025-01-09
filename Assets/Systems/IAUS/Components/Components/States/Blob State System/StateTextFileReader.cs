@@ -8,135 +8,92 @@ using System;
 using System.Linq;
 using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
+using Sirenix.Utilities;
+
 namespace IAUS.ECS.StateBlobSystem
 {
     public class StateTextFileReader
     {
 
-       
-        public static StateAsset[] SetupStateAsset()
+       public static StateAsset[] SetupStateAsset()
+{
+    var npcStates = Resources.LoadAll<NPCAISO>(@"NPC States");
+    if (npcStates.IsNullOrEmpty()) return null;
+
+    var result = new List<StateAsset>();
+
+    foreach (var npcState in npcStates)
+    {
+        foreach (var state in npcState.States)
         {
-            var textFile = Resources.Load("Creature List") as TextAsset;
-            if (textFile != null)
-            {
-                var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                var array = (from t in lines
-                    select t.Split(',')
-                    into parts
-                    let stateParts = parts[3].Split(';')
-                    from state in stateParts
-                    select new StateAsset()
-                    {
-                        ID = new Identity()
-                        {
-                            Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
-                            NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                            FactionID = int.TryParse(parts[2], out var result) ? result : 0,
-                            AIStates = (AIStates)Enum.Parse(typeof(AIStates), state)
-                        }
-                    }).ToList();
-                SetupConsideration(array, "Consideration files/Health", Considerations.Health);
-                SetupConsideration(array, "Consideration files/DistanceToTarget Enemy", Considerations.DistanceToTargetEnemy);
-                SetupConsideration(array, "Consideration files/DistanceToTarget Ally", Considerations.DistanceToTargetAlly);
-                SetupConsideration(array, "Consideration files/DistanceToTarget Location", Considerations.DistanceToTargetLocation);
-                SetupConsideration(array, "Consideration files/Distance to place of Interest", Considerations.DistanceToPOI);
-                SetupConsideration(array, "Consideration files/ManaAmmo", Considerations.ManaAmmo);
-                SetupConsideration(array, "Consideration files/ManaAmmo2", Considerations.ManaAmmo2);
-                SetupConsideration(array, "Consideration files/Time", Considerations.Time);
-                SetupConsideration(array, "Consideration files/Enemy Influence", Considerations.EnemyInfluence);
-                SetupConsideration(array, "Consideration files/Friendly Influence 1", Considerations.FriendlyInfluence);
-
-
-                return array.ToArray();
-            }
-            else
-                return null;
+            result.Add(CreateStateAsset(npcState, state));
         }
-        public static void SetupConsideration(List<StateAsset> array , string textFilePath, Considerations consideration)
+    }
+
+    return result.ToArray();
+
+    // Local function to create a StateAsset
+    StateAsset CreateStateAsset(NPCAISO npcState, State state)
+    {
+        var stateAsset = new StateAsset
         {
-            TextAsset textFile = Resources.Load(textFilePath) as TextAsset;
-            if (textFile == null) {
-                throw new ArgumentOutOfRangeException(nameof(textFilePath), $"File not include in project/build " +
-                    $"{textFilePath}");
-            }
-            var lines = textFile.text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var t in lines)
+            ID = new Identity
             {
-                var parts = t.Split(',');
-                var tempID = new Identity()
-                {
-                    Difficulty = (Difficulty)Enum.Parse(typeof(Difficulty), parts[0]),
-                    NPCLevel = (NPCLevel)Enum.Parse(typeof(NPCLevel), parts[1]),
-                    FactionID = int.TryParse(parts[2], out int result) ? result : 0,
-                    AIStates = (AIStates)Enum.Parse(typeof(AIStates), parts[3])
-                };
-                var index = GetIndexOfIdentity(tempID, array);
-
-                if (index == -1)
-                {
-                   
-#if UNITY_EDITOR
-                    Debug.Log($"{tempID.NPCLevel} faction {tempID.FactionID} needs {tempID.AIStates} add to Creature List Text file");
-#endif
-
-                }
-
-                else
-                {
-                    var temp = array[index];
-                    switch (consideration)
-                    {
-                        case Considerations.Health:
-                            temp.Health = LineRead(t);
-                            break;
-                        case Considerations.DistanceToTargetEnemy:
-                            temp.DistanceToTargetEnemy = LineRead(t);
-                            break;
-                        case Considerations.DistanceToTargetAlly:
-                            temp.DistanceToTargetAlly = LineRead(t);
-                            break; 
-                        case Considerations.DistanceToTargetLocation:
-                            temp.DistanceToTargetLocation = LineRead(t);
-                            break;
-                        case Considerations.DistanceToPOI:
-                            temp.DistanceToPlaceOfInterest = LineRead(t);
-                            break;
-                        case Considerations.Time:
-                            temp.Timer = LineRead(t);
-                            break;
-                        case Considerations.ManaAmmo:
-                            temp.ManaAmmo = LineRead(t);
-                            break;
-                        case Considerations.FriendlyInfluence:
-                            temp.FriendlyInfluence = LineRead(t);
-                            break;
-                        case Considerations.EnemyInfluence:
-                            temp.EnemyInfluence = LineRead(t);
-                            break;
-
-                        case Considerations.ManaAmmo2:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(consideration), consideration, null);
-                    }
-                    array[index] = temp;
-                }
+                Difficulty = npcState.Difficulty,
+                NPCLevel = npcState.NPCLevel,
+                FactionID = npcState.FactionID,
+                AIStates = state.StateName
             }
+        };
+
+        foreach (var consideration in state.Considerations)
+        {
+            MapConsiderationToAsset(stateAsset, consideration);
         }
 
-        private static int GetIndexOfIdentity(Identity ID, List<StateAsset> stateArray)
+        return stateAsset;
+    }
+
+    // Function to map a ConsiderationType to its value
+    void MapConsiderationToAsset(StateAsset asset, ConsiderationForSO consideration)
+    {
+        switch (consideration.ConsiderationType)
         {
-            var index = -1;
-            for (var i = 0; i < stateArray.Count; i++)
-            {
-                if (!stateArray[i].ID.Equals(ID)) continue;
-                index = i;
-                return index;
-            }
-            return index;
-
+            case ConsiderationType.Health:
+                asset.Health = consideration.Scoring;
+                break;
+            case ConsiderationType.DistanceToTargetEnemy:
+                asset.DistanceToTargetEnemy = consideration.Scoring;
+                break;
+            case ConsiderationType.DistanceToTargetLocation:
+                asset.DistanceToTargetLocation = consideration.Scoring;
+                break;
+            case ConsiderationType.DistanceToTargetAlly:
+                asset.DistanceToTargetAlly = consideration.Scoring;
+                break;
+            case ConsiderationType.DistanceToPOI:
+                asset.DistanceToPlaceOfInterest = consideration.Scoring;
+                break;
+            case ConsiderationType.Time:
+                asset.Timer = consideration.Scoring;
+                break;
+            case ConsiderationType.ManaAmmo:
+                asset.ManaAmmo = consideration.Scoring;
+                break;
+            case ConsiderationType.EnemyInfluence:
+                asset.EnemyInfluence = consideration.Scoring;
+                break;
+            case ConsiderationType.FriendlyInfluence:
+                asset.FriendlyInfluence = consideration.Scoring;
+                break;
+            case ConsiderationType.ManaAmmo2:
+                asset.ManaAmmo2 = consideration.Scoring;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-
+    }
+}
 
         static ConsiderationScoringData LineRead( string line, int startPoint=4)
         {
@@ -161,5 +118,5 @@ namespace IAUS.ECS.StateBlobSystem
         
     }
 
-    public enum Considerations { Health, DistanceToTargetEnemy,DistanceToTargetLocation,DistanceToTargetAlly, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
+    public enum ConsiderationType { Health, DistanceToTargetEnemy,DistanceToTargetLocation,DistanceToTargetAlly, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
 }
