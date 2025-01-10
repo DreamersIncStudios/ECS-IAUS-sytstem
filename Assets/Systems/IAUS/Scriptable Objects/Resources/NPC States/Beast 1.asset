@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 322e0dca0ef1d40d18318c8940868203, type: 3}
   m_Name: Beast 1
   m_EditorClassIdentifier: 
-  name: 'Wolf Testing '
+  nameNPC: 'Wolf Testing '
   Difficulty: 1
   NpcLevel: 5
   FactionID: 1
@@ -71,14 +71,14 @@ MonoBehaviour:
         K: -0.95
         B: 0.935
         C: 0.35
-    - ConsiderationType: 2
+    - ConsiderationType: 1
       Scoring:
         Inverse: 0
         responseType: 3
-        M: 20
+        M: 5000
         K: 1
         B: 0
-        C: 0.45
+        C: 0.65
     - ConsiderationType: 7
       Scoring:
         Inverse: 0
