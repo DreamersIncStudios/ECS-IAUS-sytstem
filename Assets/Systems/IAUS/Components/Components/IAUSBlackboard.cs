@@ -18,7 +18,7 @@ namespace IAUS.ECS.Component.Aspects
 
     public readonly partial struct IAUSBlackboard : IAspect
     {
-        public readonly RefRO<LocalTransform> Transform;
+        private readonly RefRO<LocalTransform> transform;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect visionAspect;
@@ -58,9 +58,9 @@ namespace IAUS.ECS.Component.Aspects
 
         private float DistanceToPoint(float3 posToCheck, float stopBuffer = 0.5f)
         {
-            return Vector3.Distance(posToCheck, Transform.ValueRO.Position) < stopBuffer
+            return Vector3.Distance(posToCheck, transform.ValueRO.Position) < stopBuffer
                 ? 0
-                : Vector3.Distance(posToCheck, Transform.ValueRO.Position);
+                : Vector3.Distance(posToCheck, transform.ValueRO.Position);
         }
 
         private float ScoreOfPatrolState
@@ -139,6 +139,7 @@ namespace IAUS.ECS.Component.Aspects
                 }
 
                 var asset = GetAsset(wander.ValueRO.Index);
+
                 wander.ValueRW.DistanceToPoint =
                     DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
                 ;
@@ -245,7 +246,7 @@ namespace IAUS.ECS.Component.Aspects
                             !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
                                 ? mapVision.ValueRO.CoverPositions.c3
                                 : float3.zero;
-                var safeDist = Vector3.Distance(Transform.ValueRO.Position, coverPosition);
+                var safeDist = Vector3.Distance(transform.ValueRO.Position, coverPosition);
                 
                 var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
                                  * asset.DistanceToTargetEnemy.Output(dist / 200.0f)

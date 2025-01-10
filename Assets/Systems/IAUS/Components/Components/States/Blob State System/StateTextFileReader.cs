@@ -1,12 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Collections;
-using Unity.Entities;
-using DreamersInc.InflunceMapSystem;
 using System;
-using System.Linq;
-using IAUS.ECS.Component;
 using IAUS.ECS.Consideration;
 using Sirenix.Utilities;
 
@@ -15,107 +9,94 @@ namespace IAUS.ECS.StateBlobSystem
     public class StateTextFileReader
     {
 
-       public static StateAsset[] SetupStateAsset()
-       {
-    var npcStates = Resources.LoadAll<NPCAISO>(@"NPC States");
-    if (npcStates.IsNullOrEmpty()) return null;
-
-    var result = new List<StateAsset>();
-
-    foreach (var npcState in npcStates)
-    {
-        foreach (var state in npcState.States)
+        public static StateAsset[] SetupStateAsset()
         {
-            result.Add(CreateStateAsset(npcState, state));
-        }
-    }
+            var npcStates = Resources.LoadAll<NPCAISO>(@"NPC States");
+            if (npcStates.IsNullOrEmpty()) return null;
 
-    return result.ToArray();
-
-    // Local function to create a StateAsset
-    StateAsset CreateStateAsset(NPCAISO npcState, State state)
-    {
-        var stateAsset = new StateAsset {
-            ID = new Identity
+            var result = new List<StateAsset>();
+    
+            foreach (var npcState in npcStates)
             {
-                Difficulty = npcState.Difficulty,
-                NPCLevel = npcState.NPCLevel,
-                FactionID = npcState.FactionID,
-                AIStates = state.StateName
-            } 
-        };
-
-        foreach (var consideration in state.Considerations)
-        {
-            MapConsiderationToAsset(stateAsset, consideration);
-        }
-
-        return stateAsset;
-    }
-
-    // Function to map a ConsiderationType to its value
-    void MapConsiderationToAsset(StateAsset asset, ConsiderationForSO consideration)
-    {
-        switch (consideration.ConsiderationType)
-        {
-            case ConsiderationType.Health:
-                asset.Health = consideration.Scoring;
-                break;
-            case ConsiderationType.DistanceToTargetEnemy:
-                asset.DistanceToTargetEnemy = consideration.Scoring;
-                break;
-            case ConsiderationType.DistanceToTargetLocation:
-                asset.DistanceToTargetLocation = consideration.Scoring;
-                break;
-            case ConsiderationType.DistanceToTargetAlly:
-                asset.DistanceToTargetAlly = consideration.Scoring;
-                break;
-            case ConsiderationType.DistanceToPOI:
-                asset.DistanceToPlaceOfInterest = consideration.Scoring;
-                break;
-            case ConsiderationType.Time:
-                asset.Timer = consideration.Scoring;
-                break;
-            case ConsiderationType.ManaAmmo:
-                asset.ManaAmmo = consideration.Scoring;
-                break;
-            case ConsiderationType.EnemyInfluence:
-                asset.EnemyInfluence = consideration.Scoring;
-                break;
-            case ConsiderationType.FriendlyInfluence:
-                asset.FriendlyInfluence = consideration.Scoring;
-                break;
-            case ConsiderationType.ManaAmmo2:
-                asset.ManaAmmo2 = consideration.Scoring;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-}
-
-        static ConsiderationScoringData LineRead( string line, int startPoint=4)
-        {
-            ConsiderationScoringData output = new();
-
-            var parts = line.Split(',');
-
-            if (bool.Parse(parts[startPoint]))
-            {
-                output = new ConsiderationScoringData()
+                foreach (var state in npcState.States)
                 {
-                    Inverse = bool.TryParse(parts[startPoint + 1], out var b) && b,
-                    responseType = (ResponseType)Enum.Parse(typeof(ResponseType), parts[startPoint + 2]),
-                    M = float.TryParse(parts[startPoint + 3], out var M) ? M : 0,
-                    K = float.TryParse(parts[startPoint + 4], out var K) ? K : 0,
-                    B = float.TryParse(parts[startPoint + 5], out var B) ? B : 0,
-                    C = float.TryParse(parts[startPoint + 6], out var C) ? C : 0
-                };
+                    result.Add(CreateStateAsset(npcState, state));
+                }
             }
-            return output;
+
+            return result.ToArray();
         }
-        
+
+        // Local function to create a StateAsset
+        static StateAsset CreateStateAsset(NPCAISO npcState, State state)
+        {
+            var stateAsset = new StateAsset
+            {
+                ID = new Identity
+                {
+                    Difficulty = npcState.Difficulty,
+                    NPCLevel = npcState.NPCLevel,
+                    FactionID = npcState.FactionID,
+                    AIStates = state.StateName
+                }
+            };
+            foreach (var consideration in state.Considerations)
+            {
+                switch (consideration.ConsiderationType)
+                {
+                    case ConsiderationType.Health:
+                        stateAsset.Health = consideration.Scoring;
+                        break;
+                    case ConsiderationType.DistanceToTargetEnemy:
+                        stateAsset.DistanceToTargetEnemy = consideration.Scoring;
+                        break;
+                    case ConsiderationType.DistanceToTargetLocation:
+                        stateAsset.DistanceToTargetLocation = consideration.Scoring;
+                        break;
+                    case ConsiderationType.DistanceToTargetAlly:
+                        stateAsset.DistanceToTargetAlly = consideration.Scoring;
+                        break;
+                    case ConsiderationType.DistanceToPOI:
+                        stateAsset.DistanceToPlaceOfInterest = consideration.Scoring;
+                        break;
+                    case ConsiderationType.Time:
+                        stateAsset.Timer = consideration.Scoring;
+                        break;
+                    case ConsiderationType.ManaAmmo:
+                        stateAsset.ManaAmmo = consideration.Scoring;
+                        break;
+                    case ConsiderationType.EnemyInfluence:
+                        stateAsset.EnemyInfluence = consideration.Scoring;
+                        break;
+                    case ConsiderationType.FriendlyInfluence:
+                        stateAsset.FriendlyInfluence = consideration.Scoring;
+                        break;
+                    case ConsiderationType.ManaAmmo2:
+                        stateAsset.ManaAmmo2 = consideration.Scoring;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
+            return stateAsset;
+        }
+
+
     }
 
-    public enum ConsiderationType { Health, DistanceToTargetEnemy,DistanceToTargetLocation,DistanceToTargetAlly, DistanceToPOI,Time, ManaAmmo, EnemyInfluence,FriendlyInfluence, ManaAmmo2, }
+
+    public enum ConsiderationType
+    {
+        Health,
+        DistanceToTargetEnemy,
+        DistanceToTargetLocation,
+        DistanceToTargetAlly,
+        DistanceToPOI,
+        Time,
+        ManaAmmo,
+        EnemyInfluence,
+        FriendlyInfluence,
+        ManaAmmo2,
+    }
 }

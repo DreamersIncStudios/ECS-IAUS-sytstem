@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 322e0dca0ef1d40d18318c8940868203, type: 3}
+  m_Name: Beast 3
+  m_EditorClassIdentifier: 
+  name: 'Wolf Testing '
+  Difficulty: 1
+  NpcLevel: 5
+  FactionID: 3
+  States:
+  - StateName: 22
+    Considerations:
+    - ConsiderationType: 0
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -0.95
+        B: 0.935
+        C: 0.35
+    - ConsiderationType: 2
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -0.95
+        B: 0.935
+        C: 0.35
+    - ConsiderationType: 1
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 500
+        K: -0.95
+        B: 1
+        C: 0.65
+  - StateName: 10
+    Considerations:
+    - ConsiderationType: 0
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -1
+        B: 0.91
+        C: 0.2
+    - ConsiderationType: 5
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -1
+        B: 0.91
+        C: 0.2
+  - StateName: 4
+    Considerations:
+    - ConsiderationType: 0
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 50
+        K: -0.95
+        B: 0.935
+        C: 0.35
+    - ConsiderationType: 2
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 20
+        K: 1
+        B: 0
+        C: 0.45
+    - ConsiderationType: 7
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 20
+        K: 1
+        B: 0
+        C: 0.45

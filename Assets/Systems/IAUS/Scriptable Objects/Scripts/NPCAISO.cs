@@ -12,10 +12,10 @@ namespace IAUS.ECS
     [CreateAssetMenu( fileName = "NPC AI states", menuName = "IAUS/NPC AI", order = 51)]
     public class NPCAISO : ScriptableObject
     {
-        public string Name { get => name; }
-        public NPCLevel NPCLevel { get; set; }
+        public string Name { get => nameNPC; }
+        public NPCLevel NPCLevel { get=> NpcLevel; }
 
-        [SerializeField] string name;
+        [FormerlySerializedAs("name")] [SerializeField] string nameNPC;
         public Difficulty Difficulty;
         public NPCLevel NpcLevel;
         public int FactionID;
