@@ -89,14 +89,15 @@ namespace IAUS.ECS.Systems.Reactive
             
             partial struct GetTerrorPosition: IJobEntity
             {
-                [ReadOnly] public BufferLookup<MeleeAttackPosition> MeleeAttackPositions;
-                [ReadOnly] public BufferLookup<RangeAttackPosition> RangedAttackBuffer;
-                [ReadOnly] public BufferLookup<Child> ChildBufferLookup;
-                [NativeDisableParallelForRestriction]public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
-
-                void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform,
-                    ref TerrorizeAreaState state, in TerrorizeAreaTag tag)
+                void Execute([ChunkIndexInQuery] int chunkIndex, ref TerrorizeAreaState state, InteractablesAspect aspect, in TerrorizeAreaTag tag)
                 {
+                    if(state.AttackPlans.IsEmpty) return;
+                    if (state.AttackPlans[0] != AttackPlan.GetAttackLocation)
+                        return;
+                    state.TargetEntity = aspect.closestInteractable.Entity;
+                    state.TargetPosition = aspect.closestInteractable.Position;
+                    
+                    state.AttackPlans.RemoveAt(0);
                 }
 
             }

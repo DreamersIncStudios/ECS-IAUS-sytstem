@@ -50,7 +50,9 @@ namespace IAUS.Components.Systems
                 {
                     Type = Interactables[i].Type,
                     Weight = Interactables[i].Weight,
-                    Entity = InteractablesEntity[i]
+                    Entity = InteractablesEntity[i],
+                    Position = InteractablesPosition[i].Position,
+                    
                 });
             }
 

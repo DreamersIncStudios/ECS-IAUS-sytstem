@@ -15,8 +15,9 @@ namespace IAUS.ECS.Component
         private readonly RefRW<TerrorizeAreaState> state;
         private readonly RefRO<LocalTransform> transform;
         private readonly RefRO<AIStat> stats;
- 
-        private readonly DynamicBuffer<InteractablesInRange> interactablesInRange;
+        private readonly RefRW<Movement> move;
+        private readonly RefRO<AgentBody> agent;
+        private readonly InteractablesAspect interactablesInRange;
      
         private bool IsHealthy => stats.ValueRO.HealthRatio > .725f;
         private bool IsInDanger => stats.ValueRO.HealthRatio < .35f;
@@ -77,10 +78,10 @@ namespace IAUS.ECS.Component
                 case AttackPlan.MoveToLocationMelee:
                 case AttackPlan.MoveToLocationMagic:
                 case AttackPlan.MoveToLocationRange:
-                    // if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition) && !state.ValueRO.TargetPosition.Equals(float3.zero))
-                    //     move.ValueRW.SetLocation(state.ValueRO.TargetPosition);
-                    // if(agent.ValueRO.RemainingDistance<5)
-                    //     state.ValueRW.AttackPlans.RemoveAt(0);
+                    if(!move.ValueRO.TargetLocation.Equals(state.ValueRO.TargetPosition) && !state.ValueRO.TargetPosition.Equals(float3.zero))
+                        move.ValueRW.SetLocation(state.ValueRO.TargetPosition);
+                    if(agent.ValueRO.RemainingDistance<5)
+                        state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMelee:
                     Debug.Log("attacking");

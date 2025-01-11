@@ -75,6 +75,7 @@ namespace IAUS.ECS.Component
                 return temp;
             }
         }
+        
         public float closestInteractableDistance
         {
             get
