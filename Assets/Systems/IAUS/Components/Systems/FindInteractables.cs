@@ -8,14 +8,6 @@ using UnityEngine;
 
 namespace IAUS.Components.Systems
 {
-    [InternalBufferCapacity(6)]
-    public struct InteractablesInRange : IBufferElementData
-    {
-            public InteractableType Type;
-            public Weight Weight;
-            public Entity Entity;
-        
-    }
 
     public partial struct FindInteractablesSystem : ISystem
     {

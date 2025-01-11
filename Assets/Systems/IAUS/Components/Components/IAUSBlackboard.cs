@@ -24,6 +24,7 @@ namespace IAUS.ECS.Component.Aspects
         private readonly VisionAspect visionAspect;
         private  readonly RefRO<MapVision> mapVision;
         private readonly InfluenceAspect influenceAspect;
+        private readonly InteractablesAspect interactables;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
@@ -267,9 +268,15 @@ namespace IAUS.ECS.Component.Aspects
                     throw new ArgumentOutOfRangeException(nameof(terrorizeArea),
                         $"Please check Creature list and Consideration Data to make sure {terrorizeArea.ValueRO.Name} state is implements");
                 var asset = GetAsset(terrorizeArea.ValueRO.Index);
-
-                var totalScore = new float();
-
+                var dist = interactables.closestInteractableDistance;
+                if(dist > 300.0f) return 0.0f;
+                
+                var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
+                                 asset.DistanceToPlaceOfInterest.Output(Mathf.Clamp01(dist / 200.0f)) *
+                                 asset.EnemyInfluence.Output(influenceDist);
+                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                terrorizeArea.ValueRW.TotalScore = totalScore;
                 return totalScore;
             }
         }

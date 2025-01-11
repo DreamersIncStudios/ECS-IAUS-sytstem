@@ -33,7 +33,7 @@ MonoBehaviour:
     difficultyMod: 10
     LevelMod: 5
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
-  AIStatesToAdd: 0a0000000400000016000000
+  AIStatesToAdd: 0a000000040000001600000015000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0
