@@ -21,12 +21,12 @@ namespace Components.MovementSystem
 
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((AgentLocomotion agent, in Movement mover) =>
+            Entities.WithoutBurst().WithChangeFilter<PatrolActionTag>().ForEach((ref AgentLocomotion agent, in Movement mover) =>
             {
                 agent.Speed = .65f * mover.MaxMovementSpeed;
             }).Run();
 
-            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((AgentLocomotion agent, in Movement mover) =>
+            Entities.WithoutBurst().WithChangeFilter<TraverseActionTag>().ForEach((ref AgentLocomotion agent, in Movement mover) =>
             {
                 agent.Speed = .65f * mover.MaxMovementSpeed;
             }).Run();

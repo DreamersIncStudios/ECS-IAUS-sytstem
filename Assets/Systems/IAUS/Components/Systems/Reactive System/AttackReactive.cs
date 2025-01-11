@@ -55,7 +55,6 @@ namespace IAUS.ECS.Systems.Reactive
             private BeginSimulationEntityCommandBufferSystem.Singleton ecb;
             protected override void OnCreate()
             {
-         
                  ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             }
 
@@ -154,7 +153,7 @@ namespace IAUS.ECS.Systems.Reactive
                 void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect,  in AttackActionTag tag)
                 {
 
-                   aspect.DeterminePlan();
+                   aspect. DeterminePlan();
                    aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
                 }
             }
