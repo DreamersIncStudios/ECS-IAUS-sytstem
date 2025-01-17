@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 322e0dca0ef1d40d18318c8940868203, type: 3}
-  m_Name: Grunt 1
+  m_Name: Beast
   m_EditorClassIdentifier: 
-  nameNPC: 
+  nameNPC: 'Wolf Testing '
   Difficulty: 1
-  NpcLevel: 0
-  FactionID: 1
+  NpcLevel: 5
+  FactionID: 0
   States:
-  - StateName: 18
+  - StateName: 22
     Considerations:
     - ConsiderationType: 0
       Scoring:
@@ -31,10 +31,18 @@ MonoBehaviour:
       Scoring:
         Inverse: 0
         responseType: 3
-        M: 1000
+        M: 50
+        K: -0.95
+        B: 0.935
+        C: 0.35
+    - ConsiderationType: 1
+      Scoring:
+        Inverse: 0
+        responseType: 3
+        M: 500
         K: -0.95
         B: 1
-        C: 0.55
+        C: 0.65
   - StateName: 10
     Considerations:
     - ConsiderationType: 0
