@@ -87,7 +87,6 @@ namespace AISenses.VisionSystems
 
             state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            world.UpdateBodyIndexMap();
             state.Dependency = new TargetingVisionRayCastJob()
             {
                 World = world,

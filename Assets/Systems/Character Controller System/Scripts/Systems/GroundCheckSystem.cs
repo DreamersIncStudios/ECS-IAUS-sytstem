@@ -12,21 +12,11 @@ namespace MotionSystem
     [UpdateBefore(typeof(AnimatorUpdate))]
     public partial struct GroundCheckSystem : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
-        }
-
-
-        public void OnDestroy(ref SystemState state)
-        {
-
-        }
 
         public void OnUpdate(ref SystemState state)
         {
             state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            world.UpdateBodyIndexMap();
             state.Dependency = new GroundCheckJob
             {
                 world = world
