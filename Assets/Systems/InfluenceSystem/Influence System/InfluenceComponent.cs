@@ -1,11 +1,7 @@
-using System.Collections.Generic;
+using DreamersIncStudio.FactionSystem;
 using UnityEngine;
-using Unity.Jobs;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
-using Unity.Collections;
-using PixelCrushers.LoveHate;
 
 namespace DreamersInc.InflunceMapSystem
 {
@@ -13,6 +9,7 @@ namespace DreamersInc.InflunceMapSystem
     [System.Serializable]
     public struct InfluenceComponent : IComponentData
     {
+        public float DetectionRadius;
         public int Threat;
         public int Protection;
         public int2 GetInfluenceValue { get { return new int2(Threat, Protection); } }
@@ -21,21 +18,8 @@ namespace DreamersInc.InflunceMapSystem
         }
         public float3 previousPos;
         public int factionID;
-        public bool GridChanged(float3 position, out InfluenceGridObject gridpoint)
-        {
-            InfluenceGridObject currentInflunceGridObject = InfluenceGridMaster.Instance.grid.GetGridObject(previousPos);
-            gridpoint = InfluenceGridMaster.Instance.grid.GetGridObject(position);
-            if (gridpoint == null)
-            {
-                return false;
-            }
-            return currentInflunceGridObject != gridpoint;
-        }
-        public bool NPCOffGrid(float3 position)
-        {
-            return null == InfluenceGridMaster.Instance.grid.GetGridObject(position) && InfluenceGridMaster.Instance.grid.GetGridObject(previousPos) != null;
-        }
-
+        public FactionNames FactionID => (FactionNames)factionID;
+ 
     }
 
 

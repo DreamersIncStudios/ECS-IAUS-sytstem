@@ -23,7 +23,6 @@ namespace IAUS.ECS.Component.Aspects
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect visionAspect;
         private  readonly RefRO<MapVision> mapVision;
-        private readonly InfluenceAspect influenceAspect;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
@@ -31,6 +30,7 @@ namespace IAUS.ECS.Component.Aspects
         [Optional] private readonly RefRW<AttackState> attack;
         [Optional] private readonly RefRW<EvadeThreat> evade;
         [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
+        [Optional] private readonly RefRW<MaintenanceState> maintenance;
         
 
         private readonly Entity self;
@@ -205,7 +205,7 @@ namespace IAUS.ECS.Component.Aspects
 
                 }
                 var asset = GetAsset(attack.ValueRO.Index);
-                var influenceDist = Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                var influenceDist = 0.0f; // Todo replace;Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
                 var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
                                  asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
                                  asset.EnemyInfluence.Output(influenceDist);
@@ -274,6 +274,24 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
+        private float ScoreOfMaintenanceState
+        {
+            get
+            {
+                if (!maintenance.IsValid) return 0.0f;
+
+                if(maintenance.ValueRO.Index==-1)
+                    throw new ArgumentOutOfRangeException(nameof(maintenance),
+                        $"Please check Creature list and Consideration Data to make sure {maintenance.ValueRO.Name} state is implements");
+                var asset = GetAsset(maintenance.ValueRO.Index);
+
+                var totalScore = new float();
+
+                return totalScore;
+            }
+
+        }
+
         private AIStates GetHighState()
         {
             var stateInfo = new List<StateInfo>
@@ -289,8 +307,8 @@ namespace IAUS.ECS.Component.Aspects
                 new StateInfo(AIStates.Wait,
                     wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
                 new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState),
-                new StateInfo(AIStates.Terrorize, terrorizeArea.IsValid ? terrorizeArea.ValueRO.Status : ActionStatus.Disabled, ScoreOfTerrorizeArea)
-     
+                new StateInfo(AIStates.Terrorize, terrorizeArea.IsValid ? terrorizeArea.ValueRO.Status : ActionStatus.Disabled, ScoreOfTerrorizeArea),
+                new StateInfo(AIStates.PerformMaintenance, maintenance.IsValid ? maintenance.ValueRO.Status : ActionStatus.Disabled, ScoreOfMaintenanceState)
             };
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
@@ -320,7 +338,6 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Attack:
                     commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, self);
                     break;
-
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, self);
                     break;
@@ -329,6 +346,9 @@ namespace IAUS.ECS.Component.Aspects
                     break;
                 case AIStates.Terrorize:
                     commandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, self);
+                    break;
+                case AIStates.PerformMaintenance:
+                    commandBufferParallel.RemoveComponent<MaintenanceState>(chunkIndex, self);
                     break;
             }
 
@@ -360,6 +380,9 @@ namespace IAUS.ECS.Component.Aspects
                     break;
                 case AIStates.Terrorize:
                     commandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, self);
+                    break;
+                case AIStates.PerformMaintenance:
+                    commandBufferParallel.AddComponent<MaintenanceState>(chunkIndex, self);
                     break;
             }
 
