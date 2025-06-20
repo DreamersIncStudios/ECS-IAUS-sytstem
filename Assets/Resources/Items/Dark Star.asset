@@ -22,7 +22,7 @@ MonoBehaviour:
   _questItem: 0
   maxStackCount: 0
   quality: 4
-  _model: {fileID: 8340900014861943573, guid: 4faf82a2e83ff834f8265665742b6c6c, type: 3}
+  _model: {fileID: 0}
   _equipToHuman: 1
   _heldBone: 18
   _equipBone: 7
