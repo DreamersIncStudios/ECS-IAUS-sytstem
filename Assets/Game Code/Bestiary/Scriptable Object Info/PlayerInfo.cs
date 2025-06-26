@@ -1,7 +1,7 @@
 using AISenses;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using MotionSystem.Components;
 using Stats;

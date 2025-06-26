@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AISenses.VisionSystems;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using NUnit.Framework;
 using Unity.Entities;
 using Unity.Mathematics;

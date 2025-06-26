@@ -7,7 +7,7 @@ using Components.MovementSystem;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.Components.Systems;
 using IAUS.ECS;
@@ -411,7 +411,6 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity,
                             new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
-                        manager.AddBuffer<InteractablesInRange>(entity);
 
                         break;
                     case AIStates.RetreatToLocation:
@@ -424,7 +423,6 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Terrorize:
                         manager.AddComponentData(entity,
                             new TerrorizeAreaState(5F, capableOfMelee, capableOfMagic, capableOfRange));
-                        manager.AddBuffer<InteractablesInRange>(entity);
                         break;
                 }
             }

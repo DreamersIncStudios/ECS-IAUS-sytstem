@@ -17,7 +17,6 @@ namespace IAUS.ECS.Component
         private readonly RefRO<AIStat> stats;
         private readonly RefRW<Movement> move;
         private readonly RefRO<AgentBody> agent; 
-        private readonly DynamicBuffer<InteractablesInRange> interactablesInRange;
         //Todo Move to AI state to allow for Variability 
         private bool IsHealthy => stats.ValueRO.HealthRatio > .725f;
         private bool IsInDanger => stats.ValueRO.HealthRatio < .35f;

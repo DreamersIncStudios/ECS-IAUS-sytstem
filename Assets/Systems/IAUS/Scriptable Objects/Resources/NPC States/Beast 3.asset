@@ -61,29 +61,3 @@ MonoBehaviour:
         K: -1
         B: 0.91
         C: 0.2
-  - StateName: 4
-    Considerations:
-    - ConsiderationType: 0
-      Scoring:
-        Inverse: 0
-        responseType: 3
-        M: 50
-        K: -0.95
-        B: 0.935
-        C: 0.35
-    - ConsiderationType: 1
-      Scoring:
-        Inverse: 0
-        responseType: 3
-        M: 5000
-        K: 1
-        B: 0
-        C: 0.65
-    - ConsiderationType: 7
-      Scoring:
-        Inverse: 0
-        responseType: 3
-        M: 20
-        K: 1
-        B: 0
-        C: 0.45

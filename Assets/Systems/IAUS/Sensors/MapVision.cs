@@ -1,4 +1,4 @@
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.ECS.Component;
 using Unity.Entities;

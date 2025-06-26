@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AISenses;
 using AISenses.VisionSystems;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.ECS.StateBlobSystem;
 using Stats.Entities;

@@ -1,4 +1,4 @@
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.FactionSystem.Authoring;
 using Unity.Collections;

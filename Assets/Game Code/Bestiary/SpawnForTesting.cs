@@ -31,10 +31,10 @@ public class SpawnForTesting : MonoBehaviour
                 i--;
             }
 
-            var entity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
-            World.DefaultGameObjectInjectionWorld.EntityManager.AddComponent<RunningTag>(entity);
+    
         }
-        
+        var entity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
+        World.DefaultGameObjectInjectionWorld.EntityManager.AddComponent<RunningTag>(entity);
         if (!SpawnDummies) return;
         {
             for (int i = 0; i < 25; i++)

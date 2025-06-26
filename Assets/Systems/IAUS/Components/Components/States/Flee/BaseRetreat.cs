@@ -3,7 +3,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using Unity.Transforms;
 using System.Collections.Generic;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Unity.Burst;
 using IAUS.ECS.Consideration;
 using System;

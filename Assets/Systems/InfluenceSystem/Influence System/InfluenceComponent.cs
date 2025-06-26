@@ -3,7 +3,7 @@ using UnityEngine;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace DreamersInc.InflunceMapSystem
+namespace DreamersInc.InfluenceMapSystem
 {
 
     [System.Serializable]
