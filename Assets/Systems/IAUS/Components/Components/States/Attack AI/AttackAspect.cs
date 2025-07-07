@@ -102,7 +102,7 @@ namespace IAUS.ECS.Component
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
+        
         }
 
         private int MeleeScore
