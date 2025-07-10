@@ -118,7 +118,7 @@ namespace DreamersIncStudio.GAIACollective
        Scavengers,
        Transport,
        Acquisition,
-        Support 
-        
+        Support,
+        Spawner
     }
 }

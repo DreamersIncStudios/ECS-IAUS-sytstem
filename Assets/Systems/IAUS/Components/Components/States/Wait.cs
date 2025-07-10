@@ -53,6 +53,6 @@ namespace IAUS.ECS.Component {
         Grunt, Specialist,Tower, NPC, Daemon, Beast
 
     }
-
+    
 
 }
