@@ -40,6 +40,12 @@ namespace DreamersIncStudio.GAIACollective
         public int MemberCount;
         public uint BiomeID;
         public Role Role;
+
+        public Pack(List<PackRole> requirement)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public static Pack AssaultTeam(uint BiomeID) => new Pack()
         {
             Requirements =  new FixedList128Bytes<PackRole>()

@@ -15,7 +15,7 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   ClassLevel: 0
-  GetNPCLevel: 0
+  GetNPCLevel: 4
   stats:
     title: 0
     Name: Test Dummy

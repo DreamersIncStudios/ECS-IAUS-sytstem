@@ -8,6 +8,7 @@ using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
+using DreamersIncStudio.GAIACollective;
 using Global.Component;
 using IAUS.Components.Systems;
 using IAUS.ECS;
@@ -429,6 +430,33 @@ namespace DreamersInc.BestiarySystem
 
             manager.AddComponent<SetupBrainTag>(entity);
 
+            return this;
+        }
+
+        public CharacterBuilder WithPackSpawning(PackType packType)
+        {
+            manager.AddComponentData(entity, new SpawnPack());
+            switch (packType)
+            {
+                case PackType.Assault:
+            manager.AddComponentData(entity, Pack.AssaultTeam(999) );
+                    break;
+                case PackType.Support:
+            manager.AddComponentData(entity, Pack.Support(999));
+                    break;
+                case PackType.Transport:
+            manager.AddComponentData(entity, Pack.Support(999));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(packType), packType, null);
+            }
+            return this;
+        }
+        public CharacterBuilder WithPackSpawning(List<PackRole> requirement)
+        {
+            manager.AddComponentData(entity, new SpawnPack());
+
+            manager.AddComponentData(entity, new Pack(requirement));
             return this;
         }
 

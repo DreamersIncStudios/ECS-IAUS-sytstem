@@ -113,7 +113,7 @@ namespace AISenses.VisionSystems
 
         [BurstCompile]
 
-        public partial struct SetQuadrantDataHashMapJob : IJobEntity
+        partial struct SetQuadrantDataHashMapJob : IJobEntity
         {
             public NativeParallelMultiHashMap<int, TargetQuadrantData>.ParallelWriter QuadrantMap;
 

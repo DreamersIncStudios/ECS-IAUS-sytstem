@@ -25,6 +25,7 @@ namespace AISenses.VisionSystems
         protected override void OnCreate()
         {
             base.OnCreate();
+            RequireForUpdate<RunningTag>();
             RequireForUpdate<PhysicsWorldSingleton>();
             EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
         }
