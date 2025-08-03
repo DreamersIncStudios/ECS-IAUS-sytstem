@@ -9,66 +9,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 677ec2f08001d984ab669ca4eb466ba0, type: 3}
-  m_Name: Spawn Portal
+  m_Script: {fileID: 11500000, guid: 261ff9a2c5bb4989bcf083815443ef06, type: 3}
+  m_Name: NewDreamersInc.BestiarySystem.PackSpawnCreatureInfo
   m_EditorClassIdentifier: 
-  creatureID: 20
-  Name: 'Portal '
-  ClassLevel: 3
-  GetNPCLevel: 2
+  creatureID: 5
+  Name: 
+  ClassLevel: 1
+  GetNPCLevel: 6
   stats:
-    title: 10
-    Name: 'Portal '
-    Level: 0
-    Strength: 20
-    Vitality: 20
-    Awareness: 20
-    Speed: 20
-    Skill: 20
-    Resistance: 20
-    Concentration: 20
-    WillPower: 20
-    Charisma: 20
-    Luck: 20
-    difficultyMod: 1
-    LevelMod: 1
-  Prefab: {fileID: 0}
+    title: 11
+    Name: 'spawn '
+    Level: 5
+    Strength: 10
+    Vitality: 10
+    Awareness: 10
+    Speed: 10
+    Skill: 10
+    Resistance: 10
+    Concentration: 10
+    WillPower: 10
+    Charisma: 10
+    Luck: 10
+    difficultyMod: 10
+    LevelMod: 10
+  Prefab: {fileID: 3541754002163558908, guid: 2fb140f86158e4744a73e5bf261366ca, type: 3}
   AIStatesToAdd: 14000000
   PhysicsInfo:
     BelongsTo:
-      Category00: 0
-      Category01: 0
-      Category02: 0
-      Category03: 0
-      Category04: 0
-      Category05: 0
-      Category06: 0
-      Category07: 0
-      Category08: 0
-      Category09: 0
-      Category10: 0
-      Category11: 1
-      Category12: 0
-      Category13: 0
-      Category14: 0
-      Category15: 0
-      Category16: 0
-      Category17: 0
-      Category18: 0
-      Category19: 0
-      Category20: 0
-      Category21: 0
-      Category22: 0
-      Category23: 0
-      Category24: 0
-      Category25: 0
-      Category26: 0
-      Category27: 0
-      Category28: 0
-      Category29: 0
-      Category30: 0
-      Category31: 0
-    CollidesWith:
       Category00: 1
       Category01: 1
       Category02: 1
@@ -101,18 +68,51 @@ MonoBehaviour:
       Category29: 1
       Category30: 1
       Category31: 1
+    CollidesWith:
+      Category00: 0
+      Category01: 0
+      Category02: 0
+      Category03: 0
+      Category04: 0
+      Category05: 0
+      Category06: 0
+      Category07: 0
+      Category08: 0
+      Category09: 0
+      Category10: 0
+      Category11: 0
+      Category12: 0
+      Category13: 0
+      Category14: 0
+      Category15: 0
+      Category16: 0
+      Category17: 0
+      Category18: 0
+      Category19: 0
+      Category20: 0
+      Category21: 0
+      Category22: 0
+      Category23: 0
+      Category24: 0
+      Category25: 0
+      Category26: 0
+      Category27: 0
+      Category28: 0
+      Category29: 0
+      Category30: 0
+      Category31: 0
   Move:
     EquipResetTimer: 0
     MovingTurnSpeed: 0
     StationaryTurnSpeed: 0
     JumpPower: 0
-    GravityMultiplier: 1.251
+    GravityMultiplier: 1.2
     RunCycleLegOffset: 0
     MoveSpeedMultiplier: 0
     AnimSpeedMultiplier: 0
     GroundCheckDistance: 0
     CombatCapable: 0
-  FactionID: 2
+  FactionID: 1
   BaseThreat: 5
   BaseProtection: 5
   Equipment:

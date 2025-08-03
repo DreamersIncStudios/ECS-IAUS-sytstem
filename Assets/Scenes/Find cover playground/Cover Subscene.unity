@@ -6462,7 +6462,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 70abd6d7ad3bb8f48ad69ff0b8fa4647, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: d778dfc2474724245a151c7dbc5c6445, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &1524493718
 GameObject:
@@ -8536,6 +8536,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1296402845}
   - {fileID: 359338034}
   - {fileID: 2144304400}
   - {fileID: 1756316525}
@@ -8552,4 +8553,3 @@ SceneRoots:
   - {fileID: 231467545}
   - {fileID: 354641897}
   - {fileID: 1524493724}
-  - {fileID: 1296402845}

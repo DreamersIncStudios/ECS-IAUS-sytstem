@@ -52,8 +52,15 @@ namespace DreamersInc.BestiarySystem
 #if UNITY_EDITOR
     public static partial class Creator {
         [MenuItem("Assets/Create/Bestiary/Creature Info")]
-        static public void CreateCreatureInfo() {
+        public static void CreateCreatureInfo() {
             Dreamers.Global.ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
+            BestiaryDB.LoadDatabase(true);
+            info.setItemID((uint)BestiaryDB.Creatures.Count + 1);
+        }    
+        
+        [MenuItem("Assets/Create/Bestiary/Spawn Creature Info")]
+        public static void CreateSpawnPackInfo() {
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset<PackSpawnCreatureInfo>("Creature", out PackSpawnCreatureInfo info);
             BestiaryDB.LoadDatabase(true);
             info.setItemID((uint)BestiaryDB.Creatures.Count + 1);
         }
