@@ -7,6 +7,7 @@ using UnityEditor;
 using Global.Component;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
+using DreamersIncStudio.GAIACollective;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
 using Sirenix.OdinInspector;
@@ -21,6 +22,7 @@ namespace DreamersInc.BestiarySystem
         public string Name;
         public uint ClassLevel;
         public NPCLevel GetNPCLevel;
+        public Role Role;
         public CharacterClass stats;
         public GameObject Prefab;
         public List<AIStates> AIStatesToAdd;
