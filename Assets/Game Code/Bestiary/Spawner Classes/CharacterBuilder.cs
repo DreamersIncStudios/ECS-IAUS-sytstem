@@ -433,7 +433,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithPackSpawning(PackType packType)
+        public CharacterBuilder WithPackSpawning(PackType packType, Role role)
         {
             manager.AddComponentData(entity, new SpawnPack());
             switch (packType)

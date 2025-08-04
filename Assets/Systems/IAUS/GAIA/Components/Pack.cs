@@ -108,7 +108,7 @@ namespace DreamersIncStudio.GAIACollective
           PackEntity = packEntity;
         }
     }
-
+    [System.Serializable]
     public struct PackRole
     {
         public Role Role;
