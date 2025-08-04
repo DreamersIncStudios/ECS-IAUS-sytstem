@@ -452,11 +452,11 @@ namespace DreamersInc.BestiarySystem
             }
             return this;
         }
-        public CharacterBuilder WithPackSpawning(List<PackRole> requirement)
+        public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role)
         {
             manager.AddComponentData(entity, new SpawnPack());
 
-            manager.AddComponentData(entity, new Pack(requirement));
+            manager.AddComponentData(entity, new Pack(requirement, 1000, role));
             return this;
         }
 

@@ -73,7 +73,7 @@ namespace DreamersInc.BestiarySystem
                         .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange)
-                        .WithPackSpawning(packInfo.RequiredPackRoles)
+                        .WithPackSpawning(packInfo.RequiredPackRoles,packInfo.Role)
                         .Build();
                     break;
                 default:

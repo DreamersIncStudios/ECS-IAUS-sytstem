@@ -41,9 +41,23 @@ namespace DreamersIncStudio.GAIACollective
         public uint BiomeID;
         public Role Role;
 
-        public Pack(List<PackRole> requirement)
+        public Pack(List<PackRole> requirement, uint BiomeID, Role Roles )
         {
-            throw new System.NotImplementedException();
+            Requirements = new FixedList128Bytes<PackRole>();
+            foreach (var role in requirement)
+            {
+                Requirements.Add(role);
+            }
+
+            CohesionFactor = 1.0f;
+            SeparationFactor = 2.0f;
+            AlignmentFactor = 0.5f;
+            this.BiomeID = BiomeID;
+            Role = Roles;
+            LeaderEntity = default;
+            HerdCenter = default;
+            MemberCount = 0;
+           
         }
 
         public static Pack AssaultTeam(uint BiomeID) => new Pack()
