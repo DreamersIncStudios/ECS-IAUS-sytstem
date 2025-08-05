@@ -72,8 +72,8 @@ namespace DreamersInc.BestiarySystem
                         .WithMovement(info.Move)
                         .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
-                            info.CapableOfRange)
-                        .WithPackSpawning(packInfo.PackType,packInfo.Role)
+                            info.CapableOfRange,packInfo.Role)
+                        .WithPackSpawning(packInfo.PackType, info.ActiveHours)
                         .Build();
                     break;
                 default:

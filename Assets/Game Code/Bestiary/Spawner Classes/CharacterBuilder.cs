@@ -352,15 +352,15 @@ namespace DreamersInc.BestiarySystem
         }
 
         public CharacterBuilder WithAI(NPCLevel getNpcLevel, List<AIStates> aiStatesToAdd, bool capableOfMelee = false,
-            bool capableOfMagic = false, bool capableOfRange = false)
+            bool capableOfMagic = false, bool capableOfRange = false, Role role = default)
         {
-            if (entity == Entity.Null) return this;
-            if (model == null) return this;
+            if (entity == Entity.Null || model == null) return this;
             manager.AddComponentData(entity, new IAUSBrain()
             {
                 NPCLevel = getNpcLevel,
                 FactionID = factionID,
-                Difficulty = Difficulty.Normal // TODO  pull from Game setting in future 
+                Difficulty = Difficulty.Normal, // TODO  pull from Game setting in future
+                Role = role
             });
             foreach (var state in aiStatesToAdd)
             {
@@ -433,30 +433,32 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithPackSpawning(PackType packType, Role role)
+        public CharacterBuilder WithPackSpawning(PackType packType, TimesOfDay activeHours)
         {
             manager.AddComponentData(entity, new SpawnPack());
+            manager.AddComponentData(entity, new GaiaLife());
+       
             switch (packType)
             {
                 case PackType.Assault:
-            manager.AddComponentData(entity, Pack.AssaultTeam(999) );
+            manager.AddComponentData(entity, GaiaSpawnLeader.AssaultTeam(999,activeHours ) );
                     break;
                 case PackType.Support:
-            manager.AddComponentData(entity, Pack.Support(999));
+            manager.AddComponentData(entity, GaiaSpawnLeader.Support(999, activeHours));
                     break;
                 case PackType.Transport:
-            manager.AddComponentData(entity, Pack.Support(999));
+            manager.AddComponentData(entity, GaiaSpawnLeader.Support(999, activeHours));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(packType), packType, null);
             }
             return this;
         }
-        public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role)
+        public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role, TimesOfDay activeHours)
         {
             manager.AddComponentData(entity, new SpawnPack());
 
-            manager.AddComponentData(entity, new Pack(requirement, 1000, role));
+            manager.AddComponentData(entity, new GaiaSpawnLeader(requirement,1000, role, activeHours));
             return this;
         }
 

@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Global.Component;
 using System;
+using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.StateBlobSystem;
 
 namespace IAUS.ECS.Component
@@ -18,6 +19,7 @@ namespace IAUS.ECS.Component
         public Difficulty Difficulty;
         public NPCLevel NPCLevel;
         public BlobAssetReference<AIStateBlobAsset> State;
+        public Role Role;
     }
     public struct SetupBrainTag : IComponentData { }
     

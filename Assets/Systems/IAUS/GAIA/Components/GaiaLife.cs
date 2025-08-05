@@ -9,13 +9,12 @@ namespace DreamersIncStudio.GAIACollective
     {
         public TimesOfDay ActiveTimeOfDay;
         public uint HomeBiomeID;
-        public Role Role; // Move to IAUS Brain 
+   
 
         public GaiaLife(TimesOfDay activeHour, uint HomeBiomeID)
         {
             ActiveTimeOfDay = activeHour;
             this.HomeBiomeID = HomeBiomeID;
-            Role = Role.Combat;
         }
     }
 

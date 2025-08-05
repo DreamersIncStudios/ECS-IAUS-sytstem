@@ -25,6 +25,7 @@ namespace DreamersInc.BestiarySystem
         public Role Role;
         public CharacterClass stats;
         public GameObject Prefab;
+        public TimesOfDay ActiveHours;
         public List<AIStates> AIStatesToAdd;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
