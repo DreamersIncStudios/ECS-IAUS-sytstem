@@ -5,6 +5,9 @@ using MotionSystem;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DreamersIncStudio.GAIACollective;
+using IAUS.ECS.Component;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -74,6 +77,15 @@ namespace DreamersInc.BestiarySystem
             Creatures.Clear();
 
         }
+        public static int GetCountByCategory(NPCLevel level, Role role)
+        {
+            ValidateDatabase();
+            LoadDatabase();
+
+            // Count creatures that match the provided NPCLevel and Role
+            return Creatures.Count(c => c.GetNPCLevel == level && c.Role == role);
+        }
+
         public static CreatureInfo GetCreature(uint id)
         {
             ValidateDatabase();
