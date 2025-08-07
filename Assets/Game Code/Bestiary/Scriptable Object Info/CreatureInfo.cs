@@ -18,7 +18,15 @@ namespace DreamersInc.BestiarySystem
 {
     public class CreatureInfo : ScriptableObject
     {
+        [ValidateInput("CustomValidation", "Creature can not be 0.",InfoMessageType.Error)]
         [SerializeField] private uint creatureID;
+
+        private bool CustomValidation(uint value)
+        {
+                if (value != 0) return true;
+                Debug.Log("Logging this message intentionally: Value cannot be negative.");
+                return false;
+        }
 
         public uint ID
         {
@@ -51,28 +59,8 @@ namespace DreamersInc.BestiarySystem
         [ShowIf("hasAttack")] public bool CapableOfRange = false;
         public bool hasAttack => AIStatesToAdd.Contains(AIStates.Attack);
 
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            // Check if creatureID needs to be reassigned
-            if (ShouldReassignID())
-            {
-                setItemID();
-            }
-        }
-
-        private bool ShouldReassignID()
-        {
-            // Use the existing ID to find the current NPC configuration in the database
-            var existingCreature = BestiaryDB.GetCreature(creatureID);
-
-            // If no match is found or values have changed, reassign the ID
-            return existingCreature == null || existingCreature.GetNPCLevel != GetNPCLevel ||
-                   existingCreature.Role != Role;
-        }
-
-        public void setItemID()
+        #if UNITY_EDITOR
+        public void SetItemID()
         {
             uint baseID = GetNPCLevel switch
             {
@@ -103,7 +91,7 @@ namespace DreamersInc.BestiarySystem
         {
             Dreamers.Global.ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
             BestiaryDB.LoadDatabase(true);
-            info.setItemID();
+            
         }
 
         [MenuItem("Assets/Create/Bestiary/Spawn Creature Info")]
@@ -112,7 +100,7 @@ namespace DreamersInc.BestiarySystem
             Dreamers.Global.ScriptableObjectUtility.CreateAsset<PackSpawnCreatureInfo>("Creature",
                 out PackSpawnCreatureInfo info);
             BestiaryDB.LoadDatabase(true);
-            info.setItemID();
+            
         }
 
     }

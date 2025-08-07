@@ -10,7 +10,6 @@ using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
 using DreamersIncStudio.GAIACollective;
 using Global.Component;
-using IAUS.Components.Systems;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Attacking;
@@ -435,30 +434,32 @@ namespace DreamersInc.BestiarySystem
 
         public CharacterBuilder WithPackSpawning(PackType packType, TimesOfDay activeHours)
         {
-            manager.AddComponentData(entity, new SpawnPack());
             manager.AddComponentData(entity, new GaiaLife());
        
             switch (packType)
             {
                 case PackType.Assault:
-            manager.AddComponentData(entity, GaiaSpawnLeader.AssaultTeam(999,activeHours ) );
+            manager.AddComponentData(entity, Pack.AssaultTeam(entity,999 ) );
                     break;
                 case PackType.Support:
-            manager.AddComponentData(entity, GaiaSpawnLeader.Support(999, activeHours));
+            manager.AddComponentData(entity, Pack.Support(entity,999));
                     break;
                 case PackType.Transport:
-            manager.AddComponentData(entity, GaiaSpawnLeader.Support(999, activeHours));
+            manager.AddComponentData(entity, Pack.Support(entity,999));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(packType), packType, null);
             }
+            manager.AddComponentData(entity, new PackMember(entity));
             return this;
         }
         public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role, TimesOfDay activeHours)
         {
-            manager.AddComponentData(entity, new SpawnPack());
 
-            manager.AddComponentData(entity, new GaiaSpawnLeader(requirement,1000, role, activeHours));
+            manager.AddComponentData(entity, new GaiaSpawnLeader());
+            manager.AddComponentData(entity, new Pack());
+            manager.AddComponentData(entity, new PackMember(entity));
+            
             return this;
         }
 

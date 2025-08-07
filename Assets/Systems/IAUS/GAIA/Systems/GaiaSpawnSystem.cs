@@ -143,11 +143,11 @@ namespace DreamersIncStudio.GAIACollective
                     switch (packInfo.PackType)
                     {
                         case PackType.Assault:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.AssaultTeam(biome.BiomeID));
+                            EntityManager.AddComponentData(baseDataEntity, Pack.AssaultTeam(Entity.Null, biome.BiomeID));
                            
                             break;
                         case PackType.Support:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.Support(biome.BiomeID));
+                            EntityManager.AddComponentData(baseDataEntity, Pack.Support(Entity.Null,biome.BiomeID));
 
                             break;
                         case PackType.Transport:

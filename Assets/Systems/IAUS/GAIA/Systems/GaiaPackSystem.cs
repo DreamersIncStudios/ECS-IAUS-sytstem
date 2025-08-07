@@ -55,6 +55,7 @@ namespace DreamersIncStudio.GAIACollective
     }
 
     [WithNone(typeof(PackMember))]
+    [WithNone(typeof(GaiaSpawnLeader))]
 
     public partial struct FindLeader : IJobEntity
     {

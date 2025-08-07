@@ -60,8 +60,9 @@ namespace DreamersIncStudio.GAIACollective
            
         }
 
-        public static Pack AssaultTeam(uint BiomeID) => new Pack()
+        public static Pack AssaultTeam(Entity entity, uint BiomeID) => new Pack()
         {
+            LeaderEntity = entity,
             Requirements =  new FixedList128Bytes<PackRole>()
             {
                 new PackRole(Role.Recon, new int2(1,0)),
@@ -79,8 +80,9 @@ namespace DreamersIncStudio.GAIACollective
         };
         
         
-        public static Pack Support(uint BiomeID) => new Pack()
+        public static Pack Support(Entity entity, uint BiomeID) => new Pack()
         {
+            LeaderEntity = entity,
             Requirements =  new FixedList128Bytes<PackRole>()
             {
                 new PackRole(Role.Recon, new int2(3,0)),
