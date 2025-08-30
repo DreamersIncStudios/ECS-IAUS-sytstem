@@ -1,34 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 using IAUS.ECS.Consideration;
 using Sirenix.Utilities;
 
 namespace IAUS.ECS.StateBlobSystem
 {
-    public class StateTextFileReader
+    public static class StateTextFileReader
     {
-
         public static StateAsset[] SetupStateAsset()
         {
             var npcStates = Resources.LoadAll<NPCAISO>(@"NPC States");
-            if (npcStates.IsNullOrEmpty()) return null;
-
-            var result = new List<StateAsset>();
-    
-            foreach (var npcState in npcStates)
-            {
-                foreach (var state in npcState.States)
-                {
-                    result.Add(CreateStateAsset(npcState, state));
-                }
-            }
-
-            return result.ToArray();
+            return npcStates.IsNullOrEmpty() ? null : (from npcState in npcStates from state in npcState.States select CreateStateAsset(npcState, state)).ToArray();
         }
 
         // Local function to create a StateAsset
-        static StateAsset CreateStateAsset(NPCAISO npcState, State state)
+        private static StateAsset CreateStateAsset(NPCAISO npcState, State state)
         {
             var stateAsset = new StateAsset
             {
