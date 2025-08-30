@@ -1,4 +1,4 @@
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.ECS.Component;
 using Unity.Entities;
@@ -25,6 +25,7 @@ namespace AISenses.VisionSystems
         protected override void OnCreate()
         {
             base.OnCreate();
+            RequireForUpdate<RunningTag>();
             RequireForUpdate<PhysicsWorldSingleton>();
             EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
         }

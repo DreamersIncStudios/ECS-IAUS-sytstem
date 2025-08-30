@@ -7,9 +7,9 @@ using Components.MovementSystem;
 using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
+using DreamersIncStudio.GAIACollective;
 using Global.Component;
-using IAUS.Components.Systems;
 using IAUS.ECS;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Attacking;
@@ -351,15 +351,15 @@ namespace DreamersInc.BestiarySystem
         }
 
         public CharacterBuilder WithAI(NPCLevel getNpcLevel, List<AIStates> aiStatesToAdd, bool capableOfMelee = false,
-            bool capableOfMagic = false, bool capableOfRange = false)
+            bool capableOfMagic = false, bool capableOfRange = false, Role role = default)
         {
-            if (entity == Entity.Null) return this;
-            if (model == null) return this;
+            if (entity == Entity.Null || model == null) return this;
             manager.AddComponentData(entity, new IAUSBrain()
             {
                 NPCLevel = getNpcLevel,
                 FactionID = factionID,
-                Difficulty = Difficulty.Normal // TODO  pull from Game setting in future 
+                Difficulty = Difficulty.Normal, // TODO  pull from Game setting in future
+                Role = role
             });
             foreach (var state in aiStatesToAdd)
             {
@@ -411,7 +411,6 @@ namespace DreamersInc.BestiarySystem
                         manager.AddComponentData(entity,
                             new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
                         manager.AddComponent<CheckAttackStatus>(entity);
-                        manager.AddBuffer<InteractablesInRange>(entity);
 
                         break;
                     case AIStates.RetreatToLocation:
@@ -424,13 +423,43 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.Terrorize:
                         manager.AddComponentData(entity,
                             new TerrorizeAreaState(5F, capableOfMelee, capableOfMagic, capableOfRange));
-                        manager.AddBuffer<InteractablesInRange>(entity);
                         break;
                 }
             }
 
             manager.AddComponent<SetupBrainTag>(entity);
 
+            return this;
+        }
+
+        public CharacterBuilder WithPackSpawning(PackType packType, TimesOfDay activeHours)
+        {
+            manager.AddComponentData(entity, new GaiaLife());
+       
+            switch (packType)
+            {
+                case PackType.Assault:
+            manager.AddComponentData(entity, Pack.AssaultTeam(entity,999 ) );
+                    break;
+                case PackType.Support:
+            manager.AddComponentData(entity, Pack.Support(entity,999));
+                    break;
+                case PackType.Transport:
+            manager.AddComponentData(entity, Pack.Support(entity,999));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(packType), packType, null);
+            }
+            manager.AddComponentData(entity, new PackMember(entity));
+            return this;
+        }
+        public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role, TimesOfDay activeHours)
+        {
+
+            manager.AddComponentData(entity, new GaiaSpawnLeader());
+            manager.AddComponentData(entity, new Pack());
+            manager.AddComponentData(entity, new PackMember(entity));
+            
             return this;
         }
 

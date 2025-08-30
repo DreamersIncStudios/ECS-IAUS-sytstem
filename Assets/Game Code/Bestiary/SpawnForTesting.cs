@@ -30,20 +30,21 @@ public class SpawnForTesting : MonoBehaviour
             {
                 i--;
             }
+
+    
         }
         var entity = World.DefaultGameObjectInjectionWorld.EntityManager.CreateEntity();
         World.DefaultGameObjectInjectionWorld.EntityManager.AddComponent<RunningTag>(entity);
-        
-        // if (!SpawnDummies) return;
-        // {
-        //     for (int i = 0; i < 25; i++)
-        //     {
-        //         if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
-        //             BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
-        //         else
-        //             i--;
-        //     }
-        // }
+        if (!SpawnDummies) return;
+        {
+            for (int i = 0; i < 25; i++)
+            {
+                if (GlobalFunctions.RandomPoint(Vector3.zero, 150, out float3 pos))
+                    BestiaryDB.SpawnDummy(2, pos + (float3)Vector3.up * 2);
+                else
+                    i--;
+            }
+        }
     }
 
     // Update is called once per frame

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using AISenses.VisionSystems;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using NUnit.Framework;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using PixelCrushers.LoveHate;
 using Stats;
 using Unity.Collections;
 

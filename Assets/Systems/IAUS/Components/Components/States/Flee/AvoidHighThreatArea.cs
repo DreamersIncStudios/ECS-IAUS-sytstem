@@ -1,10 +1,6 @@
-using DreamersInc.InflunceMapSystem;
 using IAUS.ECS.Consideration;
 using IAUS.ECS.StateBlobSystem;
-using PixelCrushers.LoveHate;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;

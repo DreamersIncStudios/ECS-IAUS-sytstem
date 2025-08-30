@@ -24,9 +24,10 @@ namespace IAUS.ECS
         ChaseMoveToTarget,
         Traverse, 
         GatherResources,
-        CallBackUp,
+        SpawnPackHerd,
         Terrorize,
-        WanderQuadrant
+        WanderQuadrant, 
+        PerformMaintenance,
 
 
     }

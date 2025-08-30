@@ -185,6 +185,17 @@ namespace IAUS.ECS.StateBlobSystem
                      NPCLevel = brain.NPCLevel
                  }));
              }).Run();
+             
+             Entities.WithoutBurst().ForEach((ref IAUSBrain brain, ref SetupBrainTag tag, ref MaintenanceState G) =>
+             {
+                 G.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+                 {
+                     Difficulty = Difficulty.Normal,
+                     AIStates = G.Name,
+                     FactionID = brain.FactionID,
+                     NPCLevel = brain.NPCLevel
+                 }));
+             }).Run();
 
        }
 

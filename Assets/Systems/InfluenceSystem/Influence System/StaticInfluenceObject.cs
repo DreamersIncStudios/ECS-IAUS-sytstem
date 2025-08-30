@@ -1,6 +1,6 @@
 ﻿using Unity.Entities;
 
-namespace DreamersInc.InflunceMapSystem
+namespace DreamersInc.InfluenceMapSystem
 {
     public struct StaticInfluenceObject : IComponentData
     {

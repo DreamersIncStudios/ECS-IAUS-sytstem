@@ -4,7 +4,7 @@ using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.CombatSystem;
 using DreamersInc.ComboSystem;
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using DreamersIncStudio.CameraControlSystem;
 using Global.Component;
 using MotionSystem;

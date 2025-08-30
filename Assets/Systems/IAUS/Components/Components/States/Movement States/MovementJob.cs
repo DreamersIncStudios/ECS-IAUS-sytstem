@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Unity.Entities;
 using IAUS.ECS.Component;
-using Unity.Burst;
 using Unity.Collections;
-using Unity.Transforms;
-using DreamersInc.InflunceMapSystem;
-using PixelCrushers.LoveHate;
 using Unity.Burst.Intrinsics;
 
 namespace IAUS.ECS.Systems
@@ -36,7 +29,7 @@ namespace IAUS.ECS.Systems
                 for (int j = 0; j < buffer.Length; j++)
                 {
                     TravelWaypointBuffer point = buffer[j];
-                    point.WayPoint.InfluenceAtPosition = InfluenceGridMaster.Instance.grid.GetGridObject(point.WayPoint.Position).GetValueNormalized(LoveHate.factionDatabase.GetFaction(Brains[i].FactionID));
+                    point.WayPoint.InfluenceAtPosition = 0.0f; // todo replace with system;
                     buffer[j] = point;
                     if (j == patrol.WaypointIndex)
                     {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameNPC: 
   Difficulty: 1
-  NpcLevel: 0
+  NpcLevel: 4
   FactionID: 1
   States:
   - StateName: 18

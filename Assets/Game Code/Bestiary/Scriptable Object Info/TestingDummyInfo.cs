@@ -1,4 +1,4 @@
-using DreamersInc.InflunceMapSystem;
+using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using MotionSystem;
 using Stats;

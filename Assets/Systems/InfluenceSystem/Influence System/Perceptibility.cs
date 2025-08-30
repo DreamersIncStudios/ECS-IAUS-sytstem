@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Entities;
 using System;
 
-namespace DreamersInc.InflunceMapSystem
+namespace DreamersInc.InfluenceMapSystem
 {
     public struct Perceptibility : IComponentData
     {

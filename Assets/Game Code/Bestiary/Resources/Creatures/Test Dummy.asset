@@ -15,7 +15,7 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   ClassLevel: 0
-  GetNPCLevel: 0
+  GetNPCLevel: 4
   stats:
     title: 0
     Name: Test Dummy
@@ -33,7 +33,7 @@ MonoBehaviour:
     difficultyMod: 10
     LevelMod: 5
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
-  AIStatesToAdd: 010000000a00000004000000
+  AIStatesToAdd: 010000000a000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0

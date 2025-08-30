@@ -20,6 +20,8 @@ http://intrinsicalgorithm.com/IAonAI/2013/02/both-my-gdc-lectures-on-utility-the
 
 https://www.gdcvault.com/play/1018040/Architecture-Tricks-Managing-Behaviors-in starts at 33 min mark
 
+This repo is primarily intended for learning and documenting my journey with DOTS and Utility AI. If you are looking for an asset which can be used out of the box in the current state, check out the link below.
+https://gitlab.com/lclemens/lightweightdotsutilityai
 
 Updated to support Unity 6 Beta
 Adding GOAP Planning for states

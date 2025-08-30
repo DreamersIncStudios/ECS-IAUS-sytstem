@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 using Stats;
 using Unity.Mathematics;
 using Global.Component;
 using IAUS.Core.GOAP;
-using PixelCrushers.LoveHate;
 using Stats.Entities;
 using Unity.Burst;
 // ReSharper disable FunctionRecursiveOnAllPaths
@@ -165,21 +163,13 @@ namespace AISenses
     {
         public Entity Entity;
         public bool IsFriendly;
-        [BurstDiscard]
-        public void CheckIsFriendly(int factionID)
-        {
-            IsFriendly = factionID == TargetInfo.FactionID ||
-                         LoveHate.factionDatabase.GetFaction(factionID).GetPersonalAffinity(TargetInfo.FactionID) > 51;
-         
-        }
-
         public AITarget TargetInfo;
         public float DistanceTo;
         public float3 LastKnownPosition;
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
-        public float PerceptilabilityScore;
+
     }
 
     public enum TargetAlignmentType
