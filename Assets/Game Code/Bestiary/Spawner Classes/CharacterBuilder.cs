@@ -432,27 +432,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithPackSpawning(PackType packType, TimesOfDay activeHours)
-        {
-            manager.AddComponentData(entity, new GaiaLife());
-       
-            switch (packType)
-            {
-                case PackType.Assault:
-            manager.AddComponentData(entity, Pack.AssaultTeam(entity,999 ) );
-                    break;
-                case PackType.Support:
-            manager.AddComponentData(entity, Pack.Support(entity,999));
-                    break;
-                case PackType.Transport:
-            manager.AddComponentData(entity, Pack.Support(entity,999));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(packType), packType, null);
-            }
-            manager.AddComponentData(entity, new PackMember(entity));
-            return this;
-        }
+      
         public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role, TimesOfDay activeHours)
         {
 

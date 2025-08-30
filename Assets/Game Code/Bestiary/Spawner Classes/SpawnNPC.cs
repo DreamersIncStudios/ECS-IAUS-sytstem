@@ -33,7 +33,6 @@ namespace DreamersInc.BestiarySystem
                             info.CapableOfRange)
                         .Build();
                     return true;
-                    break;
                 case NPCLevel.Specialist:
                     break;
                 case NPCLevel.Tower:
@@ -54,8 +53,6 @@ namespace DreamersInc.BestiarySystem
                             info.CapableOfRange)
                         .Build();
                     return true;
-
-                    break;
                 case NPCLevel.Daemon:
                     break;
                 case NPCLevel.Beast:
@@ -73,7 +70,6 @@ namespace DreamersInc.BestiarySystem
                         .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,packInfo.Role)
-                        .WithPackSpawning(packInfo.PackType, info.ActiveHours)
                         .Build();
                     break;
                 default:
