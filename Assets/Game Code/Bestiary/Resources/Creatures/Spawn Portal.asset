@@ -15,8 +15,9 @@ MonoBehaviour:
   creatureID: 20
   Name: 'Portal '
   ClassLevel: 3
-  GetNPCLevel: 2
+  GetNPCLevel: 0
   Role: 0
+  ActiveTimesOfDay: 0
   stats:
     rid: 8783116183795400909
   Prefab: {fileID: 0}

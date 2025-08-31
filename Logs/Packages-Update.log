@@ -469,3 +469,12 @@ Update Mode: updateDependencies
 
 The following packages were updated:
   com.unity.probuilder from version 6.0.5 to 6.0.6
+
+=== Sun Aug 31 16:16:14 2025
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.collections from version 2.5.1 to 2.5.7
+  com.unity.render-pipelines.universal from version 17.1.0 to 17.2.0

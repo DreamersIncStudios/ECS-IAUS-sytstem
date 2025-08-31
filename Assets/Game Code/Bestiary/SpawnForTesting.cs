@@ -24,12 +24,13 @@ public class SpawnForTesting : MonoBehaviour
         
         for (int i = 0; i < 100; i++)
         {
-            if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
-                BestiaryDB.SpawnNPC(3, pos);
-            else
-            {
-                i--;
-            }
+            Debug.Log("Fix me please");
+            // if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
+            //     BestiaryDB.SpawnNPC(3, pos);
+            // else
+            // {
+            //     i--;
+            // }
 
     
         }
@@ -58,7 +59,8 @@ public class SpawnForTesting : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             if (GlobalFunctions.RandomPoint(Vector3.zero, 450, out float3 pos))
-                BestiaryDB.SpawnNPC(3, pos);
+                Debug.Log("Fix me please");
+                //BestiaryDB.SpawnNPC(3, pos);
             else
             {
                 i--;

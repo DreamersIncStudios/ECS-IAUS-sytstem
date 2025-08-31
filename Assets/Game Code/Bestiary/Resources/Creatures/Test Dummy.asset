@@ -15,8 +15,9 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   ClassLevel: 0
-  GetNPCLevel: 4
+  GetNPCLevel: 0
   Role: 0
+  ActiveTimesOfDay: 0
   stats:
     rid: 8783116183795400908
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}

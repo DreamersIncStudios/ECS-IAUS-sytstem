@@ -224,7 +224,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithStats(ICharacterData stats, string name)
+        public CharacterBuilder WithStats(ICharacterData stats, uint playerLevel, string name)
         {
             if (entity == Entity.Null) return this;
             if (model == null) return this;
@@ -443,11 +443,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public Entity Build()
-        {
 
-            return entity;
-        }
 
         public CharacterBuilder(string entityName, out Entity spawnedEntity)
         {
@@ -476,7 +472,27 @@ namespace DreamersInc.BestiarySystem
             entity = baseDataEntity;
 
         }
+        public CharacterBuilder WithActiveHour(TimesOfDay activeHour, uint HomeBiomeID)
+        {
+            manager.AddComponentData(entity, new GaiaLife(activeHour, HomeBiomeID));
+            return this;
+        }
+        
+        public CharacterBuilder WithParent(Entity requestParentToLink)
+        {
+            if(requestParentToLink == Entity.Null) 
+                return this;
+            manager.AddComponentData(entity, new Parent()
+            {
+                Value = requestParentToLink
+            });
+            return this;
+        }
+        
+        public Entity Build()
+        {
 
-
+            return entity;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        private static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO, out Entity entity)
+        private static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel, Entity parentToLink, out GameObject GO, out Entity entity)
         {
 
             var info = GetCreature(ID);
@@ -20,8 +20,10 @@ namespace DreamersInc.BestiarySystem
                 case NPCLevel.Grunt:
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats, info.Name)
+                        .WithStats(info.stats, PlayerLevel ,info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
+                        .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
+                        .WithParent(parentToLink)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
                         .WithAIControl()
                         .WithCharacterDetection()
@@ -41,7 +43,7 @@ namespace DreamersInc.BestiarySystem
 
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats,  info.Name)
+                        .WithStats(info.stats, PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
                         .WithAIControl()
@@ -61,7 +63,7 @@ namespace DreamersInc.BestiarySystem
                     var packInfo = (PackSpawnCreatureInfo)info;
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Spawner NPC", out GO)
-                        .WithStats(info.stats,  info.Name)
+                        .WithStats(info.stats,PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         .WithAIControl()
                         .WithCharacterDetection()
@@ -82,13 +84,16 @@ namespace DreamersInc.BestiarySystem
 
 
 
-        public static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO)
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel,  out GameObject GO)
         {
-            return SpawnNPC(ID, Position, out GO, out _);
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,Entity.Null,  out GO, out _);
         } 
         
-        public static bool SpawnNPC(uint ID, Vector3 Position) {
-            return SpawnNPC(ID, Position, out _, out _);
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel ) {
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,Entity.Null, out _, out _);
+        }     
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel, Entity parentToLink ) {
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,parentToLink, out _, out _);
         }
 
     }
