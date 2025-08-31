@@ -37,7 +37,7 @@ namespace DreamersInc.BestiarySystem
         public uint ClassLevel;
         public NPCLevel GetNPCLevel;
         public Role Role;
-        public CharacterClass stats;
+        [SerializeReference]public ICharacterData stats;
         public GameObject Prefab;
         public TimesOfDay ActiveHours;
         public List<AIStates> AIStatesToAdd;

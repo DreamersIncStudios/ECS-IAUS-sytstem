@@ -21,7 +21,7 @@ namespace DreamersInc.BestiarySystem.Testing
         [SerializeField] private uint creatureID;
         public uint ID { get { return creatureID; } }
         public string Name;
-        public CharacterClass stats;
+        public NPCCharacterClass stats;
         public GameObject Prefab;
         public PhysicsInfo PhysicsInfo;
 

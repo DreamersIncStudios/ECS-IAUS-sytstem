@@ -224,7 +224,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithStats(CharacterClass stats)
+        public CharacterBuilder WithStats(ICharacterData stats)
         {
             if (entity == Entity.Null) return this;
             if (model == null) return this;

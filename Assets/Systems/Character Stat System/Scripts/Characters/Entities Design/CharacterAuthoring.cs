@@ -8,7 +8,7 @@ namespace Stats.Entities
 {
     public partial class CharacterAuthoring : MonoBehaviour
     {
-        public CharacterClass Info;
+        public ICharacterData Info;
         public Animator animator;
     }
 

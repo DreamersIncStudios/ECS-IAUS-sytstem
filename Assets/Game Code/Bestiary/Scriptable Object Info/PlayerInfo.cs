@@ -22,7 +22,7 @@ namespace DreamersInc.BestiarySystem
         [SerializeField] private uint creatureID;
         public uint ID { get { return creatureID; } }
         public string Name;
-        public CharacterClass stats;
+        public PlayerCharacterClass stats;
         public GameObject Prefab;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;

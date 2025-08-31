@@ -16,23 +16,11 @@ MonoBehaviour:
   Name: 'Test Dummy '
   ClassLevel: 0
   GetNPCLevel: 4
+  Role: 0
   stats:
-    title: 0
-    Name: Test Dummy
-    Level: 10
-    Strength: 10
-    Vitality: 10
-    Awareness: 10
-    Speed: 10
-    Skill: 10
-    Resistance: 10
-    Concentration: 10
-    WillPower: 10
-    Charisma: 10
-    Luck: 10
-    difficultyMod: 10
-    LevelMod: 5
+    rid: 8783116183795400908
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
+  ActiveHours: 0
   AIStatesToAdd: 010000000a000000
   PhysicsInfo:
     BelongsTo:
@@ -123,3 +111,25 @@ MonoBehaviour:
   CapableOfMelee: 1
   CapableOfMagic: 0
   CapableOfRange: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 8783116183795400908
+      type: {class: NPCCharacterClass, ns: Stats, asm: PlayerCharacterSystem}
+      data:
+        title: 0
+        levelRange:
+          x: 2
+          y: 4
+        strength: 10
+        vitality: 10
+        awareness: 10
+        speed: 10
+        skill: 10
+        resistance: 10
+        concentration: 10
+        willPower: 10
+        charisma: 10
+        luck: 10
+        difficultyMod: 10
+        levelMod: 2

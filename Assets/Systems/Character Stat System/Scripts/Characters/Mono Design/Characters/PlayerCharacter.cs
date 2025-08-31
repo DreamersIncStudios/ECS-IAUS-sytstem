@@ -8,11 +8,11 @@ namespace Stats
     [System.Serializable]
     public class PlayerCharacter : BaseCharacter
     {
-        public void SetupDataEntity(CharacterClass BaseStats)
+        public void SetupDataEntity(PlayerCharacterClass BaseStats)
         {
             //Todo get level and stat data
             Init();
-            this.Level = BaseStats.Level;
+            this.Level = BaseStats.Level; 
             float ModValue = BaseStats.LevelMod;
             this.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(BaseStats.Strength * ModValue);
             this.GetPrimaryAttribute((int)AttributeName.Awareness).BaseValue = (int)(BaseStats.Awareness * ModValue);
