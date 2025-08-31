@@ -224,7 +224,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithStats(ICharacterData stats)
+        public CharacterBuilder WithStats(ICharacterData stats, string name)
         {
             if (entity == Entity.Null) return this;
             if (model == null) return this;
@@ -232,7 +232,7 @@ namespace DreamersInc.BestiarySystem
             {
                 GOrepresentative = model // todo change to instance 
             };
-            data.SetupDataEntity(stats);
+            data.SetupDataEntity(stats, name);
             manager.AddComponentObject(entity, data);
 
             this.character = data;

@@ -20,7 +20,7 @@ namespace DreamersInc.BestiarySystem
                 case NPCLevel.Grunt:
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats, info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
                         .WithAIControl()
@@ -41,7 +41,7 @@ namespace DreamersInc.BestiarySystem
 
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
                         .WithAIControl()
@@ -61,7 +61,7 @@ namespace DreamersInc.BestiarySystem
                     var packInfo = (PackSpawnCreatureInfo)info;
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Spawner NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         .WithAIControl()
                         .WithCharacterDetection()

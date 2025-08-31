@@ -81,7 +81,7 @@ namespace DreamersInc.BestiarySystem
                 {
                     GOrepresentative = go
                 };
-                character.SetupDataEntity(info.stats);
+                character.SetupDataEntity(info.stats, info.Name);
                 TransformGO transformLink = new()
                 {
                     transform = go.transform

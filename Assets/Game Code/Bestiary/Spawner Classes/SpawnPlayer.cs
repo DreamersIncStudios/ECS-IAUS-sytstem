@@ -20,20 +20,20 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        public static bool SpawnPlayer(uint ID, out GameObject go, out Entity entity, bool IsPlayer = false)
+        private static bool SpawnPlayer(uint ID, out GameObject go, out Entity entity, bool IsPlayer = false)
         {
             var info = GetPlayer(ID);
             if (info != null)
             {
                 go = Instantiate(info.Prefab);
                 if(IsPlayer)
-                go.tag = "Player";
+                    go.tag = "Player";
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name);
                 AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new();
                 character.GOrepresentative = go;
-                character.SetupDataEntity(info.stats);
+                character.SetupDataEntity(info.stats, info.Name);
                 TransformGO transformLink = new()
                 {
                     transform = go.transform
