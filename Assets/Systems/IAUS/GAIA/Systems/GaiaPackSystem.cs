@@ -1,10 +1,7 @@
-using System;
 using Unity.Collections;
 using Unity.Entities;
-using Unity.Entities.Internal;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 using Unity.Jobs;
 using static Unity.Entities.SystemAPI;
 
@@ -15,17 +12,23 @@ namespace DreamersIncStudio.GAIACollective
     public partial struct GaiaPackSystem : ISystem
     {
         private EntityQuery packQuery;
-        private EntityQuery agentsQuery;
+        private EntityQuery packMemberQuery;
         private ComponentLookup<Pack> packLookup;
         private ComponentLookup<LocalToWorld> transformLookup;
         public void OnCreate(ref SystemState state)
         {
+            state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
             packQuery = state.GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[]
+                All = new[]
                     { ComponentType.ReadOnly(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(Pack)) }
             });
-            packLookup = state.GetComponentLookup<Pack>(false);
+            packMemberQuery = state.GetEntityQuery(new EntityQueryDesc()
+            {
+                All = new[]
+                    { ComponentType.ReadOnly(typeof(PackMember)), ComponentType.ReadOnly<LocalToWorld>() },
+            });
+            packLookup = state.GetComponentLookup<Pack>();
             transformLookup = state.GetComponentLookup<LocalToWorld>(true);
         }
 
@@ -36,7 +39,8 @@ namespace DreamersIncStudio.GAIACollective
             var depends = state.Dependency;
             packLookup.Update(ref state);
             transformLookup.Update(ref state);
-            
+            var packMember = packMemberQuery.ToComponentDataArray<PackMember>(Allocator.TempJob);
+            var packMembersTransform = packMemberQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
             var cmd = ecb.CreateCommandBuffer(state.WorldUnmanaged);
             var leaders = new NativeParallelHashSet<Entity>(packs.Length, Allocator.TempJob);
 
@@ -75,7 +79,7 @@ namespace DreamersIncStudio.GAIACollective
             {
                 PackEntities = packs,
                 PackLookup = packLookup,
-                ecb = cmd,
+                ECB = cmd,
                 LeadersAssigned = leaders
 
             }.Schedule(depends);
@@ -84,15 +88,22 @@ namespace DreamersIncStudio.GAIACollective
             {
                 FindTransform = transformLookup
             }.Schedule(depends);
-            
+            depends = new UpdatePackCenter()
+            {
+                PackMembers = packMember,
+                PackMembersTransform = packMembersTransform
+                
+            }.Schedule(depends);
             depends = packs.Dispose(depends);
             depends = bestScores.Dispose(depends);
             depends = bestLeaders.Dispose(depends);
             depends = leaders.Dispose(depends);
+            depends = packMember.Dispose(depends);
+            depends = packMembersTransform.Dispose(depends);
             state.Dependency = depends;
         }
 
-        // ... existing code ...
+     
         [WithNone(typeof(PackMember))]
         partial struct ScoreLeaders : IJobEntity
         {
@@ -134,7 +145,7 @@ namespace DreamersIncStudio.GAIACollective
             private static float CombineWeighted(float a, float wa, float b, float wb) => a * wa + b * wb;
         }
 
-        partial struct ApplyLeaders : IJob
+        private struct ApplyLeaders : IJob
         {
             public NativeArray<Entity> PackEntities;
             public ComponentLookup<Pack> PackLookup;
@@ -161,17 +172,17 @@ namespace DreamersIncStudio.GAIACollective
                 }
             }
         }
-        // ... existing code ...
+
 
         [WithNone(typeof(PackMember))]
-        partial struct PackJoinJob : IJobEntity
+        private partial struct PackJoinJob : IJobEntity
         {
-            public EntityCommandBuffer ecb;
+            public EntityCommandBuffer ECB;
             public NativeArray<Entity> PackEntities;
             public ComponentLookup<Pack> PackLookup;
             public NativeParallelHashSet<Entity> LeadersAssigned;
 
-            private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, PassportAspect aspect)
+            private void Execute(Entity entity, PassportAspect aspect)
             {
                 // Skip entities that have been assigned as leaders this frame
                 if (LeadersAssigned.Contains(entity)) return;
@@ -205,7 +216,7 @@ namespace DreamersIncStudio.GAIACollective
                     return false;
                 pack.MemberCount++;
                 role.QtyInfo.y++;
-                ecb.AddComponent(entity, new PackMember(packEntity));
+                ECB.AddComponent(entity, new PackMember(packEntity));
                 return true;
             }
         }
@@ -218,6 +229,26 @@ namespace DreamersIncStudio.GAIACollective
                 if(pack.LeaderEntity==Entity.Null) return;
                 transform.Position = FindTransform[pack.LeaderEntity].Position;
                 transform.Rotation = FindTransform[pack.LeaderEntity].Rotation;
+            }
+        }
+        
+        public partial struct UpdatePackCenter : IJobEntity
+        {
+            [ReadOnly] public NativeArray<PackMember> PackMembers;
+            [ReadOnly] public NativeArray<LocalToWorld> PackMembersTransform;
+            void Execute( Entity entity,ref Pack pack)
+            {
+                if(pack.LeaderEntity==Entity.Null) return;
+                int cnt = 0;
+                float3 center = float3.zero;
+                for (var index = 0; index < PackMembers.Length; index++)
+                {
+                    var member = PackMembers[index];
+                    if (entity != member.PackEntity) continue;
+                    cnt++;
+                    center += PackMembersTransform[index].Position; 
+                }
+                pack.HerdCenter = center / cnt;
             }
         }
     }

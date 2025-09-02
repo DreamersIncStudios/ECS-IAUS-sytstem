@@ -104,6 +104,12 @@ MonoBehaviour:
       - rid: 6165830346232299626
       - rid: 6165830346232299627
       - rid: 6165830346232299628
+      - rid: 6165830346232299629
+      - rid: 6165830346232299630
+      - rid: 6165830346232299631
+      - rid: 6165830346232299632
+      - rid: 6165830346232299633
+      - rid: 6165830346232299634
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 8
@@ -554,6 +560,36 @@ MonoBehaviour:
       data:
         m_version: 0
     - rid: 6165830346232299628
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299629
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299630
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299631
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299632
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299633
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299634
       type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
         asm: Unity.RenderPipelines.Core.Runtime}
       data:

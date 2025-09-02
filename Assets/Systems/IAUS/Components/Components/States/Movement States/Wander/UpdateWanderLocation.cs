@@ -3,6 +3,7 @@ using DreamersInc.QuadrantSystems;
 using IAUS.ECS.Systems;
 using System.Collections;
 using System.Collections.Generic;
+using DreamersIncStudio.GAIACollective;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -20,7 +21,7 @@ namespace IAUS.ECS.Component
     {
         protected override void OnUpdate()
         {
-            Entities.WithStructuralChanges().WithoutBurst().ForEach(
+            Entities.WithStructuralChanges().WithoutBurst().WithNone<PackMember>().ForEach(
                 (Entity entity, ref LocalTransform transform, ref WanderQuadrant wander,
                     ref UpdateWanderLocationTag tag, ref Movement move) =>
                 {
@@ -47,8 +48,81 @@ namespace IAUS.ECS.Component
 
                     EntityManager.RemoveComponent<UpdateWanderLocationTag>(entity);
                 }).Run();
+      
+            Entities.WithStructuralChanges().WithoutBurst().WithAll<PackMember>().ForEach(
+                (Entity entity, ref LocalTransform transform, ref WanderQuadrant wander,
+                    ref UpdateWanderLocationTag tag, ref Movement move) =>
+                {
+                    var pack= EntityManager.GetComponentData<Pack>(entity);
+                   
+                    var candidates = BuildCandidates(transform.Position, wander.HashKey, wander.WanderNeighborQuadrants);
+               
 
+                    // Choose a position that is outside cohesion range if possible; otherwise pick the farthest
+                    wander.TravelPosition = ChooseInsideCohesionOrFallback(pack.HerdCenter, candidates, pack.CohesionFactor);
+
+                    // Cache starting distance for movement behavior
+                    wander.StartingDistance = Vector3.Distance(wander.TravelPosition, transform.Position);
+
+                    // Clear the tag after updating
+                    EntityManager.RemoveComponent<UpdateWanderLocationTag>(entity);
+
+                }).Run();
         }
+        
+        // Local helpers (combinators)
+        float3[] BuildCandidates(float3 origin, int hashKey, bool includeNeighbors)
+        {
+            if (!includeNeighbors)
+            {
+                return new[]
+                {
+                    GetWanderPoint(origin, hashKey)
+                };
+            }
+
+            // Fixed-size array avoids GC from List allocations
+            var arr = new float3[5];
+            arr[0] = GetWanderPoint(origin, hashKey + 1);
+            arr[1] = GetWanderPoint(origin, hashKey - 1);
+            arr[2] = GetWanderPoint(origin, hashKey + NPCQuadrantSystem.quadrantZMultiplier);
+            arr[3] = GetWanderPoint(origin, hashKey - NPCQuadrantSystem.quadrantZMultiplier);
+            arr[4] = GetWanderPoint(origin, hashKey);
+            return arr;
+        }
+        float3 ChooseInsideCohesionOrFallback(float3 origin, float3[] candidates, float cohesionRadius)
+        {
+            // Prefer positions INSIDE the cohesion radius (closest wins)
+            float bestInsideDist = float.PositiveInfinity;
+            int bestInsideIdx = -1;
+
+            // Track absolute closest as deterministic fallback
+            float bestDist = float.PositiveInfinity;
+            int bestIdx = -1;
+
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                float d = math.distance(origin, candidates[i]);
+
+                // Prefer positions that are INSIDE the cohesion radius, smallest distance wins
+                if (d <= cohesionRadius && d < bestInsideDist)
+                {
+                    bestInsideDist = d;
+                    bestInsideIdx = i;
+                }
+
+                // Track absolute closest to have a deterministic fallback
+                if (d < bestDist)
+                {
+                    bestDist = d;
+                    bestIdx = i;
+                }
+            }
+
+            if (bestInsideIdx >= 0) return candidates[bestInsideIdx];
+            return candidates[bestIdx >= 0 ? bestIdx : 0];
+        }
+
         const float WanderRange = 50f;
         float3 GetWanderPoint(float3 currentPosition, int hashKey)
         {
