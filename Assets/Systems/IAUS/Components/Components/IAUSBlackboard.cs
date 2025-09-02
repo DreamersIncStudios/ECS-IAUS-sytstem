@@ -121,6 +121,7 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
+                
                 if (!wander.IsValid) return 0.0f;
 
                 if (wander.ValueRO.Index == -1)
@@ -318,7 +319,6 @@ namespace IAUS.ECS.Component.Aspects
 
         public void UpdateCurrentState(EntityCommandBuffer.ParallelWriter commandBufferParallel, int chunkIndex)
         {
-
             var highScoreState = GetHighState();
             if (brain.ValueRO.CurrentState == highScoreState) return;
             switch (brain.ValueRO.CurrentState)

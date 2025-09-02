@@ -36,7 +36,4 @@ namespace DreamersIncStudio.GAIACollective
         }
     }
 
-    public struct RunningTag : IComponentData
-    {
-    }
 }

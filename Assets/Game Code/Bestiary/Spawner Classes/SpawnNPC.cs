@@ -32,7 +32,7 @@ namespace DreamersInc.BestiarySystem
                         .WithMovement(info.Move)
                         .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
-                            info.CapableOfRange)
+                            info.CapableOfRange,info.Role)
                         .Build();
                     return true;
                 case NPCLevel.Specialist:
@@ -52,10 +52,26 @@ namespace DreamersInc.BestiarySystem
                         .WithMovement(info.Move)
                         .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
-                            info.CapableOfRange)
+                            info.CapableOfRange,info.Role)
                         .Build();
                     return true;
                 case NPCLevel.Daemon:
+                    new CharacterBuilder(info.Name, out entity)
+                        .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
+                        .WithStats(info.stats, PlayerLevel ,info.Name)
+                        .WithEntityPhysics(info.PhysicsInfo)
+                        .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
+                        .WithParent(parentToLink)
+                        // .WithInventorySystem(info.Inventory, info.Equipment)
+                        .WithAIControl()
+                        .WithCharacterDetection()
+                        .WithAnimation()
+                        .WithNPCAttack(info.AttackSequence)
+                        .WithMovement(info.Move)
+                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
+                            info.CapableOfRange,info.Role)
+                        .Build();
                     break;
                 case NPCLevel.Beast:
                     break;

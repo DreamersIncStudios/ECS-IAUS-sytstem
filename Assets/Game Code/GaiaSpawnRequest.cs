@@ -56,7 +56,6 @@ public partial class GaiaSpawnRequest: SystemBase
             
             for (var i = 0; i < request.SpawnRequest.Qty; i++)
             {
-                Debug.Log("Running "); 
               BestiaryDB.SpawnNPC(request.SpawnRequest.SpawnID, request.Position,
                   request.SpawnRequest.HomeBiomeID,
                   request.SpawnRequest.PlayerLevel,

@@ -2,13 +2,19 @@ using IAUS.ECS.Component.Aspects;
 using IAUS.ECS.StateBlobSystem;
 using Unity.Burst;
 using Unity.Entities;
+using UnityEngine;
 
 namespace IAUS.ECS.Systems
 {
     [UpdateAfter(typeof(SetupAIStateBlob))]
     public partial class IAUSUpdateGroup : ComponentSystemGroup
     {
-        
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<RunningTag>();
+        }
+
         public IAUSUpdateGroup()
         {
             RateManager = new RateUtils.VariableRateManager(1000, true);
@@ -17,25 +23,22 @@ namespace IAUS.ECS.Systems
     }
     public partial class IAUSUpdateStateGroup : ComponentSystemGroup
     {
- 
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            RequireForUpdate<RunningTag>();
+        }
+
     }
 
     [UpdateInGroup(typeof(IAUSUpdateGroup))]
     public partial struct IAUSBrainUpdate : ISystem
     {
-        public void OnCreate(ref SystemState state)
-        {
-            state.RequireForUpdate<RunningTag>();
-        }
-
-        public void OnDestroy(ref SystemState state)
-        {
-        }
+        
         [BurstCompile]
 
         public void OnUpdate(ref SystemState state)
         {
-            
             var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
             new IAUSUpdateJob()
                     { CommandBufferParallel = ecb.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter() }
@@ -49,6 +52,8 @@ namespace IAUS.ECS.Systems
        
         void Execute([ChunkIndexInQuery] int chunkIndex,  IAUSBlackboard blackboard)
         {
+  
+            
             blackboard.UpdateCurrentState(CommandBufferParallel, chunkIndex);
         }
     }

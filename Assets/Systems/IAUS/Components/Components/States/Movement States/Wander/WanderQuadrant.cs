@@ -38,7 +38,7 @@ namespace IAUS.ECS.Component
         
         float coolDownTime;
         float resetTime { get; set; }
-        float totalScore { get; set; }
+       [SerializeField] float totalScore { get; set; }
       [SerializeField]  public bool AttackTarget { get; set; }
 
         public float3 SpawnPosition;

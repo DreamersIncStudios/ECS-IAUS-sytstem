@@ -431,18 +431,7 @@ namespace DreamersInc.BestiarySystem
 
             return this;
         }
-
-      
-        public CharacterBuilder WithPackSpawning(List<PackRole> requirement, Role role, TimesOfDay activeHours)
-        {
-
-            manager.AddComponentData(entity, new GaiaSpawnLeader());
-            manager.AddComponentData(entity, new Pack());
-            manager.AddComponentData(entity, new PackMember(entity));
-            
-            return this;
-        }
-
+        
 
 
         public CharacterBuilder(string entityName, out Entity spawnedEntity)

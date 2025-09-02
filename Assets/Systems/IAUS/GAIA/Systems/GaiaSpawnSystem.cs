@@ -27,7 +27,6 @@ namespace DreamersIncStudio.GAIACollective
         
         protected override void OnUpdate()
         {
-            Debug.Log("Running "); 
             if (!SystemAPI.TryGetSingleton<GaiaControl>(out _))
             {
                 var gaiaEntity = SystemAPI.GetSingletonEntity<GaiaTime>();
@@ -44,7 +43,7 @@ namespace DreamersIncStudio.GAIACollective
                 
                 var scenario = levelManager[biome.Manager].SpawnScenario;
                 if(scenario == SpawnScenario.DoNotSpawn) return;
-                    for (var index = 0; index < biome.SpawnData.Length; index++)
+                for (var index = 0; index < biome.SpawnData.Length; index++)
                 {
                      
                     var spawn = biome.SpawnData[index];
@@ -58,7 +57,7 @@ namespace DreamersIncStudio.GAIACollective
                     }
                     else if (spawn.Respawn)
                     {
-                        Debug.Log("Running "); 
+                        Debug.Log("Spawning ");
                         spawn.Spawn(ref biome.SpawnRequests, biome.BiomeID,
                             biome.LevelRange * (int)worldManager.WorldLevel, worldManager.PlayerLevel);
                     }

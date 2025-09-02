@@ -15,15 +15,10 @@ MonoBehaviour:
   biomeID: 0
   spawnData:
   - SpawnScenario: 2
-    SpawnID: 3
-    ActiveHours: 5
-    Qty: 1
-    RespawnInterval: 15
-  - SpawnScenario: 2
-    SpawnID: 2
+    SpawnID: 4
     ActiveHours: 5
     Qty: 4
-    RespawnInterval: 10
+    RespawnInterval: 15
   packsToSpawn:
   - PackType: 0
     Size: 1

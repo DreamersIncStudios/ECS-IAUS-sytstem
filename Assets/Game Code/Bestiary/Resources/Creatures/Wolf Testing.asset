@@ -91,16 +91,16 @@ MonoBehaviour:
       Category30: 1
       Category31: 1
   Move:
-    EquipResetTimer: 0
-    MovingTurnSpeed: 0
-    StationaryTurnSpeed: 0
-    JumpPower: 0
-    GravityMultiplier: 2
-    RunCycleLegOffset: 0
-    MoveSpeedMultiplier: 0
-    AnimSpeedMultiplier: 0
-    GroundCheckDistance: 0
-    CombatCapable: 0
+    EquipResetTimer: 15
+    MovingTurnSpeed: 360
+    StationaryTurnSpeed: 180
+    JumpPower: 3
+    GravityMultiplier: 1.251
+    RunCycleLegOffset: 0.2
+    MoveSpeedMultiplier: 1
+    AnimSpeedMultiplier: 1
+    GroundCheckDistance: 0.3
+    CombatCapable: 1
   FactionID: 2
   BaseThreat: 4
   BaseProtection: 10

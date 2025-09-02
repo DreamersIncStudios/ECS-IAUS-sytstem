@@ -11,7 +11,7 @@ namespace Stats.Entities
         public float CurHealth, MaxHealth, CurMana, MaxMana;
         public float HealthRatio => CurHealth/ MaxHealth;
         public float ManaRatio => CurMana/ MaxMana;
-
+        public int Level;
         public float Speed;
 
         public AIStat(int speed)
@@ -22,6 +22,7 @@ namespace Stats.Entities
             MaxHealth = 0;
             CurMana = 0;
             MaxMana = 0;
+            Level = 1;
         }
 
     }
@@ -37,6 +38,7 @@ namespace Stats.Entities
                 aiStat.MaxHealth = baseStat.MaxHealth;
                 aiStat.CurMana = baseStat.CurMana;
                 aiStat.MaxMana= baseStat.MaxMana;
+                aiStat.Level = baseStat.Level;
             }).Run();
         }
     }
