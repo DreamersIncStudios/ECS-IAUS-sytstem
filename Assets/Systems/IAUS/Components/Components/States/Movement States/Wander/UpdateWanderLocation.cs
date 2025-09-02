@@ -51,9 +51,9 @@ namespace IAUS.ECS.Component
       
             Entities.WithStructuralChanges().WithoutBurst().WithAll<PackMember>().ForEach(
                 (Entity entity, ref LocalTransform transform, ref WanderQuadrant wander,
-                    ref UpdateWanderLocationTag tag, ref Movement move) =>
+                    ref UpdateWanderLocationTag tag, ref Movement move, in PackMember packMember) =>
                 {
-                    var pack= EntityManager.GetComponentData<Pack>(entity);
+                    var pack= EntityManager.GetComponentData<Pack>(packMember.PackEntity);
                    
                     var candidates = BuildCandidates(transform.Position, wander.HashKey, wander.WanderNeighborQuadrants);
                
@@ -90,38 +90,37 @@ namespace IAUS.ECS.Component
             arr[4] = GetWanderPoint(origin, hashKey);
             return arr;
         }
-        float3 ChooseInsideCohesionOrFallback(float3 origin, float3[] candidates, float cohesionRadius)
+        float3 ChooseInsideCohesionOrFallback(float3 origin, float3[] candidates, 
+            float cohesionWeight 
+        )
         {
-            // Prefer positions INSIDE the cohesion radius (closest wins)
-            float bestInsideDist = float.PositiveInfinity;
-            int bestInsideIdx = -1;
-
-            // Track absolute closest as deterministic fallback
-            float bestDist = float.PositiveInfinity;
+            float bestScore = float.NegativeInfinity;
             int bestIdx = -1;
 
             for (int i = 0; i < candidates.Length; i++)
             {
-                float d = math.distance(origin, candidates[i]);
+                float3 candidate = candidates[i];
 
-                // Prefer positions that are INSIDE the cohesion radius, smallest distance wins
-                if (d <= cohesionRadius && d < bestInsideDist)
-                {
-                    bestInsideDist = d;
-                    bestInsideIdx = i;
-                }
+                // ---- Cohesion: closer to pack center = higher score
+                float distToCenter = math.distance(origin, candidate);
+                float cohesionScore = 1f / (1f + distToCenter); 
+                // (falls off smoothly with distance, max at center)
 
-                // Track absolute closest to have a deterministic fallback
-                if (d < bestDist)
+      
+
+                // ---- Final weighted score
+                float score = (cohesionScore * cohesionWeight);
+
+                if (score > bestScore)
                 {
-                    bestDist = d;
+                    bestScore = score;
                     bestIdx = i;
                 }
             }
 
-            if (bestInsideIdx >= 0) return candidates[bestInsideIdx];
-            return candidates[bestIdx >= 0 ? bestIdx : 0];
+            return bestIdx >= 0 ? candidates[bestIdx] : origin;
         }
+
 
         const float WanderRange = 50f;
         float3 GetWanderPoint(float3 currentPosition, int hashKey)
