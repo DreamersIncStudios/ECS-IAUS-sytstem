@@ -15,6 +15,7 @@ namespace DreamersIncStudio.GAIACollective
         private EntityQuery packMemberQuery;
         private ComponentLookup<Pack> packLookup;
         private ComponentLookup<LocalToWorld> transformLookup;
+        private BufferLookup<PackList> packListsLookup;
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginSimulationEntityCommandBufferSystem.Singleton>();
@@ -30,6 +31,7 @@ namespace DreamersIncStudio.GAIACollective
             });
             packLookup = state.GetComponentLookup<Pack>();
             transformLookup = state.GetComponentLookup<LocalToWorld>(true);
+            packListsLookup = state.GetBufferLookup<PackList>();
         }
 
         public void OnUpdate(ref SystemState state)
@@ -39,6 +41,7 @@ namespace DreamersIncStudio.GAIACollective
             var depends = state.Dependency;
             packLookup.Update(ref state);
             transformLookup.Update(ref state);
+            packListsLookup.Update(ref state);
             var packMember = packMemberQuery.ToComponentDataArray<PackMember>(Allocator.TempJob);
             var packMembersTransform = packMemberQuery.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
             var cmd = ecb.CreateCommandBuffer(state.WorldUnmanaged);
@@ -71,7 +74,8 @@ namespace DreamersIncStudio.GAIACollective
                 PackLookup = packLookup,
                 BestLeaders = bestLeaders,
                 CommandBuffer = cmd,
-                LeadersAssigned = leaders
+                LeadersAssigned = leaders,
+                PackListsLookup = packListsLookup,
             }.Schedule(depends);
 
             // Remaining agents can join non-leader roles
@@ -80,7 +84,8 @@ namespace DreamersIncStudio.GAIACollective
                 PackEntities = packs,
                 PackLookup = packLookup,
                 ECB = cmd,
-                LeadersAssigned = leaders
+                LeadersAssigned = leaders,
+                PackListsLookup = packListsLookup,
 
             }.Schedule(depends);
             
@@ -151,6 +156,7 @@ namespace DreamersIncStudio.GAIACollective
             [ReadOnly] public NativeArray<Entity> BestLeaders;
             public EntityCommandBuffer CommandBuffer;
             public NativeParallelHashSet<Entity> LeadersAssigned;
+            public BufferLookup<PackList> PackListsLookup;
 
             public void Execute()
             {
@@ -167,6 +173,7 @@ namespace DreamersIncStudio.GAIACollective
                     pack.MemberCount++;
                     CommandBuffer.AddComponent(winner, new PackMember(packEntity));
                     PackLookup[packEntity] = pack;
+                    PackListsLookup[packEntity].Add(new PackList(winner, pack.Role));//add leader role
                     LeadersAssigned.Add(winner);
                 }
             }
@@ -179,6 +186,7 @@ namespace DreamersIncStudio.GAIACollective
             public EntityCommandBuffer ECB;
             public NativeArray<Entity> PackEntities;
             public ComponentLookup<Pack> PackLookup;
+            public BufferLookup<PackList> PackListsLookup;
             public NativeParallelHashSet<Entity> LeadersAssigned;
 
             private void Execute(Entity entity, PassportAspect aspect)
@@ -199,7 +207,7 @@ namespace DreamersIncStudio.GAIACollective
                             pack.Requirements[i] = requiredRole; // Update the modified role
                         }
                     }
-
+                    PackListsLookup[packEntity].Add(new PackList {PackMember = packEntity,MemberRole = aspect.Role});
                     PackLookup[packEntity] = pack; // Save the updated pack
                 }
             }

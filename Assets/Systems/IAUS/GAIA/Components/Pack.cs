@@ -36,7 +36,7 @@ namespace DreamersIncStudio.GAIACollective
         public FixedList128Bytes<PackRole> Requirements;
         public Entity LeaderEntity;
         public float CohesionFactor;
-        public float TravelRadius => 45
+        public float TravelRadius => 55*CohesionFactor;
         public float SeparationFactor;
         public float AlignmentFactor;
         public float3 HerdCenter; // Central point for the herd

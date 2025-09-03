@@ -391,7 +391,7 @@ namespace DreamersInc.BestiarySystem
                     case AIStates.WanderQuadrant:
 
                         manager.AddComponentData(entity, new WanderQuadrant(
-                            spawnPosition: model.transform.position,
+                            wanderCenterPoint: model.transform.position,
                             coolDownTime: 5.5f,
                             bufferZone: .25f,
                             wanderNeighborQuadrants: false //TODO Figure out way above line causes issues

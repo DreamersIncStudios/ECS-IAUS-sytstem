@@ -131,10 +131,10 @@ namespace IAUS.ECS.Component.Aspects
                 }
 
                 if (wander.ValueRO.Status == ActionStatus.Idle &&
-                    wander.ValueRO.SpawnPosition.Equals(wander.ValueRO.TravelPosition))
+                    wander.ValueRO.WanderCenterPoint.Equals(wander.ValueRO.TravelPosition))
                 {
-                    wander.ValueRW.SpawnPosition.x += 35;
-                    wander.ValueRW.SpawnPosition.z += 45;
+                    wander.ValueRW.WanderCenterPoint.x += 35;
+                    wander.ValueRW.WanderCenterPoint.z += 45;
                     wander.ValueRW.StartingDistance =
                         DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
                 }

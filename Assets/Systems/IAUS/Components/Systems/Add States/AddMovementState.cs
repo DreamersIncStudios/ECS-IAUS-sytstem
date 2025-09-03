@@ -43,7 +43,7 @@ namespace IAUS.ECS.Systems {
         public EntityCommandBuffer.ParallelWriter ECB;
         public void Execute(Entity entity, [ChunkIndexInQuery]int sortkey ,ref WanderQuadrant wander,ref LocalTransform transform)
         {
-            wander.SpawnPosition = transform.Position;
+            wander.WanderCenterPoint = transform.Position;
             wander.Status = ActionStatus.Idle;
                 ECB.AddComponent(sortkey, entity, new UpdateWanderLocationTag());
         }

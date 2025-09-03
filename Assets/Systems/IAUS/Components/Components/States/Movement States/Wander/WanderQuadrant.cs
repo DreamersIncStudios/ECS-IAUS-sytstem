@@ -41,13 +41,13 @@ namespace IAUS.ECS.Component
        [SerializeField] float totalScore { get; set; }
       [SerializeField]  public bool AttackTarget { get; set; }
 
-        public float3 SpawnPosition;
-        public int HashKey => NPCQuadrantSystem.GetPositionHashMapKey((int3)SpawnPosition);
+        public float3 WanderCenterPoint;
+        public int HashKey => NPCQuadrantSystem.GetPositionHashMapKey((int3)WanderCenterPoint);
         public bool WanderNeighborQuadrants;
 
-        public WanderQuadrant(float3 spawnPosition, float coolDownTime, float bufferZone, bool wanderNeighborQuadrants) : this()
+        public WanderQuadrant(float3 wanderCenterPoint, float coolDownTime, float bufferZone, bool wanderNeighborQuadrants) : this()
         {
-            SpawnPosition = spawnPosition;
+            WanderCenterPoint = wanderCenterPoint;
             BufferZone = bufferZone;
             this.coolDownTime = coolDownTime;
             WanderNeighborQuadrants = wanderNeighborQuadrants;
