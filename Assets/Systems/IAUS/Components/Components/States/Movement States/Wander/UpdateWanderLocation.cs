@@ -53,74 +53,13 @@ namespace IAUS.ECS.Component
                 (Entity entity, ref LocalTransform transform, ref WanderQuadrant wander,
                     ref UpdateWanderLocationTag tag, ref Movement move, in PackMember packMember) =>
                 {
-                    var pack= EntityManager.GetComponentData<Pack>(packMember.PackEntity);
-                   
-                    var candidates = BuildCandidates(transform.Position, wander.HashKey, wander.WanderNeighborQuadrants);
-               
-
-                    // Choose a position that is outside cohesion range if possible; otherwise pick the farthest
-                    wander.TravelPosition = ChooseInsideCohesionOrFallback(pack.HerdCenter, candidates, pack.CohesionFactor);
-
-                    // Cache starting distance for movement behavior
-                    wander.StartingDistance = Vector3.Distance(wander.TravelPosition, transform.Position);
-
-                    // Clear the tag after updating
-                    EntityManager.RemoveComponent<UpdateWanderLocationTag>(entity);
+                    Debug.Log("Pack member");
 
                 }).Run();
         }
         
-        // Local helpers (combinators)
-        float3[] BuildCandidates(float3 origin, int hashKey, bool includeNeighbors)
-        {
-            if (!includeNeighbors)
-            {
-                return new[]
-                {
-                    GetWanderPoint(origin, hashKey)
-                };
-            }
-
-            // Fixed-size array avoids GC from List allocations
-            var arr = new float3[5];
-            arr[0] = GetWanderPoint(origin, hashKey + 1);
-            arr[1] = GetWanderPoint(origin, hashKey - 1);
-            arr[2] = GetWanderPoint(origin, hashKey + NPCQuadrantSystem.quadrantZMultiplier);
-            arr[3] = GetWanderPoint(origin, hashKey - NPCQuadrantSystem.quadrantZMultiplier);
-            arr[4] = GetWanderPoint(origin, hashKey);
-            return arr;
-        }
-        float3 ChooseInsideCohesionOrFallback(float3 origin, float3[] candidates, 
-            float cohesionWeight 
-        )
-        {
-            float bestScore = float.NegativeInfinity;
-            int bestIdx = -1;
-
-            for (int i = 0; i < candidates.Length; i++)
-            {
-                float3 candidate = candidates[i];
-
-                // ---- Cohesion: closer to pack center = higher score
-                float distToCenter = math.distance(origin, candidate);
-                float cohesionScore = 1f / (1f + distToCenter); 
-                // (falls off smoothly with distance, max at center)
-
-      
-
-                // ---- Final weighted score
-                float score = (cohesionScore * cohesionWeight);
-
-                if (score > bestScore)
-                {
-                    bestScore = score;
-                    bestIdx = i;
-                }
-            }
-
-            return bestIdx >= 0 ? candidates[bestIdx] : origin;
-        }
-
+     
+    
 
         const float WanderRange = 50f;
         float3 GetWanderPoint(float3 currentPosition, int hashKey)

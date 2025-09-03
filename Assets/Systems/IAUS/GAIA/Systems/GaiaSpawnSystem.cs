@@ -57,7 +57,6 @@ namespace DreamersIncStudio.GAIACollective
                     }
                     else if (spawn.Respawn)
                     {
-                        Debug.Log("Spawning ");
                         spawn.Spawn(ref biome.SpawnRequests, biome.BiomeID,
                             biome.LevelRange * (int)worldManager.WorldLevel, worldManager.PlayerLevel);
                     }
@@ -86,6 +85,7 @@ namespace DreamersIncStudio.GAIACollective
                     );
                     var baseDataEntity = EntityManager.CreateEntity(baseEntityArch);
                     EntityManager.SetName(baseDataEntity, packInfo.PackType.ToString());
+                    EntityManager.AddBuffer<PackList>(baseDataEntity);
                     EntityManager.SetComponentData(baseDataEntity, new LocalTransform()
                     {
                         Position = transform.Position,

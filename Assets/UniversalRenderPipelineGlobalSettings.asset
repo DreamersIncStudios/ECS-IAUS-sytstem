@@ -110,6 +110,13 @@ MonoBehaviour:
       - rid: 6165830346232299632
       - rid: 6165830346232299633
       - rid: 6165830346232299634
+      - rid: 6165830346232299635
+      - rid: 6165830346232299636
+      - rid: 6165830346232299637
+      - rid: 6165830346232299638
+      - rid: 6165830346232299639
+      - rid: 6165830346232299640
+      - rid: 6165830346232299641
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 8
@@ -590,6 +597,41 @@ MonoBehaviour:
       data:
         m_version: 0
     - rid: 6165830346232299634
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299635
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299636
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299637
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299638
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299639
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299640
+      type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
+        asm: Unity.RenderPipelines.Core.Runtime}
+      data:
+        m_version: 0
+    - rid: 6165830346232299641
       type: {class: RenderingDebuggerRuntimeResources, ns: UnityEngine.Rendering,
         asm: Unity.RenderPipelines.Core.Runtime}
       data:

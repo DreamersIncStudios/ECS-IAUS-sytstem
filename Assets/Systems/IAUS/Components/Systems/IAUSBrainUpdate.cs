@@ -1,3 +1,4 @@
+using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.Component.Aspects;
 using IAUS.ECS.StateBlobSystem;
 using Unity.Burst;
@@ -7,6 +8,7 @@ using UnityEngine;
 namespace IAUS.ECS.Systems
 {
     [UpdateAfter(typeof(SetupAIStateBlob))]
+    [UpdateAfter(typeof(GaiaUpdateGroup))]
     public partial class IAUSUpdateGroup : ComponentSystemGroup
     {
         protected override void OnCreate()

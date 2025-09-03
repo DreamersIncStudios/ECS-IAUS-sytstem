@@ -36,6 +36,7 @@ namespace DreamersIncStudio.GAIACollective
         public FixedList128Bytes<PackRole> Requirements;
         public Entity LeaderEntity;
         public float CohesionFactor;
+        public float TravelRadius => 45
         public float SeparationFactor;
         public float AlignmentFactor;
         public float3 HerdCenter; // Central point for the herd
@@ -124,6 +125,19 @@ namespace DreamersIncStudio.GAIACollective
         }
     }
 
+    [InternalBufferCapacity(0)]
+    public struct PackList : IBufferElementData
+    {
+        public Entity PackMember;
+        public Role MemberRole;
+
+        public PackList(Entity entity, Role Role)
+        {
+            PackMember = entity;
+            MemberRole = Role;
+        }
+    }
+    
     public enum Role
     {
         Recon,

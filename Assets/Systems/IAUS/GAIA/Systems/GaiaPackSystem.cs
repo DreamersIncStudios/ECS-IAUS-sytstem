@@ -90,8 +90,7 @@ namespace DreamersIncStudio.GAIACollective
             }.Schedule(depends);
             depends = new UpdatePackCenter()
             {
-                PackMembers = packMember,
-                PackMembersTransform = packMembersTransform
+                PackMembersTransform = transformLookup
                 
             }.Schedule(depends);
             depends = packs.Dispose(depends);
@@ -234,19 +233,16 @@ namespace DreamersIncStudio.GAIACollective
         
         public partial struct UpdatePackCenter : IJobEntity
         {
-            [ReadOnly] public NativeArray<PackMember> PackMembers;
-            [ReadOnly] public NativeArray<LocalToWorld> PackMembersTransform;
-            void Execute( Entity entity,ref Pack pack)
+            [ReadOnly] public ComponentLookup<LocalToWorld> PackMembersTransform;
+            void Execute( Entity entity,ref Pack pack, DynamicBuffer<PackList> packLists)
             {
                 if(pack.LeaderEntity==Entity.Null) return;
                 int cnt = 0;
                 float3 center = float3.zero;
-                for (var index = 0; index < PackMembers.Length; index++)
+                foreach (var member in packLists)
                 {
-                    var member = PackMembers[index];
-                    if (entity != member.PackEntity) continue;
                     cnt++;
-                    center += PackMembersTransform[index].Position; 
+                    center += PackMembersTransform[member.PackMember].Position; 
                 }
                 pack.HerdCenter = center / cnt;
             }
