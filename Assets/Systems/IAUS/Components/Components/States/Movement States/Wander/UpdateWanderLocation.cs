@@ -1,7 +1,6 @@
 using Components.MovementSystem;
 using DreamersInc.QuadrantSystems;
 using IAUS.ECS.Systems;
-using System.Collections;
 using System.Collections.Generic;
 using DreamersIncStudio.GAIACollective;
 using Unity.Entities;
@@ -12,9 +11,6 @@ using UnityEngine.AI;
 using Utilities;
 using Random = UnityEngine.Random;
 
-#if  un
-
-#endif
 
 namespace IAUS.ECS.Component
 { // Base system with the template-method skeleton for processing an entity update
@@ -115,13 +111,11 @@ namespace IAUS.ECS.Component
                 {
                     GetWanderPoint(transform.Position, wander.HashKey + 1),
                     GetWanderPoint(transform.Position, wander.HashKey - 1),
-                    GetWanderPoint(transform.Position, wander.HashKey + NPCQuadrantSystem.quadrantZMultiplier),
-                    GetWanderPoint(transform.Position, wander.HashKey - NPCQuadrantSystem.quadrantZMultiplier),
                     GetWanderPoint(transform.Position, wander.HashKey)
                 };
 
              
-                return positions[Random.Range(0, positions.Count)];
+                return positions[Random.Range(0, 2)];
             }
 
             return GetWanderPoint(transform.Position, wander.HashKey);

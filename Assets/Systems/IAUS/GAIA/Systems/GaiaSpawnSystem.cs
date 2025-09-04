@@ -53,7 +53,7 @@ namespace DreamersIncStudio.GAIACollective
                     if (spawn.IsSatisfied)
                     {
                         if (spawn.Respawn)
-                            spawn.ResetRespawn();
+                            spawn.ResetRespawn();   
                     }
                     else if (spawn.Respawn)
                     {
