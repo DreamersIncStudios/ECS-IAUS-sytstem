@@ -92,8 +92,6 @@ namespace DreamersIncStudio.GAIACollective
     public struct SpawnData
     {
         public SpawnScenario SpawnScenario;
-
-
         public uint SpawnID; // Spawn ID 4 digit number ABCC A is the Race, B is the Role, CC is the ID number.
         public TimesOfDay ActiveHours;
         [Range(1,25)]public uint Qty;
