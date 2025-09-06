@@ -138,30 +138,40 @@ namespace AISenses.VisionSystems
            [ReadOnly] public NativeArray<LocalTransform> trams;
            private const float CellEdgePadding = 50f;
 
-            void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
-                ref PhysicsInfo physicsInfo,
-                in LocalTransform transform)
-            {
-                buffer.Clear();
-                var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
-                if (vision.HasTarget) return;
-             
-                var pos = transform.Position;
-        
+           void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
+               ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
+           {
+               buffer.Clear();
+               var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
+               if (vision.HasTarget) return;
 
-                var checkKeys = new List<int> { hashMapKey };
-                AddAdjacentQuadrantKeys(pos, vision.ViewRadius, hashMapKey, checkKeys);
-                var targets = GetAllTargetsInCheckList(checkKeys);
+               var pos = transform.Position;
 
-                var ctx = new TargetCtx(transform.Position, vision.ViewRadius, new CollisionFilter());
-                var pred = PredChain
-                    .Start(new InRange())
-                    .And(new IsAlive())
-                    .Build();
-                var filteredTarget =pred.Test(targets, transform, in ctx);
 
-            }
-            private void AddAdjacentQuadrantKeys(float3 pos, float viewRadius, int baseKey, List<int> outKeys)
+               var checkKeys = new List<int> { hashMapKey };
+               AddAdjacentQuadrantKeys(pos, vision.ViewRadius, hashMapKey, checkKeys);
+               var targets = GetAllTargetsInCheckList(checkKeys);
+
+               var ctx = new TargetCtx(transform, vision,  target.FactionID, World, new CollisionFilter()
+                   {
+                       BelongsTo = ((1 << 10)),
+                       CollidesWith = physicsInfo.CollidesWith.Value,
+                       GroupIndex = 0
+                   });
+               
+               var pred = PredChain
+                   .Start(new IsAlive())
+                   .And(new InRange())
+                   .And(new InViewCone())
+                   .And(new InViewRayCast())
+                   .Build();
+               var filteredTarget = pred.Test(targets, transform, in ctx);
+               Debug.Log(filteredTarget.Count);
+               ;
+
+           }
+
+           private void AddAdjacentQuadrantKeys(float3 pos, float viewRadius, int baseKey, List<int> outKeys)
             {
                 // Compute current quadrant indices
                 var quadX = math.floor(pos.x / QuadrantCellSize);
