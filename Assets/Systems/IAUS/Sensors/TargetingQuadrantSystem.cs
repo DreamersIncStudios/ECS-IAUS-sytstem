@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Combinators;
 using Global.Component;
@@ -11,6 +12,7 @@ using Unity.Properties;
 using Unity.Transforms;
 using UnityEngine;
 using RaycastHit = Unity.Physics.RaycastHit;
+// ReSharper disable Unity.BurstFunctionSignatureContainsManagedTypes
 
 namespace AISenses.VisionSystems
 {
@@ -18,7 +20,7 @@ namespace AISenses.VisionSystems
     {
         public VisionTargetingUpdateGroup()
         {
-            RateManager = new RateUtils.VariableRateManager(132, true);
+            RateManager = new RateUtils.VariableRateManager(1920, true);
         }
 
     }
@@ -124,12 +126,7 @@ namespace AISenses.VisionSystems
             }
         }
 
-        public struct TargetQuadrantData
-        {
-            public Entity Entity;
-            public float3 Position;
-            public AITarget TargetInfo;
-        }
+    
 
         [BurstCompile]
         partial struct TargetingVisionRayCastJob : IJobEntity
@@ -139,27 +136,84 @@ namespace AISenses.VisionSystems
 
             [ReadOnly] public NativeArray<AIStat> stats;
            [ReadOnly] public NativeArray<LocalTransform> trams;
+           private const float CellEdgePadding = 50f;
+
             void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
                 ref PhysicsInfo physicsInfo,
                 in LocalTransform transform)
             {
                 buffer.Clear();
                 var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
-                
+                if (vision.HasTarget) return;
+             
+                var pos = transform.Position;
+        
+
+                var checkKeys = new List<int> { hashMapKey };
+                AddAdjacentQuadrantKeys(pos, vision.ViewRadius, hashMapKey, checkKeys);
+                var targets = GetAllTargetsInCheckList(checkKeys);
+
+                var ctx = new TargetCtx(transform.Position, vision.ViewRadius, new CollisionFilter());
                 var pred = PredChain
                     .Start(new InRange())
                     .And(new IsAlive())
                     .Build();
-                var ctx = new TargetCtx(transform.Position, 100, new CollisionFilter());
+                var filteredTarget =pred.Test(targets, transform, in ctx);
 
-                for (var index = 0; index < stats.Length; index++)
+            }
+            private void AddAdjacentQuadrantKeys(float3 pos, float viewRadius, int baseKey, List<int> outKeys)
+            {
+                // Compute current quadrant indices
+                var quadX = math.floor(pos.x / QuadrantCellSize);
+                var quadZ = math.floor(pos.z / QuadrantCellSize);
+
+                // X boundaries
+                var xOffset = pos.x - (quadX * QuadrantCellSize);
+                if (xOffset < viewRadius)
                 {
-                    if (pred.Test(stats[index],trams[index], in ctx)) 
-                        Debug.Log("Hit");
+                    outKeys.Add(baseKey - 1);
                 }
+                else if (xOffset > QuadrantCellSize - CellEdgePadding)
+                {
+                    outKeys.Add(baseKey + 1);
+                }
+
+                // Z boundaries
+                var zOffset = pos.z - (quadZ * QuadrantCellSize);
+                if (zOffset < viewRadius)
+                {
+                    outKeys.Add(baseKey - QuadrantYMultiplier);
+                }
+                else if (zOffset > QuadrantCellSize - CellEdgePadding)
+                {
+                    outKeys.Add(baseKey + QuadrantYMultiplier);
+                }
+                
+            }
+
+            private List<TargetQuadrantData> GetAllTargetsInCheckList(List<int> checkKeys)
+            {
+                var targets = new List<TargetQuadrantData>();
+                foreach (var key in checkKeys)
+                {
+                    if (QuadrantMap.TryGetFirstValue(key, out var value, out var iterator))
+                    {
+                        do
+                        {
+                            targets.Add(value);
+                        } while (QuadrantMap.TryGetNextValue(out value, ref iterator));
+                    }
+                }
+                return targets;
             }
         }
 
+    }
+    public struct TargetQuadrantData
+    {
+        public Entity Entity;
+        public float3 Position;
+        public AITarget TargetInfo;
     }
 
 }

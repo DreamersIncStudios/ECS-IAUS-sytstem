@@ -1,6 +1,7 @@
-﻿
-
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.Runtime.CompilerServices;
+using AISenses.VisionSystems;
 using Stats.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -23,6 +24,7 @@ namespace Combinators
     interface IPred
     {
         bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx);
+        List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform, in TargetCtx ctx);
     }
     
 //Combinators for Predicates
@@ -39,6 +41,13 @@ namespace Combinators
                 public bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
                 {
                     return a.Test(stat, transform, in ctx) && b.Test(stat, transform, in ctx);
+                }
+
+                public List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform,
+                    in TargetCtx ctx)
+                {
+                    var afterA = a.Test(targets, transform, in ctx);
+                    return b.Test(afterA, transform, in ctx);
                 }
             }
             // Fluent Builder
@@ -70,12 +79,59 @@ namespace Combinators
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public readonly bool Test(AIStat stat,LocalTransform transform, in TargetCtx ctx)=>
                     math.lengthsq(transform.Position-ctx.origin)<=ctx.r2;
+
+                public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+                    LocalTransform transform, in TargetCtx ctx)
+                {
+                    var outList = new List<TargetQuadrantData>();
+                    foreach (var target in targets)
+                    {
+                        if (math.lengthsq(transform.Position-target.Position)<=ctx.r2)
+                        {
+                            outList.Add(target);
+                        }
+                    }
+                    return outList;
+                }
             }
             readonly struct IsAlive : IPred
             {
                 public bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
                 {
                     return stat.CurHealth>10;
+                }
+                public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+                    LocalTransform transform, in TargetCtx ctx)
+                {
+                    var outlist = new List<TargetQuadrantData>();
+                    foreach (var target in targets)
+                    {
+                        if (target.TargetInfo.IsAlive)
+                        {
+                            outlist.Add(target);
+                        }
+                    }
+
+                    return outlist;
+                }
+            }
+
+            readonly struct InViewCone : IPred
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public readonly bool Test(AIStat stat,LocalTransform transform, in TargetCtx ctx)=>
+                    math.lengthsq(transform.Position-ctx.origin)<=ctx.r2;
+
+                public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+                    LocalTransform transform, in TargetCtx ctx)
+                {
+                    var outList = new List<TargetQuadrantData>();
+                    foreach (var target in targets)
+                    {
+                        var dirToTarget = ((Vector3)target.Position -(Vector3)(ctx.origin+ new float3(0,1,0))).normalized;
+                        if (!(Vector3.Angle(ctx.transform.Forward, dirToTarget) < ctx.angle)) continue;
+                    }
+                    return outList;
                 }
             }
 }

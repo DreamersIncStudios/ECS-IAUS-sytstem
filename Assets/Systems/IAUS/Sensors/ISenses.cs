@@ -21,6 +21,7 @@ namespace AISenses
 
         public bool UpdateTargetPosition(TargetAlignmentType alignmentType) =>
             !LastKnownPosition(alignmentType).Equals(TargetPosition(alignmentType)) || !LastKnownPosition(alignmentType).Equals(float3.zero);
+        public bool HasTarget=> TargetEnemyEntity != Entity.Null || TargetFriendlyEntity != Entity.Null;
 
         public Entity TargetEntity(TargetAlignmentType alignmentType)
         {

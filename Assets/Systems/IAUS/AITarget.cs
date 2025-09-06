@@ -20,6 +20,8 @@ namespace Global.Component
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
+        public bool IsAlive => true; //TOdo change to check if entity is alive;
+
         [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
