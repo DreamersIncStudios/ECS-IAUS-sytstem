@@ -8,6 +8,7 @@ using UnityEditor;
 using Global.Component;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
@@ -45,8 +46,8 @@ namespace DreamersInc.BestiarySystem
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
 
-        [FormerlySerializedAs("factionID")] [Header("influence ")]
-        public int FactionID;
+      
+        public FactionNames FactionID;
 
         public int BaseThreat;
         public int BaseProtection;

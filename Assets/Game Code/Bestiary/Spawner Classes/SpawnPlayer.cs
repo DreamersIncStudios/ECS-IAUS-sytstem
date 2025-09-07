@@ -102,7 +102,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    FactionID = info.factionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });
@@ -145,7 +145,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    FactionID = info.factionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });

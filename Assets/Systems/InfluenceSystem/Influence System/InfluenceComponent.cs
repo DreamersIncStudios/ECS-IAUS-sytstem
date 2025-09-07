@@ -17,9 +17,9 @@ namespace DreamersInc.InfluenceMapSystem
             return new int2(Mathf.RoundToInt( mod*Threat), Mathf.RoundToInt(mod* Protection));
         }
         public float3 previousPos;
-        public int factionID;
-        public FactionNames FactionID => (FactionNames)factionID;
- 
+
+        public FactionNames FactionID;
+
     }
 
 

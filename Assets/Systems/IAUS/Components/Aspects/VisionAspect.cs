@@ -1,5 +1,6 @@
 using Global.Component;
 using System.Linq;
+using DreamersIncStudio.FactionSystem;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -35,7 +36,7 @@ namespace AISenses.VisionSystems
             get
             {
                 foreach (var item in scanPositions)
-                    if (item is { dist: < 25, target: { IsFriendly: false } })
+                    if (item is { dist: < 25, target: { Affinity: Affinity.Hate or Affinity.Negative } } )
                     {
                         return true;
                     }
@@ -47,45 +48,50 @@ namespace AISenses.VisionSystems
 
         private bool TargetEnemyTargetInRange()
         {
-            return TargetEnemyTargetInRange(out _, out _);
+            return TargetEnemyTargetInRange(out _, out _, out _);
         }
 
         public bool TargetEnemyTargetInRange(out float dist)
         {
-            return TargetEnemyTargetInRange(out _, out dist);
-        }
-        public bool TargetEnemyTargetInRange(out AITarget target)
-        {
-            return TargetEnemyTargetInRange(out target, out _);
+            return TargetEnemyTargetInRange(out _, out _, out dist);
         }
 
+        public bool TargetEnemyTargetInRange(out float3 targetPosition, out float dist)
+        {
+            return TargetEnemyTargetInRange(out targetPosition,out _, out dist);
+        }
 
         public bool TargetEnemyTargetInRange(out AITarget target, out float dist)
         {
+            return TargetEnemyTargetInRange(out _,out target, out dist);
+        }
+
+        private bool TargetEnemyTargetInRange(out float3 Position, out AITarget target, out float dist)
+        {
             target = new AITarget();
             dist = 0f;
-
+            Position = float3.zero;
             if (scanPositions.IsEmpty)
             {
                 vision.ValueRW.TargetEnemyEntity = Entity.Null;
                 return false;
             }
-            else
+
+            foreach (var scan in scanPositions)
             {
-                foreach (var scan in scanPositions)
-                {
-                    if (scan.target.IsFriendly) continue;
-                    target = scan.target.TargetInfo;
-                    dist = scan.target.DistanceTo;
-                    vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
-                   vision.ValueRW.TargetEnemyPosition = vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
-                    return true;
-                }
+                if (scan.target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
+                target = scan.target.TargetInfo;
+                dist = scan.target.DistanceTo;
+                vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
+                Position = vision.ValueRW.TargetEnemyPosition =
+                    vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
+                return true;
             }
+
             return false;
         }
 
-        public bool FriendlyInRange()
+        private bool FriendlyInRange()
         {
                 if (scanPositions.IsEmpty)
                     return false;
@@ -93,7 +99,7 @@ namespace AISenses.VisionSystems
                 {
                     foreach (var target in scanPositions)
                     {
-                        if (target.target.IsFriendly)
+                        if (target.target.Affinity is Affinity.Love or Affinity.Positive)
                             return true;
                     }
                 }
@@ -107,7 +113,7 @@ namespace AISenses.VisionSystems
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
             foreach (var target in visibleTargetInArea)
             {
-                if (!target.target.IsFriendly)
+                if (target.target.Affinity is Affinity.Hate or Affinity.Negative)
                 {
                     return target.target;
                 }
@@ -120,7 +126,7 @@ namespace AISenses.VisionSystems
             
             var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
-            foreach (var target in visibleTargetInArea.Where(target => target.target.IsFriendly))
+            foreach (var target in visibleTargetInArea.Where(target => target.target.Affinity is Affinity.Love or Affinity.Positive))
             {
                 return target.target;
             }

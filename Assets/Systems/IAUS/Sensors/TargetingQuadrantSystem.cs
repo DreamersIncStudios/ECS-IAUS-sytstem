@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Combinators;
+using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using Stats.Entities;
 using Unity.Burst;
@@ -33,7 +34,7 @@ namespace AISenses.VisionSystems
         private const int QuadrantYMultiplier = 1000;
         private const int QuadrantCellSize = 50;
         private EntityQuery query;
-    
+ 
         private static int GetPositionHashMapKey(float3 position)
         {
             return (int)(Mathf.Floor(position.x / QuadrantCellSize) +
@@ -83,6 +84,7 @@ namespace AISenses.VisionSystems
 
             state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+            world.UpdateBodyIndexMap();
             state.Dependency = new TargetingVisionRayCastJob()
             {
                 World = world,
@@ -137,7 +139,8 @@ namespace AISenses.VisionSystems
             [ReadOnly] public NativeArray<AIStat> stats;
            [ReadOnly] public NativeArray<LocalTransform> trams;
            private const float CellEdgePadding = 50f;
-
+           public DynamicBuffer<Factions> FactionsBuffer;
+           
            void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
                ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
            {
@@ -152,9 +155,9 @@ namespace AISenses.VisionSystems
                AddAdjacentQuadrantKeys(pos, vision.ViewRadius, hashMapKey, checkKeys);
                var targets = GetAllTargetsInCheckList(checkKeys);
 
-               var ctx = new TargetCtx(transform, vision,  target.FactionID, World, new CollisionFilter()
+               var ctx = new TargetCtx(transform, vision,  target.FactionID, World,FactionsBuffer,  new CollisionFilter()
                    {
-                       BelongsTo = ((1 << 10)),
+                       BelongsTo = ((1 << 11)),
                        CollidesWith = physicsInfo.CollidesWith.Value,
                        GroupIndex = 0
                    });
@@ -166,9 +169,21 @@ namespace AISenses.VisionSystems
                    .And(new InViewRayCast())
                    .Build();
                var filteredTarget = pred.Test(targets, transform, in ctx);
-               Debug.Log(filteredTarget.Count);
-               ;
+               foreach (var targetQuadrantData in filteredTarget)
+               {
+                   buffer.Add(new ScanPositionBuffer()
+                   {
+                       target = new Target()
+                       {
+                           CanSee = true,
+                           TargetInfo = targetQuadrantData.TargetInfo,
+                           Entity = targetQuadrantData.Entity,
+                           DistanceTo = targetQuadrantData.Distance
+                       }
 
+                   });
+               }
+               
            }
 
            private void AddAdjacentQuadrantKeys(float3 pos, float viewRadius, int baseKey, List<int> outKeys)
@@ -224,6 +239,7 @@ namespace AISenses.VisionSystems
         public Entity Entity;
         public float3 Position;
         public AITarget TargetInfo;
+        public float Distance { get; set; }
     }
 
 }

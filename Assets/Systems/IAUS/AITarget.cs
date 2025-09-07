@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using AISenses.VisionSystems;
+﻿using AISenses.VisionSystems;
 using DreamersInc.InfluenceMapSystem;
-using NUnit.Framework;
+using DreamersIncStudio.FactionSystem;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using Stats;
-using Unity.Collections;
 
 namespace Global.Component
 {
@@ -15,14 +13,13 @@ namespace Global.Component
     {
         public TargetType Type;
         public ClassTitle ClassTitle;
-        public uint level{get; set; }
-        public int FactionID;
+        public Affinity Affinity;
+        public uint level {get; set; }
+        public FactionNames FactionID;
         public int NumOfEntityTargetingMe;
         [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
-        public bool IsAlive => true; //TOdo change to check if entity is alive;
-
-        [HideInInspector] public int MaxNumberOfTarget; // base off of Threat Level
+        [HideInInspector] public int MaxNumberOfTarget; // base off of InfluenceValue Level
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
         //TODO change to output a relationship level;
@@ -39,7 +36,7 @@ namespace Global.Component
 
 
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-    [UpdateBefore(typeof(TargetingQuadrantSystem))]
+
     public partial class UpdateAITarget : SystemBase
     {
         protected override void OnUpdate()

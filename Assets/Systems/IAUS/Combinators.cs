@@ -3,8 +3,11 @@ using UnityEngine;
 using System.Runtime.CompilerServices;
 using AISenses;
 using AISenses.VisionSystems;
+using DreamersIncStudio.FactionSystem;
 using Global.Component;
 using Stats.Entities;
+using Unity.Collections;
+using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
@@ -17,11 +20,12 @@ namespace Combinators
         public readonly float3 Origin;
         public readonly float Angle;
         public readonly float3 Direction;
-        public readonly int FactionID;
         public readonly float r2;
         public readonly CollisionFilter Filter;
         public readonly CollisionWorld World;
-        public TargetCtx( LocalTransform transform, Vision vision,int factionID, CollisionWorld world, CollisionFilter filter)
+        public readonly IEnumerable<Relationship> Relationships;
+        public TargetCtx(LocalTransform transform, Vision vision, FactionNames factionID, CollisionWorld world,
+            DynamicBuffer<Factions> factionsBuffer, CollisionFilter filter)
         {
             this.Origin = transform.Position;
             Direction = transform.Forward();
@@ -29,7 +33,13 @@ namespace Combinators
             this.World = world;
             this.r2 = vision.ViewRadius * vision.ViewRadius;
             this.Filter = filter;
-            FactionID = factionID;
+            Relationships = new List<Relationship>();
+            foreach (var factions in factionsBuffer)
+            {
+                if (factions.Faction != factionID) continue;
+                Relationships = factions.Relationships;
+                break;
+            }
         }
 
     
@@ -98,14 +108,18 @@ namespace Combinators
                 public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
                     LocalTransform transform, in TargetCtx ctx)
                 {
+                    
                     var outList = new List<TargetQuadrantData>();
-                    foreach (var target in targets)
+                    for (var index = 0; index < targets.Count; index++)
                     {
-                        if (math.lengthsq(transform.Position-target.Position)<=ctx.r2)
-                        {
-                            outList.Add(target);
-                        }
+                        var target = targets[index];
+                        if (ctx.Origin.Equals(target.Position)) continue;
+                        if (math.lengthsq(transform.Position - target.Position) > ctx.r2)
+                            continue;
+                        target.Distance = math.length(transform.Position - target.Position);
+                         outList.Add(target);
                     }
+
                     return outList;
                 }
             }
@@ -123,10 +137,9 @@ namespace Combinators
                     var outlist = new List<TargetQuadrantData>();
                     foreach (var target in targets)
                     {
-                        if (target.TargetInfo.IsAlive)
-                        {
+                       //todo add health check
                             outlist.Add(target);
-                        }
+                        
                     }
 
                     return outlist;
@@ -174,9 +187,21 @@ namespace Combinators
                     var outList = new List<TargetQuadrantData>();
                     foreach (var target in targets)
                     {
-                        var dirToTarget = ((Vector3)target.Position -(Vector3)(ctx.Origin+ new float3(0,1,0))).normalized;
-                        if (!(Vector3.Angle(ctx.Direction, dirToTarget) < ctx.Angle)) continue;
-                        outList.Add(target);
+                        foreach (var relationship in ctx.Relationships)
+                        {
+                            if (relationship.Faction != target.TargetInfo.FactionID) continue;
+                            var affinity= relationship.Affinity switch
+                            {
+                                < -75 => Affinity.Hate,
+                                > -75 and < -35 => Affinity.Negative,
+                                > -35 and < 35 => Affinity.Neutral,
+                                > 35 and < 74 => Affinity.Positive,
+                                > 75 => Affinity.Love,
+                                _ => Affinity.Neutral
+                            };
+                            if(affinity is Affinity.Positive or Affinity.Love) continue;
+                            outList.Add(target);
+                        }
                     }
                     return outList;
                 }
@@ -197,7 +222,21 @@ namespace Combinators
                     var outList = new List<TargetQuadrantData>();
                     foreach (var target in targets)
                     {
-                       
+                        foreach (var relationship in ctx.Relationships)
+                        {
+                            if (relationship.Faction != target.TargetInfo.FactionID) continue;
+                            var affinity= relationship.Affinity switch
+                            {
+                                < -75 => Affinity.Hate,
+                                > -75 and < -35 => Affinity.Negative,
+                                > -35 and < 35 => Affinity.Neutral,
+                                > 35 and < 74 => Affinity.Positive,
+                                > 75 => Affinity.Love,
+                                _ => Affinity.Neutral
+                            };
+                            if(affinity is Affinity.Negative or Affinity.Hate) continue;
+                            outList.Add(target);
+                        }
                     }
                     return outList;
                 }
@@ -220,9 +259,9 @@ namespace Combinators
                   
                     foreach (var target in targets)
                     {
-                       var ray =CreateRaycastInput(transform, target.TargetInfo, ctx.Filter);
+                       var ray =CreateRaycastInput(ctx.Origin, ctx.Direction,target, ctx.Filter);
                        if (!ctx.World.CastRay(ray, out RaycastHit raycastHit)) continue;
-                       if(raycastHit.Entity!=target.Entity) continue;
+                       if(!raycastHit.Entity.Equals(target.Entity)) continue;
                        outList.Add(target);
                     }
 
@@ -230,13 +269,13 @@ namespace Combinators
                 }
 
 
-               private RaycastInput CreateRaycastInput(LocalTransform transform, AITarget targetData,
+               private RaycastInput CreateRaycastInput(float3 transform, float3 Forward, TargetQuadrantData targetData,
                    CollisionFilter filter)
                 {
                     return new RaycastInput()
                     {
-                        Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
-                        End = transform.Position + targetData.CenterOffset,
+                        Start = transform + new float3(0, 1, 0) + Forward * 3f,
+                        End =  targetData.Position + new float3(0, 1, 0) ,
                         Filter = filter
                     };
                 }

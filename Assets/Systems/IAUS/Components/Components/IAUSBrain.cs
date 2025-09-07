@@ -1,6 +1,7 @@
 ﻿using Unity.Entities;
 using Global.Component;
 using System;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.StateBlobSystem;
 
@@ -14,7 +15,7 @@ namespace IAUS.ECS.Component
     {
         public AITarget Target;
         public AIStates CurrentState;
-         public int FactionID;// ID CHanging?
+        public FactionNames FactionID;
         public Status Attitude;
         public Difficulty Difficulty;
         public NPCLevel NPCLevel;

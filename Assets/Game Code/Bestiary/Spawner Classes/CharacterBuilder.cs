@@ -8,6 +8,7 @@ using Dreamers.InventorySystem;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
 using DreamersInc.InfluenceMapSystem;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
 using Global.Component;
 using IAUS.ECS;
@@ -35,7 +36,7 @@ namespace DreamersInc.BestiarySystem
         private GameObject model;
         private readonly Entity entity;
         private BaseCharacterComponent character;
-        private int factionID;
+        private FactionNames factionID;
         private uint classLevel;
         private string tag;
         private ComboSO combo;
@@ -281,7 +282,7 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithFactionInfluence(int factionID, int baseProtection, int baseThreat, uint classLevel,
+        public CharacterBuilder WithFactionInfluence(FactionNames factionID, int baseProtection, int baseThreat, uint classLevel,
             bool isPlayer = false)
         {
             this.factionID = factionID;
@@ -290,7 +291,7 @@ namespace DreamersInc.BestiarySystem
             if (model == null) return this;
             manager.AddComponentData(entity, new InfluenceComponent
             {
-                factionID = factionID,
+                FactionID = factionID,
                 Protection = baseProtection,
                 Threat = baseThreat
             });

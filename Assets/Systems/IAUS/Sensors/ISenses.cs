@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DreamersIncStudio.FactionSystem;
 using Unity.Entities;
 using UnityEngine;
 using Stats;
@@ -159,18 +160,17 @@ namespace AISenses
         public static implicit operator TargetCover(CoverLocationBuffer e) { return e; }
         public static implicit operator CoverLocationBuffer(TargetCover e) { return new CoverLocationBuffer { Target = e }; }
     }
-
     public struct Target
     {
         public Entity Entity;
-        public bool IsFriendly;
+        public Affinity Affinity;
         public AITarget TargetInfo;
         public float DistanceTo;
         public float3 LastKnownPosition;
         public bool CanSee;
         public int LookAttempt;
         public bool CantFind => LookAttempt > 3;
-
+        public float PerceptilabilityScore;
     }
 
     public enum TargetAlignmentType

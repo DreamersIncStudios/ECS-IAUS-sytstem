@@ -1,8 +1,10 @@
+using DreamersInc;
 using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.FactionSystem.Authoring;
 using IAUS.ECS.Component;
 using Unity.Collections;
 using Unity.Entities;
+using UnityEngine;
 
 namespace AISenses.VisionSystems
 {
@@ -10,54 +12,83 @@ namespace AISenses.VisionSystems
     [UpdateAfter(typeof(TargetingQuadrantSystem))]
     public partial class CheckTargetThreatSystem : SystemBase
     {
-     DynamicBuffer<Factions> factionsBuffer;
-  
+    
+        Entity factionSingleton;
         protected override void OnCreate()
         {
             base.OnCreate();
-            RequireForUpdate<RunningTag>();
             RequireForUpdate<FactionSingleton>();
-
+      
 
         }
-
         protected override void OnUpdate()
         {
-            Entities.ForEach(( DynamicBuffer<ScanPositionBuffer> buffer,ref IAUSBrain brain) =>
-            {
-                for (int i = 0; i <  buffer.Length; i++)
-                {
-                    var temp = buffer[i];
-                    temp.target.IsFriendly=IsFriendly(brain.FactionID);
-                    buffer[i] = temp;
-                }
-             
-            }).WithoutBurst().Run();
+           var  factionsBuffer = SystemAPI.GetSingletonBuffer<Factions>();
+           Entities.ForEach((DynamicBuffer<ScanPositionBuffer> buffer, ref IAUSBrain brain) =>
+           {
+               for (int i = 0; i < buffer.Length; i++)
+               {
+                   var temp = buffer[i];
+                   var relationships = default(FixedList512Bytes<Relationship>);
+                   foreach (var factions in factionsBuffer)
+                   {
+                       if (factions.Faction != brain.FactionID) continue;
+                       relationships = factions.Relationships;
+                       break;
+                   }
+
+                   foreach (var relationship in relationships)
+                   {
+                       if (relationship.Faction != temp.target.TargetInfo.FactionID) continue;
+                       temp.target.Affinity = relationship.Affinity switch
+                       {
+                           < -75 => Affinity.Hate,
+                           > -75 and < -35 => Affinity.Negative,
+                           > -35 and < 35 => Affinity.Neutral,
+                           > 35 and < 74 => Affinity.Positive,
+                           > 75 => Affinity.Love,
+                           _ => Affinity.Neutral
+                       };
+                   }
+
+                   buffer[i] = temp;
+               }
+
+           }).Schedule();
+
+           Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<ScanPositionBuffer> buffer) =>
+           {
+               for (int i = 0; i < buffer.Length; i++)
+               {
+                   var temp = buffer[i];
+                   var relationships = default(FixedList512Bytes<Relationship>);
+                   foreach (var factions in factionsBuffer)
+                   {
+                       if (factions.Faction != FactionNames.Player) continue;
+                       relationships = factions.Relationships;
+                       break;
+                   }
+
+                   foreach (var relationship in relationships)
+                   {
+                       if (relationship.Faction != temp.target.TargetInfo.FactionID) continue;
+                       temp.target.Affinity = relationship.Affinity switch
+                       {
+                           < -75 => Affinity.Hate,
+                           > -75 and < -35 => Affinity.Negative,
+                           > -35 and < 35 => Affinity.Neutral,
+                           > 35 and < 74 => Affinity.Positive,
+                           > 75 => Affinity.Love,
+                           _ => Affinity.Neutral
+                       };
+                   }
+
+                   buffer[i] = temp;
+               }
+
+           }).Schedule();
         }
-        private void RetrieveFactionsData()
-        {
-            factionsBuffer = SystemAPI.GetSingletonBuffer<Factions>();
- 
-        }
-        private FixedList512Bytes<Relationship> GetRelationship(FactionNames faction)
-        {
-            foreach (var factions in factionsBuffer)
-            {
-                if (factions.Faction == faction) return factions.Relationships;
-            }
-            return default;
-        }
-        private bool IsFriendly(int factionID)
-        {
-            var faction = (FactionNames)factionID;
-            var relationships = GetRelationship(faction);
-            foreach (var relationship in relationships)
-            {
-                if (relationship.Faction != faction) continue;
-                if (relationship.Affinity <= 50) continue;
-                return true;
-            }
-            return false;
-        }
+        
+
     }
 }

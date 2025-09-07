@@ -101,7 +101,7 @@ MonoBehaviour:
     AnimSpeedMultiplier: 1
     GroundCheckDistance: 0.3
     CombatCapable: 1
-  FactionID: 0
+  FactionID: 1
   BaseThreat: 0
   BaseProtection: 0
   Equipment:

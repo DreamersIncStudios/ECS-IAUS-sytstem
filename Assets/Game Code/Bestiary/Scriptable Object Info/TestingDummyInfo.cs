@@ -5,6 +5,7 @@ using Stats;
 using Stats.Entities;
 using System.Collections;
 using System.Collections.Generic;
+using DreamersIncStudio.FactionSystem;
 using IAUS.ECS.Component.Attacking;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -26,7 +27,7 @@ namespace DreamersInc.BestiarySystem.Testing
         public PhysicsInfo PhysicsInfo;
 
         [Header("influence ")]
-        public int factionID;
+        public FactionNames factionID;
         public int BaseThreat;
         public int BaseProtection;
 #if UNITY_EDITOR
@@ -90,7 +91,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentObject(entity, character);
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
+                    FactionID = info.factionID,
                     Protection = info.BaseProtection,
                     Threat = info.BaseThreat
                 });
