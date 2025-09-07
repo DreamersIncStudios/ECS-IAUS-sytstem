@@ -242,6 +242,22 @@ namespace Combinators
                 }
             }
 
+            readonly struct SetAffinty : IPred
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                
+                public bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
+                {
+                    throw new System.NotImplementedException();
+                }
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+
+                public List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform, in TargetCtx ctx)
+                {
+                    throw new System.NotImplementedException();
+                }
+            }
+
             readonly struct InViewRayCast : IPred
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]

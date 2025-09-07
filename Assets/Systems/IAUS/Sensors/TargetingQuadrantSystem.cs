@@ -178,7 +178,9 @@ namespace AISenses.VisionSystems
                            CanSee = true,
                            TargetInfo = targetQuadrantData.TargetInfo,
                            Entity = targetQuadrantData.Entity,
-                           DistanceTo = targetQuadrantData.Distance
+                           DistanceTo = targetQuadrantData.Distance,
+                           LastKnownPosition = targetQuadrantData.Position,
+                           
                        }
 
                    });
