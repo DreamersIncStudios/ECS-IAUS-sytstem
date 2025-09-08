@@ -32,7 +32,6 @@ namespace DreamersIncStudio.GAIACollective
             #region Spawning
             var levelManager = SystemAPI.GetComponentLookup<GaiaLevelManager>(true);
 
-            var updateHashMap = false;
             Entities.WithStructuralChanges().ForEach((ref GaiaSpawnBiome biome, in LocalToWorld transform) =>
             {
                 if(biome.Manager == Entity.Null) return;
@@ -56,7 +55,6 @@ namespace DreamersIncStudio.GAIACollective
                             biome.LevelRange * (int)worldManager.WorldLevel,
                             worldManager.PlayerLevel);
                         Debug.Log("Spawning ");
-                        updateHashMap = true;
                     }
 
 

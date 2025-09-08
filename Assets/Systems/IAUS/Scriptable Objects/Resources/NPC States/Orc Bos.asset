@@ -15,7 +15,7 @@ MonoBehaviour:
   nameNPC: Orc Boss
   Difficulty: 1
   NpcLevel: 4
-  FactionID: 0
+  FactionID: 2
   States:
   - StateName: 22
     Considerations:

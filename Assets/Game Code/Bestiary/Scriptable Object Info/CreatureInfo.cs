@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using Stats;
@@ -13,7 +12,6 @@ using DreamersIncStudio.GAIACollective;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
 using Sirenix.OdinInspector;
-using UnityEngine.Serialization;
 
 namespace DreamersInc.BestiarySystem
 {

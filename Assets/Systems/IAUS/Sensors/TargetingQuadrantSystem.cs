@@ -90,7 +90,8 @@ namespace AISenses.VisionSystems
                 World = world,
                 QuadrantMap = quadrantMultiHashMap,
                 trams = query.ToComponentDataArray<LocalTransform>(Allocator.TempJob),
-                stats = query.ToComponentDataArray<AIStat>(Allocator.TempJob)
+                stats = query.ToComponentDataArray<AIStat>(Allocator.TempJob),
+                FactionsBuffer = SystemAPI.GetSingletonBuffer<Factions>(true)
       
             }.ScheduleParallel(state.Dependency);
         }
@@ -130,7 +131,6 @@ namespace AISenses.VisionSystems
 
     
 
-        [BurstCompile]
         partial struct TargetingVisionRayCastJob : IJobEntity
         {
             [ReadOnly] public CollisionWorld World;
@@ -139,7 +139,7 @@ namespace AISenses.VisionSystems
             [ReadOnly] public NativeArray<AIStat> stats;
            [ReadOnly] public NativeArray<LocalTransform> trams;
            private const float CellEdgePadding = 50f;
-           public DynamicBuffer<Factions> FactionsBuffer;
+          [ReadOnly] public DynamicBuffer<Factions> FactionsBuffer;
            
            void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
                ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
@@ -169,6 +169,7 @@ namespace AISenses.VisionSystems
                    .And(new InViewRayCast())
                    .Build();
                var filteredTarget = pred.Test(targets, transform, in ctx);
+               
                foreach (var targetQuadrantData in filteredTarget)
                {
                    buffer.Add(new ScanPositionBuffer()

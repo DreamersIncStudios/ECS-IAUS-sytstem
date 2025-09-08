@@ -12,12 +12,9 @@ namespace Global.Component
     public struct AITarget : IComponentData
     {
         public TargetType Type;
-        public ClassTitle ClassTitle;
-        public Affinity Affinity;
         public uint level {get; set; }
         public FactionNames FactionID;
         public int NumOfEntityTargetingMe;
-        [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of InfluenceValue Level
         public bool CanBeTargetByPlayer;
