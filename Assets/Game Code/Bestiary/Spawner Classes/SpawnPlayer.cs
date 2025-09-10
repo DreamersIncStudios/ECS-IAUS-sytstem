@@ -112,7 +112,7 @@ namespace DreamersInc.BestiarySystem
                     noiseState = NoiseState.Normal,
                     visibilityStates = VisibilityStates.Visible
                 });
-                manager.AddBuffer<ScanPositionBuffer>(entity);
+                manager.AddBuffer<Enemies>(entity);
 
                 go.GetComponent<VFXControl>().Init(info.Combo);
 
@@ -155,7 +155,7 @@ namespace DreamersInc.BestiarySystem
                     noiseState = NoiseState.Normal,
                     visibilityStates = VisibilityStates.Visible
                 });
-                manager.AddBuffer<ScanPositionBuffer>(entity);
+                manager.AddBuffer<Enemies>(entity);
 
                 go.GetComponent<VFXControl>().Init(info.Combo);
 

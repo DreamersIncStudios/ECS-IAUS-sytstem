@@ -18,42 +18,7 @@ namespace AISenses
     {
         public float DetectionRange { get; set; }
         public float Timer { get; set; } // consider using Variable Rate Manager;
-        public bool IsInRange(TargetAlignmentType alignmentType) => !TargetPosition(alignmentType).Equals( float3.zero);
-
-        public bool UpdateTargetPosition(TargetAlignmentType alignmentType) =>
-            !LastKnownPosition(alignmentType).Equals(TargetPosition(alignmentType)) || !LastKnownPosition(alignmentType).Equals(float3.zero);
-        public bool HasTarget=> TargetEnemyEntity != Entity.Null || TargetFriendlyEntity != Entity.Null;
-
-        public Entity TargetEntity(TargetAlignmentType alignmentType)
-        {
-            return alignmentType switch
-            {
-                TargetAlignmentType.Enemy => TargetEnemyEntity,
-                TargetAlignmentType.Friendly => TargetFriendlyEntity,
-                _ => Entity.Null
-            };
-        }
-
-        public float3 TargetPosition(TargetAlignmentType alignmentType)
-        {
-            return alignmentType switch
-            {
-                TargetAlignmentType.Enemy => TargetEnemyPosition,
-                TargetAlignmentType.Friendly => TargetFriendlyPosition,
-                _ => float3.zero
-            };
-        }
-
-        public float3 LastKnownPosition(TargetAlignmentType alignmentType)
-        {
-            return alignmentType switch
-            {
-                TargetAlignmentType.Enemy => LastKnownPositionEnemy,
-                TargetAlignmentType.Friendly => LastKnownPositionFriendly,
-                _ => float3.zero
-            };
-        }
-
+      
         public Entity TargetEnemyEntity { get; set; }
         public Entity TargetFriendlyEntity { get; set; }
  
@@ -108,46 +73,66 @@ namespace AISenses
         }
 
     }
+
+    public interface IInteractables
+    {
+        public float Dist { get; }
+
+    }
+
     [InternalBufferCapacity(0)]
-    public struct ScanPositionBuffer : IBufferElementData
+    public struct Enemies : IBufferElementData,IInteractables
     {
         public Target target;
-       public float dist;
+        public float Dist { get; }
 
-        public static implicit operator Target(ScanPositionBuffer e) { return e; }
-        public static implicit operator ScanPositionBuffer(Target e) { return new ScanPositionBuffer { target = e }; }
+        public static implicit operator Target(Enemies e) { return e; }
+        public static implicit operator Enemies(Target e) { return new Enemies { target = e }; }
+    }
+    [InternalBufferCapacity(0)]
+    public struct Allies : IBufferElementData,IInteractables
+    {
+        public Target target;
+        public float Dist { get; }
+
+        public static implicit operator Target(Allies e) { return e; }
+        public static implicit operator Allies(Target e) { return new Allies() { target = e }; }
+    }
+    [InternalBufferCapacity(0)]
+    public struct PlacesOfInterest : IBufferElementData,IInteractables
+    {
+        public Target target;
+        public float Dist { get; }
+
+        public static implicit operator Target(PlacesOfInterest e) { return e; }
+        public static implicit operator PlacesOfInterest(Target e) { return new PlacesOfInterest() { target = e }; }
+    }
+    [InternalBufferCapacity(0)]
+    public struct Resources : IBufferElementData,IInteractables
+    {
+        public Target target;
+        public float Dist { get; }
+
+        public static implicit operator Target(Resources e) { return e; }
+        public static implicit operator Resources(Target e) { return new Resources() { target = e }; }
     }
 
-    public struct SortScanPositionByDistance : IComparer<ScanPositionBuffer>
-{
-    public int Compare(ScanPositionBuffer x, ScanPositionBuffer y)
+    public struct SortScanPositionByDistance : IComparer<Enemies>
     {
-        return x.dist.CompareTo(y.dist);
-    }
-}
-
-    public struct HitDistanceComparer : IComparer<ScanPositionBuffer>
-    {
-        public int Compare(ScanPositionBuffer lhs, ScanPositionBuffer rhs)
+        public int Compare(Enemies x, Enemies y)
         {
-            return lhs.dist.CompareTo(rhs.dist);
+            return x.Dist.CompareTo(y.Dist);
         }
     }
 
-    public struct CoverLocationBuffer : IBufferElementData
+    public struct HitDistanceComparer : IComparer<Enemies>
     {
-        public struct TargetCover
+        public int Compare(Enemies lhs, Enemies rhs)
         {
-            public float3 Location;
-            public float Dist;
-            public Entity CoverEntity;
+            return lhs.Dist.CompareTo(rhs.Dist);
         }
-
-        public TargetCover Target;
-        
-        public static implicit operator TargetCover(CoverLocationBuffer e) { return e; }
-        public static implicit operator CoverLocationBuffer(TargetCover e) { return new CoverLocationBuffer { Target = e }; }
     }
+
     public struct Target
     {
         public Entity Entity;
@@ -161,8 +146,5 @@ namespace AISenses
         public float PerceptilabilityScore;
     }
 
-    public enum TargetAlignmentType
-    {
-        All,Enemy, Friendly
-    }
+ 
 }

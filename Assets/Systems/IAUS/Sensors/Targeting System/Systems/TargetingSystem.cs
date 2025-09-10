@@ -58,7 +58,7 @@ namespace AISenses.VisionSystems
         {
             if(!cameraControl)
                 cameraControl = CameraControl.Instance;
-            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<ScanPositionBuffer> buffer, ref CharControllerE control,ref AttackTarget attackTarget) =>
+            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer, ref CharControllerE control,ref AttackTarget attackTarget) =>
             {
                 var sortedBuffer = buffer.AsNativeArray();
                 sortedBuffer.Sort( new SortScanPositionByDistance());
@@ -79,7 +79,7 @@ namespace AISenses.VisionSystems
         {
             if(!cameraControl)
                 cameraControl = CameraControl.Instance;
-            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<ScanPositionBuffer> buffer, ref CharControllerE control, ref AttackTarget attackTarget) =>
+            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer, ref CharControllerE control, ref AttackTarget attackTarget) =>
             {     
                 if(!control.Targetting) return; 
                 var sortedBuffer = buffer.AsNativeArray();
@@ -95,7 +95,7 @@ namespace AISenses.VisionSystems
         {
             if(!cameraControl)
                 cameraControl = CameraControl.Instance;
-            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<ScanPositionBuffer> buffer, ref CharControllerE control,  ref AttackTarget attackTarget) =>
+            Entities.WithoutBurst().WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer, ref CharControllerE control,  ref AttackTarget attackTarget) =>
             {      
                 if(!control.Targetting) return; 
                 var sortedBuffer = buffer.AsNativeArray();
@@ -109,7 +109,7 @@ namespace AISenses.VisionSystems
             }).Run();
         }
 
-        private void SetTarget(NativeArray<ScanPositionBuffer> sortedBuffer)
+        private void SetTarget(NativeArray<Enemies> sortedBuffer)
         {
             if (cameraControl.OnTargetChanged != null)
             {

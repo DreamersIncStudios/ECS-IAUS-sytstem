@@ -17,23 +17,10 @@ MonoBehaviour:
   ClassLevel: 1
   GetNPCLevel: 6
   Role: 1
+  ActiveTimesOfDay: 0
   stats:
-    title: 11
-    Name: 'spawn '
-    Level: 5
-    Strength: 10
-    Vitality: 10
-    Awareness: 10
-    Speed: 10
-    Skill: 10
-    Resistance: 10
-    Concentration: 10
-    WillPower: 10
-    Charisma: 10
-    Luck: 10
-    difficultyMod: 10
-    LevelMod: 10
-  Prefab: {fileID: 3541754002163558908, guid: 2fb140f86158e4744a73e5bf261366ca, type: 3}
+    rid: -2
+  Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
   ActiveHours: 0
   AIStatesToAdd: 14000000
   PhysicsInfo:
@@ -127,4 +114,8 @@ MonoBehaviour:
   LevelDif: 3
   SpawnData: []
   PackType: 0
-  RequiredPackRoles: []
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

@@ -24,7 +24,7 @@ namespace AISenses.VisionSystems
         protected override void OnUpdate()
         {
            var  factionsBuffer = SystemAPI.GetSingletonBuffer<Factions>(true);
-           Entities.ForEach((DynamicBuffer<ScanPositionBuffer> buffer, ref IAUSBrain brain) =>
+           Entities.ForEach((DynamicBuffer<Enemies> buffer, ref IAUSBrain brain) =>
            {
                for (int i = 0; i < buffer.Length; i++)
                {
@@ -56,7 +56,7 @@ namespace AISenses.VisionSystems
 
            }).Schedule();
 
-           Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<ScanPositionBuffer> buffer) =>
+           Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer) =>
            {
                for (int i = 0; i < buffer.Length; i++)
                {

@@ -138,12 +138,12 @@ namespace AISenses.VisionSystems
            private const float CellEdgePadding = 50f;
           [ReadOnly] public DynamicBuffer<Factions> FactionsBuffer;
            
-           void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
+           void Execute(Entity entity, ref DynamicBuffer<Enemies> buffer, ref Vision vision,
                ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
            {
                buffer.Clear();
                var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
-               if (vision.HasTarget) return;
+//todo rewrite for                if (vision.HasTarget) return;
 
                var pos = transform.Position;
 
@@ -169,7 +169,7 @@ namespace AISenses.VisionSystems
                
                foreach (var targetQuadrantData in filteredTarget)
                {
-                   buffer.Add(new ScanPositionBuffer()
+                   buffer.Add(new Enemies()
                    {
                        target = new Target()
                        {

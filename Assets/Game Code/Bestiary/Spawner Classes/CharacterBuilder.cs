@@ -265,7 +265,7 @@ namespace DreamersInc.BestiarySystem
             if (model == null) return this;
             var vision = new Vision();
             vision.InitializeSense(character);
-            manager.AddBuffer<ScanPositionBuffer>(entity);
+            manager.AddBuffer<Enemies>(entity);
             manager.AddComponentData(entity, vision);
             manager.AddComponent<MapVision>(entity);
             return this;

@@ -9,34 +9,19 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
+        private readonly DynamicBuffer<Enemies> targets;
         private readonly RefRW<Vision> vision;
 
         public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
         
 
-        public Entity TargetEntity(TargetAlignmentType type)
-        {
-            TargetEnemyTargetInRange();
-            FriendlyInRange();
-            return vision.ValueRO.TargetEntity(type);
-        }
-
-        public float3 TargetPosition(TargetAlignmentType type)
-        {
-            TargetEnemyTargetInRange();
-            FriendlyInRange();
-
-            return vision.ValueRO.TargetPosition(type);
-        }
-
         public bool TargetInReactRange
         {
             get
             {
-                foreach (var item in scanPositions)
-                    if (item is { dist: < 25, target: { Affinity: Affinity.Hate or Affinity.Negative } } )
+                foreach (var item in targets)
+                    if (item is { Dist: < 25, target: { Affinity: Affinity.Hate or Affinity.Negative } } )
                     {
                         return true;
                     }
@@ -71,13 +56,13 @@ namespace AISenses.VisionSystems
             target = new AITarget();
             dist = 0f;
             Position = float3.zero;
-            if (scanPositions.IsEmpty)
+            if (targets.IsEmpty)
             {
                 vision.ValueRW.TargetEnemyEntity = Entity.Null;
                 return false;
             }
 
-            foreach (var scan in scanPositions)
+            foreach (var scan in targets)
             {
                 if (scan.target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
                 target = scan.target.TargetInfo;
@@ -93,11 +78,11 @@ namespace AISenses.VisionSystems
 
         private bool FriendlyInRange()
         {
-                if (scanPositions.IsEmpty)
+                if (targets.IsEmpty)
                     return false;
                 else
                 {
-                    foreach (var target in scanPositions)
+                    foreach (var target in targets)
                     {
                         if (target.target.Affinity is Affinity.Love or Affinity.Positive)
                             return true;
@@ -109,7 +94,7 @@ namespace AISenses.VisionSystems
 
         public Target GetClosestEnemy()
         {
-            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
+            var visibleTargetInArea = targets.ToNativeArray(Allocator.Temp);
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
             foreach (var target in visibleTargetInArea)
             {
@@ -124,7 +109,7 @@ namespace AISenses.VisionSystems
         public Target GetClosestFriend()
         {
             
-            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
+            var visibleTargetInArea = targets.ToNativeArray(Allocator.Temp);
             visibleTargetInArea.Sort(new SortScanPositionByDistance());
             foreach (var target in visibleTargetInArea.Where(target => target.target.Affinity is Affinity.Love or Affinity.Positive))
             {
