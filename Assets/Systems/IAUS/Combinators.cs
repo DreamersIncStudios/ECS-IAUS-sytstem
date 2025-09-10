@@ -15,12 +15,20 @@ using RaycastHit = Unity.Physics.RaycastHit;
 
 namespace Combinators
 {
-    public readonly struct TargetCtx
+    public interface IContext
     {
-        public readonly float3 Origin;
-        public readonly float Angle;
-        public readonly float3 Direction;
-        public readonly float r2;
+        public float3 Origin { get; }
+        public  float ViewAngle{ get; }
+        public float3 Forward {get; }
+        public float r2 {get; }
+    }
+
+    public readonly struct TargetCtx: IContext
+    {
+        public  float3 Origin { get;  }
+        public  float ViewAngle{ get;  }
+        public  float3 Forward{ get;  }
+        public float r2{ get;  }
         public readonly CollisionFilter Filter;
         public readonly CollisionWorld World;
         public readonly IEnumerable<Relationship> Relationships;
@@ -28,8 +36,8 @@ namespace Combinators
             DynamicBuffer<Factions> factionsBuffer, CollisionFilter filter)
         {
             this.Origin = transform.Position;
-            Direction = transform.Forward();
-            this.Angle = vision.ViewAngle;
+            Forward = transform.Forward();
+            this.ViewAngle = vision.ViewAngle;
             this.World = world;
             this.r2 = vision.ViewRadius * vision.ViewRadius;
             this.Filter = filter;
@@ -41,15 +49,15 @@ namespace Combinators
                 break;
             }
         }
-
     
     }
+
     interface IPred
     {
         bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx);
         List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform, in TargetCtx ctx);
     }
-    
+
 //Combinators for Predicates
             readonly struct And<A,B>: IPred where A:IPred where B:IPred
             {
@@ -152,7 +160,7 @@ namespace Combinators
                 public readonly bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
                 {
                     var dirToTarget = ((Vector3)AIStat.Position -(Vector3)(ctx.Origin+ new float3(0,1,0))).normalized;
-                    return Vector3.Angle(ctx.Direction, dirToTarget) < ctx.Angle;
+                    return Vector3.Angle(ctx.Forward, dirToTarget) < ctx.ViewAngle;
                 }
 
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -164,7 +172,7 @@ namespace Combinators
                     foreach (var target in targets)
                     {
                         var dirToTarget = ((Vector3)target.Position -(Vector3)(ctx.Origin+ new float3(0,1,0))).normalized;
-                        if (!(Vector3.Angle(ctx.Direction, dirToTarget) < ctx.Angle)) continue;
+                        if (!(Vector3.Angle(ctx.Forward, dirToTarget) < ctx.ViewAngle)) continue;
                         outList.Add(target);
                     }
                     return outList;
@@ -275,7 +283,7 @@ namespace Combinators
                   
                     foreach (var target in targets)
                     {
-                       var ray =CreateRaycastInput(ctx.Origin, ctx.Direction,target, ctx.Filter);
+                       var ray =CreateRaycastInput(ctx.Origin, ctx.Forward,target, ctx.Filter);
                        if (!ctx.World.CastRay(ray, out RaycastHit raycastHit)) continue;
                        if(!raycastHit.Entity.Equals(target.Entity)) continue;
                        outList.Add(target);

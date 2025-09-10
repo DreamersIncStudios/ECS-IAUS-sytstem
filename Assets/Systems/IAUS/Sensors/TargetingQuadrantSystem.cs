@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Combinators;
 using DreamersIncStudio.FactionSystem;
 using Global.Component;
@@ -9,10 +8,8 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.Properties;
 using Unity.Transforms;
 using UnityEngine;
-using RaycastHit = Unity.Physics.RaycastHit;
 // ReSharper disable Unity.BurstFunctionSignatureContainsManagedTypes
 
 namespace AISenses.VisionSystems
@@ -84,7 +81,7 @@ namespace AISenses.VisionSystems
 
             state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
-            world.UpdateBodyIndexMap();
+        //    world.UpdateBodyIndexMap();
             state.Dependency = new TargetingVisionRayCastJob()
             {
                 World = world,

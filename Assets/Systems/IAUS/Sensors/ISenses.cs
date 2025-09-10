@@ -65,28 +65,16 @@ namespace AISenses
         {
             get
             {
-                int returnValue = new int();
-                switch (EnemyAwarenessLevel)
+                var returnValue = EnemyAwarenessLevel switch
                 {
-                    case 0:
-                        returnValue = 180;
-                        break;
-                    case 1:
-                        returnValue = 90;
-                        break;
-                    case 2:
-                        returnValue = 45;
-                        break;
-                    case 3:
-                        returnValue = 20;
-                        break;
-                    case 4:
-                        returnValue = 10;
-                        break;
-                    case 5:
-                        returnValue = 5;
-                        break;
-                }
+                    0 => 180,
+                    1 => 90,
+                    2 => 45,
+                    3 => 20,
+                    4 => 10,
+                    5 => 5,
+                    _ => 0
+                };
                 return returnValue;
             }
         }
@@ -101,7 +89,7 @@ namespace AISenses
         [Range(0, 360)]
         public int ViewAngle;
         public float EngageRadius;
-        public float AlertModifer; // If AI is on high alert they will notice the enemy sooner
+        public float AlertModifer; // If AI is on high alert, they will notice the enemy sooner
         public void InitializeSense(BaseCharacterComponent baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
