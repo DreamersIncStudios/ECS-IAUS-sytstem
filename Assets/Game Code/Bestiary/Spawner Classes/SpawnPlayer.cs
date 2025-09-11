@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using Resources = AISenses.Resources;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -113,6 +114,9 @@ namespace DreamersInc.BestiarySystem
                     visibilityStates = VisibilityStates.Visible
                 });
                 manager.AddBuffer<Enemies>(entity);
+                manager.AddBuffer<Allies>(entity);
+                manager.AddBuffer<AISenses.Resources>(entity);
+                manager.AddBuffer<PlacesOfInterest>(entity);
 
                 go.GetComponent<VFXControl>().Init(info.Combo);
 

@@ -31,7 +31,7 @@ namespace Combinators
         public float r2{ get;  }
         public readonly CollisionFilter Filter;
         public readonly CollisionWorld World;
-        public readonly IEnumerable<Relationship> Relationships;
+        public readonly List<Relationship> Relationships;
         public TargetCtx(LocalTransform transform, Vision vision, FactionNames factionID, CollisionWorld world,
             DynamicBuffer<Factions> factionsBuffer, CollisionFilter filter)
         {
@@ -45,7 +45,11 @@ namespace Combinators
             foreach (var factions in factionsBuffer)
             {
                 if (factions.Faction != factionID) continue;
-                Relationships = factions.Relationships;
+                foreach (var relationship in factions.Relationships)
+                {
+                    Relationships.Add(relationship);
+                }
+
                 break;
             }
         }

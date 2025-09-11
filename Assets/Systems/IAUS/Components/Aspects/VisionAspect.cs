@@ -9,18 +9,23 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        private readonly DynamicBuffer<Enemies> targets;
+        private readonly DynamicBuffer<Enemies> enemies;
+        private readonly DynamicBuffer<Allies> allies;
+        private readonly DynamicBuffer<Resources> Resources;
+        private readonly DynamicBuffer<PlacesOfInterest> placesOfInterests;
         private readonly RefRW<Vision> vision;
 
         public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
+        public Entity TargetEnemy => vision.ValueRO.TargetEnemyEntity;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
+        public Entity TargetFriend => vision.ValueRO.TargetFriendlyEntity;
         
 
         public bool TargetInReactRange
         {
             get
             {
-                foreach (var item in targets)
+                foreach (var item in enemies)
                     if (item is { Dist: < 25, target: { Affinity: Affinity.Hate or Affinity.Negative } } )
                     {
                         return true;
@@ -31,92 +36,39 @@ namespace AISenses.VisionSystems
 
         }
 
-        private bool TargetEnemyTargetInRange()
-        {
-            return TargetEnemyTargetInRange(out _, out _, out _);
-        }
 
         public bool TargetEnemyTargetInRange(out float dist)
         {
             return TargetEnemyTargetInRange(out _, out _, out dist);
         }
 
-        public bool TargetEnemyTargetInRange(out float3 targetPosition, out float dist)
-        {
-            return TargetEnemyTargetInRange(out targetPosition,out _, out dist);
-        }
 
-        public bool TargetEnemyTargetInRange(out AITarget target, out float dist)
-        {
-            return TargetEnemyTargetInRange(out _,out target, out dist);
-        }
 
         private bool TargetEnemyTargetInRange(out float3 Position, out AITarget target, out float dist)
         {
             target = new AITarget();
             dist = 0f;
             Position = float3.zero;
-            if (targets.IsEmpty)
+            if (enemies.IsEmpty)
             {
                 vision.ValueRW.TargetEnemyEntity = Entity.Null;
                 return false;
             }
 
-            foreach (var scan in targets)
+            foreach (var enemy in enemies)
             {
-                if (scan.target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
-                target = scan.target.TargetInfo;
-                dist = scan.target.DistanceTo;
-                vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
+                if (enemy.target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
+                target = enemy.target.TargetInfo;
+                dist = enemy.target.DistanceTo;
+                vision.ValueRW.TargetEnemyEntity = enemy.target.Entity;
                 Position = vision.ValueRW.TargetEnemyPosition =
-                    vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
+                    vision.ValueRW.LastKnownPositionEnemy = enemy.target.LastKnownPosition;
                 return true;
             }
 
             return false;
         }
 
-        private bool FriendlyInRange()
-        {
-                if (targets.IsEmpty)
-                    return false;
-                else
-                {
-                    foreach (var target in targets)
-                    {
-                        if (target.target.Affinity is Affinity.Love or Affinity.Positive)
-                            return true;
-                    }
-                }
-                return false;
-            
-        }
 
-        public Target GetClosestEnemy()
-        {
-            var visibleTargetInArea = targets.ToNativeArray(Allocator.Temp);
-            visibleTargetInArea.Sort(new SortScanPositionByDistance());
-            foreach (var target in visibleTargetInArea)
-            {
-                if (target.target.Affinity is Affinity.Hate or Affinity.Negative)
-                {
-                    return target.target;
-                }
-            }
-            return new Target();
-        }
-
-        public Target GetClosestFriend()
-        {
-            
-            var visibleTargetInArea = targets.ToNativeArray(Allocator.Temp);
-            visibleTargetInArea.Sort(new SortScanPositionByDistance());
-            foreach (var target in visibleTargetInArea.Where(target => target.target.Affinity is Affinity.Love or Affinity.Positive))
-            {
-                return target.target;
-            }
-
-            return new Target();
-        }
     }
 }

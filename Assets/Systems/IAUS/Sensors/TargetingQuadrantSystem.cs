@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Combinators;
 using DreamersIncStudio.FactionSystem;
+using DreamersIncStudio.FactionSystem.Authoring;
 using Global.Component;
 using Stats.Entities;
 using Unity.Burst;
@@ -57,6 +58,7 @@ namespace AISenses.VisionSystems
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
+            state.RequireForUpdate<FactionSingleton>();
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, TargetQuadrantData>(0, Allocator.Persistent);
             query = state.GetEntityQuery(new EntityQueryDesc()
             {
@@ -138,10 +140,14 @@ namespace AISenses.VisionSystems
            private const float CellEdgePadding = 50f;
           [ReadOnly] public DynamicBuffer<Factions> FactionsBuffer;
            
-           void Execute(Entity entity, ref DynamicBuffer<Enemies> buffer, ref Vision vision,
+           void Execute(Entity entity, ref DynamicBuffer<Enemies> enemyBuffer,ref DynamicBuffer<Allies> allyBuffer,ref DynamicBuffer<Resources> resourceBuffer,ref DynamicBuffer<PlacesOfInterest> placeBuffer, ref Vision vision,
                ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
            {
-               buffer.Clear();
+               enemyBuffer.Clear();
+               allyBuffer.Clear();
+               resourceBuffer.Clear();
+               placeBuffer.Clear();
+               
                var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
 //todo rewrite for                if (vision.HasTarget) return;
 
@@ -159,17 +165,86 @@ namespace AISenses.VisionSystems
                        GroupIndex = 0
                    });
                
-               var pred = PredChain
+               var targetsInRange = PredChain
                    .Start(new IsAlive())
                    .And(new InRange())
                    .And(new InViewCone())
                    .And(new InViewRayCast())
                    .Build();
-               var filteredTarget = pred.Test(targets, transform, in ctx);
                
-               foreach (var targetQuadrantData in filteredTarget)
+               var enemyList = PredChain
+                   .Start(new IsEnemy())
+                   .Build();
+               var allyList = PredChain
+                   .Start(new IsFriendly())
+
+                   .Build();
+               var resourceList = PredChain
+                   .Start(new IsAlive())
+                   .Build();
+               var placeList = PredChain
+                   .Start(new IsAlive())
+                   .Build();
+
+               var filteredTarget = targetsInRange.Test(targets, transform, in ctx);
+               var filteredEnemy = enemyList.Test(filteredTarget, transform, in ctx);
+               var filteredAlly = allyList.Test(filteredTarget, transform, in ctx);
+               var filteredResource = resourceList.Test(filteredTarget, transform, in ctx);
+               var filteredPlace = placeList.Test(filteredTarget, transform, in ctx);
+               
+               foreach (var targetQuadrantData in filteredEnemy)
                {
-                   buffer.Add(new Enemies()
+                   enemyBuffer.Add(new Enemies()
+                   {
+                       target = new Target()
+                       {
+                           CanSee = true,
+                           TargetInfo = targetQuadrantData.TargetInfo,
+                           Entity = targetQuadrantData.Entity,
+                           DistanceTo = targetQuadrantData.Distance,
+                           LastKnownPosition = targetQuadrantData.Position,
+                           
+                       }
+
+                   });
+               }
+               foreach (var targetQuadrantData in filteredAlly)
+               {
+                   allyBuffer.Add(new Allies()
+                   {
+                       target = new Target()
+                       {
+                           CanSee = true,
+                           TargetInfo = targetQuadrantData.TargetInfo,
+                           Entity = targetQuadrantData.Entity,
+                           DistanceTo = targetQuadrantData.Distance,
+                           LastKnownPosition = targetQuadrantData.Position,
+                           
+                       }
+
+                   });
+               }   
+               
+               foreach (var targetQuadrantData in filteredResource)
+               {
+                   resourceBuffer.Add(new Resources()
+                   {
+                       target = new Target()
+                       {
+                           CanSee = true,
+                           TargetInfo = targetQuadrantData.TargetInfo,
+                           Entity = targetQuadrantData.Entity,
+                           DistanceTo = targetQuadrantData.Distance,
+                           LastKnownPosition = targetQuadrantData.Position,
+                           
+                       }
+
+                   });
+               }     
+               
+               foreach (var targetQuadrantData in filteredPlace)
+               {
+                   placeBuffer.Add(new PlacesOfInterest()
                    {
                        target = new Target()
                        {
