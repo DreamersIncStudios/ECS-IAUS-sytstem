@@ -1,30 +1,16 @@
 using System;
+using AISenses;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
+using Resources = AISenses.Resources;
 
 namespace DreamersIncStudio.GAIACollective
 {
-    public partial class GaiaUpdateGroup : ComponentSystemGroup
-    {
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            RequireForUpdate<RunningTag>();
-            RequireForUpdate<GaiaTime>();
-            RequireForUpdate<WorldManager>();
-        }
-        public GaiaUpdateGroup()
-        {
-            RateManager = new RateUtils.VariableRateManager(80, true);
-        }
-    }
     [UpdateInGroup(typeof(GaiaUpdateGroup))]
     public partial class GaiaSpawnSystem : SystemBase
     {
-     
-        
         protected override void OnUpdate()
         {
             if (!SystemAPI.TryGetSingleton<GaiaControl>(out _))
@@ -37,7 +23,10 @@ namespace DreamersIncStudio.GAIACollective
             #region Spawning
 
             var levelManager = SystemAPI.GetComponentLookup<GaiaLevelManager>(true);
-            Entities.WithStructuralChanges().ForEach((ref GaiaSpawnBiome biome, in LocalToWorld transform) =>
+            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+                .CreateCommandBuffer(World.Unmanaged);
+
+            Entities.WithReadOnly(levelManager).ForEach((Entity entity, ref GaiaSpawnBiome biome, in LocalToWorld transform) =>
             {
                 if(biome.Manager == Entity.Null) return;
                 
@@ -67,7 +56,6 @@ namespace DreamersIncStudio.GAIACollective
                 }
 
 
-
                 #region Pack Spawn
 
                 for (var i = 0; i < biome.PacksToSpawn.Length; i++)
@@ -75,31 +63,27 @@ namespace DreamersIncStudio.GAIACollective
                     var packInfo = biome.PacksToSpawn[i];
                     if (packInfo.Created) continue;
                     
-                    // ReSharper disable once Unity.BurstFunctionSignatureContainsManagedTypes
-                    var baseEntityArch = EntityManager.CreateArchetype(
-                        new ComponentType[]
-                        {
-                            typeof(LocalTransform),
-                            typeof(LocalToWorld)
-                        }
-                    );
-                    var baseDataEntity = EntityManager.CreateEntity(baseEntityArch);
-                    EntityManager.SetName(baseDataEntity, packInfo.PackType.ToString());
-                    EntityManager.AddBuffer<PackList>(baseDataEntity);
-                    EntityManager.SetComponentData(baseDataEntity, new LocalTransform()
+                    // Create and set up the pack entity via ECB to avoid structural changes during the loop.
+                    var baseDataEntity = ecb.CreateEntity();
+                    ecb.AddComponent<LocalTransform>(baseDataEntity, new LocalTransform
                     {
                         Position = transform.Position,
                         Scale = 1
                     });
+                    ecb.AddComponent<LocalToWorld>(baseDataEntity);
+                    ecb.AddBuffer<PackList>(baseDataEntity);
+                    ecb.AddBuffer<Enemies>(baseDataEntity);
+                    ecb.AddBuffer<Allies>(baseDataEntity);
+                    ecb.AddBuffer<Resources>(baseDataEntity);
+                    ecb.AddBuffer<PlacesOfInterest>(baseDataEntity);
+
                     switch (packInfo.PackType)
                     {
                         case PackType.Assault:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.AssaultTeam(biome.BiomeID, packInfo.Size));
-
+                            ecb.AddComponent(baseDataEntity, Pack.AssaultTeam(biome.BiomeID, packInfo.Size));
                             break;
                         case PackType.Support:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.Support(biome.BiomeID, packInfo.Size));
-
+                            ecb.AddComponent(baseDataEntity, Pack.Support(biome.BiomeID, packInfo.Size));
                             break;
                         case PackType.Transport:
                             break;

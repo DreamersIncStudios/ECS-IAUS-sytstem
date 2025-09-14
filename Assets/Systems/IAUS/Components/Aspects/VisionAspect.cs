@@ -1,7 +1,5 @@
 using Global.Component;
-using System.Linq;
 using DreamersIncStudio.FactionSystem;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 

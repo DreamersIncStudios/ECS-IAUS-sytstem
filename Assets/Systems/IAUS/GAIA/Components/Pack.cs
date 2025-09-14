@@ -40,7 +40,9 @@ namespace DreamersIncStudio.GAIACollective
         public int MemberCount;
         public uint BiomeID;
         public Role Role;
-
+        public PackState State;
+        public PackCommunication Communication;
+        
         private static int2 Need(int required, Size size) => new int2(required * Mod(size), 0);
 
         private static int Mod(Size size)
@@ -54,9 +56,9 @@ namespace DreamersIncStudio.GAIACollective
                 _ => throw new ArgumentOutOfRangeException(nameof(size), size, null)
             };
         }
-
         public static Pack AssaultTeam(uint BiomeID, Size size)=> new Pack()
         {
+            State = PackState.Spawned,
             Requirements = new FixedList128Bytes<PackRole>()
             {
                 new PackRole(Role.Recon, Need(2, size)),
@@ -78,6 +80,8 @@ namespace DreamersIncStudio.GAIACollective
 
         public static Pack Support(uint BiomeID,Size size) => new Pack()
         {
+ 
+            State = PackState.Spawned,
             Requirements =  new FixedList128Bytes<PackRole>()
             {
                 new PackRole(Role.Recon, Need(3, size)),
@@ -143,6 +147,24 @@ namespace DreamersIncStudio.GAIACollective
        Transport,
        Acquisition,
         Support 
+        
+    }
+    public enum PackState
+    {
+        Spawned,
+        Filled,
+        LookingForMembers,
+        Disbanded,
+        Destroyed,
+        Active
+    }
+
+    public enum PackCommunication
+    {
+        LineOfSight, // Pack members only know about each other if they are in line of sight
+        LocalRadio, // Pack members know about each other if they are within a certain range
+        DispatchedRadio // Pack members know about each other
+    
         
     }
 }

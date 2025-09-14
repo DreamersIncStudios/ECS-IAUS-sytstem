@@ -31,34 +31,6 @@ namespace IAUS.ECS.Component
         }
 
     }
-    
-    public readonly partial struct RetreatAspect: IAspect
-    {
-        private readonly RefRW<EvadeThreat> state;
-        private readonly RefRO<MapVision> mapVision;
-        private readonly RefRW<Movement> move;
-
-        public void ExecutePlan()
-        {
-            if (state.ValueRO.EvadeTargetLocation.Equals(float3.zero))
-            {
-                var coverPosition = !mapVision.ValueRO.CoverPositions.c0.Equals(float3.zero)
-                    ? mapVision.ValueRO.CoverPositions.c0
-                    : !mapVision.ValueRO.CoverPositions.c1.Equals(float3.zero)
-                        ? mapVision.ValueRO.CoverPositions.c1
-                        : !mapVision.ValueRO.CoverPositions.c2.Equals(float3.zero)
-                            ? mapVision.ValueRO.CoverPositions.c2
-                            : !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
-                                ? mapVision.ValueRO.CoverPositions.c3
-                                : float3.zero;
-                state.ValueRW.EvadeTargetLocation = coverPosition;
-            }
-            if(move.ValueRO.TargetLocation.Equals(state.ValueRO.EvadeTargetLocation))
-                return;
-            move.ValueRW.SetLocation(state.ValueRO.EvadeTargetLocation);
-        }
-        
-    }
 
 
 }

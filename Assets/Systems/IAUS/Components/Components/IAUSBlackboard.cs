@@ -22,7 +22,6 @@ namespace IAUS.ECS.Component.Aspects
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
         private readonly VisionAspect visionAspect;
-        private  readonly RefRO<MapVision> mapVision;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
@@ -223,8 +222,7 @@ namespace IAUS.ECS.Component.Aspects
             {
                 if (!evade.IsValid) return 0.0f;
                 
-                if (!visionAspect.TargetEnemyTargetInRange(out float dist) 
-                    || mapVision.ValueRO.CoverPositions.Equals(float3x4.zero))
+                if (!visionAspect.TargetEnemyTargetInRange(out float dist) )
                 {
                     evade.ValueRW.EvadeTargetLocation = float3.zero;
                     return 0.0f;
@@ -234,21 +232,8 @@ namespace IAUS.ECS.Component.Aspects
                     throw new ArgumentOutOfRangeException(nameof(wait),
                         $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
                 var asset = GetAsset(evade.ValueRO.Index);
-                var coverPosition = !mapVision.ValueRO.CoverPositions.c0.Equals(float3.zero)
-                    ?
-                    mapVision.ValueRO.CoverPositions.c0
-                    :
-                    !mapVision.ValueRO.CoverPositions.c1.Equals(float3.zero)
-                        ? mapVision.ValueRO.CoverPositions.c1
-                        :
-                        !mapVision.ValueRO.CoverPositions.c2.Equals(float3.zero)
-                            ? mapVision.ValueRO.CoverPositions.c2
-                            :
-                            !mapVision.ValueRO.CoverPositions.c3.Equals(float3.zero)
-                                ? mapVision.ValueRO.CoverPositions.c3
-                                : float3.zero;
-                var safeDist = Vector3.Distance(transform.ValueRO.Position, coverPosition);
-                
+
+                var safeDist = 200;
                 var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
                                  * asset.DistanceToTargetEnemy.Output(dist / 200.0f)
                                  * asset.DistanceToTargetLocation.Output(safeDist / 200.0f);

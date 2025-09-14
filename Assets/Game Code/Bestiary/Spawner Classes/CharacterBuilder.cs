@@ -270,7 +270,6 @@ namespace DreamersInc.BestiarySystem
             manager.AddBuffer<AISenses.Resources>(entity);
             manager.AddBuffer<PlacesOfInterest>(entity);
             manager.AddComponentData(entity, vision);
-            manager.AddComponent<MapVision>(entity);
             return this;
         }
 

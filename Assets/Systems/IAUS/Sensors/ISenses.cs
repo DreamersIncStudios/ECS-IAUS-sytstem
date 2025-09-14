@@ -47,29 +47,23 @@ namespace AISenses
 
         [Range(0, 5)]
         public int EnemyAwarenessLevel;  // Character alert level
-        public float3 HeadPositionOffset;
-        public float3 ThreatPosition;
 
         public float ViewRadius;
         [Range(0, 360)]
         public int ViewAngle;
-        public float EngageRadius;
-        public float AlertModifer; // If AI is on high alert, they will notice the enemy sooner
         public void InitializeSense(BaseCharacterComponent baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
             ViewRadius = 250;
             ViewAngle = 120;
-            EngageRadius = 50;
-            AlertModifer = 1;
+
         }
         public void UpdateSense(BaseCharacterComponent baseCharacter)
         {
             AlertRate = baseCharacter.GetAbility((int)AbilityName.Detection).AdjustBaseValue;
             ViewRadius = 250;
             ViewAngle = 120;
-            EngageRadius = 50;
-            AlertModifer = 1;
+
         }
 
     }

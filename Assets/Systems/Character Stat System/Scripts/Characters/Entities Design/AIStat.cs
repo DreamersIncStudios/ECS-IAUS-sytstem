@@ -11,7 +11,6 @@ namespace Stats.Entities
         public float CurHealth, MaxHealth, CurMana, MaxMana;
         public float HealthRatio => CurHealth/ MaxHealth;
         public float ManaRatio => CurMana/ MaxMana;
-        public static Vector3 Position { get; set; }
 
         public int Level;
         public float Speed;

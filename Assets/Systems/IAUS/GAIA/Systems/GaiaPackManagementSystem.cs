@@ -9,7 +9,7 @@ namespace DreamersIncStudio.GAIACollective
 {
     [UpdateInGroup(typeof(GaiaUpdateGroup))]
     [UpdateAfter(typeof(GaiaSpawnSystem))]
-    public partial struct GaiaPackSystem : ISystem
+    public partial struct GaiaPackManagementSystem : ISystem
     {
         private EntityQuery packQuery;
         private EntityQuery packMemberQuery;

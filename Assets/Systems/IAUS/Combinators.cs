@@ -163,7 +163,7 @@ namespace Combinators
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
                 public readonly bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
                 {
-                    var dirToTarget = ((Vector3)AIStat.Position -(Vector3)(ctx.Origin+ new float3(0,1,0))).normalized;
+                    var dirToTarget = ((Vector3)transform.Position -(Vector3)(ctx.Origin+ new float3(0,1,0))).normalized;
                     return Vector3.Angle(ctx.Forward, dirToTarget) < ctx.ViewAngle;
                 }
 
