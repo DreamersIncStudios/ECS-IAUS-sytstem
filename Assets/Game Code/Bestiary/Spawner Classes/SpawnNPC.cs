@@ -30,7 +30,7 @@ namespace DreamersInc.BestiarySystem
                         .WithAnimation()
                         .WithNPCAttack(info.AttackSequence)
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, 4, 1, info.CenterOffset ,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
                         .Build();
@@ -50,7 +50,7 @@ namespace DreamersInc.BestiarySystem
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, 4, 1, info.CenterOffset,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
                         .Build();
@@ -68,7 +68,7 @@ namespace DreamersInc.BestiarySystem
                         .WithAnimation()
                         .WithNPCAttack(info.AttackSequence)
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, 4, 1, info.CenterOffset,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
                         .Build();
@@ -85,7 +85,7 @@ namespace DreamersInc.BestiarySystem
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, 4, 1, info.CenterOffset, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,packInfo.Role)
                         .Build();

@@ -59,6 +59,7 @@ namespace AISenses.VisionSystems
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
             state.RequireForUpdate<FactionSingleton>();
+            state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, TargetQuadrantData>(0, Allocator.Persistent);
             query = state.GetEntityQuery(new EntityQueryDesc()
             {
@@ -97,10 +98,9 @@ namespace AISenses.VisionSystems
 
         void UpdateQuadrantHashMap(ref SystemState systemState)
         {
-
-            if (query.CalculateEntityCount() != quadrantMultiHashMap.Capacity)
-            {
-                quadrantMultiHashMap.Clear();
+            quadrantMultiHashMap.Clear();
+            if (query.CalculateEntityCountWithoutFiltering() > quadrantMultiHashMap.Capacity)
+            { 
                 quadrantMultiHashMap.Capacity = query.CalculateEntityCount() + 1;
             }
 
@@ -166,7 +166,8 @@ namespace AISenses.VisionSystems
                    });
                
                var targetsInRange = PredChain
-                   .Start(new IsAlive())
+                   .Start(new IsNotSelf())
+                   .And(new IsAlive())
                    .And(new InRange())
                    .And(new InViewCone())
                    .And(new InViewRayCast())

@@ -110,6 +110,28 @@ namespace Combinators
             }
             // Predicates
 
+            readonly struct IsNotSelf : IPred
+            {
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public readonly bool Test(AIStat stat, LocalTransform transform, in TargetCtx ctx)
+                {
+                    return !ctx.Origin.Equals(transform.Position);
+                }
+                
+                [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+                    LocalTransform transform, in TargetCtx ctx)
+                {
+                    var outList = new List<TargetQuadrantData>();
+                    foreach (var target in targets)
+                    {
+                        if (ctx.Origin.Equals(target.Position)) continue;
+                        outList.Add(target);
+                    }
+                    return outList;
+                }
+            }
+
             readonly struct InRange : IPred
             {
                 [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -303,7 +325,7 @@ namespace Combinators
                     return new RaycastInput()
                     {
                         Start = transform + new float3(0, 1, 0) + Forward * 3f,
-                        End =  targetData.Position + new float3(0, 1, 0) ,
+                        End =  targetData.Position + targetData.TargetInfo.CenterOffset ,
                         Filter = filter
                     };
                 }

@@ -285,7 +285,7 @@ namespace DreamersInc.BestiarySystem
         }
 
         public CharacterBuilder WithFactionInfluence(FactionNames factionID, int baseProtection, int baseThreat, uint classLevel,
-            bool isPlayer = false)
+           float3 offset, bool isPlayer = false)
         {
             this.factionID = factionID;
             this.classLevel = classLevel;
@@ -304,7 +304,7 @@ namespace DreamersInc.BestiarySystem
                 CanBeTargetByPlayer = isPlayer,
                 Type = TargetType.Character,
                 level = classLevel,
-                CenterOffset = new float3(0, 1, 0) //todo add value to SO
+                CenterOffset =offset 
             });
 
             manager.AddComponentData(entity, new Perceptibility

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective.Streaming.SceneManagement.SectionMetadata;
 using Sirenix.OdinInspector;
 using Unity.Collections;
@@ -139,6 +140,7 @@ namespace DreamersIncStudio.GAIACollective
     [System.Serializable]
     public struct PackInfo
     {
+        public FactionNames FactionID;
         public PackType PackType;
         public Size Size;
         public bool Created{get; set; }

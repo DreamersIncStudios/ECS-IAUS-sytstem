@@ -12,6 +12,7 @@ using DreamersIncStudio.GAIACollective;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
 using Sirenix.OdinInspector;
+using Unity.Mathematics;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -46,7 +47,7 @@ namespace DreamersInc.BestiarySystem
 
       
         public FactionNames FactionID;
-
+        public float3 CenterOffset;
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
