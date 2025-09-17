@@ -11,6 +11,7 @@ namespace IAUS.ECS.Component
     {
         public float3 TargetPosition;
         public Entity TargetEntity;
+        public float2 InfluenceAtTarget;
         public TerrorizeAreaState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
             this.coolDownTime = coolDownTime;
@@ -26,6 +27,7 @@ namespace IAUS.ECS.Component
             TargetEntity = Entity.Null;
             AttackPlans = new FixedList64Bytes<AttackPlan>();
             InteractableEntity = Entity.Null;
+            InfluenceAtTarget = 0;
         }
 
         public int Index { get; private set; }

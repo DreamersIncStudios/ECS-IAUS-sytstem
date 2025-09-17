@@ -52,7 +52,7 @@ namespace IAUS.ECS.Component
         public float3 Position { get; set; }
     }
 
-    public readonly partial struct InteractablesAspect : IAspect
+    public readonly partial struct InteractableAspect : IAspect
     {
         private readonly DynamicBuffer<InteractablesInRange> Interactables;
         private readonly RefRO<LocalToWorld> transform;

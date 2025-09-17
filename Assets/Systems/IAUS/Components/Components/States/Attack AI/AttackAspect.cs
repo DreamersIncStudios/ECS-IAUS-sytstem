@@ -13,6 +13,7 @@ namespace IAUS.ECS.Component
 {
     public readonly partial struct AttackAspect : IAspect
     {
+        private readonly VisionAspect visionAspect;
         private readonly RefRW<AttackState> state;
         private readonly RefRO<LocalTransform> transform;
         private readonly RefRO<AIStat> stats;
@@ -32,6 +33,7 @@ namespace IAUS.ECS.Component
             {
                 -1,
                 RestScore,
+                Wander,
                 GetAttackLocation,
                 TravelToTargetMeleeLocation,
                 TravelToTargetMagicLocation,
@@ -81,18 +83,15 @@ namespace IAUS.ECS.Component
                         state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMelee:
-                    Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15; //Todo make a variable based off attack and difficulty 
                     ECB.AddComponent<SelectAndAttack>(chunkIndex, entity);
                     state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackMagic:
-                    Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15;
                     state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
                 case AttackPlan.AttackRange:
-                    Debug.Log("attacking");
                     state.ValueRW.AttackResetTimer = 15;
                     state.ValueRW.AttackPlans.RemoveAt(0);
                     break;
@@ -102,7 +101,7 @@ namespace IAUS.ECS.Component
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        
+
         }
 
         private int MeleeScore
@@ -200,6 +199,8 @@ namespace IAUS.ECS.Component
           }
       }
 
+        private int Wander => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
+
         private int EvadeTarget {
             get
             {
@@ -220,7 +221,7 @@ namespace IAUS.ECS.Component
             }
         }
 
-        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
+        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 8 : 0;
 
         public Entity TargetEntity =>state.ValueRO.TargetEntity;
         public float3 TargetPosition {
@@ -241,6 +242,7 @@ namespace IAUS.ECS.Component
     {
         None,
         Rest,
+        Wander,
         GetAttackLocation,
         MoveToLocationMelee,
         MoveToLocationMagic,
