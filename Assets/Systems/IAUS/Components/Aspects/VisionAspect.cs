@@ -24,7 +24,7 @@ namespace AISenses.VisionSystems
             get
             {
                 foreach (var item in enemies)
-                    if (item is { Dist: < 25, target: { Affinity: Affinity.Hate or Affinity.Negative } } )
+                    if (item is { Dist: < 25, Target: { Affinity: Affinity.Hate or Affinity.Negative } } )
                     {
                         return true;
                     }
@@ -55,12 +55,12 @@ namespace AISenses.VisionSystems
 
             foreach (var enemy in enemies)
             {
-                if (enemy.target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
-                target = enemy.target.TargetInfo;
-                dist = enemy.target.DistanceTo;
-                vision.ValueRW.TargetEnemyEntity = enemy.target.Entity;
+                if (enemy.Target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
+                target = enemy.Target.TargetInfo;
+                dist = enemy.Target.DistanceTo;
+                vision.ValueRW.TargetEnemyEntity = enemy.Target.Entity;
                 Position = vision.ValueRW.TargetEnemyPosition =
-                    vision.ValueRW.LastKnownPositionEnemy = enemy.target.LastKnownPosition;
+                    vision.ValueRW.LastKnownPositionEnemy = enemy.Target.LastKnownPosition;
                 return true;
             }
 

@@ -121,7 +121,7 @@ namespace AISenses.VisionSystems
                 else
                   cameraControl.OnTargetChanged(this,
                     new CameraControl.OnTargetChangedEventArgs(EntityManager
-                        .GetComponentObject<Animator>(sortedBuffer[index].target.Entity)
+                        .GetComponentObject<Animator>(sortedBuffer[index].Target.Entity)
                         .gameObject));
             }
         }

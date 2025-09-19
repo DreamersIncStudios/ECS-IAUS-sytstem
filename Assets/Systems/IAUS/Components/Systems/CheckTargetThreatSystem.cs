@@ -39,8 +39,8 @@ namespace AISenses.VisionSystems
 
                    foreach (var relationship in relationships)
                    {
-                       if (relationship.Faction != temp.target.TargetInfo.FactionID) continue;
-                       temp.target.Affinity = relationship.Affinity switch
+                       if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                       temp.Target.Affinity = relationship.Affinity switch
                        {
                            < -75 => Affinity.Hate,
                            > -75 and < -35 => Affinity.Negative,
@@ -71,8 +71,8 @@ namespace AISenses.VisionSystems
 
                    foreach (var relationship in relationships)
                    {
-                       if (relationship.Faction != temp.target.TargetInfo.FactionID) continue;
-                       temp.target.Affinity = relationship.Affinity switch
+                       if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                       temp.Target.Affinity = relationship.Affinity switch
                        {
                            < -75 => Affinity.Hate,
                            > -75 and < -35 => Affinity.Negative,

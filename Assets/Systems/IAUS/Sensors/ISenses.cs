@@ -77,38 +77,38 @@ namespace AISenses
     [InternalBufferCapacity(0)]
     public struct Enemies : IBufferElementData,IInteractables
     {
-        public Target target;
+        public Target Target;
         public float Dist { get; }
 
         public static implicit operator Target(Enemies e) { return e; }
-        public static implicit operator Enemies(Target e) { return new Enemies { target = e }; }
+        public static implicit operator Enemies(Target e) { return new Enemies { Target = e }; }
     }
     [InternalBufferCapacity(0)]
     public struct Allies : IBufferElementData,IInteractables
     {
-        public Target target;
+        public Target Target;
         public float Dist { get; }
 
         public static implicit operator Target(Allies e) { return e; }
-        public static implicit operator Allies(Target e) { return new Allies() { target = e }; }
+        public static implicit operator Allies(Target e) { return new Allies() { Target = e }; }
     }
     [InternalBufferCapacity(0)]
     public struct PlacesOfInterest : IBufferElementData,IInteractables
     {
-        public Target target;
+        public Target Target;
         public float Dist { get; }
 
         public static implicit operator Target(PlacesOfInterest e) { return e; }
-        public static implicit operator PlacesOfInterest(Target e) { return new PlacesOfInterest() { target = e }; }
+        public static implicit operator PlacesOfInterest(Target e) { return new PlacesOfInterest() { Target = e }; }
     }
     [InternalBufferCapacity(0)]
     public struct Resources : IBufferElementData,IInteractables
     {
-        public Target target;
+        public Target Target;
         public float Dist { get; }
 
         public static implicit operator Target(Resources e) { return e; }
-        public static implicit operator Resources(Target e) { return new Resources() { target = e }; }
+        public static implicit operator Resources(Target e) { return new Resources() { Target = e }; }
     }
 
     public struct SortScanPositionByDistance : IComparer<Enemies>
@@ -140,5 +140,11 @@ namespace AISenses
         public float PerceptilabilityScore;
     }
 
- 
+    public struct SortTargetsByDistanceTo : IComparer<Target>
+    {
+        public int Compare(Target x, Target y)
+        {
+            return x.DistanceTo.CompareTo(y.DistanceTo);
+        }
+    }
 }
