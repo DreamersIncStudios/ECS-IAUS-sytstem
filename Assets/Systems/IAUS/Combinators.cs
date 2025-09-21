@@ -5,6 +5,7 @@ using AISenses;
 using AISenses.VisionSystems;
 using DreamersIncStudio.FactionSystem;
 using Global.Component;
+using Sirenix.Utilities;
 using Stats.Entities;
 using Unity.Collections;
 using Unity.Entities;
@@ -105,11 +106,26 @@ namespace Combinators.Targeting
         public List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform,
             in SearcherCtx ctx)
         {
+            if (targets.IsNullOrEmpty()) return targets;
             var neg = a.Test(targets, transform, in ctx);
-            var outList = targets;
-            foreach (var target in neg)
+            // Don't mutate 'targets' while enumerating 'neg' if they can reference the same list.
+            // Build a new list containing items from 'targets' that are NOT in 'neg'.
+            if (neg.IsNullOrEmpty()) return targets;
+
+            // Use HashSet for O(1) membership checks
+            var toExclude = new HashSet<Entity>();
+            for (int i = 0; i < neg.Count; i++)
             {
-                outList.Remove(target);
+                toExclude.Add(neg[i].Entity);
+            }
+
+            var outList = new List<TargetQuadrantData>(targets.Count);
+            foreach (var t in targets)
+            {
+                if (!toExclude.Contains(t.Entity))
+                {
+                    outList.Add(t);
+                }
             }
             return outList;
         }
@@ -309,21 +325,7 @@ namespace Combinators.Targeting
         }
     }
 
-    readonly struct SetAffinty : IPred
-    {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Test(AIStat stat, LocalTransform transform, in SearcherCtx ctx)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform,
-            in SearcherCtx ctx)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 
     readonly struct InViewRayCast : IPred
     {
@@ -380,15 +382,15 @@ namespace Combinators.Targeting
             var outList = new List<TargetQuadrantData>();
             foreach (var target in targets)
             {
-                if (target.TargetInfo.Type is not TargetType.Resource) continue;
-                outList.Add(target);
+                if (target.TargetInfo.Type == TargetType.Resource)
+                    outList.Add(target);
             }
 
             return outList;
         }
     }
 
-    readonly struct IsLocation : IPred
+    internal readonly struct IsPlaceOfInterest : IPred
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Test(AIStat stat, LocalTransform transform, in SearcherCtx ctx)
@@ -403,8 +405,8 @@ namespace Combinators.Targeting
             var outList = new List<TargetQuadrantData>();
             foreach (var target in targets)
             {
-                if (target.TargetInfo.Type is not TargetType.Location or TargetType.Vehicle) continue;
-                outList.Add(target);
+                if (target.TargetInfo.Type == TargetType.Location||target.TargetInfo.Type==TargetType.Vehicle) 
+                    outList.Add(target);
             }
 
             return outList;
