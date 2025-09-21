@@ -12,28 +12,32 @@ namespace Global.Component
     public struct AITarget : IComponentData
     {
         public TargetType Type;
-        public uint level {get; set; }
+        public ClassTitle ClassTitle;
+        public uint level { get; set; }
         public FactionNames FactionID;
         public int NumOfEntityTargetingMe;
+        [HideInInspector] public int GetInstanceID;
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of InfluenceValue Level
         public bool CanBeTargetByPlayer;
         public float3 CenterOffset;
         //TODO change to output a relationship level;
-      
-        public float detectionScore;
 
+        public float detectionScore;
     }
+
     [System.Serializable]
     public enum TargetType
     {
-        None, Character, Location, Vehicle
+        None,
+        Character,
+        Location,
+        Vehicle,
+        Resource
     }
 
 
-
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
-
     public partial class UpdateAITarget : SystemBase
     {
         protected override void OnUpdate()
@@ -44,5 +48,4 @@ namespace Global.Component
             }).Schedule();
         }
     }
-    
 }

@@ -90,6 +90,31 @@ namespace Combinators.Targeting
         }
     }
 
+    readonly struct Not<A> : IPred where A : struct, IPred 
+    {
+        public readonly A a;
+
+        public Not(A a) {
+            this.a = a;
+        }
+
+        [method: MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Test(AIStat stat, LocalTransform transform, in SearcherCtx ctx) => !a.Test(stat, transform, in ctx);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public List<TargetQuadrantData> Test(List<TargetQuadrantData> targets, LocalTransform transform,
+            in SearcherCtx ctx)
+        {
+            var neg = a.Test(targets, transform, in ctx);
+            var outList = targets;
+            foreach (var target in neg)
+            {
+                outList.Remove(target);
+            }
+            return outList;
+        }
+    }
+    
     // Fluent Builder
     readonly struct Chain<TPred> where TPred : struct, IPred
     {
@@ -103,6 +128,8 @@ namespace Combinators.Targeting
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Chain<And<TPred, Tnext>> And<Tnext>(Tnext n) where Tnext : struct, IPred =>
             new(new And<TPred, Tnext>(pred, n));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Chain<Not<TPred>> Not() => new(new Not<TPred>(pred));
 
         public TPred Build() => pred;
     }
@@ -335,6 +362,52 @@ namespace Combinators.Targeting
                 End = targetData.Position + targetData.TargetInfo.CenterOffset,
                 Filter = filter
             };
+        }
+    }
+
+    readonly struct IsResource : IPred
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool Test(AIStat stat, LocalTransform transform, in SearcherCtx ctx)
+        {
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+            LocalTransform transform, in SearcherCtx ctx)
+        {
+            var outList = new List<TargetQuadrantData>();
+            foreach (var target in targets)
+            {
+                if (target.TargetInfo.Type is not TargetType.Resource) continue;
+                outList.Add(target);
+            }
+
+            return outList;
+        }
+    }
+
+    readonly struct IsLocation : IPred
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool Test(AIStat stat, LocalTransform transform, in SearcherCtx ctx)
+        {
+            return true;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly List<TargetQuadrantData> Test(List<TargetQuadrantData> targets,
+            LocalTransform transform, in SearcherCtx ctx)
+        {
+            var outList = new List<TargetQuadrantData>();
+            foreach (var target in targets)
+            {
+                if (target.TargetInfo.Type is not TargetType.Location or TargetType.Vehicle) continue;
+                outList.Add(target);
+            }
+
+            return outList;
         }
     }
 }

@@ -175,15 +175,23 @@ namespace AISenses.VisionSystems
 
                 var enemyList = PredChain
                     .Start(new IsEnemy())
+                    .And(new IsLocation()).Not()
+                    .And(new IsResource()).Not()
                     .Build();
                 var allyList = PredChain
                     .Start(new IsFriendly())
+                    .And(new IsLocation()).Not()
+                    .And(new IsResource()).Not()
                     .Build();
                 var resourceList = PredChain
                     .Start(new IsAlive())
+                    .And(new IsResource())
+                    .And(new IsLocation()).Not()
                     .Build();
                 var placeList = PredChain
                     .Start(new IsAlive())
+                    .And(new IsLocation())
+                    .And(new IsResource()).Not()
                     .Build();
 
                 var filteredTarget = targetsInRange.Test(targets, transform, in ctx);
