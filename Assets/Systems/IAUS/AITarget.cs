@@ -20,6 +20,7 @@ namespace Global.Component
         public bool CanBeTargeted => NumOfEntityTargetingMe < 2;
         [HideInInspector] public int MaxNumberOfTarget; // base off of InfluenceValue Level
         public bool CanBeTargetByPlayer;
+        public bool Attackable;
         public float3 CenterOffset;
         //TODO change to output a relationship level;
 

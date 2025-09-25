@@ -9,10 +9,14 @@ namespace IAUS.ECS.Component
     public struct  AttackState : IBaseStateScorer
     {
         public float3 TargetPosition;
+        public float3 AttackPosition;
+
         public Entity TargetEntity;
         public int TargetPositionID;
+        public HowToAttack AttackType;
         public AttackState(float coolDownTime, bool melee = false, bool magic = false, bool range = false)
         {
+            AttackType = HowToAttack.None;
             this.coolDownTime = coolDownTime;
             status = ActionStatus.Idle;
             Index = 0;
@@ -23,7 +27,7 @@ namespace IAUS.ECS.Component
             CapableOfMagic = magic;
             CapableOfProjectile = range;
             AttackResetTimer = 0.0f;
-            TargetPosition = float3.zero;
+            AttackPosition = TargetPosition = float3.zero;
             TargetEntity = Entity.Null;
             AttackPlans = new FixedList64Bytes<AttackPlan>();
             TargetPositionID = -1;

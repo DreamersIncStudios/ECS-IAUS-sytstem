@@ -10,6 +10,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEngine;
 using Utilities;
 
 namespace IAUS.ECS.Systems
@@ -54,15 +55,16 @@ namespace IAUS.ECS.Systems
             depends = new FindObjectToTerrorize()
             {
             }.Schedule(depends);
-            depends = new DetermineAction()
-            {
-                deltaTime = SystemAPI.Time.DeltaTime,
-                ECB = ecb.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
-            }.Schedule(depends);
             depends = new GetTerrorizeLocation()
             {
                 TransformLookup = this.transformLookup
             }.Schedule(depends);
+            // depends = new DetermineAction()
+            // {
+            //     deltaTime = SystemAPI.Time.DeltaTime,
+            //     ECB = ecb.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
+            // }.Schedule(depends);
+            //
             state.Dependency = depends;
         }
 
@@ -85,6 +87,7 @@ namespace IAUS.ECS.Systems
 
                 var targetsInRange = PredChain
                     .Start(new FilterDuplicates())
+                    .And(new IsAttackable())
                     .And(new SortByRange())
                     .And(new SortByInfluence())
                     .Build();
@@ -92,6 +95,7 @@ namespace IAUS.ECS.Systems
                 var filtered = targetsInRange.Test(targets, searchCTX);
                 if (filtered.Count == 0) return;
                 state.TargetEntity = filtered[0].Entity;
+                Debug.Log("Have target to terrorize");
             }
         }
 

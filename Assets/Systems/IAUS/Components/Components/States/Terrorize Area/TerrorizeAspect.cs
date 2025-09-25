@@ -16,24 +16,40 @@ namespace IAUS.ECS.Systems
     {
         private readonly RefRW<TerrorizeAreaState> state;
         private readonly RefRO<LocalToWorld> transform;
-        private readonly RefRO<AIStat> stats; // Ensure the 'AIStat' type/component is implemented and that the corresponding namespace is imported.
-        public  readonly RefRW<Movement> Move;
+
+        private readonly RefRO<AIStat>
+            stats; // Ensure the 'AIStat' type/component is implemented and that the corresponding namespace is imported.
+
+        public readonly RefRW<Movement> Move;
         private readonly RefRO<AgentBody> agent;
 
         public FixedList32Bytes<AttackPlan> Plan => state.ValueRW.AttackPlans;
-        
+        public Entity TargetEntity => state.ValueRO.TargetEntity;
+
+        public float3 TargetPosition
+        {
+            get => state.ValueRW.TargetPosition;
+            set => state.ValueRW.TargetPosition = value;
+        }
+
         private bool IsHealthy => stats.ValueRO.HealthRatio > .725f;
         private bool IsInDanger => stats.ValueRO.HealthRatio < .35f;
 
+        private bool MultiAttackStates => (state.ValueRO.CapableOfMagic && state.ValueRO.CapableOfMelee) ||
+                                          (state.ValueRO.CapableOfMagic && state.ValueRO.CapableOfProjectile) ||
+                                          (state.ValueRO.CapableOfMelee && state.ValueRO.CapableOfProjectile);
+
         public void DeterminePlan()
         {
-            if(state.ValueRO.AttackPlans.Length!=0)return;
+            if (state.ValueRO.AttackPlans.Length != 0) return;
+            state.ValueRW.AttackType = DetermineHowToAttack();
             // select an attack Plan
-            int[] scores= new[]
+            int[] scores = new[]
             {
                 -1,
                 RestScore,
                 Wander,
+                GetTargetLocation,
                 GetAttackLocation,
                 TravelToTargetMeleeLocation,
                 TravelToTargetMagicLocation,
@@ -42,17 +58,30 @@ namespace IAUS.ECS.Systems
                 MagicScore,
                 RangeScore,
                 EvadeTarget
-
             };
             var sortedScores = scores.ToList().OrderByDescending(x => x);
             foreach (var score in sortedScores)
             {
                 if (score <= 0) continue;
-                if(state.ValueRW.AttackPlans.Length>=8)return;
+                if (state.ValueRW.AttackPlans.Length >= 8) return;
                 var index = scores.ToList().IndexOf(score);
                 state.ValueRW.AttackPlans.Add((AttackPlan)(index));
             }
+        }
 
+        public HowToAttack DetermineHowToAttack()
+        {
+            int[] scores = new[]
+            {
+                -1,
+                MeleeScore,
+                MagicScore,
+                RangeScore,
+            };
+            var sortedScores = scores.ToList().OrderByDescending(x => x);
+
+            var index = scores.ToList().IndexOf(0);
+            return (HowToAttack)(index);
         }
 
         public void ExecutePlan(Entity entity, int chunkIndex, float deltaTime, EntityCommandBuffer.ParallelWriter ECB)
@@ -97,18 +126,40 @@ namespace IAUS.ECS.Systems
                     break;
                 case AttackPlan.Evade:
                 case AttackPlan.GetAttackLocation:
+
+                    break;
+                case AttackPlan.GetTargetLocation:
                     break;
             }
-
         }
-        
+
         bool InAttackRange(float range)
         {
-            if(state.ValueRO.TargetPosition.Equals(float3.zero)) return false;
-            var distance = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.TargetPosition);
+            if (state.ValueRO.AttackPosition.Equals(float3.zero)) return false;
+            var distance = Vector3.Distance(transform.ValueRO.Position, state.ValueRO.AttackPosition);
             return distance <= range;
         }
-        private int GetAttackLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
+
+        private bool InSafeHpRange => stats.ValueRO.HealthRatio > .425f;
+
+
+        bool CoverInRange()
+        {
+            return false;
+        }
+
+        bool ManaLevelLow()
+        {
+            return false;
+        }
+
+        bool AmmoLevelLow()
+        {
+            return false;
+        }
+
+        private int GetAttackLocation => state.ValueRO.AttackPosition.Equals(float3.zero) ? 10 : 0;
+        private int GetTargetLocation => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
         private int Wander => state.ValueRO.TargetPosition.Equals(float3.zero) ? 10 : 0;
 
         private int MeleeScore
@@ -117,7 +168,26 @@ namespace IAUS.ECS.Systems
             {
                 if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfMelee) return 0;
+                //Todo add Map influence check
+
                 var temp = 2;
+                if (InSafeHpRange)
+                    temp++;
+                if (!CoverInRange() && (state.ValueRO.CapableOfMagic || state.ValueRO.CapableOfProjectile))
+                {
+                    if (!CoverInRange())
+                        temp++;
+                }
+
+                if (MultiAttackStates)
+                {
+                    if (!state.ValueRO.CapableOfMagic && ManaLevelLow())
+                        temp++;
+
+                    if (!state.ValueRO.CapableOfProjectile && AmmoLevelLow())
+                        temp++;
+                }
+
                 if (!InAttackRange(3)) return temp;
                 temp++;
                 return temp;
@@ -130,7 +200,20 @@ namespace IAUS.ECS.Systems
             {
                 if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfMagic) return 0;
+                //Todo add Map influence check
+
                 var temp = 2;
+                if (!CoverInRange())
+                    temp++;
+                if (MultiAttackStates)
+                {
+                    if (!state.ValueRO.CapableOfMelee && !ManaLevelLow())
+                        temp++;
+
+                    if (!state.ValueRO.CapableOfProjectile && AmmoLevelLow())
+                        temp++;
+                }
+
                 if (!InAttackRange(10)) return temp;
                 temp++;
                 return temp;
@@ -143,14 +226,30 @@ namespace IAUS.ECS.Systems
             {
                 if (state.ValueRO.InAttackCooldown) return 0;
                 if (!state.ValueRO.CapableOfProjectile) return 0;
+                //Todo add Map influence check
+                //Check for cover
+                //check for Ammo
+                //check for HP
                 var temp = 2;
+                if (!CoverInRange())
+                    temp++;
+                if (MultiAttackStates)
+                {
+                    if (!state.ValueRO.CapableOfMagic && ManaLevelLow())
+                        temp++;
+
+                    if (!state.ValueRO.CapableOfMelee && !AmmoLevelLow())
+                        temp++;
+                }
+
                 if (!InAttackRange(30)) return temp;
                 temp++;
                 return temp;
             }
         }
 
-        private int TravelToTargetMeleeLocation {
+        private int TravelToTargetMeleeLocation
+        {
             get
             {
                 if (!state.ValueRO.CapableOfMelee) return 0;
@@ -161,14 +260,14 @@ namespace IAUS.ECS.Systems
                 if (IsHealthy)
                     temp++;
                 return temp;
-
             }
         }
 
-        private int TravelToTargetMagicLocation {
+        private int TravelToTargetMagicLocation
+        {
             get
             {
-                if (!state.ValueRO.CapableOfMagic||InAttackRange(10)) return 0;
+                if (!state.ValueRO.CapableOfMagic || InAttackRange(10)) return 0;
                 var temp = 3;
                 if (IsInDanger)
                 {
@@ -186,7 +285,8 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        private int TravelToTargetRangeLocation {
+        private int TravelToTargetRangeLocation
+        {
             get
             {
                 if (!state.ValueRO.CapableOfProjectile) return 0;
@@ -200,31 +300,33 @@ namespace IAUS.ECS.Systems
                         return temp;
                     }
                 }
+
                 if (IsHealthy)
                     temp++;
                 return temp;
             }
         }
 
-        private int EvadeTarget {
+        private int EvadeTarget
+        {
             get
             {
                 if (!IsInDanger) return 0;
                 var temp = 2;
-                return temp; 
+                return temp;
             }
         }
 
-        private int RestScore {
+        private int RestScore
+        {
             get
             {
                 var temp = 0;
                 if (IsInDanger) return temp;
-                if(state.ValueRO.InAttackCooldown)
+                if (state.ValueRO.InAttackCooldown)
                     temp = 3;
-                return temp; 
+                return temp;
             }
         }
-
     }
 }

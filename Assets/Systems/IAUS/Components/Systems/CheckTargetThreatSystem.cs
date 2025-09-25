@@ -12,83 +12,281 @@ namespace AISenses.VisionSystems
     [UpdateAfter(typeof(TargetingQuadrantSystem))]
     public partial class CheckTargetThreatSystem : SystemBase
     {
-    
         Entity factionSingleton;
+
         protected override void OnCreate()
         {
             base.OnCreate();
             RequireForUpdate<FactionSingleton>();
-      
-
         }
+
         protected override void OnUpdate()
         {
-           var  factionsBuffer = SystemAPI.GetSingletonBuffer<Factions>(true);
-           Entities.ForEach((DynamicBuffer<Enemies> buffer, ref IAUSBrain brain) =>
-           {
-               for (int i = 0; i < buffer.Length; i++)
-               {
-                   var temp = buffer[i];
-                   var relationships = default(FixedList512Bytes<Relationship>);
-                   foreach (var factions in factionsBuffer)
-                   {
-                       if (factions.Faction != brain.FactionID) continue;
-                       relationships = factions.Relationships;
-                       break;
-                   }
+            var factionsBuffer = SystemAPI.GetSingletonBuffer<Factions>();
+            Entities.ForEach((DynamicBuffer<Enemies> buffer, ref IAUSBrain brain) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != brain.FactionID) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
 
-                   foreach (var relationship in relationships)
-                   {
-                       if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
-                       temp.Target.Affinity = relationship.Affinity switch
-                       {
-                           < -75 => Affinity.Hate,
-                           > -75 and < -35 => Affinity.Negative,
-                           > -35 and < 35 => Affinity.Neutral,
-                           > 35 and < 74 => Affinity.Positive,
-                           > 75 => Affinity.Love,
-                           _ => Affinity.Neutral
-                       };
-                   }
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
 
-                   buffer[i] = temp;
-               }
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+            
+            Entities.ForEach((DynamicBuffer<Allies> buffer, ref IAUSBrain brain) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != brain.FactionID) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
 
-           }).Schedule();
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
 
-           Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer) =>
-           {
-               for (int i = 0; i < buffer.Length; i++)
-               {
-                   var temp = buffer[i];
-                   var relationships = default(FixedList512Bytes<Relationship>);
-                   foreach (var factions in factionsBuffer)
-                   {
-                       if (factions.Faction != FactionNames.Player) continue;
-                       relationships = factions.Relationships;
-                       break;
-                   }
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+            
+            Entities.ForEach((DynamicBuffer<Resources> buffer, ref IAUSBrain brain) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != brain.FactionID) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
 
-                   foreach (var relationship in relationships)
-                   {
-                       if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
-                       temp.Target.Affinity = relationship.Affinity switch
-                       {
-                           < -75 => Affinity.Hate,
-                           > -75 and < -35 => Affinity.Negative,
-                           > -35 and < 35 => Affinity.Neutral,
-                           > 35 and < 74 => Affinity.Positive,
-                           > 75 => Affinity.Love,
-                           _ => Affinity.Neutral
-                       };
-                   }
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
 
-                   buffer[i] = temp;
-               }
+                    buffer[i] = temp;
+                }
+            }).Schedule(); 
+            
+            Entities.ForEach((DynamicBuffer<PlacesOfInterest> buffer, ref IAUSBrain brain) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != brain.FactionID) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
 
-           }).Schedule();
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
+
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+
+            Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<Enemies> buffer) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != FactionNames.Player) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
+
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
+
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+
+
+            Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<Allies> buffer) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != FactionNames.Player) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
+
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
+
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+
+            Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<Resources> buffer) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != FactionNames.Player) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
+
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
+
+                    buffer[i] = temp;
+                }
+            }).Schedule();
+
+            Entities.WithAll<Player_Control>().ForEach((DynamicBuffer<PlacesOfInterest> buffer) =>
+            {
+                for (int i = 0; i < buffer.Length; i++)
+                {
+                    var temp = buffer[i];
+                    var relationships = default(FixedList512Bytes<Relationship>);
+                    foreach (var factions in factionsBuffer)
+                    {
+                        if (factions.Faction != FactionNames.Player) continue;
+                        relationships = factions.Relationships;
+                        break;
+                    }
+
+                    foreach (var relationship in relationships)
+                    {
+                        if (relationship.Faction != temp.Target.TargetInfo.FactionID) continue;
+                        var target = temp.Target;
+                        target.Affinity = relationship.Affinity switch
+                        {
+                            < -75 => Affinity.Hate,
+                            > -75 and < -35 => Affinity.Negative,
+                            > -35 and < 35 => Affinity.Neutral,
+                            > 35 and < 74 => Affinity.Positive,
+                            > 75 => Affinity.Love,
+                            _ => Affinity.Neutral
+                        };
+                        temp.Target = target;
+                    }
+
+                    buffer[i] = temp;
+                }
+            }).Schedule();
         }
-        
-
     }
 }
