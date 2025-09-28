@@ -111,6 +111,24 @@ namespace AISenses
         public static implicit operator Resources(Target e) { return new Resources() { Target = e }; }
     }
 
+    [InternalBufferCapacity(0)]
+    public struct GlobalTargets : IBufferElementData
+    {
+        public AITarget Target { get; set; }
+        public float3 CurPosition { get; set; }
+        public Entity Entity { get; set; }
+
+        public static implicit operator AITarget(GlobalTargets e)
+        {
+            return e;
+        }
+
+        public static implicit operator GlobalTargets(AITarget e)
+        {
+            return new GlobalTargets() { Target = e };
+        }
+    }
+    
     public struct SortScanPositionByDistance : IComparer<Enemies>
     {
         public int Compare(Enemies x, Enemies y)

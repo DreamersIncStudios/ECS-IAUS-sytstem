@@ -87,22 +87,16 @@ namespace DreamersInc.BestiarySystem
 #if UNITY_EDITOR
     public static partial class Creator
     {
-        [MenuItem("Assets/Create/Bestiary/Creature Info")]
+        private const string NPCFolderPath = "Assets/Prefab Library/Resources/Item Database/Spells";
+
+        [MenuItem("Assets/Create/Bestiary/NPC Info")]
         public static void CreateCreatureInfo()
         {
-            Dreamers.Global.ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset(NPCFolderPath,"Creature", out CreatureInfo info);
             BestiaryDB.LoadDatabase(true);
-            
         }
 
-        [MenuItem("Assets/Create/Bestiary/Spawn Creature Info")]
-        public static void CreateSpawnPackInfo()
-        {
-            Dreamers.Global.ScriptableObjectUtility.CreateAsset<PackSpawnCreatureInfo>("Creature",
-                out PackSpawnCreatureInfo info);
-            BestiaryDB.LoadDatabase(true);
-            
-        }
+    
 
     }
 #endif

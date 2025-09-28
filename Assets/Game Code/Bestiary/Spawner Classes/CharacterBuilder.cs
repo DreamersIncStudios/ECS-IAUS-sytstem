@@ -35,6 +35,8 @@ namespace DreamersInc.BestiarySystem
     {
         private GameObject model;
         private readonly Entity entity;
+        private Entity aiEntity;
+        private Entity visionEntity;
         private BaseCharacterComponent character;
         private FactionNames factionID;
         private uint classLevel;
@@ -231,7 +233,7 @@ namespace DreamersInc.BestiarySystem
             if (model == null) return this;
             BaseCharacterComponent data = new()
             {
-                GOrepresentative = model // todo change to instance 
+                GORepresentative = model // todo change to instance 
             };
             data.SetupDataEntity(stats, name);
             manager.AddComponentObject(entity, data);
@@ -262,14 +264,28 @@ namespace DreamersInc.BestiarySystem
         public CharacterBuilder WithCharacterDetection()
         {
             if (entity == Entity.Null) return this;
-            if (model == null) return this;
+            if (!model) return this;
+            var baseEntityArch = manager.CreateArchetype(
+                typeof(LocalTransform),
+                typeof(LocalToWorld)
+            );
+            visionEntity = manager.CreateEntity(baseEntityArch);
+            manager.SetName(visionEntity, "Vision Entity");
+            manager.SetComponentData(visionEntity, new LocalTransform() { Scale = 1 });
+            manager.AddComponentData(visionEntity, new Parent()
+            {
+                Value = entity
+            });
+
             var vision = new Vision();
             vision.InitializeSense(character);
-            manager.AddBuffer<Enemies>(entity);
-            manager.AddBuffer<Allies>(entity);
-            manager.AddBuffer<AISenses.Resources>(entity);
-            manager.AddBuffer<PlacesOfInterest>(entity);
-            manager.AddComponentData(entity, vision);
+            //Todo Move to entity by self
+            manager.AddBuffer<Enemies>(visionEntity);
+            manager.AddBuffer<Allies>(visionEntity);
+            manager.AddBuffer<AISenses.Resources>(visionEntity);
+            manager.AddBuffer<PlacesOfInterest>(visionEntity);
+            manager.AddBuffer<GlobalTargets>(visionEntity);
+            manager.AddComponentData(visionEntity, vision);
             return this;
         }
 
@@ -284,27 +300,35 @@ namespace DreamersInc.BestiarySystem
             return this;
         }
 
-        public CharacterBuilder WithFactionInfluence(FactionNames factionID, int baseProtection, int baseThreat, uint classLevel,
-           float3 offset, bool isPlayer = false)
+        public CharacterBuilder WithFactionInfluence(FactionNames factionID, int influenceValue, uint classLevel,
+           float3 centerOffset = default, bool isPlayer = false)
         {
+            if (entity == Entity.Null) return this;
+            if (!model) return this;
+
+
             this.factionID = factionID;
             this.classLevel = classLevel;
-            if (entity == Entity.Null) return this;
-            if (model == null) return this;
-            manager.AddComponentData(entity, new InfluenceComponent
+            if (aiEntity != Entity.Null)
             {
-                FactionID = factionID,
-                Protection = baseProtection,
-                Threat = baseThreat
-            });
+                manager.AddComponentData(aiEntity,
+                    new InfluenceComponent(this.factionID, influenceValue,
+                        15));
+            } //Todo add range of Influence to CharacterInfo Scriptable Object
+            else
+            {
+                manager.AddComponentData(entity,
+                    new InfluenceComponent(this.factionID, influenceValue, 15));
+            }
+
             manager.AddComponentData(entity, new AITarget()
             {
-                FactionID = factionID,
+                FactionID = (FactionNames)factionID,
                 NumOfEntityTargetingMe = 3,
                 CanBeTargetByPlayer = isPlayer,
                 Type = TargetType.Character,
                 level = classLevel,
-                CenterOffset =offset 
+                CenterOffset = centerOffset
             });
 
             manager.AddComponentData(entity, new Perceptibility
@@ -313,7 +337,6 @@ namespace DreamersInc.BestiarySystem
                 noiseState = NoiseState.Normal,
                 visibilityStates = VisibilityStates.Visible
             });
-
             return this;
         }
 
@@ -355,82 +378,112 @@ namespace DreamersInc.BestiarySystem
 
         public CharacterBuilder WithAI(NPCLevel getNpcLevel, List<AIStates> aiStatesToAdd, bool capableOfMelee = false,
             bool capableOfMagic = false, bool capableOfRange = false, Role role = default)
+        { if (!model || entity == Entity.Null) return this;
+
+        var baseEntityArch = manager.CreateArchetype(
+            typeof(LocalTransform),
+            typeof(LocalToWorld)
+        );
+        aiEntity = manager.CreateEntity(baseEntityArch);
+        manager.SetName(aiEntity, "AI Entity");
+        manager.SetComponentData(aiEntity, new LocalTransform() { Scale = 1 });
+        manager.AddComponentData(aiEntity, new Parent()
         {
-            if (entity == Entity.Null || model == null) return this;
-            manager.AddComponentData(entity, new IAUSBrain()
+            Value = entity
+        });
+
+        manager.AddComponentData(aiEntity, new AIStat());
+
+        manager.AddComponentData(aiEntity, new IAUSBrain()
+        {
+            NPCLevel = getNpcLevel,
+            FactionID = factionID,
+            Difficulty = Difficulty.Normal,
+            Role = role
+        });
+        manager.AddComponentData(aiEntity, new VisionIAUSLink(visionEntity));
+        model.layer = LayerMask.NameToLayer("NPC");
+        foreach (var state in aiStatesToAdd)
+        {
+            switch (state)
             {
-                NPCLevel = getNpcLevel,
-                FactionID = factionID,
-                Difficulty = Difficulty.Normal, // TODO  pull from Game setting in future
-                Role = role
-            });
-            foreach (var state in aiStatesToAdd)
-            {
-                switch (state)
-                {
-                    case AIStates.Patrol:
-                        var patrol = new Patrol()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        if (classLevel > 3)
-                            patrol.StayInQuadrant = true;
-                        manager.AddComponentData(entity, patrol);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
+                case AIStates.Patrol:
+                    var patrol = new Patrol()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    if (classLevel > 3)
+                        patrol.StayInQuadrant = true;
+                    manager.AddComponentData(entity, patrol);
+                    manager.AddBuffer<TravelWaypointBuffer>(aiEntity);
+                    break;
 
-                    case AIStates.Traverse:
-                        var traverse = new Traverse()
-                        {
-                            NumberOfWayPoints = 10,
-                            BufferZone = .25f,
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, traverse);
-                        manager.AddBuffer<TravelWaypointBuffer>(entity);
-                        break;
-                    case AIStates.WanderQuadrant:
+                case AIStates.Traverse:
+                    var traverse = new Traverse()
+                    {
+                        NumberOfWayPoints = 10,
+                        BufferZone = .25f,
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(entity, traverse);
+                    manager.AddBuffer<TravelWaypointBuffer>(aiEntity);
+                    break;
+                case AIStates.WanderQuadrant:
 
-                        manager.AddComponentData(entity, new WanderQuadrant(
-                            wanderCenterPoint: model.transform.position,
-                            coolDownTime: 5.5f,
-                            bufferZone: .25f,
-                            wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
-                        ));
+                    manager.AddComponentData(aiEntity, new WanderQuadrant(
+                        wanderCenterPoint: model.transform.position,
+                        coolDownTime: 5.5f,
+                        bufferZone: .25f,
+                        wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
+                    ));
 
-                        break;
-                    case AIStates.Wait:
-                        var wait = new Wait()
-                        {
-                            _coolDownTime = 5.5f
-                        };
-                        manager.AddComponentData(entity, wait);
-                        break;
-                    case AIStates.Attack:
-                        manager.AddComponent<AttackTarget>(entity);
-                        manager.AddComponentObject(entity, new Command());
-                        manager.AddComponentData(entity,
-                            new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
-                        manager.AddComponent<CheckAttackStatus>(entity);
+                    break;
+                case AIStates.Wait:
+                    var wait = new Wait()
+                    {
+                        _coolDownTime = 5.5f
+                    };
+                    manager.AddComponentData(aiEntity, wait);
+                    break;
+                case AIStates.Attack:
+                    manager.AddComponent<AttackTarget>(aiEntity);
+                    var command = new Command
+                    {
+                        BareHands = true // equip system need to adjust this value
+                    };
+                    manager.AddComponentData(aiEntity, command);
+                    manager.AddComponentData(aiEntity, command);
+                    
+                    manager.AddComponentData(aiEntity,
+                        new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
+                    manager.AddComponent<CheckAttackStatus>(aiEntity);
+                    break;
+                case AIStates.Retreat:
 
-                        break;
-                    case AIStates.RetreatToLocation:
-                        manager.AddComponentData(entity, new EscapeThreat(coolDownTime: 10f));
-                        break;
-                    case AIStates.RetreatToQuadrant:
-                        manager.AddComponentData(entity,
-                            new StayInQuadrant(coolDownTime: 10f, spawnPosition: model.transform.position));
-                        break;
-                    case AIStates.Terrorize:
-                        manager.AddComponentData(entity,
-                            new TerrorizeAreaState(5F, capableOfMelee, capableOfMagic, capableOfRange));
-                        break;
-                }
+                    manager.AddComponentData(aiEntity, new EvadeThreat(10f));
+                    break;
+
+                case AIStates.Terrorize:
+                    manager.AddComponentData(aiEntity,
+                        new TerrorizeAreaState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
+                    manager.AddComponent<AttackTarget>(aiEntity);
+
+                    manager.AddComponentObject(aiEntity, new Command
+                    {
+                        BareHands = true // equip system need to adjust this value
+                    });
+                    manager.AddComponent<CheckAttackStatus>(aiEntity);
+
+                    break;
+                case AIStates.PerformMaintenance:
+                    manager.AddComponentData(aiEntity, new MaintenanceState(coolDownTime: 10f, 5.5f));
+                    break;
             }
+        }
 
-            manager.AddComponent<SetupBrainTag>(entity);
+        manager.AddComponent<SetupBrainTag>(aiEntity);
 
             return this;
         }

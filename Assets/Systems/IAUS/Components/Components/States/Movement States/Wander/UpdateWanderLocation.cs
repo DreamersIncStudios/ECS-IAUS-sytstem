@@ -1,19 +1,23 @@
 using Components.MovementSystem;
 using DreamersInc.QuadrantSystems;
 using IAUS.ECS.Systems;
+using System.Collections.Generic;
+using DreamersIncStudio.GAIACollective;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
+using Random = UnityEngine.Random;
 
 
 namespace IAUS.ECS.Component
-{ // Base system with the template-method skeleton for processing an entity update
+{
+    // Base system with the template-method skeleton for processing an entity update
     public abstract partial class WanderLocationSystemBase : SystemBase
     {
-        protected const float WanderRange = 50f;
+        private const float WanderRange = 50f;
 
         protected override void OnUpdate()
         {
@@ -21,12 +25,12 @@ namespace IAUS.ECS.Component
             // and invoke ProcessEntityTemplate(...) for each matched entity.
         }
 
-    
+
         protected void ProcessEntityTemplate(Entity entity,
-                                             ref LocalTransform transform,
-                                             ref WanderQuadrant wander,
-                                             ref UpdateWanderLocationTag tag,
-                                             ref Movement move)
+            ref LocalToWorld transform,
+            ref WanderQuadrant wander,
+            ref UpdateWanderLocationTag tag,
+            ref Movement move)
         {
             float3 travel = ComputeTravelPosition(entity, ref transform, ref wander, ref move);
             wander.TravelPosition = travel;
@@ -38,9 +42,9 @@ namespace IAUS.ECS.Component
 
         // Variation point implemented by subclasses
         protected abstract float3 ComputeTravelPosition(Entity entity,
-                                                        ref LocalTransform transform,
-                                                        ref WanderQuadrant wander,
-                                                        ref Movement move);
+            ref LocalToWorld transform,
+            ref WanderQuadrant wander,
+            ref Movement move);
 
         //  helpers
         protected float3 GetWanderPoint(float3 currentPosition, int hashKey)
@@ -48,7 +52,8 @@ namespace IAUS.ECS.Component
             var attempts = 0;
             while (attempts < 50)
             {
-                if (!GlobalFunctions.RandomPoint(currentPosition, WanderRange, out float3 potentialPosition) || !IsPositionValid((int3)potentialPosition, hashKey))
+                if (!GlobalFunctions.RandomPoint(currentPosition, WanderRange, out float3 potentialPosition) ||
+                    !IsPositionValid((int3)potentialPosition, hashKey))
                 {
                     attempts++;
                     continue;
@@ -76,4 +81,6 @@ namespace IAUS.ECS.Component
                    path.status == NavMeshPathStatus.PathComplete;
         }
     }
+
+    
 }

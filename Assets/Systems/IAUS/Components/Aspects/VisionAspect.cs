@@ -17,21 +17,20 @@ namespace AISenses.VisionSystems
         public Entity TargetEnemy => vision.ValueRO.TargetEnemyEntity;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
         public Entity TargetFriend => vision.ValueRO.TargetFriendlyEntity;
-        
+
 
         public bool TargetInReactRange
         {
             get
             {
                 foreach (var item in enemies)
-                    if (item is { Dist: < 25, Target: { Affinity: Affinity.Hate or Affinity.Negative } } )
+                    if (item is { Dist: < 25, Target: { Affinity: Affinity.Hate or Affinity.Negative } })
                     {
                         return true;
                     }
 
                 return false;
             }
-
         }
 
 
@@ -39,7 +38,6 @@ namespace AISenses.VisionSystems
         {
             return TargetEnemyTargetInRange(out _, out _, out dist);
         }
-
 
 
         private bool TargetEnemyTargetInRange(out float3 Position, out AITarget target, out float dist)
@@ -66,7 +64,27 @@ namespace AISenses.VisionSystems
 
             return false;
         }
+    }
 
+    public struct VisionIAUSLink : IComponentData
+    {
+        public VisionIAUSLink(Entity visionEntity)
+        {
+            VisionEntity = visionEntity;
+            TargetEnemy = Entity.Null;
+            Dist = 0;
+            HasTarget = false;
+        }
 
+        public Entity VisionEntity { get; }
+        public Entity TargetEnemy { get; set; }
+        public bool HasTarget;
+        public float Dist;
+
+        public bool TargetEnemyTargetInRange(out float f)
+        {
+            f = Dist;
+            return HasTarget;
+        }
     }
 }

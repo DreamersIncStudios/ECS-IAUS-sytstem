@@ -20,7 +20,7 @@ namespace Stats.Entities
         public bool InPlay;
         public bool InvincibleMode;
 
-       [HideInInspector] public GameObject GOrepresentative;
+       [HideInInspector] public GameObject GORepresentative;
         [Range(0, 9999)]
         [SerializeField] int _curHealth;
         public int CurHealth

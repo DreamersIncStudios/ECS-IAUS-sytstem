@@ -73,23 +73,29 @@ namespace Dreamers.InventorySystem
             //    // need to deal with duplicate itemID numbers 
 
             //}
+            private const string ArmorFolderPath = "Assets/Prefab Library/Resources/Item Database/Weapons";
+
             [MenuItem("Assets/Create/RPG/Armor Item")]
-            static public void CreateArmorItem()
+            public static void CreateArmorItem()
             {
-                ScriptableObjectUtility.CreateAsset<ArmorSO>("Item", out ArmorSO Item);
+                ScriptableObjectUtility.CreateAsset<ArmorSO>(ArmorFolderPath,"Armor", out ArmorSO Item);
                 ItemDatabase.LoadDatabaseForce();
-                Item.setItemID((uint)ItemDatabase.Items.Count + 1);
+                Item.setItemID();
                 Debug.Log(Item.ItemID);
+                AssetDatabase.SetLabels(Item, new [] {"Item","Equippable","Armor"});
                 // need to deal with duplicate itemID numbers 
 
             }
-            [MenuItem("Assets/Create/RPG/Weapon Item")]
-            static public void CreateWeaponItem()
+            private const string WeaponFolderPath = "Assets/Prefab Library/Resources/Item Database/Weapons";
+
+            [MenuItem("Assets/Create/RPG/Weapon/Melee Item")]
+            public static void CreateWeaponItem()
             {
-                ScriptableObjectUtility.CreateAsset<WeaponSO>("Item", out WeaponSO Item);
+                ScriptableObjectUtility.CreateAsset<WeaponSO>(WeaponFolderPath,"Weapon", out WeaponSO Item);
                 ItemDatabase.LoadDatabaseForce();
-                Item.setItemID((uint)ItemDatabase.Items.Count + 1);
+                Item.setItemID();
                 Debug.Log(Item.ItemID);
+                AssetDatabase.SetLabels(Item, new [] {"Item","Equippable","Weapon"});
                 // need to deal with duplicate itemID numbers 
 
             }

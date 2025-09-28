@@ -21,6 +21,7 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
+        //Builder used the main project 
         private static bool SpawnPlayer(uint ID, out GameObject go, out Entity entity, bool IsPlayer = false)
         {
             var info = GetPlayer(ID);
@@ -33,7 +34,7 @@ namespace DreamersInc.BestiarySystem
                 entity = CreateEntity(manager, go.transform, info.Name);
                 AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new();
-                character.GOrepresentative = go;
+                character.GORepresentative = go;
                 character.SetupDataEntity(info.stats, info.Name);
                 TransformGO transformLink = new()
                 {
@@ -104,8 +105,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
                     FactionID = info.factionID,
-                    Protection = info.BaseProtection,
-                    Threat = info.BaseThreat
+              
                 });
                 manager.AddComponentData(entity, new Perceptibility
                 {
@@ -150,8 +150,7 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
                     FactionID = info.factionID,
-                    Protection = info.BaseProtection,
-                    Threat = info.BaseThreat
+
                 });
                 manager.AddComponentData(entity, new Perceptibility
                 {

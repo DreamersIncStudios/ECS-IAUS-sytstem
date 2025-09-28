@@ -6,22 +6,26 @@ using AISenses.VisionSystems;
 using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.ECS.StateBlobSystem;
+using ProjectDawn.Navigation;
 using Stats.Entities;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace IAUS.ECS.Component.Aspects
 {
-
     public readonly partial struct IAUSBlackboard : IAspect
     {
+        #region Components
+
         private readonly RefRO<LocalTransform> transform;
         readonly RefRO<AIStat> statInfo;
         private readonly RefRW<IAUSBrain> brain;
-        private readonly VisionAspect visionAspect;
+        private readonly RefRO<VisionIAUSLink> visionLink;
+        private readonly RefRO<InfluenceComponent> influence;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
@@ -30,9 +34,16 @@ namespace IAUS.ECS.Component.Aspects
         [Optional] private readonly RefRW<EvadeThreat> evade;
         [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
         [Optional] private readonly RefRW<MaintenanceState> maintenance;
-        
+        [Optional] private readonly RefRO<ManualControlIAUS> manualControl;
+
+        private string DebugText(AIStates state) =>
+            $"Please check AI State Scriptable object and Consideration Data to make sure {state} state is implemented";
 
         private readonly Entity self;
+
+        #endregion
+
+        #region Derived Values
 
         private StateAsset GetAsset(int index)
         {
@@ -41,10 +52,9 @@ namespace IAUS.ECS.Component.Aspects
 
         private struct StateInfo
         {
-            [SerializeField] public AIStates StateName { get; private set; }
+            public AIStates StateName { get; private set; }
             public readonly float TotalScore;
             public readonly ActionStatus Status;
-            public bool ConsiderScore => Status is ActionStatus.Idle or ActionStatus.Running;
 
             public StateInfo(AIStates state, ActionStatus status, float score)
             {
@@ -52,7 +62,6 @@ namespace IAUS.ECS.Component.Aspects
                 Status = status;
                 TotalScore = score;
             }
-
         }
 
         private float DistanceToPoint(float3 posToCheck, float stopBuffer = 0.5f)
@@ -62,6 +71,10 @@ namespace IAUS.ECS.Component.Aspects
                 : Vector3.Distance(posToCheck, transform.ValueRO.Position);
         }
 
+        #endregion
+
+        #region State Scores
+
         private float ScoreOfPatrolState
         {
             get
@@ -69,9 +82,7 @@ namespace IAUS.ECS.Component.Aspects
                 if (!patrol.IsValid) return 0.0f;
                 if (patrol.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(patrol),
-                        $"Please check Creature list and Consideration Data to make sure {patrol.ValueRO.Name} state is implements");
-
+                    throw new ArgumentOutOfRangeException(nameof(patrol), DebugText(patrol.ValueRO.Name));
                 }
 
                 var asset = GetAsset(patrol.ValueRO.Index);
@@ -97,8 +108,7 @@ namespace IAUS.ECS.Component.Aspects
                 if (!traverse.IsValid) return 0.0f;
                 if (traverse.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(traverse),
-                        $"Please check Creature list and Consideration Data to make sure {traverse.ValueRO.Name} state is implements");
+                    throw new ArgumentOutOfRangeException(nameof(traverse), DebugText(traverse.ValueRO.Name));
                 }
 
                 traverse.ValueRW.DistanceToPoint =
@@ -120,13 +130,11 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
-                
                 if (!wander.IsValid) return 0.0f;
 
                 if (wander.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wander),
-                        $"Please check Creature list and Consideration Data to make sure {wander.ValueRO.Name} state is implements");
+                    throw new ArgumentOutOfRangeException(nameof(wander), DebugText(wander.ValueRO.Name));
                 }
 
                 if (wander.ValueRO.Status == ActionStatus.Idle &&
@@ -139,14 +147,12 @@ namespace IAUS.ECS.Component.Aspects
                 }
 
                 var asset = GetAsset(wander.ValueRO.Index);
-
                 wander.ValueRW.DistanceToPoint =
                     DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
-                ;
 
-
-                var distToEnemy = visionAspect.TargetEnemyTargetInRange(out float dist)
-                    ? dist : 200.0f;
+                var distToEnemy = visionLink.ValueRO.TargetEnemyTargetInRange(out float dist)
+                    ? dist
+                    : 200.0f;
                 var totalScore = Mathf.Clamp01(asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio) *
                                                asset.Health.Output(statInfo.ValueRO.HealthRatio) *
                                                asset.DistanceToTargetEnemy.Output(
@@ -162,27 +168,24 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
-        float ScoreOfWaitState
+        private float ScoreOfWaitState
         {
             get
             {
                 if (!wait.IsValid) return 0.0f;
                 if (wait.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wait),
-                        $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
-
+                    throw new ArgumentOutOfRangeException(nameof(wait), DebugText(wait.ValueRO.Name));
                 }
 
                 var asset = GetAsset(wait.ValueRO.Index);
-                float TotalScore = asset.Timer.Output(wait.ValueRO.TimePercent) *
-                                   asset.Health.Output(statInfo.ValueRO.HealthRatio);
+                var totalScore = asset.Timer.Output(wait.ValueRO.TimePercent) *
+                                 asset.Health.Output(statInfo.ValueRO.HealthRatio);
                 wait.ValueRW.TotalScore =
-                    Mathf.Clamp01(TotalScore + ((1.0f - TotalScore) * wait.ValueRO.mod) * TotalScore);
-                TotalScore = wait.ValueRW.TotalScore;
-                return TotalScore;
+                    Mathf.Clamp01(0.05f + totalScore + ((1.0f - totalScore) * wait.ValueRO.mod) * totalScore);
+                totalScore = wait.ValueRW.TotalScore;
+                return totalScore;
             }
-
         }
 
         private float ScoreOfAttackState
@@ -190,30 +193,27 @@ namespace IAUS.ECS.Component.Aspects
             get
             {
                 if (!attack.IsValid) return 0.0f;
-                if (!visionAspect.TargetEnemyTargetInRange(out float dist))
+                if (!visionLink.ValueRO.TargetEnemyTargetInRange(out float dist))
                 {
                     attack.ValueRW.TargetPosition = float3.zero;
                     return 0.0f;
                 }
 
-                attack.ValueRW.TargetEntity = visionAspect.TargetEnemy;
-            
+                attack.ValueRW.TargetEntity = visionLink.ValueRO.TargetEnemy;
+
                 if (wait.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wait),
-                        $"Please check Creature list and Consideration Data to make sure {wait.ValueRO.Name} state is implements");
-
+                    throw new ArgumentOutOfRangeException(nameof(wait), DebugText(attack.ValueRO.Name));
                 }
+
                 var asset = GetAsset(attack.ValueRO.Index);
-                var influenceDist = 0.0f; // Todo replace;Mathf.Clamp01(influenceAspect.DistanceToHighProtection / TravelInFiveSec);
+                var influenceDist = 0; //Todo Figure this out 
                 var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
                                  asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
                                  asset.EnemyInfluence.Output(influenceDist);
                 totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
-                attack.ValueRW.TotalScore = totalScore;
                 return totalScore;
             }
-
         }
 
         private float ScoreOfEvadeState
@@ -221,40 +221,53 @@ namespace IAUS.ECS.Component.Aspects
             get
             {
                 if (!evade.IsValid) return 0.0f;
-                
-                if (!visionAspect.TargetEnemyTargetInRange(out float dist) )
+
+                if (!visionLink.ValueRO.TargetEnemyTargetInRange(out var dist))
                 {
                     evade.ValueRW.EvadeTargetLocation = float3.zero;
+                    evade.ValueRW.CheckInfluencePos = float3.zero;
                     return 0.0f;
                 }
 
-                if(evade.ValueRO.Index==-1)
-                    throw new ArgumentOutOfRangeException(nameof(wait),
-                        $"Please check Creature list and Consideration Data to make sure {evade.ValueRO.Name} state is implements");
+                evade.ValueRW.CheckInfluencePos = new float3(); // todo figure this out
+                if (evade.ValueRO.Index == -1)
+                    throw new ArgumentOutOfRangeException(nameof(evade), DebugText(evade.ValueRO.Name));
                 var asset = GetAsset(evade.ValueRO.Index);
-
-                var safeDist = 200;
+                var influenceRatio = Mathf.Clamp01(evade.ValueRO.InfluenceAtPoint.y /
+                                                   (float)(influence.ValueRO.InfluenceValue +
+                                                           evade.ValueRO.InfluenceAtPoint.x));
                 var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio)
-                                 * asset.DistanceToTargetEnemy.Output(dist / 200.0f)
-                                 * asset.DistanceToTargetLocation.Output(safeDist / 200.0f);
+                                 * asset.DistanceToTargetEnemy.Output(Mathf.Clamp01(dist / 200.0f))
+                                 * asset.EnemyInfluence.Output(influenceRatio);
                 evade.ValueRW.TotalScore = totalScore =
-                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * evade.ValueRO.mod) * totalScore);
+
                 return totalScore;
             }
         }
-        private float TravelInFiveSec => statInfo.ValueRO.Speed * 5;
 
         private float ScoreOfTerrorizeArea
         {
             get
             {
                 if (!terrorizeArea.IsValid) return 0.0f;
-                if(terrorizeArea.ValueRO.Index==-1)
-                    throw new ArgumentOutOfRangeException(nameof(terrorizeArea),
-                        $"Please check Creature list and Consideration Data to make sure {terrorizeArea.ValueRO.Name} state is implements");
+                if (terrorizeArea.ValueRO.TargetEntity == Entity.Null) return 0.0f;
+                if (terrorizeArea.ValueRO.Index == -1)
+                    throw new ArgumentOutOfRangeException(nameof(terrorizeArea), DebugText(terrorizeArea.ValueRO.Name));
                 var asset = GetAsset(terrorizeArea.ValueRO.Index);
 
-                var totalScore = new float();
+                var influenceRatio = Mathf.Clamp01(terrorizeArea.ValueRO.InfluenceAtTarget.y /
+                                                   (float)(influence.ValueRO.InfluenceValue +
+                                                           terrorizeArea.ValueRO.InfluenceAtTarget.x));
+                var dist = !terrorizeArea.ValueRO.TargetPosition.Equals(float3.zero)
+                    ? Vector3.Distance(transform.ValueRO.Position, terrorizeArea.ValueRO.TargetPosition)
+                    : 300;
+
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
+                                 asset.EnemyInfluence.Output(influenceRatio) *
+                                 asset.DistanceToPlaceOfInterest.Output(Mathf.Clamp01(dist / 300.0f));
+                terrorizeArea.ValueRW.TotalScore = totalScore =
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * terrorizeArea.ValueRO.mod) * totalScore);
 
                 return totalScore;
             }
@@ -264,22 +277,38 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
-                if (!maintenance.IsValid) return 0.0f;
+                if (!maintenance.IsValid || maintenance.ValueRO.MaintNeeded == MaintPlan.None) return 0.0f;
 
-                if(maintenance.ValueRO.Index==-1)
-                    throw new ArgumentOutOfRangeException(nameof(maintenance),
-                        $"Please check Creature list and Consideration Data to make sure {maintenance.ValueRO.Name} state is implements");
+                if (maintenance.ValueRO.Index == -1)
+                    throw new ArgumentOutOfRangeException(nameof(maintenance), DebugText(maintenance.ValueRO.Name));
                 var asset = GetAsset(maintenance.ValueRO.Index);
+                var influenceRatio = Mathf.Clamp01(maintenance.ValueRO.InfluenceAtPoint.y /
+                                                   (float)(influence.ValueRO.InfluenceValue +
+                                                           evade.ValueRO.InfluenceAtPoint.x));
 
-                var totalScore = new float();
-
+                var dist = !maintenance.ValueRO.MaintLocation.Equals(float3.zero)
+                    ? Vector3.Distance(transform.ValueRO.Position, maintenance.ValueRO.MaintLocation)
+                    : 300;
+                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
+                                 asset.EnemyInfluence.Output(influenceRatio)
+                                 * asset.DistanceToPlaceOfInterest.Output(Mathf.Clamp01(dist / 300.0f));
+                maintenance.ValueRW.TotalScore = totalScore =
+                    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * maintenance.ValueRO.mod) * totalScore);
                 return totalScore;
             }
-
         }
+
+        #endregion
+
+        #region State Actions
 
         private AIStates GetHighState()
         {
+            if (manualControl.IsValid)
+            {
+                return AIStates.None;
+            }
+
             var stateInfo = new List<StateInfo>
             {
                 new StateInfo(AIStates.Attack, attack.IsValid ? attack.ValueRO.Status : ActionStatus.Disabled,
@@ -292,14 +321,17 @@ namespace IAUS.ECS.Component.Aspects
                     wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
                 new StateInfo(AIStates.Wait,
                     wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
-                new StateInfo( AIStates.Retreat, evade.IsValid? evade.ValueRO.Status: ActionStatus.Disabled,ScoreOfEvadeState),
-                new StateInfo(AIStates.Terrorize, terrorizeArea.IsValid ? terrorizeArea.ValueRO.Status : ActionStatus.Disabled, ScoreOfTerrorizeArea),
-                new StateInfo(AIStates.PerformMaintenance, maintenance.IsValid ? maintenance.ValueRO.Status : ActionStatus.Disabled, ScoreOfMaintenanceState)
+                new StateInfo(AIStates.Retreat, evade.IsValid ? evade.ValueRO.Status : ActionStatus.Disabled,
+                    ScoreOfEvadeState),
+                new StateInfo(AIStates.Terrorize,
+                    terrorizeArea.IsValid ? terrorizeArea.ValueRO.Status : ActionStatus.Disabled, ScoreOfTerrorizeArea),
+                new StateInfo(AIStates.PerformMaintenance,
+                    maintenance.IsValid ? maintenance.ValueRO.Status : ActionStatus.Disabled, ScoreOfMaintenanceState)
             };
 
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
                 .FirstOrDefault(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
-            return high.TotalScore == 0.0f ? AIStates.None : high.StateName;
+            return high.TotalScore.Equals(0.0f) ? AIStates.None : high.StateName;
         }
 
         public void UpdateCurrentState(EntityCommandBuffer.ParallelWriter commandBufferParallel, int chunkIndex)
@@ -323,6 +355,7 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Attack:
                     commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, self);
                     break;
+
                 case AIStates.RetreatToLocation:
                     commandBufferParallel.RemoveComponent<RetreatActionTag>(chunkIndex, self);
                     break;
@@ -333,16 +366,13 @@ namespace IAUS.ECS.Component.Aspects
                     commandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, self);
                     break;
                 case AIStates.PerformMaintenance:
-                    commandBufferParallel.RemoveComponent<MaintenanceState>(chunkIndex, self);
+                    commandBufferParallel.RemoveComponent<MaintenanceTag>(chunkIndex, self);
                     break;
             }
-
-            
 
             //add new action tag
             switch (highScoreState)
             {
-
                 case AIStates.Patrol:
                     commandBufferParallel.AddComponent(chunkIndex, self,
                         new PatrolActionTag() { UpdateWayPoint = false });
@@ -367,13 +397,13 @@ namespace IAUS.ECS.Component.Aspects
                     commandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, self);
                     break;
                 case AIStates.PerformMaintenance:
-                    commandBufferParallel.AddComponent<MaintenanceState>(chunkIndex, self);
+                    commandBufferParallel.AddComponent<MaintenanceTag>(chunkIndex, self);
                     break;
             }
 
             brain.ValueRW.CurrentState = highScoreState;
         }
 
+        #endregion
     }
-
 }

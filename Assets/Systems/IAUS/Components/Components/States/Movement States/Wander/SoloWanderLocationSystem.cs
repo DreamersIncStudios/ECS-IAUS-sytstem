@@ -19,18 +19,19 @@ namespace IAUS.ECS.Component
                 .WithoutBurst()
                 .WithNone<PackMember>()
                 .ForEach((Entity entity,
-                    ref LocalTransform transform,
+                    ref LocalToWorld transform,
                     ref WanderQuadrant wander,
                     ref UpdateWanderLocationTag tag,
-                    ref Movement move) =>
+                    in Parent parent) =>
                 {
+                    var move = EntityManager.GetComponentData<Movement>(parent.Value);
                     ProcessEntityTemplate(entity, ref transform, ref wander, ref tag, ref move);
                 })
                 .Run();
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
-            ref LocalTransform transform,
+            ref LocalToWorld transform,
             ref WanderQuadrant wander,
             ref Movement move)
         {

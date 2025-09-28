@@ -17,14 +17,16 @@ namespace IAUS.ECS.Component
                 .WithoutBurst()
                 .WithAll<PackMember>()
                 .ForEach((Entity entity,
-                    ref LocalTransform transform,
+                    ref LocalToWorld transform,
                     ref WanderQuadrant wander,
                     ref UpdateWanderLocationTag tag,
-                    ref Movement move,
+                    in Parent parent,
                     in PackMember packMember) =>
                 {
                     // Maintain herd center update behavior
-                    wander.WanderCenterPoint = EntityManager.GetComponentData<Pack>(packMember.PackEntity).HerdCenter;
+                    wander.WanderCenterPoint =
+                        EntityManager.GetComponentData<Pack>(packMember.PackEntity).HerdCenter;
+                    var move = EntityManager.GetComponentData<Movement>(parent.Value);
 
                     ProcessEntityTemplate(entity, ref transform, ref wander, ref tag, ref move);
                 })
@@ -32,7 +34,7 @@ namespace IAUS.ECS.Component
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
-            ref LocalTransform transform,
+            ref LocalToWorld transform,
             ref WanderQuadrant wander,
             ref Movement move)
         {
