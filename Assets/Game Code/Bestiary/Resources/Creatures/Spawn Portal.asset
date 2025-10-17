@@ -22,7 +22,7 @@ MonoBehaviour:
     rid: 8783116183795400909
   Prefab: {fileID: 0}
   ActiveHours: 0
-  AIStatesToAdd: 14000000
+  AIStatesToAdd: 13000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0
@@ -102,6 +102,10 @@ MonoBehaviour:
     GroundCheckDistance: 0.3
     CombatCapable: 1
   FactionID: 2
+  CenterOffset:
+    x: 0
+    y: 0
+    z: 0
   BaseThreat: 5
   BaseProtection: 5
   Equipment:

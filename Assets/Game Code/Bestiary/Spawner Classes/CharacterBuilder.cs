@@ -19,6 +19,7 @@ using MotionSystem.Components;
 using ProjectDawn.Navigation;
 using Stats;
 using Stats.Entities;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
@@ -394,95 +395,24 @@ namespace DreamersInc.BestiarySystem
 
         manager.AddComponentData(aiEntity, new AIStat());
 
-        manager.AddComponentData(aiEntity, new IAUSBrain()
+       var brain = new IAUSBrain()
         {
             NPCLevel = getNpcLevel,
             FactionID = factionID,
             Difficulty = Difficulty.Normal,
-            Role = role
-        });
+            Role = role,
+            StatesToCheck = new FixedList512Bytes<StateData>(),
+            CurrentState = AIStates.None
+        };
         manager.AddComponentData(aiEntity, new VisionIAUSLink(visionEntity));
         model.layer = LayerMask.NameToLayer("NPC");
+        
         foreach (var state in aiStatesToAdd)
         {
-            switch (state)
-            {
-                case AIStates.Patrol:
-                    var patrol = new Patrol()
-                    {
-                        NumberOfWayPoints = 10,
-                        BufferZone = .25f,
-                        _coolDownTime = 5.5f
-                    };
-                    if (classLevel > 3)
-                        patrol.StayInQuadrant = true;
-                    manager.AddComponentData(entity, patrol);
-                    manager.AddBuffer<TravelWaypointBuffer>(aiEntity);
-                    break;
-
-                case AIStates.Traverse:
-                    var traverse = new Traverse()
-                    {
-                        NumberOfWayPoints = 10,
-                        BufferZone = .25f,
-                        _coolDownTime = 5.5f
-                    };
-                    manager.AddComponentData(entity, traverse);
-                    manager.AddBuffer<TravelWaypointBuffer>(aiEntity);
-                    break;
-                case AIStates.WanderQuadrant:
-
-                    manager.AddComponentData(aiEntity, new WanderQuadrant(
-                        wanderCenterPoint: model.transform.position,
-                        coolDownTime: 5.5f,
-                        bufferZone: .25f,
-                        wanderNeighborQuadrants: false //TODO Figure out way above line causes issues
-                    ));
-
-                    break;
-                case AIStates.Wait:
-                    var wait = new Wait()
-                    {
-                        _coolDownTime = 5.5f
-                    };
-                    manager.AddComponentData(aiEntity, wait);
-                    break;
-                case AIStates.Attack:
-                    manager.AddComponent<AttackTarget>(aiEntity);
-                    var command = new Command
-                    {
-                        BareHands = true // equip system need to adjust this value
-                    };
-                    manager.AddComponentData(aiEntity, command);
-                    manager.AddComponentData(aiEntity, command);
-                    
-                    manager.AddComponentData(aiEntity,
-                        new AttackState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
-                    manager.AddComponent<CheckAttackStatus>(aiEntity);
-                    break;
-                case AIStates.Retreat:
-
-                    manager.AddComponentData(aiEntity, new EvadeThreat(10f));
-                    break;
-
-                case AIStates.Terrorize:
-                    manager.AddComponentData(aiEntity,
-                        new TerrorizeAreaState(5.5f, capableOfMelee, capableOfMagic, capableOfRange));
-                    manager.AddComponent<AttackTarget>(aiEntity);
-
-                    manager.AddComponentObject(aiEntity, new Command
-                    {
-                        BareHands = true // equip system need to adjust this value
-                    });
-                    manager.AddComponent<CheckAttackStatus>(aiEntity);
-
-                    break;
-                case AIStates.PerformMaintenance:
-                    manager.AddComponentData(aiEntity, new MaintenanceState(coolDownTime: 10f, 5.5f));
-                    break;
-            }
+            brain.StatesToCheck.Add(new StateData(state));
         }
 
+        manager.AddComponentData(aiEntity, brain);
         manager.AddComponent<SetupBrainTag>(aiEntity);
 
             return this;

@@ -29,7 +29,6 @@ namespace IAUS.ECS.Component.Aspects
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
         [Optional] private readonly RefRW<WanderQuadrant> wander;
-        [Optional] private readonly RefRW<Wait> wait;
         [Optional] private readonly RefRW<AttackState> attack;
         [Optional] private readonly RefRW<EvadeThreat> evade;
         [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
@@ -130,54 +129,11 @@ namespace IAUS.ECS.Component.Aspects
         {
             get
             {
-                if (!wander.IsValid) return 0.0f;
-
-                if (wander.ValueRO.Index == -1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(wander), DebugText(wander.ValueRO.Name));
-                }
-
-                var asset = GetAsset(wander.ValueRO.Index);
-                wander.ValueRW.DistanceToPoint =
-                    DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
-
-                var distToEnemy = visionLink.ValueRO.TargetEnemyTargetInRange(out float dist)
-                    ? dist
-                    : 200.0f;
-                var totalScore = Mathf.Clamp01(asset.DistanceToTargetLocation.Output(wander.ValueRO.DistanceRatio) *
-                                               asset.Health.Output(statInfo.ValueRO.HealthRatio) *
-                                               asset.DistanceToTargetEnemy.Output(
-                                                   Mathf.Clamp01(distToEnemy /
-                                                                 200.0f))); //TODO Add Back Later * escape.ValueRO.TargetInRange.Output(attackRatio); ;
-                wander.ValueRW.TotalScore =
-                    wander.ValueRO.Status != ActionStatus.CoolDown && !wander.ValueRO.AttackTarget
-                        ? Mathf.Clamp01(totalScore + ((1.0f - totalScore) * wander.ValueRO.mod) * totalScore)
-                        : 0.0f;
-
-                totalScore = wander.ValueRW.TotalScore;
-                return totalScore;
+                return 0.0f;
             }
         }
 
-        private float ScoreOfWaitState
-        {
-            get
-            {
-                if (!wait.IsValid) return 0.0f;
-                if (wait.ValueRO.Index == -1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(wait), DebugText(wait.ValueRO.Name));
-                }
-
-                var asset = GetAsset(wait.ValueRO.Index);
-                var totalScore = asset.Timer.Output(wait.ValueRO.TimePercent) *
-                                 asset.Health.Output(statInfo.ValueRO.HealthRatio);
-                wait.ValueRW.TotalScore =
-                    Mathf.Clamp01(0.05f + totalScore + ((1.0f - totalScore) * wait.ValueRO.mod) * totalScore);
-                totalScore = wait.ValueRW.TotalScore;
-                return totalScore;
-            }
-        }
+ 
 
         private float ScoreOfAttackState
         {
@@ -192,9 +148,9 @@ namespace IAUS.ECS.Component.Aspects
 
                 attack.ValueRW.TargetEntity = visionLink.ValueRO.TargetEnemy;
 
-                if (wait.ValueRO.Index == -1)
+                if (attack.ValueRO.Index == -1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(wait), DebugText(attack.ValueRO.Name));
+                    throw new ArgumentOutOfRangeException(nameof(attack), DebugText(attack.ValueRO.Name));
                 }
 
                 var asset = GetAsset(attack.ValueRO.Index);
@@ -310,8 +266,7 @@ namespace IAUS.ECS.Component.Aspects
                     traverse.IsValid ? traverse.ValueRO.Status : ActionStatus.Disabled, ScoreOfTraverseState),
                 new StateInfo(AIStates.WanderQuadrant,
                     wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
-                new StateInfo(AIStates.Wait,
-                    wait.IsValid ? wait.ValueRO.Status : ActionStatus.Disabled, ScoreOfWaitState),
+
                 new StateInfo(AIStates.Retreat, evade.IsValid ? evade.ValueRO.Status : ActionStatus.Disabled,
                     ScoreOfEvadeState),
                 new StateInfo(AIStates.Terrorize,
@@ -337,9 +292,7 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.Traverse:
                     commandBufferParallel.RemoveComponent<TraverseActionTag>(chunkIndex, self);
                     break;
-                case AIStates.Wait:
-                    commandBufferParallel.RemoveComponent<WaitActionTag>(chunkIndex, self);
-                    break;
+
                 case AIStates.WanderQuadrant:
                     commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, self);
                     break;
@@ -375,9 +328,7 @@ namespace IAUS.ECS.Component.Aspects
                 case AIStates.WanderQuadrant:
                     commandBufferParallel.AddComponent<WanderActionTag>(chunkIndex, self);
                     break;
-                case AIStates.Wait:
-                    commandBufferParallel.AddComponent<WaitActionTag>(chunkIndex, self);
-                    break;
+             
                 case AIStates.Attack:
                     commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, self);
                     break;

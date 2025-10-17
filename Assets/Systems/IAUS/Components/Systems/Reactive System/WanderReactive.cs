@@ -1,3 +1,4 @@
+using System;
 using Unity.Collections;
 using UnityEngine;
 using Utilities.ReactiveSystem;
@@ -7,6 +8,7 @@ using IAUS.ECS.Component;
 using Unity.Entities;
 using Components.MovementSystem;
 using Unity.Burst;
+using Random = UnityEngine.Random;
 
 [assembly:
     RegisterGenericComponentType(
@@ -143,6 +145,52 @@ namespace IAUS.ECS.Systems.Reactive
                     Movements[parent.Value] = move;
                 }
             }
+                        
+
+            public partial struct WanderPlanner : IJobEntity
+            {
+                public EntityCommandBuffer.ParallelWriter ECB;
+                private void Execute(Entity entity, [ChunkIndexInQuery] int sortkey, ref WanderActionTag wander, ref Movement move)
+                {
+                    if (move.DistanceRemaining < 1.5 && wander.WaitTimer > 00.0f && wander.Plan != TravelPlan.Wait)
+                    {
+                        wander.Plan = TravelPlan.Wait;
+                        ExecutePlan(entity, sortkey,ref wander, ref move);
+                    }
+                    if (move.DistanceRemaining < 1.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.GetNewLocation)
+                    {
+                        wander.Plan = TravelPlan.GetNewLocation;
+                    }
+
+                    if (move.DistanceRemaining > 1.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.MoveToLocation)
+                    {
+                        wander.Plan = TravelPlan.MoveToLocation;
+                    }
+                }
+
+                void ExecutePlan(Entity entity, [ChunkIndexInQuery] int sortkey,ref WanderActionTag wander, ref Movement move)
+                {
+                    switch (wander.Plan)
+                    {
+                        case TravelPlan.none:
+                            break;
+                        case TravelPlan.GetNewLocation:
+                            
+                            ECB.AddComponent(sortkey, entity, new UpdateWanderLocationTag());
+                            break;
+                        case TravelPlan.MoveToLocation:
+                            move.SetLocation(wander.TravelPosition);
+                            break;
+                        case TravelPlan.Wait:
+                            wander.WaitTimer = Random.Range(9, 25);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+            }
+
         }
+
     }
 }

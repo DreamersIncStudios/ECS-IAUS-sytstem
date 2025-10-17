@@ -62,8 +62,18 @@ namespace IAUS.ECS.Component
     public struct WanderActionTag : IComponentData
     {
         public float WaitTime;
-
+        public TravelPlan Plan;
+        public Waypoint CurWaypoint { get; set; }
+        public float WaitTimer; // Value base TBDs
+        public float3 TravelPosition;
     }
-
+    [System.Serializable]
+    public enum TravelPlan
+    {
+        none, 
+        GetNewLocation,
+        MoveToLocation, 
+        Wait
+    }
  
 }

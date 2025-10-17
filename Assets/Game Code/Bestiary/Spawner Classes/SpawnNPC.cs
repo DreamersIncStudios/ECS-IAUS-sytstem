@@ -75,7 +75,7 @@ namespace DreamersInc.BestiarySystem
                     break;
                 case NPCLevel.Beast:
                     break;
-                case NPCLevel.spawner:
+                case NPCLevel.Spawner:
                     var packInfo = (PackSpawnCreatureInfo)info;
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Spawner NPC", out GO)

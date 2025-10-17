@@ -71,7 +71,7 @@ namespace DreamersInc.BestiarySystem
                 NPCLevel.NPC => 4000,
                 NPCLevel.Daemon => 4000,
                 NPCLevel.Beast => 5000,
-                NPCLevel.spawner => 6000,
+                NPCLevel.Spawner => 6000,
                 _ => 0
             };
             // Combine Role and incremental count into the ID
