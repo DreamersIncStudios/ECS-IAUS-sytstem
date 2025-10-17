@@ -20,7 +20,7 @@
     "com.unity.scriptablebuildpipeline": "2.4.1",
     "com.unity.searcher": "4.9.2",
     "com.unity.settings-manager": "2.1.0",
-    "com.unity.test-framework": "1.5.1",
+    "com.unity.test-framework": "1.6.0",
     "com.unity.test-framework.performance": "3.1.0",
     "com.unity.timeline": "1.8.9",
     "com.unity.toolchain.macos-arm64-linux-x86_64": "2.0.4",

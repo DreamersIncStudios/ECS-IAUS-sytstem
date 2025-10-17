@@ -29,10 +29,9 @@ namespace IAUS.ECS.Component
         protected void ProcessEntityTemplate(Entity entity,
             ref LocalToWorld transform,
             ref WanderQuadrant wander,
-            ref UpdateWanderLocationTag tag,
-            ref Movement move)
+            ref UpdateWanderLocationTag tag)
         {
-            float3 travel = ComputeTravelPosition(entity, ref transform, ref wander, ref move);
+            float3 travel = ComputeTravelPosition(entity, ref transform, ref wander);
             wander.TravelPosition = travel;
 
             // Shared post-steps
@@ -43,8 +42,8 @@ namespace IAUS.ECS.Component
         // Variation point implemented by subclasses
         protected abstract float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander,
-            ref Movement move);
+            ref WanderQuadrant wander
+        );
 
         //  helpers
         protected float3 GetWanderPoint(float3 currentPosition, int hashKey)
@@ -52,7 +51,8 @@ namespace IAUS.ECS.Component
             var attempts = 0;
             while (attempts < 50)
             {
-                if (!GlobalFunctions.RandomPoint(currentPosition, WanderRange, out float3 potentialPosition) ||
+                if (!GlobalFunctions.RandomPoint(currentPosition + new float3(0, .25f, 0), 100,
+                        out float3 potentialPosition) ||
                     !IsPositionValid((int3)potentialPosition, hashKey))
                 {
                     attempts++;
@@ -60,7 +60,9 @@ namespace IAUS.ECS.Component
                 }
 
                 if (IsPathComplete(currentPosition, potentialPosition))
+                {
                     return potentialPosition;
+                }
 
                 attempts++;
             }
@@ -81,6 +83,5 @@ namespace IAUS.ECS.Component
                    path.status == NavMeshPathStatus.PathComplete;
         }
     }
-
     
 }

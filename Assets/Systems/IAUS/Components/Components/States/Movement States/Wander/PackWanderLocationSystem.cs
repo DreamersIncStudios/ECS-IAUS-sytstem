@@ -28,15 +28,14 @@ namespace IAUS.ECS.Component
                         EntityManager.GetComponentData<Pack>(packMember.PackEntity).HerdCenter;
                     var move = EntityManager.GetComponentData<Movement>(parent.Value);
 
-                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag, ref move);
+                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag);
                 })
                 .Run();
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander,
-            ref Movement move)
+            ref WanderQuadrant wander)
         {
             // Minimal outline: reuse current hash-based wander point.
             // You could refine this to bias toward wander.WanderCenterPoint if desired.

@@ -21,19 +21,17 @@ namespace IAUS.ECS.Component
                 .ForEach((Entity entity,
                     ref LocalToWorld transform,
                     ref WanderQuadrant wander,
-                    ref UpdateWanderLocationTag tag,
-                    in Parent parent) =>
+                    ref UpdateWanderLocationTag tag) =>
                 {
-                    var move = EntityManager.GetComponentData<Movement>(parent.Value);
-                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag, ref move);
+                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag);
                 })
                 .Run();
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander,
-            ref Movement move)
+            ref WanderQuadrant wander
+        )
         {
             if (wander.WanderNeighborQuadrants)
             {

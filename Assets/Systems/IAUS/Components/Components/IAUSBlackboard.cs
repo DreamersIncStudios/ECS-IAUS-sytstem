@@ -137,15 +137,6 @@ namespace IAUS.ECS.Component.Aspects
                     throw new ArgumentOutOfRangeException(nameof(wander), DebugText(wander.ValueRO.Name));
                 }
 
-                if (wander.ValueRO.Status == ActionStatus.Idle &&
-                    wander.ValueRO.WanderCenterPoint.Equals(wander.ValueRO.TravelPosition))
-                {
-                    wander.ValueRW.WanderCenterPoint.x += 35;
-                    wander.ValueRW.WanderCenterPoint.z += 45;
-                    wander.ValueRW.StartingDistance =
-                        DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
-                }
-
                 var asset = GetAsset(wander.ValueRO.Index);
                 wander.ValueRW.DistanceToPoint =
                     DistanceToPoint(wander.ValueRO.TravelPosition, wander.ValueRO.BufferZone);
