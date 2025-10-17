@@ -61,10 +61,10 @@ namespace IAUS.ECS.Systems
         
         public EntityCommandBuffer.ParallelWriter CommandBufferParallel;
        
-        void Execute(Entity self, [ChunkIndexInQuery] int chunkIndex,  ref IAUSBrain brain, ref VisionIAUSLink visionLink, ref AIStat statInfo)
+        void Execute(Entity self, [ChunkIndexInQuery] int chunkIndex, DynamicBuffer<StateData> StatesToCheck, ref IAUSBrain brain, ref VisionIAUSLink visionLink, ref AIStat statInfo)
         {
             var stateInfo = new List<StateInfo>();
-            foreach (var stateData in brain.StatesToCheck)
+            foreach (var stateData in StatesToCheck)
             {
                 var score = 0.0f;
                 var mod = 0.0f;

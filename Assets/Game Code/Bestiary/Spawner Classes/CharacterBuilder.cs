@@ -395,24 +395,22 @@ namespace DreamersInc.BestiarySystem
 
         manager.AddComponentData(aiEntity, new AIStat());
 
-       var brain = new IAUSBrain()
+       manager.AddComponentData(aiEntity,new IAUSBrain()
         {
             NPCLevel = getNpcLevel,
             FactionID = factionID,
             Difficulty = Difficulty.Normal,
             Role = role,
-            StatesToCheck = new FixedList512Bytes<StateData>(),
             CurrentState = AIStates.None
-        };
+        });
         manager.AddComponentData(aiEntity, new VisionIAUSLink(visionEntity));
         model.layer = LayerMask.NameToLayer("NPC");
-        
+        var statesToCheck = manager.AddBuffer<StateData>(aiEntity);
         foreach (var state in aiStatesToAdd)
         {
-            brain.StatesToCheck.Add(new StateData(state));
+            statesToCheck.Add(new StateData(state));
         }
 
-        manager.AddComponentData(aiEntity, brain);
         manager.AddComponent<SetupBrainTag>(aiEntity);
 
             return this;

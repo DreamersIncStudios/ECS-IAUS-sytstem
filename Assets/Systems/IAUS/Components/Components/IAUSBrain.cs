@@ -14,7 +14,6 @@ namespace IAUS.ECS.Component
     [Serializable]
     public struct IAUSBrain : IComponentData
     {
-        public FixedList128Bytes<StateData> StatesToCheck;
         public AITarget Target;
         public AIStates CurrentState;
         public FactionNames FactionID;
@@ -27,8 +26,9 @@ namespace IAUS.ECS.Component
     public struct SetupBrainTag : IComponentData { }
     
     public enum Status { Normal, Brave, Reckless, Berserk, Cautious, Sleep, Confused, Dazed }
-    [Serializable]
-    public struct StateData
+    
+    [InternalBufferCapacity(6)]
+    public struct StateData : IBufferElementData
     {
         public readonly AIStates State;
         public StateData(AIStates state)

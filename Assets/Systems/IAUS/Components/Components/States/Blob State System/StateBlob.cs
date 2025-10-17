@@ -69,21 +69,27 @@ namespace IAUS.ECS.StateBlobSystem
          {
      
              
-             Entities.WithoutBurst().ForEach(( ref IAUSBrain brain, in SetupBrainTag tag) => {
+             Entities.WithoutBurst().ForEach(( DynamicBuffer<StateData> statesToCheck, ref IAUSBrain brain, in SetupBrainTag tag) => {
                  brain.State = reference;
-                 for (int i = 0; i < brain.StatesToCheck.Length; i++)
+                 for (int i = 0; i < statesToCheck.Length; i++)
                  {
-                     Debug.Log(brain.StatesToCheck[i].State);
-                     var state = brain.StatesToCheck[i];
-                    state.SetIndex(reference.Value.GetConsiderationIndex(new Identity()
+                     var s = statesToCheck[i];
+                     Debug.Log(reference.Value.GetConsiderationIndex(new Identity
                      {
                          Difficulty = brain.Difficulty,
-                         AIStates =  brain.StatesToCheck[i].State,
+                         AIStates = s.State,
                          FactionID = (int)brain.FactionID,
                          NPCLevel = brain.NPCLevel
                      }));
-                    state.SetStatus(ActionStatus.Idle);
-                    brain.StatesToCheck[i] = state;
+                     s.SetIndex(reference.Value.GetConsiderationIndex(new Identity
+                     {
+                         Difficulty = brain.Difficulty,
+                         AIStates = s.State,
+                         FactionID = (int)brain.FactionID,
+                         NPCLevel = brain.NPCLevel
+                     }));
+                     s.SetStatus(ActionStatus.Idle);
+                     statesToCheck[i] = s; // write back
                  }
              }).Run();
        
