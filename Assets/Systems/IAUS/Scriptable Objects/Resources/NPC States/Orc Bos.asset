@@ -17,7 +17,7 @@ MonoBehaviour:
   NpcLevel: 4
   FactionID: 2
   States:
-  - StateName: 22
+  - StateName: 21
     Considerations:
     - ConsiderationType: 0
       Scoring:

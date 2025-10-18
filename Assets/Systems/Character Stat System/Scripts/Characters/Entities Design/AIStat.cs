@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Unity.Entities;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace Stats.Entities
@@ -28,17 +29,19 @@ namespace Stats.Entities
 
     }
 
+
     public partial class AIStatLinkSystem : SystemBase
     {
-        [SuppressMessage("ReSharper", "Unity.BurstLoadingManagedType")]
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<BaseCharacterComponent>().ForEach((BaseCharacterComponent baseStat, ref AIStat aiStat )=> {
+            Entities.WithoutBurst().ForEach((ref AIStat aiStat, in Parent parent) =>
+            {
+                var baseStat = EntityManager.GetComponentData<BaseCharacterComponent>(parent.Value);
 
                 aiStat.CurHealth = baseStat.CurHealth;
                 aiStat.MaxHealth = baseStat.MaxHealth;
                 aiStat.CurMana = baseStat.CurMana;
-                aiStat.MaxMana= baseStat.MaxMana;
+                aiStat.MaxMana = baseStat.MaxMana;
                 aiStat.Level = baseStat.Level;
             }).Run();
         }

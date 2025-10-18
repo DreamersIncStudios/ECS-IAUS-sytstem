@@ -12,49 +12,62 @@ using Random = UnityEngine.Random;
 
 [assembly:
     RegisterGenericComponentType(
-        typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
+        typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
             StateComponent))]
 [assembly:
     RegisterGenericJobType(
-        typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
+        typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
             ManageComponentAdditionJob))]
 [assembly:
     RegisterGenericJobType(
-        typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
+        typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, IAUS.ECS.Systems.Reactive.WanderTagReactor>.
             ManageComponentRemovalJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
-    public partial struct WanderTagReactor : IComponentReactorTagsForAIStates<WanderActionTag, WanderQuadrant>
+    public partial struct WanderTagReactor : IComponentReactorTagsForAIBuffer<WanderActionTag, StateData>
     {
-        public void ComponentAdded(Entity entity, ref WanderActionTag newComponent, ref WanderQuadrant AIStateCompoment)
+        public void ComponentAdded(Entity entity, ref WanderActionTag newAITag, DynamicBuffer<StateData> AIStateCompoment)
         {
-            AIStateCompoment.Status = ActionStatus.Running;
-            newComponent.WaitTime = 10;
+            for (int i = 0; i < AIStateCompoment.Length; i++)
+            {
+                if (AIStateCompoment[i].State != AIStates.WanderQuadrant)
+                    continue;
+                var temp = AIStateCompoment[i];
+                temp.SetStatus( ActionStatus.Running);
+                AIStateCompoment[i] = temp;
+            }
+            newAITag.WaitTime = 10;
         }
 
-        public void ComponentRemoved(Entity entity, ref WanderQuadrant AIStateCompoment,
+        public void ComponentRemoved(Entity entity, DynamicBuffer<StateData> AIStateCompoment,
             in WanderActionTag oldComponent)
         {
-            if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
+            for (int i = 0; i < AIStateCompoment.Length; i++)
             {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+                if (AIStateCompoment[i].State != AIStates.WanderQuadrant)
+                    continue;
+                var temp = AIStateCompoment[i];
+                temp.SetStatus( ActionStatus.Success);
+                AIStateCompoment[i] = temp;
             }
-            else
-            {
-                AIStateCompoment.Status = ActionStatus.CoolDown;
-                AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
-            }
+            // if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
+            // {
+            //     AIStateCompoment.Status = ActionStatus.CoolDown;
+            //     AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime;
+            // }
+            // else
+            // {
+            //     AIStateCompoment.Status = ActionStatus.CoolDown;
+            //     AIStateCompoment.ResetTime = AIStateCompoment.CoolDownTime * 2;
+            // }
         }
+ 
 
-        public void ComponentValueChanged(Entity entity, ref WanderActionTag newComponent,
-            ref WanderQuadrant AIStateCompoment, in WanderActionTag oldComponent)
-        {
-        }
+
 
         public partial class
-            WanderReactiveSystem : AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>
+            WanderReactiveSystem : AIReactiveSystemBuffer<WanderActionTag, StateData, WanderTagReactor>
         {
             protected override WanderTagReactor CreateComponentReactor()
             {
@@ -83,7 +96,7 @@ namespace IAUS.ECS.Systems.Reactive
                     Absent = new ComponentType[]
                     {
                         ComponentType.ReadOnly(
-                            typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.
+                            typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, WanderTagReactor>.
                                 StateComponent))
                     }
                 });
@@ -95,7 +108,7 @@ namespace IAUS.ECS.Systems.Reactive
                         ComponentType.ReadOnly(typeof(LocalTransform)),
                         ComponentType.ReadOnly(typeof(Parent)),
                         ComponentType.ReadOnly(
-                            typeof(AIReactiveSystemBase<WanderActionTag, WanderQuadrant, WanderTagReactor>.
+                            typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, WanderTagReactor>.
                                 StateComponent))
                     },
                     Absent = new ComponentType[] { ComponentType.ReadWrite(typeof(WanderActionTag)) },

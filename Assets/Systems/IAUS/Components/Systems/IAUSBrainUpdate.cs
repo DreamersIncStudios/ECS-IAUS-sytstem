@@ -157,9 +157,12 @@ namespace IAUS.ECS.Systems
                 }
                 stateInfo.Add(new StateInfo(stateData.State, stateData.Status, score));
             }
+            
             var high = stateInfo.OrderByDescending(s => s.TotalScore)
                 .FirstOrDefault(s => s.Status is ActionStatus.Idle or ActionStatus.Running);
+            
             if(brain.CurrentState == high.StateName) return;
+            
             switch (brain.CurrentState)
             {
                 case AIStates.Patrol:

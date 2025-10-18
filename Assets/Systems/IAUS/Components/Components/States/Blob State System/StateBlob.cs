@@ -74,13 +74,7 @@ namespace IAUS.ECS.StateBlobSystem
                  for (int i = 0; i < statesToCheck.Length; i++)
                  {
                      var s = statesToCheck[i];
-                     Debug.Log(reference.Value.GetConsiderationIndex(new Identity
-                     {
-                         Difficulty = brain.Difficulty,
-                         AIStates = s.State,
-                         FactionID = (int)brain.FactionID,
-                         NPCLevel = brain.NPCLevel
-                     }));
+              
                      s.SetIndex(reference.Value.GetConsiderationIndex(new Identity
                      {
                          Difficulty = brain.Difficulty,

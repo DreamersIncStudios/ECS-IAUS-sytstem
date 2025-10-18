@@ -23,7 +23,7 @@ namespace IAUS.ECS.Systems.Reactive
 
     public partial struct AttackTagReactor : IComponentReactorTagsForAIStates<AttackActionTag, AttackState>
     {
-        public void ComponentAdded(Entity entity, ref AttackActionTag newComponent, ref AttackState aiStateComponent)
+        public void ComponentAdded(Entity entity, ref AttackActionTag newAITag, ref AttackState aiStateComponent)
         {
             aiStateComponent.Status = ActionStatus.Running;
             aiStateComponent.TargetPosition = float3.zero;
@@ -35,8 +35,8 @@ namespace IAUS.ECS.Systems.Reactive
             aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
         }
 
-        public void ComponentValueChanged(Entity entity, ref AttackActionTag newComponent,
-            ref AttackState aiStateComponent, in AttackActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref AttackActionTag newAITag,
+            ref AttackState aiStateComponent, in AttackActionTag oldAITag)
         {
         }
 

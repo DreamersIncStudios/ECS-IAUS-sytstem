@@ -2,7 +2,7 @@
   "dependencies": {
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.unity.ai.navigation": "2.0.9",
-    "com.unity.burst": "1.8.24",
+    "com.unity.burst": "1.8.25",
     "com.unity.cinemachine": "3.1.4",
     "com.unity.collections": "2.5.7",
     "com.unity.entities": "1.3.14",

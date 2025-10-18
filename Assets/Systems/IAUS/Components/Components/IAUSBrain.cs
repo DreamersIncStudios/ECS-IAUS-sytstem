@@ -37,8 +37,8 @@ namespace IAUS.ECS.Component
          Index = -1;
          Status = ActionStatus.Idle;
         }
-        public int Index;
-        public ActionStatus Status{ get; private set; }
+        public int Index{ get; private set; }
+        public ActionStatus Status;
         public void SetIndex(int index)
         {
             Index = index;
