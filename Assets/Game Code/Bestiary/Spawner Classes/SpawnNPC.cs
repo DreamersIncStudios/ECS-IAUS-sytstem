@@ -25,7 +25,6 @@ namespace DreamersInc.BestiarySystem
                         .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
                         .WithParent(parentToLink)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithNPCAttack(info.AttackSequence)
@@ -33,6 +32,8 @@ namespace DreamersInc.BestiarySystem
                         .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset ,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     return true;
                 case NPCLevel.Specialist:
@@ -46,13 +47,14 @@ namespace DreamersInc.BestiarySystem
                         .WithStats(info.stats, PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
                         .WithFactionInfluence(info.FactionID, 3, info.ClassLevel,  info.CenterOffset,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     return true;
                 case NPCLevel.Daemon:
@@ -63,7 +65,6 @@ namespace DreamersInc.BestiarySystem
                         .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
                         .WithParent(parentToLink)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithNPCAttack(info.AttackSequence)
@@ -71,6 +72,8 @@ namespace DreamersInc.BestiarySystem
                         .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     break;
                 case NPCLevel.Beast:
@@ -81,13 +84,14 @@ namespace DreamersInc.BestiarySystem
                         .WithModel(info.Prefab, Position, "Spawner NPC", out GO)
                         .WithStats(info.stats,PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
                         .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,packInfo.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     break;
                 default:

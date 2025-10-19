@@ -31,11 +31,13 @@ namespace IAUS.ECS.Component
     public struct StateData : IBufferElementData
     {
         public readonly AIStates State;
+        public float ResetTime;
         public StateData(AIStates state)
         {
          State = state;
          Index = -1;
          Status = ActionStatus.Idle;
+         ResetTime = 0;
         }
         public int Index{ get; private set; }
         public ActionStatus Status;

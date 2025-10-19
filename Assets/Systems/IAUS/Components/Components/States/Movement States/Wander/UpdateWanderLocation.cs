@@ -28,21 +28,23 @@ namespace IAUS.ECS.Component
 
         protected void ProcessEntityTemplate(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander,
+            ref WanderActionTag wander,
+            ref Movement move,
             ref UpdateWanderLocationTag tag)
         {
+                    Debug.Log("running");
+            
             float3 travel = ComputeTravelPosition(entity, ref transform, ref wander);
             wander.TravelPosition = travel;
-
+            move.SetLocation(travel);
             // Shared post-steps
-            wander.StartingDistance = Vector3.Distance(wander.TravelPosition, transform.Position);
             EntityManager.RemoveComponent<UpdateWanderLocationTag>(entity);
         }
 
         // Variation point implemented by subclasses
         protected abstract float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander
+            ref WanderActionTag wander
         );
 
         //  helpers

@@ -7,6 +7,7 @@ using Unity.Transforms;
 using IAUS.ECS.Component;
 using Unity.Entities;
 using Components.MovementSystem;
+using DreamersInc.QuadrantSystems;
 using Unity.Burst;
 using Random = UnityEngine.Random;
 
@@ -37,7 +38,6 @@ namespace IAUS.ECS.Systems.Reactive
                 temp.SetStatus( ActionStatus.Running);
                 AIStateCompoment[i] = temp;
             }
-            newAITag.WaitTime = 10;
         }
 
         public void ComponentRemoved(Entity entity, DynamicBuffer<StateData> AIStateCompoment,
@@ -49,8 +49,10 @@ namespace IAUS.ECS.Systems.Reactive
                     continue;
                 var temp = AIStateCompoment[i];
                 temp.SetStatus( ActionStatus.Success);
+                temp.ResetTime = 15;
                 AIStateCompoment[i] = temp;
             }
+            
             // if (AIStateCompoment.Complete || AIStateCompoment.Status == ActionStatus.Success)
             // {
             //     AIStateCompoment.Status = ActionStatus.CoolDown;
@@ -78,7 +80,6 @@ namespace IAUS.ECS.Systems.Reactive
         public partial class WanderSystem : SystemBase
         {
             private EntityQuery componentAddedQuery;
-            private ComponentLookup<Movement> mover;
             private EntityQuery wanderingStopped;
 
 
@@ -88,10 +89,9 @@ namespace IAUS.ECS.Systems.Reactive
                 {
                     All = new ComponentType[]
                     {
-                        ComponentType.ReadWrite(typeof(WanderQuadrant)),
                         ComponentType.ReadWrite(typeof(WanderActionTag)),
-                        ComponentType.ReadOnly(typeof(LocalTransform)),
-                        ComponentType.ReadOnly(typeof(Parent))
+                        ComponentType.ReadWrite(typeof(Movement)),
+                        ComponentType.ReadOnly(typeof(LocalToWorld)),
                     },
                     Absent = new ComponentType[]
                     {
@@ -104,8 +104,8 @@ namespace IAUS.ECS.Systems.Reactive
                 {
                     All = new ComponentType[]
                     {
-                        ComponentType.ReadWrite(typeof(WanderQuadrant)),
-                        ComponentType.ReadOnly(typeof(LocalTransform)),
+                        ComponentType.ReadOnly(typeof(LocalToWorld)),
+                        ComponentType.ReadOnly(typeof(Movement)),
                         ComponentType.ReadOnly(typeof(Parent)),
                         ComponentType.ReadOnly(
                             typeof(AIReactiveSystemBuffer<WanderActionTag, StateData, WanderTagReactor>.
@@ -117,45 +117,40 @@ namespace IAUS.ECS.Systems.Reactive
 
             protected override void OnUpdate()
             {
+                var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
+
                 var depends = Dependency;
-                mover = GetComponentLookup<Movement>(false);
                 depends = new WanderSetupJob()
                 {
-                    Movements = mover
                 }.Schedule(componentAddedQuery, depends);
                 depends = new WanderStopJob()
                 {
-                    Movements = mover
                 }.Schedule(wanderingStopped, depends);
+                depends = new WanderPlanner()
+                {
+                    ECB=  ecbSingleton.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
+                    deltaTime = SystemAPI.Time.DeltaTime,
+                    
+                }.Schedule(depends);
                 Dependency = depends;
             }
 
             [BurstCompile]
             public partial struct WanderSetupJob : IJobEntity
             {
-                public ComponentLookup<Movement> Movements;
-
-                void Execute(ref WanderQuadrant wander, in Parent parent, [ReadOnly] LocalTransform transform)
+                void Execute(ref WanderActionTag wander, [ReadOnly] LocalToWorld transform)
                 {
-                    wander.StartingDistance = Vector3.Distance(transform.Position, wander.TravelPosition);
-                    var test = Movements[parent.Value];
-                    test.SetLocation(wander.TravelPosition);
-                    Movements[parent.Value] = test;
-
-                    Debug.Log("test");
+                    wander.HashKey = NPCQuadrantSystem.GetPositionHashMapKey(transform.Position);
                 }
             }
 
             [BurstCompile]
             public partial struct WanderStopJob : IJobEntity
             {
-                public ComponentLookup<Movement> Movements;
 
-                void Execute(ref WanderQuadrant wander, in Parent parent)
+                void Execute(ref Movement move)
                 {
-                    var move = Movements[parent.Value];
                     move.CanMove = false;
-                    Movements[parent.Value] = move;
                 }
             }
                         
@@ -163,22 +158,33 @@ namespace IAUS.ECS.Systems.Reactive
             public partial struct WanderPlanner : IJobEntity
             {
                 public EntityCommandBuffer.ParallelWriter ECB;
+                public float deltaTime;
                 private void Execute(Entity entity, [ChunkIndexInQuery] int sortkey, ref WanderActionTag wander, ref Movement move)
                 {
-                    if (move.DistanceRemaining < 1.5 && wander.WaitTimer > 00.0f && wander.Plan != TravelPlan.Wait)
+                    if (move.DistanceRemaining < 5.5 && wander.WaitTimer > 00.0f && wander.Plan != TravelPlan.Wait)
                     {
                         wander.Plan = TravelPlan.Wait;
                         ExecutePlan(entity, sortkey,ref wander, ref move);
                     }
-                    if (move.DistanceRemaining < 1.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.GetNewLocation)
+                    if (move.DistanceRemaining < 5.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.GetNewLocation)
                     {
                         wander.Plan = TravelPlan.GetNewLocation;
+                        ExecutePlan(entity, sortkey,ref wander, ref move);
+                        
                     }
 
-                    if (move.DistanceRemaining > 1.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.MoveToLocation)
+                    if (move.DistanceRemaining > 5.5 && wander.WaitTimer == 00.0f && wander.Plan != TravelPlan.MoveToLocation)
                     {
                         wander.Plan = TravelPlan.MoveToLocation;
+                        ExecutePlan(entity, sortkey,ref wander, ref move);
+                        wander.WaitTimer = 10;
+
                     }
+                    if(wander is { WaitTimer: > 00.0f, Plan: TravelPlan.Wait })
+                        wander.WaitTimer -= deltaTime;
+                    if (wander.WaitTimer <= 00.0f)
+                        wander.WaitTimer = 00.0f;
+                        
                 }
 
                 void ExecutePlan(Entity entity, [ChunkIndexInQuery] int sortkey,ref WanderActionTag wander, ref Movement move)
@@ -194,12 +200,9 @@ namespace IAUS.ECS.Systems.Reactive
                         case TravelPlan.MoveToLocation:
                             move.SetLocation(wander.TravelPosition);
                             break;
-                        case TravelPlan.Wait:
-                            wander.WaitTimer = Random.Range(9, 25);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+              
                     }
+                    
                 }
             }
 

@@ -5,6 +5,7 @@ using IAUS.ECS.Systems;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace IAUS.ECS.Component
@@ -20,22 +21,24 @@ namespace IAUS.ECS.Component
                 .WithNone<PackMember>()
                 .ForEach((Entity entity,
                     ref LocalToWorld transform,
-                    ref WanderQuadrant wander,
+                    ref WanderActionTag wander,
+                    ref Movement move,
                     ref UpdateWanderLocationTag tag) =>
                 {
-                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag);
+                    Debug.Log("running");
+                    ProcessEntityTemplate(entity, ref transform, ref wander, ref move, ref tag);
                 })
                 .Run();
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander
+            ref WanderActionTag wander
         )
         {
-            if (wander.WanderNeighborQuadrants)
+            if (false)
             {
-                // Choose among neighbor quadrants (outline keeps original selection behavior)
+                // Choose among neighbor quadrants (outline keeps the original selection behavior)
                 var positions = new List<float3>
                 {
                     GetWanderPoint(transform.Position, wander.HashKey + 1),

@@ -92,9 +92,7 @@ namespace DreamersInc.BestiarySystem
                 {
                     manager.AddComponent<Player_Control>(entity);
                 }
-                else {
-                    manager.AddComponent<AI_Control>(entity);
-                }
+           
                 manager.AddComponent<AttackTarget>(entity);
                 manager.AddComponentObject(entity, new Command());
                 var controllerData = new CharControllerE();

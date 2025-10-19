@@ -120,10 +120,8 @@ namespace IAUS.ECS.Systems
             void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, TerrorizeAspect aspect,
                 in TerrorizeAreaTag tag)
             {
-                if (aspect.Plan.IsEmpty)
-                {
+                if (aspect.CurAttackStep == AttackPlan.None)
                     aspect.DeterminePlan();
-                }
 
                 aspect.ExecutePlan(entity, chunkIndex, deltaTime, ECB);
             }

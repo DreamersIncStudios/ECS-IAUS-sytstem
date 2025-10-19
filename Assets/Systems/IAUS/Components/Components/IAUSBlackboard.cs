@@ -28,7 +28,6 @@ namespace IAUS.ECS.Component.Aspects
         private readonly RefRO<InfluenceComponent> influence;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
-        [Optional] private readonly RefRW<WanderQuadrant> wander;
         [Optional] private readonly RefRW<AttackState> attack;
         [Optional] private readonly RefRW<EvadeThreat> evade;
         [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
@@ -125,14 +124,7 @@ namespace IAUS.ECS.Component.Aspects
             }
         }
 
-        private float ScoreOfWanderState
-        {
-            get
-            {
-                return 0.0f;
-            }
-        }
-
+ 
  
 
         private float ScoreOfAttackState
@@ -264,8 +256,7 @@ namespace IAUS.ECS.Component.Aspects
                     patrol.IsValid ? patrol.ValueRO.Status : ActionStatus.Disabled, ScoreOfPatrolState),
                 new StateInfo(AIStates.Traverse,
                     traverse.IsValid ? traverse.ValueRO.Status : ActionStatus.Disabled, ScoreOfTraverseState),
-                new StateInfo(AIStates.WanderQuadrant,
-                    wander.IsValid ? wander.ValueRO.Status : ActionStatus.Disabled, ScoreOfWanderState),
+    
 
                 new StateInfo(AIStates.Retreat, evade.IsValid ? evade.ValueRO.Status : ActionStatus.Disabled,
                     ScoreOfEvadeState),

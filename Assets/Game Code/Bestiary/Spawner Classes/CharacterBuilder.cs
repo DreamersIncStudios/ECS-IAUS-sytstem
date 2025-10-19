@@ -97,16 +97,11 @@ namespace DreamersInc.BestiarySystem
             manager.AddComponentData(entity, AgentSeparation.Default);
             manager.AddComponentData(entity, new GiveUpStopTimer());
 
-            var move = new Movement()
+            manager.AddComponentData(aiEntity, new Movement()
             {
-                //Acceleration = agent.acceleration,
-                //StoppingDistance = agent.stoppingDistance,
-                //Offset = agent.baseOffset,
-            };
-            move.SetMovementSpeed(character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue);
-            manager.AddComponentData(entity, move);
-            manager.AddComponentData(entity, new AI_Control());
-            manager.AddComponentData(entity, new AIStat() { Speed = 10 });
+                MaxMovementSpeed = character.GetPrimaryAttribute((int)AttributeName.Speed).AdjustBaseValue
+            });
+
             return this;
         }
 

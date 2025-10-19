@@ -18,24 +18,22 @@ namespace IAUS.ECS.Component
                 .WithAll<PackMember>()
                 .ForEach((Entity entity,
                     ref LocalToWorld transform,
-                    ref WanderQuadrant wander,
-                    ref UpdateWanderLocationTag tag,
-                    in Parent parent,
-                    in PackMember packMember) =>
+                    ref WanderActionTag wander,
+                    ref Movement move,
+                    ref UpdateWanderLocationTag tag
+                   ) =>
                 {
                     // Maintain herd center update behavior
-                    wander.WanderCenterPoint =
-                        EntityManager.GetComponentData<Pack>(packMember.PackEntity).HerdCenter;
-                    var move = EntityManager.GetComponentData<Movement>(parent.Value);
+       
 
-                    ProcessEntityTemplate(entity, ref transform, ref wander, ref tag);
+                    ProcessEntityTemplate(entity, ref transform, ref wander, ref move, ref tag);
                 })
                 .Run();
         }
 
         protected override float3 ComputeTravelPosition(Entity entity,
             ref LocalToWorld transform,
-            ref WanderQuadrant wander)
+            ref WanderActionTag wander)
         {
             // Minimal outline: reuse current hash-based wander point.
             // You could refine this to bias toward wander.WanderCenterPoint if desired.

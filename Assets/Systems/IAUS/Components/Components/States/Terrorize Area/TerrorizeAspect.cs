@@ -24,6 +24,7 @@ namespace IAUS.ECS.Systems
         private readonly RefRO<AgentBody> agent;
 
         public FixedList32Bytes<AttackPlan> Plan => state.ValueRW.AttackPlans;
+        public AttackPlan CurAttackStep => state.ValueRO.AttackPlans.IsEmpty ? AttackPlan.None : state.ValueRO.AttackPlans[0];
         public Entity TargetEntity => state.ValueRO.TargetEntity;
 
         public float3 TargetPosition
