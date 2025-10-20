@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AISenses;
 using AISenses.VisionSystems;
+using Dreamers.InventorySystem;
 using DreamersInc.InfluenceMapSystem;
 using Global.Component;
 using IAUS.ECS.StateBlobSystem;
@@ -28,7 +29,6 @@ namespace IAUS.ECS.Component.Aspects
         private readonly RefRO<InfluenceComponent> influence;
         [Optional] private readonly RefRW<Patrol> patrol;
         [Optional] private readonly RefRW<Traverse> traverse;
-        [Optional] private readonly RefRW<AttackState> attack;
         [Optional] private readonly RefRW<EvadeThreat> evade;
         [Optional] private readonly RefRW<TerrorizeAreaState> terrorizeArea;
         [Optional] private readonly RefRW<MaintenanceState> maintenance;
@@ -127,34 +127,7 @@ namespace IAUS.ECS.Component.Aspects
  
  
 
-        private float ScoreOfAttackState
-        {
-            get
-            {
-                if (!attack.IsValid) return 0.0f;
-                if (!visionLink.ValueRO.TargetEnemyTargetInRange(out float dist))
-                {
-                    attack.ValueRW.TargetPosition = float3.zero;
-                    return 0.0f;
-                }
-
-                attack.ValueRW.TargetEntity = visionLink.ValueRO.TargetEnemy;
-
-                if (attack.ValueRO.Index == -1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(attack), DebugText(attack.ValueRO.Name));
-                }
-
-                var asset = GetAsset(attack.ValueRO.Index);
-                var influenceDist = 0; //Todo Figure this out 
-                var totalScore = asset.Health.Output(statInfo.ValueRO.HealthRatio) *
-                                 asset.DistanceToTargetEnemy.Output(dist / 200.0f) *
-                                 asset.EnemyInfluence.Output(influenceDist);
-                totalScore = Mathf.Clamp01(totalScore + ((1.0f - totalScore) * attack.ValueRO.mod) * totalScore);
-                return totalScore;
-            }
-        }
-
+    
         private float ScoreOfEvadeState
         {
             get
@@ -250,8 +223,6 @@ namespace IAUS.ECS.Component.Aspects
 
             var stateInfo = new List<StateInfo>
             {
-                new StateInfo(AIStates.Attack, attack.IsValid ? attack.ValueRO.Status : ActionStatus.Disabled,
-                    ScoreOfAttackState),
                 new StateInfo(AIStates.Patrol,
                     patrol.IsValid ? patrol.ValueRO.Status : ActionStatus.Disabled, ScoreOfPatrolState),
                 new StateInfo(AIStates.Traverse,
@@ -282,13 +253,6 @@ namespace IAUS.ECS.Component.Aspects
                     break;
                 case AIStates.Traverse:
                     commandBufferParallel.RemoveComponent<TraverseActionTag>(chunkIndex, self);
-                    break;
-
-                case AIStates.WanderQuadrant:
-                    commandBufferParallel.RemoveComponent<WanderActionTag>(chunkIndex, self);
-                    break;
-                case AIStates.Attack:
-                    commandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, self);
                     break;
 
                 case AIStates.RetreatToLocation:
@@ -322,6 +286,7 @@ namespace IAUS.ECS.Component.Aspects
              
                 case AIStates.Attack:
                     commandBufferParallel.AddComponent<AttackActionTag>(chunkIndex, self);
+                    commandBufferParallel.AddComponent<CheckAttackStatus>(chunkIndex, self);
                     break;
                 case AIStates.Retreat:
                     commandBufferParallel.AddComponent<RetreatActionTag>(chunkIndex, self);

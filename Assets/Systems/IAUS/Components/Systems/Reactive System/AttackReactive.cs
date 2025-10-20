@@ -14,33 +14,42 @@ using UnityEngine.SocialPlatforms;
 using Utilities.ReactiveSystem;
 
 
-[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
-[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBase<AttackActionTag, AttackState, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentRemovalJob))]
+[assembly: RegisterGenericComponentType(typeof(AIReactiveSystemBuffer<AttackActionTag, StateData, IAUS.ECS.Systems.Reactive.AttackTagReactor>.StateComponent))]
+[assembly: RegisterGenericJobType(typeof(AIReactiveSystemBuffer<AttackActionTag, StateData, IAUS.ECS.Systems.Reactive.AttackTagReactor>.ManageComponentAdditionJob))]
 
 namespace IAUS.ECS.Systems.Reactive
 {
 
-    public partial struct AttackTagReactor : IComponentReactorTagsForAIStates<AttackActionTag, AttackState>
+    public partial struct AttackTagReactor : IComponentReactorTagsForAIBuffer<AttackActionTag, StateData>
     {
-        public void ComponentAdded(Entity entity, ref AttackActionTag newAITag, ref AttackState aiStateComponent)
+        public void ComponentAdded(Entity entity, ref AttackActionTag newAITag, DynamicBuffer<StateData> AIStateCompoment)
         {
-            aiStateComponent.Status = ActionStatus.Running;
-            aiStateComponent.TargetPosition = float3.zero;
+            for (int i = 0; i < AIStateCompoment.Length; i++)
+            {
+                if (AIStateCompoment[i].State != AIStates.WanderQuadrant)
+                    continue;
+                var temp = AIStateCompoment[i];
+                temp.SetStatus( ActionStatus.Running);
+                AIStateCompoment[i] = temp;
+            }
         }
 
-        public void ComponentRemoved(Entity entity, ref AttackState aiStateComponent, in AttackActionTag oldComponent)
+        public void ComponentRemoved(Entity entity, DynamicBuffer<StateData>  AIStateCompoment, in AttackActionTag oldComponent)
         {
-            aiStateComponent.Status = ActionStatus.CoolDown;
-            aiStateComponent.ResetTime = aiStateComponent.CoolDownTime;
+            for (int i = 0; i < AIStateCompoment.Length; i++)
+            {
+                if (AIStateCompoment[i].State != AIStates.WanderQuadrant)
+                    continue;
+                var temp = AIStateCompoment[i];
+                temp.SetStatus( ActionStatus.Success);
+                temp.ResetTime = 15;
+                AIStateCompoment[i] = temp;
+            }
         }
 
-        public void ComponentValueChanged(Entity entity, ref AttackActionTag newAITag,
-            ref AttackState aiStateComponent, in AttackActionTag oldAITag)
-        {
-        }
+  
 
-        public partial class ReactiveSystem : AIReactiveSystemBase<AttackActionTag, AttackState, AttackTagReactor>
+        public partial class ReactiveSystem : AIReactiveSystemBuffer<AttackActionTag, StateData, AttackTagReactor>
         {
             protected override AttackTagReactor CreateComponentReactor()
             {
@@ -67,6 +76,7 @@ namespace IAUS.ECS.Systems.Reactive
                     deltaTime = SystemAPI.Time.DeltaTime,
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),
                 }.Schedule(depends);
+                
                 depends = new GetAttackPosition()
                 {
                     ChildBufferLookup = SystemAPI.GetBufferLookup<Child>(),
@@ -102,7 +112,7 @@ namespace IAUS.ECS.Systems.Reactive
                 [NativeDisableParallelForRestriction]public BufferLookup<ReserveLocationTag> ReserveLocationBuffer;
 
                 void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref LocalTransform transform, 
-                    ref AttackState state, in AttackActionTag tag)
+                    ref AttackActionTag state)
                 {
                     if(state.AttackPlans.IsEmpty) return;
                     if (state.AttackPlans[0] != AttackPlan.GetAttackLocation)
@@ -145,25 +155,14 @@ namespace IAUS.ECS.Systems.Reactive
                     public float Distance;
                 }
             }
-            partial struct DetermineAction: IJobEntity
-            {
-                public float deltaTime;
-                public EntityCommandBuffer.ParallelWriter ECB;
-         
-                void Execute([ChunkIndexInQuery]int chunkIndex, Entity entity, AttackAspect aspect,  in AttackActionTag tag)
-                {
-
-                   aspect. DeterminePlan();
-                   aspect.ExecutePlan(entity, chunkIndex, deltaTime,ECB);
-                }
-            }
+            
 
             private partial struct CheckAttackPosition:IJobEntity
             {
                 public ComponentLookup<LocalTransform> LocalTransformLookup;
                 public BufferLookup<Child> ChildBufferLookup;
                 public BufferLookup<MeleeAttackPosition> MeleeBufferLookup;
-                void Execute(ref AttackState state, in AttackActionTag tag)
+                void Execute(ref AttackActionTag state)
                 {
                     if (state.TargetPositionID == -1) return;
                     if (state.TargetPositionID > 4)

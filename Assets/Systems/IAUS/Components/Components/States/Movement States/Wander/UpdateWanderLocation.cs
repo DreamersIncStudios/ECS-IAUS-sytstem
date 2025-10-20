@@ -32,8 +32,6 @@ namespace IAUS.ECS.Component
             ref Movement move,
             ref UpdateWanderLocationTag tag)
         {
-                    Debug.Log("running");
-            
             float3 travel = ComputeTravelPosition(entity, ref transform, ref wander);
             wander.TravelPosition = travel;
             move.SetLocation(travel);

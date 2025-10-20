@@ -12,12 +12,12 @@ namespace IAUS.ECS.Component {
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackState attackState, in CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackActionTag attackState, in CheckAttackStatus tag) => {
 
                attackState.CapableOfMelee = false;
              attackState.CapableOfMagic = false;
              attackState.CapableOfProjectile = false;
-             EntityManager.RemoveComponent<CheckAttackStatus>(entity);
+         
 
                 foreach (var item in test.Equipment.EquippedWeapons)
                 {
@@ -48,7 +48,7 @@ namespace IAUS.ECS.Component {
                     if (test.Equipment.EquippedAbility.Count > 0)
                         attackState.CapableOfMagic = true;
                 }
-
+                EntityManager.RemoveComponent<CheckAttackStatus>(entity);
             }).Run();
         }
     }

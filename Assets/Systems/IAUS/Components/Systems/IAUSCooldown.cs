@@ -20,7 +20,6 @@ public partial struct IausCooldown : ISystem
         float deltaTime = SystemAPI.Time.DeltaTime;
         new UpdatePatrol() { DeltaTime= deltaTime}.ScheduleParallel();
         new UpdateTraverse() { DeltaTime = deltaTime }.ScheduleParallel();
-        new UpdateAttack() { DeltaTime = deltaTime }.ScheduleParallel();
     }
     [BurstCompile]
 
@@ -64,22 +63,5 @@ public partial struct IausCooldown : ISystem
 
 
 
-    partial struct UpdateAttack: IJobEntity
-    {
-        public float DeltaTime;
-
-        void Execute(ref AttackState state)
-        {
-            if (state.InCooldown)
-            {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
-            {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime = 0.0f;
-            }
-        }
-
-    }
+   
 }

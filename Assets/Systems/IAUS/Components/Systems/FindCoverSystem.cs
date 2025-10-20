@@ -60,7 +60,7 @@ namespace IAUS.ECS.Systems
             [ReadOnly] public NativeArray<Cover> Covers;
             [ReadOnly] public NativeArray<LocalToWorld> CoversPositions;
             [ReadOnly]  public ComponentLookup<AITarget> AITargetInfo;
-            void Execute(AttackAspect aspect, in LocalToWorld transform, in PhysicsInfo physicsInfo)
+            void Execute(AttackActionTag aspect, in LocalToWorld transform, in PhysicsInfo physicsInfo)
             {
                 var offset = AITargetInfo[aspect.TargetEntity].CenterOffset;
                 var ctx = new PositionCTX(transform.Position, transform.Forward, 75,

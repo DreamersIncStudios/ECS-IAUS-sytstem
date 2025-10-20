@@ -25,7 +25,6 @@ namespace IAUS.ECS.Component
                     ref Movement move,
                     ref UpdateWanderLocationTag tag) =>
                 {
-                    Debug.Log("running");
                     ProcessEntityTemplate(entity, ref transform, ref wander, ref move, ref tag);
                 })
                 .Run();
