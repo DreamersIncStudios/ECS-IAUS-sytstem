@@ -127,6 +127,14 @@ namespace IAUS.ECS.Systems
                     case AIStates.SpawnPackHerd:
                         break;
                     case AIStates.Terrorize:
+                        if (stateData.Index == -1)
+                            throw new ArgumentOutOfRangeException(nameof(stateData.State), DebugText(stateData.State));
+                        asset = brain.State.Value.Array[stateData.Index];
+                        totalScore = asset.Health.Output(statInfo.HealthRatio);
+                        mod =1.0f - (1.0f / 2.0f); 
+                        //Todo add a vision check are there things to destroy on npcs to chase in the area. ?
+                        //Todo check Influence around NPC is there something around them they should run from?
+                        score =    Mathf.Clamp01(totalScore + ((1.0f - totalScore) * mod) * totalScore);
                         break;
                     case AIStates.WanderQuadrant:
 

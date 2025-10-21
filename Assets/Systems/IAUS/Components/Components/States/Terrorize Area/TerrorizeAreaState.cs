@@ -93,5 +93,9 @@ namespace IAUS.ECS.Component
 
     public struct TerrorizeAreaTag : IComponentData
     {
+        public float3 TargetPosition;
+        public float3 AttackPosition;
+        public Entity TargetEntity;
+        public float2 InfluenceAtTarget;
     }
 }
