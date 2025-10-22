@@ -112,19 +112,6 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        partial struct DetermineAction : IJobEntity
-        {
-            public float deltaTime;
-            public EntityCommandBuffer.ParallelWriter ECB;
-
-            void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, TerrorizeAspect aspect,
-                in TerrorizeAreaTag tag)
-            {
-                if (aspect.CurAttackStep == AttackPlan.None)
-                    aspect.DeterminePlan();
-
-                aspect.ExecutePlan(entity, chunkIndex, deltaTime, ECB);
-            }
-        }
+        
     }
 }

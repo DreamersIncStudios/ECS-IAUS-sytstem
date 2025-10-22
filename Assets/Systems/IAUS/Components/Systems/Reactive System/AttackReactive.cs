@@ -71,7 +71,7 @@ namespace IAUS.ECS.Systems.Reactive
             {
                 var depends = Dependency;
                 
-                depends = new DetermineAction()
+                depends = new DetermineAttackAction()
                 {
                     DeltaTime = SystemAPI.Time.DeltaTime,
                     ECB = ecb.CreateCommandBuffer(World.Unmanaged).AsParallelWriter(),

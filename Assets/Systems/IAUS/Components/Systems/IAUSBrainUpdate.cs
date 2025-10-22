@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AISenses.VisionSystems;
+using Dreamers.InventorySystem;
 using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.Component;
 using IAUS.ECS.Component.Aspects;
@@ -83,10 +84,14 @@ namespace IAUS.ECS.Systems
                         break;
                     case AIStates.Attack:
                         if (!visionLink.TargetEnemyTargetInRange(out float distAttackTarget))
-                            if (stateData.Index == -1)
-                            {
-                                throw new ArgumentOutOfRangeException(nameof(stateData.State), DebugText(stateData.State));
-                            }
+                        {
+                            score = 0.0f;
+                            break;
+                        }
+                        if (stateData.Index == -1)
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(stateData.State), DebugText(stateData.State));
+                        }
                         asset = brain.State.Value.Array[stateData.Index];
                         var influenceDist = 0; //Todo Figure this out 
                         var totalScoreAttack = asset.Health.Output(statInfo.HealthRatio) *
@@ -127,6 +132,12 @@ namespace IAUS.ECS.Systems
                     case AIStates.SpawnPackHerd:
                         break;
                     case AIStates.Terrorize:
+                        if (!visionLink.TargetEnemyTargetInRange(out float distTerrorTarget))
+                        {
+                            score = 0.0f;
+                            break;
+                        }
+                        var InfluenceAtPosition = 0.0f; //Todo Figure this out 
                         if (stateData.Index == -1)
                             throw new ArgumentOutOfRangeException(nameof(stateData.State), DebugText(stateData.State));
                         asset = brain.State.Value.Array[stateData.Index];
@@ -185,6 +196,8 @@ namespace IAUS.ECS.Systems
                     break;
                 case AIStates.Attack:
                     CommandBufferParallel.RemoveComponent<AttackActionTag>(chunkIndex, self);
+                    CommandBufferParallel.AddComponent<CheckAttackStatus>(chunkIndex, self);
+                    
                     break;
 
                 case AIStates.RetreatToLocation:
@@ -195,6 +208,8 @@ namespace IAUS.ECS.Systems
                     break;
                 case AIStates.Terrorize:
                     CommandBufferParallel.RemoveComponent<TerrorizeAreaTag>(chunkIndex, self);
+                    CommandBufferParallel.AddComponent<CheckAttackStatus>(chunkIndex, self);
+                    
                     break;
                 case AIStates.PerformMaintenance:
                     CommandBufferParallel.RemoveComponent<MaintenanceTag>(chunkIndex, self);

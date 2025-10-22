@@ -95,7 +95,12 @@ namespace IAUS.ECS.Component
     {
         public float3 TargetPosition;
         public float3 AttackPosition;
+        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public Entity TargetEntity;
-        public float2 InfluenceAtTarget;
+        public int TargetPositionID;
+        public HowToAttack AttackType;
+        public  FixedList32Bytes<AttackPlan> AttackPlans;
+        public float AttackResetTimer;
+        [SerializeField]  public bool InAttackCooldown => AttackResetTimer != 0.0f;
     }
 }

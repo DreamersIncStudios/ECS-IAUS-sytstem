@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Components.MovementSystem;
 using IAUS.ECS.Component;
@@ -7,10 +7,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-namespace IAUS.ECS.Systems.Reactive
+namespace IAUS.ECS.Systems
 {
-
-
     partial struct DetermineAction : IJobEntity
     {
         public float DeltaTime;
@@ -25,7 +23,7 @@ namespace IAUS.ECS.Systems.Reactive
         private const float TravelMagicRange = 10f;
         private const float TravelRangeRange = 10f;
 
-        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, ref AttackActionTag state, in AIStat stat, in LocalToWorld transform)
+        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, TerrorizeAreaTag state, in AIStat stat, in LocalToWorld transform)
         {
             if (state.AttackPlans.Length != 0) return;
 
@@ -47,11 +45,6 @@ namespace IAUS.ECS.Systems.Reactive
                 (AttackPlan.AttackRange, ScoreRange(state, stat, transform)),
                 (AttackPlan.Evade, ScoreEvade(state, stat))
             };
-
-            // Sort descending by score, stable
-            System.Array.Sort(scoredPlans, (a, b) => b.score.CompareTo(a.score));
-
-
             foreach (var entry in scoredPlans)
             {
                 if (entry.score <= 0) return;
@@ -59,11 +52,9 @@ namespace IAUS.ECS.Systems.Reactive
                 state.AttackPlans.Add(entry.plan);
                 if (state.AttackPlans.Length >= 8) break;
             }
-
-            // aspect.ExecutePlan(entity, chunkIndex, deltaTime, ECB);
         }
 
-        private HowToAttack DeterminePrimaryAttackType(AttackActionTag state, AIStat stat, LocalToWorld transform)
+        private HowToAttack DeterminePrimaryAttackType(TerrorizeAreaTag state, AIStat stat, LocalToWorld transform)
         {
             // Score attack types and pick the best
             var typeScores = new (HowToAttack type, int score)[]
@@ -76,8 +67,7 @@ namespace IAUS.ECS.Systems.Reactive
             System.Array.Sort(typeScores, (a, b) => b.score.CompareTo(a.score));
             return typeScores[0].type;
         }
-
-        private int ScoreMelee(AttackActionTag state, AIStat stats, LocalToWorld transform)
+          private int ScoreMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (state.InAttackCooldown || !state.CapableOfMelee) return 0;
 
@@ -100,7 +90,7 @@ namespace IAUS.ECS.Systems.Reactive
             return score + 1;
         }
 
-        private int ScoreRange(AttackActionTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (state.InAttackCooldown || !state.CapableOfProjectile) return 0;
 
@@ -117,7 +107,7 @@ namespace IAUS.ECS.Systems.Reactive
             return score + 1;
         }
 
-        private int ScoreMagic(AttackActionTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (state.InAttackCooldown || !state.CapableOfMagic) return 0;
 
@@ -151,19 +141,19 @@ namespace IAUS.ECS.Systems.Reactive
             return false;
         }
 
-        private bool IsInAttackRange(in AttackActionTag state, float range, in LocalToWorld transform)
+        private bool IsInAttackRange(in TerrorizeAreaTag state, float range, in LocalToWorld transform)
         {
             if (state.AttackPosition.Equals(float3.zero)) return false;
             var distance = Vector3.Distance(transform.Position, state.AttackPosition);
             return distance <= range;
         }
 
-        private static bool HasMultipleAttackCapabilities(in AttackActionTag state) =>
+        private static bool HasMultipleAttackCapabilities(in TerrorizeAreaTag state) =>
             state is { CapableOfMagic: true, CapableOfMelee: true }
                 or { CapableOfMagic: true, CapableOfProjectile: true }
                 or { CapableOfMelee: true, CapableOfProjectile: true };
 
-        private int ScoreTravelToTargetMelee(AttackActionTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (!state.CapableOfMelee) return 0;
             if (IsInAttackRange(state, TravelMeleeRange, transform)) return 0;
@@ -176,7 +166,7 @@ namespace IAUS.ECS.Systems.Reactive
             return score;
         }
 
-        private int ScoreTravelToTargetMagic(AttackActionTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (!state.CapableOfMagic || IsInAttackRange(state, TravelMagicRange, transform)) return 0;
 
@@ -190,7 +180,7 @@ namespace IAUS.ECS.Systems.Reactive
             return score;
         }
 
-        private int ScoreTravelToTargetRange(AttackActionTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
         {
             if (!state.CapableOfProjectile || IsInAttackRange(state, TravelRangeRange, transform)) return 0;
 
@@ -203,12 +193,12 @@ namespace IAUS.ECS.Systems.Reactive
 
         private int WanderScore => 0;
 
-        private int ScoreEvade(AttackActionTag state, AIStat stats)
+        private int ScoreEvade(TerrorizeAreaTag state, AIStat stats)
         {
             return stats.HealthRatio > LowHealthThreshold ? 0 : 2;
         }
 
-        private int ComputeRestScore(AttackActionTag state, AIStat stats)
+        private int ComputeRestScore(TerrorizeAreaTag state, AIStat stats)
         {
             var score = 0;
             if (stats.HealthRatio < LowHealthThreshold) return score;
@@ -216,16 +206,15 @@ namespace IAUS.ECS.Systems.Reactive
             return score;
         }
 
-        private static int ScoreGetAttackLocation(in AttackActionTag state) => state.AttackPosition.Equals(float3.zero) ? 10 : 0;
+        private static int ScoreGetAttackLocation(in TerrorizeAreaTag state) => state.AttackPosition.Equals(float3.zero) ? 10 : 0;
 
-        private static int ScoreGetTargetLocation(in AttackActionTag state) => state.TargetPosition.Equals(float3.zero) ? 10 : 0;
+        private static int ScoreGetTargetLocation(in TerrorizeAreaTag state) => state.TargetPosition.Equals(float3.zero) ? 10 : 0;
     }
-
-    public partial struct ExecuteAttackAction : IJobEntity
+      public partial struct ExecuteTerrorizeAction : IJobEntity
     {
         public  float DeltaTime;
         public EntityCommandBuffer.ParallelWriter ECB;
-        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref AttackActionTag state, ref Movement move)
+        private void Execute(Entity entity, [ChunkIndexInQuery] int chunkIndex, ref TerrorizeAreaTag state, ref Movement move)
         {
             if (state.AttackPlans.IsEmpty) return;
                         switch (state.AttackPlans[0])

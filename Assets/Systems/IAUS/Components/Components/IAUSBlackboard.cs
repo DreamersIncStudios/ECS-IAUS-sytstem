@@ -293,6 +293,7 @@ namespace IAUS.ECS.Component.Aspects
                     break;
                 case AIStates.Terrorize:
                     commandBufferParallel.AddComponent<TerrorizeAreaTag>(chunkIndex, self);
+                    commandBufferParallel.AddComponent<CheckAttackStatus>(chunkIndex, self);
                     break;
                 case AIStates.PerformMaintenance:
                     commandBufferParallel.AddComponent<MaintenanceTag>(chunkIndex, self);
