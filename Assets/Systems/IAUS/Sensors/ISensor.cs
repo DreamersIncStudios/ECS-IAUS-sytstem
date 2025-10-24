@@ -10,12 +10,7 @@ namespace IAUS.Core.GOAP
     {
         public float DetectionRange { get; set; }
         float Timer { get; set; } // consider using Variable Rate Manager;
-
-        Entity TargetEntity(TargetAlignmentType alignmentType);
-        float3 TargetPosition(TargetAlignmentType alignmentType);
-        float3 LastKnownPosition(TargetAlignmentType alignmentType);
-        public bool IsInRange(TargetAlignmentType alignmentType);
-        public bool UpdateTargetPosition(TargetAlignmentType alignmentType);
+        
 
     }
 

@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using System;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 namespace Stats
 {
     public class CharacterSetup : MonoBehaviour
     {
-    public CharacterClass CharClass;
+        [SerializeReference]public ICharacterData CharClass;
 
         private void Awake()
         {
             if (CharClass.LevelMod == 0)
                 CharClass.LevelMod = 1;
 
-            if (CharClass.difficultyMod == 0)
-                CharClass.difficultyMod = 1;
+            if (CharClass.DifficultyMod == 0)
+                CharClass.DifficultyMod = 1;
 
         }
 
@@ -44,27 +46,8 @@ namespace Stats
 
 
     }
-    [System.Serializable]
-    public struct CharacterClass
-    {
-        public ClassTitle title;
-        public string Name;
-        public int Level;
-        public int Strength;
-        public int Vitality;
-        public int Awareness;
-        public int Speed;
-        public int Skill;
-        public int Resistance;
-        public int Concentration;
-        public int WillPower;
-        public int Charisma;
-        public int Luck;
 
-        public float difficultyMod;
-        public float LevelMod;
 
-    }
     public enum ClassTitle
     {
         Grunt, Soldier, Ranger, Archer, Sorcer, Mage, Monk, Swordman, Thief, Knight, Bot, Generalist, Pugiblist, Beast

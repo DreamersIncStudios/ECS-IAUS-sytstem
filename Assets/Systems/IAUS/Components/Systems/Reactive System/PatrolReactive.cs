@@ -17,10 +17,10 @@ namespace IAUS.ECS.Systems.Reactive
 {
     public partial  struct PatrolTagReactor : IComponentReactorTagsForAIStates<PatrolActionTag, Patrol>
     {
-        public void ComponentAdded(Entity entity, ref PatrolActionTag newComponent, ref Patrol aiStateComponent)
+        public void ComponentAdded(Entity entity, ref PatrolActionTag newAITag, ref Patrol aiStateComponent)
         {
             aiStateComponent.Status = ActionStatus.Running;
-            newComponent.WaitTime = aiStateComponent.CurWaypoint.TimeToWaitatWaypoint;
+            newAITag.WaitTime = aiStateComponent.CurWaypoint.TimeToWaitatWaypoint;
         }
 
         public void ComponentRemoved(Entity entity, ref Patrol aiStateComponent, in PatrolActionTag oldComponent)
@@ -38,7 +38,7 @@ namespace IAUS.ECS.Systems.Reactive
             }
         }
 
-        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newComponent, ref Patrol aiStateComponent, in PatrolActionTag oldComponent)
+        public void ComponentValueChanged(Entity entity, ref PatrolActionTag newAITag, ref Patrol aiStateComponent, in PatrolActionTag oldAITag)
         {
         }
 

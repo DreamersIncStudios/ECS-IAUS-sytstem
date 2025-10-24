@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d32022f830472a88c376f541f9164b, type: 3}
+  m_Name: testing
+  m_EditorClassIdentifier: 
+  biomeID: 0
+  spawnData:
+  - SpawnScenario: 2
+    SpawnID: 4
+    ActiveHours: 5
+    Qty: 4
+    RespawnInterval: 15
+  packsToSpawn:
+  - PackType: 0
+    Size: 1

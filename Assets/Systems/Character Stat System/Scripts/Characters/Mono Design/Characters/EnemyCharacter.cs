@@ -4,13 +4,15 @@ using UnityEngine;
 using Unity.Entities;
 using DreamersInc.DamageSystem.Interfaces;
 using DreamersInc.CombatSystem.Animation;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 namespace Stats
 {
     public class EnemyCharacter : BaseCharacter
     {
         public uint EXPgained;
-        public CharacterClass BaseStats;
+        public ICharacterData BaseStats;
 
         public void SetupDataEntity()
         {

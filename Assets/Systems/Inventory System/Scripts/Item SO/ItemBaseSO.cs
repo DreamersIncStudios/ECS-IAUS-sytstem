@@ -33,7 +33,7 @@ namespace Dreamers.InventorySystem.Interfaces
         public uint MaxStackCount { get { return maxStackCount; } }
 #if UNITY_EDITOR
 
-        public void setItemID(uint ID)
+        public void setItemID(uint ID=0) // using serializableGUID in the main project
         {
 
             _itemID = ID;

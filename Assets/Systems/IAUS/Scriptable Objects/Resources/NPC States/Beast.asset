@@ -15,7 +15,7 @@ MonoBehaviour:
   nameNPC: 'Wolf Testing '
   Difficulty: 1
   NpcLevel: 5
-  FactionID: 1
+  FactionID: 0
   States:
   - StateName: 22
     Considerations:

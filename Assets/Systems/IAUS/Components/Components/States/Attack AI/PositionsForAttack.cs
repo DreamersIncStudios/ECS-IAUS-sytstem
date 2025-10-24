@@ -123,7 +123,7 @@ namespace IAUS.ECS.Component.Attacking
                     })
                 .ScheduleParallel();
 
-            ComponentLookup<AttackState> lookup = SystemAPI.GetComponentLookup<AttackState>(false);
+            ComponentLookup<AttackActionTag> lookup = SystemAPI.GetComponentLookup<AttackActionTag>(false);
             Entities.ForEach((Entity entity,DynamicBuffer<ReserveLocationTag> tags,
                  DynamicBuffer<MeleeAttackPosition> attackPosition) =>
             {

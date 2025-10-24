@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d191a85dd84bca44b4017f7eae4e3c7, type: 3}
+  m_Name: Config
+  m_EditorClassIdentifier: Assembly-CSharp::DreamersIncStudio.GAIACollective.GaiaConfiguration
+  cycleSpeed: 0.2
+  Daybreak:
+    ambientColor: {r: 0.4156863, g: 0.67058825, b: 0.73333335, a: 0}
+    sunColor: {r: 0.9725491, g: 0.6392157, b: 0.38431376, a: 0}
+    backgroundColor: {r: 1, g: 0.9960785, b: 0.9803922, a: 0}
+    sunIntensity: 1.9
+    shadowStrength: 0.7
+    fogColor: {r: 0.427451, g: 0.5294118, b: 0.5647059, a: 0}
+    fogDensity: 0.005
+    waterColor: {r: 0.42745098, g: 0.5294118, b: 0.5647059, a: 0}
+  Midday:
+    ambientColor: {r: 0.7490196, g: 0.7411765, b: 0.68235296, a: 0}
+    sunColor: {r: 0.9607844, g: 0.9607844, b: 0.8196079, a: 0}
+    backgroundColor: {r: 0.67058825, g: 0.8705883, b: 0.9333334, a: 0}
+    sunIntensity: 1.3
+    shadowStrength: 1
+    fogColor: {r: 0, g: 0, b: 0, a: 0}
+    fogDensity: 0
+    waterColor: {r: 0.3254902, g: 0.85882354, b: 0.972549, a: 0.69411767}
+  Sunset:
+    ambientColor: {r: 0.7490196, g: 0.7411765, b: 0.68235296, a: 0}
+    sunColor: {r: 0.9607844, g: 0.9607844, b: 0.8196079, a: 0}
+    backgroundColor: {r: 0.67058825, g: 0.8705883, b: 0.9333334, a: 0}
+    sunIntensity: 1.3
+    shadowStrength: 1
+    fogColor: {r: 0, g: 0, b: 0, a: 0}
+    fogDensity: 0
+    waterColor: {r: 0.3254902, g: 0.85882354, b: 0.972549, a: 0.69411767}
+  Night:
+    ambientColor: {r: 0.9607844, g: 0.5254902, b: 0.35686275, a: 0}
+    sunColor: {r: 0.7686275, g: 0.7058824, b: 0.5882353, a: 0}
+    backgroundColor: {r: 0.7490196, g: 0.3803922, b: 0.3254902, a: 0}
+    sunIntensity: 1.6
+    shadowStrength: 0.7
+    fogColor: {r: 0.30980393, g: 0.23137257, b: 0.19215688, a: 0}
+    fogDensity: 0.004
+    waterColor: {r: 0.427451, g: 0.34509805, b: 0.35686275, a: 0.69411767}

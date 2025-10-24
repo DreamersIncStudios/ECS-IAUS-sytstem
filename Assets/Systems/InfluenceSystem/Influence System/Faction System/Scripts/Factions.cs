@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
@@ -28,6 +27,7 @@ namespace DreamersIncStudio.FactionSystem
         public FactionNames Faction; // 4bytes
         [Range(-100,100)]public int Affinity; // 4bytes 
     }
+    public enum Affinity { Hate,Negative, Neutral, Positive, Love }
     [System.Serializable]
     public struct FactionData
     {

@@ -10,7 +10,7 @@ public class FindCoverTestManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        BestiaryDB.SpawnNPC(1201, Vector3.zero);
+      //  BestiaryDB.SpawnNPC(1201, Vector3.zero);
 
     }
 

@@ -30,7 +30,7 @@ namespace IAUS.ECS.Systems
             wanderStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
                 All = new[] { ComponentType.ReadOnly(typeof(SetupBrainTag)),
-                    ComponentType.ReadWrite(typeof(WanderQuadrant)) ,ComponentType.ReadOnly(typeof(LocalTransform)) },
+                    ComponentType.ReadWrite(typeof(WanderActionTag)) ,ComponentType.ReadOnly(typeof(LocalTransform)) },
             });
             traverseStateEntity = GetEntityQuery(new EntityQueryDesc()
             {
@@ -70,10 +70,7 @@ namespace IAUS.ECS.Systems
             }.ScheduleParallel(traverseStateEntity, systemDeps);
             ecbSystem.AddJobHandleForProducer(systemDeps);
             
-            systemDeps = new AddWanderState() { 
-                ECB = ecbSingleton.CreateCommandBuffer(World.Unmanaged).AsParallelWriter()
-            }.ScheduleParallel(wanderStateEntity, systemDeps);
-            ecbSystem.AddJobHandleForProducer(systemDeps);
+      
           
             // This is to be the last job of this system
             systemDeps = new RemoveSetupTag()

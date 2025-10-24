@@ -48,7 +48,7 @@ namespace Dreamers.InventorySystem
 
         public bool Equip(BaseCharacterComponent player)
         {
-            var anim = player.GOrepresentative.GetComponent<Animator>();
+            var anim = player.GORepresentative.GetComponent<Animator>();
 
             if (player.Level >= LevelRqd)
             {
@@ -118,7 +118,7 @@ namespace Dreamers.InventorySystem
         public  bool EquipItem(CharacterInventory characterInventory, BaseCharacterComponent player)
         {
             EquipmentBase Equipment = characterInventory.Equipment;
-            var Anim = player.GOrepresentative.GetComponent<Animator>();
+            var Anim = player.GORepresentative.GetComponent<Animator>();
 
             if (player.Level >= LevelRqd)
             {

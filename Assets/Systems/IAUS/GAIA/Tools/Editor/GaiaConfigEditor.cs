@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DreamersIncStudio.GAIACollective.EditorWindows
 {
+    #if UNITY_EDITOR
     [CustomEditor(typeof(GaiaConfiguration))]
     public class GaiaConfigEditor : Editor
     {
@@ -51,4 +52,5 @@ namespace DreamersIncStudio.GAIACollective.EditorWindows
             }
         }
     }
+    #endif
 }

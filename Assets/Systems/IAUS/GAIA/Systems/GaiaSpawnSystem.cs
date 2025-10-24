@@ -1,36 +1,16 @@
 using System;
+using AISenses;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
+using Resources = AISenses.Resources;
 
 namespace DreamersIncStudio.GAIACollective
 {
-    public partial class GaiaUpdateGroup : ComponentSystemGroup
-    {
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-            RequireForUpdate<RunningTag>();
-            RequireForUpdate<GaiaTime>();
-            RequireForUpdate<WorldManager>();
-        }
-
-        public GaiaUpdateGroup()
-        {
-            RateManager = new RateUtils.VariableRateManager(80, true);
-        }
-    }
     [UpdateInGroup(typeof(GaiaUpdateGroup))]
     public partial class GaiaSpawnSystem : SystemBase
     {
-    
-        protected override void OnCreate()
-        {
-            base.OnCreate();
-        }
-
-
         protected override void OnUpdate()
         {
             if (!SystemAPI.TryGetSingleton<GaiaControl>(out _))
@@ -39,116 +19,71 @@ namespace DreamersIncStudio.GAIACollective
                 EntityManager.AddComponentData(gaiaEntity, new GaiaControl(10));
             }
             var worldManager = SystemAPI.GetSingleton<WorldManager>();
-            var gaiaTime = SystemAPI.GetSingletonRW<GaiaTime>();
-            var gaiaSettings = SystemAPI.GetSingleton<GaiaLightSettings>();
-            gaiaTime.ValueRW.UpdateTime(SystemAPI.Time.DeltaTime);
-            var timeOfDay = gaiaTime.ValueRO.TimeOfDay;
-
-            #region Lighting
-
-            Entities.WithoutBurst().ForEach((Light light) =>
-            {
-                var rotationPivot = light.transform;
-                float timePercent = gaiaTime.ValueRO.TimeOfDay / 24f;
-                float xRotation = (timePercent * 360f) - 90f;
-                if (rotationPivot.localRotation.eulerAngles.x != xRotation ||
-                    rotationPivot.localRotation.eulerAngles.y != -30)
-                {
-                    rotationPivot.localRotation = Quaternion.Euler(new Vector3(xRotation, -30, 0));
-                }
-
-                TimeLightingSettings from, to;
-                float blend;
-                switch (timeOfDay)
-                {
-                    case < 6f:
-                        from = gaiaSettings.Night;
-                        to = gaiaSettings.Daybreak;
-                        blend = timeOfDay / 6f;
-                        break;
-                    case < 12f:
-                        from = gaiaSettings.Daybreak;
-                        to = gaiaSettings.Midday;
-                        blend = (timeOfDay - 6f) / 6f;
-                        break;
-                    case < 18f:
-                        from = gaiaSettings.Midday;
-                        to = gaiaSettings.Sunset;
-                        blend = (timeOfDay - 12f) / 6f;
-                        break;
-                    default:
-                        from = gaiaSettings.Sunset;
-                        to = gaiaSettings.Night;
-                        blend = (timeOfDay - 18f) / 6f;
-                        break;
-                }
-
-                RenderSettings.ambientLight = Color.Lerp(from.ambientColor, to.ambientColor, blend);
-                light.color = Color.Lerp(from.sunColor, to.sunColor, blend);
-                light.intensity = Mathf.Lerp(from.sunIntensity, to.sunIntensity, blend);
-                light.shadowStrength = Mathf.Lerp(from.shadowStrength, to.shadowStrength, blend);
-
-                if (gaiaSettings.EnableFogControl && RenderSettings.fog)
-                {
-                    RenderSettings.fogColor = Color.Lerp(from.fogColor, to.fogColor, blend);
-                    RenderSettings.fogDensity = Mathf.Lerp(from.fogDensity, to.fogDensity, blend);
-                }
-            }).Run();
-
-            #endregion
-
-            var ecb = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
-            var endBuffer = ecb.CreateCommandBuffer(World.Unmanaged);
 
             #region Spawning
 
-            var updateHashMap = false;
-            Entities.WithStructuralChanges().ForEach((ref GaiaSpawnBiome biome) =>
+            var levelManager = SystemAPI.GetComponentLookup<GaiaLevelManager>(true);
+            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>()
+                .CreateCommandBuffer(World.Unmanaged);
+
+            Entities.WithReadOnly(levelManager).ForEach((Entity entity, ref GaiaSpawnBiome biome, in LocalToWorld transform) =>
             {
+                if(biome.Manager == Entity.Null) return;
+                
+                var scenario = levelManager[biome.Manager].SpawnScenario;
+                if(scenario == SpawnScenario.DoNotSpawn) return;
                 for (var index = 0; index < biome.SpawnData.Length; index++)
                 {
+                     
                     var spawn = biome.SpawnData[index];
-                    switch (spawn)
+                    if(spawn.SpawnScenario != scenario) continue;
+                    
+                    spawn.Countdown(SystemAPI.Time.DeltaTime);
+                    if (spawn.IsSatisfied)
                     {
-                        case { IsSatisfied: true, Respawn: false }:
-                            break;
-                        case { Respawn: true, IsSatisfied: true }:
-                          spawn.ResetRespawn();
-                            break;
-                        default:
-                       spawn.Spawn(biome.BiomeID,biome.LevelRange*(int)worldManager.WorldLevel, worldManager.PlayerLevel);
-                       updateHashMap = true;
-                            break;
+                        if (spawn.Respawn)
+                            spawn.ResetRespawn();   
+                    }
+                    else if (spawn.Respawn)
+                    {
+                        spawn.Spawn(ref biome.SpawnRequests, biome.BiomeID,
+                            biome.LevelRange * (int)worldManager.WorldLevel, worldManager.PlayerLevel);
                     }
 
-                    spawn.Countdown(SystemAPI.Time.DeltaTime);
+
                     biome.SpawnData[index] = spawn;
+
                 }
 
+
                 #region Pack Spawn
+
                 for (var i = 0; i < biome.PacksToSpawn.Length; i++)
                 {
                     var packInfo = biome.PacksToSpawn[i];
-                    if(packInfo.Satisfied) continue;
-                    // ReSharper disable once Unity.BurstFunctionSignatureContainsManagedTypes
-                    var baseEntityArch = EntityManager.CreateArchetype(
-                        new ComponentType[]
-                        {
-                            typeof(LocalTransform),
-                            typeof(LocalToWorld)
-                        }
-                    );
-                    var baseDataEntity = EntityManager.CreateEntity(baseEntityArch);
+                    if (packInfo.Created) continue;
+                    
+                    // Create and set up the pack entity via ECB to avoid structural changes during the loop.
+                    var baseDataEntity = ecb.CreateEntity();
+                    ecb.AddComponent<LocalTransform>(baseDataEntity, new LocalTransform
+                    {
+                        Position = transform.Position,
+                        Scale = 1
+                    });
+                    ecb.AddComponent<LocalToWorld>(baseDataEntity);
+                    ecb.AddBuffer<PackList>(baseDataEntity);
+                    ecb.AddBuffer<Enemies>(baseDataEntity);
+                    ecb.AddBuffer<Allies>(baseDataEntity);
+                    ecb.AddBuffer<Resources>(baseDataEntity);
+                    ecb.AddBuffer<PlacesOfInterest>(baseDataEntity);
 
                     switch (packInfo.PackType)
                     {
                         case PackType.Assault:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.AssaultTeam(Entity.Null, biome.BiomeID));
-                           
+                            ecb.AddComponent(baseDataEntity, Pack.AssaultTeam(biome.BiomeID, packInfo.Size));
                             break;
                         case PackType.Support:
-                            EntityManager.AddComponentData(baseDataEntity, Pack.Support(Entity.Null,biome.BiomeID));
-
+                            ecb.AddComponent(baseDataEntity, Pack.Support(biome.BiomeID, packInfo.Size));
                             break;
                         case PackType.Transport:
                             break;
@@ -163,23 +98,15 @@ namespace DreamersIncStudio.GAIACollective
                         default:
                             throw new ArgumentOutOfRangeException();
                     }
+
                     packInfo.Qty++;
+                    packInfo.Created = true;
                     biome.PacksToSpawn[i] = packInfo;
                 }
-                #endregion
                 
             }).Run();
-            if (!updateHashMap) return;
-            var control = SystemAPI.GetSingleton<GaiaControl>();
-            Entities.ForEach((Entity entity, ref GaiaLife life) =>
-            {
-                if (control.entityMapTesting.IsCreated)
-                {
-                    control.entityMapTesting.Clear();
-                }
-                control.entityMapTesting.Add(life.HomeBiomeID, new AgentInfo(entity));
-            }).Schedule();
-
+              
+            #endregion
 
             #endregion
 

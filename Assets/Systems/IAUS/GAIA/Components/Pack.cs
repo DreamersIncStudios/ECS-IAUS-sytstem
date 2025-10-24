@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
+using System;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -31,46 +29,44 @@ namespace DreamersIncStudio.GAIACollective
                 return count == MemberCount;
             }
         }
-        public FixedList128Bytes<PackRole>  Requirements;
+
+        public FixedList128Bytes<PackRole> Requirements;
         public Entity LeaderEntity;
         public float CohesionFactor;
+        public float TravelRadius => 55*CohesionFactor;
         public float SeparationFactor;
         public float AlignmentFactor;
         public float3 HerdCenter; // Central point for the herd
         public int MemberCount;
         public uint BiomeID;
         public Role Role;
+        public PackState State;
+        public PackCommunication Communication;
+        
+        private static int2 Need(int required, Size size) => new int2(required * Mod(size), 0);
 
-        public Pack(List<PackRole> requirement, uint BiomeID, Role Roles )
+        private static int Mod(Size size)
         {
-            Requirements = new FixedList128Bytes<PackRole>();
-            foreach (var role in requirement)
+            return size switch
             {
-                Requirements.Add(role);
-            }
-
-            CohesionFactor = 1.0f;
-            SeparationFactor = 2.0f;
-            AlignmentFactor = 0.5f;
-            this.BiomeID = BiomeID;
-            Role = Roles;
-            LeaderEntity = default;
-            HerdCenter = default;
-            MemberCount = 0;
-           
+                Size.small => 1,
+                Size.medium => 2,
+                Size.large => 3,
+                Size.huge => 4,
+                _ => throw new ArgumentOutOfRangeException(nameof(size), size, null)
+            };
         }
-
-        public static Pack AssaultTeam(Entity entity, uint BiomeID) => new Pack()
+        public static Pack AssaultTeam(uint BiomeID, Size size)=> new Pack()
         {
-            LeaderEntity = entity,
-            Requirements =  new FixedList128Bytes<PackRole>()
+            State = PackState.Spawned,
+            Requirements = new FixedList128Bytes<PackRole>()
             {
-                new PackRole(Role.Recon, new int2(1,0)),
-                new PackRole(Role.Combat, new int2(1,0)),
-                new PackRole(Role.Scavengers, new int2(1,0)),
-                new PackRole(Role.Transport, new int2(1,0)),
-                new PackRole(Role.Acquisition, new int2(1,0)),
-                new PackRole(Role.Support, new int2(1,0)),
+                new PackRole(Role.Recon, Need(2, size)),
+                new PackRole(Role.Combat, Need(5, size)),
+                new PackRole(Role.Scavengers, Need(1, size)),
+                new PackRole(Role.Transport, Need(0, size)),
+                new PackRole(Role.Acquisition, Need(0, size)),
+                new PackRole(Role.Support, Need(2, size))
             },
             CohesionFactor = 1.0f,
             SeparationFactor = 2.0f,
@@ -78,19 +74,22 @@ namespace DreamersIncStudio.GAIACollective
             BiomeID = BiomeID,
             Role = Role.Combat
         };
-        
-        
-        public static Pack Support(Entity entity, uint BiomeID) => new Pack()
+    
+
+
+
+        public static Pack Support(uint BiomeID,Size size) => new Pack()
         {
-            LeaderEntity = entity,
+ 
+            State = PackState.Spawned,
             Requirements =  new FixedList128Bytes<PackRole>()
             {
-                new PackRole(Role.Recon, new int2(3,0)),
-                new PackRole(Role.Combat, new int2(2,0)),
-                new PackRole(Role.Scavengers, new int2(0,0)),
-                new PackRole(Role.Transport, new int2(1,0)),
-                new PackRole(Role.Acquisition, new int2(0,0)),
-                new PackRole(Role.Support, new int2(3,0)),
+                new PackRole(Role.Recon, Need(3, size)),
+                new PackRole(Role.Combat, Need(2, size)),
+                new PackRole(Role.Scavengers, Need(0, size)),
+                new PackRole(Role.Transport,Need(1, size)),
+                new PackRole(Role.Acquisition, Need(0, size)),
+                new PackRole(Role.Support, Need(3, size)),
             },
             CohesionFactor = 1.0f,
             SeparationFactor = 2.0f,
@@ -110,7 +109,7 @@ namespace DreamersIncStudio.GAIACollective
           PackEntity = packEntity;
         }
     }
-    [System.Serializable]
+
     public struct PackRole
     {
         public Role Role;
@@ -127,6 +126,19 @@ namespace DreamersIncStudio.GAIACollective
         }
     }
 
+    [InternalBufferCapacity(0)]
+    public struct PackList : IBufferElementData
+    {
+        public Entity PackMember;
+        public Role MemberRole;
+
+        public PackList(Entity entity, Role Role)
+        {
+            PackMember = entity;
+            MemberRole = Role;
+        }
+    }
+    
     public enum Role
     {
         Recon,
@@ -134,7 +146,25 @@ namespace DreamersIncStudio.GAIACollective
        Scavengers,
        Transport,
        Acquisition,
-        Support,
-        Spawner
+        Support 
+        
+    }
+    public enum PackState
+    {
+        Spawned,
+        Filled,
+        LookingForMembers,
+        Disbanded,
+        Destroyed,
+        Active
+    }
+
+    public enum PackCommunication
+    {
+        LineOfSight, // Pack members only know about each other if they are in line of sight
+        LocalRadio, // Pack members know about each other if they are within a certain range
+        DispatchedRadio // Pack members know about each other
+    
+        
     }
 }
