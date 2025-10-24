@@ -17,8 +17,9 @@ MonoBehaviour:
   - SpawnScenario: 2
     SpawnID: 4
     ActiveHours: 5
-    Qty: 4
+    Qty: 250
     RespawnInterval: 15
   packsToSpawn:
-  - PackType: 0
+  - FactionID: 0
+    PackType: 0
     Size: 1

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Entities;
 using System;
-using IAUS.ECS.Component.Aspects;
 
 namespace IAUS.ECS.Component
 {

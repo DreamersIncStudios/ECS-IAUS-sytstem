@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
 using Dreamers.InventorySystem;
-using IAUS.ECS.Component.Aspects;
 using Dreamers.InventorySystem.Interfaces;
-using IAUS.Core.GOAP;
 
 namespace IAUS.ECS.Component {
     public partial class EquipmentUpdate : SystemBase
