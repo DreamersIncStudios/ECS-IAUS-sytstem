@@ -23,11 +23,11 @@ namespace IAUS.ECS.Systems
         private const float TravelMagicRange = 10f;
         private const float TravelRangeRange = 10f;
 
-        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, TerrorizeAreaTag state, in AIStat stat, in LocalToWorld transform)
+        void Execute([ChunkIndexInQuery] int chunkIndex, Entity entity, TerrorizeAreaTag state, in AIStat stat, in LocalToWorld transform, in AttackCapable capable)
         {
             if (state.AttackPlans.Length != 0) return;
 
-            state.AttackType = DeterminePrimaryAttackType(state, stat, transform);
+            state.AttackType = DeterminePrimaryAttackType(state, stat, transform, capable);
 
             // Build scored plan list as (plan, score) pairs to keep index without re-searching
             var scoredPlans = new (AttackPlan plan, int score)[]
@@ -37,12 +37,12 @@ namespace IAUS.ECS.Systems
                 (AttackPlan.Wander, WanderScore),
                 (AttackPlan.GetTargetLocation, ScoreGetTargetLocation(state)),
                 (AttackPlan.GetAttackLocation, ScoreGetAttackLocation(state)),
-                (AttackPlan.MoveToLocationMelee, ScoreTravelToTargetMelee(state, stat, transform)),
-                (AttackPlan.MoveToLocationMagic, ScoreTravelToTargetMagic(state, stat, transform)),
-                (AttackPlan.MoveToLocationRange, ScoreTravelToTargetRange(state, stat, transform)),
-                (AttackPlan.AttackMelee, ScoreMelee(state, stat, transform)),
-                (AttackPlan.AttackMagic, ScoreMagic(state, stat, transform)),
-                (AttackPlan.AttackRange, ScoreRange(state, stat, transform)),
+                (AttackPlan.MoveToLocationMelee, ScoreTravelToTargetMelee(state, stat, transform, capable)),
+                (AttackPlan.MoveToLocationMagic, ScoreTravelToTargetMagic(state, stat, transform, capable)),
+                (AttackPlan.MoveToLocationRange, ScoreTravelToTargetRange(state, stat, transform, capable)),
+                (AttackPlan.AttackMelee, ScoreMelee(state, stat, transform, capable)),
+                (AttackPlan.AttackMagic, ScoreMagic(state, stat, transform, capable)),
+                (AttackPlan.AttackRange, ScoreRange(state, stat, transform, capable)),
                 (AttackPlan.Evade, ScoreEvade(state, stat))
             };
             foreach (var entry in scoredPlans)
@@ -54,70 +54,70 @@ namespace IAUS.ECS.Systems
             }
         }
 
-        private HowToAttack DeterminePrimaryAttackType(TerrorizeAreaTag state, AIStat stat, LocalToWorld transform)
+        private HowToAttack DeterminePrimaryAttackType(TerrorizeAreaTag state, AIStat stat, LocalToWorld transform, AttackCapable capable)
         {
             // Score attack types and pick the best
             var typeScores = new (HowToAttack type, int score)[]
             {
                 (HowToAttack.None, -1),
-                (HowToAttack.Melee, ScoreMelee(state, stat, transform)),
-                (HowToAttack.Magic, ScoreMagic(state, stat, transform)),
-                (HowToAttack.Range, ScoreRange(state, stat, transform))
+                (HowToAttack.Melee, ScoreMelee(state, stat, transform, capable)),
+                (HowToAttack.Magic, ScoreMagic(state, stat, transform, capable)),
+                (HowToAttack.Range, ScoreRange(state, stat, transform,capable))
             };
             System.Array.Sort(typeScores, (a, b) => b.score.CompareTo(a.score));
             return typeScores[0].type;
         }
-          private int ScoreMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+          private int ScoreMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (state.InAttackCooldown || !state.CapableOfMelee) return 0;
+            if (state.InAttackCooldown || !capable.CapableOfMelee) return 0;
 
             var score = 2;
             if (IsHealthAtLeast(stats, SafeHealthThreshold)) score++;
 
-            if (!IsCoverInRange() && (state.CapableOfMagic || state.CapableOfProjectile))
+            if (!IsCoverInRange() && (capable.CapableOfMagic || capable.CapableOfProjectile))
             {
                 // Favor melee a bit more when no cover and other options exist
                 score++;
             }
 
-            if (HasMultipleAttackCapabilities(state))
+            if (HasMultipleAttackCapabilities(capable))
             {
-                if (!state.CapableOfMagic && IsManaLow()) score++;
-                if (!state.CapableOfProjectile && IsAmmoLow()) score++;
+                if (!capable.CapableOfMagic && IsManaLow()) score++;
+                if (!capable.CapableOfProjectile && IsAmmoLow()) score++;
             }
 
             if (!IsInAttackRange(state, MeleeRange, transform)) return score;
             return score + 1;
         }
 
-        private int ScoreRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (state.InAttackCooldown || !state.CapableOfProjectile) return 0;
+            if (state.InAttackCooldown || !capable.CapableOfProjectile) return 0;
 
             var score = 2;
             if (!IsCoverInRange()) score++;
 
-            if (HasMultipleAttackCapabilities(state))
+            if (HasMultipleAttackCapabilities(capable))
             {
-                if (!state.CapableOfMagic && IsManaLow()) score++;
-                if (!state.CapableOfMelee && !IsAmmoLow()) score++;
+                if (!capable.CapableOfMagic && IsManaLow()) score++;
+                if (!capable.CapableOfMelee && !IsAmmoLow()) score++;
             }
 
             if (!IsInAttackRange(state, MeleeRange, transform)) return score;
             return score + 1;
         }
 
-        private int ScoreMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (state.InAttackCooldown || !state.CapableOfMagic) return 0;
+            if (state.InAttackCooldown || !capable.CapableOfMagic) return 0;
 
             var score = 2;
             if (!IsCoverInRange()) score++;
 
-            if (HasMultipleAttackCapabilities(state))
+            if (HasMultipleAttackCapabilities(capable))
             {
-                if (!state.CapableOfMelee && !IsManaLow()) score++;
-                if (!state.CapableOfProjectile && IsAmmoLow()) score++;
+                if (!capable.CapableOfMelee && !IsManaLow()) score++;
+                if (!capable.CapableOfProjectile && IsAmmoLow()) score++;
             }
 
             if (!IsInAttackRange(state, MeleeRange, transform)) return score;
@@ -148,14 +148,14 @@ namespace IAUS.ECS.Systems
             return distance <= range;
         }
 
-        private static bool HasMultipleAttackCapabilities(in TerrorizeAreaTag state) =>
-            state is { CapableOfMagic: true, CapableOfMelee: true }
+        private static bool HasMultipleAttackCapabilities(in AttackCapable capable) =>
+            capable is { CapableOfMagic: true, CapableOfMelee: true }
                 or { CapableOfMagic: true, CapableOfProjectile: true }
                 or { CapableOfMelee: true, CapableOfProjectile: true };
 
-        private int ScoreTravelToTargetMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetMelee(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (!state.CapableOfMelee) return 0;
+            if (!capable.CapableOfMelee) return 0;
             if (IsInAttackRange(state, TravelMeleeRange, transform)) return 0;
 
             int score = 1;
@@ -166,28 +166,28 @@ namespace IAUS.ECS.Systems
             return score;
         }
 
-        private int ScoreTravelToTargetMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetMagic(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (!state.CapableOfMagic || IsInAttackRange(state, TravelMagicRange, transform)) return 0;
+            if (!capable.CapableOfMagic || IsInAttackRange(state, TravelMagicRange, transform)) return 0;
 
             var score = 3;
             if (stats.HealthRatio > LowHealthThreshold)
             {
-                if (state.CapableOfMelee) score++;
+                if (capable.CapableOfMelee) score++;
                 else return score;
             }
             if (stats.HealthRatio > HighHealthThreshold) score++;
             return score;
         }
 
-        private int ScoreTravelToTargetRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform)
+        private int ScoreTravelToTargetRange(TerrorizeAreaTag state, AIStat stats, LocalToWorld transform, AttackCapable capable)
         {
-            if (!state.CapableOfProjectile || IsInAttackRange(state, TravelRangeRange, transform)) return 0;
+            if (!capable.CapableOfProjectile || IsInAttackRange(state, TravelRangeRange, transform)) return 0;
 
             var score = 2;
             if (!(stats.HealthRatio < LowHealthThreshold)) return score;
 
-            if (state.CapableOfMelee) score++;
+            if (capable.CapableOfMelee) score++;
             return score;
         }
 

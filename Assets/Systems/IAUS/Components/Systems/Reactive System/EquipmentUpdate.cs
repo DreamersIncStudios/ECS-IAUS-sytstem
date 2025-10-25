@@ -7,11 +7,11 @@ namespace IAUS.ECS.Component {
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackActionTag attackState, in CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackCapable capable, in CheckAttackStatus tag) => {
 
-               attackState.CapableOfMelee = false;
-             attackState.CapableOfMagic = false;
-             attackState.CapableOfProjectile = false;
+               capable.CapableOfMelee = false;
+             capable.CapableOfMagic = false;
+             capable.CapableOfProjectile = false;
          
 
                 foreach (var item in test.Equipment.EquippedWeapons)
@@ -26,63 +26,26 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Club:
                         case WeaponType.Gloves:
                             case WeaponType.Claws:
-                                  attackState.CapableOfMelee = true;
+                                  capable.CapableOfMelee = true;
                             break;
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                           attackState.CapableOfMagic = true;
+                           capable.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                              attackState.CapableOfProjectile = true;
+                              capable.CapableOfProjectile = true;
                             break;
                     }
                     
                     if (test.Equipment.EquippedAbility.Count > 0)
-                        attackState.CapableOfMagic = true;
+                        capable.CapableOfMagic = true;
                 }
                 EntityManager.RemoveComponent<CheckAttackStatus>(entity);
             }).Run();
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref TerrorizeAreaTag attackState, in CheckAttackStatus tag) => {
-
-                attackState.CapableOfMelee = false;
-                attackState.CapableOfMagic = false;
-                attackState.CapableOfProjectile = false;
-         
-
-                foreach (var item in test.Equipment.EquippedWeapons)
-                {
-                    switch (item.Value.WeaponType)
-                    {
-                        case WeaponType.Axe:
-                        case WeaponType.Sword:
-                        case WeaponType.H2BoardSword:
-                        case WeaponType.Katana:
-                        case WeaponType.Bo_Staff:
-                        case WeaponType.Club:
-                        case WeaponType.Gloves:
-                        case WeaponType.Claws:
-                            attackState.CapableOfMelee = true;
-                            break;
-                        case WeaponType.Mage_Staff:
-                        case WeaponType.Enchanter_Stone:
-
-                            attackState.CapableOfMagic = true;
-                            break;
-                        case WeaponType.Bow:
-
-                        case WeaponType.Pistol:
-                            attackState.CapableOfProjectile = true;
-                            break;
-                    }
-                    
-                    if (test.Equipment.EquippedAbility.Count > 0)
-                        attackState.CapableOfMagic = true;
-                }
-                EntityManager.RemoveComponent<CheckAttackStatus>(entity);
-            }).Run();
+        
         }
     }
 }

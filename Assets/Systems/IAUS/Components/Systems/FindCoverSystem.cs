@@ -62,6 +62,9 @@ namespace IAUS.ECS.Systems
             [ReadOnly]  public ComponentLookup<AITarget> AITargetInfo;
             void Execute(AttackActionTag aspect, in LocalToWorld transform, in PhysicsInfo physicsInfo)
             {
+                if (aspect.TargetEntity == Entity.Null) return;
+                if (aspect.AttackPlans[0] != AttackPlan.GetAttackLocation) return;
+                
                 var offset = AITargetInfo[aspect.TargetEntity].CenterOffset;
                 var ctx = new PositionCTX(transform.Position, transform.Forward, 75,
                     aspect.TargetPosition, offset, aspect.TargetEntity, World,

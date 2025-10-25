@@ -12,7 +12,6 @@ namespace IAUS.ECS.Component
     {
         public float3 TargetPosition;
         public float3 AttackPosition;
-        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public Entity TargetEntity;
         public int TargetPositionID;
         public HowToAttack AttackType;
@@ -22,7 +21,18 @@ namespace IAUS.ECS.Component
         
 
     }
-    
+    public struct AttackCapable : IComponentData
+    {
+        public bool CapableOfMelee, CapableOfMagic, CapableOfProjectile;
+
+        public AttackCapable(bool capableOfMelee, bool capableOfMagic, bool capableOfRange)
+        {
+            CapableOfMelee = capableOfMelee;
+            CapableOfMagic = capableOfMagic;
+            CapableOfProjectile = capableOfRange;
+        }
+    }
+
     public enum AttackPlan
     {
         None,

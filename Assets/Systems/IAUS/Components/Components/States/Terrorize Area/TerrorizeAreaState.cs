@@ -95,7 +95,6 @@ namespace IAUS.ECS.Component
     {
         public float3 TargetPosition;
         public float3 AttackPosition;
-        public bool CapableOfMelee, CapableOfMagic,CapableOfProjectile;
         public Entity TargetEntity;
         public int TargetPositionID;
         public HowToAttack AttackType;
