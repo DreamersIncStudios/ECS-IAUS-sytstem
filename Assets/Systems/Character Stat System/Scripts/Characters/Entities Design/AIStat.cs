@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Unity.Entities;
+using Unity.Transforms;
 using UnityEngine;
 
 namespace Stats.Entities
@@ -12,6 +13,7 @@ namespace Stats.Entities
         public float HealthRatio => CurHealth/ MaxHealth;
         public float ManaRatio => CurMana/ MaxMana;
 
+        public int Level;
         public float Speed;
 
         public AIStat(int speed)
@@ -22,21 +24,25 @@ namespace Stats.Entities
             MaxHealth = 0;
             CurMana = 0;
             MaxMana = 0;
+            Level = 1;
         }
 
     }
 
+
     public partial class AIStatLinkSystem : SystemBase
     {
-        [SuppressMessage("ReSharper", "Unity.BurstLoadingManagedType")]
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithChangeFilter<BaseCharacterComponent>().ForEach((BaseCharacterComponent baseStat, ref AIStat aiStat )=> {
+            Entities.WithoutBurst().ForEach((ref AIStat aiStat, in Parent parent) =>
+            {
+                var baseStat = EntityManager.GetComponentData<BaseCharacterComponent>(parent.Value);
 
                 aiStat.CurHealth = baseStat.CurHealth;
                 aiStat.MaxHealth = baseStat.MaxHealth;
                 aiStat.CurMana = baseStat.CurMana;
-                aiStat.MaxMana= baseStat.MaxMana;
+                aiStat.MaxMana = baseStat.MaxMana;
+                aiStat.Level = baseStat.Level;
             }).Run();
         }
     }

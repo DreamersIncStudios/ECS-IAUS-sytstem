@@ -15,25 +15,14 @@ MonoBehaviour:
   creatureID: 1
   Name: 'Test Dummy '
   ClassLevel: 0
-  GetNPCLevel: 4
+  GetNPCLevel: 0
+  Role: 0
+  ActiveTimesOfDay: 0
   stats:
-    title: 0
-    Name: Test Dummy
-    Level: 10
-    Strength: 10
-    Vitality: 10
-    Awareness: 10
-    Speed: 10
-    Skill: 10
-    Resistance: 10
-    Concentration: 10
-    WillPower: 10
-    Charisma: 10
-    Luck: 10
-    difficultyMod: 10
-    LevelMod: 5
+    rid: 8783116183795400908
   Prefab: {fileID: 7865731278268184837, guid: a3ad3ad2a3132164e8c0b4af10f28705, type: 3}
-  AIStatesToAdd: 010000000a000000
+  ActiveHours: 0
+  AIStatesToAdd: 15000000
   PhysicsInfo:
     BelongsTo:
       Category00: 0
@@ -102,17 +91,21 @@ MonoBehaviour:
       Category30: 1
       Category31: 1
   Move:
-    EquipResetTimer: 0
-    MovingTurnSpeed: 0
-    StationaryTurnSpeed: 0
-    JumpPower: 0
-    GravityMultiplier: 2
-    RunCycleLegOffset: 0
-    MoveSpeedMultiplier: 0
-    AnimSpeedMultiplier: 0
-    GroundCheckDistance: 0
-    CombatCapable: 0
-  FactionID: 0
+    EquipResetTimer: 15
+    MovingTurnSpeed: 360
+    StationaryTurnSpeed: 180
+    JumpPower: 3
+    GravityMultiplier: 1.251
+    RunCycleLegOffset: 0.2
+    MoveSpeedMultiplier: 1
+    AnimSpeedMultiplier: 1
+    GroundCheckDistance: 0.3
+    CombatCapable: 1
+  FactionID: 1
+  CenterOffset:
+    x: 0
+    y: 0
+    z: 0
   BaseThreat: 0
   BaseProtection: 0
   Equipment:
@@ -123,3 +116,25 @@ MonoBehaviour:
   CapableOfMelee: 1
   CapableOfMagic: 0
   CapableOfRange: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 8783116183795400908
+      type: {class: NPCCharacterClass, ns: Stats, asm: PlayerCharacterSystem}
+      data:
+        title: 0
+        levelRange:
+          x: 2
+          y: 4
+        strength: 10
+        vitality: 10
+        awareness: 10
+        speed: 10
+        skill: 10
+        resistance: 10
+        concentration: 10
+        willPower: 10
+        charisma: 10
+        luck: 10
+        difficultyMod: 10
+        levelMod: 2

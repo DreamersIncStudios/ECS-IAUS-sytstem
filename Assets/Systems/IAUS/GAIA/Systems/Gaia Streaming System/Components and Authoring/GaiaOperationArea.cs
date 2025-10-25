@@ -18,18 +18,10 @@ namespace DreamersIncStudio.GAIACollective.Streaming.SceneManagement.SectionMeta
             _ => 0
         };
 
-        public GaiaOperationArea(Authoring.GaiaSpawnBiome authoring)
+        public GaiaOperationArea(float3 position, float radius)
         {
-            Center = authoring.transform.position;
-            Radius = authoring.gameObject.layer switch
-            {
-                6 => 750,
-                9 or 10 or 11 => 500,
-                26 => 250,
-                27 => 100,
-                28 => 85,
-                _ => 2250
-            };
+            Center = position;
+            Radius = radius;
         }
     }
 }

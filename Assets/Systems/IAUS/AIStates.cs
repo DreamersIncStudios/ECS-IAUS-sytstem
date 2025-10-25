@@ -14,7 +14,6 @@ namespace IAUS.ECS
         Talk, 
         Guard, 
         GroupUp, 
-        Wait, 
         GotoLeader,
         InvestigateArea, 
         SearchArea, 

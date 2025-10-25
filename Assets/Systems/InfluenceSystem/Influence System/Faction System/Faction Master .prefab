@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4853635427288878823
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 972251305079018457}
+  - component: {fileID: 4106406181380913764}
+  m_Layer: 0
+  m_Name: 'Faction Master '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &972251305079018457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853635427288878823}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4106406181380913764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853635427288878823}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 577675e22521e0346848993e78a94d23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  factionsList:
+  - Faction: 0
+    Relationships:
+    - Faction: 0
+      Affinity: 0
+    - Faction: 1
+      Affinity: 83
+    - Faction: 2
+      Affinity: -70
+    - Faction: 3
+      Affinity: 75
+    - Faction: 4
+      Affinity: -100
+  - Faction: 1
+    Relationships:
+    - Faction: 0
+      Affinity: 100
+    - Faction: 1
+      Affinity: 75
+    - Faction: 2
+      Affinity: -100
+    - Faction: 3
+      Affinity: 100
+    - Faction: 4
+      Affinity: -100
+  - Faction: 2
+    Relationships:
+    - Faction: 0
+      Affinity: -100
+    - Faction: 1
+      Affinity: -100
+    - Faction: 2
+      Affinity: 32
+    - Faction: 3
+      Affinity: -74
+    - Faction: 4
+      Affinity: -55
+  - Faction: 3
+    Relationships:
+    - Faction: 0
+      Affinity: -47
+    - Faction: 1
+      Affinity: -69
+    - Faction: 2
+      Affinity: 32
+    - Faction: 3
+      Affinity: -74
+    - Faction: 4
+      Affinity: 0
+  - Faction: 4
+    Relationships:
+    - Faction: 0
+      Affinity: -100
+    - Faction: 1
+      Affinity: -100
+    - Faction: 2
+      Affinity: 32
+    - Faction: 3
+      Affinity: -74
+    - Faction: 4
+      Affinity: 0
+  allowFriendlyFire: 0

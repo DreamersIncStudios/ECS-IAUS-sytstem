@@ -1,26 +1,25 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
 
 
 namespace Dreamers.Global
 {
-    static public class ScriptableObjectUtility
+    public static class ScriptableObjectUtility
     {
-        static public void CreateAsset<T>(string pathExt, out T test) where T : ScriptableObject {
-            T asset = ScriptableObject.CreateInstance<T>();
-            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
-            if (path == "")
+        public static void CreateAsset<T>(string folderPath, string pathExt, out T test) where T : ScriptableObject {
+            // Ensure the folder path exists. Unity does this automatically.
+            if (!System.IO.Directory.Exists(folderPath))
             {
-                path = "Assets/" + pathExt;
+                System.IO.Directory.CreateDirectory(folderPath);
             }
-            else if (Path.GetExtension(path) != "") {
-                path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
-            }
+            T asset = ScriptableObject.CreateInstance<T>();
+          
+            string assetPath = $"{folderPath}/{pathExt}.asset";
 
-            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New" + typeof(T).ToString() + ".asset");
-            AssetDatabase.CreateAsset(asset, assetPathAndName);
+            AssetDatabase.CreateAsset(asset, assetPath);
+            AssetDatabase.SaveAssets();
+
             AssetDatabase.Refresh();
             EditorUtility.FocusProjectWindow();
             Selection.activeObject = asset;

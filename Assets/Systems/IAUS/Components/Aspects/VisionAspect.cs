@@ -1,6 +1,5 @@
 using Global.Component;
-using System.Linq;
-using Unity.Collections;
+using DreamersIncStudio.FactionSystem;
 using Unity.Entities;
 using Unity.Mathematics;
 
@@ -8,124 +7,84 @@ namespace AISenses.VisionSystems
 {
     public readonly partial struct VisionAspect : IAspect
     {
-        private readonly DynamicBuffer<ScanPositionBuffer> scanPositions;
+        private readonly DynamicBuffer<Enemies> enemies;
+        private readonly DynamicBuffer<Allies> allies;
+        private readonly DynamicBuffer<Resources> Resources;
+        private readonly DynamicBuffer<PlacesOfInterest> placesOfInterests;
         private readonly RefRW<Vision> vision;
 
         public float3 TargetEnemyPosition => vision.ValueRO.TargetEnemyPosition;
+        public Entity TargetEnemy => vision.ValueRO.TargetEnemyEntity;
         public float3 TargetFriendPosition => vision.ValueRO.TargetFriendlyPosition;
-        
+        public Entity TargetFriend => vision.ValueRO.TargetFriendlyEntity;
 
-        public Entity TargetEntity(TargetAlignmentType type)
-        {
-            TargetEnemyTargetInRange();
-            FriendlyInRange();
-            return vision.ValueRO.TargetEntity(type);
-        }
-
-        public float3 TargetPosition(TargetAlignmentType type)
-        {
-            TargetEnemyTargetInRange();
-            FriendlyInRange();
-
-            return vision.ValueRO.TargetPosition(type);
-        }
 
         public bool TargetInReactRange
         {
             get
             {
-                foreach (var item in scanPositions)
-                    if (item is { dist: < 25, target: { IsFriendly: false } })
+                foreach (var item in enemies)
+                    if (item is { Dist: < 25, Target: { Affinity: Affinity.Hate or Affinity.Negative } })
                     {
                         return true;
                     }
 
                 return false;
             }
-
         }
 
-        private bool TargetEnemyTargetInRange()
-        {
-            return TargetEnemyTargetInRange(out _, out _);
-        }
 
         public bool TargetEnemyTargetInRange(out float dist)
         {
-            return TargetEnemyTargetInRange(out _, out dist);
-        }
-        public bool TargetEnemyTargetInRange(out AITarget target)
-        {
-            return TargetEnemyTargetInRange(out target, out _);
+            return TargetEnemyTargetInRange(out _, out _, out dist);
         }
 
 
-        public bool TargetEnemyTargetInRange(out AITarget target, out float dist)
+        private bool TargetEnemyTargetInRange(out float3 Position, out AITarget target, out float dist)
         {
             target = new AITarget();
             dist = 0f;
-
-            if (scanPositions.IsEmpty)
+            Position = float3.zero;
+            if (enemies.IsEmpty)
             {
                 vision.ValueRW.TargetEnemyEntity = Entity.Null;
                 return false;
             }
-            else
+
+            foreach (var enemy in enemies)
             {
-                foreach (var scan in scanPositions)
-                {
-                    if (scan.target.IsFriendly) continue;
-                    target = scan.target.TargetInfo;
-                    dist = scan.target.DistanceTo;
-                    vision.ValueRW.TargetEnemyEntity = scan.target.Entity;
-                   vision.ValueRW.TargetEnemyPosition = vision.ValueRW.LastKnownPositionEnemy = scan.target.LastKnownPosition;
-                    return true;
-                }
+                if (enemy.Target.Affinity is Affinity.Love or Affinity.Positive or Affinity.Neutral) continue;
+                target = enemy.Target.TargetInfo;
+                dist = enemy.Target.DistanceTo;
+                vision.ValueRW.TargetEnemyEntity = enemy.Target.Entity;
+                Position = vision.ValueRW.TargetEnemyPosition =
+                    vision.ValueRW.LastKnownPositionEnemy = enemy.Target.LastKnownPosition;
+                return true;
             }
+
             return false;
         }
+    }
 
-        public bool FriendlyInRange()
+    public struct VisionIAUSLink : IComponentData
+    {
+        public VisionIAUSLink(Entity visionEntity)
         {
-                if (scanPositions.IsEmpty)
-                    return false;
-                else
-                {
-                    foreach (var target in scanPositions)
-                    {
-                        if (target.target.IsFriendly)
-                            return true;
-                    }
-                }
-                return false;
-            
+            VisionEntity = visionEntity;
+            TargetEnemy = Entity.Null;
+            Dist = 0;
+            HasTarget = false;
         }
 
-        public Target GetClosestEnemy()
-        {
-            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
-            visibleTargetInArea.Sort(new SortScanPositionByDistance());
-            foreach (var target in visibleTargetInArea)
-            {
-                if (!target.target.IsFriendly)
-                {
-                    return target.target;
-                }
-            }
-            return new Target();
-        }
+        public Entity VisionEntity { get; }
+        public Entity TargetEnemy { get; set; }
+        public bool HasTarget;
+        public float Dist;
 
-        public Target GetClosestFriend()
+        public bool TargetEnemyTargetInRange(out float f)
         {
-            
-            var visibleTargetInArea = scanPositions.ToNativeArray(Allocator.Temp);
-            visibleTargetInArea.Sort(new SortScanPositionByDistance());
-            foreach (var target in visibleTargetInArea.Where(target => target.target.IsFriendly))
-            {
-                return target.target;
-            }
-
-            return new Target();
+            f = Dist;
+            return HasTarget;
         }
     }
 }

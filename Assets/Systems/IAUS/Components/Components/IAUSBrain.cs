@@ -1,8 +1,10 @@
 ﻿using Unity.Entities;
 using Global.Component;
 using System;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
 using IAUS.ECS.StateBlobSystem;
+using Unity.Collections;
 
 namespace IAUS.ECS.Component
 {
@@ -14,7 +16,7 @@ namespace IAUS.ECS.Component
     {
         public AITarget Target;
         public AIStates CurrentState;
-         public int FactionID;// ID CHanging?
+        public FactionNames FactionID;
         public Status Attitude;
         public Difficulty Difficulty;
         public NPCLevel NPCLevel;
@@ -24,4 +26,28 @@ namespace IAUS.ECS.Component
     public struct SetupBrainTag : IComponentData { }
     
     public enum Status { Normal, Brave, Reckless, Berserk, Cautious, Sleep, Confused, Dazed }
+    
+    [InternalBufferCapacity(6)]
+    public struct StateData : IBufferElementData
+    {
+        public readonly AIStates State;
+        public float ResetTime;
+        public StateData(AIStates state)
+        {
+         State = state;
+         Index = -1;
+         Status = ActionStatus.Idle;
+         ResetTime = 0;
+        }
+        public int Index{ get; private set; }
+        public ActionStatus Status;
+        public void SetIndex(int index)
+        {
+            Index = index;
+        }
+        public void SetStatus(ActionStatus status)
+        {
+            Status = status;
+        }
+    }
 }

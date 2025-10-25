@@ -38,17 +38,6 @@ namespace IAUS.ECS.Systems {
 
      
     }
-    public partial struct AddWanderState : IJobEntity {
-
-        public EntityCommandBuffer.ParallelWriter ECB;
-        public void Execute(Entity entity, [ChunkIndexInQuery]int sortkey ,ref WanderQuadrant wander,ref LocalTransform transform)
-        {
-            wander.SpawnPosition = transform.Position;
-            wander.Status = ActionStatus.Idle;
-                ECB.AddComponent(sortkey, entity, new UpdateWanderLocationTag());
-        }
-
-        
-    }
     public struct UpdateWanderLocationTag : IComponentData { }
+
 }

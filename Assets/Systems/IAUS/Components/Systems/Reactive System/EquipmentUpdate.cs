@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
 using Dreamers.InventorySystem;
-using IAUS.ECS.Component.Aspects;
 using Dreamers.InventorySystem.Interfaces;
-using IAUS.Core.GOAP;
 
 namespace IAUS.ECS.Component {
     public partial class EquipmentUpdate : SystemBase
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackState attackState, in CheckAttackStatus tag) => {
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(( Entity entity, CharacterInventory test,  ref AttackCapable capable, in CheckAttackStatus tag) => {
 
-               attackState.CapableOfMelee = false;
-             attackState.CapableOfMagic = false;
-             attackState.CapableOfProjectile = false;
-             EntityManager.RemoveComponent<CheckAttackStatus>(entity);
+               capable.CapableOfMelee = false;
+             capable.CapableOfMagic = false;
+             capable.CapableOfProjectile = false;
+         
 
                 foreach (var item in test.Equipment.EquippedWeapons)
                 {
@@ -31,25 +26,26 @@ namespace IAUS.ECS.Component {
                         case WeaponType.Club:
                         case WeaponType.Gloves:
                             case WeaponType.Claws:
-                                  attackState.CapableOfMelee = true;
+                                  capable.CapableOfMelee = true;
                             break;
                         case WeaponType.Mage_Staff:
                         case WeaponType.Enchanter_Stone:
 
-                           attackState.CapableOfMagic = true;
+                           capable.CapableOfMagic = true;
                             break;
                         case WeaponType.Bow:
 
                         case WeaponType.Pistol:
-                              attackState.CapableOfProjectile = true;
+                              capable.CapableOfProjectile = true;
                             break;
                     }
                     
                     if (test.Equipment.EquippedAbility.Count > 0)
-                        attackState.CapableOfMagic = true;
+                        capable.CapableOfMagic = true;
                 }
-
+                EntityManager.RemoveComponent<CheckAttackStatus>(entity);
             }).Run();
+        
         }
     }
 }

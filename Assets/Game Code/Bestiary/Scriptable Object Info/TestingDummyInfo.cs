@@ -1,17 +1,13 @@
 using DreamersInc.InfluenceMapSystem;
 using Global.Component;
-using MotionSystem;
 using Stats;
 using Stats.Entities;
-using System.Collections;
-using System.Collections.Generic;
-using IAUS.ECS.Component.Attacking;
+using DreamersIncStudio.FactionSystem;
 using Unity.Entities;
 using Unity.Mathematics;
-using Unity.Transforms;
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 
 namespace DreamersInc.BestiarySystem.Testing
@@ -21,14 +17,14 @@ namespace DreamersInc.BestiarySystem.Testing
         [SerializeField] private uint creatureID;
         public uint ID { get { return creatureID; } }
         public string Name;
-        public CharacterClass stats;
+        public ICharacterData stats;
         public GameObject Prefab;
         public PhysicsInfo PhysicsInfo;
 
         [Header("influence ")]
-        public int factionID;
-        public int BaseThreat;
-        public int BaseProtection;
+        public FactionNames FactionID;
+        [FormerlySerializedAs("BaseThreat")] public int InfluenceValue;
+     
 #if UNITY_EDITOR
 
         public void setItemID(uint ID)
@@ -42,10 +38,12 @@ namespace DreamersInc.BestiarySystem.Testing
 #if UNITY_EDITOR
     public static partial class Creator
     {
-        [MenuItem("Assets/Create/Test Dummy Info")]
+        private const string NPCFolderPath = "Assets/Prefab Library/Resources/Item Database/Spells";
+
+        [MenuItem("Assets/Create/Bestiary/Test Dummy Info")]
         static public void CreateTestDummyInfo()
         {
-            Dreamers.Global.ScriptableObjectUtility.CreateAsset<TestingDummyInfo>("Creature", out TestingDummyInfo info);
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset<TestingDummyInfo>(NPCFolderPath,"Creature", out TestingDummyInfo info);
             BestiaryDB.LoadDatabase(true);
             info.setItemID((uint)BestiaryDB.Dummies.Count + 1);
         }
@@ -60,81 +58,45 @@ namespace DreamersInc.BestiarySystem
 
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        public static bool SpawnDummy(uint ID, Vector3 pos,  out GameObject go, out Entity entity) {
+        public static bool SpawnDummy(uint ID, out GameObject go, out Entity entity) {
             var info = GetDummy(ID);
                 if (info != null) 
             {
                 go = Instantiate(info.Prefab);
-                go.transform.position = pos;
-                
-               // go.layer = 6;
+                go.layer = 6;
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name + " NPC");
                 AddPhysics(manager, entity, go, info.PhysicsInfo);
-                manager.SetComponentData(entity, new LocalTransform()
-                {
-                    Position = pos,
-                    Rotation = go.transform.rotation,
-                    Scale = 1
-                });
                 BaseCharacterComponent character = new()
                 {
-                    GOrepresentative = go
+                    GORepresentative = go
                 };
-                character.SetupDataEntity(info.stats);
-                TransformGO transformLink = new()
-                {
-                    transform = go.transform
-                };
-                manager.AddComponentData(entity, transformLink);
+                character.SetupDataEntity(info.stats,info.Name);
+         ;
+                manager.AddComponentObject(entity, go.transform);
                 manager.AddComponentObject(entity, character);
-                manager.AddComponentData(entity, new InfluenceComponent
-                {
-                    factionID = info.factionID,
-                    Protection = info.BaseProtection,
-                    Threat = info.BaseThreat
-                });
+                manager.AddComponentData(entity, 
+                    new InfluenceComponent(info.FactionID, info.InfluenceValue,15)); //Todo add range of Influence to CharacterInfo Scriptable Object
                 manager.AddComponentData(entity, new AITarget()
                 {
-                    FactionID = info.factionID,
-                    NumOfEntityTargetingMe = 300,
+                    FactionID = info.FactionID,
+                    NumOfEntityTargetingMe = 3,
                     CanBeTargetByPlayer = true,
                     Type = TargetType.Character,
                     CenterOffset = new float3(0, 1, 0) //todo add value to SO
                 });
-                
-                var baseEntityArch = manager.CreateArchetype(
-                    typeof(LocalTransform),
-                    typeof(LocalToWorld),
-                    typeof(MeleeAttackPosition),
-                    typeof(RangeAttackPosition)
-                );
-                var baseDataEntity = manager.CreateEntity(baseEntityArch);
-                manager.SetName(baseDataEntity, "Attack Location Entity");
-                manager.SetComponentData(baseDataEntity, new LocalTransform() { Scale = 1 });
-                manager.AddComponentData(baseDataEntity, new Parent()
-                {
-                    Value = entity
-                });
-                manager.AddBuffer<ReserveLocationTag>(baseDataEntity);
-                var meleeAttackPositions = manager.GetBuffer<MeleeAttackPosition>(baseDataEntity);
-                meleeAttackPositions.Length = 4;
-                var rangeAttackPositions = manager.GetBuffer<RangeAttackPosition>(baseDataEntity);
-                rangeAttackPositions.Length = 6;
-              
             }
-            else 
+                else 
             {
                 go = null;
                 entity = Entity.Null;
             }
-                
             return info != null;
         }
 
         public static bool SpawnDummy(uint ID, Vector3 Position)
         {
-            if (SpawnDummy(ID, Position, out GameObject go, out Entity _))
+            if (SpawnDummy(ID, out GameObject go, out Entity _))
             {
                 go.transform.position = Position;
                 return true;

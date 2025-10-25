@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using Stats;
@@ -8,11 +7,12 @@ using UnityEditor;
 using Global.Component;
 using Dreamers.InventorySystem.Base;
 using DreamersInc.ComboSystem;
+using DreamersIncStudio.FactionSystem;
 using DreamersIncStudio.GAIACollective;
 using MotionSystem.Components;
 using IAUS.ECS.Component;
 using Sirenix.OdinInspector;
-using UnityEngine.Serialization;
+using Unity.Mathematics;
 
 namespace DreamersInc.BestiarySystem
 {
@@ -37,16 +37,17 @@ namespace DreamersInc.BestiarySystem
         public uint ClassLevel;
         public NPCLevel GetNPCLevel;
         public Role Role;
-        public CharacterClass stats;
+        [EnumToggleButtons]public TimesOfDay ActiveTimesOfDay;
+        [SerializeReference]public ICharacterData stats;
         public GameObject Prefab;
         public TimesOfDay ActiveHours;
         public List<AIStates> AIStatesToAdd;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
 
-        [FormerlySerializedAs("factionID")] [Header("influence ")]
-        public int FactionID;
-
+      
+        public FactionNames FactionID;
+        public float3 CenterOffset;
         public int BaseThreat;
         public int BaseProtection;
         public EquipmentSave Equipment;
@@ -70,7 +71,7 @@ namespace DreamersInc.BestiarySystem
                 NPCLevel.NPC => 4000,
                 NPCLevel.Daemon => 4000,
                 NPCLevel.Beast => 5000,
-                NPCLevel.spawner => 6000,
+                NPCLevel.Spawner => 6000,
                 _ => 0
             };
             // Combine Role and incremental count into the ID
@@ -86,22 +87,16 @@ namespace DreamersInc.BestiarySystem
 #if UNITY_EDITOR
     public static partial class Creator
     {
-        [MenuItem("Assets/Create/Bestiary/Creature Info")]
+        private const string NPCFolderPath = "Assets/Prefab Library/Resources/Item Database/Spells";
+
+        [MenuItem("Assets/Create/Bestiary/NPC Info")]
         public static void CreateCreatureInfo()
         {
-            Dreamers.Global.ScriptableObjectUtility.CreateAsset<CreatureInfo>("Creature", out CreatureInfo info);
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset(NPCFolderPath,"Creature", out CreatureInfo info);
             BestiaryDB.LoadDatabase(true);
-            
         }
 
-        [MenuItem("Assets/Create/Bestiary/Spawn Creature Info")]
-        public static void CreateSpawnPackInfo()
-        {
-            Dreamers.Global.ScriptableObjectUtility.CreateAsset<PackSpawnCreatureInfo>("Creature",
-                out PackSpawnCreatureInfo info);
-            BestiaryDB.LoadDatabase(true);
-            
-        }
+    
 
     }
 #endif

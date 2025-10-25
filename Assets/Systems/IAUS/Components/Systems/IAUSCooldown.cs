@@ -18,109 +18,26 @@ public partial struct IausCooldown : ISystem
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
-        new UpdatePatrol() { DeltaTime= deltaTime}.ScheduleParallel();
-        new UpdateTraverse() { DeltaTime = deltaTime }.ScheduleParallel();
-        new UpdateWait() { DeltaTime = deltaTime }.ScheduleParallel();
-        new UpdateWander() { DeltaTime = deltaTime }.ScheduleParallel();
-        new UpdateAttack() { DeltaTime = deltaTime }.ScheduleParallel();
     }
-    [BurstCompile]
 
-    partial struct UpdatePatrol : IJobEntity
+    partial struct IAUSCooldownState : IJobEntity
     {
-        public float DeltaTime;
-        void Execute(ref Patrol state)
+        public float DT;
+        public void Execute(DynamicBuffer<StateData> states)
         {
-            if (state.InCooldown) {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f) {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime = 0.0f;
-
+            for (var index = 0; index < states.Length; index++)
+            {
+                var state = states[index];
+                if (state.Status is not (ActionStatus.Running or ActionStatus.Idle))
+                {
+                    state.ResetTime -= DT;
+                }
+                states[index] = state;
             }
         }
-
-    }
-    [BurstCompile]
-
-    partial struct UpdateWait : IJobEntity
-    {
-        public float DeltaTime;
-
-        void Execute(ref Wait state)
-        {
-            if (state.InCooldown)
-            {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
-            {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime = 0.0f;
-
-            }
-        }
-
-    }
-    [BurstCompile]
-
-    partial struct UpdateTraverse : IJobEntity
-    {
-        public float DeltaTime;
-
-        void Execute(ref Traverse state)
-        {
-            if (state.InCooldown)
-            {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
-            {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime= 0.0f;
-            }
-        }
-
-    }
-    [BurstCompile]
-
-    partial struct UpdateWander : IJobEntity
-    {
-        public float DeltaTime;
-
-        void Execute(ref WanderQuadrant state)
-        {
-            if (state.InCooldown)
-            {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
-            {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime = 0.0f;
-            }
-        }
-
     }
 
 
-    partial struct UpdateAttack: IJobEntity
-    {
-        public float DeltaTime;
 
-        void Execute(ref AttackState state)
-        {
-            if (state.InCooldown)
-            {
-                state.ResetTime -= DeltaTime;
-            }
-            if (state.Status == ActionStatus.CoolDown && state.ResetTime <= 0.0f)
-            {
-                state.Status = ActionStatus.Idle;
-                state.ResetTime = 0.0f;
-            }
-        }
 
-    }
 }

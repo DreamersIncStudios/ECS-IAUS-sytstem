@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Permissions;
+using DreamersIncStudio.FactionSystem;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
@@ -22,12 +23,12 @@ namespace DreamersInc.BestiarySystem
         [SerializeField] private uint creatureID;
         public uint ID { get { return creatureID; } }
         public string Name;
-        public CharacterClass stats;
+        public PlayerCharacterClass stats;
         public GameObject Prefab;
         public PhysicsInfo PhysicsInfo;
         public MovementData Move;
         [Header("influence ")]
-        public int factionID;
+        public FactionNames factionID;
         public int BaseThreat;
         public int BaseProtection;
         public ComboSO Combo;
@@ -46,14 +47,16 @@ namespace DreamersInc.BestiarySystem
 #if UNITY_EDITOR
     public static partial class Creator
     {
+        private const string PlayerFolderPath = "Assets/Prefab Library/Resources/Item Database/Spells";
+
         [MenuItem("Assets/Create/Bestiary/Player Info")]
         static public void CreatePlayerInfo()
         {
-           Dreamers.Global.ScriptableObjectUtility.CreateAsset<PlayerInfo>("Creature", out PlayerInfo info);
+            Dreamers.Global.ScriptableObjectUtility.CreateAsset<PlayerInfo>(PlayerFolderPath, "Creature",
+                out PlayerInfo info);
             BestiaryDB.LoadDatabase(true);
             info.setItemID((uint)BestiaryDB.Players.Count + 1);
         }
-
     }
 #endif
 

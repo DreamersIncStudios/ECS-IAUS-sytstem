@@ -9,7 +9,7 @@ namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        private static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO, out Entity entity)
+        private static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel, Entity parentToLink, out GameObject GO, out Entity entity)
         {
 
             var info = GetCreature(ID);
@@ -20,20 +20,22 @@ namespace DreamersInc.BestiarySystem
                 case NPCLevel.Grunt:
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats, PlayerLevel ,info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
+                        .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
+                        .WithParent(parentToLink)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithNPCAttack(info.AttackSequence)
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset ,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
-                            info.CapableOfRange)
+                            info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     return true;
-                    break;
                 case NPCLevel.Specialist:
                     break;
                 case NPCLevel.Tower:
@@ -42,38 +44,54 @@ namespace DreamersInc.BestiarySystem
 
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats, PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
                         // .WithInventorySystem(info.Inventory, info.Equipment)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, info.ClassLevel,  info.CenterOffset,true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
-                            info.CapableOfRange)
+                            info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
                         .Build();
                     return true;
-
-                    break;
                 case NPCLevel.Daemon:
+                    new CharacterBuilder(info.Name, out entity)
+                        .WithModel(info.Prefab, Position, "Enemy NPC", out GO)
+                        .WithStats(info.stats, PlayerLevel ,info.Name)
+                        .WithEntityPhysics(info.PhysicsInfo)
+                        .WithActiveHour(info.ActiveTimesOfDay,HomeBiomeID)
+                        .WithParent(parentToLink)
+                        // .WithInventorySystem(info.Inventory, info.Equipment)
+                        .WithCharacterDetection()
+                        .WithAnimation()
+                        .WithNPCAttack(info.AttackSequence)
+                        .WithMovement(info.Move)
+                        .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset,true)
+                        .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
+                            info.CapableOfRange,info.Role)
+                        .WithAIControl()
+                        
+                        .Build();
                     break;
                 case NPCLevel.Beast:
                     break;
-                case NPCLevel.spawner:
+                case NPCLevel.Spawner:
                     var packInfo = (PackSpawnCreatureInfo)info;
                     new CharacterBuilder(info.Name, out entity)
                         .WithModel(info.Prefab, Position, "Spawner NPC", out GO)
-                        .WithStats(info.stats)
+                        .WithStats(info.stats,PlayerLevel,  info.Name)
                         .WithEntityPhysics(info.PhysicsInfo)
-                        .WithAIControl()
                         .WithCharacterDetection()
                         .WithAnimation()
                         .WithMovement(info.Move)
-                        .WithFactionInfluence(info.FactionID, 3, 4, 1, true)
+                        .WithFactionInfluence(info.FactionID, 3, info.ClassLevel, info.CenterOffset, true)
                         .WithAI(info.GetNPCLevel, info.AIStatesToAdd, info.CapableOfMelee, info.CapableOfMagic,
                             info.CapableOfRange,packInfo.Role)
-                        .WithPackSpawning(packInfo.PackType, info.ActiveHours)
+                        .WithAIControl()
+                        
                         .Build();
                     break;
                 default:
@@ -86,13 +104,16 @@ namespace DreamersInc.BestiarySystem
 
 
 
-        public static bool SpawnNPC(uint ID, Vector3 Position, out GameObject GO)
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel,  out GameObject GO)
         {
-            return SpawnNPC(ID, Position, out GO, out _);
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,Entity.Null,  out GO, out _);
         } 
         
-        public static bool SpawnNPC(uint ID, Vector3 Position) {
-            return SpawnNPC(ID, Position, out _, out _);
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel ) {
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,Entity.Null, out _, out _);
+        }     
+        public static bool SpawnNPC(uint ID, Vector3 Position, uint HomeBiomeID, uint PlayerLevel, Entity parentToLink ) {
+            return SpawnNPC(ID, Position, HomeBiomeID,PlayerLevel,parentToLink, out _, out _);
         }
 
     }

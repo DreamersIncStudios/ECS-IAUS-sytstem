@@ -15,25 +15,27 @@ using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using Resources = AISenses.Resources;
 
 namespace DreamersInc.BestiarySystem
 {
     public sealed partial class BestiaryDB : MonoBehaviour
     {
-        public static bool SpawnPlayer(uint ID, out GameObject go, out Entity entity, bool IsPlayer = false)
+        //Builder used the main project 
+        private static bool SpawnPlayer(uint ID, out GameObject go, out Entity entity, bool IsPlayer = false)
         {
             var info = GetPlayer(ID);
             if (info != null)
             {
                 go = Instantiate(info.Prefab);
                 if(IsPlayer)
-                go.tag = "Player";
+                    go.tag = "Player";
                 EntityManager manager = World.DefaultGameObjectInjectionWorld.EntityManager;
                 entity = CreateEntity(manager, go.transform, info.Name);
                 AddPhysics(manager, entity, go, info.PhysicsInfo);
                 BaseCharacterComponent character = new();
-                character.GOrepresentative = go;
-                character.SetupDataEntity(info.stats);
+                character.GORepresentative = go;
+                character.SetupDataEntity(info.stats, info.Name);
                 TransformGO transformLink = new()
                 {
                     transform = go.transform
@@ -90,9 +92,7 @@ namespace DreamersInc.BestiarySystem
                 {
                     manager.AddComponent<Player_Control>(entity);
                 }
-                else {
-                    manager.AddComponent<AI_Control>(entity);
-                }
+           
                 manager.AddComponent<AttackTarget>(entity);
                 manager.AddComponentObject(entity, new Command());
                 var controllerData = new CharControllerE();
@@ -102,9 +102,8 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
-                    Protection = info.BaseProtection,
-                    Threat = info.BaseThreat
+                    FactionID = info.factionID,
+              
                 });
                 manager.AddComponentData(entity, new Perceptibility
                 {
@@ -112,7 +111,10 @@ namespace DreamersInc.BestiarySystem
                     noiseState = NoiseState.Normal,
                     visibilityStates = VisibilityStates.Visible
                 });
-                manager.AddBuffer<ScanPositionBuffer>(entity);
+                manager.AddBuffer<Enemies>(entity);
+                manager.AddBuffer<Allies>(entity);
+                manager.AddBuffer<AISenses.Resources>(entity);
+                manager.AddBuffer<PlacesOfInterest>(entity);
 
                 go.GetComponent<VFXControl>().Init(info.Combo);
 
@@ -145,9 +147,8 @@ namespace DreamersInc.BestiarySystem
                 manager.AddComponentObject(entity, new PlayerComboComponent { Combo = comboInfo });
                 manager.AddComponentData(entity, new InfluenceComponent
                 {
-                    factionID = info.factionID,
-                    Protection = info.BaseProtection,
-                    Threat = info.BaseThreat
+                    FactionID = info.factionID,
+
                 });
                 manager.AddComponentData(entity, new Perceptibility
                 {
@@ -155,7 +156,7 @@ namespace DreamersInc.BestiarySystem
                     noiseState = NoiseState.Normal,
                     visibilityStates = VisibilityStates.Visible
                 });
-                manager.AddBuffer<ScanPositionBuffer>(entity);
+                manager.AddBuffer<Enemies>(entity);
 
                 go.GetComponent<VFXControl>().Init(info.Combo);
 

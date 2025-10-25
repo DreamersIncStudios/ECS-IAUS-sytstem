@@ -65,10 +65,6 @@ namespace MotionSystem.Components
         }
     }
 
-    public struct AI_Control : IComponentData
-    {
-        public bool IsGrounded;
-    }
 
 
     [Serializable]

@@ -8,7 +8,8 @@ namespace Stats.Entities
 {
     public partial class CharacterAuthoring : MonoBehaviour
     {
-        public CharacterClass Info;
+        public string Name;
+        public ICharacterData Info;
         public Animator animator;
     }
 
@@ -19,7 +20,7 @@ namespace Stats.Entities
             var entity = GetEntity(TransformUsageFlags.Dynamic);
 
             BaseCharacterComponent character = new();
-            character.SetupDataEntity(authoring.Info);
+            character.SetupDataEntity(authoring.Info, authoring.Name);
                 AddComponentObject (entity, character);
             AddComponentObject(entity, new AnimatorComponent() { anim = authoring.animator});
             AddComponent(entity, new PlayerTag());

@@ -1,13 +1,18 @@
+using System.Collections.Generic;
+using Combinators.Targeting;
+using DreamersIncStudio.FactionSystem;
+using DreamersIncStudio.FactionSystem.Authoring;
 using Global.Component;
+using Stats.Entities;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
-using Unity.Properties;
 using Unity.Transforms;
 using UnityEngine;
-using RaycastHit = Unity.Physics.RaycastHit;
+
+// ReSharper disable Unity.BurstFunctionSignatureContainsManagedTypes
 
 namespace AISenses.VisionSystems
 {
@@ -15,18 +20,16 @@ namespace AISenses.VisionSystems
     {
         public VisionTargetingUpdateGroup()
         {
-            RateManager = new RateUtils.VariableRateManager(15, true);
+            RateManager = new RateUtils.VariableRateManager(1920, true);
         }
-
     }
 
     [UpdateInGroup(typeof(VisionTargetingUpdateGroup))]
     public partial struct TargetingQuadrantSystem : ISystem
     {
-
         private NativeParallelMultiHashMap<int, TargetQuadrantData> quadrantMultiHashMap;
         private const int QuadrantYMultiplier = 1000;
-        private const int QuadrantCellSize = 50;
+        private const int QuadrantCellSize = 750;
         private EntityQuery query;
 
         private static int GetPositionHashMapKey(float3 position)
@@ -49,28 +52,20 @@ namespace AISenses.VisionSystems
             return count;
         }
 
-        private static void DebugDrawQuadrant(float3 position)
-        {
-            Vector3 lowerLeft = new(Mathf.Floor(position.x / QuadrantCellSize) * QuadrantCellSize,
-                (QuadrantYMultiplier * Mathf.Floor(position.z / QuadrantCellSize) * QuadrantCellSize));
-            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+1, +0, +0) * QuadrantCellSize);
-            Debug.DrawLine(lowerLeft, lowerLeft + new Vector3(+0, +0, +1) * QuadrantCellSize);
-            Debug.DrawLine(lowerLeft + new Vector3(+1, +0, +0) * QuadrantCellSize,
-                lowerLeft + new Vector3(+1, +0, +1) * QuadrantCellSize);
-            Debug.DrawLine(lowerLeft + new Vector3(+0, +0, +1) * QuadrantCellSize,
-                lowerLeft + new Vector3(+0, +0, +0) * QuadrantCellSize);
-            Debug.Log(GetPositionHashMapKey(position) + "" + position);
-
-        }
-
 
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<PhysicsWorldSingleton>();
+            state.RequireForUpdate<FactionSingleton>();
+            state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             quadrantMultiHashMap = new NativeParallelMultiHashMap<int, TargetQuadrantData>(0, Allocator.Persistent);
             query = state.GetEntityQuery(new EntityQueryDesc()
             {
-                All = new ComponentType[] { ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(AITarget)) }
+                All = new ComponentType[]
+                {
+                    ComponentType.ReadWrite(typeof(LocalTransform)), ComponentType.ReadWrite(typeof(AITarget)),
+                    ComponentType.ReadWrite(typeof(AIStat))
+                }
             });
         }
 
@@ -87,32 +82,34 @@ namespace AISenses.VisionSystems
 
             state.EntityManager.CompleteDependencyBeforeRO<PhysicsWorldSingleton>();
             var world = SystemAPI.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
+            //    world.UpdateBodyIndexMap();
             state.Dependency = new TargetingVisionRayCastJob()
             {
                 World = world,
                 QuadrantMap = quadrantMultiHashMap,
-                TransformComponentLookup = SystemAPI.GetComponentLookup<LocalTransform>(true),
-                TargetData = SystemAPI.GetComponentLookup<AITarget>(true)
+                trams = query.ToComponentDataArray<LocalTransform>(Allocator.TempJob),
+                stats = query.ToComponentDataArray<AIStat>(Allocator.TempJob),
+                FactionsBuffer = SystemAPI.GetSingletonBuffer<Factions>(true)
             }.ScheduleParallel(state.Dependency);
         }
 
         void UpdateQuadrantHashMap(ref SystemState systemState)
         {
+            quadrantMultiHashMap.Clear();
 
-            if (query.CalculateEntityCount() != quadrantMultiHashMap.Capacity)
+            if (query.CalculateEntityCount() > quadrantMultiHashMap.Capacity)
             {
-                quadrantMultiHashMap.Clear();
                 quadrantMultiHashMap.Capacity = query.CalculateEntityCount() + 1;
             }
 
-            new SetQuadrantDataHashMapJob()
+            systemState.Dependency = new SetQuadrantDataHashMapJob()
             {
                 QuadrantMap = quadrantMultiHashMap.AsParallelWriter()
-            }.ScheduleParallel(query);
+            }.ScheduleParallel(query, systemState.Dependency);
         }
 
         [BurstCompile]
-
+        [WithAll(typeof(AIStat))]
         partial struct SetQuadrantDataHashMapJob : IJobEntity
         {
             public NativeParallelMultiHashMap<int, TargetQuadrantData>.ParallelWriter QuadrantMap;
@@ -129,217 +126,194 @@ namespace AISenses.VisionSystems
             }
         }
 
-        public struct TargetQuadrantData
-        {
-            public Entity Entity;
-            public float3 Position;
-            public AITarget TargetInfo;
-        }
 
-        [BurstCompile]
         partial struct TargetingVisionRayCastJob : IJobEntity
         {
             [ReadOnly] public CollisionWorld World;
             [ReadOnly] public NativeParallelMultiHashMap<int, TargetQuadrantData> QuadrantMap;
 
-            void Execute(Entity entity, ref DynamicBuffer<ScanPositionBuffer> buffer, ref Vision vision,
-                ref PhysicsInfo physicsInfo,
-                in LocalTransform transform)
+            [ReadOnly] public NativeArray<AIStat> stats;
+            [ReadOnly] public NativeArray<LocalTransform> trams;
+            private const float CellEdgePadding = 50f;
+            [ReadOnly] public DynamicBuffer<Factions> FactionsBuffer;
+
+            void Execute(Entity entity, ref DynamicBuffer<Enemies> enemyBuffer, ref DynamicBuffer<Allies> allyBuffer,
+                ref DynamicBuffer<Resources> resourceBuffer, ref DynamicBuffer<PlacesOfInterest> placeBuffer,
+                ref Vision vision,
+                ref PhysicsInfo physicsInfo, in LocalTransform transform, in AITarget target)
             {
-                buffer.Clear();
+                enemyBuffer.Clear();
+                allyBuffer.Clear();
+                resourceBuffer.Clear();
+                placeBuffer.Clear();
+
                 var hashMapKey = TargetingQuadrantSystem.GetPositionHashMapKey(transform.Position);
-                CheckTargetEntity(vision, TargetAlignmentType.Enemy, physicsInfo);
-                CheckTargetEntity(vision, TargetAlignmentType.Friendly, physicsInfo);
+//todo rewrite for                if (vision.HasTarget) return;
 
-                if (!vision.TargetEntity(TargetAlignmentType.Enemy).Equals(Entity.Null) &&
-                    !vision.TargetEntity(TargetAlignmentType.Friendly).Equals(Entity.Null)) return;
-                FindTargets(hashMapKey, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey + 1, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey - 1, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey + QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey - QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey + 1 + QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey - 1 + QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey + 1 - QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-                FindTargets(hashMapKey - 1 - QuadrantYMultiplier, entity, buffer, vision, transform, physicsInfo);
-            }
+                var pos = transform.Position;
 
-            /// <summary>
-            /// Finds the targets based on the given input parameters.
-            /// </summary>
-            /// <param name="hashMapKey">The key for the quadrant map lookup.</param>
-            /// <param name="entity">The target entity.</param>
-            /// <param name="buffer">The buffer containing scan position information.</param>
-            /// <param name="vision">The vision structure containing target information.</param>
-            /// <param name="transform">The local transform of the target entity.</param>
-            /// <param name="physicsInfo">The physics information of the target entity.</param>
-            void FindTargets(int hashMapKey, Entity entity, DynamicBuffer<ScanPositionBuffer> buffer, Vision vision,
-                LocalTransform transform, PhysicsInfo physicsInfo)
-            {
-                if (QuadrantMap.TryGetFirstValue(hashMapKey, out var quadrantData, out var iterator))
-                {
-                    do
+
+                var checkKeys = new List<int> { hashMapKey };
+                AddAdjacentQuadrantKeys(pos, vision.ViewRadius, hashMapKey, checkKeys);
+                var targets = GetAllTargetsInCheckList(checkKeys);
+
+                var ctx = new SearcherCtx(transform, vision, target.FactionID, World, FactionsBuffer,
+                    new CollisionFilter()
                     {
-                        if (quadrantData.Entity.Equals(entity))
-                            continue;
-                        var dist = Vector3.Distance(transform.Position, quadrantData.Position);
-                        // if target is within 30 units of NPC add it to the list of targets
-                        if (dist < 30)
-                        {
-                            //Todo add visibility check at later date 
-                            buffer.Add(new ScanPositionBuffer()
-                            {
-                                target = new Target()
-                                {
-                                    CanSee = true,
-                                    DistanceTo = dist,
-                                    LastKnownPosition = quadrantData.Position,
-                                    TargetInfo = quadrantData.TargetInfo,
-                                    Entity = quadrantData.Entity
-                                },
-                                dist = dist
-
-                            });
-                        }
-
-                        if (dist > vision.ViewRadius || dist< 30) continue;
-                        var dirToTarget = ((Vector3)quadrantData.Position -
-                                           (Vector3)(transform.Position + new float3(0, 1, 0))).normalized;
-                        if (!(Vector3.Angle(transform.Forward(), dirToTarget) < vision.ViewAngle / 2.0f)) continue;
-                        var raycastInput = new RaycastInput()
-                        {
-                            Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
-                            End = quadrantData.Position + quadrantData.TargetInfo.CenterOffset,
-                            Filter = new CollisionFilter()
-                            {
-                                BelongsTo = ((1 << 10)),
-                                CollidesWith = physicsInfo.CollidesWith.Value,
-                                GroupIndex = 0
-                            }
-                        };
-                        if (!World.CastRay(raycastInput, out RaycastHit raycastHit)) continue;
-                        if (raycastHit.Entity.Equals(quadrantData.Entity))
-                        {
-
-                            buffer.Add(new ScanPositionBuffer()
-                            {
-                                target = new Target()
-                                {
-                                    CanSee = true,
-                                    DistanceTo = dist,
-                                    LastKnownPosition = quadrantData.Position,
-                                    TargetInfo = quadrantData.TargetInfo,
-                                    Entity = quadrantData.Entity
-                                },
-                                dist = dist
-
-                            });
-                        }
-                    } while (QuadrantMap.TryGetNextValue(out quadrantData, ref iterator));
-                }
-
-            }
-
-            [ReadOnly] public ComponentLookup<LocalTransform> TransformComponentLookup;
-            [ReadOnly] public ComponentLookup<AITarget> TargetData;
-
-            /// <summary>
-            /// Checks if NPC can see the target entity based on alignment type and physics information.
-            /// </summary>
-            /// <param name="vision">The vision structure containing target information.</param>
-            /// <param name="type">The alignment type of the target.</param>
-            /// <param name="physicsInfo">The physics information of the target.</param>
-            private void CheckTargetEntity(Vision vision, TargetAlignmentType type, PhysicsInfo physicsInfo)
-            {
-                var targetEntity = vision.TargetEntity(type);
-                if (targetEntity.Equals(Entity.Null)) return;
-
-                var transform = TransformComponentLookup[targetEntity];
-                var dirToTarget = GetDirectionToTarget(transform);
-
-                if (!CanSeeTarget(transform, vision, dirToTarget))
-                {
-                    switch (type)
-                    {
-                     case TargetAlignmentType.Enemy:
-                         vision.TargetEnemyEntity = Entity.Null;
-                         vision.TargetEnemyPosition = float3.zero;
-                         break;
-                     case TargetAlignmentType.Friendly:
-                         vision.TargetFriendlyEntity = Entity.Null;
-                         vision.TargetFriendlyPosition = float3.zero;
-                         break;
-                    }
-                    
-                }
-
-                var raycastInput = CreateRaycastInput(transform, TargetData[targetEntity], physicsInfo);
-                if (!World.CastRay(raycastInput, out RaycastHit raycastHit)) return;
-
-                SetTargetBasedOnRaycastHit(raycastHit, vision, type, targetEntity);
-            }
-
-            private Vector3 GetDirectionToTarget(LocalTransform transform)
-            {
-                return (((Vector3)transform.Position -
-                         (Vector3)(transform.Position + new float3(0, 1, 0))).normalized);
-            }
-
-            private bool CanSeeTarget(LocalTransform transform, Vision vision, Vector3 dirToTarget)
-            {
-                var dist = Vector3.Distance(transform.Position, transform.Position);
-                return dist <= vision.ViewRadius &&
-                       Vector3.Angle(transform.Forward(), dirToTarget) < vision.ViewAngle / 2.0f;
-            }
-
-            private RaycastInput CreateRaycastInput(LocalTransform transform, AITarget targetData, PhysicsInfo physicsInfo)
-            {
-                return new RaycastInput()
-                {
-                    Start = transform.Position + new float3(0, 1, 0) + transform.Forward() * 3f,
-                    End = transform.Position + targetData.CenterOffset,
-                    Filter = new CollisionFilter()
-                    {
-                        BelongsTo = ((1 << 10)),
+                        BelongsTo = ((1 << 11)),
                         CollidesWith = physicsInfo.CollidesWith.Value,
                         GroupIndex = 0
-                    }
-                };
+                    });
+
+                var targetsInRange = PredChain
+                    .Start(new IsNotSelf())
+                    .And(new IsAlive())
+                    .And(new InRange())
+                    .And(new InViewCone())
+                    .And(new InViewRayCast())
+                    .Build();
+
+                var enemyList = PredChain
+                    .Start(new IsEnemy())
+                    .And(new IsPlaceOfInterest()).Not()
+                    .And(new IsResource()).Not()
+                    .Build();
+                var allyList = PredChain
+                    .Start(new IsFriendly())
+                    .And(new IsPlaceOfInterest()).Not()
+                    .And(new IsResource()).Not()
+                    .Build();
+                var resourceList = PredChain
+                    .Start(new IsAlive())
+                    .And(new IsResource())
+                    .And(new IsPlaceOfInterest()).Not()
+                    .Build();
+                var placeList = PredChain
+                    .Start(new IsAlive())
+                    .And(new IsPlaceOfInterest())
+                    .And(new IsResource()).Not()
+                    .Build();
+
+                var filteredTarget = targetsInRange.Test(targets, transform, in ctx);
+                var filteredEnemy = enemyList.Test(filteredTarget, transform, in ctx);
+                var filteredAlly = allyList.Test(filteredTarget, transform, in ctx);
+                var filteredResource = resourceList.Test(filteredTarget, transform, in ctx);
+                var filteredPlace = placeList.Test(filteredTarget, transform, in ctx);
+
+                foreach (var targetQuadrantData in filteredEnemy)
+                {
+                    enemyBuffer.Add(new Enemies()
+                    {
+                        Target = new Target()
+                        {
+                            CanSee = true,
+                            TargetInfo = targetQuadrantData.TargetInfo,
+                            Entity = targetQuadrantData.Entity,
+                            DistanceTo = targetQuadrantData.Distance,
+                            LastKnownPosition = targetQuadrantData.Position,
+                        }
+                    });
+                }
+
+                foreach (var targetQuadrantData in filteredAlly)
+                {
+                    allyBuffer.Add(new Allies()
+                    {
+                        Target = new Target()
+                        {
+                            CanSee = true,
+                            TargetInfo = targetQuadrantData.TargetInfo,
+                            Entity = targetQuadrantData.Entity,
+                            DistanceTo = targetQuadrantData.Distance,
+                            LastKnownPosition = targetQuadrantData.Position,
+                        }
+                    });
+                }
+
+                foreach (var targetQuadrantData in filteredResource)
+                {
+                    resourceBuffer.Add(new Resources()
+                    {
+                        Target = new Target()
+                        {
+                            CanSee = true,
+                            TargetInfo = targetQuadrantData.TargetInfo,
+                            Entity = targetQuadrantData.Entity,
+                            DistanceTo = targetQuadrantData.Distance,
+                            LastKnownPosition = targetQuadrantData.Position,
+                        }
+                    });
+                }
+
+                foreach (var targetQuadrantData in filteredPlace)
+                {
+                    placeBuffer.Add(new PlacesOfInterest()
+                    {
+                        Target = new Target()
+                        {
+                            CanSee = true,
+                            TargetInfo = targetQuadrantData.TargetInfo,
+                            Entity = targetQuadrantData.Entity,
+                            DistanceTo = targetQuadrantData.Distance,
+                            LastKnownPosition = targetQuadrantData.Position,
+                        }
+                    });
+                }
             }
 
-            private void SetTargetBasedOnRaycastHit(RaycastHit raycastHit, Vision vision, TargetAlignmentType type,
-                Entity targetEntity)
+            private void AddAdjacentQuadrantKeys(float3 pos, float viewRadius, int baseKey, List<int> outKeys)
             {
-                if (raycastHit.Entity.Equals(targetEntity))
+                // Compute current quadrant indices
+                var quadX = math.floor(pos.x / QuadrantCellSize);
+                var quadZ = math.floor(pos.z / QuadrantCellSize);
+
+                // X boundaries
+                var xOffset = pos.x - (quadX * QuadrantCellSize);
+                if (xOffset < viewRadius)
                 {
-                    var targetPosition = raycastHit.Position;
-                    switch (type)
+                    outKeys.Add(baseKey - 1);
+                }
+                else if (xOffset > QuadrantCellSize - CellEdgePadding)
+                {
+                    outKeys.Add(baseKey + 1);
+                }
+
+                // Z boundaries
+                var zOffset = pos.z - (quadZ * QuadrantCellSize);
+                if (zOffset < viewRadius)
+                {
+                    outKeys.Add(baseKey - QuadrantYMultiplier);
+                }
+                else if (zOffset > QuadrantCellSize - CellEdgePadding)
+                {
+                    outKeys.Add(baseKey + QuadrantYMultiplier);
+                }
+            }
+
+            private List<TargetQuadrantData> GetAllTargetsInCheckList(List<int> checkKeys)
+            {
+                var targets = new List<TargetQuadrantData>();
+                foreach (var key in checkKeys)
+                {
+                    if (QuadrantMap.TryGetFirstValue(key, out var value, out var iterator))
                     {
-                        case TargetAlignmentType.Enemy:
-                            vision.TargetEnemyPosition = targetPosition;
-                            break;
-                        case TargetAlignmentType.Friendly:
-                            vision.TargetFriendlyPosition = targetPosition;
-                            break;
+                        do
+                        {
+                            targets.Add(value);
+                        } while (QuadrantMap.TryGetNextValue(out value, ref iterator));
                     }
                 }
-                else
-                {
-                    switch (type)
-                    {
-                        case TargetAlignmentType.Enemy:
-                            vision.TargetEnemyEntity = Entity.Null;
-                            break;
-                        case TargetAlignmentType.Friendly:
-                            vision.TargetFriendlyEntity = Entity.Null;
-                            break;
-                    }
-                }
+
+                return targets;
             }
         }
-
     }
 
+    public struct TargetQuadrantData
+    {
+        public Entity Entity;
+        public float3 Position;
+        public AITarget TargetInfo;
+        public float Distance { get; set; }
+    }
 }
-    
-

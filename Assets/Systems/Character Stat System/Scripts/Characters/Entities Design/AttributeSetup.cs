@@ -6,17 +6,18 @@ using Unity.Entities;
 using System.Threading.Tasks;
 using DreamersInc.DamageSystem.Interfaces;
 using CharacterClass = Stats.Entities;
+using Random = UnityEngine.Random;
 
 namespace Stats.Entities
 {
     public partial class BaseCharacterComponent : IComponentData
     {
 
-        public void SetupDataEntity( CharacterClass BaseStats)
+        public void SetupDataEntity( ICharacterData BaseStats, string name)
         {
             //Todo get level and stat data
             Init();
-            Name = BaseStats.Name;
+            Name = name;
             this.Level = BaseStats.Level;
             float ModValue = BaseStats.LevelMod;
             this.GetPrimaryAttribute((int)AttributeName.Strength).BaseValue = (int)(BaseStats.Strength * ModValue);

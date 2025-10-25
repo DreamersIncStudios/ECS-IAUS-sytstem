@@ -1,4 +1,8 @@
+using System;
 using System.Collections.Generic;
+using DreamersIncStudio.FactionSystem;
+using DreamersIncStudio.GAIACollective.Streaming.SceneManagement.SectionMetadata;
+using Sirenix.OdinInspector;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -8,23 +12,49 @@ using Random = UnityEngine.Random;
 
 namespace DreamersIncStudio.GAIACollective.Authoring
 {
-    public class GaiaSpawnBiome : MonoBehaviour
+
+    public class GaiaSpawnBiome : MonoBehaviour, ISpawnBiome
     {    
-        public uint BiomeID;
-        public int2 LevelRange;
-        public List<SpawnData> SpawnData;
-        public List<PackInfo> PacksToSpawn;
+        public uint BiomeID=> biomeID;
+        [SerializeField] private uint biomeID;
+        public int2 LevelRange=> levelRange;
+        [SerializeField] private int2 levelRange;
+
+        public List<SpawnData> SpawnData => spawnData;
+        [SerializeField] private List<SpawnData> spawnData;
+
+        public List<PackInfo> PacksToSpawn => packsToSpawn;
+        [SerializeField] private List<PackInfo> packsToSpawn;
         public class Baker : Baker<GaiaSpawnBiome>
         {
             public override void Bake(GaiaSpawnBiome authoring)
             {
                 var entity = GetEntity(TransformUsageFlags.WorldSpace);   
                 AddComponent(entity, new Biome(authoring));
+                var Radius = authoring.gameObject.layer switch
+                {
+                    6 => 750,
+                    9 or 10 or 11 => 500,
+                    26 => 250,
+                    27 => 100,
+                    28 => 85,
+                    _ => 2250
+                };
+                AddComponent(entity, new GaiaOperationArea(authoring.transform.position, Radius));
             }
         }
 
   
     }
+    
+    public interface ISpawnBiome
+    {
+        public uint BiomeID { get; }
+        public int2 LevelRange{ get; }
+        public List<SpawnData> SpawnData{ get; }
+        public List<PackInfo> PacksToSpawn{ get; }
+    }
+
 }
 namespace DreamersIncStudio.GAIACollective
 {
@@ -34,7 +64,8 @@ namespace DreamersIncStudio.GAIACollective
         public int2 LevelRange;
         public FixedList512Bytes<SpawnData> SpawnData;
         public FixedList128Bytes<PackInfo> PacksToSpawn;
-        public GaiaSpawnBiome( Authoring.GaiaSpawnBiome gaiaSpawnBiome)
+        public FixedList512Bytes<SpawnRequest> SpawnRequests;
+        public GaiaSpawnBiome( Authoring.ISpawnBiome gaiaSpawnBiome)
         {
             BiomeID = gaiaSpawnBiome.BiomeID;
             LevelRange = gaiaSpawnBiome.LevelRange;
@@ -49,31 +80,44 @@ namespace DreamersIncStudio.GAIACollective
             {
                 PacksToSpawn.Add(pack);
             }
+            SpawnRequests = new FixedList512Bytes<SpawnRequest>();
+            Manager= Entity.Null;
+            
         }
+
+        public Entity Manager { get; set; }
     }
   
 
     [System.Serializable]
     public struct SpawnData
     {
-        public uint SpawnID;
+        public SpawnScenario SpawnScenario;
+        public uint SpawnID; // Spawn ID 4 digit number ABCC A is the Race, B is the Role, CC is the ID number.
         public TimesOfDay ActiveHours;
-        public uint Qty;
+        [Range(1,250)]public uint Qty;
         private uint qtySpawned;
         public bool IsSatisfied => qtySpawned >= Qty;
             public bool Respawn => respawnTime <= 0.0f;
-        private float respawnTime;
-        [Range(0,20)]
+            private float respawnTime;
+        [Range(0,30)]
         public int RespawnInterval;
-            public void Spawn(uint HomeBiomeID, int2 levelRange, uint playerLevel)
+  
+            public void Spawn(ref FixedList512Bytes<SpawnRequest> spawnRequests,uint HomeBiomeID, int2 levelRange, uint playerLevel)
             {
-                var entities = new List<Entity>();
                 var cnt = Qty - qtySpawned;
-                //Todo Update implementation 
+                spawnRequests.Add(new SpawnRequest(SpawnID, HomeBiomeID, levelRange, playerLevel, cnt, ActiveHours));;
                 ResetRespawn();
-         
             }
 
+            public void IncrementSpawned()
+            {
+                qtySpawned++;
+            }
+            public void IncrementSpawned(uint qty)
+            {
+                qtySpawned+= qty;
+            }
             public void ResetRespawn()
             {
                 var interval = 60.0f * RespawnInterval;
@@ -96,10 +140,28 @@ namespace DreamersIncStudio.GAIACollective
     [System.Serializable]
     public struct PackInfo
     {
+        public FactionNames FactionID;
         public PackType PackType;
+        public Size Size;
+        public bool Created{get; set; }
         public int Qty { get; set; }
-        public int QtyLimit;
+
+        public int QtyLimit => Size switch
+                {
+                    Size.small => 1,
+                    Size.medium => 2,
+                    Size.large => 3,
+                    Size.huge => 6,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            
+        
         public bool Satisfied => Qty >= QtyLimit;
+    }
+
+    public enum Size
+    {
+        small, medium, large, huge
     }
 
     public enum PackType
@@ -112,5 +174,23 @@ namespace DreamersIncStudio.GAIACollective
         Combat,
         Acquisition
     }
-
+    public struct SpawnRequest
+    {
+        public uint SpawnID;
+        public uint HomeBiomeID;
+        public int2 LevelRange;
+        public uint PlayerLevel;
+        public uint Qty;
+        public TimesOfDay ActiveHours;
+        public SpawnRequest(uint spawnID, uint homeBiomeID, int2 levelRange, uint playerLevel, uint cnt,
+            TimesOfDay activeHours)
+        {
+            SpawnID = spawnID;
+            HomeBiomeID = homeBiomeID;
+            LevelRange = levelRange;
+            PlayerLevel = playerLevel;
+            Qty = cnt;
+            ActiveHours = activeHours;
+        }
+    }
 }
