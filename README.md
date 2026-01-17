@@ -1,3 +1,35 @@
+
+<div align="right">
+  <details>
+    <summary >🌐 Language</summary>
+    <div>
+      <div align="center">
+        <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=en">English</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=zh-CN">简体中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=zh-TW">繁體中文</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=ja">日本語</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=ko">한국어</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=hi">हिन्दी</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=th">ไทย</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=fr">Français</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=de">Deutsch</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=es">Español</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=it">Italiano</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=ru">Русский</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=pt">Português</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=nl">Nederlands</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=pl">Polski</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=ar">العربية</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=fa">فارسی</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=tr">Türkçe</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=vi">Tiếng Việt</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=id">Bahasa Indonesia</a>
+        | <a href="https://openaitx.github.io/view.html?user=DreamersIncStudios&project=ECS-IAUS-sytstem&lang=as">অসমীয়া</
+      </div>
+    </div>
+  </details>
+</div>
+
 # ECS-IAUS-sytstem
 Infinite Axis Utility System for Unity 
 The utility system works by identifying options available to the AI and selecting the best option by scoring each option based on the circumstances. This has proven a remarkable well-working method for several reasons.
